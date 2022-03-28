@@ -1,0 +1,78 @@
+
+<div class="container">
+    <div class="row" >
+        <div class="col-md-2 box">     
+            <img  src="../../assets/feedbackIcon.png" class="icon" />
+        </div>
+    </div>
+
+  
+    <div class="row boxTitle">
+       <p [ngStyle]="{'color':result==='le feedback à été envoyé!' ? 'green':'red'}">{{result}}</p>
+        <label class="labelTitle">Coordonnées</label>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+        <form (submit)="onSubmit()" #feedbackForm="ngForm" class="boxTitle" novalidate>
+        <div class="form-group littleBox" [class.has.error]="!email.valid">
+                <label for="email" class="col-sm-10 control-label">Votre email Zenika</label>
+                <div class="col-sm-10"  >
+                <input type="email" id="email" [(ngModel)]="sendRequest.email"   required  name="email" class="inputBox form-control" placeholder="Ex:Pierre@zenika.com" #email="ngModel"/>
+            </div>
+            </div>
+            <div class="form-group littleBox" [class.has.error]="!sendEmail.valid">
+                <label for="sendEmail" class="col-sm-2 control-label">Email Zenika de votre collègue</label>
+                <div class="col-sm-10">
+                  <input type="email" name="sendEmail" class="inputBox form-control" id="sendEmail" [(ngModel)]="sendRequest!.to" required pattern="[a-z0-9._%+-]+@zenika.com" #sendEmail="ngModel" placeholder="Ex: Juliette@zenika.com">
+                </div>
+                     
+              </div>
+              <div>
+                <hr class="line">
+              </div>
+
+              <div class="row">
+                <label class="labelTitle">Points positifs</label>
+                </div>
+              <div class="form-group littleBox" [class.has.error]="!positifsPoints.valid">
+                <label for="textarea" class="col-sm-10 control-label starFont">*</label>
+                <div class="col-sm-10">
+                <textarea name="positifPoints" class="textarea  form-control required"  [(ngModel)]="sendRequest.pointsPositifs" required #positifsPoints="ngModel" placeholder="Veuillez mettre les poins positifs de votre collègue*"></textarea>
+            </div>
+            </div>
+            <div>
+                <hr class="line">
+              </div>
+
+              <div class="row">
+               
+                <label class="labelTitle">Axes d'améliorations</label>
+                </div>
+              <div class="form-group littleBox" [class.has.error]="!axesAmeliorations.valid">
+                <label for="textarea" class="col-sm-10 control-label starFont">*</label>
+                <div class="col-sm-10">
+                <textarea name="axesAmeliorations" class="textarea form-control" [(ngModel)]="sendRequest!.axesAmeliorations" required #axesAmeliorations="ngModel" placeholder="Veuillez mettre les axes d'améliorations de votre collègue"></textarea>
+            </div>
+            </div>
+            <div>
+                <hr class="line">
+              </div>
+
+              <div class="row">
+                <label class="labelTitle">Commentaire</label>
+                </div>
+              <div class="form-group littleBox" [class.has.error]="!commentaire.valid">
+                <div class="col-sm-10">
+                <textarea name="commentaire" class="textarea form-control" [(ngModel)]="sendRequest!.commentaire" #commentaire="ngModel" placeholder="Veuillez mettre les axes d'améliorations de votre collègue"></textarea>
+            </div>
+            </div>
+            <div class="col-md-8 col-md-8">
+            <button type="submit" class="btn buttonSubmit btn-success pull-right" [disabled]="!feedbackForm.valid">Submit</button>
+            <button class="buttonAnnuler btn-success pull-right">Annuler</button>
+          </div>
+
+        </form>
+    </div>
+    </div>
+</div>
+    

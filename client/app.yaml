@@ -1,0 +1,44 @@
+
+
+runtime: python27
+threadsafe: yes
+api_version: 1
+ 
+handlers:
+
+
+- url: /assets
+  static_dir: dist/client/assets
+  secure: always
+
+
+- url: /(.*)
+  static_files: dist/client/index.html
+  upload: dist/client/index.html
+
+- url: /
+  static_dir: dist/client
+
+
+ 
+skip_files:
+  - e2e/
+  - node_modules/
+  - src/
+  - coverage
+  - ^(.*/)?\..*$
+  - ^(.*/)?.*\.json$
+  - ^(.*/)?.*\.md$
+  - ^(.*/)?.*\.yaml$
+  - ^LICENSE
+
+
+
+
+
+  
+ 
+
+
+  
+

@@ -8,7 +8,7 @@ const {Datastore} = require('@google-cloud/datastore');
 const crypto = require('crypto');
 const { visit } = require('graphql');
 
- 
+ global.result = "not";
 const datastore = new Datastore({
 projectId: 'feedzback-343709',
 });
@@ -31,7 +31,14 @@ const server = new ApolloServer({ typeDefs, resolvers,introspection: true,
 const app = express();
 
 
-
+app.post('/event', function (req, res) {
+    var events = req.body;
+    console.log(req);
+    events.forEach(function (event) {
+      // Here, you now have each event and can process them how you like
+       console.log(event);
+    });
+  })
 app.use('/hello',async (req,res)=> {
     try {
         const [entities] = await getVisits();

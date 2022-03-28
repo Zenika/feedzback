@@ -1,0 +1,107 @@
+.icon {
+    height: 150px;
+    width: 300px;
+    align-items: center;
+}
+.labelTitle{
+ 
+    font-size: 20px;
+    color: blue;
+}
+.box{
+    padding: 0px 0px 0px 600px;
+}
+.littleBox{
+    padding: 0px 0px 15px 0px;
+}
+.boxTitle{
+    padding: 0px 40px 10px 500px;
+}
+.boxForm{
+    padding: 0px 0px 0px 300px;
+}
+.inputBox {
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: black;
+    width: 600px;
+
+}
+.form-control.ng-untouched,
+.form-control.ng-valid {
+    border-color: #ccc !important;
+    
+}
+
+
+input:required {
+border-color: red;
+
+}
+textarea:required {
+    border-color: red;
+    
+    }
+.line{
+    width: 600px;
+    color: black;
+    margin-left: -0.01px;
+   
+}
+.starFont{
+    font-family: 'Courier New', Courier, monospace;
+}
+.textarea{
+    width: 600px;
+    height: 100px;
+    border-color: black;
+    border-radius: 5px;
+
+    border-width: 1px;
+    margin-left: -0.01px;
+}
+.buttonSubmit{
+    margin-left: 180px;
+    margin-top: 10px;
+    background-color: brown;
+    
+    color: white;
+    border-radius: 5px;
+    border-color: black;
+    height: 40px;
+    width: 100px;
+    font-size: 15px;
+    border-width:1px;
+    
+   
+
+}
+.buttonSubmit:active{
+    background-color: antiquewhite;
+}
+.buttonSubmit:disabled,
+.buttonSubmit[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+.buttonAnnuler{
+    margin-left: 50px;
+    margin-top: 10px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 1px;
+    height: 40px;
+    width: 100px;
+    font-size: 15px;
+   
+
+}
+.resultRed {
+    color: red;
+}
+.resultGreen {
+    color: green;
+}

@@ -1,14 +1,15 @@
 const sendEmail = require('./sendEmail');
 const getEmail = require('./getEmail');
-const { Datastore } = require("@google-cloud/datastore");
+
 
 const resolvers = {
     Query: {
-        allMessage:  () =>  getEmail()
+        allMessage:  () =>  getEmail(),
+        getResult: ()=> global.result
            
     },
     Mutation: {
-        createMessage: (_,payload)=> sendEmail(payload)
+        createMessage: async(_,payload)=> await sendEmail(payload)
     }
 }
 module.exports = resolvers;
