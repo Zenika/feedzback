@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder, FormsModule, NgForm } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ApolloModule,APOLLO_OPTIONS } from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
@@ -20,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ApolloModule,
-    HttpClientModule
+    HttpClientModule,
+ 
   ],
   providers: [
     {

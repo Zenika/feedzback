@@ -1,8 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/build/http';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {

@@ -1,4 +1,4 @@
-import { Component, Directive, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Apollo, gql } from 'apollo-angular';
 import { EmailModel } from '../model/emailModel';
@@ -23,25 +23,32 @@ export class FormulaireComponent implements OnInit {
   result!:String;
 
 
-form!:FormGroup
+  @ViewChild('feedbackForm',{static:false})
+  feedbackForm!: NgForm;
 
 
-  constructor(private apollo:Apollo,private fb:FormBuilder) { }
+
+  constructor(private apollo:Apollo) { }
 
 
   ngOnInit(): void {
  
     this.sendRequest = new SendRequest();
     this.emailModel = new EmailModel();
- 
+
+ /*
     this.form = this.fb.group({
       email:['',[Validators.required]]
     })
-
+*/
   }
+  ngAfterViewInit() {
+    console.log('on after view init', this.feedbackForm);
+    // this returns null
+  }
+  ngAfterViewChecked(){}
+
   onSubmit(){
-    this.sendRequest = new SendRequest();
-    this.emailModel = new EmailModel();
     this.apollo.mutate({
       mutation:SEND_MESSAGE,
       variables:{
