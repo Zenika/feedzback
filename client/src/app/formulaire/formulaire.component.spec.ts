@@ -15,7 +15,7 @@ describe('FormuleComponent', () => {
       providers:[Apollo],
       declarations: [ FormulaireComponent
        ],
-       imports:[ReactiveFormsModule,FormsModule,
+       imports:[FormsModule,
       ApolloTestingModule],
       schemas:[CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

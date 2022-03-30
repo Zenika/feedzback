@@ -36,17 +36,8 @@ export class FormulaireComponent implements OnInit {
     this.sendRequest = new SendRequest();
     this.emailModel = new EmailModel();
 
- /*
-    this.form = this.fb.group({
-      email:['',[Validators.required]]
-    })
-*/
   }
-  ngAfterViewInit() {
-    console.log('on after view init', this.feedbackForm);
-    // this returns null
-  }
-  ngAfterViewChecked(){}
+
 
   onSubmit(){
     this.apollo.mutate({
