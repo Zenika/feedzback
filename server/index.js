@@ -6,7 +6,8 @@ const resolvers = require('./resolvers');
 const server = new ApolloServer({ typeDefs, resolvers,introspection: true,
     playground: true, });
 const app = express();
-
+const cors = require('cors');
+app.use(cors());
 const PORT = parseInt(process.env.PORT) || 4000;
 server.start().then(()=>{
     server.applyMiddleware({app}),

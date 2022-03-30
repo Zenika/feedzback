@@ -1,11 +1,10 @@
-import { Component, Directive, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Apollo, gql } from 'apollo-angular';
-import { EmailModel } from '../model/emailModel';
 import { SendRequest } from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
-mutation CreateMessage($email:String!,$to:String!,$message:String!){
+mutation CreateMessage($email:String!,$to:String!,$message:SendRequest!){
   createMessage(email:$email,to:$to,message:$message)
 }
 `;
@@ -19,7 +18,6 @@ mutation CreateMessage($email:String!,$to:String!,$message:String!){
 export class FormulaireComponent implements OnInit {
 
   sendRequest!:SendRequest;
-  emailModel!: EmailModel;
   result!:String;
 
 
@@ -34,18 +32,20 @@ export class FormulaireComponent implements OnInit {
   ngOnInit(): void {
  
     this.sendRequest = new SendRequest();
-    this.emailModel = new EmailModel();
+ 
 
   }
 
 
   onSubmit(){
+
+
     this.apollo.mutate({
       mutation:SEND_MESSAGE,
       variables:{
         email:this.sendRequest.email,
         to:this.sendRequest.to,
-        message:this.emailModel.getEmailModel(this.sendRequest)
+        message:this.sendRequest
       }
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage

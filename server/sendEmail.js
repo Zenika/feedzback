@@ -1,8 +1,7 @@
 const sgMail = require('@sendgrid/mail')
 const {Datastore} = require('@google-cloud/datastore');
-const { Query } = require('./resolvers');
-const  result  = require("./result");
-const { response } = require('express');
+const emailModel = require('./model/emailModel');
+
 require('dotenv').config();
 sgMail.setApiKey(process.env.API_KEY);
 
@@ -18,11 +17,15 @@ const insertValue = value => {
 
 }
 module.exports = async ({ email,to, message }) => {
+  console.log("hey "+ message.email)
+ let model = emailModel(message);
+ console.log(" no" + model)
+
   const msg = {
       to: to,
       from:email,
       subject:"Feedback",
-      text: message
+      text:model
   }
   global.result = "sent"
   console.log(global.result);
