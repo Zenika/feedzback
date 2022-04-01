@@ -12,14 +12,14 @@ type Message {
 }
 input SendRequest {
     email:String
-    to:String
+    nom:String
     pointsPositifs:String
     axesAmeliorations:String
     commentaire:String
 }
 
 type Mutation{
-    createMessage(email:String!,to:String!,message:SendRequest!):String
+    createMessage(email:String!,message:SendRequest!):String
     
 }
 `;

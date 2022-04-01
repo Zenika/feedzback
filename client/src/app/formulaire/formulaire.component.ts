@@ -4,8 +4,8 @@ import { Apollo, gql } from 'apollo-angular';
 import { SendRequest } from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
-mutation CreateMessage($email:String!,$to:String!,$message:SendRequest!){
-  createMessage(email:$email,to:$to,message:$message)
+mutation CreateMessage($email:String!,$message:SendRequest!){
+  createMessage(email:$email,message:$message)
 }
 `;
 
@@ -44,11 +44,11 @@ export class FormulaireComponent implements OnInit {
       mutation:SEND_MESSAGE,
       variables:{
         email:this.sendRequest.email,
-        to:this.sendRequest.to,
         message:this.sendRequest
       }
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage
+      this.result ==="le feedback a été envoyé!"? this.feedbackForm.reset():this.result
     });
   }
 }

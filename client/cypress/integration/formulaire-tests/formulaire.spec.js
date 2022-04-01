@@ -15,6 +15,7 @@ describe('Formulaire tests', () => {
     
     }).as('CreateMessage')
    cy.visit('/')
+
   
 
 
@@ -24,46 +25,28 @@ describe('Formulaire tests', () => {
   it('Application a le bon titre',()=>{
     cy.title().should('include','FeedZback')
   })
-  it('Le champs Votre email zenika est invalid quand il est vide et applique pas le pattern email',()=>{
-    cy.get('#email:invalid').should('have.length',1)
+  it("Le formulaire n'est pas valide quand les champs requis sont vides et les chmaps d'emails n'appliquent pas le pattern email",()=>{
+    cy.get('#nom').should('have.class','ng-invalid')
+    cy.get('#email').should('have.class','ng-invalid')
+    cy.get('#pointsPositifs').should('have.class','ng-invalid')
+    cy.get('#pointsPositifs').should('have.class','ng-invalid')
+    cy.get('#feedbackForm').should('have.class','ng-invalid')
   })
-  it('Le champs Email Zenika de votre collègue est invalid quand il est vide et applique pas le pattern email',()=>{
-    cy.get('#sendEmail:invalid').should('have.length',1)
-  })
-  it('Le champs Points positifs est invalid quand il est vide',()=>{
-    cy.get('#pointsPositifs:invalid').should('have.length',1)
-  })
-  it("Le champs Axes d'améliorations est invalid quand il est vide",()=>{
-    cy.get('#pointsPositifs:invalid').should('have.length',1)
-  })
-  it('Le formulaire est invalid quand les champs sont invalides aussi', () => {
+ 
 
-    cy.get('#feedbackForm:invalid').should('have.length',1)
-
-  })
-
-  it('Le bord de champs Votre email zenika est rouge quand il est touché et invalide',()=>{
+  it('Les bords des champs requis deviennent rouges quand ils sont touchés et invalides',()=>{
+    cy.get('#nom').type('example@gmail.com')
+    cy.get('#nom').clear();
     cy.get('#email').type('example@gmail.com')
-    cy.get('#email').clear();
-    cy.get('#sendEmail').type('example@gmail.com')
+    cy.get('#nom').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
+    cy.get('#email').clear()
+    cy.get('#pointsPositifs').type('les points ppositifs sont:...')
     cy.get('#email').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
-  })
-
-  it('Le bord de champs Email Zenika de votre collègue est rouge quand il est touché et invalide',()=>{
-    cy.get('#sendEmail').clear()
-    cy.get('#pointsPositifs').type('...')
-    cy.get('#sendEmail').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
-  })
-
-  it('Le bord de champs Points positifs est rouge quand il est touché et invalide',()=>{
     cy.get('#pointsPositifs').clear()
-    cy.get('#axesAmeliorations').type('...')
+    cy.get('#axesAmeliorations').type("les axes d'améliorations sont:.....")
     cy.get('#pointsPositifs').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
-  })
-
-  it("Le bord de champs Axes d'améliorations est rouge quand il est touché et invalide",()=>{
     cy.get('#axesAmeliorations').clear()
-    cy.get('#commentaire').type('...')
+    cy.get('#commentaire').type('contiuner comme ça')
     cy.get('#axesAmeliorations').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
   })
 
@@ -71,13 +54,10 @@ describe('Formulaire tests', () => {
   it('Le formulaire est valide et envoie le feedback',()=>{
   
     cy.get('#feedbackForm').within(()=>{
-      cy.get('#email').type('exemple@gmail.com')
-      cy.get('#sendEmail').type('exemple@zenika.com')
-      cy.get('input:valid').should('have.length',2)
+      cy.get('#nom').type('binyat.sharif@gmail.com')
+      cy.get('#email').type('bnyat.azizsharif@zenika.com')
       cy.get('#pointsPositifs').type('les points poitifs sont:......')
       cy.get('#axesAmeliorations').type('les axes dAmeliorations sont:.....')
-      cy.get('textarea:valid').should('have.length',3)
-      cy.get('button:valid').should('have.length',2)
      
       cy.get('#submit').click();
       cy.wait('@CreateMessage')

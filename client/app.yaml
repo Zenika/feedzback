@@ -1,32 +1,16 @@
 
-runtime: python27
-threadsafe: yes
-api_version: 1
-
-
+runtime: nodejs16
+service: client-service
 
 handlers:
-- url: /(.*)
-  static_files: dist/client/index.html
-  upload: dist/client/index.html
-
-- url: /(.*)
-  static_files: dist/client/\1
-  upload: dist/client/(.*)
-
- 
-skip_files:
-  - e2e/
-  - node_modules/
-  - src/
-  - coverage
-  - ^(.*/)?\..*$
-  - ^(.*/)?.*\.json$
-  - ^(.*/)?.*\.md$
-  - ^(.*/)?.*\.yaml$
-  - ^LICENSE
-
-
+    # Serve all static files with urls ending with a file extension
+    - url: /(.*\..+)$
+      static_files: dist/client/\1
+      upload: dist/(.*\..+)$
+      # catch all handler to index.html
+    - url: /.*
+      static_files: dist/client/index.html
+      upload: dist/client/index.html
 
 
 
