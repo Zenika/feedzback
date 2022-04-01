@@ -19,7 +19,7 @@ module.exports = async ({ email, message }) => {
  let model = emailModel(message);
  const envi = process.env.NODE_ENV || 'development';
  if(envi=='development')
- return;
+ return "le feedback a été envoyé(une reponse automatique en mode de developement)";
   const msg = {
       to: email,
       from:"feedzback@zenika.com",

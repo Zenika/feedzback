@@ -8,18 +8,23 @@ module.exports  = (sendRequest) =>{
     let recerveFistName;
      recerveFistName= recever.split(" ");
     let sender = sendRequest.nom
+    let footer =  "Si toi aussi tu souhaites faire un feedzback, rendez-vous sur la plateforme Feedzback:\n" + 
+    "https://client-service-dot-feedzback-343709.ew.r.appspot.com/formulaire" + "\n\n" +
+    "L’équipe Feedzback";
+
 
     return   "Bonjour "+ recerveFistName[0]+", \n\n" +
-    "Vous avez reçu un feedzback de la part de votre collègue "+ sender+"\n\n"
-    +"Points positifs: \n\n"  +
+    "Votre collègue"+ sender+" vous a fait un feedzback !\n\n"
+    +"Points positifs: \n"  +
     sendRequest.pointsPositifs + " \n" +
-    "##############################################\n\n"+
    
-    "Axes d'améliorations: \n\n" +
+    "Axes d'améliorations: \n" +
     sendRequest.axesAmeliorations + " \n" + 
-    "##############################################n\n\n"+
-    "Commentaire: \n\n" +
-    sendRequest.commentaire;
+    sendRequest.commentaire===''?footer: +
+    "Commentaire: \n" +
+    sendRequest.commentaire+"\n" +
+    footer;
+    
 
 };
 

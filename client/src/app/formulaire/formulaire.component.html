@@ -1,12 +1,15 @@
 
 <div class="container">
-    <div class="row" >
-        <div class="col-md-2 box">     
-            <img  src="../../assets/feedbackIcon.png" class="icon" />
-        </div>
-    </div>
-
+  <div class="row">
+    <div class="col-sm-2 logoBox" >
+        <img  src="../../assets/feedbackIcon.png" class="icon" />  
+      </div>
+      <div class="col-sm-6 ">
+        <p class="titleFormulaire">FeedZback</p>
+        <p class="description-formulaire">Faites des retours à vos collègues grâce à Feedzback ! Remplissez les champs ci-dessous et votre collègue recevra un email directement dans sa boîte mail</p>
+      </div>
   
+    </div>
     <div class="row boxTitle">
        <p [ngStyle]="{'color':result==='le feedback a été envoyé!' ? 'green':'red'}">{{result}}</p>
         <label class="labelTitle">Coordonnées</label>
@@ -15,43 +18,40 @@
             <div class="panel-body">
         <form (submit)="onSubmit()" id="feedbackForm" #feedbackForm="ngForm" class="boxTitle" novalidate>
         <div class="form-group littleBox" >
-                <label for="nom" class="col-sm-10 control-label">Votre nom</label>
-                <div class="col-sm-10"  >
-                <input type="text" id="nom" [(ngModel)]="sendRequest.nom"   required  name="nom" class="inputBox form-control" placeholder="Ex:Douchon Pierre" #nom="ngModel"/>
+              <label for="textarea" class="starFont">*</label>
+                <label for="nom" class=" control-label">Votre nom</label>
+                <input type="text" id="nom" [(ngModel)]="sendRequest.nom"   required  name="nom" class="inputBox form-control" placeholder="Exemple: Douchon Pierre" #nom="ngModel"/>
             </div>
-            </div>
+       
             <div class="form-group littleBox" >
-                <label for="email" class="col-sm-2 control-label">Email Zenika de votre collègue</label>
-                <div class="col-sm-10">
-                  <input type="email" name="email" id="email" class="inputBox form-control" id="email" [(ngModel)]="sendRequest!.email" required pattern="[a-z0-9._%+-]+@zenika.com" #sendEmail="ngModel" placeholder="Ex: Juliette@zenika.com">
+              <label for="textarea" class="starFont">*</label>
+                <label for="email" class="control-label">Email Zenika de votre collègue</label>
+                <div>
+                  <input type="email" name="email" id="email" class="inputBox form-control" id="email" [(ngModel)]="sendRequest!.email" required pattern="[a-z0-9._%+-]+@zenika.com" #sendEmail="ngModel" placeholder="Exemple: Juliette@zenika.com">
                 </div>
                      
               </div>
               <div>
                 <hr class="line">
               </div>
-
-              <div class="row">
-                <label class="labelTitle">Points positifs</label>
-                </div>
               <div class="form-group littleBox">
-                <label for="textarea" class="col-sm-10 control-label starFont">*</label>
-                <div class="col-sm-10">
-                <textarea name="pointsPositifs" class="textarea  form-control required" id="pointsPositifs"  [(ngModel)]="sendRequest.pointsPositifs" required #pointsPositifs="ngModel" placeholder="Veuillez mettre les poins positifs de votre collègue*"></textarea>
+                <label for="textarea" class=" starFont">*</label>
+                <label class="labelTitle">Points positifs</label>
+                <div >
+                <textarea name="pointsPositifs" class="textarea  form-control required" id="pointsPositifs"  [(ngModel)]="sendRequest.pointsPositifs" required #pointsPositifs="ngModel" placeholder="Exemple : Collègue à l’écoute de ses pairs"></textarea>
             </div>
             </div>
             <div>
                 <hr class="line">
               </div>
 
-              <div class="row">
-               
-                <label class="labelTitle">Axes d'améliorations</label>
-                </div>
+            
               <div class="form-group littleBox" >
-                <label for="textarea" class="col-sm-10 control-label starFont">*</label>
-                <div class="col-sm-10">
-                <textarea name="axesAmeliorations" class="textarea form-control" id="axesAmeliorations" [(ngModel)]="sendRequest!.axesAmeliorations" required #axesAmeliorations="ngModel" placeholder="Veuillez mettre les axes d'améliorations de votre collègue"></textarea>
+                <label for="textarea" class=" starFont">*</label>
+        
+                <label class="labelTitle">Axes d'améliorations</label>
+                <div>
+                <textarea name="axesAmeliorations" class="textarea form-control" id="axesAmeliorations" [(ngModel)]="sendRequest!.axesAmeliorations" required #axesAmeliorations="ngModel" placeholder="Exemple : Manque de ponctualité"></textarea>
             </div>
             </div>
             <div>
@@ -63,13 +63,15 @@
                 </div>
               <div class="form-group littleBox" >
                 <div class="col-sm-10">
-                <textarea name="commentaire" id="commentaire" class="textarea form-control" [(ngModel)]="sendRequest!.commentaire" #commentaire="ngModel" placeholder="Veuillez mettre les axes d'améliorations de votre collègue"></textarea>
+                <textarea name="commentaire" id="commentaire" class="textarea form-control" [(ngModel)]="sendRequest!.commentaire" #commentaire="ngModel" placeholder="Exemple : Bravo pour ton talk à la dernière technozaure !"></textarea>
             </div>
             </div>
+            <p class="starFont" style="color: red;">* les champs marqués en etoiles sont obligatoires</p>
             <div class="col-md-8 col-md-8">
-            <button type="submit" id="submit" class="btn buttonSubmit btn-success pull-right" [disabled]="!feedbackForm.valid">Submit</button>
-            <button class="buttonAnnuler btn-success pull-right">Annuler</button>
+            <button type="submit" id="submit" class="btn buttonSubmit btn-success pull-right" [disabled]="!feedbackForm.valid">Envoi</button>
+            <button class=" btn buttonAnnuler btn-success pull-right">Annuler</button>
           </div>
+    
 
         </form>
     </div>

@@ -15,7 +15,7 @@
     padding: 0px 0px 15px 0px;
 }
 .boxTitle{
-    padding: 0px 40px 10px 500px;
+    padding: 0px 40px 10px 400px;
 }
 .boxForm{
     padding: 0px 0px 0px 300px;
@@ -98,4 +98,20 @@ textarea:required {
     font-size: 15px;
    
 
+}
+.titleFormulaire{
+    font-size: 40px;
+    margin-left: 5px;
+    margin-top: 25px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: brown;
+    padding: 0px 0px 0px 210px;
+
+}
+.description-formulaire {
+    padding: 0px 0px 0px 210px;
+    font-size: 18px;
+}
+.logoBox{
+    padding: 0px 0px 0px 300px;
 }

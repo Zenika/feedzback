@@ -1,8 +1,9 @@
 {
-    "name":"feedzback",
+    "name": "feedzback",
     "scripts": {
-        
         "dev": "concurrently --kill-others \"cd client && npm start\" \"cd server && npm start\""
-        
-      }
+    },
+    "dependencies": {
+        "font-awesome": "^4.7.0"
+    }
 }
