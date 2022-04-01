@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { isDevMode, NgModule } from '@angular/core';
+import {  FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ApolloModule,APOLLO_OPTIONS } from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
@@ -20,16 +20,20 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     ApolloModule,
-    HttpClientModule
+    HttpClientModule,
+    
+ 
   ],
   providers: [
     {
+
+  
       provide:APOLLO_OPTIONS,
       useFactory:(httpLink:HttpLink)=>{
         return {
           cache:new InMemoryCache(),
           link:httpLink.create({
-            uri:'https://feedzback-343709.ew.r.appspot.com/graphql'
+            uri: isDevMode() ?'http://localhost:4000/graphql':'https://feedzback-343709.ew.r.appspot.com/graphql'
           })
         }
       },

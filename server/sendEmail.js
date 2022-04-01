@@ -1,8 +1,6 @@
 const sgMail = require('@sendgrid/mail')
 const {Datastore} = require('@google-cloud/datastore');
-const { Query } = require('./resolvers');
-const  result  = require("./result");
-const { response } = require('express');
+const emailModel = require('./model/emailModel');
 require('dotenv').config();
 sgMail.setApiKey(process.env.API_KEY);
 
@@ -17,22 +15,23 @@ const insertValue = value => {
     
 
 }
-module.exports = async ({ email,to, message }) => {
+module.exports = async ({ email, message }) => {
+ let model = emailModel(message);
+ const envi = process.env.NODE_ENV || 'development';
+ if(envi=='development')
+ return;
   const msg = {
-      to: to,
-      from:email,
+      to: email,
+      from:"feedzback@zenika.com",
       subject:"Feedback",
-      text: message
+      text:model
   }
-  global.result = "sent"
-  console.log(global.result);
+
   try {
     
- const res = await sgMail.send(msg).then((response)=>{
-   console.log(response);
-   return "le feedback à été envoyé!";
- }).catch((response)=>{
-  console.log("hata era " + response);
+ const res = await sgMail.send(msg).then(()=>{
+   return "le feedback a été envoyé!";
+ }).catch(()=>{
   return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît";
  });
        insertValue(msg);

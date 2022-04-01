@@ -1,12 +1,13 @@
 {
   "name": "client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "PORT=4001 ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "cypress": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "apollo-angular": "^3.0.0",
+    "jest-preset-angular": "^11.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -31,6 +33,7 @@
     "@types/jasmine": "~3.10.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^12.11.1",
+    "cypress": "^9.5.2",
     "jasmine-core": "~4.0.0",
     "jest": "^27.5.1",
     "karma-coverage": "~2.1.0",

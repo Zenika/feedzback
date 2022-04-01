@@ -10,8 +10,16 @@ type Message {
     to:String
     message: String
 }
+input SendRequest {
+    email:String
+    nom:String
+    pointsPositifs:String
+    axesAmeliorations:String
+    commentaire:String
+}
+
 type Mutation{
-    createMessage(email:String!,to:String!,message:String!):String
+    createMessage(email:String!,message:SendRequest!):String
     
 }
 `;

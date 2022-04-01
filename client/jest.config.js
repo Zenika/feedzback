@@ -1,8 +1,12 @@
+
+require('jest-preset-angular')
 module.exports = {
-    moduleNameMapper: {
-      '@core/(.*)': '<rootDir>/src/app/core/$1',
-    },
-    preset: 'jest-preset-angular',
-    setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-  };
-  
+  preset: 'jest-preset-angular',
+  moduleNameMapper: {
+
+    '@core/(.*)': '<rootDir>/src/app/core/$1',
+  },
+  preset: 'jest-preset-angular',
+  setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+  testPathIgnorePatterns: ["<rootDir>/cypress/"]
+};
