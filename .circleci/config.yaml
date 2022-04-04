@@ -6,6 +6,8 @@ version: 2.1 # using 2.1 provides access to orbs and other features
 workflows:
   matrix-tests:
     jobs:
+      build:
+        working_directory: server/
       - node/test:
           version: 13.11.0
       - node/test:
