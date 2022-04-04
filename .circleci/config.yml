@@ -3,13 +3,25 @@ orbs: # declare what orbs we are going to use
 
 version: 2.1 # using 2.1 provides access to orbs and other features
 working_directory: ~/server
+jobs:
+    test:
+      docker:
+        - image: circleci/node:12.16
+      steps:
+        - run: echo "Running tests"
+        - run: npm install
+        - run: npm test
+    build:
+      docker:
+        - image: circleci/node:12.16
+      steps:   
+        - run: echo "build project"
 workflows:
   
   matrix-tests:
     jobs:
-      - node/test:
-          version: 13.11.0
-      - node/test:
-          version: 12.16.0
-      - node/test:
-          version: 10.19.0
+      - test
+      - build:
+         requires:
+          - test
+
