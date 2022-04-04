@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail')
 const {Datastore} = require('@google-cloud/datastore');
-const emailModel = require('./model/emailModel');
+const { getNameFromEmail } = require('./model/getNameFromEmail');
 require('dotenv').config();
 sgMail.setApiKey(process.env.API_KEY);
 
@@ -16,15 +16,26 @@ const insertValue = value => {
 
 }
 module.exports = async ({ email, message }) => {
- let model = emailModel(message);
+ let recever = getNameFromEmail(message.email).split(" ");
  const envi = process.env.NODE_ENV || 'development';
- if(envi=='development')
- return "le feedback a été envoyé(une reponse automatique en mode de developement)";
+ console.log(message.nom);
+ 
+ if(envi=='development'){
+   console.log("les données envoyées " + email + " model " )
+  return "le feedback a été envoyé(une reponse automatique en mode de developement)";
+ }
+
   const msg = {
       to: email,
       from:"feedzback@zenika.com",
-      subject:"Feedback",
-      text:model
+      template_id:'d-0015050451894264ba6885324349ab71',
+      dynamic_template_data:{
+        name:recever[0],
+        senderName:message.nom,
+        pointsPositifs:message.pointsPositifs,
+        axesAmeliorations:message.axesAmeliorations,
+        commentaire:message.commentaire
+      }
   }
 
   try {
