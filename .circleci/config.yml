@@ -8,7 +8,9 @@ jobs:
         - image: circleci/node:17.2.0
       steps:
         - run: echo "Running tests"
-        - run: npm run dev
+        - run: 
+            name: start applications 
+            command: npm run dev
     build:
       docker:
         - image: circleci/node:12.16
