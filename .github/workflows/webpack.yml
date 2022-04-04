@@ -8,9 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    working_directory: ~/server
+  runs-on: ubuntu-latest
 
-    strategy:
+     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
     
