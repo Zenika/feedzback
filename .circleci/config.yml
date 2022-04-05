@@ -2,26 +2,62 @@ orbs: # declare what orbs we are going to use
   node: circleci/node@2.0.2 # the node orb provides common node-related configuration
 
 version: 2.1 # using 2.1 provides access to orbs and other features
+executors:
+   node:
+     docker:
+       - image: cimg/16.13.0
+
 jobs:
-    test:
-      docker:
-        - image: circleci/node:17.2.0
-      steps:
-        - run: echo "Running tests"
-        - run: 
-            name: start applications 
-            command: npm run dev
-    build:
-      docker:
-        - image: circleci/node:12.16
-      steps:   
-        - run: echo "build project"
-workflows:
+  install-dependencies:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
+            - v4-packaging-dependencies-
+      - run:
+          name: install-dependencies
+          command: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          keys: v4-packaging-dependencies-{{ checksum "package-lock.json" }}
   
+  run_app:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+         keys:
+           - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
+           - v4-packaging-dependencies-
+      - run: 
+          name: run_app
+          command: npm run dev
+
+  unit-test:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+         keys:
+           - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
+           - v4-packaging-dependencies-
+      - run:
+          name: unit-test
+          working_directory: client
+          command: ng test
+
+
+workflows:
   matrix-tests:
     jobs:
-      - test
-      - build:
-         requires:
-          - test
-
+      - install_dependencies
+      - run_app:
+          requires:
+            - install-dependencies
+      - unit_test:
+          requires:
+            - install-dependencies
+     
