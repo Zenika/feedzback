@@ -2,8 +2,6 @@ const sgMail = require('@sendgrid/mail')
 const {Datastore} = require('@google-cloud/datastore');
 const { getNameFromEmail } = require('./model/getNameFromEmail');
 require('dotenv').config();
-sgMail.setApiKey(process.env.API_KEY);
-
 
 const datastore  = new Datastore({
   projectId: 'feedzback-343709'
@@ -16,9 +14,11 @@ const insertValue = value => {
 
 }
 module.exports = async ({ email, message }) => {
+
  let recever = getNameFromEmail(message.email).split(" ");
  const envi = process.env.NODE_ENV || 'development';
  console.log(message.nom);
+ 
  
  if(envi=='development'){
    console.log("les données envoyées " + email + " model " )
