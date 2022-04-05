@@ -38,7 +38,7 @@ jobs:
           working_directory: server
           command: npm start
 
-  unit_test:
+  unit-test:
     executor: node
     steps:
       - checkout
@@ -59,7 +59,7 @@ workflows:
       - run_app:
           requires:
             - install-dependencies
-      - unit_test:
+      - unit-test:
           requires:
             - install-dependencies
 
