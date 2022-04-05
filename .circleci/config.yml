@@ -36,7 +36,7 @@ jobs:
       - run: 
           name: run_app
           working_directory: server
-          command: npm run dev
+          command: npm start
 
   unit_test:
     executor: node
