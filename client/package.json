@@ -6,7 +6,7 @@
     "start": "PORT=4001 ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch=false",
     "cypress": "cypress open"
   },
   "private": true,
