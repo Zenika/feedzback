@@ -17,8 +17,11 @@ module.exports = async ({ email, message }) => {
 
  let recever = getNameFromEmail(message.email).split(" ");
  const envi = process.env.NODE_ENV || 'development';
- console.log(message.nom);
  
+ let pointsPositifs = message.pointsPositifs.replace(/\n/g,"<br>");
+ let axesAmeliorations = message.axesAmeliorations.replace(/\n/g,"<br>");
+ let commentaire = message.commentaire.replace(/\n/g,"<br>");
+ console.log(pointsPositifs);
  
  if(envi=='development'){
    console.log("les données envoyées " + email + " model " )
@@ -32,9 +35,9 @@ module.exports = async ({ email, message }) => {
       dynamic_template_data:{
         name:recever[0],
         senderName:message.nom,
-        pointsPositifs:message.pointsPositifs,
-        axesAmeliorations:message.axesAmeliorations,
-        commentaire:message.commentaire
+        pointsPositifs:pointsPositifs,
+        axesAmeliorations:axesAmeliorations,
+        commentaire:commentaire
       }
   }
 

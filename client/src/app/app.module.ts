@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule } from '@angular/common/http';
+import { LineBreakPipePipe } from './line-break-pipe.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FormulaireComponent,
+    LineBreakPipePipe,
   ],
   imports: [
     BrowserModule,

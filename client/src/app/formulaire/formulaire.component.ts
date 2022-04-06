@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Apollo, gql } from 'apollo-angular';
+import { LineBreakPipePipe } from '../line-break-pipe.pipe';
 import { SendRequest } from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
@@ -38,7 +39,12 @@ export class FormulaireComponent implements OnInit {
 
 
   onSubmit(){
-
+    console.log( "dfsdfdsfsd");
+/*
+    this.sendRequest.pointsPositifs = new LineBreakPipePipe().transform(this.sendRequest.pointsPositifs);
+    this.sendRequest.axesAmeliorations = new LineBreakPipePipe().transform(this.sendRequest.axesAmeliorations);
+    this.sendRequest.commentaire = new LineBreakPipePipe().transform(this.sendRequest.commentaire);
+  */
 
     this.apollo.mutate({
       mutation:SEND_MESSAGE,
