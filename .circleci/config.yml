@@ -19,7 +19,6 @@ jobs:
       - restore_cache:
           keys:
             - v4-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v4-packaging-dependencies-
       - run:
           name: install_clinet_dependencies
           command: npm install
