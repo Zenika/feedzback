@@ -27,7 +27,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v4-packaging-dependencies-{{ checksum "package-lock.json" }}
+          key: v4-packaging-dependencies-{{ checksum "client/package-lock.json" }}
   
   
   run_server:
