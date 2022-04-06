@@ -2,9 +2,6 @@ orbs:
   common: okode/common@2.0.13
   node: circleci/node@4 # the node orb provides common node-related configuration
 
-description: |
-  Build and publish Angular libraries.
-  Repository: https://github.com/okode/orbs
 
 version: 2.1 # using 2.1 provides access to orbs and other features
 executors:
@@ -14,34 +11,24 @@ executors:
      
 
 jobs:
-  install-dependencies:
+  install-client-dependencies:
     executor:
       name: node
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
+            - v4-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v4-packaging-dependencies-
       - run:
-          name: install_dependencies
+          name: install_clinet_dependencies
           command: npm install
-      - run:
-          name: install-concurrency
-          command: sudo npm install -g concurrently
       
       - save_cache:
           paths:
             - node_modules
           key: v4-packaging-dependencies-{{ checksum "package-lock.json" }}
   
-  install-concurrency:
-      executor: node
-      steps:
-        - checkout
-        - run:
-            name: install-concurrency
-            command: sudo npm install -g concurrently
   
   run_server:
     executor:
@@ -61,15 +48,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install_dependencies
-          working_directory: client
-          command: npm install
-
-      - run:
           working_directory: client
           command: npm run build
-
-  
       
       - run:
           name: unit-test
@@ -80,7 +60,10 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - unit-test
+      - install-client-dependencies
+      - unit-test:
+         requires:
+             - install-client-dependencies
            
       
       
