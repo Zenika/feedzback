@@ -50,6 +50,11 @@ jobs:
       - restore_cache:
           keys:
             - v2-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      
+      - run:
+          working_directory: client
+          command: npm install
+
       - run:
           working_directory: client
           command: npm run build
@@ -64,10 +69,8 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - install-client-dependencies
-      - unit-test:
-         requires:
-             - install-client-dependencies
+      - unit-test
+        
            
       
       
