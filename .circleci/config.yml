@@ -21,6 +21,7 @@ jobs:
             - v4-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: install_clinet_dependencies
+          working_directory: client
           command: npm install
       
       - save_cache:
