@@ -22,7 +22,7 @@ jobs:
       - run:
           name: install_clinet_dependencies
           working_directory: client
-          command: npm install
+          command: npm ci
       
       - save_cache:
           paths:
