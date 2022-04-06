@@ -21,8 +21,6 @@ describe('FormuleComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(FormulaireComponent);
     component = fixture.debugElement.componentInstance;
-   // component.ngOnInit();
-  //component.ngAfterViewInit();
   fixture.detectChanges();
     
   });
@@ -40,22 +38,22 @@ describe('FormuleComponent', () => {
     
     }));
   it('champs email est requis',waitForAsync(()=>{
-   let email = component.feedbackForm.controls['email'];
-    expect(email.valid).toBeFalsy();
+   let nom = component.feedbackForm.controls['nom'];
+    expect(nom.valid).toBeFalsy();
   }))
   it('champs email est valide quand il est remplis',waitForAsync(()=>{
-    let email = component.feedbackForm.controls['email'];
-    email.setValue("binyat@gmail.com")
-     expect(email.valid).toBeTruthy();
+    let nom = component.feedbackForm.controls['nom'];
+    nom.setValue("Pompidore Pierre")
+     expect(nom.valid).toBeTruthy();
    }))
    it('champs SendEmail est requis',waitForAsync(()=>{
-    let sendEmail = component.feedbackForm.controls['sendEmail'];
-     expect(sendEmail.valid).toBeFalsy();
+    let email = component.feedbackForm.controls['email'];
+     expect(email.valid).toBeFalsy();
    }))
    it('champs sendEmail est valide quand il est remplis',waitForAsync(()=>{
-     let sendEmail = component.feedbackForm.controls['sendEmail'];
-     sendEmail.setValue("bnyat.azizsharif@zenika.com")
-      expect(sendEmail!.valid).toBeTruthy();
+     let email = component.feedbackForm.controls['email'];
+     email.setValue("bnyat.azizsharif@zenika.com")
+      expect(email!.valid).toBeTruthy();
     }))
     it('champs points positifs est requis',waitForAsync(()=>{
       let pointsPositifs = component.feedbackForm.controls['pointsPositifs'];
@@ -76,10 +74,10 @@ describe('FormuleComponent', () => {
           expect(axesAmeliorations.valid).toBeTruthy();
         }))
    it('Formulaire doit être valide quand tous les champs sont valides',waitForAsync(()=>{
+    let nom = component.feedbackForm.controls['nom'];
+    nom.setValue("Pompidor Pierre")
     let email = component.feedbackForm.controls['email'];
-    email.setValue("binyat@gmail.com")
-    let sendEmail = component.feedbackForm.controls['sendEmail'];
-    sendEmail.setValue("bnyat.azizsharif@zenika.com")
+    email.setValue("bnyat.azizsharif@zenika.com")
     let pointsPositifs = component.feedbackForm.controls['pointsPositifs'];
     pointsPositifs.setValue("les points positifs:.....")
     let axesAmeliorations = component.feedbackForm.controls['axesAmeliorations'];
