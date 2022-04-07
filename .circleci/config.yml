@@ -23,6 +23,13 @@ jobs:
           name: install_client_dependencies
           working_directory: client
           command: npm install
+
+      - run:
+          name: angular cli
+          command: npm install -g @angular/cli
+
+      - run: 
+          command: npm list -g | head -1
       
       - save_cache:
           paths:
