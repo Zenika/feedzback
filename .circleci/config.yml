@@ -26,7 +26,7 @@ jobs:
 
       - run:
           name: angular cli
-          command: npm install -g @angular/cli
+          command: sudo npm install -g @angular/cli
 
       - run: 
           command: npm list -g | head -1
