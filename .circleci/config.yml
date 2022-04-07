@@ -24,9 +24,7 @@ jobs:
           working_directory: client
           command: npm install
 
-      - run:
-          name: angular cli
-          command: sudo npm install -g @angular/cli
+      
 
       - run: 
           command: npm list -g | head -1
