@@ -1,36 +1,23 @@
-.icon {
-    height: 150px;
-    width: 300px;
-    align-items: center;
-}
+
 .labelTitle{
  
     font-size: 20px;
     color: blue;
 }
-.box{
-    padding: 0px 0px 0px 600px;
-}
-.littleBox{
-    padding: 0px 0px 15px 0px;
-}
-.boxTitle{
-    padding: 0px 40px 10px 400px;
-}
-.boxForm{
-    padding: 0px 0px 0px 300px;
-}
-.inputBox {
-    border-radius: 5px;
-    border-width: 1px;
-    border-color: black;
-    width: 600px;
 
-}
 .form-control.ng-untouched,
 .form-control.ng-valid {
     border-color: #ccc !important;
     
+}
+.form-control-lg.ng-untouched,
+.form-controllg.ng-valid {
+    border-color: #ccc !important;
+    
+}
+.img-responsive{
+    width: 100%;
+    height: 80%;
 }
 
 
@@ -42,44 +29,23 @@ textarea:required {
     border-color: red;
     
     }
-.line{
-    width: 600px;
-    color: black;
-    margin-left: -0.01px;
-   
-}
+
 .starFont{
     font-family: 'Courier New', Courier, monospace;
 }
-.textarea{
-    width: 600px;
-    height: 100px;
-    border-color: black;
-    border-radius: 5px;
 
-    border-width: 1px;
-    margin-left: -0.01px;
-}
-.buttonSubmit{
-    margin-left: 180px;
-    margin-top: 10px;
+.btn-primary{
+
     background-color: brown;
-    
-    color: white;
-    border-radius: 5px;
-    border-color: black;
-    height: 40px;
-    width: 100px;
-    font-size: 15px;
-    border-width:1px;
+  
     
    
 
 }
-.buttonSubmit:active{
+.btn-primary:active{
     background-color: antiquewhite;
 }
-.buttonSubmit:disabled,
+.btn-primary:disabled,
 .buttonSubmit[disabled]{
   border: 1px solid #999999;
   background-color: #cccccc;
@@ -100,18 +66,8 @@ textarea:required {
 
 }
 .titleFormulaire{
-    font-size: 40px;
-    margin-left: 5px;
-    margin-top: 25px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ 
     color: brown;
-    padding: 0px 0px 0px 210px;
 
 }
-.description-formulaire {
-    padding: 0px 0px 0px 210px;
-    font-size: 18px;
-}
-.logoBox{
-    padding: 0px 0px 0px 300px;
-}
+
