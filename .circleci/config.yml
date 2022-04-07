@@ -18,7 +18,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v4-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v5-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -35,7 +35,7 @@ jobs:
           paths:
             - client/node_modules
             - /usr/local/lib
-          key: v4-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v5-packaging-dependencies-{{ checksum "client/package-lock.json" }}
   
   
   run_server:
@@ -57,7 +57,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v4-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v5-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
 
       - run:
