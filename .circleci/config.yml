@@ -1,66 +1,78 @@
-orbs: # declare what orbs we are going to use
-  node: circleci/node@2.0.2 # the node orb provides common node-related configuration
+orbs:
+  common: okode/common@2.0.13
+  node: circleci/node@4 # the node orb provides common node-related configuration
+
 
 version: 2.1 # using 2.1 provides access to orbs and other features
 executors:
    node:
      docker:
        - image: cimg/node:16.13.0
+     
 
 jobs:
-  install-dependencies:
-    executor: node
+  install-client-dependencies:
+    executor:
+      name: node
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
-            - v4-packaging-dependencies-
+            - v4-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
-          name: install-dependencies
-          working_directory: server
-          command: npm ci
+          name: install_clinet_dependencies
+          working_directory: client
+          command: npm install
+      
       - save_cache:
           paths:
-            - node_modules
-          key: v4-packaging-dependencies-{{ checksum "package-lock.json" }}
+            - client/node_modules
+          key: v4-packaging-dependencies-{{ checksum "client/package-lock.json" }}
   
-  run_app:
-    executor: node
+  
+  run_server:
+    executor:
+      name: node
     steps:
       - checkout
-      - restore_cache:
-         keys:
-           - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
-           - v4-packaging-dependencies-
-      - run: 
-          name: run_app
+
+      - run:
+          name: install_dependencies
           working_directory: server
-          command: npm start
+          command: |
+            npm install
+            npm run build
 
   unit-test:
     executor: node
     steps:
       - checkout
       - restore_cache:
-         keys:
-           - v4-packaging-dependencies-{{ checksum "package-lock.json"}}
-           - v4-packaging-dependencies-
+          keys:
+            - v2-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      
+      - run:
+          working_directory: client
+          command: npm install
+
+      - run:
+          working_directory: client
+          command: npm run build
+      
       - run:
           name: unit-test
           working_directory: client
-          command: ng test
-
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      
+      
 
 workflows:
   matrix-tests:
     jobs:
-      - install-dependencies
-      - run_app:
-          requires:
-            - install-dependencies
-      - unit-test:
-          requires:
-            - install-dependencies
-
+      - unit-test
+        
+           
+      
+      
+      
      
