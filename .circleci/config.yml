@@ -20,7 +20,7 @@ jobs:
           keys:
             - v4-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
-          name: install_clinet_dependencies
+          name: install_client_dependencies
           working_directory: client
           command: npm install
       
@@ -49,7 +49,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v4-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
 
       - run:
