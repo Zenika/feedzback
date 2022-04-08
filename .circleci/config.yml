@@ -151,7 +151,7 @@ workflows:
          browser: chrome
          requires:
             - install-client-dependencies
-         cache-key: 'v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
+         cache-key: 'v8-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
          start: npm run dev
       - unit-test:
            requires:
