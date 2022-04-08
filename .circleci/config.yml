@@ -23,7 +23,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v9-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: install_client_dependencies
@@ -38,7 +38,7 @@ jobs:
             - client/node_modules
             - /usr/local/lib
            
-          key: v9-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v10-packaging-dependencies-{{ checksum "client/package-lock.json" }}
    
 
 
@@ -48,7 +48,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v9-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v10-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -63,7 +63,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v9-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -100,7 +100,7 @@ jobs:
           at: client/dist
       - restore_cache:
            keys:
-             - v9-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
@@ -131,7 +131,7 @@ workflows:
          browser: chrome
          requires:
             - install-client-dependencies
-         cache-key: 'v9-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
+         cache-key: 'v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
          start: npm run dev
       - unit-test:
            requires:
