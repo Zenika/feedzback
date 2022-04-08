@@ -149,7 +149,7 @@ workflows:
       - cypress/install
       - cypress/run:
          working_directory: client
-         yarn: true
+         executor: node
          requires:
             - install-client-dependencies
          cache-key: 'v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
