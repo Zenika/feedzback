@@ -27,7 +27,7 @@ jobs:
       - run:
           name: install_cypress
           working_directory: client
-          command: ng add @cypress/schematic
+          command: npm install --save-dev
 
       - save_cache:
           paths:
