@@ -23,7 +23,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: install_client_dependencies
@@ -35,10 +35,8 @@ jobs:
 
       - save_cache:
           paths:
-            - client/node_modules
-            - /usr/local/lib
-           
-          key: v10-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - client/node_modules         
+          key: v11-packaging-dependencies-{{ checksum "client/package-lock.json" }}
    
 
 
@@ -48,7 +46,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v10-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v11-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -63,7 +61,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -100,7 +98,7 @@ jobs:
           at: client/dist
       - restore_cache:
            keys:
-             - v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
@@ -115,6 +113,30 @@ jobs:
           name: deploy
           working_directory: client
           command: gcloud app deploy app.yaml --version="version-client"
+
+    
+  deploy-server:
+     docker:
+      - image: google/cloud-sdk
+     steps:
+      - checkout
+      - restore_cache:
+           keys:
+             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            
+      - run:
+          name: Set up gcloud config
+          command: |
+            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
+            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
+            rm /tmp/sa_key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
+
+      - run:
+          name: deploy-server
+          working_directory: server
+          command: gcloud app deploy app.yaml --version="version-server"
           
 
 
@@ -132,7 +154,7 @@ workflows:
          yarn: true
          requires:
             - install-client-dependencies
-         cache-key: 'v10-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
+         cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
          start: npm run dev
       - unit-test:
            requires:
@@ -142,9 +164,14 @@ workflows:
           requires:
             - unit-test
 
+      - deploy-server:
+           requires:
+            - cypress/run
+
       - deploy:
           requires:
             - build
+            - deploy-server
         
            
       
