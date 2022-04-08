@@ -9,6 +9,10 @@ executors:
    node:
      docker:
        - image: cimg/node:16.13.0
+   with-chrome:
+    resource_class: small
+    docker:
+      - image: "cypress/browsers:node14.16.0-chrome90-ff88"
      
 
 jobs:
@@ -149,7 +153,8 @@ workflows:
       - cypress/install
       - cypress/run:
          working_directory: client
-         executor: node
+         executor: with-chrome
+         browser: chrome
          requires:
             - install-client-dependencies
          cache-key: 'v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
