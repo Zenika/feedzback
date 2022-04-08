@@ -140,6 +140,7 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
+          working_directory: client
           record: true
           group: 'all testes'
           start: 'npm run dev'
