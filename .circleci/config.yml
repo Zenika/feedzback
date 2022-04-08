@@ -150,7 +150,6 @@ workflows:
   matrix-tests:
     jobs:
       - install-client-dependencies
-      - cypress/install
       - cypress/run:
          working_directory: client
          executor: with-chrome
@@ -162,7 +161,6 @@ workflows:
       - unit-test:
            requires:
               - install-client-dependencies
-              - cypress/install
       
       - build:
           requires:
