@@ -32,12 +32,6 @@ jobs:
            npm ci
            sudo npm install -g concurrently
 
-      - run:
-          name: install_cypress_dependencies
-          command: |
-             npm install
-             sudo npm install -g concurrency
-             npm install --save-dev cypress
 
       - save_cache:
           paths:
