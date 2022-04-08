@@ -20,12 +20,14 @@ jobs:
       - restore_cache:
           keys:
             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v7-packaging-dependencies-{{ checksum "package-lock.json"}}
             
       - run:
           name: install_client_dependencies
           working_directory: client
-          command: npm install
+          command: |
+           npm install
+           sudo npm install -g concurrently
+
       - run:
           name: install_cypress_dependencies
           command: |
@@ -146,6 +148,7 @@ workflows:
       - install-client-dependencies
       - cypress/run:
          working_directory: client
+         cache-key: v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          start: npm run dev
       - unit-test:
            requires:
