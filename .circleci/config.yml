@@ -27,7 +27,12 @@ jobs:
       - run:
           name: install_cypress
           working_directory: client
-          command: npm install --save-dev
+          command: npm install --save-dev cypress
+
+      - run:
+          name: install-concurrently-dependency
+          working_directory: client
+          command: npm install -g concurrently
 
       - save_cache:
           paths:
