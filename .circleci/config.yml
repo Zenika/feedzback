@@ -77,7 +77,8 @@ jobs:
 
 
   deploy:
-    executor: node
+    docker:
+      - image: google/cloud-sdk
     steps:
       - checkout
       - attach_workspace:
