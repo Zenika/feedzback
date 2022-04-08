@@ -155,7 +155,10 @@ workflows:
          requires:
             - install-client-dependencies
          cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
-         start: npm run dev
+         start: |
+          sudo npm install -g concurrently
+          npm run dev
+           
       - unit-test:
            requires:
               - install-client-dependencies
