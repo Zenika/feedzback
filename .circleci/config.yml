@@ -86,6 +86,14 @@ jobs:
       - restore_cache:
            keys:
              - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            
+      - run:
+          name: Set up gcloud config
+          command: |
+            echo $GCLOUD_KEY | base64 --decode | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GCLOUD_PROJECT}
+            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}  
+            
       - run:
           name: deploy
           working_directory: client
