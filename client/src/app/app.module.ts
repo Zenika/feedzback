@@ -9,6 +9,7 @@ import { FormulaireComponent } from './formulaire/formulaire.component';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule } from '@angular/common/http';
 import { LineBreakPipePipe } from './line-break-pipe.pipe';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { LineBreakPipePipe } from './line-break-pipe.pipe';
         return {
           cache:new InMemoryCache(),
           link:httpLink.create({
-            uri: isDevMode() ?'http://localhost:4000/graphql':'https://feedzback-343709.ew.r.appspot.com/graphql'
+            uri: environment.serverApi
           })
         }
       },
