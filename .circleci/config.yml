@@ -56,8 +56,27 @@ jobs:
           name: unit-test
           working_directory: client
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      
 
   build:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+           keys:
+             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+      - run:
+          name: build_front_end
+          working_directory: client
+          command: npm run build
+      
+      - persist_to_workspace:
+          root: client/dist
+          paths:
+            - ./*
+
+
+  deploy:
     executor: node
     steps:
       - checkout
@@ -67,9 +86,10 @@ jobs:
            keys:
              - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
-          name: build_front_end
+          name: deploy
           working_directory: client
-          command: npm run build
+          command: gcloud app deploy --version="version-client"
+          
 
 
       
@@ -85,6 +105,10 @@ workflows:
       - build:
           requires:
             - unit-test
+
+      - deploy:
+          requires:
+            - build
         
            
       
