@@ -90,7 +90,7 @@ jobs:
       - run:
           name: Set up gcloud config
           command: |
-            echo $GCLOUD_KEGCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account bnyat.azizsharif@zenika.com --key-file=-
+            echo $GCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account bnyat.azizsharif@zenika.com --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
 
