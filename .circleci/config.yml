@@ -19,7 +19,6 @@ jobs:
       - restore_cache:
           keys:
             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v6-packaging-dependencies- {{checksum "package-lock.json" }}
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -30,16 +29,11 @@ jobs:
           working_directory: client
           command: npm install --save-dev cypress
 
-      - run:
-          name: install-concurrently-dependency
-          working_directory: client
-          command: sudo npm install -g concurrently
-
       - save_cache:
           paths:
             - client/node_modules
             - /usr/local/lib
-            - node_modules
+           
           key: v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
             
   
@@ -94,10 +88,19 @@ jobs:
       - checkout
       - restore_cache:
             keys:
-              - v6-packaging-dependencies-{{ checksum "package-lock.json" }}
+              - v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      - run:
+          name: install-concurrently-dependency
+          working_directory: client
+          command: sudo npm install -g concurrently
+
       - run:
           name: e2e-tests
           command: npm run dev
+      - run:
+          name: cypress-tests
+          working_directory: client
+          command: npm run cypress
       
 
   deploy:
