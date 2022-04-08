@@ -24,10 +24,18 @@ jobs:
       - restore_cache:
           keys:
             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v12-packaging-dependencies-{{ checksum "server/package-lock.json"}}
             
       - run:
           name: install_client_dependencies
           working_directory: client
+          command: |
+           npm ci
+           sudo npm install -g concurrently
+
+      - run:
+          name: install_server_dependencies
+          working_directory: server
           command: |
            npm ci
            sudo npm install -g concurrently
@@ -37,6 +45,10 @@ jobs:
           paths:
             - client/node_modules         
           key: v11-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      - save_cache:
+          paths:
+            - server/node_modules         
+          key: v12-packaging-dependencies-{{ checksum "server/package-lock.json" }}
    
 
 
@@ -147,18 +159,16 @@ workflows:
   matrix-tests:
     jobs:
       - install-client-dependencies
-      - cypress/install
       - cypress/run:
+         working_directory: client
          executor: with-chrome
          browser: chrome
          yarn: false
          requires:
-            - cypress/install
+            - install-client-dependencies
          cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
          pre-steps:
-           - run: |
-              npm install -g concurrently
-              npm ci
+           - run: npm install -g concurrently
          start: 
            npm run dev
            
