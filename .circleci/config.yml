@@ -24,6 +24,11 @@ jobs:
           working_directory: client
           command: npm install
       
+      - run:
+          name: install_cypress
+          working_directory: client
+          command: ng add @cypress/schematic
+
       - save_cache:
           paths:
             - client/node_modules
@@ -75,6 +80,17 @@ jobs:
           paths:
             - ./*
 
+  cypress:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+            keys:
+              - v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      - run:
+          name: e2e-tests
+          command: npm run dev
+      
 
   deploy:
     docker:
@@ -113,6 +129,9 @@ workflows:
       - unit-test:
            requires:
               - install-client-dependencies
+      - cypress:
+          requires:
+            - install-client-dependencies
       - build:
           requires:
             - unit-test
