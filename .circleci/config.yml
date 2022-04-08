@@ -1,6 +1,7 @@
 orbs:
   common: okode/common@2.0.13
   node: circleci/node@4 # the node orb provides common node-related configuration
+  cypress: cypress-io/cypress@1
 
 
 version: 2.1 # using 2.1 provides access to orbs and other features
@@ -23,11 +24,6 @@ jobs:
           name: install_client_dependencies
           working_directory: client
           command: npm install
-      
-      - run:
-          name: install_cypress
-          working_directory: client
-          command: npm install --save-dev cypress
 
       - save_cache:
           paths:
@@ -136,13 +132,17 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
+      - install/cypress
       - install-client-dependencies
       - unit-test:
            requires:
               - install-client-dependencies
-      - cypress:
+      - cypress/run:
           requires:
-            - install-client-dependencies
+            - cypress/install
+          record: true
+          group: 'all testes'
+          start: 'npm run dev'
       - build:
           requires:
             - unit-test
