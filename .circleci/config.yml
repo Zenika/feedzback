@@ -32,7 +32,7 @@ jobs:
       - run:
           name: install-concurrently-dependency
           working_directory: client
-          command: npm install -g concurrently
+          command: sudo npm install -g concurrently
 
       - save_cache:
           paths:
