@@ -19,6 +19,7 @@ jobs:
       - restore_cache:
           keys:
             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v6-packaging-dependencies- {{checksum "package-lock.json" }}
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -38,7 +39,9 @@ jobs:
           paths:
             - client/node_modules
             - /usr/local/lib
+            - node_modules
           key: v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            
   
   
   run_server:
@@ -91,7 +94,7 @@ jobs:
       - checkout
       - restore_cache:
             keys:
-              - v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+              - v6-packaging-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: e2e-tests
           command: npm run dev
