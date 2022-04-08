@@ -20,10 +20,18 @@ jobs:
       - restore_cache:
           keys:
             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v7-packaging-dependencies-{{ checksum "package-lock.json"}}
+            
       - run:
           name: install_client_dependencies
           working_directory: client
           command: npm install
+      - run:
+          name: install_cypress_dependencies
+          command: |
+             npm install
+             sudo npm install -g concurrency
+             npm install --save-dev cypress
 
       - save_cache:
           paths:
@@ -31,6 +39,12 @@ jobs:
             - /usr/local/lib
            
           key: v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      - save_cache:
+          paths:
+            - node_modules
+            - /usr/local/lib
+           
+          key: v7-packaging-dependencies-{{ checksum "package-lock.json" }}
             
   
   
@@ -59,9 +73,7 @@ jobs:
           name: unit-test
           working_directory: client
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-      - run:
-          name: stop-job
-          command: cypress/install step halt
+  
       
 
   build:
@@ -87,19 +99,12 @@ jobs:
       - checkout
       - restore_cache:
             keys:
-              - v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
-      - run:
-          name: install-concurrently-dependency
-          working_directory: client
-          command: sudo npm install -g concurrently
+              - v6-packaging-dependencies-{{ checksum "package-lock.json" }}
+     
 
       - run:
           name: e2e-tests
           command: npm run dev
-      - run:
-          name: cypress-tests
-          working_directory: client
-          command: npm run cypress
       
 
   deploy:
@@ -135,18 +140,14 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - cypress/install:
-         working_directory: client
       - install-client-dependencies
+      - cypress:
+           requires:
+             - install-client-dependencies
       - unit-test:
            requires:
               - install-client-dependencies
-      - cypress/run:
-          requires:
-            - cypress/install
-          record: true
-          group: 'all testes'
-          start: 'npm run dev'
+      
       - build:
           requires:
             - unit-test
