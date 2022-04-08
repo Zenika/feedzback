@@ -99,7 +99,7 @@ jobs:
       - checkout
       - restore_cache:
             keys:
-              - v6-packaging-dependencies-{{ checksum "package-lock.json" }}
+              - v7-packaging-dependencies-{{ checksum "package-lock.json" }}
      
 
       - run:
