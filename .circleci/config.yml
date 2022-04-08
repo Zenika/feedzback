@@ -99,9 +99,10 @@ jobs:
       - checkout
       - run:
           name: install_cypress_dependencies
-          command: 
-             sudo npm install -g concurrency
-            
+          command: |
+             npm install
+             sudo npm install -g concurrently
+             npm install --save-dev cypress
      
 
       - run:
