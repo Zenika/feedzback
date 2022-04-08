@@ -97,9 +97,12 @@ jobs:
     executor: node
     steps:
       - checkout
-      - restore_cache:
-            keys:
-              - v7-packaging-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: install_cypress_dependencies
+          command: |
+             npm install
+             sudo npm install -g concurrency
+             npm install --save-dev cypress
      
 
       - run:
@@ -141,9 +144,7 @@ workflows:
   matrix-tests:
     jobs:
       - install-client-dependencies
-      - cypress:
-           requires:
-             - install-client-dependencies
+      - cypress
       - unit-test:
            requires:
               - install-client-dependencies
