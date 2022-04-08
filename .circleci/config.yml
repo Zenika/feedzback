@@ -132,7 +132,8 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - cypress/install
+      - cypress/install:
+         working_directory: client
       - install-client-dependencies
       - unit-test:
            requires:
@@ -140,7 +141,6 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
-          working_directory: client
           record: true
           group: 'all testes'
           start: 'npm run dev'
