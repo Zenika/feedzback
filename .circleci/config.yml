@@ -132,7 +132,7 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - install/cypress
+      - cypress/install
       - install-client-dependencies
       - unit-test:
            requires:
