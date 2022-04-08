@@ -23,13 +23,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v8-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: install_client_dependencies
           working_directory: client
           command: |
-           npm install
+           npm ci
            sudo npm install -g concurrently
 
       - run:
@@ -44,13 +44,8 @@ jobs:
             - client/node_modules
             - /usr/local/lib
            
-          key: v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
-      - save_cache:
-          paths:
-            - node_modules
-            - /usr/local/lib
-           
-          key: v7-packaging-dependencies-{{ checksum "package-lock.json" }}
+          key: v8-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+   
             
   
   
@@ -73,7 +68,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v6-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v8-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -88,7 +83,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v8-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -125,7 +120,7 @@ jobs:
           at: client/dist
       - restore_cache:
            keys:
-             - v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v8-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
