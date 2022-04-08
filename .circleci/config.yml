@@ -59,6 +59,9 @@ jobs:
           name: unit-test
           working_directory: client
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - run:
+          name: stop-job
+          command: cypress/install step halt
       
 
   build:
