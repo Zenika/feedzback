@@ -148,7 +148,9 @@ workflows:
       - install-client-dependencies
       - cypress/run:
          working_directory: client
-         cache-key: v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         requires:
+            - install-client-dependencies
+         cache-key: 'v6-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
          start: npm run dev
       - unit-test:
            requires:
