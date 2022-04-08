@@ -151,7 +151,7 @@ workflows:
          working_directory: client
          executor: with-chrome
          browser: chrome
-         yarn: true
+         yarn: false
          requires:
             - install-client-dependencies
          cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
