@@ -146,7 +146,7 @@ workflows:
          working_directory: client
          executor: with-chrome
          browser: chrome
-         install-command: npm install apollo-angular
+         install-command: npm i apollo-angular
          pre-steps: 
             - run: npm install -g concurrently
          yarn: false                 
