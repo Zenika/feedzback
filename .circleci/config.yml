@@ -148,7 +148,7 @@ workflows:
          browser: chrome
          yarn: false
          pre-steps:
-            - run: npm i @apollo/client
+            - run: npm install apollo-angular
                 
               
          start: 
