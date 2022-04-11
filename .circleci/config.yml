@@ -12,7 +12,7 @@ executors:
    with-chrome:
     resource_class: small
     docker:
-      - image: "cypress/browsers:latest"
+      - image: cypress/base:16.14.0
      
 
 jobs:
