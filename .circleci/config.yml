@@ -148,7 +148,7 @@ workflows:
     jobs: 
       - install-client-dependencies
       - cypress/run:
-         working_directory: ~/client
+         working_directory: client
          executor: with-chrome
          browser: chrome
          yarn: false
@@ -159,7 +159,7 @@ workflows:
             - run: |
                npm install -g concurrently
                npm install --save graphql
-               npm install -g apollo
+              
          start: 
            npm run dev
            
