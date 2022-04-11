@@ -150,6 +150,7 @@ workflows:
          pre-steps:
             - run: |
                 npm install -g concurrently
+                npm i @apollo/client
                 
               
          start: 
