@@ -148,7 +148,6 @@ workflows:
     jobs: 
       - install-client-dependencies
       - cypress/run:
-         working_directory: tmp
          executor: with-chrome
          browser: chrome
          yarn: false
