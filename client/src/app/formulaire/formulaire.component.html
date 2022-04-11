@@ -1,7 +1,7 @@
 
 <div class="container-fluid">
   <div class="row justify-content-center">
-    <div class="col-4 col-sm-2 col-md-2" >
+    <div class="col-4 col-sm-2 col-md-2 offset-2" >
         <img  src="../../assets/feedbackFormIcon.png" class="img-responsive" alt="Responsive image"/>  
       </div>
      
@@ -23,26 +23,23 @@
             <label class="labelTitle">Coordonnées</label>
          
         <form  (submit)="onSubmit()" id="feedbackForm" class="col-12" #feedbackForm="ngForm"  novalidate>
-          <label for="nom" class=" control-label">Votre nom</label>
+          <label for="nom" class=" control-label starFont">Votre nom*</label>
         <div class="form-group littleBox" >
           <div class="row">
-            <div class="col-11">
+            <div class="col-12">
             <input type="text" id="nom" [(ngModel)]="sendRequest.nom"   required  name="nom" class="form-control" placeholder="Exemple: Douchon Pierre" #nom="ngModel"/>
           </div>
-            <label for="nom" class="col-1 starFont">*</label>
+          
           </div>
              
             </div>
        
             <div class="form-group littleBox" >
              
-                <label for="email" class="control-label">Email Zenika de votre collègue</label>
+                <label for="email" class="control-label starFont">Email Zenika de votre collègue*</label>
                 <div class="row">
-                <div class="col-11">
+                <div class="col-12">
                   <input type="email" name="email" id="email" class="col-md-12 form-control" id="email" [(ngModel)]="sendRequest!.email" required pattern="[a-z0-9._%+-]+@zenika.com" #sendEmail="ngModel" placeholder="Exemple: Juliette@zenika.com">
-                </div>
-               <div class="col-1">
-                <label for="email" class="starFont" align="right">*</label>
                 </div>
                </div>
                      
@@ -52,29 +49,28 @@
               </div>
               <div class="form-group ">
                
-                <label class="labelTitle">Points positifs</label>
+                <label class="labelTitle starFont">Points positifs*</label>
               <div class="row">
-                <textarea name="pointsPositifs" class="col-11 col-md-11 form-control-lg required" id="pointsPositifs"  [(ngModel)]="sendRequest.pointsPositifs" required #pointsPositifs="ngModel" placeholder="Exemple : Collègue à l’écoute de ses pairs"></textarea>
-                <label for="textarea" class="col-1 col-md-1 starFont " align="top">*</label>           
+                <textarea name="pointsPositifs" class="col-12 col-md-12 form-control-lg required" id="pointsPositifs"  [(ngModel)]="sendRequest.pointsPositifs" required #pointsPositifs="ngModel" placeholder="Exemple : Collègue à l’écoute de ses pairs"></textarea>
+                      
             </div>
            
             </div>
    
      
             <div>
-                <hr class="col-11">
+                <hr class="col-12">
               </div>
 
             
               <div class="form-group" >      
-                <label class="label label-primary">Axes d'améliorations</label>
+                <label class="label label-primary labelTitle starFont">Axes d'améliorations*</label>
                 <div class="row">
-                <textarea name="axesAmeliorations" class="col-11 col-md-11 form-control-lg required" id="axesAmeliorations" [(ngModel)]="sendRequest!.axesAmeliorations" required #axesAmeliorations="ngModel" placeholder="Exemple : Manque de ponctualité"></textarea>
-                <label for="textarea" class="col-1 starFont"  align="top">*</label>
+                <textarea name="axesAmeliorations" class="col-12 col-md-12 form-control-lg required" id="axesAmeliorations" [(ngModel)]="sendRequest!.axesAmeliorations" required #axesAmeliorations="ngModel" placeholder="Exemple : Manque de ponctualité"></textarea>
             </div>
             </div>
             <div>
-                <hr class="col-11">
+                <hr class="col-12">
               </div>
 
               <div class="row">
@@ -82,7 +78,7 @@
               
               <div class="form-group" >
                 <div class="row">
-                <textarea name="commentaire" id="commentaire" class="col-11 col-md-11 form-control-lg" [(ngModel)]="sendRequest!.commentaire" #commentaire="ngModel" placeholder="Exemple : Bravo pour ton talk à la dernière technozaure !"></textarea>
+                <textarea name="commentaire" id="commentaire" class="col-12 col-md-12 form-control-lg" [(ngModel)]="sendRequest!.commentaire" #commentaire="ngModel" placeholder="Exemple : Bravo pour ton talk à la dernière technozaure !"></textarea>
               </div>
                 <p class="starFont" style="color: red;">*Les champs marqués en etoiles sont obligatoires</p>
             </div>
