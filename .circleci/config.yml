@@ -35,7 +35,7 @@ jobs:
           command: |
            npm ci
            sudo npm install -g concurrently
-           npm install angular-apollo
+           npm i apollo-angular
 
       - run:
           name: install_server_dependencies
