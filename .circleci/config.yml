@@ -13,7 +13,7 @@ executors:
    with-chrome:
     resource_class: small
     docker:
-      - image: cypress/included:9.4.1
+      - image: cypress/browsers:node16.13.0-chrome90-ff88
      
 
 jobs:
@@ -154,8 +154,8 @@ workflows:
          requires:
             - install-client-dependencies
          cache-key: v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-         pre-requests:
-           npm install -g concurrently
+         pre-steps:
+            - run: npm install -g concurrently
          start: 
            npm run dev
            
