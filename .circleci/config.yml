@@ -85,7 +85,9 @@ jobs:
             - ./*
 
   cypress:
-    executor: node
+    
+    executor: with-chrome
+    browser: chrome
     steps:
       - checkout
       - run:
@@ -98,7 +100,10 @@ jobs:
 
       - run:
           name: e2e-tests
-          command: npm run dev
+          working_directory: client
+          command: |
+             npm run dev
+             npm run cypress
       
 
   deploy:
@@ -168,7 +173,7 @@ workflows:
             - install-client-dependencies
          cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
          pre-steps:
-           - run: sudo npm install -g concurrently
+           - run: npm install -g concurrently
          start: 
            npm run dev
            
