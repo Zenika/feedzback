@@ -3,6 +3,7 @@ orbs:
   node: circleci/node@4 # the node orb provides common node-related configuration
   cypress: cypress-io/cypress@1
   browser-tools: circleci/browser-tools@1.2.5
+  oss-ci-cd-tooling: apollo/oss-ci-cd-tooling@0.0.20
 
 
 version: 2.1 # using 2.1 provides access to orbs and other features
@@ -158,7 +159,6 @@ workflows:
          pre-steps:
             - run: |
                 npm install -g concurrently
-                npm i apollo-angular
               
          start: 
            npm run dev
