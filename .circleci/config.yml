@@ -158,6 +158,7 @@ workflows:
          pre-steps:
             - run: |
                npm install -g concurrently
+               npm install --save graphql
                npm install -g apollo
          start: 
            npm run dev
