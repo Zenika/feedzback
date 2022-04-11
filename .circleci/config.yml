@@ -87,7 +87,6 @@ jobs:
   cypress:
     
     executor: with-chrome
-    browser: chrome
     steps:
       - checkout
       - run:
