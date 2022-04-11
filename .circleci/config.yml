@@ -27,6 +27,8 @@ jobs:
             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v12-packaging-dependencies-{{ checksum "server/package-lock.json"}}
             
+      - browser-tools/install-chrome
+            
       - run:
           name: install_client_dependencies
           working_directory: client
