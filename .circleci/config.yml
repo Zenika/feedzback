@@ -142,20 +142,11 @@ jobs:
 workflows:
   matrix-tests:
     jobs: 
-      - cypress/install:
-            working_directory: client
-            pre-steps:
-                - run: npm install
       - cypress/run:
          working_directory: client
          executor: with-chrome
          browser: chrome
-         yarn: false
-         requires:
-             - cypress/install
-         
-                
-              
+         yarn: false                 
          start: 
            npm run dev
            
