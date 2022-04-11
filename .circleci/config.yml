@@ -125,7 +125,7 @@ jobs:
       - run:
           name: deploy-server
           working_directory: server
-          command: gcloud app deploy app.yaml --version="version-server"
+          command: gcloud app deploy --version="version-server"
           
 
 
