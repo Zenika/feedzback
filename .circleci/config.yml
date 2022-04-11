@@ -17,6 +17,18 @@ executors:
      
 
 jobs:
+  test:
+    docker:
+      - image: 'cimg/node:13.12-browsers'
+    steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          command: |
+            google-chrome --version
+            chromedriver --version
+          name: Check install
+
   install-client-dependencies:
     executor:
       name: node
@@ -27,7 +39,7 @@ jobs:
             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v12-packaging-dependencies-{{ checksum "server/package-lock.json"}}
 
-      - browser-tools/install-chrome
+      
             
       - run:
           name: install_client_dependencies
@@ -169,7 +181,7 @@ workflows:
       - cypress/run:
          working_directory: client
          executor: with-chrome
-         browser: electron
+         browser: chrome
          yarn: false
          requires:
             - install-client-dependencies
