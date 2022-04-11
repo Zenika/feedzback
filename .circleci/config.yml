@@ -26,7 +26,7 @@ jobs:
           keys:
             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v12-packaging-dependencies-{{ checksum "server/package-lock.json"}}
-            
+
       - browser-tools/install-chrome
             
       - run:
@@ -169,7 +169,7 @@ workflows:
       - cypress/run:
          working_directory: client
          executor: with-chrome
-         browser: chrome
+         browser: electron
          yarn: false
          requires:
             - install-client-dependencies
