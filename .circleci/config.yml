@@ -27,8 +27,11 @@ jobs:
       - restore_cache:
           keys:
             - v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-           
-            
+      - run:
+         name: dir
+         working_directory: client
+         command: ls
+       
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -36,7 +39,7 @@ jobs:
            npm ci
            sudo npm install -g concurrently
            npm i apollo-angular
-      - run: ls
+      
 
 
 
