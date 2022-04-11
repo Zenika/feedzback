@@ -22,12 +22,12 @@ module.exports = async ({ email, message }) => {
  let axesAmeliorations = message.axesAmeliorations.replace(/\n/g,"<br>");
  let commentaire = message.commentaire.replace(/\n/g,"<br>");
  console.log(pointsPositifs);
- 
+ /*
  if(envi=='development'){
    console.log("les données envoyées " + email + " model " )
   return "le feedback a été envoyé(une reponse automatique en mode de developement)";
  }
-
+*/
   const msg = {
       to: email,
       from:"feedzback@zenika.com",
