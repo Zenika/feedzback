@@ -177,6 +177,7 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
+      - test
       - install-client-dependencies
       - cypress/run:
          working_directory: client
@@ -189,7 +190,7 @@ workflows:
          pre-steps:
            - run: npm install -g concurrently
          start: 
-           npm run start
+           npm run dev
            
       - unit-test:
            requires:
