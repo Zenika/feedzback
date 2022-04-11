@@ -91,6 +91,7 @@ jobs:
       - checkout
       - run:
           name: install_cypress_dependencies
+          working_directory: client
           command: |
              npm install
              sudo npm install -g concurrently
