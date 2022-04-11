@@ -2,6 +2,7 @@ orbs:
   common: okode/common@2.0.13
   node: circleci/node@4 # the node orb provides common node-related configuration
   cypress: cypress-io/cypress@1
+  browser-tools: circleci/browser-tools@1.2.5
 
 
 version: 2.1 # using 2.1 provides access to orbs and other features
