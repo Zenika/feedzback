@@ -143,6 +143,7 @@ workflows:
   matrix-tests:
     jobs: 
       - cypress/install:
+            working_directory: client
             pre-steps:
                 - run: npm install apollo-angular
       - cypress/run:
