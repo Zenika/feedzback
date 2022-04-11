@@ -152,6 +152,7 @@ workflows:
       - cypress/run:
          working_directory: client
          executor: with-chrome
+         browser: chrome
          yarn: false
          requires:
             - install-client-dependencies
