@@ -87,14 +87,14 @@ jobs:
   cypress:
     
     executor: with-chrome
+    browser: chrome
     steps:
       - checkout
       - run:
           name: install_cypress_dependencies
-          working_directory: client
           command: |
              npm install
-             npm install -g concurrently
+             sudo npm install -g concurrently
              npm install --save-dev cypress
      
 
@@ -164,7 +164,18 @@ workflows:
   matrix-tests:
     jobs:
       - install-client-dependencies
-      - cypress
+      - cypress/run:
+         working_directory: client
+         executor: with-chrome
+         browser: chrome
+         yarn: false
+         requires:
+            - install-client-dependencies
+         cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
+         pre-steps:
+           - run: npm install -g concurrently
+         start: 
+           npm run start
            
       - unit-test:
            requires:
@@ -174,7 +185,9 @@ workflows:
           requires:
             - unit-test
 
-      - deploy-server
+      - deploy-server:
+           requires:
+            - cypress/run
 
       - deploy:
           requires:
