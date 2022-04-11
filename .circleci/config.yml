@@ -21,6 +21,9 @@ jobs:
     docker:
       - image: 'cimg/node:13.12-browsers'
     steps:
+      - restore_cache:
+          keys:
+            - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -177,7 +180,10 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - test
+      - test:
+          requires:
+            - install-client-dependencies
+         
       - install-client-dependencies
       - cypress/run:
          working_directory: client
