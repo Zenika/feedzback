@@ -94,7 +94,7 @@ jobs:
           working_directory: client
           command: |
              npm install
-             sudo npm install -g concurrently
+             npm install -g concurrently
              npm install --save-dev cypress
      
 
