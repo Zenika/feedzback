@@ -83,8 +83,6 @@ jobs:
       - image: google/cloud-sdk
     steps:
       - checkout
-      - attach_workspace:
-          at: client/dist
       - restore_cache:
            keys:
              - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
