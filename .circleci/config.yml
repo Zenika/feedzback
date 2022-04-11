@@ -150,7 +150,7 @@ workflows:
          pre-steps:
             - run: |
                 npm install -g concurrently
-                npm install apollo-angular
+                npx apollo service:check
               
          start: 
            npm run dev
