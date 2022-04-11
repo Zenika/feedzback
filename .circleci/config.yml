@@ -26,7 +26,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
            
             
       - run:
@@ -35,6 +35,7 @@ jobs:
           command: |
            npm ci
            sudo npm install -g concurrently
+           npm install angular-apollo
 
       - run:
           name: install_server_dependencies
@@ -47,12 +48,8 @@ jobs:
       - save_cache:
           paths:
             - client/node_modules         
-          key: v11-packaging-dependencies-{{ checksum "client/package-lock.json" }}
-      - save_cache:
-          paths:
-            - server/node_modules         
-          key: v12-packaging-dependencies-{{ checksum "server/package-lock.json" }}
-   
+          key: v13-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+     
 
 
   unit-test:
@@ -61,7 +58,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v11-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v13-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -76,7 +73,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -99,7 +96,7 @@ jobs:
           at: client/dist
       - restore_cache:
            keys:
-             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
@@ -123,7 +120,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
@@ -155,7 +152,7 @@ workflows:
          yarn: false
          requires:
             - install-client-dependencies
-         cache-key: v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         cache-key: v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          pre-steps:
             - run: |
                 npm install -g concurrently
