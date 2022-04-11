@@ -148,12 +148,10 @@ workflows:
          executor: with-chrome
          browser: chrome
          yarn: false
-         requires:
-            - install-client-dependencies
-         cache-key: v13-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          pre-steps:
             - run: |
                 npm install -g concurrently
+                npm i apollo-angular
               
          start: 
            npm run dev
