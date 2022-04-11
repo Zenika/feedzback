@@ -156,7 +156,9 @@ workflows:
             - install-client-dependencies
          cache-key: v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          pre-steps:
-            - run: npm install -g concurrently
+            - run: |
+                npm install -g concurrently
+                npm install apollo-angular
               
          start: 
            npm run dev
