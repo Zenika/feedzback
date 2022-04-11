@@ -173,9 +173,7 @@ workflows:
           requires:
             - unit-test
 
-      - deploy-server:
-           requires:
-            - cypress/run
+      - deploy-server
 
       - deploy:
           requires:
