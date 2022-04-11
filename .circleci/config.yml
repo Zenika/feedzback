@@ -148,7 +148,7 @@ workflows:
                 - run: 
                     name: install_apollo
                     working_directory: client
-                    command: npm install apollo-angular
+                    command: npm ci
       - cypress/run:
          working_directory: client
          executor: with-chrome
