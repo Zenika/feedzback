@@ -13,7 +13,7 @@ executors:
    with-chrome:
     resource_class: small
     docker:
-      - image: cypress/base:16.13.0
+      - image: cypress/included:9.4.1
      
 
 jobs:
@@ -27,8 +27,6 @@ jobs:
           keys:
             - v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
            
-
-      
             
       - run:
           name: install_client_dependencies
@@ -155,9 +153,7 @@ workflows:
          yarn: false
          requires:
             - install-client-dependencies
-         cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
-         pre-steps:
-           - run: npm install -g concurrently
+         cache-key: v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          start: 
            npm run dev
            
