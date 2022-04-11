@@ -19,7 +19,7 @@ executors:
 jobs:
   test:
     docker:
-      - image: 'cimg/node:13.12-browsers'
+      - image: cimg/node:13.12-browsers
     steps:
       - restore_cache:
           keys:
@@ -180,15 +180,12 @@ jobs:
 workflows:
   matrix-tests:
     jobs:
-      - test:
-          requires:
-            - install-client-dependencies
-         
+      - test  
       - install-client-dependencies
       - cypress/run:
          working_directory: client
          executor: with-chrome
-         browser: electron
+         browser: chrome
          yarn: false
          requires:
             - install-client-dependencies
