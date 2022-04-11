@@ -164,18 +164,7 @@ workflows:
   matrix-tests:
     jobs:
       - install-client-dependencies
-      - cypress/run:
-         working_directory: client
-         executor: with-chrome
-         browser: chrome
-         yarn: false
-         requires:
-            - install-client-dependencies
-         cache-key: 'v11-packaging-dependencies-{{ checksum "client/package-lock.json"}}'
-         pre-steps:
-           - run: npm install -g concurrently
-         start: 
-           npm run dev
+      - cypress
            
       - unit-test:
            requires:
