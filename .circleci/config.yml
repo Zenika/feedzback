@@ -36,13 +36,8 @@ jobs:
            npm ci
            sudo npm install -g concurrently
            npm i apollo-angular
+      - run: ls
 
-      - run:
-          name: install_server_dependencies
-          working_directory: server
-          command: |
-           npm ci
-           sudo npm install -g concurrently
 
 
       - save_cache:
