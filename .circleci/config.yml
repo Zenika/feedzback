@@ -183,8 +183,7 @@ workflows:
       - install-client-dependencies
       - cypress/run:
          working_directory: client
-         executor: cypress/browsers-chrome69
-         browser: chrome
+         executor: with-chrome
          yarn: false
          requires:
             - install-client-dependencies
