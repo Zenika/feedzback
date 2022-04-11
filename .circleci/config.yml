@@ -147,7 +147,6 @@ workflows:
             pre-steps:
                 - run: 
                     name: install_apollo
-                    working_directory: client
                     command: npm ci
       - cypress/run:
          working_directory: client
