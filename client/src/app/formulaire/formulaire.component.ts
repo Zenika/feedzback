@@ -40,11 +40,7 @@ export class FormulaireComponent implements OnInit {
 
   onSubmit(){
     console.log( "dfsdfdsfsd");
-/*
-    this.sendRequest.pointsPositifs = new LineBreakPipePipe().transform(this.sendRequest.pointsPositifs);
-    this.sendRequest.axesAmeliorations = new LineBreakPipePipe().transform(this.sendRequest.axesAmeliorations);
-    this.sendRequest.commentaire = new LineBreakPipePipe().transform(this.sendRequest.commentaire);
-  */
+
 
     this.apollo.mutate({
       mutation:SEND_MESSAGE,

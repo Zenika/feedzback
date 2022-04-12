@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false",
+    "dev": "concurrently --kill-others \"npm start\" \"cd ../server && npm start\"",
     "cypress": "cypress open"
   },
   "private": true,
