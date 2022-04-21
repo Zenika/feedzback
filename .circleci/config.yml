@@ -70,9 +70,9 @@ jobs:
           command: npm run build
       
       - persist_to_workspace:
-          root: client/dist
+          root: client
           paths:
-            - ./*
+            - dist
 
   
       
@@ -88,7 +88,6 @@ jobs:
             
       - run:
           name: Set up gcloud config
-          working_directory: client
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
