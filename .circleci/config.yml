@@ -33,7 +33,6 @@ jobs:
           working_directory: client
           command: npm ci
         
-      
 
 
       - save_cache:
@@ -89,6 +88,7 @@ jobs:
             
       - run:
           name: Set up gcloud config
+          working_directory: client
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
