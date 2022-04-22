@@ -33,7 +33,6 @@ jobs:
           working_directory: client
           command: npm ci
         
-      
 
 
       - save_cache:
@@ -71,9 +70,9 @@ jobs:
           command: npm run build
       
       - persist_to_workspace:
-          root: client/dist
+          root: client
           paths:
-            - ./*
+            - dist/*
 
   
       
@@ -83,23 +82,23 @@ jobs:
       - image: google/cloud-sdk
     steps:
       - checkout
+      - attach_workspace:
+          at: client
       - restore_cache:
            keys:
              - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
-          name: Set up gcloud config
+          name: Set up and deploy gcloud config
+          working_directory: client
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
+            gcloud --quiet app deploy --version="version-client"
 
-      - run:
-          name: deploy
-          working_directory: client
-          command: gcloud app deploy --version="version-client"
 
     
   deploy-server:
