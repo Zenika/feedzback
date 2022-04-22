@@ -100,7 +100,7 @@ jobs:
 
       - run:
           name: deploy
-          working_directory: client
+          working_directory: client/dist
           command: gcloud app deploy --version="version-client"
 
     
