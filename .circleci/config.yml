@@ -70,9 +70,9 @@ jobs:
           command: npm run build
       
       - persist_to_workspace:
-          root: client/dist
+          root: ~/client
           paths:
-            - ./*
+            - dist/*
 
   
       
@@ -82,6 +82,8 @@ jobs:
       - image: google/cloud-sdk
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/client
       - restore_cache:
            keys:
              - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
