@@ -1,4 +1,4 @@
-import { isDevMode, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import {  FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ApolloModule,APOLLO_OPTIONS } from 'apollo-angular';
