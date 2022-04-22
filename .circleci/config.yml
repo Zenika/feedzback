@@ -70,9 +70,9 @@ jobs:
           command: npm run build
       
       - persist_to_workspace:
-          root: client/dist
+          root: .
           paths:
-            - ./*
+            - client/dist
 
   
       
