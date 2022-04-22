@@ -90,6 +90,7 @@ jobs:
             
       - run:
           name: Set up and deploy gcloud config
+          working_directory: client
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
@@ -121,7 +122,7 @@ jobs:
       - run:
           name: deploy-server
           working_directory: server
-          command: gcloud app deploy 
+          command: gcloud app deploy --version="version-server"
           
 
 
