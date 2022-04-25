@@ -20,5 +20,13 @@
     "graphql": "^16.3.0",
     "graphql-playground-middleware": "^1.1.2",
     "graphql-tools": "^8.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "prettier": "2.6.2"
   }
 }

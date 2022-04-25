@@ -27,7 +27,6 @@
               "src/assets"
             ],
             "styles": [
-             
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
@@ -70,7 +69,7 @@
         },
         "serve": {
           "options": {
-            "port":4200
+            "port": 4200
           },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
@@ -102,9 +101,21 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "client"
+  "defaultProject": "client",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
