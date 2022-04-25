@@ -131,13 +131,39 @@ jobs:
           name: deploy-server
           working_directory: server
           command: |
-              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-              VERSION="server-${VERSION}"
-              gcloud app deploy --version=$VERSION
+              SERVER_VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+              SERVER_VERSION="server-${SERVER_VERSION}"
+              gcloud app deploy --version=$SERVER_VERSION
           
 
 
-      
+  remove-merged-versions:
+     docker:
+      - image: google/cloud-sdk
+     steps:
+      - checkout        
+      - run:
+          name: Set up gcloud config
+          command: |
+            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
+            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
+            rm /tmp/sa_key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
+      - run:
+          name: Remove Server version
+          command: |
+              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+              VERSION="server-${VERSION}"
+              gcloud remove --service=server-service $VERSION
+      - run:
+          name: Remove Client version
+          command: |
+              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+              VERSION="client-${VERSION}"
+              gcloud remove --service=default $VERSION       
+          
+       
       
 
 workflows:
@@ -171,6 +197,11 @@ workflows:
             requires:
                - build
                - deploy-server
+      
+      - remove-merged-versions:
+           filters:
+             branches:
+               only: master
       
            
 
