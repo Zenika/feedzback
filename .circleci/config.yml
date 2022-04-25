@@ -103,8 +103,8 @@ jobs:
           name: deploy-client
           working_directory: client
           command: |
-               echo ${VERSION_NAME} = ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]')`
-               gcloud --quiet app deploy --version= "client-" + ${VERSION_NAME}
+               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+               gcloud --quiet app deploy --version= "client-" + $VERSION
 
 
    
@@ -130,8 +130,8 @@ jobs:
           name: deploy-server
           working_directory: server
           command: |
-              echo ${VERSION_NAME} = ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'
-              gcloud app deploy --version="server-" + ${VERSION_NAME}
+              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+              gcloud app deploy --version="server-" + $VERSION
           
 
 
