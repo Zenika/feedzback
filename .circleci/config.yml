@@ -97,7 +97,14 @@ jobs:
             rm /tmp/sa_key.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
-            gcloud --quiet app deploy --version=${CIRCLE_BRANCH} + "-client"
+           
+      
+      - run:
+          name: deploy-client
+          working_directory: client
+          command: |
+              $VERSION = $(echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]')
+               gcloud --quiet app deploy --version= "client-" + $VERSION
 
 
     
@@ -123,8 +130,8 @@ jobs:
           name: deploy-server
           working_directory: server
           command: |
-              $VERSION = $(echo ${CIRCLE_BRANCH,,} | tr -d)
-              gcloud app deploy --version=$VERSION
+              $VERSION = $(echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]')
+              gcloud app deploy --version="server-" + $VERSION
           
 
 
