@@ -1,7 +1,7 @@
-const sgMail = require('@sendgrid/mail');
-const {Datastore} = require('@google-cloud/datastore');
-const {getNameFromEmail} = require('./model/getNameFromEmail');
-require('dotenv').config();
+import sgMail from '@sendgrid/mail';
+import {Datastore} from '@google-cloud/datastore';
+import getNameFromEmail from '../model/getNameFromEmail.js';
+import dotEnv from 'dotenv'
 
 const datastore= new Datastore({
   projectId: 'feedzback-343709',
@@ -13,8 +13,9 @@ const insertValue = (value) => {
   });
 };
 
-module.exports = async ({email, message}) => {
+export const sendEmail = async ({email, message}) => {
   const recever = getNameFromEmail(message.email).split(' ');
+  dotEnv.config();
   const envi = process.env.NODE_ENV || 'development';
   const pointsPositifs = message.pointsPositifs.replace(/\n/g, '<br>');
   const axesAmeliorations = message.axesAmeliorations.replace(/\n/g, '<br>');
