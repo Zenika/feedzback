@@ -122,7 +122,9 @@ jobs:
       - run:
           name: deploy-server
           working_directory: server
-          command: gcloud app deploy --version=${CIRCLE_BRANCH} | td -d
+          command: |
+              version = echo ${CIRCLE_BRANCH//_,,} | td -d
+              gcloud app deploy --version=${CIRCLE_BRANCH} | td -d
           
 
 
