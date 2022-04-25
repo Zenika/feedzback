@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule } from '@angular/common/http';
-import { LineBreakPipePipe } from './line-break-pipe.pipe';
 import { environment } from 'src/environments/environment';
 
 
@@ -16,7 +15,6 @@ import { environment } from 'src/environments/environment';
   declarations: [
     AppComponent,
     FormulaireComponent,
-    LineBreakPipePipe,
   ],
   imports: [
     BrowserModule,
