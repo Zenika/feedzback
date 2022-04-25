@@ -1,6 +1,6 @@
-const {gql} = require('apollo-server');
+import {gql}  from 'apollo-server';
 
-const typeDefs = gql`
+export const typeDefs = gql`
 type Query{
    allMessage: Message
    getResult:String
@@ -23,4 +23,3 @@ type Mutation{
     
 }
 `;
-module.exports = typeDefs;
