@@ -131,7 +131,7 @@ jobs:
           working_directory: server
           command: |
               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-              gcloud app deploy --version="server-" + $VERSION
+              gcloud app deploy --version=$VERSION
           
 
 
