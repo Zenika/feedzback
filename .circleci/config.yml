@@ -125,44 +125,20 @@ jobs:
           command: gcloud app deploy --version="version-server"
           
 
-
+  show_pr:
+     executor:
+      name: node
+     steps:
+     - checkout
+     - run: 
+         command: echo ${CIRCLE_PULL_REQUEST}  
       
       
 
 workflows:
   matrix-tests:
     jobs: 
-      - install-client-dependencies
-      - build: 
-          requires:
-            - install-client-dependencies
-      - unit-test:
-           requires:
-              - install-client-dependencies
-
-      - cypress/run:
-         working_directory: client
-         executor: with-chrome
-         browser: chrome
-         install-command: npm install apollo-angular @apollo/client graphql
-         pre-steps: 
-            - run: npm install -g concurrently
-         yarn: false                 
-         start: 
-           npm run dev
-
-      - deploy-server:
-           requires:
-             - install-client-dependencies
-             - cypress/run
-
-      - deploy:
-            requires:
-               - build
-               - deploy-server
-      
-           
-
+     - show_pr
       
       
       
