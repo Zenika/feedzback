@@ -15,10 +15,7 @@ jobs:
      runs-on: ubuntu-latest
      if: |
       (github.event_name == 'push' && !contains(github.event.head_commit.message, 'Merge pull request')) ||
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true &&
-       github.head_ref != 'create-pull-request-by-robot' &&
-       github.head_ref != 'create-pull-request-by-robot-01' &&
-       github.head_ref != 'create-pull-request-by-robot-02')
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
      steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3    
