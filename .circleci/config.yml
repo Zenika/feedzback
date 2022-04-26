@@ -137,6 +137,7 @@ jobs:
           
 
 
+
   remove-merged-versions:
      docker:
       - image: google/cloud-sdk
@@ -164,6 +165,7 @@ jobs:
               gcloud remove --service=default $VERSION       
           
        
+
       
 
 workflows:
@@ -198,14 +200,9 @@ workflows:
                - build
                - deploy-server
       
-      - remove-merged-versions:
-           filters:
-             branches:
-               only: master
-      
+
            
+
 
       
       
-      
-     
