@@ -169,7 +169,7 @@ jobs:
      steps:
        
      - run: 
-         command: echo ${CIRCLE_PULL_REQUEST}  
+         command: echo ${CIRCLE_BRANCH}  
        
       
 
