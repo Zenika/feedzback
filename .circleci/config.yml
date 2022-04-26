@@ -132,8 +132,8 @@ jobs:
      - checkout
      - run: 
          command: echo ${CIRCLE_PULL_REQUEST}  
-     environement: 
-      - FOO: foo
+     environment: 
+         FOO: foo
       
       
 
