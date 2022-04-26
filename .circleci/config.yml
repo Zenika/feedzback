@@ -162,23 +162,46 @@ jobs:
               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
               VERSION="client-${VERSION}"
               gcloud remove --service=default $VERSION       
-
-  show_pr:
-     executor:
-      name: node
-     steps:
-     - checkout
-     - run: 
-         command: echo ${CIRCLE_BRANCH}  
+          
        
       
 
 workflows:
   matrix-tests:
-      jobs:
-        - show_pr
+    jobs: 
+      - install-client-dependencies
+      - build: 
+          requires:
+            - install-client-dependencies
+      - unit-test:
+           requires:
+              - install-client-dependencies
 
-   
+      - cypress/run:
+         working_directory: client
+         executor: with-chrome
+         browser: chrome
+         install-command: npm install apollo-angular @apollo/client graphql
+         pre-steps: 
+            - run: npm install -g concurrently
+         yarn: false                 
+         start: 
+           npm run dev
+
+      - deploy-server:
+           requires:
+             - install-client-dependencies
+             - cypress/run
+
+      - deploy:
+            requires:
+               - build
+               - deploy-server
+      
+      - remove-merged-versions:
+           filters:
+             branches:
+               only: master
       
            
 
