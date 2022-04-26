@@ -22,4 +22,4 @@ jobs:
      steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3    
-      - run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
+      - run: echo "$::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
