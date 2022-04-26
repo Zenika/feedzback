@@ -167,7 +167,7 @@ jobs:
      executor:
       name: node
      steps:
-       
+     - checkout
      - run: 
          command: echo ${CIRCLE_BRANCH}  
        
