@@ -131,9 +131,9 @@ jobs:
           name: deploy-server
           working_directory: server
           command: |
-              SERVER_VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-              SERVER_VERSION="server-${SERVER_VERSION}"
-              gcloud app deploy --version=$SERVER_VERSION
+              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+              VERSION="server-${VERSION}"
+              gcloud app deploy --version=$VERSION
           
 
 
@@ -162,46 +162,23 @@ jobs:
               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
               VERSION="client-${VERSION}"
               gcloud remove --service=default $VERSION       
-          
+
+  show_pr:
+     executor:
+      name: node
+     steps:
+       
+     - run: 
+         command: echo ${CIRCLE_PULL_REQUEST}  
        
       
 
 workflows:
   matrix-tests:
-    jobs: 
-      - install-client-dependencies
-      - build: 
-          requires:
-            - install-client-dependencies
-      - unit-test:
-           requires:
-              - install-client-dependencies
+      jobs:
+        - show_pr
 
-      - cypress/run:
-         working_directory: client
-         executor: with-chrome
-         browser: chrome
-         install-command: npm install apollo-angular @apollo/client graphql
-         pre-steps: 
-            - run: npm install -g concurrently
-         yarn: false                 
-         start: 
-           npm run dev
-
-      - deploy-server:
-           requires:
-             - install-client-dependencies
-             - cypress/run
-
-      - deploy:
-            requires:
-               - build
-               - deploy-server
-      
-      - remove-merged-versions:
-           filters:
-             branches:
-               only: master
+   
       
            
 
