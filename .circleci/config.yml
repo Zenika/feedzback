@@ -132,6 +132,8 @@ jobs:
      - checkout
      - run: 
          command: echo ${CIRCLE_PULL_REQUEST}  
+     environement: 
+      - FOO: foo
       
       
 
@@ -139,6 +141,8 @@ workflows:
   matrix-tests:
     jobs: 
      - show_pr
+  
+       
       
       
       
