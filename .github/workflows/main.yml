@@ -14,8 +14,7 @@ jobs:
   delete_merged_versions:
      runs-on: ubuntu-latest
      steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3   
+      - uses: actions/checkout@v3  
       - uses: nelonoel/branch-name@v1.0.1
       - uses: google-github-actions/auth@v0.4.0
       - uses: SvanBoxel/delete-merged-branch@main
@@ -36,8 +35,8 @@ jobs:
   delete_merged_branches:
        runs-on: ubuntu-latest
        steps:
-        - name: delete branch
-        - uses: SvanBoxel/delete-merged-branch@main
-        - env:
+       - uses: actions/checkout@v3
+       - uses: SvanBoxel/delete-merged-branch@main
+       - env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
