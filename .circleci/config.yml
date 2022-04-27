@@ -137,6 +137,7 @@ jobs:
               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
               VERSION="server-${VERSION}"
               gcloud app deploy --version=$VERSION --no-promote
+              fi
           
 
       
@@ -166,7 +167,7 @@ workflows:
       - deploy-server:
            requires:
              - install-client-dependencies
-             - cypress/run
+           
 
       - deploy:
             requires:
