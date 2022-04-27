@@ -103,7 +103,7 @@ jobs:
           name: deploy-client
           working_directory: client
           command: |
-               if "${CIRCLE_BRANCH}"=="master" 
+               if [["${CIRCLE_BRANCH}" -eq "master" ]]
                then
                gcloud app deploy --version=${CIRCLE_BRANCH}
                else
@@ -136,7 +136,7 @@ jobs:
           name: deploy-server
           working_directory: server
           command: |
-              if "${CIRCLE_BRANCH}"=="master" 
+              if [["${CIRCLE_BRANCH}" -eq "master"]]
               then
               gcloud app deploy --version=${CIRCLE_BRANCH}
               else
