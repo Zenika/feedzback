@@ -199,7 +199,7 @@ workflows:
          working_directory: client
          executor: with-chrome
          browser: chrome
-         requieres:
+         requires:
             - build
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
