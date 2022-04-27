@@ -103,9 +103,12 @@ jobs:
           name: deploy-client
           working_directory: client
           command: |
+               if [["${CIRCLE_BRANCH}"=="master"]]; then
+               gcloud app deploy --version=${CIRCLE_BRANCH}
+               else
                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
                VERSION="client-${VERSION}"
-               gcloud --quiet app deploy --version=$VERSION
+               gcloud --quiet app deploy --version=$VERSION --no-promote
 
 
    
