@@ -30,6 +30,7 @@ jobs:
            gcloud app versions delete --service=default $VERSION_CLIENT
            
   delete_merged_branches:
+       needs:  delete_merged_versions
        runs-on: ubuntu-latest
        steps:
        - uses: actions/checkout@v3
