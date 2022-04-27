@@ -18,6 +18,9 @@ jobs:
       - uses: actions/setup-node@v3   
       - uses: nelonoel/branch-name@v1.0.1
       - uses: google-github-actions/auth@v0.4.0
+      - uses: SvanBoxel/delete-merged-branch@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
            credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
       - name: PR_name
