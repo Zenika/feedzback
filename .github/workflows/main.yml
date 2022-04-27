@@ -25,6 +25,8 @@ jobs:
         run: |
            echo ${{ github.event.pull_request.head.ref }}
            VERSION=`echo ${{ github.event.pull_request.head.ref }} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-           VERSION="client-${VERSION}"
-           gcloud app versions delete --service=default $VERSION
+           VERSION_CLIENT="client-${VERSION}"
+           VERSION_SERVER="server-${VERSION}"
+           gcloud app versions delete --service=default $VERSION_SERVER
+           gcloud app versions delete --service=default $VERSION_CLIENT
       
