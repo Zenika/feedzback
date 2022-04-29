@@ -1,7 +1,25 @@
-import sgMail from '@sendgrid/mail';
+
 import {Datastore} from '@google-cloud/datastore';
 import getNameFromEmail from '../model/getNameFromEmail.js';
 import dotEnv from 'dotenv'
+import mailgun from 'mailgun-js';
+
+
+dotEnv.config();
+
+const apiKey  = process.env.API_KEY;
+const domain = process.env.DOMAIN;
+
+const mygun =  mailgun({
+  apiKey: apiKey,
+  baseUrl: domain,
+});
+// const config  = {
+//   apiKey: apiKey,
+//   domain: domain,
+//   host: 'api.eu.mailgun.net'
+// }
+//const mailgun = new Mailgun({apiKey:apiKey});
 
 const datastore= new Datastore({
   projectId: 'feedzback-343709',
@@ -15,42 +33,30 @@ const insertValue = (value) => {
 
 export const sendEmail = async ({email, message}) => {
   const recever = getNameFromEmail(message.email).split(' ');
-  dotEnv.config();
   const envi = process.env.NODE_ENV || 'development';
   const pointsPositifs = message.pointsPositifs.replace(/\n/g, '<br>');
   const axesAmeliorations = message.axesAmeliorations.replace(/\n/g, '<br>');
   const commentaire = message.commentaire.replace(/\n/g, '<br>');
-
+/*
   if (envi=='development') {
     return 'le feedback a été envoyé(une reponse automatique en mode '+
       'de developement)';
   }
-
+  */
   const msg = {
-    to: email,
-    from: 'feedzback@zenika.com',
-    template_id: 'd-0015050451894264ba6885324349ab71',
-    dynamic_template_data: {
-      name: recever[0],
-      senderName: message.nom,
-      pointsPositifs: pointsPositifs,
-      axesAmeliorations: axesAmeliorations,
-      commentaire: commentaire,
-    },
+     to: 'bnyat.azizsharif@zenika.com',
+    from: 'mailgun@zenika.com',
+     text: message.pointsPositifs
   };
 
-  try {
-    const res = await sgMail.send(msg).then(()=>{
-      return 'le feedback a été envoyé!';
-    }).catch(()=>{
-      // eslint-disable-next-line quotes
-      return "Le feedback n'est pas envoyé, vérifier les données"+
-      // eslint-disable-next-line quotes
-      + "s'il vous plaît";
-    });
-    insertValue(msg);
-    return res;
-  } catch (error) {
-    return error;
-  }
+  //  const res = await
+   await  mygun.messages().send(msg).then(res=> console.log(res)).catch(err => console.log(err))
+    //   ,(error,body) => {
+    //   if(error)  console.log( 'le feedback a été envoyé!');
+    //   else console.log("l'email " + body);
+    // });
+    // insertValue(msg);
+    // console.log(res + "erere")
+    // return res;
+
 };
