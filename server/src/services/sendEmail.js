@@ -45,7 +45,7 @@ export const sendEmail = async ({email, message}) => {
   */
   const msg = {
      to: 'bnyat.azizsharif@zenika.com',
-    from: 'mailgun@zenika.com',
+    from: 'binyat.sharif@zenika.com',
      text: message.pointsPositifs
   };
 
