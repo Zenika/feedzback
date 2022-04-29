@@ -3,23 +3,28 @@ import {Datastore} from '@google-cloud/datastore';
 import getNameFromEmail from '../model/getNameFromEmail.js';
 import dotEnv from 'dotenv'
 import mailgun from 'mailgun-js';
+import * as fs from 'fs';
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
+
+
+const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString();
+
+console.log(emailTemplate)
 
 dotEnv.config();
 
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
 
-const mygun =  mailgun({
+const myMailgun =  mailgun({
   apiKey: apiKey,
-  baseUrl: domain,
+  domain: domain,
 });
-// const config  = {
-//   apiKey: apiKey,
-//   domain: domain,
-//   host: 'api.eu.mailgun.net'
-// }
-//const mailgun = new Mailgun({apiKey:apiKey});
+
 
 const datastore= new Datastore({
   projectId: 'feedzback-343709',
@@ -45,12 +50,25 @@ export const sendEmail = async ({email, message}) => {
   */
   const msg = {
      to: 'bnyat.azizsharif@zenika.com',
-    from: 'binyat.sharif@zenika.com',
-     text: message.pointsPositifs
-  };
+    from: 'binyat.sharif@gmail.com',
+    subject:'hey',
 
+
+  
+  };
+  const msgTemp =  {
+    template: emailTemplate,
+    name: "bnyat",
+    senderName: "hey",
+    pointsPositifs: "dfdf",
+    axesAmeliorations: axesAmeliorations,
+    commentaire: commentaire
+
+  }
+
+  //console.log(msgTemp.name)
   //  const res = await
-   await  mygun.messages().send(msg).then(res=> console.log(res)).catch(err => console.log(err))
+   await  myMailgun.messages().send(msgTemp & msg).then(res=> console.log(res)).catch(err => console.log(err))
     //   ,(error,body) => {
     //   if(error)  console.log( 'le feedback a été envoyé!');
     //   else console.log("l'email " + body);
