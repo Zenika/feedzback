@@ -1,5 +1,5 @@
 
-import getNameFromEmail from "../src/model/getNameFromEmail"
+import getNameFromEmail from "../model/getNameFromEmail"
 
 describe('Email test', () => { 
 
