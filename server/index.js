@@ -4,6 +4,8 @@ import {typeDefs} from './src/graphql/typeDefs.js';
 import {resolvers} from './src/graphql/resolvers.js';
 import cors from 'cors';
 
+
+
 const server = new ApolloServer({typeDefs, resolvers, introspection: true,
   playground: true});
 const app = express();
