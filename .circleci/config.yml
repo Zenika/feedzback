@@ -186,6 +186,7 @@ workflows:
             - run: |
                npm install -g concurrently
                npm i mailgun-js
+               npm install --save @google-cloud/storage
          yarn: false                 
          start: 
            npm run dev
