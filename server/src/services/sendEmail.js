@@ -1,4 +1,4 @@
-import sgMail from '@sendgrid/mail';
+
 import {Datastore} from '@google-cloud/datastore';
 import getNameFromEmail from '../model/getNameFromEmail.js';
 import dotEnv from 'dotenv'
