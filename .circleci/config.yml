@@ -26,7 +26,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
        
       - run:
           name: install_client_dependencies
@@ -38,7 +38,7 @@ jobs:
       - save_cache:
           paths:
             - client/node_modules         
-          key: v14-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v21-packaging-dependencies-{{ checksum "client/package-lock.json" }}
      
 
 
@@ -48,7 +48,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v21-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -61,7 +61,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v21-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -74,7 +74,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -97,7 +97,7 @@ jobs:
           at: client
       - restore_cache:
            keys:
-             - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up and deploy gcloud config
@@ -132,7 +132,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
@@ -177,6 +177,7 @@ workflows:
 
       - cypress/run:
          working_directory: client
+         cache-key: v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
          requires:
