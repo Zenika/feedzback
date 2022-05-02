@@ -40,10 +40,10 @@ const datastore= new Datastore({
 export const sendEmail = async ({email, message}) => {
   
 
-  // if (envi=='development') {
-  //   return 'le feedback a été envoyé(une reponse automatique en mode '+
-  //     'de developement)';
-  // }
+  if (envi=='development') {
+    return 'le feedback a été envoyé(une reponse automatique en mode '+
+      'de developement)';
+  }
   
    const template = replaceHtmlVars(emailTemplate , message , email);
   const msgTemp =   {
