@@ -42,7 +42,7 @@ jobs:
      
 
 
-  unit-test:
+  unit-test-client:
     executor: node
     steps:
       - checkout
@@ -55,7 +55,18 @@ jobs:
           working_directory: client
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   
+  unit-test-server:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v14-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
+      - run:
+          name: unit-test
+          working_directory: server
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI    
 
   build:
     executor: node
@@ -152,17 +163,24 @@ workflows:
   matrix-tests:
     jobs: 
       - install-client-dependencies
+     
+      - unit-test-client:
+           requires:
+              - install-client-dependencies
+      - unit-test-server:
+          requires:
+             - install-client-dependencies
       - build: 
           requires:
             - install-client-dependencies
-      - unit-test:
-           requires:
-              - install-client-dependencies
+            - unit-test-client
 
       - cypress/run:
          working_directory: client
          executor: with-chrome
          browser: chrome
+         requires:
+            - build
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
             - run: npm install -g concurrently
@@ -173,6 +191,7 @@ workflows:
       - deploy-server:
            requires:
              - install-client-dependencies
+             - unit-test-server
              - cypress/run
            
 
