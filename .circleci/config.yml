@@ -183,7 +183,9 @@ workflows:
           - build
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
-            - run: npm install -g concurrently
+            - run: |
+               npm install -g concurrently
+               npm i mailgun-js
          yarn: false                 
          start: 
            npm run dev
