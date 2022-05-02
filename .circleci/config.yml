@@ -179,6 +179,7 @@ workflows:
          working_directory: client
          executor: with-chrome
          browser: chrome
+         restore-cache: v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          requires:
           - build
          install-command: npm install apollo-angular @apollo/client graphql
