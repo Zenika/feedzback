@@ -114,9 +114,14 @@ jobs:
           name: deploy-client
           working_directory: client
           command: |
+               if [[ "${CIRCLE_BRANCH}" -eq "master" ]]
+               then
+               gcloud app deploy --version=${CIRCLE_BRANCH}
+               else
                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
                VERSION="client-${VERSION}"
-               gcloud --quiet app deploy --version=$VERSION
+               gcloud --quiet app deploy --version=$VERSION --no-promote
+               fi
 
 
    
@@ -142,40 +147,15 @@ jobs:
           name: deploy-server
           working_directory: server
           command: |
+              if [[ "${CIRCLE_BRANCH}" -eq "master" ]]
+              then
+              gcloud app deploy --version=${CIRCLE_BRANCH}
+              else
               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
               VERSION="server-${VERSION}"
-              gcloud app deploy --version=$VERSION
+              gcloud app deploy --version=$VERSION --no-promote
+              fi
           
-
-
-
-  remove-merged-versions:
-     docker:
-      - image: google/cloud-sdk
-     steps:
-      - checkout        
-      - run:
-          name: Set up gcloud config
-          command: |
-            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
-            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
-            rm /tmp/sa_key.json
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
-      - run:
-          name: Remove Server version
-          command: |
-              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-              VERSION="server-${VERSION}"
-              gcloud remove --service=server-service $VERSION
-      - run:
-          name: Remove Client version
-          command: |
-              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-              VERSION="client-${VERSION}"
-              gcloud remove --service=default $VERSION       
-          
-       
 
       
 
@@ -200,7 +180,7 @@ workflows:
          executor: with-chrome
          browser: chrome
          requires:
-            - build
+          - build
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
             - run: npm install -g concurrently
@@ -213,6 +193,7 @@ workflows:
              - install-client-dependencies
              - unit-test-server
              - cypress/run
+           
 
       - deploy:
             requires:
