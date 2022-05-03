@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed,waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormulaireComponent } from './formulaire.component';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApolloTestingModule, ApolloTestingController } from 'apollo-angular/testing';
+import { Apollo } from 'apollo-angular';
+import { FormsModule } from '@angular/forms';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('FormuleComponent', () => {
@@ -16,6 +17,7 @@ describe('FormuleComponent', () => {
       declarations: [ FormulaireComponent
        ],
        imports:[FormsModule,
+      RouterTestingModule,
       ApolloTestingModule],
       schemas:[CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
