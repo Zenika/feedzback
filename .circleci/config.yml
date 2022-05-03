@@ -176,7 +176,7 @@ workflows:
             - unit-test-client
 
       - cypress/run:
-         working_directory: client
+         working_directory: client/dist
          executor: with-chrome
          browser: chrome
          requires:
