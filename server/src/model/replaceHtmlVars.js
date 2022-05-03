@@ -2,8 +2,7 @@ import getNameFromEmail from "./getNameFromEmail.js";
 
 export default function replaceHtmlVars(html, message, email) {
     const recever = getNameFromEmail(email).split(' ');
-//   dotEnv.config();
-//   const envi = process.env.NODE_ENV || 'development';
+
   const pointsPositifs = message.pointsPositifs.replace(/\n/g, '<br>');
   const axesAmeliorations = message.axesAmeliorations.replace(/\n/g, '<br>');
   const commentaire = message.commentaire.replace(/\n/g, '<br>');
