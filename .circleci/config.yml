@@ -27,10 +27,16 @@ jobs:
       - restore_cache:
           keys:
             - v14-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v22-packaging-dependencies-{{ checksum "server/package-lock.json"}}
        
       - run:
           name: install_client_dependencies
           working_directory: client
+          command: npm ci
+      
+      - run:
+          name: install_server_dependencies
+          working_directory: server
           command: npm ci
         
 
@@ -39,6 +45,11 @@ jobs:
           paths:
             - client/node_modules         
           key: v14-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      
+      - save_cache:
+          paths:
+            - server/node_modules         
+          key: v22-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -61,7 +72,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v14-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v14-packaging-dependencies-{{ checksum "server/package-lock.json" }}
       
       - run:
           name: unit-test
