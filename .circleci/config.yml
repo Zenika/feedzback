@@ -176,10 +176,10 @@ workflows:
             - unit-test-client
 
       - cypress/run:
-         working_directory: ~/client
+         working_directory: client
          cache-key: v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
-         browser: chrom
+         browser: chrome
          requires:
           - build
          install-command: npm install apollo-angular @apollo/client graphql
