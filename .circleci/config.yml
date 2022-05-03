@@ -175,9 +175,8 @@ workflows:
             - install-client-dependencies
             - unit-test-client
       - cypress/run:
-         yarn: false                 
-         start: 
-           npm run dev
+         working_directory: client/server
+        
 
       - deploy-server:
            requires:
