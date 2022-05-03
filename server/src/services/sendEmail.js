@@ -1,56 +1,69 @@
 
 import {Datastore} from '@google-cloud/datastore';
-import getNameFromEmail from '../model/getNameFromEmail.js';
+
 import dotEnv from 'dotenv'
+import mailgun from 'mailgun-js';
+import * as fs from 'fs';
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import replaceHtmlVars from '../model/replaceHtmlVars.js';
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+
+
+const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString();
+
+// console.log(emailTemplate)
+
+dotEnv.config();
+
+const apiKey  = process.env.API_KEY;
+const domain = process.env.DOMAIN;
+
+const myMailgun =  mailgun({
+  apiKey: apiKey,
+  domain: domain,
+});
+
 
 const datastore= new Datastore({
   projectId: 'feedzback-343709',
 });
-const insertValue = (value) => {
-  datastore.save({
-    key: datastore.key('visit'),
-    data: value,
-  });
-};
+// const insertValue = (value) => {
+//   datastore.save({
+//     key: datastore.key('visit'),
+//     data: value,
+//   });
+// };
 
 export const sendEmail = async ({email, message}) => {
-  const recever = getNameFromEmail(message.email).split(' ');
+  
+
   dotEnv.config();
   const envi = process.env.NODE_ENV || 'development';
-  const pointsPositifs = message.pointsPositifs.replace(/\n/g, '<br>');
-  const axesAmeliorations = message.axesAmeliorations.replace(/\n/g, '<br>');
-  const commentaire = message.commentaire.replace(/\n/g, '<br>');
-
   if (envi=='development') {
     return 'le feedback a été envoyé(une reponse automatique en mode '+
       'de developement)';
   }
-
-  const msg = {
+  
+   const template = replaceHtmlVars(emailTemplate , message , email);
+  const msgTemp =   {
     to: email,
-    from: 'feedzback@zenika.com',
-    template_id: 'd-0015050451894264ba6885324349ab71',
-    dynamic_template_data: {
-      name: recever[0],
-      senderName: message.nom,
-      pointsPositifs: pointsPositifs,
-      axesAmeliorations: axesAmeliorations,
-      commentaire: commentaire,
-    },
-  };
+    from: 'bnyat.azizsharif@zenika.com',
+    subject:'FeedZback',
+    html: template,
 
-  try {
-    const res = await sgMail.send(msg).then(()=>{
-      return 'le feedback a été envoyé!';
-    }).catch(()=>{
-      // eslint-disable-next-line quotes
-      return "Le feedback n'est pas envoyé, vérifier les données"+
-      // eslint-disable-next-line quotes
-      + "s'il vous plaît";
-    });
-    insertValue(msg);
-    return res;
-  } catch (error) {
-    return error;
   }
+
+
+   const res =
+   await  myMailgun.messages().send(msgTemp)
+   .then(()=> {return "Votre feedback a été envoyé!"})
+   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données vérifier les données s'il vous plaît"})
+    
+    // insertValue(msg);
+    return res;
+
+  
 };
