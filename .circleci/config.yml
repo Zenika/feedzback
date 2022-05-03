@@ -176,7 +176,8 @@ workflows:
             - unit-test-client
 
       - cypress/run:
-         cache-key: v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         working_directory: ~/client
+         cache-key: v21-pacaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
          requires:
