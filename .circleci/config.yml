@@ -37,7 +37,9 @@ jobs:
       - run:
           name: install_server_dependencies
           working_directory: server
-          command: npm ci
+          command: |
+              npm ci
+              npm install jest
         
 
 
