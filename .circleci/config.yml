@@ -181,6 +181,14 @@ workflows:
             - install-client-dependencies
          executor: with-chrome
          browser: chrome
+         install-command: |
+                 npm install apollo-angular @apollo/client graphql
+                 npm i mailgun-js
+                 npm install --save @google-cloud/storage
+         pre-steps: 
+            - run: |
+               npm install -g concurrently
+               
          yarn: false                 
          start: 
            npm run dev
