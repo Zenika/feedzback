@@ -174,13 +174,12 @@ workflows:
           requires:
             - install-client-dependencies
             - unit-test-client
-      - cypress/install
       - cypress/run:
          working_directory: client
          executor: with-chrome
          browser: chrome
          requires:
-           - cypress/install
+           - install-client-dependencies
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
             - run: |
