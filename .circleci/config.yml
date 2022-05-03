@@ -175,17 +175,6 @@ workflows:
             - install-client-dependencies
             - unit-test-client
       - cypress/run:
-         working_directory: client/server
-         executor: with-chrome
-         browser: chrome
-         requires:
-           - install-client-dependencies
-         install-command: npm install apollo-angular @apollo/client graphql
-         pre-steps: 
-            - run: |
-               npm install -g concurrently
-               npm i mailgun-js
-               npm install --save @google-cloud/storage
          yarn: false                 
          start: 
            npm run dev
