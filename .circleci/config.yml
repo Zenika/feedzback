@@ -179,7 +179,17 @@ workflows:
          cache-key: v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          requires:
             - install-client-dependencies
-        
+         executor: with-chrome
+         browser: chrome
+         install-command: npm install apollo-angular @apollo/client graphql
+         pre-steps: 
+            - run: |
+               npm install -g concurrently
+               npm i mailgun-js
+               npm install --save @google-cloud/storage
+         yarn: false                 
+         start: 
+           npm run dev
 
       - deploy-server:
            requires:
