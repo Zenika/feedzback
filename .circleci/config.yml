@@ -176,6 +176,9 @@ workflows:
             - unit-test-client
       - cypress/run:
          working_directory: client
+         cache-key: v21-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         requires:
+            - install-client-dependencies
         
 
       - deploy-server:
