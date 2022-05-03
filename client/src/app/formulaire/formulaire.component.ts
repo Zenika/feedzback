@@ -33,7 +33,7 @@ export class FormulaireComponent implements OnInit {
 
 
   onSubmit() {
-    console.log( 'dfsdfdsfsd');
+ 
     this.apollo.mutate({
       mutation: SEND_MESSAGE,
       variables: {
