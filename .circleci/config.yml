@@ -217,6 +217,10 @@ workflows:
             - build
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
+            - run: 
+                name: install_server_dependencies
+                working_directory: server
+                command: npm install
             - run: npm install -g concurrently
          yarn: false                 
          start: 
