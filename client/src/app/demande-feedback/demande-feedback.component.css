@@ -1,0 +1,19 @@
+.padTop{
+    padding-top: 30px;
+}
+
+.form-control.ng-untouched,
+.form-control.ng-valid {
+    border-color: #ccc !important;
+    
+}
+
+
+input:required {
+border-color: red;
+
+}
+textarea:required {
+    border-color: red;
+    
+    }
