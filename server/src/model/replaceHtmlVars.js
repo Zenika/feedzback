@@ -3,9 +3,9 @@ import getNameFromEmail from "./getNameFromEmail.js";
 export default function replaceHtmlVars(html, message, email) {
     const recever = getNameFromEmail(email).split(' ');
 
-  const pointsPositifs = message.pointsPositifs.replace(/\n/g, '<br>');
-  const axesAmeliorations = message.axesAmeliorations.replace(/\n/g, '<br>');
-  const commentaire = message.commentaire.replace(/\n/g, '<br>');
+  const pointsPositifs = String(message.pointsPositifs).replace(/\n/g, '<br>');
+  const axesAmeliorations = String(message.axesAmeliorations).replace(/\n/g, '<br>');
+  const commentaire = String(message.commentaire).replace(/\n/g, '<br>');
 
   const template = html.split("{{").map((i)=> {
       const symbole = i.substring(0,i.indexOf('}}')).trim();

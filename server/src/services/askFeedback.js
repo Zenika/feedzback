@@ -20,13 +20,12 @@ const myMailgun =  mailgun({
 
 export const askFeedback = async ({email, senderEmail, text})=> {
     
-    const template = feedbackRequestTemplate(email, senderEmail, text);
+    const template = feedbackRequestTemplate(emailTemplate,email, senderEmail, text);
     const msg = {
-        to: "binyat.sharif@gmail.com",
-        from: "bnyat.azizsharif@zenika.com",
+        to: "bnyat.azizsharif@zenika.com",
+        from: "binyat.sharif@gmail.com",
         subject: "Solliciter un feedback",
-        text:"hey"
-       // html: template
+        html: template
     }
 
     const res = await myMailgun.messages().send(msg).then(()=> {return 'Votre demande a bien été envoyé'})

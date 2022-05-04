@@ -47,13 +47,12 @@ export const sendEmail = async ({email, message}) => {
   //     'de developement)';
   // }
   
- //  const template = replaceHtmlVars(emailTemplate , message , email);
+  const template = replaceHtmlVars(emailTemplate , message , email);
   const msgTemp =   {
-    to: 'binyat.sharif@zenika.com',
+    to: 'bnyat.azizsharif@zenika.com',
     from: 'bnyat.azizsharif@zenika.com',
     subject:'FeedZback',
-    text:'hey'
-   // html: template,
+    html: template,
 
   }
 
