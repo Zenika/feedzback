@@ -9,12 +9,16 @@ import { FormulaireComponent } from './formulaire/formulaire.component';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { HomeComponent } from './home/home.component';
+import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FormulaireComponent,
+    HomeComponent,
+    DemandeFeedbackComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import {  FormsModule } from '@angular/forms';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+
 describe('FormuleComponent', () => {
   let component:FormulaireComponent;
   let fixture:ComponentFixture<FormulaireComponent>;
@@ -17,7 +18,7 @@ describe('FormuleComponent', () => {
        ],
        imports:[FormsModule,
         RouterTestingModule,
-      ApolloTestingModule],
+        ApolloTestingModule],
       schemas:[CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(FormulaireComponent);
