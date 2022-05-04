@@ -218,14 +218,14 @@ workflows:
             - run: 
                 name: install_server_dependencies
                 working_directory: ../server
-                command: pwd
+                command: npm install
             - run: 
                 name: install_server
                 working_directory: server
-                command: pwd
+                command: npm install
             - run: 
                 name: install
-                command: pwd
+                command: npm install
             - run: npm install -g concurrently
          yarn: false                 
          start: 
