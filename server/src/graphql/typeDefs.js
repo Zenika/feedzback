@@ -20,6 +20,7 @@ input SendRequest {
 
 type Mutation{
     createMessage(email:String!,message:SendRequest!):String
+    sendFeedbackRequest(email:String!,senderEmail:String!,text:String):String
     
 }
 `;
