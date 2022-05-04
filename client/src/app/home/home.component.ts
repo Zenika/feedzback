@@ -12,13 +12,4 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  openFormComponent() {
-    this.router.navigate(['/formulaire'])
-  }
-
-  openAskFeedbackComponent(){
-    this.router.navigate(['/demandeFeedback'])
-  }
-
 }
