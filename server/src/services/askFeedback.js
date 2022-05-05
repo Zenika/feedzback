@@ -9,7 +9,7 @@ const __dirname = dirname(__filename)
 
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/askFeedbackModel.html').toString();
 
-  require('dotenv').config();
+dotEnv.config();
 
 
 console.log("heyoooooooooooooooo" + process.env.DOMAIN);

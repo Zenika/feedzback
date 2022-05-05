@@ -16,7 +16,7 @@ const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString()
 
 // console.log(emailTemplate)
 
-  require('dotenv').config();
+dotEnv.config();
 
 console.log("leyoooooooooooooooo" + process.env.DOMAIN)
 
