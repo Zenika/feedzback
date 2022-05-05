@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import { Router } from '@angular/router';
+
 import {Apollo, gql} from 'apollo-angular';
+
 import {SendRequest} from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
@@ -24,7 +27,7 @@ export class FormulaireComponent implements OnInit {
     feedbackForm!: NgForm;
 
 
-  constructor(private apollo:Apollo) { }
+  constructor(private apollo:Apollo, private router:Router) { }
 
 
   ngOnInit(): void {
@@ -42,7 +45,7 @@ export class FormulaireComponent implements OnInit {
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
-      this.result ==='le feedback a été envoyé!'? this.feedbackForm.reset():this.result;
+      this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
     });
   }
 }
