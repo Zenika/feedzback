@@ -27,7 +27,7 @@ jobs:
       - restore_cache:
           keys:
             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v22-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+            - v25-packaging-dependencies-{{ checksum "server/package-lock.json"}}
        
       - run:
           name: install_client_dependencies
@@ -38,6 +38,8 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: |
+              echo "API_KEY=${API_KEY}">> ${BASH_ENV}
+              echo "DOMAIN=${DOMAIN}">> ${BASH_ENV}
               npm ci
               npm install jest
         
@@ -51,7 +53,7 @@ jobs:
       - save_cache:
           paths:
             - server/node_modules         
-          key: v22-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+          key: v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -140,15 +142,9 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
-      - run:
-          name: set en variables
-          working_directory: server
-          command: |
-                echo -e "API_KEY=${API_KEY}">> .env
-                echo "API_KEY=${API_KEY}">> ${BASH_ENV}
-                echo "DOMAIN=${DOMAIN}">> ${BASH_ENV}
+            
       - run:
           name: Set up gcloud config
           command: |
