@@ -9,11 +9,11 @@ const __dirname = dirname(__filename)
 
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/askFeedbackModel.html').toString();
 
-
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
+}
 
-
-console.log("heyoooooooooooooooo" + process.env.API_KEY);
+console.log("heyoooooooooooooooo" + process.env.DOMAIN);
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
 
