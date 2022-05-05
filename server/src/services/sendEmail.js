@@ -16,9 +16,8 @@ const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString()
 
 // console.log(emailTemplate)
 
-if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-}
+
 console.log("leyoooooooooooooooo" + process.env.DOMAIN)
 
 const apiKey  = process.env.API_KEY;
