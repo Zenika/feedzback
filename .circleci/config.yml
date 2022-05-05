@@ -38,8 +38,7 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: |
-              echo "export API_KEY=${API_KEY}">> ${BASH_ENV}
-              echo "export DOMAIN=${DOMAIN}">> ${BASH_ENV}
+              
               npm ci
               npm install jest
         
@@ -144,6 +143,12 @@ jobs:
            keys:
              - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
+      - run:
+          name: set en variables
+          working_directory: server
+          command: |
+                echo 'export API_KEY=${API_KEY}' >> ${BASH_ENV}
+                echo 'export DOMAIN=${DOMAIN}' >> ${BASH_ENV}
             
       - run:
           name: Set up gcloud config
