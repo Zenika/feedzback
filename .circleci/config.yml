@@ -38,8 +38,8 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: |
-              echo "API_KEY=${API_KEY}">> ${BASH_ENV}
-              echo "DOMAIN=${DOMAIN}">> ${BASH_ENV}
+              echo "export API_KEY=${API_KEY}">> ${BASH_ENV}
+              echo "export DOMAIN=${DOMAIN}">> ${BASH_ENV}
               npm ci
               npm install jest
         
