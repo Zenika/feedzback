@@ -148,6 +148,7 @@ jobs:
           command: |
                 echo -e "API_KEY=${API_KEY}">> .env
                 echo "API_KEY=${API_KEY}">> ${BASH_ENV}
+                echo "DOMAIN=${DOMAIN}">> ${BASH_ENV}
       - run:
           name: Set up gcloud config
           command: |
