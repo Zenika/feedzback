@@ -137,6 +137,9 @@ jobs:
   deploy-server:
      docker:
       - image: google/cloud-sdk
+     environment:
+      API_KEY: ${API_KEY}
+      DOMAIN: ${DOMAIN}
      steps:
       - checkout
       - restore_cache:
