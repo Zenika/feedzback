@@ -16,7 +16,10 @@ const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString()
 
 // console.log(emailTemplate)
 
-dotEnv.config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+console.log("heyoooooooooooooooo" + process.env.API_KEY);
 
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
@@ -40,7 +43,7 @@ const datastore= new Datastore({
 export const sendEmail = async ({email, message}) => {
   
 
-  dotEnv.config();
+  
   const envi = process.env.NODE_ENV || 'development';
   if (envi=='development') {
     return 'le feedback a été envoyé(une reponse automatique en mode '+
