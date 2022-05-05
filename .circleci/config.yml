@@ -143,6 +143,12 @@ jobs:
              - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
+          name: set en variables
+          working_directory: server
+          command: |
+                echo -e "API_KEY=${API_KEY}">> .env
+                echo "API_KEY=${API_KEY}">> ${BASH_ENV}
+      - run:
           name: Set up gcloud config
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
