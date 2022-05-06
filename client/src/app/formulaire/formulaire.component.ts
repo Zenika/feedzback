@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {Apollo, gql} from 'apollo-angular';
 
@@ -27,7 +28,10 @@ export class FormulaireComponent implements OnInit {
     feedbackForm!: NgForm;
 
 
-  constructor(private apollo:Apollo, private router:Router) { }
+  constructor(private apollo:Apollo, private activateRouter:ActivatedRoute, private router:Router) {
+    //  console.logthis.activateRouter.snapshot.paramMap.get('email')
+    console.log(JSON.stringify(activateRouter.snapshot.paramMap))
+   }
 
 
   ngOnInit(): void {

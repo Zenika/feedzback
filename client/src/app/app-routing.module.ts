@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {path:'formulaire',component:FormulaireComponent},
+  {path:'formulaire/:email',component:FormulaireComponent},
   {path:'home',component:HomeComponent},
   {path:'demandeFeedback',component:DemandeFeedbackComponent},
   {path:'feedbackEnvoye',component:FeedbackEnvoyeComponent},
