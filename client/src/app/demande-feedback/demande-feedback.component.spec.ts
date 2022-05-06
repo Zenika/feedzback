@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Apollo } from 'apollo-angular';
 
 import { DemandeFeedbackComponent } from './demande-feedback.component';
 
@@ -9,8 +11,11 @@ describe('DemandeFeedbackComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [Apollo],
       declarations: [ DemandeFeedbackComponent ],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule,
+      FormsModule,
+    ]
     })
     .compileComponents();
   });
