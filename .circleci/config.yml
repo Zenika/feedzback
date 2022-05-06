@@ -75,7 +75,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v22-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+            - v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
       
       - run:
           name: unit-test
