@@ -12,14 +12,12 @@ const __dirname = dirname(__filename)
 
 
 
-const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString();
-
-// console.log(emailTemplate)
+const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/emailModel.html').toString();
 
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config()
 }
-console.log("leyoooooooooooooooo" + process.env.DOMAIN)
+
 
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
