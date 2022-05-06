@@ -3,7 +3,7 @@
         <p class="col-6">Demande un feedback à un(e) collégue</p>
     </div>
     <div class="row justify-content-center padTop">
-        <form (submit)="onSubmit()" id="askFeedback" #askFeedback="ngForm" novalidate>
+        <form (submit)="onSubmitRequest()" id="askFeedback" #askFeedback="ngForm" novalidate>
             <div class="form-group">
                 <label class="col-2">Votre Email:</label>
                 <input type="text" id="email" name="email" [(ngModel)]="askFeedbackRequest.email"  class="col-6 form-control required" #email="ngModel" required placeholder="Ex: pierre.pompidor@gmail.com"/>
@@ -17,7 +17,7 @@
                 <textarea type="text" class="form-control" id="text" name="text" [(ngModel)]="askFeedbackRequest.text" #text="ngModel" placeholder="Ex: Salut Marie ça te dit de me donner un feedback après avoir fait le projet chez Pix ensemble"></textarea>
             </div>
             <div class="col-4 offset-4 padTop">
-                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="!askFeedback.valid">Envoyer</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!askFeedback.valid">Envoyer</button>
             </div>         
         </form>     
     </div>

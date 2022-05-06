@@ -30,7 +30,7 @@ export class DemandeFeedbackComponent implements OnInit {
   ngOnInit(): void {
     this.askFeedbackRequest= new AskFeedbackRequest();
   }
-  onSubmit(){
+  onSubmitRequest(){
     this.apollo.mutate({
       mutation: SEND_FEEDBACK_REQUEST,
       variables: {
