@@ -12,11 +12,14 @@ const __dirname = dirname(__filename)
 
 
 
-const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/emailModel.html').toString();
+const emailTemplate = fs.readFileSync(__dirname + '/emailModel.html').toString();
 
 // console.log(emailTemplate)
 
-dotEnv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotEnv.config()
+}
+console.log("leyoooooooooooooooo" + process.env.DOMAIN)
 
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
@@ -40,16 +43,16 @@ const datastore= new Datastore({
 export const sendEmail = async ({email, message}) => {
   
 
-  dotEnv.config();
-  const envi = process.env.NODE_ENV || 'development';
-  // if (envi=='development') {
-  //   return 'le feedback a été envoyé(une reponse automatique en mode '+
-  //     'de developement)';
-  // }
   
-  const template = replaceHtmlVars(emailTemplate , message , email);
+  const envi = process.env.NODE_ENV || 'development';
+  if (envi=='development') {
+    return 'le feedback a été envoyé(une reponse automatique en mode '+
+      'de developement)';
+  }
+  
+   const template = replaceHtmlVars(emailTemplate , message , email);
   const msgTemp =   {
-    to: 'bnyat.azizsharif@zenika.com',
+    to: email,
     from: 'bnyat.azizsharif@zenika.com',
     subject:'FeedZback',
     html: template,
@@ -60,7 +63,7 @@ export const sendEmail = async ({email, message}) => {
    const res =
    await  myMailgun.messages().send(msgTemp)
    .then(()=> {return "Votre feedback a été envoyé!"})
-   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données  s'il vous plaît"})
+   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données vérifier les données s'il vous plaît"})
     
     // insertValue(msg);
     return res;

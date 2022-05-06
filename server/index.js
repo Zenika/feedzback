@@ -9,6 +9,14 @@ const server = new ApolloServer({typeDefs, resolvers, introspection: true,
   playground: true});
 const app = express();
 
+const data = {
+  email: 'hawler',
+  
+}
+const params = new URLSearchParams(data).toString();
+const url = 'http://localhost:4200/formulaire/';
+console.log(url+params);
+
 app.use("*",cors());
 const PORT = parseInt(process.env.PORT) || 4000;
 server.start().then(()=>{
