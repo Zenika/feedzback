@@ -137,9 +137,6 @@ jobs:
   deploy-server:
      docker:
       - image: google/cloud-sdk
-     environment:
-      API_KEY: ${API_KEY}
-      DOMAIN: ${DOMAIN}
      steps:
       - checkout
       - restore_cache:
@@ -150,9 +147,6 @@ jobs:
           name: set en variables
           working_directory: server
           command: |
-                touch .env.production
-                echo 'export API_KEY=${API_KEY}' > .env.production
-                echo 'export DOMAIN=${DOMAIN}' > .env.production
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
             
@@ -233,10 +227,7 @@ workflows:
          install-command: npm install apollo-angular @apollo/client graphql
          pre-steps: 
             - run: npm install -g concurrently
-            - run: 
-               name: server_dependecies
-               working_directory: ../server
-               command: npm install
+            
          yarn: false   
          start: 
            npm run dev
