@@ -14,7 +14,7 @@ describe('Formulaire tests', () => {
       }
     
     }).as('CreateMessage')
-   cy.visit('/')
+   cy.visit('/formulaire')
 
   
 
