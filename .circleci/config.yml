@@ -219,7 +219,7 @@ workflows:
            requires:
              - install-client-dependencies
              - unit-test-server
-             - cypress/run
+            
 
       - deploy:
             requires:
