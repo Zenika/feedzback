@@ -27,7 +27,7 @@ jobs:
       - restore_cache:
           keys:
             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v25-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+            - v22-packaging-dependencies-{{ checksum "server/package-lock.json"}}
        
       - run:
           name: install_client_dependencies
@@ -38,7 +38,6 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: |
-              
               npm ci
               npm install jest
         
@@ -52,7 +51,7 @@ jobs:
       - save_cache:
           paths:
             - server/node_modules         
-          key: v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+          key: v22-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -137,24 +136,11 @@ jobs:
   deploy-server:
      docker:
       - image: google/cloud-sdk
-     environment:
-      API_KEY: ${API_KEY}
-      DOMAIN: ${DOMAIN}
      steps:
       - checkout
       - restore_cache:
            keys:
-             - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            
-      - run:
-          name: set en variables
-          working_directory: server
-          command: |
-                touch .env.production
-                echo 'export API_KEY=${API_KEY}' > .env.production
-                echo 'export DOMAIN=${DOMAIN}' > .env.production
-                sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
-                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up gcloud config
@@ -164,7 +150,12 @@ jobs:
             rm /tmp/sa_key.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
-
+      - run:
+          name: set en variables
+          working_directory: server
+          command: |
+                sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
+                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
       - run:
           name: deploy-server
           working_directory: server
@@ -221,19 +212,27 @@ workflows:
           requires:
             - install-client-dependencies
             - unit-test-client
-            
-         yarn: false   
+
+      - cypress/run:
+         working_directory: client
+         cache-key: v22-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+         executor: with-chrome
+         browser: chrome
+         requires:
+            - build
+         install-command: npm install apollo-angular @apollo/client graphql
+         pre-steps: 
+            - run: npm install
+            - run: npm install -g concurrently
+         yarn: false                 
          start: 
            npm run dev
-         
-
-     
 
       - deploy-server:
            requires:
              - install-client-dependencies
              - unit-test-server
-            
+             - cypress/run
 
       - deploy:
             requires:
@@ -246,4 +245,3 @@ workflows:
 
       
       
- 
