@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
-import { AskFeedbackRequest } from '../model/AskFeedbackRequest';
+import { AskFeedbackRequest } from '../model/askFeedbackRequest';
 
 
 const SEND_FEEDBACK_REQUEST = gql`
