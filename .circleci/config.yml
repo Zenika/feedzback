@@ -153,8 +153,8 @@ jobs:
                 touch .env.production
                 echo 'export API_KEY=${API_KEY}' > .env.production
                 echo 'export DOMAIN=${DOMAIN}' > .env.production
-                sed "s/<API_KEY>/${API_KEY}/g" -i app.yml
-                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yml
+                sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
+                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
             
       - run:
           name: Set up gcloud config
