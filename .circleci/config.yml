@@ -150,8 +150,9 @@ jobs:
           name: set en variables
           working_directory: server
           command: |
-                echo 'export API_KEY=${API_KEY}' >> ${BASH_ENV}
-                echo 'export DOMAIN=${DOMAIN}' >> ${BASH_ENV}
+                touch .env.production
+                echo 'export API_KEY=${API_KEY}' > .env.production
+                echo 'export DOMAIN=${DOMAIN}' > .env.production
             
       - run:
           name: Set up gcloud config
