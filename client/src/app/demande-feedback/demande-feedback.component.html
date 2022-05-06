@@ -17,7 +17,7 @@
                 <textarea type="text" class="form-control" id="text" name="text" [(ngModel)]="askFeedbackRequest.text" #text="ngModel" placeholder="Ex: Salut Marie ça te dit de me donner un feedback après avoir fait le projet chez Pix ensemble"></textarea>
             </div>
             <div class="col-4 offset-4 padTop">
-                <button type="submit" class="btn btn-primary" [disabled]="!askFeedback.valid">Envoyer</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="!askFeedback.valid">Envoyer</button>
             </div>         
         </form>     
     </div>

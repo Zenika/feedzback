@@ -50,7 +50,7 @@ export class FormulaireComponent implements OnInit {
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
       console.log(data.data.createMessage)
-   //   this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
+      this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
     });
   }
 }
