@@ -37,10 +37,8 @@ jobs:
       - run:
           name: install_server_dependencies
           working_directory: server
-          command: |
+          command: npm ci
               
-              npm ci
-              npm install jest
         
 
 
@@ -76,6 +74,8 @@ jobs:
       - restore_cache:
           keys:
             - v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+
+      - run : npm install jest
       
       - run:
           name: unit-test
