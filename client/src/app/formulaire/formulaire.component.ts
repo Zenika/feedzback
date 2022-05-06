@@ -40,7 +40,7 @@ export class FormulaireComponent implements OnInit {
 
 
   onSubmit() {
-
+    console.log("heyyyy")
     this.apollo.mutate({
       mutation: SEND_MESSAGE,
       variables: {
@@ -49,7 +49,7 @@ export class FormulaireComponent implements OnInit {
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
-      console.log(this.result)
+      console.log(data.data.createMessage)
    //   this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
     });
   }
