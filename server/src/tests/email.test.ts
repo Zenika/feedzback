@@ -9,3 +9,4 @@ describe('Email test', () => {
        expect(name).toBe("Test Name")    
   })
  })
+ 

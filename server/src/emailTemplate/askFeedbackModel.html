@@ -3,11 +3,13 @@
       <title>FeedZback</title>
     </head>
     <body>
-      <p>Bonjour {{name}}</p>
+      <p>Bonjour <%=name%></p>
     
-      <p>Votre collègue {{senderName}}  vous demande de lui envoyer un feedzback!</p>
+      <p>Votre collègue <%=senderName%>  vous demande de lui envoyer un feedzback!</p>
+      <% if (text !== '') { %>
       <p><b>Text</b></p>
-      <p>{{text}}</p>
+      <p><%=text%></p>
+      <% } %>
         <br>
         <br>
         <p>Cliquez le lien dessous pour lui envoyer le feedback souhaté!</p>
