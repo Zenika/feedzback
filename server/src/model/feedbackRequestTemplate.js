@@ -1,4 +1,4 @@
-import sanitize from "sanitize-html";
+
 import getNameFromEmail from "./getNameFromEmail.js";
 import ejs from 'ejs';
 export function feedbackRequestTemplate (html,email,senderEmail,textRequest) {
