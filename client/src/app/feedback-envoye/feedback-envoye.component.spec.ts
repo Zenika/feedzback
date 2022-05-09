@@ -18,4 +18,7 @@ describe('FeedbackEnvoyeComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+  it('il doit y avoir au moins un test', ()=>{
+    expect(1).toBe(1);
+  })
 });
