@@ -5,6 +5,7 @@ export default function replaceHtmlVars(html, message, email) {
 
   const pointsPositifs = String(message.pointsPositifs).replace(/\n/g, '<br>');
   const axesAmeliorations = String(message.axesAmeliorations).replace(/\n/g, '<br>');
+
   let commentaire = '';
   if(message.commentaire)
   commentaire = String(message.commentaire).replace(/\n/g, '<br>');
@@ -15,6 +16,7 @@ export default function replaceHtmlVars(html, message, email) {
     axesAmeliorations: axesAmeliorations,
     commentaire: commentaire 
 })
+
   
   return template;
 }

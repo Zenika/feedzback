@@ -38,4 +38,3 @@ export const askFeedback = async ({email, senderEmail, text})=> {
     return res;
 
  }
- 

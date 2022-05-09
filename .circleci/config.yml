@@ -27,7 +27,7 @@ jobs:
       - restore_cache:
           keys:
             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v22-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+            - v25-packaging-dependencies-{{ checksum "server/package-lock.json"}}
        
       - run:
           name: install_client_dependencies
@@ -37,9 +37,8 @@ jobs:
       - run:
           name: install_server_dependencies
           working_directory: server
-          command: |
-              npm ci
-              npm install jest
+          command: npm ci
+              
         
 
 
@@ -51,7 +50,7 @@ jobs:
       - save_cache:
           paths:
             - server/node_modules         
-          key: v22-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+          key: v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -74,7 +73,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v22-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+            - v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+
+      - run : npm install jest
       
       - run:
           name: unit-test
@@ -140,7 +141,14 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            
+      - run:
+          name: set en variables
+          working_directory: server
+          command: |
+                sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
+                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
             
       - run:
           name: Set up gcloud config
@@ -213,7 +221,25 @@ workflows:
             - install-client-dependencies
             - unit-test-client
 
-   
+            
+      - cypress/run:
+         working_directory: client
+         cache-key: v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         executor: with-chrome
+         browser: chrome
+         requires:
+            - build
+            - install-client-dependencies   
+         install-command: npm install apollo-angular @apollo/client graphql
+         pre-steps: 
+            - run: npm install -g concurrently
+            
+         yarn: false   
+         start: 
+           npm run dev
+         
+
+
 
       - deploy-server:
            requires:
@@ -232,3 +258,4 @@ workflows:
 
       
       
+ 
