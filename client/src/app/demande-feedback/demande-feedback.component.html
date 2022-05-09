@@ -6,11 +6,11 @@
         <form (submit)="onSubmitRequest()" id="askFeedback" #askFeedback="ngForm" novalidate>
             <div class="form-group">
                 <label class="col-2">Votre Email:</label>
-                <input type="text" id="email" name="email" [(ngModel)]="askFeedbackRequest.email"  class="col-6 form-control required" #email="ngModel" required placeholder="Ex: pierre.pompidor@gmail.com"/>
+                <input type="text" id="email" name="email" [(ngModel)]="askFeedbackRequest.email"  class="col-6 form-control required" #email="ngModel" required placeholder="Ex: pierre.pompidor@exemple.com"/>
             </div>
             <div class="form-group padTop">
-                <label class="col-2">Collégue Email:</label>
-                <input  type="text" id="senderEmail" name="senderEmail"  [(ngModel)]="askFeedbackRequest.senderEmail" required class="col-6 form-control required" #senderEmail="ngModel" placeholder="Ex: marie.mettrand@gmail.com"/>
+                <label class="col-2">Email du ton collègue:</label>
+                <input  type="text" id="senderEmail" name="senderEmail"  [(ngModel)]="askFeedbackRequest.senderEmail" required class="col-6 form-control required" #senderEmail="ngModel" placeholder="Ex: marie.mettrand@exemple.com"/>
             </div>
             <div class="form-group padTop">
                 <label class="col-2">Text(optionnel)</label>
