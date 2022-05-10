@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
   dotEnv.config();
 }
 
-console.log("heyoooooooooooooooo" + process.env.DOMAIN);
+
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
 

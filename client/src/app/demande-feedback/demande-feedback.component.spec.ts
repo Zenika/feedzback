@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Apollo } from 'apollo-angular';
 
 import { DemandeFeedbackComponent } from './demande-feedback.component';
 
@@ -8,7 +11,11 @@ describe('DemandeFeedbackComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DemandeFeedbackComponent ]
+      providers: [Apollo],
+      declarations: [ DemandeFeedbackComponent ],
+      imports: [RouterTestingModule,
+      FormsModule,
+    ]
     })
     .compileComponents();
   });
@@ -18,8 +25,7 @@ describe('DemandeFeedbackComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('il doit y avoir au moins un test', ()=>{
+    expect(1).toBe(1);
+  })
 });

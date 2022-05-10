@@ -4,16 +4,18 @@
       <title>FeedZback</title>
     </head>
     <body>
-      <p>Bonjour {{name}}</p>
+      <p>Bonjour <%=name%></p>
     
-      <p>Votre collègue {{senderName}}  vous a fait un feedzback!</p>
+      <p>Votre collègue <%=senderName%>  vous a fait un feedzback!</p>
       <p><b>Points positifs</b></p>
-      <p>{{pointsPositifs}}</p>
+      <p><%=pointsPositifs%></p>
       
         <p><b>Axes d'améliorations</b></p>
-            <p>{{axesAmeliorations}}</p> 
+            <p><%=axesAmeliorations%></p> 
+        <%if (commentaire !== '') { %>
         <p ><b>Commentaires</b></p>
-        <p hi>{{commentaire}}</p>
+        <p><%=commentaire%></p>
+        <% } %>
         <br>
         <br>
         <p>Si toi aussi tu souhaites faire un feedzback, rendez-vous sur la plateforme Feedzback</p>

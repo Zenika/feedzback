@@ -10,14 +10,10 @@ describe('Formulaire tests', () => {
         req.reply((res)=>{
           res.body.data.createMessage="mock:Votre feedback a été envoyé!"
         })
-  
       }
     
     }).as('CreateMessage')
    cy.visit('/formulaire')
-
-  
-
 
   })
 

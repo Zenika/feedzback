@@ -1,18 +1,17 @@
 
 .labelTitle{
- 
     font-size: 20px;
     color: blue;
 }
 
 .form-control.ng-untouched,
 .form-control.ng-valid {
-    border-color: #ccc !important;
-    
+    border-color: #ccc;  
 }
+
 .form-control-lg.ng-untouched,
 .form-control-lg.ng-valid {
-    border-color: #ccc !important;
+    border-color: #ccc;
     
 }
 .img-responsive{
@@ -20,15 +19,13 @@
     height: 80%;
 }
 
-
 input:required {
 border-color: red;
 
 }
 textarea:required {
     border-color: red;
-    
-    }
+}
 
 .starFont{
     font-family: 'Courier New', Courier, monospace;
@@ -37,11 +34,8 @@ textarea:required {
 .btn-primary{
 
     background-color: brown;
-  
-    
-   
-
 }
+
 .btn-primary:active{
     background-color: antiquewhite;
 }
@@ -62,12 +56,9 @@ textarea:required {
     height: 40px;
     width: 100px;
     font-size: 15px;
-   
-
 }
-.titleFormulaire{
- 
-    color: brown;
 
+.titleFormulaire{
+    color: brown;
 }
 

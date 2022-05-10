@@ -1,6 +1,6 @@
+
 runtime: nodejs16
 service: server-service
-
 
 env_variables:
    API_KEY: <API_KEY>

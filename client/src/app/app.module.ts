@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.component';
+import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.component';
+import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.component';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.co
     FormulaireComponent,
     HomeComponent,
     DemandeFeedbackComponent,
+    FeedbackEnvoyeComponent,
+    DemandeEnvoyeComponent,
   ],
   imports: [
     BrowserModule,
