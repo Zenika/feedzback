@@ -130,7 +130,11 @@ jobs:
           command: |
                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
                VERSION="client-${VERSION}"
+               if [VERSION -eq 'client-master']
                gcloud --quiet app deploy --version=$VERSION
+               else
+               gcloud --quiet app deploy --version=$VERSION --no-promote
+               fi
 
 
    
@@ -170,7 +174,11 @@ jobs:
           command: |
               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
               VERSION="server-${VERSION}"
+              if [VERSION -eq 'server-master']
               gcloud app deploy --version=$VERSION
+              else
+              gcloud app deploy --version=$VERSION --no-promote
+              fi
           
 
 
