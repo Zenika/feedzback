@@ -50,8 +50,9 @@ describe('Formulaire tests', () => {
   it('Le formulaire est valide et envoie le feedback',()=>{
   
     cy.get('#feedbackForm').within(()=>{
-      cy.get('#nom').type('binyat.sharif@gmail.com')
-      cy.get('#email').type('bnyat.azizsharif@zenika.com')
+      cy.get('#nom').type('pierre henry')
+      cy.get('#email').type('pierre.henry@gmail.com')
+      cy.get('#receverEmail').type('marie.mettrand@gmail.com')
       cy.get('#pointsPositifs').type('les points poitifs sont:......')
       cy.get('#axesAmeliorations').type('les axes dAmeliorations sont:.....')
      
