@@ -12,9 +12,9 @@ export default function replaceHtmlVars(html, message, email) {
   const template = ejs.render(html,{
     name: recever[0],
     senderName: message.nom,
-    pointsPositifs: pointsPositifs,
-    axesAmeliorations: axesAmeliorations,
-    commentaire: commentaire 
+    pointsPositifs,
+    axesAmeliorations,
+    commentaire 
 })
 
   
