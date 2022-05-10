@@ -22,9 +22,9 @@ const myMailgun =  mailgun({
   domain: domain,
 });
 
-export const askFeedback = async ({email, senderEmail, text})=> {
+export const askFeedback = async ({askFeedback})=> {
     
-    const template = feedbackRequestTemplate(emailTemplate,email, senderEmail, text);
+    const template = feedbackRequestTemplate(emailTemplate,askFeedback);
     const msg = {
         to: "bnyat.azizsharif@zenika.com",
         from: "binyat.sharif@gmail.com",

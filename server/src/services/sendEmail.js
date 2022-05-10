@@ -36,28 +36,36 @@ const datastore= new Datastore({
 //   });
 // };
 
-export const sendEmail = async ({email, message}) => {
+export const sendEmail = async ({sendRequest}) => {
   
   const envi = process.env.NODE_ENV || 'development';
-  if (envi=='development') {
-    return 'le feedback a été envoyé(une reponse automatique en mode '+
-      'de developement)';
-  }
-  
-  const template = replaceHtmlVars(emailTemplate , message , email);
-  const msgTemp =   {
-    to: email,
+  const template = replaceHtmlVars(emailTemplate , sendRequest);
+
+  const msgDev =   {
+    to: 'bnyat.azizsharif@zenika.com',
     from: 'bnyat.azizsharif@zenika.com',
     subject:'FeedZback',
     html: template,
   }
+  const msgProd =   {
+    to: sendRequest.receverEmail,
+    from: sendRequest.email,
+    subject:'FeedZback',
+    html: template,
+  }
 
-   const res =
-   await  myMailgun.messages().send(msgTemp)
-   .then(()=> {return "Votre feedback a été envoyé!"})
-   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
-   // insertValue(msg);
+  let res;
+  if (envi=='development') {
+     res = await  myMailgun.messages().send(msgDev)
+       .then(()=> {return "Votre feedback a été envoyé!(Dev mode)"})
+       .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
+  } else {
+     res = await  myMailgun.messages().send(msgProd)
+      .then(()=> {return "Votre feedback a été envoyé!"})
+      .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
+  }
    
+   // insertValue(msg); 
     return res;
 
 };
