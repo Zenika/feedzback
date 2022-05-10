@@ -55,7 +55,7 @@ export const sendEmail = async ({email, message}) => {
    const res =
    await  myMailgun.messages().send(msgTemp)
    .then(()=> {return "Votre feedback a été envoyé!"})
-   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données vérifier les données s'il vous plaît"}) 
+   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
    // insertValue(msg);
    
     return res;
