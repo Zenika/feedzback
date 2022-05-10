@@ -8,8 +8,8 @@ import { AskFeedbackRequest } from '../model/askFeedbackRequest';
 
 
 const SEND_FEEDBACK_REQUEST = gql`
-mutation MUTATION_REQUEST($email:String!, $senderEmail:String!, $text:String){
-  sendFeedbackRequest(email:$email, senderEmail:$senderEmail, text:$text)
+mutation Mutation($askFeedback: AskFeedback!) {
+  sendFeedbackRequest(askFeedback: $askFeedback)
 }
 `
 
@@ -35,9 +35,7 @@ export class DemandeFeedbackComponent implements OnInit {
     this.apollo.mutate({
       mutation: SEND_FEEDBACK_REQUEST,
       variables: {
-        email: this.askFeedbackRequest.email,
-        senderEmail: this.askFeedbackRequest.senderEmail,
-        text: this.askFeedbackRequest.text
+       askFeedback: this.askFeedbackRequest
       }
     }).subscribe((data:any)=> {
   

@@ -8,8 +8,8 @@ import {Apollo, gql} from 'apollo-angular';
 import {SendRequest} from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
-mutation CreateMessage($email:String!,$message:SendRequest!){
-  createMessage(email:$email,message:$message)
+mutation CreateMessage($sendRequest:SendRequest!){
+  createMessage(sendRequest:$sendRequest)
 }
 `;
 
@@ -29,27 +29,34 @@ export class FormulaireComponent implements OnInit {
 
 
   constructor(private apollo:Apollo, private activateRouter:ActivatedRoute, private router:Router) {
-    //  console.logthis.activateRouter.snapshot.paramMap.get('email')
-    console.log(JSON.stringify(activateRouter.snapshot.paramMap))
+    
    }
 
 
   ngOnInit(): void {
+    const params = this.activateRouter.snapshot.paramMap.get('params');
+    let data;
+    if(params)
+    data = decodeURIComponent(params!).split('&')
+    console.log(data)
     this.sendRequest = new SendRequest();
+    if(data){
+      this.sendRequest.nom = data[0].split('=')[1]
+      this.sendRequest.email = data[1].split('=')[1]
+      this.sendRequest.receverName = data[2].split('=')[1]
+      this.sendRequest.receverEmail = data[3].split('=')[1]
+    }
   }
 
 
   onSubmit() {
-    console.log("heyyyy")
     this.apollo.mutate({
       mutation: SEND_MESSAGE,
       variables: {
-        email: this.sendRequest.email,
-        message: this.sendRequest,
+        sendRequest: this.sendRequest,
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
-      console.log(data.data.createMessage)
       this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
     });
   }

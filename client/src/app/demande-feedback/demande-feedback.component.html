@@ -5,11 +5,19 @@
     <div class="row justify-content-center padTop">
         <form (submit)="onSubmitRequest()" id="askFeedback" #askFeedback="ngForm" novalidate>
             <div class="form-group">
+                <label class="col-2">Votre nom:</label>
+                <input type="text" id="name" name="name" [(ngModel)]="askFeedbackRequest.name"  class="col-6 form-control required" #name="ngModel" required placeholder="Ex: Pierre Pompidor"/>
+            </div>
+            <div class="form-group">
                 <label class="col-2">Votre Email:</label>
                 <input type="text" id="email" name="email" [(ngModel)]="askFeedbackRequest.email"  class="col-6 form-control required" #email="ngModel" required placeholder="Ex: pierre.pompidor@exemple.com"/>
             </div>
             <div class="form-group padTop">
-                <label class="col-2">Email du ton collègue:</label>
+                <label class="col-4">Nom de ton collègue:</label>
+                <input type="text" id="senderName" name="senderName" [(ngModel)]="askFeedbackRequest.senderName"  class="col-6 form-control required" #senderName="ngModel" required placeholder="Ex: Marie Mettrand"/>
+            </div>
+            <div class="form-group">
+                <label class="col-4">Email du ton collègue:</label>
                 <input  type="text" id="senderEmail" name="senderEmail"  [(ngModel)]="askFeedbackRequest.senderEmail" required class="col-6 form-control required" #senderEmail="ngModel" placeholder="Ex: marie.mettrand@exemple.com"/>
             </div>
             <div class="form-group padTop">
