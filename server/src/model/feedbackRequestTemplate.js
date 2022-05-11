@@ -11,7 +11,7 @@ export function feedbackRequestTemplate (html,{name, email, senderName, senderEm
     commentaire = String(text).replace(/\n/g, '<br>')
 
     const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail})
-    const paramsEnc = encodeURIComponent(params);
+    const paramsEnc = encodeURIComponent(JSON.stringify({senderName, senderEmail, receverName, receverEmail}));
     const template = ejs.render(html ,
      { name: senderName,
         senderName: name,
