@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,10 +27,7 @@ export class FormulaireComponent implements OnInit {
     feedbackForm!: NgForm;
 
 
-  constructor(private apollo:Apollo, private activateRouter:ActivatedRoute, private router:Router) {
-    //  console.logthis.activateRouter.snapshot.paramMap.get('email')
-    console.log(JSON.stringify(activateRouter.snapshot.paramMap))
-   }
+  constructor(private apollo:Apollo, private router:Router) {}
 
 
   ngOnInit(): void {
@@ -40,7 +36,6 @@ export class FormulaireComponent implements OnInit {
 
 
   onSubmit() {
-    console.log("heyyyy")
     this.apollo.mutate({
       mutation: SEND_MESSAGE,
       variables: {
@@ -49,8 +44,10 @@ export class FormulaireComponent implements OnInit {
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
-      console.log(data.data.createMessage)
-      this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
+      if(this.result === 'Votre feedback a été envoyé!')
+        this.router.navigate(['/feedbackEnvoye'])
+        else
+        this.result;
     });
   }
 }

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed,waitForAsync } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormulaireComponent } from './formulaire.component';
 import { Apollo } from 'apollo-angular';
 import {  FormsModule } from '@angular/forms';

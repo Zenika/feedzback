@@ -42,8 +42,7 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "eslint-plugin-prettier"
+        "plugin:@angular-eslint/template/recommended"
       ],
       "plugins": [
         "eslint-plugin-prettier"
