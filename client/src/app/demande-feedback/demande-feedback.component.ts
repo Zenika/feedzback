@@ -1,7 +1,7 @@
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { AskFeedbackRequest } from '../model/askFeedbackRequest';
 
@@ -26,10 +26,13 @@ export class DemandeFeedbackComponent implements OnInit {
   askFeedback!: NgForm;
   err!:String
 
-  constructor(private apollo:Apollo, private router:Router) { }
+  constructor(private apollo:Apollo, private router:Router, private active: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.askFeedbackRequest= new AskFeedbackRequest();
+
+  const  js = JSON.parse(this.active.snapshot.paramMap.get('object')!);
+    console.log(js!.name)
   }
   onSubmitRequest(){
     this.apollo.mutate({

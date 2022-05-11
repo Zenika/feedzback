@@ -34,11 +34,13 @@ export class FormulaireComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const params = this.activateRouter.snapshot.paramMap.get('params');
+    const params = JSON.parse(this.activateRouter.snapshot.paramMap.get('params')!);
+    console.log(params.senderName)
+
     let data;
     if(params)
     data = decodeURIComponent(params!).split('&')
-    console.log(data)
+  //  console.log(data)
     this.sendRequest = new SendRequest();
     if(data){
       this.sendRequest.nom = data[0].split('=')[1]

@@ -9,4 +9,9 @@ import { Router } from '@angular/router';
 export class HomeComponent {
 
   constructor(private router:Router) { }
+  test() {
+
+    this.router.navigate(['/demandeFeedback',{object: JSON.stringify({name: "hey",email:"heyy"})}])
+  }
+  
 }
