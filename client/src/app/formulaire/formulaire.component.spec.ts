@@ -55,7 +55,7 @@ describe('FormuleComponent', () => {
    }))
    it('champs Votre Email est valide quand il est remplis',waitForAsync(()=>{
      let email = component.feedbackForm.controls['email'];
-     email.setValue("pierre.henry@gmail.com")
+     email.setValue("pierre.henry@example.com")
       expect(email!.valid).toBeTruthy();
     }))
 
@@ -65,7 +65,7 @@ describe('FormuleComponent', () => {
      }))
      it('champs Email Zenika de votre collègue est valide quand il est remplis',waitForAsync(()=>{
        let senderEmail = component.feedbackForm.controls['receverEmail'];
-       senderEmail.setValue("marie.mettrand@gmail.com")
+       senderEmail.setValue("marie.mettrand@example.com")
         expect(senderEmail.valid).toBeTruthy();
       }))
 
