@@ -1,6 +1,5 @@
 
 import {Datastore} from '@google-cloud/datastore';
-
 import dotEnv from 'dotenv'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
@@ -41,25 +40,23 @@ export const sendEmail = async ({sendRequest}) => {
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate , sendRequest);
 
-  const msgDev =   {
-const msg =   {
+let msg =   {
     to: sendRequest.receverEmail,
     from: sendRequest.email,
     subject:'FeedZback',
     html: template,
   }
-  if (envi === 'developpement') {
+  if (envi !== 'production') {
     msg = {
       ...msg,
-      to: 'bnyat.azizsharif@zenika.com',
-      from: 'bnyat.azizsharif@zenika.com',
+      to: 'feedzback@zenika.com',
+      from: 'feedzback@zenika.com',
     };
-  }
-  
+  } 
 
   let res;
-  res = await  myMailgun.messages().send((envi=='development') ? msgDev : msgProd)
-     .then(()=> {return "Votre feedback a été envoyé!(Dev mode)"})
+  res = await  myMailgun.messages().send(msg)
+     .then(()=> {return "Votre feedback a été envoyé!"})
      .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"})
    
    // insertValue(msg); 
