@@ -94,10 +94,10 @@ describe('FormuleComponent', () => {
     nom.setValue("Pompidor Pierre")
 
     let email = component.feedbackForm.controls['email'];
-    email.setValue("pierre.pompidor@exemple.com")
+    email.setValue("pierre.pompidor@example.com")
 
     let receverEmail = component.feedbackForm.controls['receverEmail'];
-    receverEmail.setValue("marie.mettrand@exemple.com")
+    receverEmail.setValue("marie.mettrand@example.com")
 
     let pointsPositifs = component.feedbackForm.controls['pointsPositifs'];
     pointsPositifs.setValue("les points positifs:.....")
