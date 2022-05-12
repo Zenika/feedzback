@@ -1,8 +1,11 @@
-
-import getNameFromEmail from "./getNameFromEmail.js";
 import ejs from 'ejs';
+import dotEnv from 'dotenv'
 
 export function feedbackRequestTemplate (html,{name, email, senderName, senderEmail, text}) {
+
+    if (process.env.NODE_ENV !== 'production') {
+        dotEnv.config()
+      }
 
     const receverEmail = email;
     const receverName = name
@@ -16,6 +19,7 @@ export function feedbackRequestTemplate (html,{name, email, senderName, senderEm
      { name: senderName,
         senderName: name,
         text: commentaire,
+        urlClientForm: process.env.URL_CLIENT_FORM,
         params: paramsEnc
      })
 
