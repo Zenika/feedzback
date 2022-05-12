@@ -55,15 +55,9 @@ export const sendEmail = async ({sendRequest}) => {
   }
 
   let res;
-  if (envi=='development') {
-     res = await  myMailgun.messages().send(msgDev)
-       .then(()=> {return "Votre feedback a été envoyé!(Dev mode)"})
-       .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
-  } else {
-     res = await  myMailgun.messages().send(msgProd)
-      .then(()=> {return "Votre feedback a été envoyé!"})
-      .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
-  }
+  res = await  myMailgun.messages().send((envi=='development') ? msgDev : msgProd)
+     .then(()=> {return "Votre feedback a été envoyé!(Dev mode)"})
+     .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"})
    
    // insertValue(msg); 
     return res;
