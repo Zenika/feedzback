@@ -1,5 +1,5 @@
 <div class="container-fluid">
     <div class="row justify-content-center padTop textColor">
-        <h1>Votre feedback a été envoyé!</h1>
+        <h1 [ngStyle]="{'color':result==='le feedback a été envoyé!' ? 'green':'red'}">{{result}}</h1>
     </div>
 </div>

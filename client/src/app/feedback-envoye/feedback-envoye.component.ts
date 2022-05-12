@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-feedback-envoye',
@@ -7,5 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedbackEnvoyeComponent  {
 
-  constructor() { }
+  result!: string
+  constructor(private route: ActivatedRoute) {
+    this.result = this.route.snapshot.paramMap.get('result')
+   }
 }

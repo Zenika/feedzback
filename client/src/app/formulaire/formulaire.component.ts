@@ -44,10 +44,7 @@ export class FormulaireComponent implements OnInit {
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
-      if(this.result === 'Votre feedback a été envoyé!')
-        this.router.navigate(['/feedbackEnvoye'])
-        else
-        this.result;
+      this.router.navigate(['/feedbackEnvoye',{result: this.result}])
     });
   }
 }

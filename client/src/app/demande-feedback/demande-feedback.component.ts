@@ -39,10 +39,7 @@ export class DemandeFeedbackComponent implements OnInit {
       }
     }).subscribe((data:any)=> {
       this.result =  data.data.sendFeedbackRequest;
-      if(this.result ===  'Votre demande a bien été envoyé')
-        this.router.navigate(['/demandeEnvoye'])
-      else
-        this.result
+      this.router.navigate(['/demandeEnvoye', {result: this.result}])
     })
   }
 
