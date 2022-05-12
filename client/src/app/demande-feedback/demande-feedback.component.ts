@@ -31,8 +31,6 @@ export class DemandeFeedbackComponent implements OnInit {
   ngOnInit(): void {
     this.askFeedbackRequest= new AskFeedbackRequest();
 
-  const  js = JSON.parse(this.active.snapshot.paramMap.get('object')!);
-    console.log(js!.name)
   }
   onSubmitRequest(){
     this.apollo.mutate({

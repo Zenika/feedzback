@@ -4,6 +4,7 @@ import {NgForm} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {Apollo, gql} from 'apollo-angular';
+import { param } from 'cypress/types/jquery';
 
 import {SendRequest} from '../model/sendRequest';
 
@@ -34,19 +35,14 @@ export class FormulaireComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const params = JSON.parse(this.activateRouter.snapshot.paramMap.get('params')!);
-    console.log(params.senderName)
-
-    let data;
-    if(params)
-    data = decodeURIComponent(params!).split('&')
-  //  console.log(data)
     this.sendRequest = new SendRequest();
-    if(data){
-      this.sendRequest.nom = data[0].split('=')[1]
-      this.sendRequest.email = data[1].split('=')[1]
-      this.sendRequest.receverName = data[2].split('=')[1]
-      this.sendRequest.receverEmail = data[3].split('=')[1]
+    const params = JSON.parse(this.activateRouter.snapshot.paramMap.get('params')!);
+    
+    if (params) {
+      this.sendRequest.nom = params.senderName
+      this.sendRequest.email = params.senderEmail
+      this.sendRequest.receverName = params.receverName
+      this.sendRequest.receverEmail = params.receverEmail
     }
   }
 
