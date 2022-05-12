@@ -42,17 +42,20 @@ export const sendEmail = async ({sendRequest}) => {
   const template = replaceHtmlVars(emailTemplate , sendRequest);
 
   const msgDev =   {
-    to: 'bnyat.azizsharif@zenika.com',
-    from: 'bnyat.azizsharif@zenika.com',
-    subject:'FeedZback',
-    html: template,
-  }
-  const msgProd =   {
+const msg =   {
     to: sendRequest.receverEmail,
     from: sendRequest.email,
     subject:'FeedZback',
     html: template,
   }
+  if (envi === 'developpement') {
+    msg = {
+      ...msg,
+      to: 'bnyat.azizsharif@zenika.com',
+      from: 'bnyat.azizsharif@zenika.com',
+    };
+  }
+  
 
   let res;
   res = await  myMailgun.messages().send((envi=='development') ? msgDev : msgProd)
