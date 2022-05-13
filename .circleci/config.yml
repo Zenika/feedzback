@@ -161,9 +161,7 @@ jobs:
           command: |
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
-                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-                VERSION="server-${VERSION}"
-                sed "s,<URL_CLIENT_FORM>,$VERSION,g" -i app.yaml
+                
             
       - run:
           name: Set up gcloud config
@@ -186,6 +184,20 @@ jobs:
               else
               gcloud app deploy --version=$VERSION --no-promote
               fi
+      
+
+      - run: 
+          name: set server url vraiable
+          working_directory: server
+          command: |
+            VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+            VERSION="server-${VERSION}"
+            gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
+            URL=$(sed -n '/versionUrl/,$p' temp.txt)
+            rm bnopiom.txt
+            URL=echo "$URL | cut -d':' -f2 -f3"      
+            echo $URL     
+            sed "s,<URL_CLIENT_FORM>,$VERSION,g" -i app.yaml  
           
 
 
