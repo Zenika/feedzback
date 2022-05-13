@@ -28,7 +28,7 @@ input AskFeedback {
 }
 
 type Mutation{
-    createMessage(sendRequest:SendRequest!):String
+    sendFeedback(sendRequest:SendRequest!):String
     sendFeedbackRequest(askFeedback: AskFeedback!):String
     
 }
