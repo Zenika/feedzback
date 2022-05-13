@@ -10,6 +10,6 @@ export class FeedbackEnvoyeComponent  {
 
   result!: string
   constructor(private route: ActivatedRoute) {
-    this.result = this.route.snapshot.paramMap.get('result')
+    this.result = this.route.snapshot.paramMap.get('result')!
    }
 }
