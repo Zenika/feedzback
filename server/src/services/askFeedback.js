@@ -35,7 +35,7 @@ export const askFeedback = async ({askFeedback})=> {
       msg = {
         ...msg,
         to: "feedzback@zenika.com",
-        from: "feedzback@zenika.com"
+        from: "binyat.sharif@gmail.com"
       }
 
     } 
