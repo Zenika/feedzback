@@ -6,7 +6,7 @@ import {SendRequest} from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
 mutation SendFeedback($sendRequest:SendRequest!){
-  SendFeedback(sendRequest:$sendRequest)
+  sendFeedback(sendRequest:$sendRequest)
 }
 `;
 
