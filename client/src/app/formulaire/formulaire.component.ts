@@ -35,19 +35,13 @@ export class FormulaireComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.sendRequest = new SendRequest();
-    
-    const senderName = this.activateRouter.snapshot.queryParamMap.get('senderName')
-    const senderEmail= this.activateRouter.snapshot.queryParamMap.get('senderEmail')
-    const receverName= this.activateRouter.snapshot.queryParamMap.get('receverName')
-    const receverEmail= this.activateRouter.snapshot.queryParamMap.get('receverEmail')
-    
-    if (senderName && senderEmail && receverName && receverEmail) {
-      this.sendRequest.nom = senderName
-      this.sendRequest.email = senderEmail
-      this.sendRequest.receverName = receverName
-      this.sendRequest.receverEmail = receverEmail
-    }
+    const query = this.activateRouter.snapshot.queryParamMap;
+    this.sendRequest = {
+        senderName: query.get('senderName'),
+        senderEmail: query.get('senderEmail'),
+        receverName: query.get('receverName'),
+        receverEmail: query.get('receverEmail'),
+    };
   }
 
 
