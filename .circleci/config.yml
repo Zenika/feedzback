@@ -195,7 +195,7 @@ jobs:
             gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
             URL=$(sed -n '/versionUrl/,$p' temp.txt)
             rm temp.txt
-            URL=$(echo "$URL" | cut -d':' -f2)    
+            URL=$(echo "$URL" | cut -d':' -f2,3)    
             echo $URL     
             sed "s,<URL_CLIENT_FORM>,$URL,g" -i app.yaml  
           
