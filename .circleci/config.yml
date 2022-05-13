@@ -154,7 +154,7 @@ jobs:
           command: |
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
-                sed "s/<URL_CLIENT_FORM>"/${URL_CLIENT_FORM}/g" -i app.yaml
+                sed "s/<URL_CLIENT_FORM>/${URL_CLIENT_FORM}/g" -i app.yaml
             
       - run:
           name: Set up gcloud config
