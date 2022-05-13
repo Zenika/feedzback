@@ -135,6 +135,14 @@ jobs:
                else
                gcloud --quiet app deploy --version=$VERSION --no-promote
                fi
+      - run:
+          name: test-version-link
+          working_directory: client
+          command: |
+                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+                VERSION="client-${VERSION}"
+                echo ${VERSION}
+                
 
 
    
@@ -153,7 +161,9 @@ jobs:
           command: |
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
-                sed "s,<URL_CLIENT_FORM>,$URL_CLIENT_FORM,g" -i app.yaml
+                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+                VERSION="server-${VERSION}"
+                sed "s,<URL_CLIENT_FORM>,$VERSION,g" -i app.yaml
             
       - run:
           name: Set up gcloud config
