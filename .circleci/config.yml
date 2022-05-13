@@ -197,7 +197,7 @@ jobs:
             rm temp.txt
             URL=echo "$URL | cut -d':' -f2 -f3"      
             echo $URL     
-            sed "s,<URL_CLIENT_FORM>,$VERSION,g" -i app.yaml  
+            sed "s,<URL_CLIENT_FORM>,$URL,g" -i app.yaml  
           
 
 
