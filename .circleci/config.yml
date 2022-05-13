@@ -194,7 +194,7 @@ jobs:
             VERSION="server-${VERSION}"
             gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
             URL=$(sed -n '/versionUrl/,$p' temp.txt)
-            rm bnopiom.txt
+            rm temp.txt
             URL=echo "$URL | cut -d':' -f2 -f3"      
             echo $URL     
             sed "s,<URL_CLIENT_FORM>,$VERSION,g" -i app.yaml  
