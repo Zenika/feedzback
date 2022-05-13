@@ -1,5 +1,5 @@
 <div fxLayout="column"   fxLayoutGap="20px">
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+    <div fxLayout="row"  fxLayoutAlign="center center" fxLayout.lt-md="column" fxLayoutGap="20px">
         <div>
           <img  src="../assets/logo.png"/> 
         </div> 
@@ -8,16 +8,16 @@
         </div>
      </div>
 
-     <div class="home-description"  fxLayout="column"  fxLayoutGap="0px"  fxLayoutAlign="center">
+     <div class="home-description"   fxLayout="column"  fxLayoutGap="0px"  fxLayoutAlign="center center">
         <p fxLayout="row">Choisissez d’envoyer ou de demander à la personne de votre choix un retour en cliquant sur l’un ou</p>
-         <p fxLayout="row">l’autre des boutons ci-dessous et laissez-vous guider !</p>
+         <p fxLayout="row" fxLayout.lt-md="column">l’autre des boutons ci-dessous et laissez-vous guider !</p>
      </div>
 
-    <div fxLayout="row"  fxLayoutGap="80px" fxLayoutGap.lt-md="20px">
+    <div fxLayout="row"  fxLayoutAlign="center center"  fxLayoutGap="80px" fxLayoutGap.lt-md="20px">
 
-        <button  class="home-send-feedback-btn"  fxFlexOffset.lt-md="18px" routerLink="/formulaire">
+        <button  class="home-send-feedback-btn"  routerLink="/formulaire">
             <div fxLayout="row" fxFlexOffset.lt-md="30px"  fxLayout.lt-md="column" fxLayoutAlign.lt-md="center center"  fxLayoutGap="10px">
-                <svg fxLayout.lt-md="row" fxFlexOffset.lt-md="30px" class="home-send-feedback-icon" width="90" height="60" viewBox="0 0 45 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg fxLayout.lt-md="row" fxFlexOffset.lt-md="30px" class="home-send-feedback-icon" width="45" height="38" viewBox="0 0 45 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 37.6666V23.3749L17.6167 18.9999L0 14.5082V0.333252L44.3333 18.9999L0 37.6666Z" fill="white"/>
                     </svg>
                     <label fxFlexOffset.lt-md="10px" class="home-send-text-btn">ENVOYER</label>     
