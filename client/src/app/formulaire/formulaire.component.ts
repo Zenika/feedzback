@@ -1,16 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import {Apollo, gql} from 'apollo-angular';
-import { param } from 'cypress/types/jquery';
-
 import {SendRequest} from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
-mutation CreateMessage($sendRequest:SendRequest!){
-  createMessage(sendRequest:$sendRequest)
+mutation SendFeedback($sendRequest:SendRequest!){
+  SendFeedback(sendRequest:$sendRequest)
 }
 `;
 

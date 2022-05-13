@@ -6,13 +6,13 @@ describe('Formulaire tests', () => {
   
     cy.intercept('POST','/graphql',req =>{
       if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')){
-        req.alias=`CreateMessage`
+        req.alias=`SendFeedback`
         req.reply((res)=>{
-          res.body.data.createMessage="mock:Votre feedback a été envoyé!"
+          res.body.data.sendFeedback="mock:Votre feedback a été envoyé!"
         })
       }
     
-    }).as('CreateMessage')
+    }).as('Sendfeedback')
    cy.visit('/formulaire')
 
   })
@@ -57,13 +57,7 @@ describe('Formulaire tests', () => {
       cy.get('#axesAmeliorations').type('les axes dAmeliorations sont:.....')
      
       cy.get('#submit').click();
-      cy.wait('@CreateMessage')
+      cy.wait('@Sendfeedback')
     })
-
   })
-
-
-
-
 })
-
