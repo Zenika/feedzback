@@ -36,11 +36,17 @@ export class FormulaireComponent implements OnInit {
 
   ngOnInit(): void {
     const query = this.activateRouter.snapshot.queryParamMap;
+
+   
     this.sendRequest = {
-        senderName: query.get('senderName'),
-        senderEmail: query.get('senderEmail'),
-        receverName: query.get('receverName'),
-        receverEmail: query.get('receverEmail'),
+        nom: query.get('senderName')!,
+        email: query.get('senderEmail')!,
+        receverName: query.get('receverName')!,
+        receverEmail: query.get('receverEmail')!,
+        pointsPositifs: '',
+        axesAmeliorations: '',
+        commentaire: ''
+        
     };
   }
 
