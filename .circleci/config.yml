@@ -91,7 +91,16 @@ jobs:
       - run:
           name: build_front_end
           working_directory: client
-          command: npm run build
+          command: |
+            VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+            VERSION="server-${VERSION}"
+            gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
+            URL=$(sed -n '/versionUrl/,$p' temp.txt)
+            rm temp.txt
+            URL=$(echo "$URL" | cut -d':' -f2,3)    
+            echo $URL 
+            sed -i "s/serverApi/$URL/g" src/environments/environments.prod.ts
+            npm run build
       
       - persist_to_workspace:
           root: client
