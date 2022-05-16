@@ -88,6 +88,16 @@ jobs:
       - restore_cache:
            keys:
              - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             
+      - run:
+          name: Set up gcloud config
+          command: |
+            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
+            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
+            rm /tmp/sa_key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
+
       - run:
           name: build_front_end
           working_directory: client
