@@ -110,7 +110,7 @@ jobs:
             rm temp.txt
             URL=$(echo "$URL" | cut -d':' -f2,3)    
             echo $URL 
-            sed -n "/serverApi/,$URL" -i src/environments/environments.prod.ts
+            sed "s,serverApi,$URL,g" -i src/environments/environments.prod.ts
             npm run build
       
       - persist_to_workspace:
