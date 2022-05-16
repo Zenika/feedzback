@@ -83,7 +83,7 @@ jobs:
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI    
 
 
-  set-serverUrl-client:
+  set-serverApi-client:
      docker: 
         - image: google/cloud-sdk
      steps:
@@ -98,7 +98,7 @@ jobs:
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
 
        - run:
-          name: build_front_end
+          name: set url
           working_directory: client
           command: |
             VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
