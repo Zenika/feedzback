@@ -1,14 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import {Apollo, gql} from 'apollo-angular';
-
 import {SendRequest} from '../model/sendRequest';
 
 const SEND_MESSAGE = gql`
-mutation CreateMessage($email:String!,$message:SendRequest!){
-  createMessage(email:$email,message:$message)
+mutation SendFeedback($sendRequest:SendRequest!){
+  sendFeedback(sendRequest:$sendRequest)
 }
 `;
 
@@ -27,11 +25,25 @@ export class FormulaireComponent implements OnInit {
     feedbackForm!: NgForm;
 
 
-  constructor(private apollo:Apollo, private router:Router) {}
+
+  constructor(private apollo:Apollo, private activateRouter:ActivatedRoute, private router:Router) {}
+
 
 
   ngOnInit(): void {
-    this.sendRequest = new SendRequest();
+    const query = this.activateRouter.snapshot.queryParamMap;
+
+   
+    this.sendRequest = {
+        nom: query.get('senderName')!,
+        email: query.get('senderEmail')!,
+        receverName: query.get('receverName')!,
+        receverEmail: query.get('receverEmail')!,
+        pointsPositifs: '',
+        axesAmeliorations: '',
+        commentaire: ''
+        
+    };
   }
 
 
@@ -39,8 +51,7 @@ export class FormulaireComponent implements OnInit {
     this.apollo.mutate({
       mutation: SEND_MESSAGE,
       variables: {
-        email: this.sendRequest.email,
-        message: this.sendRequest,
+        sendRequest: this.sendRequest,
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;

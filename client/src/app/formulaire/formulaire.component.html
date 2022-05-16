@@ -28,13 +28,21 @@
             </div>  
          </div>
          <div class="form-group littleBox" >
-           <label for="email" class="control-label starFont">Email Zenika de votre collègue*</label>
+           <label for="email" class="control-label starFont">Votre Email*</label>
            <div class="row">
               <div class="col-12">
-                  <input type="email" name="email" id="email" class="col-md-12 form-control" id="email" [(ngModel)]="sendRequest!.email" required pattern="[a-z0-9._%+-]+@zenika.com" #sendEmail="ngModel" placeholder="Exemple: Juliette@zenika.com">
+                  <input type="email" name="email" id="email" class="col-md-12 form-control" id="email" [(ngModel)]="sendRequest!.email" required #email="ngModel" placeholder="Exemple: Pierre@exemple.com" email>
               </div>
            </div>        
          </div>
+         <div class="form-group littleBox" >
+          <label for="receverEmail" class="control-label starFont">Email Zenika de votre collègue*</label>
+          <div class="row">
+             <div class="col-12">
+                 <input type="email" name="receverEmail" id="receverEmail" class="col-md-12 form-control" id="receverEmail" [(ngModel)]="sendRequest!.receverEmail" required #receverEmail="ngModel" placeholder="Exemple: Juliette@exemple.com" email>
+             </div>
+          </div>        
+        </div>
          <div>
             <hr class="col-">
          </div>

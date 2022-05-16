@@ -11,16 +11,24 @@ type Message {
     message: String
 }
 input SendRequest {
-    email:String
     nom:String
+    email:String
+    receverEmail: String
+    receverName: String
     pointsPositifs:String
     axesAmeliorations:String
     commentaire:String
 }
+input AskFeedback {
+    name: String!
+    email: String!
+    senderName: String!
+    senderEmail: String!
+    text: String
+}
 
 type Mutation{
-    sendFeedback(email:String!,message:SendRequest!):String
-    askFeedback(email:String!,senderEmail:String!,text:String):String
-    
+    sendFeedback(sendRequest:SendRequest!):String
+    sendFeedbackRequest(askFeedback: AskFeedback!):String    
 }
 `;

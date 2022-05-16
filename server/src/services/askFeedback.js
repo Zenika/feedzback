@@ -13,7 +13,6 @@ if (process.env.NODE_ENV !== 'production') {
   dotEnv.config();
 }
 
-
 const apiKey  = process.env.API_KEY;
 const domain = process.env.DOMAIN;
 
@@ -22,19 +21,27 @@ const myMailgun =  mailgun({
   domain: domain,
 });
 
-export const askFeedback = async ({email, senderEmail, text})=> {
+export const askFeedback = async ({askFeedback})=> {
     
-    const template = feedbackRequestTemplate(emailTemplate,email, senderEmail, text);
-    const msg = {
-        to: "bnyat.azizsharif@zenika.com",
-        from: "binyat.sharif@gmail.com",
+    const template = feedbackRequestTemplate(emailTemplate, askFeedback);
+    let msg = {
+        to: askFeedback.senderEmail,
+        from: askFeedback.email,
         subject: "Solliciter un feedback",
         html: template
     }
+
+    if(process.env.NODE_ENV !== 'production') {
+      msg = {
+        ...msg,
+        to: "feedzback@zenika.com",
+        from: "binyat.sharif@gmail.com"
+      }
+
+    } 
 
     const res = await myMailgun.messages().send(msg).then(()=> {return 'Votre demande a bien été envoyé'})
     .catch(()=> {return "Votre demande n'est pas envoyé vérifiez les données s'il vous plaît"});
 
     return res;
-
  }

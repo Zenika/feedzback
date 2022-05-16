@@ -9,7 +9,7 @@ export const resolvers = {
   },
   Mutation: {
     sendFeedback: async (_, payload)=> await sendEmail(payload),
-    askFeedback : async(_,request)=> await askFeedback(request)
+    sendFeedbackRequest : async(_,request)=> await askFeedback(request)
   },
 };
 
