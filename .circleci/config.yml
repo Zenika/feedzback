@@ -82,19 +82,14 @@ jobs:
           working_directory: server
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI    
 
-  build:
-    docker: 
-        - image: cimg/node:16.13.0
+
+  set-serverUrl-client:
+     docker: 
         - image: google/cloud-sdk
-    steps:
-      - checkout
-      - restore_cache:
-           keys:
-             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-             
-      - run:
+     steps:
+       - checkout
+       - run:
           name: Set up gcloud config
-        
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
@@ -102,7 +97,7 @@ jobs:
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
 
-      - run:
+       - run:
           name: build_front_end
           working_directory: client
           command: |
@@ -114,7 +109,19 @@ jobs:
             URL=$(echo "$URL" | cut -d':' -f2,3)    
             echo $URL 
             sed "s,serverApi,$URL,g" -i src/environments/environment.prod.ts
-            npm run build
+
+  build:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+           keys:
+             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
+
+      - run:
+          name: build_front_end
+          working_directory: client
+          command:  npm run build
       
       - persist_to_workspace:
           root: client
@@ -239,10 +246,14 @@ workflows:
       - unit-test-server:
           requires:
              - install-client-dependencies
+      - set-serverApi-client:
+            requires:
+              - deploy-server
       - build: 
           requires:
             - install-client-dependencies
             - unit-test-client
+            - set-serverApi-client
 
             
       - cypress/run:
