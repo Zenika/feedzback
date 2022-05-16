@@ -83,7 +83,9 @@ jobs:
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI    
 
   build:
-    executor: node
+    docker: 
+        - image: cimg/node:16.13.0
+        - image: google/cloud-sdk
     steps:
       - checkout
       - restore_cache:
@@ -92,6 +94,7 @@ jobs:
              
       - run:
           name: Set up gcloud config
+        
           command: |
             echo ${GCLOUD_KEY} > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
