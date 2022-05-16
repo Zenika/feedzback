@@ -1,19 +1,27 @@
-
-import getNameFromEmail from "./getNameFromEmail.js";
 import ejs from 'ejs';
-export function feedbackRequestTemplate (html,email,senderEmail,textRequest) {
+import dotEnv from 'dotenv'
 
-    const senderName = getNameFromEmail(email).split(' ');
-    const name = getNameFromEmail(senderEmail);
-    let text='';
-    if(textRequest)
-    text = String(textRequest).replace(/\n/g, '<br>')
+export function feedbackRequestTemplate (html,{name, email, senderName, senderEmail, text}) {
 
+    if (process.env.NODE_ENV !== 'production') {
+        dotEnv.config()
+      }
+
+    const receverEmail =  encodeURIComponent(email);
+    senderEmail = encodeURIComponent(senderEmail);
+    const receverName = name
+    let commentaire='';
+    if(text)
+    commentaire = String(text).replace(/\n/g, '<br>');
+
+    const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
     const template = ejs.render(html ,
-     { name:name,
-       senderName: senderName,
-       text: text
-    })
+     { name: senderName,
+        senderName: name,
+        text: commentaire,
+        urlClientForm: process.env.URL_CLIENT_FORM,
+        params: params
+     })
 
     return template;
 }

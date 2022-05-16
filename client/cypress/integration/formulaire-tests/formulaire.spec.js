@@ -5,14 +5,14 @@ describe('Formulaire tests', () => {
   beforeEach(() => {
   
     cy.intercept('POST','/graphql',req =>{
-      if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')){
-        req.alias=`CreateMessage`
+      if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')){   
+        req.alias=`SendFeedback`
         req.reply((res)=>{
-          res.body.data.createMessage="mock:Votre feedback a été envoyé!"
+          res.body.data.sendFeedback="mock:Votre feedback a été envoyé!"
         })
       }
     
-    }).as('CreateMessage')
+    }).as('SendFeedback')
    cy.visit('/formulaire')
 
   })
@@ -31,9 +31,9 @@ describe('Formulaire tests', () => {
  
 
   it('Les bords des champs requis deviennent rouges quand ils sont touchés et invalides',()=>{
-    cy.get('#nom').type('example@gmail.com')
+    cy.get('#nom').type('example@example.com')
     cy.get('#nom').clear();
-    cy.get('#email').type('example@gmail.com')
+    cy.get('#email').type('example@example.com')
     cy.get('#nom').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
     cy.get('#email').clear()
     cy.get('#pointsPositifs').type('les points ppositifs sont:...')
@@ -50,19 +50,14 @@ describe('Formulaire tests', () => {
   it('Le formulaire est valide et envoie le feedback',()=>{
   
     cy.get('#feedbackForm').within(()=>{
-      cy.get('#nom').type('binyat.sharif@gmail.com')
-      cy.get('#email').type('bnyat.azizsharif@zenika.com')
+      cy.get('#nom').type('pierre henry')
+      cy.get('#email').type('pierre.henry@example.com')
+      cy.get('#receverEmail').type('marie.mettrand@example.com')
       cy.get('#pointsPositifs').type('les points poitifs sont:......')
       cy.get('#axesAmeliorations').type('les axes dAmeliorations sont:.....')
      
       cy.get('#submit').click();
-      cy.wait('@CreateMessage')
+      cy.wait('@SendFeedback')
     })
-
   })
-
-
-
-
 })
-

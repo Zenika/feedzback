@@ -1,15 +1,15 @@
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { AskFeedbackRequest } from '../model/askFeedbackRequest';
 
 
 
 const SEND_FEEDBACK_REQUEST = gql`
-mutation MUTATION_REQUEST($email:String!, $senderEmail:String!, $text:String){
-  sendFeedbackRequest(email:$email, senderEmail:$senderEmail, text:$text)
+mutation Mutation($askFeedback: AskFeedback!) {
+  sendFeedbackRequest(askFeedback: $askFeedback)
 }
 `
 
@@ -26,18 +26,17 @@ export class DemandeFeedbackComponent implements OnInit {
   askFeedback!: NgForm;
   err!:String
 
-  constructor(private apollo:Apollo, private router:Router) { }
+  constructor(private apollo:Apollo, private router:Router, private active: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.askFeedbackRequest= new AskFeedbackRequest();
   }
+
   onSubmitRequest(){
     this.apollo.mutate({
       mutation: SEND_FEEDBACK_REQUEST,
       variables: {
-        email: this.askFeedbackRequest.email,
-        senderEmail: this.askFeedbackRequest.senderEmail,
-        text: this.askFeedbackRequest.text
+       askFeedback: this.askFeedbackRequest
       }
     }).subscribe((data:any)=> {
   

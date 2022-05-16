@@ -28,7 +28,6 @@ jobs:
           keys:
             - v24-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v25-packaging-dependencies-{{ checksum "server/package-lock.json"}}
-       
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -136,6 +135,14 @@ jobs:
                else
                gcloud --quiet app deploy --version=$VERSION --no-promote
                fi
+      - run:
+          name: test-version-link
+          working_directory: client
+          command: |
+                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+                VERSION="client-${VERSION}"
+                echo ${VERSION}
+                
 
 
    
@@ -147,13 +154,14 @@ jobs:
       - restore_cache:
            keys:
              - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            
+      - run: echo ${URL_CLIENT_FORM}      
       - run:
           name: set en variables
           working_directory: server
           command: |
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+                
             
       - run:
           name: Set up gcloud config
@@ -163,12 +171,7 @@ jobs:
             rm /tmp/sa_key.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
-      - run:
-          name: set en variables
-          working_directory: server
-          command: |
-                sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
-                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+  
       - run:
           name: deploy-server
           working_directory: server
@@ -181,6 +184,20 @@ jobs:
               else
               gcloud app deploy --version=$VERSION --no-promote
               fi
+      
+
+      - run: 
+          name: set server url vraiable
+          working_directory: server
+          command: |
+            VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+            VERSION="server-${VERSION}"
+            gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
+            URL=$(sed -n '/versionUrl/,$p' temp.txt)
+            rm temp.txt
+            URL=$(echo "$URL" | cut -d':' -f2,3)    
+            echo $URL     
+            sed "s,<URL_CLIENT_FORM>,$URL,g" -i app.yaml  
           
 
 
