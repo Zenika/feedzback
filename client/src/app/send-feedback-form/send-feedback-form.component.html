@@ -1,7 +1,11 @@
 <div class="flex-container flex-column">
-    <a href="">Retour</a>
+    <div class="flex-container justify-content-center">
+        <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
+    </div>
+    <a href="">< Retour</a>
     <h1>Envoi de feedback</h1>
-    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail contenant vos retours !</span>
+    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail contenant vos
+        retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <h2>Qui êtes-vous ?</h2>
     <div class="flex-container">
@@ -29,22 +33,21 @@
     <div class="flex-container flex-column">
         <div class="flex-container flex-column form-input">
             <label for="positive-feedback">Points positifs *</label>
-            <textarea name="positive-feedback" id="positive-feedback"
+            <textarea class="textarea" name="positive-feedback" id="positive-feedback"
                 placeholder="Exemple : Collègue à l’écoute!"></textarea>
         </div>
         <div class="flex-container flex-column form-input">
             <label for="to-improve-feedback">Axes d’améliorations *</label>
-            <textarea name="to-improve-feedback" id="to-improve-feedback"
+            <textarea class="textarea" name="to-improve-feedback" id="to-improve-feedback"
                 placeholder="Exemple : Ponctualité"></textarea>
         </div>
         <div class="flex-container flex-column form-input">
             <label for="comment">Commentaires</label>
-            <textarea name="comment" id="comment"
+            <textarea class="textarea" name="comment" id="comment"
                 placeholder="Exemple : Bravo pour ton talk à la dernière technozaure !"></textarea>
         </div>
     </div>
     <div class="flex-container justify-content-end">
-        <button>Envoyer</button>
+        <button class="btn btn-primary">Envoyer</button>
     </div>
-
 </div>
