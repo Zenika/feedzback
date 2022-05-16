@@ -1,10 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 5px 5px 5px 5px;
+}
+
 .btn-primary {
-    background-color: brown;
+    background-color: #D52150;
+    color: white;
+}
+
+.btn-primary:disabled {
+    background-color: #C0B0B4;
 }
 
 .btn-primary:hover {
-    background-color: rgb(99, 19, 19);
+    background-color: #a41a3f;
 }
 
 .btn-secondary {
@@ -21,6 +32,14 @@
     border: none;
     padding: 5px;
     width: 100%;
+}
+
+.textarea {
+    background: #FAFAFA;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    resize: vertical;
 }
 
 @font-face {
