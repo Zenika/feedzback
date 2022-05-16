@@ -84,6 +84,7 @@ jobs:
   build:
     docker:
       - image: google/cloud-sdk
+      - image: cimg/node:16.13.0
     steps:
       - checkout
       - restore_cache:
