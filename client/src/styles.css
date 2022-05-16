@@ -2,6 +2,7 @@
 .btn-primary {
     background-color: brown;
 }
+
 .btn-primary:hover {
     background-color: rgb(99, 19, 19);
 }
@@ -12,4 +13,21 @@
 
 .btn-secondary:hover {
     background-color: rgb(186, 67, 67);
+}
+
+.input-text {
+    background: #FAFAFA;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    width: 100%;
+}
+
+@font-face {
+    font-family: Nunito;
+    src: url(assets/Nunito/Nunito-VariableFont_wght.ttf);
+}
+
+* {
+    font-family: Nunito;
 }

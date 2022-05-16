@@ -1,0 +1,35 @@
+.flex-container {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.form-input {
+    flex-grow: 1;
+    padding: .5rem;
+    color: #605E5E;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
+}
+
+h2 {
+    margin-top: .5rem;
+}
+
+h1 {
+    color: #D52150;
+    font-weight: bold;
+}
+
+small {
+    color: #D52150;
+    font-weight: lighter;
+}
+
+.subtitle {
+    color: #4E4B4B;
+}

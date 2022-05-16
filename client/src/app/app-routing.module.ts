@@ -5,6 +5,7 @@ import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.co
 import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { HomeComponent } from './home/home.component';
+import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
 
 const routes: Routes = [
   {path:'formulaire',component:FormulaireComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path:'demandeFeedback',component:DemandeFeedbackComponent},
   {path:'feedbackEnvoye',component:FeedbackEnvoyeComponent},
   {path:'demandeEnvoye',component:DemandeEnvoyeComponent},
+  {path:'send-feedback', component:SendFeedbackFormComponent},
   {path:'**',redirectTo:'home'}
 ];
 
