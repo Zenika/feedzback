@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" class="container">
     <div fxLayoutAlign="center">
         <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
     </div>
@@ -8,7 +8,7 @@
         retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <h2>Qui êtes-vous ?</h2>
-    <div fxLayout="row">
+    <div fxLayout="row" [fxLayout.lt-md]="'column'">
         <div fxLayout="column" fxFlex="grow" class="form-input">
             <label for="your-email">Votre email Zenika *</label>
             <input type="text" class="input-text" id="your-email" placeholder="Exemple: pierre.douchon@zenika.com">
@@ -19,7 +19,7 @@
         </div>
     </div>
     <h2>Qui est votre collègue ?</h2>
-    <div fxLayout="row">
+    <div fxLayout="row" [fxLayout.lt-md]="'column'">
         <div fxLayout="column" fxFlex="grow" class="form-input">
             <label for="coworker-email">Email de votre collègue *</label>
             <input type="text" class="input-text" id="coworker-email" placeholder="Exemple: pierre.douchon@zenika.om'">
@@ -47,7 +47,7 @@
                 placeholder="Exemple : Bravo pour ton talk à la dernière technozaure !"></textarea>
         </div>
     </div>
-    <div fxLayoutAlign="end">
+    <div fxLayoutAlign="end" [fxLayoutAlign.lt-sm]="'center'">
         <button class="btn btn-primary">Envoyer</button>
     </div>
 </div>
