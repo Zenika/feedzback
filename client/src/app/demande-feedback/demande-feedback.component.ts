@@ -5,8 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { AskFeedbackRequest } from '../model/askFeedbackRequest';
 
-
-
 const SEND_FEEDBACK_REQUEST = gql`
 mutation Mutation($askFeedback: AskFeedback!) {
   sendFeedbackRequest(askFeedback: $askFeedback)
@@ -24,7 +22,7 @@ export class DemandeFeedbackComponent implements OnInit {
 
   @ViewChild('feedbackForm', {static: false})
   askFeedback!: NgForm;
-  err!:String
+  result!:String
 
   constructor(private apollo:Apollo, private router:Router, private active: ActivatedRoute) { }
 
@@ -39,8 +37,8 @@ export class DemandeFeedbackComponent implements OnInit {
        askFeedback: this.askFeedbackRequest
       }
     }).subscribe((data:any)=> {
-  
-      data.data.sendFeedbackRequest==='Votre demande a bien été envoyé'? this.router.navigate(['/demandeEnvoye']):this.err=data.data.sendFeedbackRequest
+      this.result =  data.data.sendFeedbackRequest;
+      this.router.navigate(['/demandeEnvoye', {result: this.result}])
     })
   }
 

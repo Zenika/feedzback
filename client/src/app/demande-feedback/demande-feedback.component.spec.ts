@@ -14,8 +14,7 @@ describe('DemandeFeedbackComponent', () => {
       providers: [Apollo],
       declarations: [ DemandeFeedbackComponent ],
       imports: [RouterTestingModule,
-      FormsModule,
-    ]
+        FormsModule]
     })
     .compileComponents();
   });

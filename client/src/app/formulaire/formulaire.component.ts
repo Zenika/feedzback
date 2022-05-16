@@ -25,9 +25,9 @@ export class FormulaireComponent implements OnInit {
     feedbackForm!: NgForm;
 
 
-  constructor(private apollo:Apollo, private activateRouter:ActivatedRoute, private router:Router) {
-    
-   }
+
+  constructor(private apollo:Apollo, private activateRouter:ActivatedRoute, private router:Router) {}
+
 
 
   ngOnInit(): void {
@@ -55,7 +55,7 @@ export class FormulaireComponent implements OnInit {
       },
     }).subscribe((data:any)=>{
       this.result = data.data.createMessage;
-      this.result ==='Votre feedback a été envoyé!'? this.router.navigate(['/feedbackEnvoye']):this.result;
+      this.router.navigate(['/feedbackEnvoye',{result: this.result}])
     });
   }
 }

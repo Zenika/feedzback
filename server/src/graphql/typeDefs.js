@@ -29,7 +29,6 @@ input AskFeedback {
 
 type Mutation{
     sendFeedback(sendRequest:SendRequest!):String
-    sendFeedbackRequest(askFeedback: AskFeedback!):String
-    
+    sendFeedbackRequest(askFeedback: AskFeedback!):String    
 }
 `;
