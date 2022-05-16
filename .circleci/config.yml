@@ -82,7 +82,8 @@ jobs:
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI    
 
   build:
-    executor: node
+    docker:
+      - image: google/cloud-sdk
     steps:
       - checkout
       - restore_cache:
