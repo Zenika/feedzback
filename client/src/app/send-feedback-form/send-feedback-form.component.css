@@ -1,23 +1,6 @@
-.flex-container {
-    display: flex;
-}
-
-.flex-column {
-    flex-direction: column;
-}
-
 .form-input {
-    flex-grow: 1;
     padding: .5rem;
     color: #605E5E;
-}
-
-.justify-content-end {
-    justify-content: flex-end;
-}
-
-.justify-content-center {
-    justify-content: center;
 }
 
 .subtitle {
