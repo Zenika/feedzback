@@ -7,10 +7,7 @@
 .flex-column {
   flex-direction: column;
 }
-.buttonStyle {
-    background-color: brown;
-    color: white;
-}
+
 .padTop{
     padding-top: 30px;
 }
@@ -23,6 +20,7 @@ font-size: 16px;
 line-height: 22px;
 color: #D52150;
 }
+
 
 .home-description {
 
@@ -39,13 +37,21 @@ color: #4E4B4B;
 .home-send-feedback-btn {
 
 background: #D52150;
+border-color: #D52150;
 border-radius: 10px;
+
 
 }
 
 .home-ask-feedback-btn {
 background: #D52150;
 border-radius: 10px;
+border-color: #D52150;
+
+}
+.pad{
+  margin-top: 55px;
+  margin-bottom: 55px;
 
 }
 
@@ -58,6 +64,7 @@ border-radius: 10px;
     line-height: 25px;
     text-align: center;
     color: #FFFFFF;
+ 
 
 }
 
@@ -69,6 +76,7 @@ font-weight: 900;
 font-size: 18px;
 line-height: 25px;
 text-align: center;
+
 
 
 color: #FFFFFF;
