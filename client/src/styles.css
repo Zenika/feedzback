@@ -36,10 +36,15 @@
 
 .textarea {
     background: #FAFAFA;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 10px;
     border: none;
     padding: 5px;
-    resize: vertical;
+}
+
+.input-invalid {
+    border: #D52150;
+    border-style: solid;
+    border-width: 0.5px;
 }
 
 @font-face {

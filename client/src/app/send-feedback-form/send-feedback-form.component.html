@@ -2,52 +2,70 @@
     <div fxLayoutAlign="center">
         <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
     </div>
-    <a href="">< Retour</a>
+    <a href="">&lt; Retour</a>
     <h1>Envoi de feedback</h1>
     <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail contenant vos
         retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
-    <h2>Qui êtes-vous ?</h2>
-    <div fxLayout="row" [fxLayout.lt-md]="'column'">
-        <div fxLayout="column" fxFlex="grow" class="form-input">
-            <label for="your-email">Votre email Zenika *</label>
-            <input type="text" class="input-text" id="your-email" placeholder="Exemple: pierre.douchon@zenika.com">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm">
+        <h2>Qui êtes-vous ?</h2>
+        <div fxLayout="row" [fxLayout.lt-md]="'column'">
+            <div fxLayout="column" fxFlex="grow" class="form-input">
+                <label for="your-email">Votre email Zenika *</label>
+                <input type="text" class="input-text input-invalid" id="your-email"
+                    placeholder="pierre.douchon@zenika.com" formControlName="yourEmail" required
+                    [ngClass]="{'input-invalid': myform.submitted && yourEmail?.invalid}">
+                <small *ngIf="myform.submitted && yourEmail?.invalid">{{yourEmailErrorMessage}}</small>
+            </div>
+            <div fxLayout="column" fxFlex="grow" class="form-input">
+                <label for="your-name">Votre nom</label>
+                <input type="text" class="input-text" id="your-name" placeholder="Pierre Duchon"
+                    formControlName="yourName">
+            </div>
         </div>
-        <div fxLayout="column" fxFlex="grow" class="form-input">
-            <label for="your-name">Votre nom</label>
-            <input type="text" class="input-text" id="your-name" placeholder="Pierre Duchon">
+        <h2>Qui est votre collègue ?</h2>
+        <div fxLayout="row" [fxLayout.lt-md]="'column'">
+            <div fxLayout="column" fxFlex="grow" class="form-input">
+                <label for="coworker-email">Email de votre collègue *</label>
+                <input type="text" class="input-text" id="coworker-email" placeholder="pierre.douchon@zenika.com"
+                    formControlName="coworkerEmail" required
+                    [ngClass]="{'input-invalid': myform.submitted && coworkerEmail?.invalid}">
+                <small *ngIf="myform.submitted && coworkerEmail?.invalid">{{coworkerEmailErrorMessage}}</small>
+            </div>
+            <div fxLayout="column" fxFlex="grow" class="form-input">
+                <label for="coworker-name">Nom de votre collègue</label>
+                <input type="text" class="input-text" id="coworker-name" placeholder="Pierre Duchon"
+                    formControlName="coworkerName">
+            </div>
         </div>
-    </div>
-    <h2>Qui est votre collègue ?</h2>
-    <div fxLayout="row" [fxLayout.lt-md]="'column'">
-        <div fxLayout="column" fxFlex="grow" class="form-input">
-            <label for="coworker-email">Email de votre collègue *</label>
-            <input type="text" class="input-text" id="coworker-email" placeholder="Exemple: pierre.douchon@zenika.om'">
+        <h2>Votre retour</h2>
+        <div fxLayout="column">
+            <div fxLayout="column" class="form-input">
+                <label for="positive-feedback">Points positifs *</label>
+                <textarea class="textarea" name="positive-feedback" id="positive-feedback"
+                    placeholder="Collègue à l’écoute!" formControlName="postitiveFeedback" required
+                    [ngClass]="{'input-invalid': myform.submitted && postitiveFeedback?.invalid}">
+                </textarea>
+                <small *ngIf="myform.submitted && postitiveFeedback?.invalid">{{postitiveFeedbackErrorMessage}}</small>
+            </div>
+            <div fxLayout="column" class="form-input">
+                <label for="to-improve-feedback">Axes d’améliorations *</label>
+                <textarea class="textarea" name="to-improve-feedback" id="to-improve-feedback" placeholder="Ponctualité"
+                    formControlName="toImproveFeedback" required
+                    [ngClass]="{'input-invalid': myform.submitted && toImproveFeedback?.invalid}">
+                </textarea>
+                <small *ngIf="myform.submitted && toImproveFeedback?.invalid">{{toImproveFeedbackErrorMessage}}</small>
+
+            </div>
+            <div fxLayout="column" class="form-input">
+                <label for="comment">Commentaires</label>
+                <textarea class="textarea" name="comment" id="comment"
+                    placeholder="Bravo pour ton talk à la dernière technozaure !" formControlName="comment">
+                </textarea>
+            </div>
         </div>
-        <div fxLayout="column" fxFlex="grow" class="form-input">
-            <label for="coworker-name">Nom de votre collègue</label>
-            <input type="text" class="input-text" id="coworker-name" placeholder="Pierre Duchon">
+        <div fxLayoutAlign="end" [fxLayoutAlign.lt-sm]="'center'">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
         </div>
-    </div>
-    <h2>Votre retour</h2>
-    <div fxLayout="column">
-        <div fxLayout="column" class="form-input">
-            <label for="positive-feedback">Points positifs *</label>
-            <textarea class="textarea" name="positive-feedback" id="positive-feedback"
-                placeholder="Exemple : Collègue à l’écoute!"></textarea>
-        </div>
-        <div fxLayout="column" class="form-input">
-            <label for="to-improve-feedback">Axes d’améliorations *</label>
-            <textarea class="textarea" name="to-improve-feedback" id="to-improve-feedback"
-                placeholder="Exemple : Ponctualité"></textarea>
-        </div>
-        <div fxLayout="column" class="form-input">
-            <label for="comment">Commentaires</label>
-            <textarea class="textarea" name="comment" id="comment"
-                placeholder="Exemple : Bravo pour ton talk à la dernière technozaure !"></textarea>
-        </div>
-    </div>
-    <div fxLayoutAlign="end" [fxLayoutAlign.lt-sm]="'center'">
-        <button class="btn btn-primary">Envoyer</button>
-    </div>
+    </form>
 </div>

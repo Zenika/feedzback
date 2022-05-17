@@ -15,6 +15,7 @@ import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.compo
 import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.component';
 import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     ApolloModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
