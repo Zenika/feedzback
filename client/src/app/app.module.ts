@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.component';
 import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.component';
 import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.componen
     FormsModule,
     ApolloModule,
     HttpClientModule,
-    
+    FlexLayoutModule
  
   ],
   providers: [
