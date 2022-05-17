@@ -1,6 +1,5 @@
 
 import {Datastore} from '@google-cloud/datastore';
-
 import dotEnv from 'dotenv'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
@@ -36,28 +35,31 @@ const datastore= new Datastore({
 //   });
 // };
 
-export const sendEmail = async ({email, message}) => {
+export const sendEmail = async ({sendRequest}) => {
   
   const envi = process.env.NODE_ENV || 'development';
-  if (envi=='development') {
-    return 'le feedback a été envoyé(une reponse automatique en mode '+
-      'de developement)';
-  }
-  
-  const template = replaceHtmlVars(emailTemplate , message , email);
-  const msgTemp =   {
-    to: email,
-    from: 'bnyat.azizsharif@zenika.com',
+  const template = replaceHtmlVars(emailTemplate , sendRequest);
+
+let msg =   {
+    to: sendRequest.receverEmail,
+    from: sendRequest.email,
     subject:'FeedZback',
     html: template,
   }
+  if (envi !== 'production') {
+    msg = {
+      ...msg,
+      to: 'feedzback@zenika.com',
+      from: 'feedzback@zenika.com',
+    };
+  } 
 
-   const res =
-   await  myMailgun.messages().send(msgTemp)
-   .then(()=> {return "Votre feedback a été envoyé!"})
-   .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"}) 
-   // insertValue(msg);
+  let res;
+  res = await  myMailgun.messages().send(msg)
+     .then(()=> {return "Votre feedback a été envoyé!"})
+     .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"})
    
+   // insertValue(msg); 
     return res;
 
 };

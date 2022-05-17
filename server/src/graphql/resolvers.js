@@ -8,7 +8,7 @@ export const resolvers = {
     allMessage: () => getEmail(),
   },
   Mutation: {
-    createMessage: async (_, payload)=> await sendEmail(payload),
+    sendFeedback: async (_, payload)=> await sendEmail(payload),
     sendFeedbackRequest : async(_,request)=> await askFeedback(request)
   },
 };

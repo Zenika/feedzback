@@ -1363,7 +1363,7 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@npmcli/arborist@^5.0.0", "@npmcli/arborist@^5.0.4":
-  "version" "5.1.1"
+  "version" "5.2.0"
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/installed-package-contents" "^1.0.7"
@@ -2339,7 +2339,7 @@
   "version" "1.1.2"
 
 "builtins@^5.0.0":
-  "version" "5.0.0"
+  "version" "5.0.1"
   dependencies:
     "semver" "^7.0.0"
 
@@ -2688,7 +2688,7 @@
   dependencies:
     "ms" "^2.1.1"
 
-"debug@^4.1.0", "debug@^4.3.1":
+"debug@^4.1.0", "debug@^4.3.3":
   "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   "version" "4.3.4"
@@ -4662,7 +4662,7 @@
   "version" "5.2.0"
 
 "just-diff@^5.0.1":
-  "version" "5.0.1"
+  "version" "5.0.2"
 
 "jwa@^2.0.0":
   "integrity" "sha512-jrZ2Qx916EA+fq9cEAeCROWPTfCwi1IVHqT2tapuqLEVVDKFDENFw1oL+MwrTvH6msKxsd1YTDVw6uKEcsrLEA=="
@@ -4865,7 +4865,7 @@
     "yallist" "^4.0.0"
 
 "lru-cache@^7.4.4", "lru-cache@^7.5.1", "lru-cache@^7.7.1":
-  "version" "7.8.1"
+  "version" "7.9.0"
 
 "mailgun-js@^0.22.0":
   "integrity" "sha512-a2alg5nuTZA9Psa1pSEIEsbxr1Zrmqx4VkgGCQ30xVh0kIH7Bu57AYILo+0v8QLSdXtCyLaS+KVmdCrQo0uWFA=="
@@ -4889,8 +4889,8 @@
   dependencies:
     "semver" "^6.0.0"
 
-"make-fetch-happen@^10.0.3", "make-fetch-happen@^10.0.6", "make-fetch-happen@^10.1.2":
-  "version" "10.1.2"
+"make-fetch-happen@^10.0.3", "make-fetch-happen@^10.0.6", "make-fetch-happen@^10.1.3":
+  "version" "10.1.3"
   dependencies:
     "agentkeepalive" "^4.2.1"
     "cacache" "^16.0.2"
@@ -5165,7 +5165,7 @@
     "validate-npm-package-name" "^4.0.0"
 
 "npm-packlist@^5.0.0":
-  "version" "5.0.2"
+  "version" "5.0.3"
   dependencies:
     "glob" "^8.0.1"
     "ignore-walk" "^5.0.1"
@@ -5207,10 +5207,10 @@
 "npm-user-validate@^1.0.1":
   "version" "1.0.1"
 
-"npm@^8.9.0":
-  "integrity" "sha512-4mhU5nEv7ktvHmJnM2nmWP2Zk4cCsD26imX+dvZ76HOuFUnIpU6+i1MWuoMg8N/xWHQgB0d2/ybWEGgJR9M/pw=="
-  "resolved" "https://registry.npmjs.org/npm/-/npm-8.9.0.tgz"
-  "version" "8.9.0"
+"npm@^8.10.0":
+  "integrity" "sha512-6oo65q9Quv9mRPGZJufmSH+C/UFdgelwzRXiglT/2mDB50zdy/lZK5dFY0TJ9fJ/8gHqnxcX1NM206KLjTBMlQ=="
+  "resolved" "https://registry.npmjs.org/npm/-/npm-8.10.0.tgz"
+  "version" "8.10.0"
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/arborist" "^5.0.4"
@@ -5247,7 +5247,7 @@
     "libnpmsearch" "^5.0.2"
     "libnpmteam" "^4.0.2"
     "libnpmversion" "^3.0.1"
-    "make-fetch-happen" "^10.1.2"
+    "make-fetch-happen" "^10.1.3"
     "minipass" "^3.1.6"
     "minipass-pipeline" "^1.2.4"
     "mkdirp" "^1.0.4"
@@ -6149,13 +6149,13 @@
     "socks" "~2.3.2"
 
 "socks-proxy-agent@^6.1.1":
-  "version" "6.1.1"
+  "version" "6.2.0"
   dependencies:
     "agent-base" "^6.0.2"
-    "debug" "^4.3.1"
-    "socks" "^2.6.1"
+    "debug" "^4.3.3"
+    "socks" "^2.6.2"
 
-"socks@^2.6.1":
+"socks@^2.6.2":
   "version" "2.6.2"
   dependencies:
     "ip" "^1.1.5"
