@@ -52,8 +52,6 @@ export class SendFeedbackFormComponent implements OnInit {
   }
 
   get postitiveFeedbackErrorMessage(): String | null {
-
-    console.log(this.postitiveFeedback)
     if (this.postitiveFeedback?.hasError('required'))
       return "Ce champ est requis"
     if (this.postitiveFeedback?.hasError('maxlength'))
