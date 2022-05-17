@@ -12,7 +12,7 @@
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-email">Votre email Zenika *</label>
-                <input type="text" class="input-text input-invalid" id="your-email"
+                <input type="email" class="input-text input-invalid" id="your-email"
                     placeholder="pierre.douchon@zenika.com" formControlName="senderEmail" required
                     [ngClass]="{'input-invalid': myform.submitted && senderEmail?.invalid}">
                 <small *ngIf="myform.submitted && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
@@ -27,7 +27,7 @@
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-email">Email de votre collègue *</label>
-                <input type="text" class="input-text" id="coworker-email" placeholder="pierre.douchon@zenika.com"
+                <input type="email" class="input-text" id="coworker-email" placeholder="pierre.douchon@zenika.com"
                     formControlName="receverEmail" required
                     [ngClass]="{'input-invalid': myform.submitted && receverEmail?.invalid}">
                 <small *ngIf="myform.submitted && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
