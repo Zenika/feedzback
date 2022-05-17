@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -7,19 +8,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./send-feedback-form.component.css']
 })
 export class SendFeedbackFormComponent implements OnInit {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+
   private feedbackMaxLength = 500;
+  private queryParams = this.activatedRoute.snapshot.queryParamMap;
 
   public form = new FormGroup({
-    yourEmail: new FormControl('', [Validators.required, Validators.email]),
-    yourName: new FormControl(''),
-    coworkerEmail: new FormControl('', [Validators.required, Validators.email]),
-    coworkerName: new FormControl(''),
+    yourEmail: new FormControl(this.queryParams.get('senderName'), [Validators.required, Validators.email]),
+    yourName: new FormControl(this.queryParams.get('senderEmail')),
+    coworkerEmail: new FormControl(this.queryParams.get('receverName'), [Validators.required, Validators.email]),
+    coworkerName: new FormControl(this.queryParams.get('receverEmail')),
     postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
     toImproveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
     comment: new FormControl(''),
   });
-
-  constructor() { }
 
   ngOnInit(): void {
   }
