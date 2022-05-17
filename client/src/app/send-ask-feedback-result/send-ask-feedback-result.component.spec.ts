@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SendFeedbackResultComponent } from './send-feedback-result.component';
+import { SendAskFeedbackResultComponent } from './send-ask-feedback-result.component';
 
 describe('SendFeedbackResultComponent', () => {
-  let component: SendFeedbackResultComponent;
-  let fixture: ComponentFixture<SendFeedbackResultComponent>;
+  let component: SendAskFeedbackResultComponent;
+  let fixture: ComponentFixture<SendAskFeedbackResultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SendFeedbackResultComponent ]
+      declarations: [ SendAskFeedbackResultComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SendFeedbackResultComponent);
+    fixture = TestBed.createComponent(SendAskFeedbackResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

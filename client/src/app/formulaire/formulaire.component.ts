@@ -61,7 +61,7 @@ export class FormulaireComponent implements OnInit {
         + this.sendRequest.receverEmail; 
         this.router.navigate(['/result',{result: this.result}])
       } else {
-        this.result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+        this.result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
         this.router.navigate(['/result',{result: this.result}])
       }
 

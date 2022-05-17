@@ -14,7 +14,7 @@ import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.co
 import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.component';
 import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SendFeedbackResultComponent } from './send-feedback-result/send-feedback-result.component';
+import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { SendFeedbackResultComponent } from './send-feedback-result/send-feedbac
     DemandeFeedbackComponent,
     FeedbackEnvoyeComponent,
     DemandeEnvoyeComponent,
-    SendFeedbackResultComponent
+    SendAskFeedbackResultComponent
   ],
   imports: [
     BrowserModule,

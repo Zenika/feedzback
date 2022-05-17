@@ -38,7 +38,15 @@ export class DemandeFeedbackComponent implements OnInit {
       }
     }).subscribe((data:any)=> {
       this.result =  data.data.sendFeedbackRequest;
-      this.router.navigate(['/demandeEnvoye', {result: this.result}])
+      if(this.result === "Votre feedback a été envoyé!")
+      {
+        this.result = "Félicitations! Votre demande vient d’être envoyée à : "
+        + this.askFeedbackRequest.senderEmail; 
+        this.router.navigate(['/result',{result: this.result}])
+      } else {
+        this.result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+        this.router.navigate(['/result',{result: this.result}])
+      }
     })
   }
 

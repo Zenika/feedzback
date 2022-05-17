@@ -5,7 +5,7 @@ import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.co
 import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.component';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { HomeComponent } from './home/home.component';
-import { SendFeedbackResultComponent } from './send-feedback-result/send-feedback-result.component';
+import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 
 const routes: Routes = [
   {path:'formulaire',component:FormulaireComponent},
@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'demandeFeedback',component:DemandeFeedbackComponent},
   {path:'feedbackEnvoye',component:FeedbackEnvoyeComponent},
   {path:'demandeEnvoye',component:DemandeEnvoyeComponent},
-  {path:'result',component:SendFeedbackResultComponent},
+  {path:'result',component:SendAskFeedbackResultComponent},
   {path:'**',redirectTo:'home'}
 ];
 
