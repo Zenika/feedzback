@@ -54,8 +54,17 @@ export class FormulaireComponent implements OnInit {
         sendRequest: this.sendRequest,
       },
     }).subscribe((data:any)=>{
-      this.result = data.data.createMessage;
-      this.router.navigate(['/feedbackEnvoye',{result: this.result}])
+      this.result = data.data.sendFeedback; 
+      if(this.result === "Votre feedback a été envoyé!")
+      {
+        this.result = "Félicitations! Votre feedback vient d’être envoyée à : "
+        + this.sendRequest.receverEmail; 
+        this.router.navigate(['/result',{result: this.result}])
+      } else {
+        this.result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+        this.router.navigate(['/result',{result: this.result}])
+      }
+
     });
   }
 }

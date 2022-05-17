@@ -1,0 +1,9 @@
+<div fxLayout="column" fxLayoutAlign="center " fxFlexOffset="10px" >
+  <img src="../../assets/logo-feedZback.svg"/>
+  <div  fxFlexOffset="70px" ></div>
+<div >{{result}}</div>
+<div  fxFlexOffset="70px" ></div>
+<button [hidden]="result.includes('Félicitations')">REESAYER</button>
+<div  fxFlexOffset="10px" ></div>
+<button  [style]="{'background-color': (result.includes('Désolé'))? '#A02C5A': '#D52150' }">Retouner</button>
+</div>
