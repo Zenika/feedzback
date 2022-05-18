@@ -49,5 +49,4 @@ export class DemandeFeedbackComponent implements OnInit {
       }
     })
   }
-
 }

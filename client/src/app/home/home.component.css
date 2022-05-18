@@ -64,8 +64,6 @@ border-color: #D52150;
     line-height: 25px;
     text-align: center;
     color: #FFFFFF;
- 
-
 }
 
 .home-ask-text-btn {
@@ -77,26 +75,20 @@ font-size: 18px;
 line-height: 25px;
 text-align: center;
 
-
-
 color: #FFFFFF;
 }
+
 .home-send-feedback-icon {
-
   color: #FFFFFF;
-
 }
 
 .home-ask-feedback-icon {
 
   color: #FFFFFF;
-    
-
 }
 
 .home-card {
   background: #FFFFFF;
-
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2),
     0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
@@ -110,7 +102,6 @@ font-style: normal;
 font-weight: 700;
 font-size: 14px;
 line-height: 19px;
-
 
 color: #4E4B4B;
 }
