@@ -5,7 +5,6 @@ import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormulaireComponent } from './formulaire/formulaire.component';
 import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -20,7 +19,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    FormulaireComponent,
     HomeComponent,
     DemandeFeedbackComponent,
     FeedbackEnvoyeComponent,
