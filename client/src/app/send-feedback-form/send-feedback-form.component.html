@@ -18,9 +18,11 @@
                 <small *ngIf="myform.submitted && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
-                <label for="your-name">Votre nom</label>
+                <label for="your-name">Votre nom *</label>
                 <input type="text" class="input-text" id="your-name" placeholder="Pierre Duchon"
-                    formControlName="senderName">
+                    formControlName="senderName"
+                    [ngClass]="{'input-invalid': myform.submitted && senderName?.invalid}">
+                <small *ngIf="myform.submitted && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
             </div>
         </div>
         <h2>Qui est votre collègue ?</h2>
@@ -33,9 +35,11 @@
                 <small *ngIf="myform.submitted && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
-                <label for="coworker-name">Nom de votre collègue</label>
+                <label for="coworker-name">Nom de votre collègue *</label>
                 <input type="text" class="input-text" id="coworker-name" placeholder="Pierre Duchon"
-                    formControlName="receverName">
+                    formControlName="receverName"
+                    [ngClass]="{'input-invalid': myform.submitted && receverName?.invalid}">
+                <small *ngIf="myform.submitted && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
             </div>
         </div>
         <h2>Votre retour</h2>
