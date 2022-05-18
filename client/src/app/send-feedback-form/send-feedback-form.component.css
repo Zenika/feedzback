@@ -22,6 +22,7 @@ h2 {
 h1 {
     color: #D52150;
     font-weight: bold;
+    margin-left: 5px;
 }
 
 small {
@@ -35,4 +36,12 @@ a {
 
 .textarea {
     resize: vertical;
+}
+
+#vector-arrow {
+    background-color: #D52150;
+    border-radius: 2px;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
 }
