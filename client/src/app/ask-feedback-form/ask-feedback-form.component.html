@@ -7,7 +7,8 @@
         <img src="../../assets/question-mark.svg" alt="vector-arrow">
         <h1>Demande de feedback</h1>
     </div>
-    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à vous faire ses retours !</span>
+    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
+        vous faire ses retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui êtes-vous ?</h2>
@@ -16,13 +17,14 @@
                 <label for="your-email">Votre email Zenika *</label>
                 <input type="email" class="input-text input-invalid" id="your-email"
                     placeholder="pierre.douchon@example.com" formControlName="senderEmail" required
-                    [ngClass]="{'input-invalid': myform.submitted && senderEmail?.invalid}"  email>
+                    [ngClass]="{'input-invalid': myform.submitted && senderEmail?.invalid}" email>
                 <small *ngIf="myform.submitted && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-name">Votre nom *</label>
                 <input type="text" class="input-text" id="your-name" placeholder="Pierre Duchon"
-                    formControlName="senderName" required [ngClass]="{'input-invalid': myform.submitted && senderName?.invalid}">
+                    formControlName="senderName" required
+                    [ngClass]="{'input-invalid': myform.submitted && senderName?.invalid}">
                 <small *ngIf="myform.submitted && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
             </div>
         </div>
@@ -48,7 +50,8 @@
             <div fxLayout="column" class="form-input">
                 <label for="message">Message</label>
                 <textarea class="textarea" name="message" id="message"
-                    placeholder="Bravo pour ton talk à la dernière technozaure !" formControlName="message">
+                    placeholder="Ton avis à propos de moi m’intéresse. Merci d’avance pour tes retours !"
+                    formControlName="message">
                 </textarea>
             </div>
         </div>

@@ -1,7 +1,9 @@
 export class AskFeedbackRequest {
-    name: string = ''
-    email: string = ''
-    senderName: string =''
-    senderEmail: string=''
-    text: string =''
+    constructor(
+        public name: string = '',
+        public email: string = '',
+        public senderName: string = '',
+        public senderEmail: string = '',
+        public text: string = ''
+    ) { }
 }

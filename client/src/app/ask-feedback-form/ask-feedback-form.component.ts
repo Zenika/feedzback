@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
-import { SendRequest } from '../model/sendRequest';
+import { AskFeedbackRequest } from '../model/askFeedbackRequest';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -16,10 +16,10 @@ export class AskFeedbackFormComponent implements OnInit {
   public getFormControlError = getFormControlError
 
   private mutation = gql`
-  mutation SendFeedback($sendRequest:SendRequest!){
-    sendFeedback(sendRequest:$sendRequest)
+  mutation Mutation($askFeedback: AskFeedback!) {
+    sendFeedbackRequest(askFeedback: $askFeedback)
   }
-  `;
+  `
 
   public form = new FormGroup({
     senderEmail: new FormControl(this.queryParams.get('senderEmail'), [Validators.required, Validators.email]),
@@ -43,7 +43,7 @@ export class AskFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          sendRequest: new SendRequest(
+          askFeedback: new AskFeedbackRequest(
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,
@@ -52,7 +52,7 @@ export class AskFeedbackFormComponent implements OnInit {
           ),
         },
       }).subscribe(({data}: any) => {
-        this.router.navigate(['/feedbackEnvoye', { result: data.sendFeedback }])
+        this.router.navigate(['/demandeEnvoye', { result: data.sendFeedbackRequest }])
       });
     }
   }
