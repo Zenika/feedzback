@@ -2,3 +2,6 @@
     font-family: "Nunito";
     src:  url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
 }
+* {
+    font-family: Nunito;
+}
