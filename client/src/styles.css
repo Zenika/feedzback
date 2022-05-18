@@ -50,8 +50,8 @@
 }
 
 @font-face {
-    font-family: Nunito;
-    src: url(assets/Nunito/Nunito-VariableFont_wght.ttf);
+    font-family: "Nunito";
+    src:  url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
 }
 
 * {

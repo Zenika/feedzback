@@ -1,35 +1,15 @@
-.flex-contaner {
-  display: flex;
-}
-
-.flex-right {
-  -ms-flex-align: start;
-}
-
-.flex-column {
-  flex-direction: column;
-}
-
 .padTop {
   padding-top: 30px;
 }
 
 .home-tittle {
-
-  font-family: 'Nunito';
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 22px;
   color: #D52150;
 }
 
-
 .home-description {
-
-
-  font-family: 'Nunito';
-  font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 19px;
@@ -42,8 +22,6 @@
   background: #D52150;
   border-color: #D52150;
   border-radius: 10px;
-
-
 }
 
 .home-ask-feedback-btn {
@@ -53,55 +31,37 @@
 
 }
 
-.pad {
+.btn-margin {
   margin-top: 55px;
   margin-bottom: 55px;
-
 }
 
 .home-send-text-btn {
-
-  font-family: "Nunito";
-  font-style: normal;
   font-weight: 900;
   font-size: 18px;
   line-height: 25px;
   text-align: center;
   color: #FFFFFF;
-
-
 }
 
 .home-ask-text-btn {
-
-  font-family: 'Nunito';
-  font-style: normal;
   font-weight: 900;
   font-size: 18px;
   line-height: 25px;
   text-align: center;
-
-
-
   color: #FFFFFF;
 }
 
 .home-send-feedback-icon {
-
   color: #FFFFFF;
-
 }
 
 .home-ask-feedback-icon {
-
   color: #FFFFFF;
-
-
 }
 
 .home-card {
   background: #FFFFFF;
-
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2),
     0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
@@ -109,13 +69,8 @@
 }
 
 .home-guide-text {
-
-  font-family: 'Nunito';
-  font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 19px;
-
-
   color: #4E4B4B;
 }
