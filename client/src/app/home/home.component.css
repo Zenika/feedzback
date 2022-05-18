@@ -13,12 +13,10 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 19px;
-
   color: #4E4B4B;
 }
 
 .home-send-feedback-btn {
-
   background: #D52150;
   border-color: #D52150;
   border-radius: 10px;
@@ -28,13 +26,13 @@
   background: #D52150;
   border-radius: 10px;
   border-color: #D52150;
-
 }
 
 .btn-margin {
   margin-top: 55px;
   margin-bottom: 55px;
 }
+
 
 .home-send-text-btn {
   font-weight: 900;

@@ -15,54 +15,50 @@
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-email">Votre email Zenika *</label>
-                <input type="email" class="input-text input-invalid" id="your-email"
+                <input type="email" class="input-text form-control" id="your-email"
                     placeholder="pierre.douchon@example.com" formControlName="senderEmail" required
-                    [ngClass]="{'input-invalid': myform.submitted && senderEmail?.invalid}"  email>
-                <small *ngIf="myform.submitted && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
+                  email>
+                <small *ngIf="senderEmail?.touched && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-name">Votre nom *</label>
-                <input type="text" class="input-text" id="your-name" placeholder="Pierre Duchon"
-                    formControlName="senderName" required [ngClass]="{'input-invalid': myform.submitted && senderName?.invalid}">
-                <small *ngIf="myform.submitted && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
+                <input type="text" class="input-text form-control" id="your-name" placeholder="Pierre Duchon"
+                    formControlName="senderName" required >
+                <small *ngIf="senderName?.touched && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
             </div>
         </div>
         <h2>Qui est votre collègue ?</h2>
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-email">Email de votre collègue *</label>
-                <input type="email" class="input-text" id="coworker-email" placeholder="pierre.douchon@example.com"
-                    formControlName="receverEmail" required
-                    [ngClass]="{'input-invalid': myform.submitted && receverEmail?.invalid}" email>
-                <small *ngIf="myform.submitted && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
+                <input type="email" class="input-text form-control" id="coworker-email" placeholder="pierre.douchon@example.com"
+                    formControlName="receverEmail" required email>
+                <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-name">Nom de votre collègue *</label>
-                <input type="text" class="input-text" id="coworker-name" placeholder="Pierre Duchon" required
-                    formControlName="receverName"
-                    [ngClass]="{'input-invalid': myform.submitted && receverName?.invalid}">
-                <small *ngIf="myform.submitted && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
+                <input type="text" class="input-text form-control" id="coworker-name" placeholder="Pierre Duchon" required
+                    formControlName="receverName">
+                <small *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
             </div>
         </div>
         <h2>Votre retour</h2>
         <div fxLayout="column">
             <div fxLayout="column" class="form-input">
                 <label for="positive-feedback">Points positifs *</label>
-                <textarea class="textarea" name="positive-feedback" id="positive-feedback"
-                    placeholder="Collègue à l’écoute!" formControlName="postitiveFeedback" required
-                    [ngClass]="{'input-invalid': myform.submitted && postitiveFeedback?.invalid}">
+                <textarea class="textarea form-control" name="positive-feedback" id="positive-feedback"
+                    placeholder="Collègue à l’écoute!" formControlName="postitiveFeedback" required>
                 </textarea>
                 <small
-                    *ngIf="myform.submitted && postitiveFeedback?.invalid">{{getFormControlError(postitiveFeedback!)}}</small>
+                    *ngIf="postitiveFeedback?.touched && postitiveFeedback?.invalid">{{getFormControlError(postitiveFeedback!)}}</small>
             </div>
             <div fxLayout="column" class="form-input">
                 <label for="to-improve-feedback">Axes d’améliorations *</label>
-                <textarea class="textarea" name="to-improve-feedback" id="to-improve-feedback" placeholder="Ponctualité"
-                    formControlName="toImproveFeedback" required
-                    [ngClass]="{'input-invalid': myform.submitted && toImproveFeedback?.invalid}">
+                <textarea class="textarea form-control" name="to-improve-feedback" id="to-improve-feedback" placeholder="Ponctualité"
+                    formControlName="toImproveFeedback" required>
                 </textarea>
                 <small
-                    *ngIf="myform.submitted && toImproveFeedback?.invalid">{{getFormControlError(toImproveFeedback!)}}</small>
+                    *ngIf="toImproveFeedback?.touched && toImproveFeedback?.invalid">{{getFormControlError(toImproveFeedback!)}}</small>
 
             </div>
             <div fxLayout="column" class="form-input">

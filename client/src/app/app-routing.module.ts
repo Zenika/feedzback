@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'ask',component:AskFeedbackFormComponent},
   {path:'feedbackEnvoye',component:FeedbackEnvoyeComponent},
   {path:'demandeEnvoye',component:DemandeEnvoyeComponent},
-  {path:'send-feedback', component:SendFeedbackFormComponent},
+  {path:'send', component:SendFeedbackFormComponent},
   {path:'**',redirectTo:'home'}
 ];
 
