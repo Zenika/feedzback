@@ -16,14 +16,14 @@
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-email">Votre email Zenika *</label>
                 <input type="email" class="input-text form-control" id="your-email"
-                    placeholder="pierre.douchon@example.com" formControlName="senderEmail" required
-                  email>
-                <small *ngIf="senderEmail?.touched && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
+                    placeholder="pierre.douchon@example.com" formControlName="senderEmail" required email>
+                <small
+                    *ngIf="senderEmail?.touched && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-name">Votre nom *</label>
                 <input type="text" class="input-text form-control" id="your-name" placeholder="Pierre Duchon"
-                    formControlName="senderName" required >
+                    formControlName="senderName" required>
                 <small *ngIf="senderName?.touched && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
             </div>
         </div>
@@ -31,15 +31,17 @@
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-email">Email de votre collègue *</label>
-                <input type="email" class="input-text form-control" id="coworker-email" placeholder="pierre.douchon@example.com"
-                    formControlName="receverEmail" required email>
-                <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
+                <input type="email" class="input-text form-control" id="coworker-email"
+                    placeholder="pierre.douchon@example.com" formControlName="receverEmail" required email>
+                <small
+                    *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-name">Nom de votre collègue *</label>
-                <input type="text" class="input-text form-control" id="coworker-name" placeholder="Pierre Duchon" required
-                    formControlName="receverName">
-                <small *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
+                <input type="text" class="input-text form-control" id="coworker-name" placeholder="Pierre Duchon"
+                    required formControlName="receverName">
+                <small
+                    *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
             </div>
         </div>
         <h2>Votre retour</h2>
@@ -54,8 +56,8 @@
             </div>
             <div fxLayout="column" class="form-input">
                 <label for="to-improve-feedback">Axes d’améliorations *</label>
-                <textarea class="textarea form-control" name="to-improve-feedback" id="to-improve-feedback" placeholder="Ponctualité"
-                    formControlName="toImproveFeedback" required>
+                <textarea class="textarea form-control" name="to-improve-feedback" id="to-improve-feedback"
+                    placeholder="Ponctualité" formControlName="toImproveFeedback" required>
                 </textarea>
                 <small
                     *ngIf="toImproveFeedback?.touched && toImproveFeedback?.invalid">{{getFormControlError(toImproveFeedback!)}}</small>

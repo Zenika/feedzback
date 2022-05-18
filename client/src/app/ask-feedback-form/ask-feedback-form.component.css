@@ -34,21 +34,3 @@ a {
 .textarea {
     resize: vertical;
 }
-
-.form-control.ng-untouched,
-.form-control.ng-valid {
-    border-color: #ccc;
-}
-
-.form-control-lg.ng-untouched,
-.form-control-lg.ng-valid {
-    border-color: #ccc;
-}
-
-input:required {
-    border-color: #D52150;
-}
-
-textarea:required {
-    border-color: #D52150;
-}

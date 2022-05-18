@@ -45,6 +45,7 @@ export class SendFeedbackFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.form.markAllAsTouched()
     if (this.form.valid) {
       this.apollo.mutate({
         mutation: this.mutation,

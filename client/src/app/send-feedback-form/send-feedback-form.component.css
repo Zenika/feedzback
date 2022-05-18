@@ -42,21 +42,3 @@ a {
     height: 20px;
     padding: 3px;
 }
-
-.form-control.ng-untouched,
-.form-control.ng-valid {
-    border-color: #ccc;
-}
-
-.form-control-lg.ng-untouched,
-.form-control-lg.ng-valid {
-    border-color: #ccc;
-}
-
-input:required {
-    border-color: red;
-}
-
-textarea:required {
-    border-color: red;
-}
