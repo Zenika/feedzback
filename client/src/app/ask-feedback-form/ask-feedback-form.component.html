@@ -4,11 +4,10 @@
     </div>
     <a href="">&lt; Retour</a>
     <div fxLayout="row" fxLayoutAlign="start center">
-        <img id="vector-arrow" src="../../assets/vector-arrow.svg" alt="vector-arrow">
-        <h1>Envoi de feedback</h1>
+        <img src="../../assets/question-mark.svg" alt="vector-arrow">
+        <h1>Demande de feedback</h1>
     </div>
-    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail contenant vos
-        retours !</span>
+    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à vous faire ses retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui êtes-vous ?</h2>
@@ -44,31 +43,12 @@
                 <small *ngIf="myform.submitted && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
             </div>
         </div>
-        <h2>Votre retour</h2>
+        <h2>Votre demande</h2>
         <div fxLayout="column">
             <div fxLayout="column" class="form-input">
-                <label for="positive-feedback">Points positifs *</label>
-                <textarea class="textarea" name="positive-feedback" id="positive-feedback"
-                    placeholder="Collègue à l’écoute!" formControlName="postitiveFeedback" required
-                    [ngClass]="{'input-invalid': myform.submitted && postitiveFeedback?.invalid}">
-                </textarea>
-                <small
-                    *ngIf="myform.submitted && postitiveFeedback?.invalid">{{getFormControlError(postitiveFeedback!)}}</small>
-            </div>
-            <div fxLayout="column" class="form-input">
-                <label for="to-improve-feedback">Axes d’améliorations *</label>
-                <textarea class="textarea" name="to-improve-feedback" id="to-improve-feedback" placeholder="Ponctualité"
-                    formControlName="toImproveFeedback" required
-                    [ngClass]="{'input-invalid': myform.submitted && toImproveFeedback?.invalid}">
-                </textarea>
-                <small
-                    *ngIf="myform.submitted && toImproveFeedback?.invalid">{{getFormControlError(toImproveFeedback!)}}</small>
-
-            </div>
-            <div fxLayout="column" class="form-input">
-                <label for="comment">Commentaires</label>
-                <textarea class="textarea" name="comment" id="comment"
-                    placeholder="Bravo pour ton talk à la dernière technozaure !" formControlName="comment">
+                <label for="message">Message</label>
+                <textarea class="textarea" name="message" id="message"
+                    placeholder="Bravo pour ton talk à la dernière technozaure !" formControlName="message">
                 </textarea>
             </div>
         </div>

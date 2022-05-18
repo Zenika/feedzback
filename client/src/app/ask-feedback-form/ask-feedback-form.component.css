@@ -35,14 +35,6 @@ a {
     resize: vertical;
 }
 
-#vector-arrow {
-    background-color: #D52150;
-    border-radius: 2px;
-    width: 20px;
-    height: 20px;
-    padding: 3px;
-}
-
 .form-control.ng-untouched,
 .form-control.ng-valid {
     border-color: #ccc;
@@ -54,9 +46,9 @@ a {
 }
 
 input:required {
-    border-color: red;
+    border-color: #D52150;
 }
 
 textarea:required {
-    border-color: red;
+    border-color: #D52150;
 }

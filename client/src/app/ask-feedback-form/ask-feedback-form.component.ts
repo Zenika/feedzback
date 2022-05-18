@@ -1,0 +1,59 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { getFormControlError } from '../get-form-control-error';
+import { Apollo, gql } from 'apollo-angular';
+import { SendRequest } from '../model/sendRequest';
+
+@Component({
+  selector: 'app-ask-feedback-form',
+  templateUrl: './ask-feedback-form.component.html',
+  styleUrls: ['./ask-feedback-form.component.css']
+})
+export class AskFeedbackFormComponent implements OnInit {
+  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router) { }
+  private queryParams = this.activatedRoute.snapshot.queryParamMap;
+  public getFormControlError = getFormControlError
+
+  private mutation = gql`
+  mutation SendFeedback($sendRequest:SendRequest!){
+    sendFeedback(sendRequest:$sendRequest)
+  }
+  `;
+
+  public form = new FormGroup({
+    senderEmail: new FormControl(this.queryParams.get('senderEmail'), [Validators.required, Validators.email]),
+    senderName: new FormControl(this.queryParams.get('senderName'), Validators.required),
+    receverEmail: new FormControl(this.queryParams.get('receverEmail'), [Validators.required, Validators.email]),
+    receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
+    message: new FormControl(''),
+  });
+
+  get senderEmail() { return this.form.get('senderEmail') }
+  get senderName() { return this.form.get('senderName') }
+  get receverEmail() { return this.form.get('receverEmail') }
+  get receverName() { return this.form.get('receverName') }
+  get message() { return this.form.get('message') }
+
+  ngOnInit(): void {
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.apollo.mutate({
+        mutation: this.mutation,
+        variables: {
+          sendRequest: new SendRequest(
+            this.senderName?.value,
+            this.senderEmail?.value,
+            this.receverName?.value,
+            this.receverEmail?.value,
+            this.message?.value
+          ),
+        },
+      }).subscribe(({data}: any) => {
+        this.router.navigate(['/feedbackEnvoye', { result: data.sendFeedback }])
+      });
+    }
+  }
+}

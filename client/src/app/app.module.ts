@@ -14,6 +14,7 @@ import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.compo
 import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.component';
 import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FeedbackEnvoyeComponent,
     DemandeEnvoyeComponent,
     SendFeedbackFormComponent,
+    AskFeedbackFormComponent,
   ],
   imports: [
     BrowserModule,
