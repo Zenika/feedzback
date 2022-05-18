@@ -1,39 +1,50 @@
 
-.padTop{
-    padding-top: 30px;
+
+.padTop {
+  padding-top: 30px;
 }
+
 .home-tittle {
+
 font-weight: 700;
 font-size: 16px;
 line-height: 22px;
 color: #D52150;
+
 }
 
 .home-description {
+
 font-weight: 700;
 font-size: 14px;
 line-height: 19px;
 
-color: #4E4B4B;
+
+  color: #4E4B4B;
 }
 
 .home-send-feedback-btn {
 
+
 background: #D52150;
 border-color: #D52150;
 border-radius: 10px;
+
 }
 
 .home-ask-feedback-btn {
-background: #D52150;
-border-radius: 10px;
-border-color: #D52150;
+  background: #D52150;
+  border-radius: 10px;
+  border-color: #D52150;
 
 }
+
 .btn-margin{
+
   margin-top: 55px;
   margin-bottom: 55px;
 }
+
 
 .home-send-text-btn{
     font-weight: 900;
@@ -49,13 +60,17 @@ font-size: 18px;
 line-height: 25px;
 text-align: center;
 color: #FFFFFF;
+
 }
+
 .home-send-feedback-icon {
   color: #FFFFFF;
 }
 
 .home-ask-feedback-icon {
+
   color: #FFFFFF;    
+
 }
 
 .home-card {
@@ -72,3 +87,4 @@ font-size: 14px;
 line-height: 19px;
 color: #4E4B4B;
 }
+
