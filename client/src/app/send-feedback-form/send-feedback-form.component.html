@@ -10,20 +10,20 @@
     <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail contenant vos
         retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui êtes-vous ?</h2>
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-email">Votre email Zenika *</label>
                 <input type="email" class="input-text input-invalid" id="your-email"
-                    placeholder="pierre.douchon@zenika.com" formControlName="senderEmail" required
-                    [ngClass]="{'input-invalid': myform.submitted && senderEmail?.invalid}">
+                    placeholder="pierre.douchon@example.com" formControlName="senderEmail" required
+                    [ngClass]="{'input-invalid': myform.submitted && senderEmail?.invalid}"  email>
                 <small *ngIf="myform.submitted && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="your-name">Votre nom *</label>
                 <input type="text" class="input-text" id="your-name" placeholder="Pierre Duchon"
-                    formControlName="senderName" [ngClass]="{'input-invalid': myform.submitted && senderName?.invalid}">
+                    formControlName="senderName" required [ngClass]="{'input-invalid': myform.submitted && senderName?.invalid}">
                 <small *ngIf="myform.submitted && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
             </div>
         </div>
@@ -31,14 +31,14 @@
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-email">Email de votre collègue *</label>
-                <input type="email" class="input-text" id="coworker-email" placeholder="pierre.douchon@zenika.com"
+                <input type="email" class="input-text" id="coworker-email" placeholder="pierre.douchon@example.com"
                     formControlName="receverEmail" required
-                    [ngClass]="{'input-invalid': myform.submitted && receverEmail?.invalid}">
+                    [ngClass]="{'input-invalid': myform.submitted && receverEmail?.invalid}" email>
                 <small *ngIf="myform.submitted && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>
             <div fxLayout="column" fxFlex="grow" class="form-input">
                 <label for="coworker-name">Nom de votre collègue *</label>
-                <input type="text" class="input-text" id="coworker-name" placeholder="Pierre Duchon"
+                <input type="text" class="input-text" id="coworker-name" placeholder="Pierre Duchon" required
                     formControlName="receverName"
                     [ngClass]="{'input-invalid': myform.submitted && receverName?.invalid}">
                 <small *ngIf="myform.submitted && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
