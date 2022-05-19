@@ -33,6 +33,7 @@ jobs:
           working_directory: client
           command: |
                 npm ci
+                npm audit fix
                 npm i apollo-angular@1.6.0
       
       - run:
