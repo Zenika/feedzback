@@ -34,7 +34,6 @@ jobs:
           command: |
                 npm ci
                 npm i apollo-angular
-                npm install esbuild
       
       - run:
           name: install_server_dependencies
