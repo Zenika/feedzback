@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-send-feedback-result',
@@ -9,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SendAskFeedbackResultComponent implements OnInit {
 
   result!: string
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private location: Location) {
     this.result = this.route.snapshot.paramMap.get('result')!
 
     if (!this.result)
@@ -17,5 +18,13 @@ export class SendAskFeedbackResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public onRetryClick() {
+    this.location.back()
+  }
+
+  public onReturnClick() {
+    this.router.navigate(['/'])
   }
 }

@@ -3,7 +3,7 @@
   <div fxFlexOffset="70px"></div>
   <div>{{result}}</div>
   <div fxFlexOffset="70px"></div>
-  <button class="btn btn-primary" [hidden]="result.includes('Félicitations')">REESAYER</button>
+  <button class="btn btn-primary" [hidden]="result.includes('Félicitations')" (click)="onRetryClick()">REESAYER</button>
   <div fxFlexOffset="10px"></div>
-  <button class="btn btn-primary" [class.btn-secondary]="result.includes('Désolé')">RETOUR À L'ACCUEIL</button>
+  <button class="btn btn-primary" [class.btn-secondary]="result.includes('Désolé')" (click)="onReturnClick()">RETOUR À L'ACCUEIL</button>
 </div>
