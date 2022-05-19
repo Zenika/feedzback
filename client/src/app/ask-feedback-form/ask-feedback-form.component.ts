@@ -52,9 +52,16 @@ export class AskFeedbackFormComponent implements OnInit {
             this.message?.value
           ),
         },
-      }).subscribe(({data}: any) => {
-        this.router.navigate(['/demandeEnvoye', { result: data.sendFeedbackRequest }])
-      });
+      }).subscribe((data: any) => {
+        let result = data.data.sendFeedbackRequest;
+        if (result === "Votre feedback a été envoyé!") {
+          result = "Félicitations! Votre demande vient d’être envoyée à : " + this.senderName?.value;
+          this.router.navigate(['/result', { result: result }])
+        } else {
+          result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+          this.router.navigate(['/result', { result: result }])
+        }
+      })
     }
   }
 }

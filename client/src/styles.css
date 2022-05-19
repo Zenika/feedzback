@@ -5,11 +5,11 @@
     padding: 10px 75px 10px 75px;
     font-style: normal;
     font-weight: 900;
+    color: white;
 }
 
 .btn-primary {
     background-color: #D52150;
-    color: white;
 }
 
 .btn-primary:disabled {
@@ -21,7 +21,7 @@
 }
 
 .btn-secondary {
-    background-color: rgb(226, 109, 109);
+    background-color: #A02C5A;
 }
 
 .btn-secondary:hover {
