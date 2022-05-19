@@ -1,49 +1,48 @@
+<html>
 
-  <html>
-    <head>
-      <title>FeedZback</title>
-      <style>
-         @font-face {
-           font-family: "Nunito";
-           src:  url(fonts/Nunito-VariableFont_wght.ttf) format('opentype');
-         }
-         .btn {
-            background: #D52150;
-            border: 1px solid #D52150;
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-family: 'Nunito';
-            font-style: normal;
-            font-weight: 800;
-            font-size: 17px;
-            line-height: 23px;
-            text-align: center; 
-            align-items: center;
-           
-     }
-   </style>
-    </head>
-    <body>
-      <p>Bonjour <%=name%></p>
-    
-      <p>Votre collègue <%=senderName%>  vous a fait un feedzback!</p>
-      <p><b>Points positifs</b></p>
-      <p><%=pointsPositifs%></p>
-      
-        <p><b>Axes d'améliorations</b></p>
-            <p><%=axesAmeliorations%></p> 
-        <%if (commentaire !== '') { %>
-        <p ><b>Commentaires</b></p>
-        <p><%=commentaire%></p>
-        <% } %>
-        <br>
-        <br>
-        <p>Si toi aussi tu souhaites faire un feedzback, rendez-vous sur la plateforme Feedzback</p>
-        <a href="<%=urlClientForm%>">FeedZback</a>
-        
-        <p>L’équipe Feedzback</p>
+<head>
+  <title>FeedZback</title>
+  <style>
+    .btn {
+      background: #D52150;
+      border: 1px solid #D52150;
+      color: #fefefe !important;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 23px;
+      text-align: center;
+      align-items: center;
+    }
+  </style>
+</head>
 
-    </body>
-  </html>
+<body>
+  <p>Bonjour <%=name%>
+  </p>
+  <p>Votre collègue <%=senderName%> vous a fait un feedzback!</p>
+  <p><b>Points positifs</b></p>
+  <p>
+    <%=pointsPositifs%>
+  </p>
+  <p><b>Axes d'améliorations</b></p>
+  <p>
+    <%=axesAmeliorations%>
+  </p>
+  <%if (commentaire !=='' ) { %>
+    <p><b>Commentaires</b></p>
+    <p>
+      <%=commentaire%>
+    </p>
+    <% } %>
+      <br>
+      <br>
+      <p>Si toi aussi tu souhaites faire un feedzback, rendez-vous sur la plateforme Feedzback</p>
+      <a class="btn" href="<%=urlClientForm%>">FeedZback</a>
+      <p>L’équipe Feedzback</p>
+</body>
+
+</html>
