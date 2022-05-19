@@ -1,4 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 75px 10px 75px;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.btn-primary {
+    background-color: #D52150;
+    color: white;
+}
+
+.btn-primary:disabled {
+    background-color: #C0B0B4;
+}
+
+.btn-primary:hover {
+    background-color: #a41a3f;
+}
+
+.btn-secondary {
+    background-color: rgb(226, 109, 109);
+}
+
+.btn-secondary:hover {
+    background-color: rgb(186, 67, 67);
+}
+
+.input-text {
+    background: #FAFAFA;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    width: 100%;
+}
+
+.textarea {
+    background: #FAFAFA;
+    border-radius: 10px 10px 0 10px;
+    border: none;
+    padding: 5px;
+}
+
+
+.form-control.ng-untouched,
+.form-control.ng-valid {
+    border-color: #ccc;  
+}
+
+.input-lg.ng-untouched,
+.form-control-lg.ng-valid {
+    border-color: #ccc;   
+}
+
+input:required {
+    border: #D52150;
+    border-style: solid;
+    border-width: 0.5px;
+}
+textarea:required {
+    border: #D52150;
+    border-style: solid;
+    border-width: 0.5px;
+}
+
 @font-face {
     font-family: "Nunito";
     src:  url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
+}
+
+* {
+    font-family: Nunito;
 }
