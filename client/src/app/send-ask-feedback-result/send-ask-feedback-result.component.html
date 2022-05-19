@@ -3,7 +3,7 @@
   <div fxFlexOffset="70px"></div>
   <div>{{result}}</div>
   <div fxFlexOffset="70px"></div>
-  <button class="btn btn-primary" [hidden]="result.includes('Félicitations')" routerLink="/send-feedback">REESAYER</button>
+  <button class="btn btn-primary btn-retry" [hidden]="result.includes('Félicitations')" routerLink="/send-feedback">REESAYER</button>
   <div fxFlexOffset="10px"></div>
-  <button class="btn btn-primary" [class.btn-secondary]="result.includes('Désolé')" routerLink="/home">RETOUR À L'ACCUEIL</button>
+  <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('Désolé')" routerLink="/home">RETOUR À L'ACCUEIL</button>
 </div>

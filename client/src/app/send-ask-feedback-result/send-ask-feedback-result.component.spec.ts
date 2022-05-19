@@ -50,7 +50,7 @@ describe('SendFeedbackResultComponent', () => {
 
   it("Return button will navigate to home page when it's clicked", ()=>{
 
-    fixture.debugElement.query(By.css('.return-btn')).nativeElement.click();
+    fixture.debugElement.query(By.css('.btn-return')).nativeElement.click();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(location.path()).toEqual('/home');
@@ -59,7 +59,7 @@ describe('SendFeedbackResultComponent', () => {
 
   it("Retry button will navigate to send feedback page when it's clicked", ()=>{
 
-      fixture.debugElement.query(By.css('.retry-btn')).nativeElement.click();
+      fixture.debugElement.query(By.css('.btn-retry')).nativeElement.click();
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         expect(location.path()).toEqual('/send-feedback');
