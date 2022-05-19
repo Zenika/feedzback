@@ -20,11 +20,4 @@ export class SendAskFeedbackResultComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onRetryClick() {
-    this.location.back()
-  }
-
-  public onReturnClick() {
-    this.router.navigate(['/'])
-  }
 }
