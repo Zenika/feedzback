@@ -264,10 +264,12 @@ workflows:
          executor: with-chrome
          browser: chrome
          requires:
-            - install-client-dependencies   
+            - install-client-dependencies  
+         install-command: npm install -f 
          pre-steps: 
-            - run: npm install -g concurrently 
-         yarn: true   
+            - run: npm install -g concurrently
+            
+         yarn: false   
          start: 
            npm run dev
          
