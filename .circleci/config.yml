@@ -262,6 +262,7 @@ workflows:
          cache-key: v28-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
+         install-command: npm install esbuild
          requires:
             - install-client-dependencies   
          pre-steps: 
