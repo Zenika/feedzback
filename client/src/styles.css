@@ -5,11 +5,11 @@
     padding: 10px 75px 10px 75px;
     font-style: normal;
     font-weight: 900;
+    color: white;
 }
 
 .btn-primary {
     background-color: #D52150;
-    color: white;
 }
 
 .btn-primary:disabled {
@@ -21,7 +21,7 @@
 }
 
 .btn-secondary {
-    background-color: rgb(226, 109, 109);
+    background-color: #A02C5A;
 }
 
 .btn-secondary:hover {
@@ -46,12 +46,12 @@
 
 .form-control.ng-untouched,
 .form-control.ng-valid {
-    border-color: #ccc;  
+    border-color: #ccc;
 }
 
 .input-lg.ng-untouched,
 .form-control-lg.ng-valid {
-    border-color: #ccc;   
+    border-color: #ccc;
 }
 
 input:required {
@@ -59,6 +59,7 @@ input:required {
     border-style: solid;
     border-width: 0.5px;
 }
+
 textarea:required {
     border: #D52150;
     border-style: solid;
@@ -67,7 +68,7 @@ textarea:required {
 
 @font-face {
     font-family: "Nunito";
-    src:  url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
+    src: url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
 }
 
 * {

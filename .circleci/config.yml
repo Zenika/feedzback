@@ -31,9 +31,8 @@ jobs:
       - run:
           name: install_client_dependencies
           working_directory: client
-          command: |
-                npm ci
-                npm i apollo-angular
+          command: npm ci
+             
       
       - run:
           name: install_server_dependencies
@@ -264,7 +263,9 @@ workflows:
          browser: chrome
          requires:
             - install-client-dependencies  
-         install-command: npm install -f 
+         install-command: |
+            npm install -f 
+            npm install apollo-angular @apollo/client graphql
          pre-steps: 
             - run: npm install -g concurrently
             
