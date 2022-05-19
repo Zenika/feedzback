@@ -21,43 +21,50 @@ describe('Send feedback form tests', () => {
   it('Application has the right title',()=>{
     cy.title().should('include','FeedZback')
   })
-  it("The form is not validate when all required input text are empty and input type emails are not email match",()=>{
+  it("The form is not valid when all required input text are empty and input type emails are not email match",()=>{
     cy.get('#your-email').should('have.class','ng-invalid')
     cy.get('#coworker-email').should('have.class','ng-invalid')
     cy.get('#positive-feedback').should('have.class','ng-invalid')
     cy.get('#to-improve-feedback').should('have.class','ng-invalid')
-    // cy.get('#myform').should('have.class','ng-invalid')
+    cy.get('#feedbackForm').should('have.class','ng-invalid')
   })
  
 
-  it('Les bords des champs requis deviennent rouges quand ils sont touchés et invalides',()=>{
+  it('Required input borders become red when they are touched and not valid',()=>{
     cy.get('#your-email').type('example@example.com')
     cy.get('#your-email').clear();
-    // cy.get('#email').type('example@example.com')
-    // cy.get('#nom').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
-    // cy.get('#email').clear()
-    // cy.get('#pointsPositifs').type('les points ppositifs sont:...')
-    // cy.get('#email').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
-    // cy.get('#pointsPositifs').clear()
-    // cy.get('#axesAmeliorations').type("les axes d'améliorations sont:.....")
-    // cy.get('#pointsPositifs').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
-    // cy.get('#axesAmeliorations').clear()
-    // cy.get('#commentaire').type('contiuner comme ça')
-    // cy.get('#axesAmeliorations').should('have.css','border-color').and('eq','rgb(255, 0, 0)')
+    cy.get('#your-name').type('example@example.com')
+    cy.get('#your-email').should('have.css','border-color').and('eq','rgb(213, 33, 80)')
+    cy.get('#your-name').clear()
+    cy.get('#coworker-email').type('example@example.com')
+    cy.get('#your-name').should('have.css','border-color').and('eq','rgb(213, 33, 80)')
+    cy.get('#coworker-email').clear()
+    cy.get('#coworker-name').type('les points ppositifs sont:...')
+    cy.get('#coworker-email').should('have.css','border-color').and('eq','rgb(213, 33, 80)')
+    cy.get('#coworker-name').clear()
+    cy.get('#positive-feedback').type('les points ppositifs sont:...')
+    cy.get('#coworker-name').should('have.css','border-color').and('eq','rgb(213, 33, 80)')
+    cy.get('#positive-feedback').clear()
+    cy.get('#to-improve-feedback').type("les axes d'améliorations sont:.....")
+    cy.get('#positive-feedback').should('have.css','border-color').and('eq','rgb(213, 33, 80)')
+    cy.get('#to-improve-feedback').clear()
+    cy.get('#comment').type('contiuner comme ça')
+    cy.get('#to-improve-feedback').should('have.css','border-color').and('eq','rgb(213, 33, 80)')
   })
 
-
-  // it('Le formulaire est valide et envoie le feedback',()=>{
+  it('The form is valid and send the feedback',()=>{
   
-  //   cy.get('#feedbackForm').within(()=>{
-  //     cy.get('#nom').type('pierre henry')
-  //     cy.get('#email').type('pierre.henry@example.com')
-  //     cy.get('#receverEmail').type('marie.mettrand@example.com')
-  //     cy.get('#pointsPositifs').type('les points poitifs sont:......')
-  //     cy.get('#axesAmeliorations').type('les axes dAmeliorations sont:.....')
+    cy.get('#feedbackForm').within(()=>{
+      cy.get('#your-name').type('pierre henry')
+      cy.get('#your-email').type('pierre.henry@example.com')
+      cy.get('#coworker-name').type('marie mettrand')
+      cy.get('#coworker-email').type('marie.mettrand@example.com')
+      cy.get('#positive-feedback').type('les points poitifs sont:......')
+      cy.get('#to-improve-feedback').type('les axes dAmeliorations sont:.....')
      
-  //     cy.get('#submit').click();
-  //     cy.wait('@SendFeedback')
-  //   })
-  // })
+      cy.get('#submit').click();
+      cy.wait('@SendFeedback')
+    })
+  })
+
 })
