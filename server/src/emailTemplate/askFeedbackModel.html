@@ -1,20 +1,37 @@
   <html>
     <head>
       <title>FeedZback</title>
+    <style>
+      .btn {
+        background: #D52150;
+        border: 1px solid #D52150;
+        color: #fefefe !important;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 17px;
+        line-height: 23px;
+        text-align: center;
+        align-items: center;
+      }
+    </style>
     </head>
     <body>
       <p>Bonjour <%=name%></p>
-    
-      <p>Votre collègue <%=senderName%> vous demande de lui envoyer un feedzback!</p>
+      <p>Votre collègue <%=senderName%> vous demande de lui faire un retour!</p>
       <% if (text !== '') { %>
-      <p><b>Text</b></p>
+      <p><b>Commentaire:</b></p>
       <p><%=text%></p>
       <% } %>
         <br>
+        <p>Cliquez sur ce lien pour accèder à l'interface de saisie de votre retour:</p>
+          <div style="align-content: center;">
+          <a class="btn" href="<%=urlClientForm%>?<%=params%>">SAISIR VOTRE FEEDZBACK</a>
+          </div>
         <br>
-        <p>Cliquez le lien dessous pour lui envoyer le feedback souhaté!</p>
-        <a href="<%=urlClientForm%>?<%=params%>">FeedZback</a>
         <p>L’équipe Feedzback</p>
-
+        <br>
     </body>
   </html>
