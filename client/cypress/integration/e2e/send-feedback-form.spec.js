@@ -4,15 +4,15 @@ describe('Send feedback form tests', () => {
   
   beforeEach(() => {
   
-    cy.intercept('POST','/graphql',req =>{
-      if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')){   
-        req.alias=`SendFeedback`
-        req.reply((res)=>{
-          res.body.data.sendFeedback="mock:Votre feedback a été envoyé!"
-        })
-      }
+    // cy.intercept('POST','/graphql',req =>{
+    //   if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')){   
+    //     req.alias=`SendFeedback`
+    //     req.reply((res)=>{
+    //       res.body.data.sendFeedback="mock:Votre feedback a été envoyé!"
+    //     })
+    //   }
     
-    }).as('SendFeedback')
+    // }).as('SendFeedback')
    cy.visit('/send-feedback')
 
   })
@@ -63,7 +63,7 @@ describe('Send feedback form tests', () => {
       cy.get('#to-improve-feedback').type('les axes dAmeliorations sont:.....')
      
       cy.get('#submit').click();
-      cy.wait('@SendFeedback')
+      // cy.wait('@SendFeedback')
     })
   })
 
