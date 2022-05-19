@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-send-feedback-result',
@@ -9,10 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 export class SendAskFeedbackResultComponent implements OnInit {
 
   result!: string
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.result = this.route.snapshot.paramMap.get('result')!
-   }
-  ngOnInit(): void {
+
+    if (!this.result)
+      this.router.navigate(['/'])
   }
 
+  ngOnInit(): void {
+  }
 }
