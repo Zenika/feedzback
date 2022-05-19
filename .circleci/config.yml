@@ -265,7 +265,7 @@ workflows:
             - install-client-dependencies  
          install-command: |
             npm install -f 
-            npm i apollo-angular
+            npm install apollo-angular @apollo/client graphql
          pre-steps: 
             - run: npm install -g concurrently
             
