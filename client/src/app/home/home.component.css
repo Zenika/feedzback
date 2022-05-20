@@ -1,66 +1,53 @@
-
-
 .padTop {
   padding-top: 30px;
 }
 
 .home-tittle {
-
-font-weight: 700;
-font-size: 16px;
-line-height: 22px;
-color: #D52150;
-
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #D52150;
 }
 
 .home-description {
-
-font-weight: 700;
-font-size: 14px;
-line-height: 19px;
-
-
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
   color: #4E4B4B;
 }
 
 .home-send-feedback-btn {
-
-
-background: #D52150;
-border-color: #D52150;
-border-radius: 10px;
-
+  background: #D52150;
+  border-color: #D52150;
+  border-radius: 10px;
 }
 
 .home-ask-feedback-btn {
   background: #D52150;
   border-radius: 10px;
   border-color: #D52150;
-
 }
 
-.btn-margin{
-
+.btn-margin {
   margin-top: 55px;
   margin-bottom: 55px;
 }
 
 
-.home-send-text-btn{
-    font-weight: 900;
-    font-size: 18px;
-    line-height: 25px;
-    text-align: center;
-    color: #FFFFFF;
+.home-send-text-btn {
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 .home-ask-text-btn {
-font-weight: 900;
-font-size: 18px;
-line-height: 25px;
-text-align: center;
-color: #FFFFFF;
-
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 .home-send-feedback-icon {
@@ -79,10 +66,9 @@ color: #FFFFFF;
   border-radius: 4px;
 }
 
-.home-guide-text{
-font-weight: 700;
-font-size: 14px;
-line-height: 19px;
-color: #4E4B4B;
+.home-guide-text {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #4E4B4B;
 }
-

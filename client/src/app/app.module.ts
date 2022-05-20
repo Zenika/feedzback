@@ -9,11 +9,11 @@ import { InMemoryCache } from '@apollo/client/core';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
-import { DemandeFeedbackComponent } from './demande-feedback/demande-feedback.component';
 import { FeedbackEnvoyeComponent } from './feedback-envoye/feedback-envoye.component';
 import { DemandeEnvoyeComponent } from './demande-envoye/demande-envoye.component';
 import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -21,11 +21,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     HomeComponent,
-    DemandeFeedbackComponent,
     FeedbackEnvoyeComponent,
     DemandeEnvoyeComponent,
     SendAskFeedbackResultComponent,
     SendFeedbackFormComponent,
+    AskFeedbackFormComponent,
   ],
   imports: [
     BrowserModule,

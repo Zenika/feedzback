@@ -54,13 +54,7 @@
     border-color: #ccc;
 }
 
-input:required {
-    border: #D52150;
-    border-style: solid;
-    border-width: 0.5px;
-}
-
-textarea:required {
+input:required, textarea:required {
     border: #D52150;
     border-style: solid;
     border-width: 0.5px;
