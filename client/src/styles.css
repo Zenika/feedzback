@@ -38,7 +38,9 @@
 .textarea {
     background: #FAFAFA;
     border-radius: 10px 10px 0 10px;
-    border: none;
+    border-color: #ccc;
+    border-width: 0.5px;
+    border-style: solid;
     padding: 10px;
 }
 
