@@ -1,28 +1,17 @@
-.padTop {
-  padding-top: 30px;
-}
-
-.home-tittle {
+.home-title {
   font-weight: 700;
   font-size: 16px;
-  line-height: 22px;
   color: #D52150;
 }
 
 .home-description {
   font-weight: 700;
   font-size: 14px;
-  line-height: 19px;
   color: #4E4B4B;
+  margin-bottom: 10px;
 }
 
-.home-send-feedback-btn {
-  background: #D52150;
-  border-color: #D52150;
-  border-radius: 10px;
-}
-
-.home-ask-feedback-btn {
+.home-ask-feedback-btn, .home-send-feedback-btn {
   background: #D52150;
   border-radius: 10px;
   border-color: #D52150;
@@ -37,7 +26,6 @@
 .home-send-text-btn {
   font-weight: 900;
   font-size: 18px;
-  line-height: 25px;
   text-align: center;
   color: #FFFFFF;
 }
@@ -45,9 +33,12 @@
 .home-ask-text-btn {
   font-weight: 900;
   font-size: 18px;
-  line-height: 25px;
   text-align: center;
   color: #FFFFFF;
+}
+
+.home-send-feedback-btn:hover, .home-ask-feedback-btn:hover {
+  background-color: #a41a3f;
 }
 
 .home-send-feedback-icon {
@@ -64,11 +55,23 @@
     0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
+  padding: 15px;
 }
 
 .home-guide-text {
   font-weight: 700;
   font-size: 14px;
-  line-height: 19px;
   color: #4E4B4B;
+}
+
+.button-row {
+  margin-bottom: 15px;
+}
+
+h3 {
+  margin: 0;
+}
+
+.text-align-center {
+  text-align: center;
 }
