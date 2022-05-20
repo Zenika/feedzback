@@ -1,6 +1,40 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.ask-logo {
+    display: flex;
+    justify-content: center;
+}
+.header-section {
+    display: flex;
+    flex-direction: column;
+    margin-left: 450px;
+}
+.title{
+    display: flex;
+ flex-direction: row;
+}
+h1 {
+    color: #D52150;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 .form-input {
     padding: .5rem;
     color: #605E5E;
+    margin-right: 30px;
+    
 }
 
 .subtitle {
@@ -16,11 +50,16 @@ h2 {
     margin-bottom: .5rem;
 }
 
-h1 {
-    color: #D52150;
-    font-weight: bold;
-    margin-left: 5px;
+.input-text {
+    padding: 15px;
+    padding-right: 25px;
 }
+.your-email {
+    padding: 15px;
+    padding-right: 24px;
+    margin-right: 87px;
+}
+
 
 small {
     color: #D52150;
@@ -32,5 +71,49 @@ a {
 }
 
 .textarea {
-    resize: vertical;
+    resize: vertical;  
+    padding-bottom: 35px;
 }
+/* .message-section {
+    display: flex;
+    flex-direction: column;
+    width: 820px;
+} */
+
+@media only screen and (max-width: 900px) {
+    .header-section {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: 0px;
+    }
+    .return-link {
+        margin-right: 280px;
+    }
+    .title {
+        flex-direction: row;
+        margin-left: 0px;
+        justify-items: left;
+    }
+    h1 {
+        color: #D52150;
+        font-weight: bold;
+        font-size: 26px;
+        margin-left: 25px;
+    }
+    .row {
+        display: flex;
+        flex-direction: column;
+    }
+    /* .message-section {
+        display: flex;
+        flex-direction: column;
+        width: 113%;
+    } */
+    .textarea {
+        resize: vertical;  
+        padding-bottom: 35px;
+      
+    }
+}
+

@@ -1,6 +1,8 @@
-.conatiner {
+.container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  
 }
 .btn-container {
   display: flex;
@@ -38,34 +40,30 @@
   line-height: 19px;
   color: #4E4B4B;
   margin-bottom: 40px;
+  width: 50%;
 }
 
-.home-send-feedback-btn {
+.home-feedback-btn {
   background: #D52150;
   border-color: #D52150;
   border-radius: 10px;
 }
 
-.home-ask-feedback-btn {
-  background: #D52150;
-  border-radius: 10px;
-  border-color: #D52150;
-}
 
 .btn-send-margin {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-right: 30px;
+  margin-right: 53px;
 }
 .btn-ask-margin {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 30px;
+  margin-left: 53px;
 }
 .btn-pad {
-  padding: 30px;
-  padding-right: 100px;
-  padding-left: 100px;
+  padding: 40px;
+  padding-right: 120px;
+  padding-left: 120px;
 }
 
 .btn-text {
@@ -92,12 +90,13 @@
   border-radius: 4px;
   justify-content: center;
   text-align: center;
+  width: 53%;
 }
 
 .home-guide-image{
   width: 60%;
-
 }
+
 .home-guide-text {
   font-weight: 700;
   font-size: 14px;
@@ -122,8 +121,12 @@
 
   .home-description {
     margin-bottom: 30px;
+    width: 100%;
   }
 
+  .home-card {
+    width: 100%;
+  }
   .btn-pad {
     padding: 30px;
     align-items: center;
@@ -139,5 +142,4 @@
   .btn-ask-margin {
     margin-left: 10px;
   }
-
 }

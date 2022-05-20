@@ -1,42 +1,49 @@
-<div fxLayout="column" fxFlex="800px" [fxFlex.lt-md]="'500px'" [fxFlex.lt-sm]="'100%'">
-    <div fxLayoutAlign="center">
-        <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
-    </div>
-    <a href="">&lt; Retour</a>
-    <div fxLayout="row" fxLayoutAlign="start center">
-        <img src="../../assets/question-mark.svg" alt="vector-arrow">
-        <h1>Demande de feedback</h1>
-    </div>
-    <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
+
+<div class="container">
+        <div class="ask-logo">
+            <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
+        </div> 
+
+    <div class="header-section">
+      <a class="return-link" href="">&lt; Retour</a>  
+      <div class="title">
+        <img  src="../../assets/question-mark.svg" alt="vector-arrow">
+        <h1>Demande de feedback</h1>      
+      </div>
+
+      <div class="description">
+      <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
         vous faire ses retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
+    </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui êtes-vous ?</h2>
-        <div fxLayout="row" [fxLayout.lt-md]="'column'">
-            <div fxLayout="column" fxFlex="grow" class="form-input">
-                <label for="your-email">Votre email Zenika *</label>
-                <input type="email" class="input-text form-control" id="your-email"
-                    placeholder="pierre.douchon@example.com" formControlName="senderEmail" required email>
-                <small
-                    *ngIf="senderEmail?.touched && senderEmail?.invalid">{{getFormControlError(senderEmail!)}}</small>
+        <div class="row">
+    
+            <div class="form-input" >
+                <label for="your-email">Votre email *</label>
+                <input type="email" class="input-text form-control your-email" id="your-email" placeholder="pierre.douchon@example.com"
+                    formControlName="senderEmail" required email>
+                <small  *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>
-            <div fxLayout="column" fxFlex="grow" class="form-input">
-                <label for="your-name">Votre nom *</label>
-                <input type="text" class="input-text form-control" id="your-name" placeholder="Pierre Duchon"
-                    formControlName="senderName" required>
-                <small *ngIf="senderName?.touched && senderName?.invalid">{{getFormControlError(senderName!)}}</small>
+            
+            <div class="form-input">
+                <label for="your-name">Votre nom * </label>
+                <input type="text" class="input-text form-control your-email" id="your-name" placeholder="Pierre Duchon" required
+                    formControlName="senderName">
+                <small
+                    *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
             </div>
         </div>
         <h2>Qui est votre collègue ?</h2>
-        <div fxLayout="row" [fxLayout.lt-md]="'column'">
-            <div fxLayout="column" fxFlex="grow" class="form-input">
+        <div class="row">
+            <div class="form-input" >
                 <label for="coworker-email">Email de votre collègue *</label>
                 <input type="email" class="input-text form-control" id="coworker-email" placeholder="pierre.douchon@example.com"
                     formControlName="receverEmail" required email>
-                <small
-                    *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
+                <small  *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>
-            <div fxLayout="column" fxFlex="grow" class="form-input">
+            <div class="form-input">
                 <label for="coworker-name">Nom de votre collègue *</label>
                 <input type="text" class="input-text form-control" id="coworker-name" placeholder="Pierre Duchon" required
                     formControlName="receverName">
@@ -45,17 +52,22 @@
             </div>
         </div>
         <h2>Votre demande</h2>
-        <div fxLayout="column">
-            <div fxLayout="column" class="form-input">
-                <label for="message">Message</label>
-                <textarea class="textarea" name="message" id="message"
-                    placeholder="Ton avis à propos de moi m’intéresse. Merci d’avance pour tes retours !"
-                    formControlName="message">
-                </textarea>
+            <div  class="form-input">
+                <div class="message-section">
+                    <label for="message">Message</label>
+                    <textarea class="textarea" name="message" id="message"
+                        placeholder="Ton avis à propos de moi m’intéresse. Merci d’avance pour tes retours !"
+                        formControlName="message">
+                    </textarea>
+                </div>
+               
             </div>
-        </div>
-        <div fxLayoutAlign="end" [fxLayoutAlign.lt-sm]="'center'">
+        <div >
             <button type="submit" class="btn btn-primary">ENVOYER</button>
         </div>
     </form>
+
 </div>
+</div> 
+ 
+   
