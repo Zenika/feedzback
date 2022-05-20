@@ -13,7 +13,7 @@ describe('Send feedback form tests', () => {
     //   }
     
     // }).as('SendFeedback')
-   cy.visit('/send-feedback')
+   cy.visit('/send')
 
   })
 

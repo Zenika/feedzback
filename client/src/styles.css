@@ -32,15 +32,16 @@
     background: #FAFAFA;
     border-radius: 10px;
     border: none;
-    padding: 5px;
-    width: 100%;
+    padding: 10px;
 }
 
 .textarea {
     background: #FAFAFA;
     border-radius: 10px 10px 0 10px;
-    border: none;
-    padding: 5px;
+    border-color: #ccc;
+    border-width: 0.5px;
+    border-style: solid;
+    padding: 10px;
 }
 
 
