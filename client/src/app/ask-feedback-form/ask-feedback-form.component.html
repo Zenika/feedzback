@@ -10,7 +10,7 @@
     <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
         vous faire ses retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
+    <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui êtes-vous ?</h2>
         <div fxLayout="row" [fxLayout.lt-md]="'column'">
             <div fxLayout="column" fxFlex="grow" class="form-input">
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div fxLayoutAlign="end" [fxLayoutAlign.lt-sm]="'center'">
-            <button type="submit" class="btn btn-primary">ENVOYER</button>
+            <button type="submit" id="submit" class="btn btn-primary">ENVOYER</button>
         </div>
     </form>
 </div>
