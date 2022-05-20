@@ -60,9 +60,16 @@ export class SendFeedbackFormComponent implements OnInit {
             this.comment?.value
           ),
         },
-      }).subscribe(({data}: any) => {
-        this.router.navigate(['/feedbackEnvoye', { result: data.sendFeedback }])
-      });
+      }).subscribe((data: any) => {
+        let result = data.data.sendFeedback;
+        if (result === "Votre feedback a été envoyé!") {
+          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.senderName?.value;
+          this.router.navigate(['/result', { result: result }])
+        } else {
+          result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+          this.router.navigate(['/result', { result: result }])
+        }
+      })
     }
   }
 }
