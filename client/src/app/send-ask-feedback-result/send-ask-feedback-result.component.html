@@ -1,9 +1,13 @@
-<div fxLayout="column" fxLayoutAlign="center " fxFlexOffset="10px">
-  <img src="../../assets/logo-feedZback.svg" />
-  <div fxFlexOffset="70px"></div>
-  <div>{{result}}</div>
-  <div fxFlexOffset="70px"></div>
+<div class="container">
+  <div class="result-logo">
+    <img src="../../assets/logo-feedZback.svg" />
+</div>
+
+  <div class="result-title">{{result}}</div>
+  <div class="btn-layout">
   <button class="btn btn-primary btn-retry" [hidden]="result.includes('Félicitations')" routerLink="/send-feedback">REESAYER</button>
-  <div fxFlexOffset="10px"></div>
   <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('Désolé')" routerLink="/home">RETOUR À L'ACCUEIL</button>
 </div>
+</div>
+
+ 
