@@ -1,4 +1,4 @@
-import {gql}  from 'apollo-server';
+import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
 type Query{
@@ -11,13 +11,13 @@ type Message {
     message: String
 }
 input SendRequest {
-    nom:String
-    email:String
+    senderName:String
+    senderEmail:String
     receverEmail: String
     receverName: String
-    pointsPositifs:String
-    axesAmeliorations:String
-    commentaire:String
+    positiveFeedback:String
+    toImprove:String
+    comment:String
 }
 input AskFeedback {
     name: String!
@@ -29,6 +29,6 @@ input AskFeedback {
 
 type Mutation{
     sendFeedback(sendRequest:SendRequest!):String
-    sendFeedbackRequest(askFeedback: AskFeedback!):String    
+    sendFeedbackRequest(askFeedback: AskFeedback!):String
 }
 `;
