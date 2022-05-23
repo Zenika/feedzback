@@ -28,6 +28,7 @@ h1 {
 .row {
     display: flex;
     flex-direction: row;
+    width: 60%;
 }
 
 .form-input {
@@ -74,11 +75,19 @@ a {
     resize: vertical;  
     padding-bottom: 35px;
 }
-/* .message-section {
+.message-section {
     display: flex;
     flex-direction: column;
-    width: 820px;
-} */
+    width: 62%;
+}
+.btn-form{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+
 
 @media only screen and (max-width: 900px) {
     .header-section {
@@ -94,6 +103,7 @@ a {
         flex-direction: row;
         margin-left: 0px;
         justify-items: left;
+        width: 80%;
     }
     h1 {
         color: #D52150;
@@ -104,16 +114,29 @@ a {
     .row {
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
-    /* .message-section {
+    .message-section {
         display: flex;
         flex-direction: column;
         width: 113%;
-    } */
+    }
     .textarea {
         resize: vertical;  
         padding-bottom: 35px;
       
     }
+    .btn-form{
+        margin-left: 0px;
+    }
 }
+
+@media  (min-width:768px) and (max-width:912px){
+    .message-section {
+        display: flex;
+        flex-direction: column;
+        width: 105%;
+    }
+}
+
 
