@@ -30,6 +30,11 @@ h1 {
     flex-direction: row;
     width: 60%;
 }
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
 
 .form-input {
     padding: .5rem;
