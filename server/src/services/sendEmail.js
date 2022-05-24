@@ -30,6 +30,13 @@ const datastore = new Datastore({
 const insertFeedback = async (data) => {
   await datastore.save({
     key: datastore.key('feedzback'),
+    excludeFromIndexes: [
+      'senderName',
+      'receverName',
+      'positiveFeedback',
+      'toImprove',
+      'comment'
+    ],
     data
   })
 }
