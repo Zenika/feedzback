@@ -5,7 +5,6 @@ import { AskFeedbackFormComponent } from './ask-feedback-form.component';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 describe('AskFeedbackFormComponent', () => {
   let component: AskFeedbackFormComponent;
@@ -19,7 +18,6 @@ describe('AskFeedbackFormComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         ApolloTestingModule,
-        FlexLayoutModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

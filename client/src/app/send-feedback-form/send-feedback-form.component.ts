@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
-import { SendRequest } from '../model/sendRequest';
+import { FeedbackQueryData } from '../model/feedbackQueryData';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -50,7 +50,7 @@ export class SendFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          sendRequest: new SendRequest(
+          sendRequest: new FeedbackQueryData(
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,
@@ -60,9 +60,16 @@ export class SendFeedbackFormComponent implements OnInit {
             this.comment?.value
           ),
         },
-      }).subscribe(({data}: any) => {
-        this.router.navigate(['/feedbackEnvoye', { result: data.sendFeedback }])
-      });
+      }).subscribe((data: any) => {
+        let result = data.data.sendFeedback;
+        if (result === "Votre feedback a été envoyé!") {
+          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.senderName?.value;
+          this.router.navigate(['/result', { result: result }])
+        } else {
+          result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+          this.router.navigate(['/result', { result: result }])
+        }
+      })
     }
   }
 }

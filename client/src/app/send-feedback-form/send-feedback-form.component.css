@@ -1,25 +1,51 @@
-.form-input {
-    padding: .5rem;
-    color: #605E5E;
+.form-logo {
+    display: flex;
+    justify-content: center;
 }
-
-.subtitle {
-    color: #4E4B4B;
-    text-align: justify;
+.content-section {
+    display: flex;
+    flex-direction: column;
+    justify-items: start;
+    align-items: stretch;
+    text-align: left;
+    max-width: 745px;
+    margin: auto;
 }
-
-.logo {
-    margin: 1rem 0 1rem 0;
-}
-
-h2 {
-    margin-bottom: .5rem;
-}
-
 h1 {
     color: #D52150;
     font-weight: bold;
     margin-left: 5px;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+}
+.row {
+    display: flex;
+    flex-direction: row; 
+}
+
+.form-input {
+    padding: 0.5rem;
+    color: #605E5E;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.subtitle {
+    color: #4E4B4B;
+    text-align: start;
+    font-weight: bold;
+}
+h2 {
+    margin-bottom: .5rem;
+}
+
+.input-text {
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 small {
@@ -30,9 +56,20 @@ small {
 a {
     color: #D52150;
 }
-
+.content-title {
+    padding-left: 3px;
+}
 .textarea {
-    resize: vertical;
+    resize: vertical;  
+    padding-bottom: 35px;
+}
+.message-section {
+    display: flex;
+    flex-direction: column;
+}
+.btn-form{
+    display: flex;
+    justify-content: flex-end;
 }
 
 #vector-arrow {
@@ -40,5 +77,38 @@ a {
     border-radius: 2px;
     width: 20px;
     height: 20px;
-    padding: 3px;
+    padding: 4px;
+    padding-left: 5px;
+    margin-top: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  
+    .return-link {
+        margin-right: 280px;
+    }
+    h1 {
+        color: #D52150;
+        font-weight: bold;
+        font-size: 26px;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    .row {
+        flex-direction: column;
+    }
+    .message-section {
+        display: flex;
+        flex-direction: column;
+    }
+    .textarea {
+        resize: vertical;  
+        padding-bottom: 35px;  
+    }
+    .btn-form{
+     justify-content: center;
+    }
+    #vector-arrow {
+    margin-top: 5px;
+   }
 }

@@ -1,5 +1,5 @@
 
-import {Datastore} from '@google-cloud/datastore';
+import { Datastore } from '@google-cloud/datastore';
 import dotEnv from 'dotenv'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
@@ -11,55 +11,57 @@ const __dirname = dirname(__filename)
 
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/emailModel.html').toString();
 
-
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config()
 }
 
-
-const apiKey  = process.env.API_KEY;
+const apiKey = process.env.API_KEY;
 const domain = process.env.DOMAIN;
 
-const myMailgun =  mailgun({
+const myMailgun = mailgun({
   apiKey: apiKey,
   domain: domain,
 });
 
-const datastore= new Datastore({
+const datastore = new Datastore({
   projectId: 'feedzback-343709',
 });
-// const insertValue = (value) => {
-//   datastore.save({
-//     key: datastore.key('visit'),
-//     data: value,
-//   });
-// };
 
-export const sendEmail = async ({sendRequest}) => {
-  
+const insertFeedback = async (data) => {
+  await datastore.save({
+    key: datastore.key('feedzback'),
+    excludeFromIndexes: [
+      'senderName',
+      'receverName',
+      'positiveFeedback',
+      'toImprove',
+      'comment'
+    ],
+    data
+  })
+}
+
+export const sendEmail = async ({ sendRequest }) => {
   const envi = process.env.NODE_ENV || 'development';
-  const template = replaceHtmlVars(emailTemplate , sendRequest);
+  const template = replaceHtmlVars(emailTemplate, sendRequest);
 
-let msg =   {
+  const msg = {
     to: sendRequest.receverEmail,
     from: sendRequest.email,
-    subject:'FeedZback',
+    subject: 'FeedZback',
     html: template,
   }
   if (envi !== 'production') {
-    msg = {
-      ...msg,
-      to: 'feedzback@zenika.com',
-      from: 'feedzback@zenika.com',
-    };
-  } 
+    msg.to = 'feedzback@zenika.com'
+    msg.from = 'feedzback@zenika.com'
+  }
 
-  let res;
-  res = await  myMailgun.messages().send(msg)
-     .then(()=> {return "Votre feedback a été envoyé!"})
-     .catch(err => {return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"})
-   
-   // insertValue(msg); 
-    return res;
-
+  try {
+    await insertFeedback(sendRequest)
+    await myMailgun.messages().send(msg)
+    return "Votre feedback a été envoyé!";
+  } catch (e) {
+    console.error(e)
+    return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"
+  }
 };
