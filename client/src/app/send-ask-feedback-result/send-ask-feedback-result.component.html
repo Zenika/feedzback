@@ -1,13 +1,12 @@
 <div class="container">
   <div class="result-logo">
-    <img src="../../assets/logo-feedZback.svg" />
+    <img class="logo" src="../../assets/logo-feedZback.svg" />
 </div>
 
   <div class="result-title">{{result}}</div>
-  <div class="btn-layout">
   <button class="btn btn-primary btn-retry" [hidden]="result.includes('Félicitations')" routerLink="/send-feedback">REESAYER</button>
   <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('Désolé')" routerLink="/home">RETOUR À L'ACCUEIL</button>
 </div>
-</div>
+
 
  

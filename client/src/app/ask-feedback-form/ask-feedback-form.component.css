@@ -1,51 +1,45 @@
-.container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
 .ask-logo {
     display: flex;
     justify-content: center;
+    text-align: start;
+    align-items: flex-start;
 }
 .header-section {
     display: flex;
     flex-direction: column;
-    margin-left: 450px;
-}
-.title{
-    display: flex;
- flex-direction: row;
+    justify-items: start;
+    align-items: stretch;
+    text-align: left;
+    max-width: 745px;
+    margin: auto;
+
 }
 h1 {
     color: #D52150;
     font-weight: bold;
-    margin-left: 10px;
 }
 .description {
     display: flex;
     flex-direction: column;
 }
+
 .row {
     display: flex;
     flex-direction: row;
-    width: 60%;
-}
-.column {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
 }
 
 .form-input {
     padding: .5rem;
-    color: #605E5E;
-    margin-right: 30px;
-    
+    color: #605E5E; 
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .subtitle {
     color: #4E4B4B;
-    text-align: justify;
+    text-align: start;
 }
 
 .logo {
@@ -57,13 +51,8 @@ h2 {
 }
 
 .input-text {
-    padding: 15px;
-    padding-right: 25px;
-}
-.your-email {
-    padding: 15px;
-    padding-right: 24px;
-    margin-right: 87px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 
@@ -81,50 +70,37 @@ a {
     padding-bottom: 35px;
 }
 .message-section {
-    display: flex;
+    display:flex;
     flex-direction: column;
-    width: 62%;
+    width: 102.3%;
 }
 .btn-form{
     display: flex;
-    justify-content: center;
+    justify-content: right;
     margin-top: 10px;
-    margin-left: 40px;
+}
+.row {
+    width: 100%;
+}
+#vector-arrow {
+    margin-top: 20px;
 }
 
-
-
-@media only screen and (max-width: 900px) {
-    .header-section {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        margin-left: 0px;
-    }
-    .return-link {
-        margin-right: 280px;
-    }
-    .title {
-        flex-direction: row;
-        margin-left: 0px;
-        justify-items: left;
-        width: 80%;
-    }
+@media only screen and (max-width: 600px) {
     h1 {
         color: #D52150;
         font-weight: bold;
         font-size: 26px;
-        margin-left: 25px;
+        margin-top: 0px;
+    
     }
     .row {
         display: flex;
         flex-direction: column;
-        width: 100%;
+       
     }
     .message-section {
-        display: flex;
-        flex-direction: column;
-        width: 113%;
+        width: 102.3%;
     }
     .textarea {
         resize: vertical;  
@@ -132,16 +108,46 @@ a {
       
     }
     .btn-form{
-        margin-left: 0px;
+        justify-content: center;
     }
 }
+#vector-arrow {
 
-@media  (min-width:768px) and (max-width:912px){
-    .message-section {
-        display: flex;
-        flex-direction: column;
-        width: 105%;
-    }
+    border-radius: 2px;
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    padding-left: 5px;
+    margin-top: 23px;
 }
 
+@media only screen and (max-width: 420px){
+    h1 {
+        font-size: 15px;
+    }
+    .description {
+        font-size: 12px;
+    }
+    .return-link{
+        font-size: 12px;
+        margin-right: 0px;
+    }
+    h2 {
 
+     font-size: 12px;   
+    }
+    label {
+        font-size: 12px;
+    }
+
+    #vector-arrow {
+        width: 30px;
+        height: 30px;
+        padding: 4px;
+        padding-left: 5px;
+        margin-top: 5px;
+    }
+    .logo {
+        width: 100%;
+    } 
+}

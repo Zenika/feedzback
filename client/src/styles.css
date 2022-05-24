@@ -33,6 +33,7 @@
     border-radius: 10px;
     border: none;
     padding: 5px;
+    resize: none;
     width: 100%;
 }
 

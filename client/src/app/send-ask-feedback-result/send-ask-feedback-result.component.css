@@ -1,8 +1,11 @@
 .container {
     display: flex;
-    justify-items: center;
     flex-direction: column;
-    margin-top: 20px;
+    justify-items: start;
+    align-items: stretch;
+    text-align: left;
+    max-width: 745px;
+    margin: auto;
 }
 .result-logo {
     display: flex;
@@ -17,16 +20,22 @@
     color: #4E4B4B;
     margin-bottom: 30px;
 }
-.btn-layout {
+
+.btn-return {
+    font-weight: 800;
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
-.btn-return {
-    font-weight: 800;
-    
-}
 .btn-retry {
     font-weight: 800;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
     margin-bottom: 10px;
+}
+@media only screen and (max-width:300px) {
+    .logo {
+        width: 100%;
+    } 
 }
