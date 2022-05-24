@@ -1,13 +1,13 @@
-import {Datastore} from '@google-cloud/datastore';
+import { Datastore } from '@google-cloud/datastore';
 
 const datastore = new Datastore(
-    {projectId: 'feedzback-343709'},
+  { projectId: 'feedzback-343709' },
 );
-const getEmails = ()=>{
-  const query = datastore.createQuery('inbox');
+const getEmails = () => {
+  const query = datastore.createQuery('feedback');
   return datastore.runQuery(query);
 };
-export const getEmail= async ()=>{
+export const getEmail = async () => {
   try {
     const [entities] = await getEmails();
     if (entities) return entities[0];

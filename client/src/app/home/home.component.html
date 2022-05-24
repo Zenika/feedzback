@@ -5,7 +5,21 @@
       <h2>Demandez ou envoyez des retours avec feedZback !</h2>
     </div>
   </div>
-
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="60px" fxLayoutGap.lt-md="20px" class="button-row">
+    <button fxLayout="row" fxFlex="50%" fxLayoutAlign="center center" fxLayoutGap="10px" fxLayout.lt-md="column"
+      class="home-send-feedback-btn" routerLink="/send">
+      <div fxFlexOffset.lt-md="15px" class="btn-margin"></div>
+      <div fxLayout="column" fxLayoutGap="6px">
+        <svg class="home-send-feedback-icon" width="45" height="38" viewBox="0 0 45 38" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 37.6666V23.3749L17.6167 18.9999L0 14.5082V0.333252L44.3333 18.9999L0 37.6666Z" fill="white" />
+        </svg>
+      </div>
+      <div fxLayout="column" fxLayoutGap="6px">
+        <label class="home-send-text-btn">ENVOYER</label>
+      </div>
+      <div fxFlexOffset.lt-md="15px"></div>
+    </button>
   <div class="home-description" >
     <h3> Choisissez d’envoyer ou de demander à la personne de votre choix un retour en cliquant sur l’un ou l’autre des boutons ci-dessous et laissez-vous guider !</h3>
   </div>
@@ -36,4 +50,3 @@
   </div>
 
 </div>
-

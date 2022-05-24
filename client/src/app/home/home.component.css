@@ -26,7 +26,6 @@
 .home-title {
   font-weight: 700;
   font-size: 16px;
-  line-height: 22px;
   color: #D52150;
   padding-top: 50px;
   padding-left: 10px;
@@ -36,7 +35,6 @@
   text-align: center;
   font-weight: 700;
   font-size: 14px;
-  line-height: 19px;
   color: #4E4B4B;
   margin-bottom: 40px;
   width: 50%;
@@ -58,6 +56,7 @@
   margin-bottom: 10px;
   margin-left: 53px;
 }
+
 .btn-pad {
   padding: 40px;
   padding-right: 120px;
@@ -67,13 +66,13 @@
 .btn-text {
   font-weight: 900;
   font-size: 18px;
-  line-height: 25px;
   text-align: center;
   color: #FFFFFF;
   padding-left: 10px;
   padding-top: 5px
   
 }
+
 
 .btn-icon {
   padding-left: 10px; 
@@ -98,10 +97,8 @@
 .home-guide-text {
   font-weight: 700;
   font-size: 14px;
-  line-height: 19px;
   color: #4E4B4B;
 }
-
 
 @media screen and (max-width:1200px) {
   .btn-pad {
