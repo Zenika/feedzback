@@ -26,37 +26,35 @@ const myMailgun = mailgun({
 const datastore = new Datastore({
   projectId: 'feedzback-343709',
 });
-const insertValue = (data) => {
-  datastore.save({
-    key: datastore.key('feedback'),
+
+const insertFeedback = async (data) => {
+  await datastore.save({
+    key: datastore.key('feedzback'),
     data
-  });
-};
+  })
+}
 
 export const sendEmail = async ({ sendRequest }) => {
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, sendRequest);
 
-  let msg = {
+  const msg = {
     to: sendRequest.receverEmail,
     from: sendRequest.email,
     subject: 'FeedZback',
     html: template,
   }
   if (envi !== 'production') {
-    msg = {
-      ...msg,
-      to: 'feedzback@zenika.com',
-      from: 'feedzback@zenika.com',
-    };
+    msg.to = 'feedzback@zenika.com'
+    msg.from = 'feedzback@zenika.com'
   }
 
-  let res;
-  res = await myMailgun.messages().send(msg)
-    .then(() => { return "Votre feedback a été envoyé!" })
-    .catch(err => { return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît" })
-
-  insertValue(sendRequest);
-  return res;
-
+  try {
+    await insertFeedback(sendRequest)
+    await myMailgun.messages().send(msg)
+    return "Votre feedback a été envoyé!";
+  } catch (e) {
+    console.error(e)
+    return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"
+  }
 };
