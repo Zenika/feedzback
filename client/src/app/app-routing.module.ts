@@ -11,7 +11,7 @@ const routes: Routes = [
   {path:'ask',component:AskFeedbackFormComponent},
   {path:'send', component:SendFeedbackFormComponent},
   {path:'result', component:SendAskFeedbackResultComponent},
-  {path:'sign-in', component:SignInComponent}
+  {path:'sign-in', component:SignInComponent},
   {path:'**',redirectTo:'sign-in'}
 ];
 
