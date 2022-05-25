@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/user';
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -19,6 +15,7 @@ export class AuthService {
     public firebaseAuth: AngularFireAuth,
     public router: Router
   ) {
+    
     this.firebaseAuth.authState.subscribe(user => {
       this.user = user! 
    });
