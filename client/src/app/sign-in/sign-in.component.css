@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+.card-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 50px;
+    box-sizing: content-box;
+    border: solid 3px;
+    border-radius: 10px;
+    border-color: #D52150;
+   
+}
+.connection-logo-wrapper {
+
+    display: flex;
+    align-items: center;
+    transform: translateY(-70px); 
+    background-color: white;
+    padding-right: 10px;
+    padding-left: 17px;
+}
+.connection-logo {
+    width: 100%;
+}
+h2 {
+    font-family: 'Nunito';
+    text-align: center;
+}
+
+.google-sign-in {
+    display: inline-flex;
+    box-shadow:  0 4px 4px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 11px;
+    border-width: 1px;
+    background-color: white;
+    width: 270px;
+    margin-top: 12px;
+}
+.google-sign-in:hover {
+    cursor: pointer;
+    border-color: #D52150;
+    -webkit-box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+    box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+}
+
+.google-logo-wrapper {
+    padding: 2px;
+    background: #fff;
+    width: 45px;
+    height: 100%;
+    border-radius: 1px;
+    display: inline-block;
+}
+
+.google-text-btn {
+    font-family: 'Nunito';
+    padding-top:5px;
+    letter-spacing: .21px;
+    font-size: 15px;
+    line-height: 48px;
+    vertical-align: top;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding-left: 2px;
+}
+
+@media only screen and (max-width: 800px) {
+    h2 {
+        font-size: 20px;
+    } 
+}

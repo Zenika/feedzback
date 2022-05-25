@@ -40,9 +40,7 @@
   width: 50%;
 }
 
-.home-feedback-btn {
-  background: #D52150;
-  border-color: #D52150;
+.btn-primary {
   border-radius: 10px;
 }
 

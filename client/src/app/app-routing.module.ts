@@ -5,12 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
+const redirectUnauthorizedToSignInPage = () => redirectUnauthorizedTo(['sign-in']);
 const routes: Routes = [
-  {path:'home',component:HomeComponent},
-  {path:'ask',component:AskFeedbackFormComponent},
-  {path:'send', component:SendFeedbackFormComponent},
-  {path:'result', component:SendAskFeedbackResultComponent},
+  {path:'home',component:HomeComponent ,canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
+  {path:'ask',component:AskFeedbackFormComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
+  {path:'send', component:SendFeedbackFormComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
+  {path:'result', component:SendAskFeedbackResultComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
   {path:'sign-in', component:SignInComponent},
   {path:'**',redirectTo:'sign-in'}
 ];
