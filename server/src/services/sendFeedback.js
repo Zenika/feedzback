@@ -41,7 +41,7 @@ const insertFeedback = async (data) => {
   })
 }
 
-export const sendEmail = async ({ sendRequest }) => {
+export const sendFeedback = async ({ sendRequest }) => {
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, sendRequest);
 

@@ -2,13 +2,16 @@ import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
 type Query{
-   allMessage: Message
+   feedbacks(email: String!): [Feedback!]!
    getResult:String
 }
-type Message {
-    email: String
-    to:String
-    message: String
+
+type Feedback {
+    senderName: String
+    senderEmail: String
+    positiveFeedback: String
+    toImprove: String
+    comment: String
 }
 input SendRequest {
     senderName:String
