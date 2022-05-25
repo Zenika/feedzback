@@ -14,6 +14,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SendAskFeedbackResultComponent,
     SendFeedbackFormComponent,
     AskFeedbackFormComponent,
+    MyFeedbacksPageComponent,
+    FeedbackListComponent,
   ],
   imports: [
     BrowserModule,

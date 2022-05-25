@@ -68,4 +68,5 @@ input:required, textarea:required {
 
 * {
     font-family: Nunito;
+    -webkit-font-smoothing: antialiased; /* fix font-weight not working on Chrome */
 }

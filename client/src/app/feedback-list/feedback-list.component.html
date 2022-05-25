@@ -1,0 +1,29 @@
+<ul>
+    <li *ngFor="let feedback of feedbacks" class="flex flex-column">
+        <div class="flex feedback-header">
+            <span>
+                <strong>From:</strong> {{feedback.senderName}}
+                (<a href="mailto:{{feedback.senderEmail}}">{{feedback.senderEmail}}</a>)
+            </span>
+            <button class="btn btn-primary">Expand</button>
+        </div>
+        <div class="flex feedback-content">
+            <div class="flex flex-column">
+                <h4>Positive feedback:</h4>
+                <span>{{feedback.positiveFeedback}}</span>
+            </div>
+            <div class="flex flex-column">
+                <h4>To improve:</h4>
+                <span>{{feedback.toImprove}}</span>
+            </div>
+            <div class="flex flex-column">
+                <h4>Comment:</h4>
+                <span>{{feedback.comment}}</span>
+            </div>
+        </div>
+
+    </li>
+    <div *ngIf="!feedbacks || feedbacks.length === 0" class="empty">
+        <span>No feedbacks yet</span>
+    </div>
+</ul>
