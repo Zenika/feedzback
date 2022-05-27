@@ -1,3 +1,15 @@
-<div class="container">
-    <app-feedback-list [feedbacks]="feedbacks"></app-feedback-list>
+<div class="container flex flex-column">
+    <div class="flex justify-content-center">
+        <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
+    </div>
+    <h1>Vos feedbacks</h1>
+
+    <app-tabs>
+        <app-tab-link [tabTitle]="'Received'">
+            <app-feedback-list [feedbacks]="feedbacks"></app-feedback-list>
+        </app-tab-link>
+        <app-tab-link tabTitle="Sent">
+            Tab 2 content
+        </app-tab-link>
+    </app-tabs>
 </div>

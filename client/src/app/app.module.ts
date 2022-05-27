@@ -16,6 +16,8 @@ import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-
 import { ReactiveFormsModule } from '@angular/forms';
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
+import { TabsComponent } from './tabs/tabs.component';
+import { TabLinkComponent } from './tab-link/tab-link.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { FeedbackListComponent } from './feedback-list/feedback-list.component';
     AskFeedbackFormComponent,
     MyFeedbacksPageComponent,
     FeedbackListComponent,
+    TabsComponent,
+    TabLinkComponent,
   ],
   imports: [
     BrowserModule,

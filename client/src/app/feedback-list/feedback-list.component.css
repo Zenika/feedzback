@@ -19,7 +19,6 @@
 ul {
     list-style-type: none;
     border: 0.5px solid #ccc;
-    border-radius: 10px;
     padding: 0;
     margin: 0;
     overflow: scroll;
@@ -50,9 +49,9 @@ h4 {
 }
 
 .feedback-content>div>span {
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: nowrap; */
 }
 
 .empty {
@@ -63,7 +62,7 @@ h4 {
     padding: 0.25rem 0.5rem 0.25rem 0.5rem;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 800px) {
     .feedback-content {
         flex-direction: column;
     }

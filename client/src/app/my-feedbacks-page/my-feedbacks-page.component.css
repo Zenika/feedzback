@@ -1,9 +1,32 @@
-.container {
-    width: 1100px;
+.flex {
+    display: flex;
 }
 
-@media screen and (max-width: 1100px) {
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.container {
+    width: 800px;
+}
+
+h1 {
+    color: #D52150;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 800px) {
     .container {
-        width: 600px;
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .container {
+        width: 100%;
     }
 }

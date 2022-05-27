@@ -1,0 +1,33 @@
+ul {
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+ul>li {
+    display: inline-block;
+}
+
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.75rem;
+    background-color: #f1f1f1;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+.active {
+    background-color: #ccc;
+}
+
+.active:hover {
+    background-color: #ccc;
+}
