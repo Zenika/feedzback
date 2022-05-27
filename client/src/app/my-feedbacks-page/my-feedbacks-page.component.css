@@ -19,6 +19,19 @@ h1 {
     font-weight: bold;
 }
 
+a {
+    color: #D52150;
+}
+
+small {
+    color: #D52150;
+    font-weight: lighter;
+}
+
+app-tabs {
+    margin-top: 1.5rem;
+}
+
 @media screen and (max-width: 800px) {
     .container {
         width: 500px;

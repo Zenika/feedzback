@@ -2,13 +2,15 @@
     <div class="flex justify-content-center">
         <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
     </div>
+    <a href="">&lt; Retour</a>
     <h1>Vos feedbacks</h1>
-
+    <span class="subtitle">Retrouvez tous les feedbacks que vous avez reçus et envoyés</span>
+    <small>les champs marqués d’une astérisque sont obligatoires</small>
     <app-tabs>
-        <app-tab-link [tabTitle]="'Received'">
+        <app-tab-link [tabTitle]="'Feedbacks reçus'">
             <app-feedback-list [feedbacks]="feedbacks"></app-feedback-list>
         </app-tab-link>
-        <app-tab-link tabTitle="Sent">
+        <app-tab-link tabTitle="Feedbacks envoyés">
             Tab 2 content
         </app-tab-link>
     </app-tabs>
