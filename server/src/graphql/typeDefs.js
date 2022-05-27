@@ -3,7 +3,7 @@ import { gql } from 'apollo-server';
 export const typeDefs = gql`
 type Query{
    allMessage: Message
-   getResult:String
+   getResult: String
 }
 type Message {
     email: String
@@ -11,6 +11,7 @@ type Message {
     message: String
 }
 input SendRequest {
+    token: String
     senderName:String
     senderEmail:String
     receverEmail: String
@@ -20,6 +21,7 @@ input SendRequest {
     comment:String
 }
 input AskFeedback {
+    token:String
     name: String!
     email: String!
     senderName: String!

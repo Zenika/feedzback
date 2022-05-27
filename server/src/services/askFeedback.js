@@ -4,6 +4,7 @@ import mailgun from 'mailgun-js';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import admin from 'firebase-admin'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -39,9 +40,11 @@ export const askFeedback = async ({askFeedback})=> {
       }
 
     } 
-
-    const res = await myMailgun.messages().send(msg).then(()=> {return 'Votre demande a bien été envoyé'})
-    .catch(()=> {return "Votre demande n'est pas envoyé vérifiez les données s'il vous plaît"});
+    const auth = await admin.auth().verifyIdToken(askFeedback.token).catch(()=> {return false})
+    if(!auth)
+    return "vous n'etes pas authorisé";
+    const res = await myMailgun.messages().send(msg).then(()=> {return 'sent'})
+    .catch(()=> {return 'error'});
 
     return res;
  }

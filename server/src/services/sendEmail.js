@@ -6,8 +6,10 @@ import * as fs from 'fs';
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import replaceHtmlVars from '../model/replaceHtmlVars.js';
+import admin from 'firebase-admin';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+
 
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/emailModel.html').toString();
 
@@ -42,6 +44,11 @@ const insertFeedback = async (data) => {
 }
 
 export const sendEmail = async ({ sendRequest }) => {
+ 
+  const auth  = await  admin.auth().verifyIdToken(sendRequest.token).catch(()=> { return false})
+  if(!auth)
+  return "Vous n'êtes pas authorisé";
+  
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, sendRequest);
 
@@ -59,9 +66,9 @@ export const sendEmail = async ({ sendRequest }) => {
   try {
     await insertFeedback(sendRequest)
     await myMailgun.messages().send(msg)
-    return "Votre feedback a été envoyé!";
+    return "sent";
   } catch (e) {
     console.error(e)
-    return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"
+    return "error"
   }
 };
