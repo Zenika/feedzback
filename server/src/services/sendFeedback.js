@@ -41,13 +41,13 @@ const insertFeedback = async (data) => {
   })
 }
 
-export const sendFeedback = async ({ sendRequest }) => {
+export const sendFeedback = async ({ feedbackInput }) => {
   const envi = process.env.NODE_ENV || 'development';
-  const template = replaceHtmlVars(emailTemplate, sendRequest);
+  const template = replaceHtmlVars(emailTemplate, feedbackInput);
 
   const msg = {
-    to: sendRequest.receverEmail,
-    from: sendRequest.email,
+    to: feedbackInput.receverEmail,
+    from: feedbackInput.email,
     subject: 'FeedZback',
     html: template,
   }
@@ -57,7 +57,7 @@ export const sendFeedback = async ({ sendRequest }) => {
   }
 
   try {
-    await insertFeedback(sendRequest)
+    await insertFeedback(feedbackInput)
     await myMailgun.messages().send(msg)
     return "Votre feedback a été envoyé!";
   } catch (e) {

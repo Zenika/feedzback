@@ -2,18 +2,21 @@ import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
 type Query{
-   feedbacks(email: String!): [Feedback!]!
+   sentFeedbacks(email: String!): [Feedback!]!
+   receivedFeedbacks(email: String!): [Feedback!]!
    getResult:String
 }
 
 type Feedback {
     senderName: String
     senderEmail: String
+    receverEmail: String
+    receverName: String
     positiveFeedback: String
     toImprove: String
     comment: String
 }
-input SendRequest {
+input FeedbackInput {
     senderName:String
     senderEmail:String
     receverEmail: String
@@ -31,7 +34,7 @@ input AskFeedback {
 }
 
 type Mutation{
-    sendFeedback(sendRequest:SendRequest!):String
+    sendFeedback(feedbackInput: FeedbackInput!):String
     sendFeedbackRequest(askFeedback: AskFeedback!):String
 }
 `;

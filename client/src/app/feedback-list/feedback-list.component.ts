@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Feedback } from '../model/feedback';
+import { FeedbackType } from '../enum/feedback-type';
 
 @Component({
   selector: 'app-feedback-list',
@@ -8,6 +9,8 @@ import { Feedback } from '../model/feedback';
 })
 export class FeedbackListComponent implements OnInit {
   @Input() feedbacks!: Feedback[];
+  @Input() type!: FeedbackType;
+  public feedbackType: typeof FeedbackType = FeedbackType;
 
   constructor() { }
 

@@ -18,8 +18,8 @@ export class SendFeedbackFormComponent implements OnInit {
   public getFormControlError = getFormControlError
 
   private mutation = gql`
-    mutation SendFeedback($sendRequest:SendRequest!){
-      sendFeedback(sendRequest:$sendRequest)
+    mutation SendFeedback($feedbackInput: FeedbackInput!){
+      sendFeedback(feedbackInput:$feedbackInput)
     }
   `;
 
@@ -50,7 +50,7 @@ export class SendFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          sendRequest: new Feedback(
+          feedbackInput: new Feedback(
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,

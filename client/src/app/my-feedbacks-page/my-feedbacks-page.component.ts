@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { map, Subject, takeUntil } from 'rxjs';
 import { Feedback } from '../model/feedback';
-
+import { FeedbackType } from '../enum/feedback-type';
 
 @Component({
   selector: 'app-my-feedbacks-page',
@@ -11,12 +11,20 @@ import { Feedback } from '../model/feedback';
 })
 export class MyFeedbacksPageComponent implements OnInit {
   private unsubscribe$: Subject<void> = new Subject();
+  public feedbackType: typeof FeedbackType = FeedbackType;
 
   private query = gql`
     query GetFeedbacks($email: String!){
-      feedbacks(email: $email) {
+      receivedFeedbacks(email: $email) {
         senderEmail
         senderName
+        positiveFeedback
+        toImprove
+        comment
+      }
+      sentFeedbacks(email: $email) {
+        receverEmail
+        receverName
         positiveFeedback
         toImprove
         comment
@@ -24,7 +32,8 @@ export class MyFeedbacksPageComponent implements OnInit {
     }
   `;
 
-  public feedbacks: Feedback[] = [];
+  public receivedFeedbacks: Feedback[] = [];
+  public sentFeedbacks: Feedback[] = [];
 
   constructor(private apollo: Apollo) { }
 
@@ -37,7 +46,10 @@ export class MyFeedbacksPageComponent implements OnInit {
     }).pipe(
       map(({ data }) => data),
       takeUntil(this.unsubscribe$)
-    ).subscribe(({ feedbacks }: any) => this.feedbacks = feedbacks)
+    ).subscribe(({ receivedFeedbacks, sentFeedbacks }: any) => {
+      this.receivedFeedbacks = receivedFeedbacks
+      this.sentFeedbacks = sentFeedbacks
+    })
   }
 
   ngOnDestroy() {

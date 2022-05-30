@@ -8,10 +8,10 @@
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <app-tabs>
         <app-tab-link [tabTitle]="'Feedbacks reçus'">
-            <app-feedback-list [feedbacks]="feedbacks"></app-feedback-list>
+            <app-feedback-list [feedbacks]="receivedFeedbacks" [type]="feedbackType.Received"></app-feedback-list>
         </app-tab-link>
         <app-tab-link tabTitle="Feedbacks envoyés">
-            Tab 2 content
+            <app-feedback-list [feedbacks]="sentFeedbacks" [type]="feedbackType.Sent"></app-feedback-list>
         </app-tab-link>
     </app-tabs>
 </div>

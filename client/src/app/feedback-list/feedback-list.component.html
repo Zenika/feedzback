@@ -1,10 +1,16 @@
 <ul>
     <li *ngFor="let feedback of feedbacks" class="flex flex-column">
         <div class="flex feedback-header">
-            <span>
+            <span *ngIf="type === feedbackType.Received; else sent_feedbacks">
                 <strong>From:</strong> {{feedback.senderName}}
                 (<a href="mailto:{{feedback.senderEmail}}">{{feedback.senderEmail}}</a>)
             </span>
+            <ng-template #sent_feedbacks>
+                <span>
+                    <strong>To:</strong> {{feedback.receverName}}
+                    (<a href="mailto:{{feedback.receverEmail}}">{{feedback.receverEmail}}</a>)
+                </span>
+            </ng-template>
             <button class="btn btn-primary">Expand</button>
         </div>
         <div class="flex feedback-content">
