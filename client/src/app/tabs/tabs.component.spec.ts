@@ -9,7 +9,7 @@ import { TabsComponent } from './tabs.component';
         <app-tab-link tabTitle="Feedzbacks reçus">
           <span id="content1">content 1</span>
         </app-tab-link>
-        <app-tab-link tabTitle="Feedbacks envoyés">
+        <app-tab-link tabTitle="Feedzbacks envoyés">
           <span id="content2">content 2</span>
         </app-tab-link>
     </app-tabs>
