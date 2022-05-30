@@ -1,1 +1,24 @@
-  <router-outlet></router-outlet>
+<nav class="nav-mobile" role="navigation">
+  <div id="menuToggle">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menu">
+      <li><a *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
+         <li><a *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a></li>
+         <li><a *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoieFeedBack</a></li>
+         <li><a >Se deconnecter</a></li>
+       </ul>  
+  </div>
+</nav>
+<nav class="nav-web">
+  <ul>
+    <a >FeedZback</a>
+    <a style="align-self: flex-end;" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">Acceuil</a>
+    <a *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a>
+    <a *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoieFeedBack</a>
+    <a (click)="signOut()" >Se deconnecter</a>
+  </ul>  
+</nav>
+ <router-outlet></router-outlet>

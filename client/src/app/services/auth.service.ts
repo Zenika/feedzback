@@ -27,4 +27,14 @@ export class AuthService {
   signInWithGoogle() {
     return this.oAuthProvider(new auth.GoogleAuthProvider())
   }
+  isLogged() {
+    const token = localStorage.getItem('token')!
+    return token === null ? false : true;
+  }
+  signOut() {
+    return this.firebaseAuth.signOut().then(() =>{
+      localStorage.removeItem('token');
+      this.router.navigate(['sign-in'])
+    })
+  }
 }

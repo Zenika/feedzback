@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from  "@angular/fire/compat";
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
     HttpClientModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule
   ],
   providers: [
     {

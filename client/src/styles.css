@@ -67,6 +67,10 @@ input:required, textarea:required {
     border-width: 0.5px;
 }
 
+
+
+
+
 @font-face {
     font-family: "Nunito";
     src: url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
