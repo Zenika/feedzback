@@ -6,7 +6,7 @@ import { TabsComponent } from './tabs.component';
 @Component({
   template: `
     <app-tabs>
-        <app-tab-link tabTitle="Feedbacks reçus">
+        <app-tab-link tabTitle="Feedzbacks reçus">
           <span id="content1">content 1</span>
         </app-tab-link>
         <app-tab-link tabTitle="Feedbacks envoyés">
