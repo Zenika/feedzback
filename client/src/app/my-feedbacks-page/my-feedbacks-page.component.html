@@ -7,7 +7,7 @@
     <span class="subtitle">Retrouvez tous les feedbacks que vous avez reçus et envoyés</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <app-tabs>
-        <app-tab-link [tabTitle]="'Feedbacks reçus'">
+        <app-tab-link tabTitle="Feedbacks reçus">
             <app-feedback-list [feedbacks]="receivedFeedbacks" [type]="feedbackType.Received"></app-feedback-list>
         </app-tab-link>
         <app-tab-link tabTitle="Feedbacks envoyés">
