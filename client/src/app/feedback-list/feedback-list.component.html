@@ -2,29 +2,29 @@
     <li *ngFor="let feedback of feedbacks" class="flex flex-column">
         <div class="flex feedback-header">
             <span *ngIf="type === feedbackType.Received; else sent_feedbacks">
-                <strong>From:</strong> {{feedback.senderName}}
+                <strong>De:</strong> {{feedback.senderName}}
                 (<a href="mailto:{{feedback.senderEmail}}">{{feedback.senderEmail}}</a>)
             </span>
             <ng-template #sent_feedbacks>
                 <span>
-                    <strong>To:</strong> {{feedback.receverName}}
+                    <strong>À:</strong> {{feedback.receverName}}
                     (<a href="mailto:{{feedback.receverEmail}}">{{feedback.receverEmail}}</a>)
                 </span>
             </ng-template>
-            <button class="btn btn-primary">Expand</button>
+            <button class="btn btn-primary">Ouvrir</button>
         </div>
         <div class="flex feedback-content">
-            <div class="flex flex-column">
+            <div>
                 <h4>Points positifs:</h4>
-                <span>{{feedback.positiveFeedback}}</span>
+                <p>{{feedback.positiveFeedback}}</p>
             </div>
-            <div class="flex flex-column">
+            <div>
                 <h4>Axes d’améliorations:</h4>
-                <span>{{feedback.toImprove}}</span>
+                <p>{{feedback.toImprove}}</p>
             </div>
-            <div class="flex flex-column">
+            <div>
                 <h4>Commentaires:</h4>
-                <span>{{feedback.comment}}</span>
+                <p>{{feedback.comment}}</p>
             </div>
         </div>
 

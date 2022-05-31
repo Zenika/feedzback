@@ -33,7 +33,7 @@ li:last-child {
     border: none;
 }
 
-h4 {
+h4, p {
     margin: 0;
 }
 
@@ -48,10 +48,12 @@ h4 {
     border-right: 0.5px solid #ccc;
 }
 
-.feedback-content>div>span {
-    /* text-overflow: ellipsis;
+.feedback-content>div>p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    white-space: nowrap; */
+    font-size: 0.85rem;
 }
 
 .empty {

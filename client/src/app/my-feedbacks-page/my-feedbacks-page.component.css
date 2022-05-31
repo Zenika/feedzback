@@ -11,7 +11,7 @@
 }
 
 .container {
-    width: 800px;
+    max-width: 800px;
 }
 
 h1 {
@@ -34,12 +34,12 @@ app-tabs {
 
 @media screen and (max-width: 800px) {
     .container {
-        width: 500px;
+        max-width: 500px;
     }
 }
 
 @media screen and (max-width: 500px) {
     .container {
-        width: 100%;
+        max-width: 100%;
     }
 }
