@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FeedbackType } from '../enum/feedback-type';
 import { Feedback } from '../model/feedback';
+import { Nl2brPipe } from '../pipe/nl2br/nl2br.pipe';
 
 import { FeedbackListComponent } from './feedback-list.component';
 
@@ -11,7 +12,10 @@ describe('FeedbackListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FeedbackListComponent]
+      declarations: [
+        FeedbackListComponent,
+        Nl2brPipe
+      ]
     })
       .compileComponents();
   });
