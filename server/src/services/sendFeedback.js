@@ -35,9 +35,13 @@ const insertFeedback = async (data) => {
       'receverName',
       'positiveFeedback',
       'toImprove',
-      'comment'
+      'comment',
+      'createdAt'
     ],
-    data
+    data: {
+      ...data,
+      createdAt: Date.now()
+    }
   })
 }
 

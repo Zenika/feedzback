@@ -21,6 +21,7 @@ export class MyFeedbacksPageComponent implements OnInit {
         positiveFeedback
         toImprove
         comment
+        createdAt
       }
       sentFeedbacks(email: $email) {
         receverEmail

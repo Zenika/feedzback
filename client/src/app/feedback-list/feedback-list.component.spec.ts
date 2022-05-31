@@ -35,14 +35,14 @@ describe('FeedbackListComponent', () => {
     component.feedbacks = [new Feedback("John", "john@example.com", "Steve", "steve@example.com", "Very good", "Wack af", "Good evening")]
     component.type = FeedbackType.Received
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector("span").textContent).toContain('De:');
+    expect(fixture.nativeElement.querySelector("p").textContent).toContain('De:');
   })
 
   it('should display "To:" if type is "Sent"', () => {
     component.feedbacks = [new Feedback("John", "john@example.com", "Steve", "steve@example.com", "Very good", "Wack af", "Good evening")]
     component.type = FeedbackType.Sent
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector("span").textContent).toContain('À:');
+    expect(fixture.nativeElement.querySelector("p").textContent).toContain('À:');
   })
 
   it('should display a message when the list is empty', () => {
@@ -51,9 +51,9 @@ describe('FeedbackListComponent', () => {
 
   it('should display a list with multiple feedbacks', () => {
     component.feedbacks = [
-      new Feedback("John", "john@example.com", "Steve", "steve@example.com", "Very good", "Wack af", "Good evening"),
-      new Feedback("Frank", "franck@example.com", "Marie", "marie@example.com", "yes", "no", "why not"),
-      new Feedback("Paulette", "paulette@example.com", "Thierry", "thierry@example.com", "très bien", "pas top ", "à plus")
+      new Feedback("John", "john@example.com", "Steve", "steve@example.com", "Very good", "Wack af", "Good evening", "1654007139829"),
+      new Feedback("Frank", "franck@example.com", "Marie", "marie@example.com", "yes", "no", "why not", "1654007116872"),
+      new Feedback("Paulette", "paulette@example.com", "Thierry", "thierry@example.com", "très bien", "pas top ", "à plus", "1654007115662")
     ];
     component.type = FeedbackType.Received
     fixture.detectChanges();
@@ -65,9 +65,7 @@ describe('FeedbackListComponent', () => {
       const textContent = ulContent[i].nativeElement.textContent;
       expect(textContent).toContain(component.feedbacks[i].senderName)
       expect(textContent).toContain(component.feedbacks[i].senderEmail)
-      expect(textContent).toContain(component.feedbacks[i].positiveFeedback)
-      expect(textContent).toContain(component.feedbacks[i].toImprove)
-      expect(textContent).toContain(component.feedbacks[i].comment)
+      expect(textContent).toContain("5/31/22")
     }
   })
 });

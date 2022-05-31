@@ -15,6 +15,7 @@ type Feedback {
     positiveFeedback: String
     toImprove: String
     comment: String
+    createdAt: String
 }
 input FeedbackInput {
     senderName:String
