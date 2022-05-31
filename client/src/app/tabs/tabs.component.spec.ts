@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TabLinkComponent } from '../tab-link/tab-link.component';
 import { TabsComponent } from './tabs.component';
 
@@ -54,14 +55,23 @@ describe('TabsComponent', () => {
     expect(activeTab).toBeDefined()
     expect(activeTab[0]).toBeDefined()
     expect(activeTab[0]).toBe(component.tabs.tabs.get(0)!)
+
+    const contentSpans = fixture.debugElement.queryAll(By.css('.content'));
+    expect(contentSpans[0].properties['hidden']).toBe(false)
+    expect(contentSpans[1].properties['hidden']).toBe(true)
   })
 
   it('should have the second tab active', () => {
     component.tabs.selectTab(component.tabs.tabs.get(1)!)
     let activeTab = component.tabs.tabs.filter((tab) => tab.active);
+    fixture.detectChanges();
 
     expect(activeTab).toBeDefined()
     expect(activeTab[0]).toBeDefined()
     expect(activeTab[0]).toBe(component.tabs.tabs.get(1)!)
+
+    const contentSpans = fixture.debugElement.queryAll(By.css('.content'));
+    expect(contentSpans[0].properties['hidden']).toBe(true)
+    expect(contentSpans[1].properties['hidden']).toBe(false)
   })
 });

@@ -1,4 +1,4 @@
-<ul>
+<ul *ngIf="feedbacks && feedbacks.length !== 0; else empty">
     <li *ngFor="let feedback of feedbacks" class="flex flex-column">
         <div class="flex feedback-header">
             <span *ngIf="type === feedbackType.Received; else sent_feedbacks">
@@ -19,7 +19,7 @@
                 <p>{{feedback.positiveFeedback}}</p>
             </div>
             <div>
-                <h4>Axes d’améliorations:</h4>
+                <h4>Axes d'améliorations:</h4>
                 <p>{{feedback.toImprove}}</p>
             </div>
             <div>
@@ -27,9 +27,10 @@
                 <p>{{feedback.comment}}</p>
             </div>
         </div>
-
     </li>
-    <div *ngIf="!feedbacks || feedbacks.length === 0" class="empty">
+</ul>
+<ng-template #empty>
+    <div class="empty">
         <span>Aucun FeedzBack</span>
     </div>
-</ul>
+</ng-template>
