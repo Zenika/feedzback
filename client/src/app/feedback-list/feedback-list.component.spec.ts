@@ -27,14 +27,14 @@ describe('FeedbackListComponent', () => {
   });
 
   it('should display "From:" if type is "Received"', () => {
-    component.feedbacks = [new Feedback("John", "john@gmail.com", "Steve", "steve@gmail.com", "Very good", "Wack af", "Good evening")]
+    component.feedbacks = [new Feedback("John", "john@example.com", "Steve", "steve@example.com", "Very good", "Wack af", "Good evening")]
     component.type = FeedbackType.Received
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector("span").textContent).toContain('From:');
   })
 
   it('should display "To:" if type is "Sent"', () => {
-    component.feedbacks = [new Feedback("John", "john@gmail.com", "Steve", "steve@gmail.com", "Very good", "Wack af", "Good evening")]
+    component.feedbacks = [new Feedback("John", "john@example.com", "Steve", "steve@example.com", "Very good", "Wack af", "Good evening")]
     component.type = FeedbackType.Sent
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector("span").textContent).toContain('To:');
