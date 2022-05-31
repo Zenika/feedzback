@@ -18,6 +18,7 @@ import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabLinkComponent } from './tab-link/tab-link.component';
+import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TabLinkComponent } from './tab-link/tab-link.component';
     FeedbackListComponent,
     TabsComponent,
     TabLinkComponent,
+    Nl2brPipe,
   ],
   imports: [
     BrowserModule,

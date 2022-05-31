@@ -16,15 +16,15 @@
         <div class="flex feedback-content">
             <div>
                 <h4>Points positifs:</h4>
-                <p>{{feedback.positiveFeedback}}</p>
+                <p [innerHTML]="feedback.positiveFeedback | nl2br"></p>
             </div>
             <div>
                 <h4>Axes d'améliorations:</h4>
-                <p>{{feedback.toImprove}}</p>
+                <p [innerHTML]="feedback.toImprove | nl2br"></p>
             </div>
             <div>
                 <h4>Commentaires:</h4>
-                <p>{{feedback.comment}}</p>
+                <p [innerHTML]="feedback.comment | nl2br"></p>
             </div>
         </div>
     </li>
