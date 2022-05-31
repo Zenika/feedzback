@@ -5,20 +5,21 @@
     <span></span>
     <span></span>
     <ul id="menu">
-      <li><a *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
-         <li><a *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a></li>
-         <li><a *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoieFeedBack</a></li>
-         <li><a >Se deconnecter</a></li>
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
+         <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a></li>
+         <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoiFeedBack</a></li>
+         <li><a class="menu-item" (click)="signOut()" class="menu-item">Se deconnecter</a></li>
        </ul>  
   </div>
+    <ul><a class="nav-title" routerLink="/home">FeedZback</a></ul>
 </nav>
 <nav class="nav-web">
+  <ul><a class="nav-title" routerLink="/home">FeedZback</a></ul>
   <ul>
-    <a >FeedZback</a>
-    <a style="align-self: flex-end;" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">Acceuil</a>
-    <a *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a>
-    <a *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoieFeedBack</a>
-    <a (click)="signOut()" >Se deconnecter</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">Acceuil</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoieFeedBack</a>
+    <a class="menu-item" (click)="signOut()" >Se deconnecter</a>
   </ul>  
 </nav>
  <router-outlet></router-outlet>
