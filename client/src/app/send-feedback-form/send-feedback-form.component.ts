@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
-import { FeedbackQueryData } from '../model/feedbackQueryData';
+import { Feedback } from '../model/feedback';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -18,9 +18,9 @@ export class SendFeedbackFormComponent implements OnInit {
   public getFormControlError = getFormControlError
 
   private mutation = gql`
-  mutation SendFeedback($sendRequest:SendRequest!){
-    sendFeedback(sendRequest:$sendRequest)
-  }
+    mutation SendFeedback($feedbackInput: FeedbackInput!){
+      sendFeedback(feedbackInput:$feedbackInput)
+    }
   `;
 
   public form = new FormGroup({
@@ -50,7 +50,7 @@ export class SendFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          sendRequest: new FeedbackQueryData(
+          feedbackInput: new Feedback(
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,
