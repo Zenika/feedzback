@@ -15,6 +15,10 @@ executors:
     resource_class: small
     docker:
       - image: cypress/browsers:node14.16.0-chrome90-ff88
+    environnment:
+      service-key: ${FIREBASE_SERVICE_KEY}
+      CYPRESS_TEST_UID: ${FIREBASE_UID}
+   
      
 
 jobs:
