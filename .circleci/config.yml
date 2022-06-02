@@ -265,7 +265,7 @@ workflows:
          executor: with-chrome
          browser: chrome
          config: 'service-key= ${FIREBASE_SERVICE_KEY}'
-         env: 'CYPRESS_TEST_UID: ${FIREBASE_UID}'
+         env: 'service-key= ${FIREBASE_SERVICE_KEY},CYPRESS_TEST_UID= ${FIREBASE_UID}'
          requires:
             - install-client-dependencies  
          install-command: |
