@@ -1,15 +1,26 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { AuthService } from './services/auth.service';
 
+
+let authStub = {
+  constructor: () => {console.log('constructor called')},
+  oAuthProvider: () => {console.log('login called')},
+  signInWithGoogle: () => {console.log('logout called')},
+  signOut: () => {console.log('sign out!')}
+}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        AngularFireAuthModule
       ],
+      providers: [{provide:AuthService, useValue: authStub}],
       declarations: [
         AppComponent
       ],

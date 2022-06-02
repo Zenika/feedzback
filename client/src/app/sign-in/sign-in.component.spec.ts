@@ -14,6 +14,7 @@ describe('SignInComponent', () => {
     constructor: () => {console.log('constructor called')},
     oAuthProvider: () => {console.log('login called')},
     signInWithGoogle: () => {console.log('logout called')},
+    signOut: () => {console.log('sign out!')}
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
