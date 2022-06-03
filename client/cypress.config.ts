@@ -6,6 +6,7 @@ export default defineConfig({
   e2e: {
     baseUrl : 'http://localhost:4200',
     setupNodeEvents(on, config) {
+      console.log(config.env['hey']);
       admin.initializeApp({
         
         credential: admin.credential.cert(config.env['service-key'])
