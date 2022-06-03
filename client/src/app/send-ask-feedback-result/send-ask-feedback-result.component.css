@@ -1,13 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-items: start;
+    align-items: stretch;
+    text-align: left;
+    max-width: 745px;
+    margin: auto;
+}
+.result-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
 .result-title {
     font-weight: 800;
     font-size: 24px;
     line-height: 33px;
     text-align: center;
     color: #4E4B4B;
+    margin-bottom: 30px;
 }
+
 .btn-return {
     font-weight: 800;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 .btn-retry {
     font-weight: 800;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+@media only screen and (max-width:300px) {
+    .logo {
+        width: 100%;
+    } 
 }

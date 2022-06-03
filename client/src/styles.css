@@ -32,7 +32,9 @@
     background: #FAFAFA;
     border-radius: 10px;
     border: none;
-    padding: 10px;
+    padding: 5px;
+    resize: none;
+    width: 100%;
 }
 
 .textarea {
@@ -68,5 +70,4 @@ input:required, textarea:required {
 
 * {
     font-family: Nunito;
-    -webkit-font-smoothing: antialiased; /* fix font-weight not working on Chrome */
 }

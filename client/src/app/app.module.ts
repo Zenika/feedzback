@@ -10,10 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from  "@angular/fire/compat";
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { TabsComponent } from './tabs/tabs.component';
@@ -27,6 +29,7 @@ import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
     SendAskFeedbackResultComponent,
     SendFeedbackFormComponent,
     AskFeedbackFormComponent,
+    SignInComponent,
     MyFeedbacksPageComponent,
     FeedbackListComponent,
     TabsComponent,
@@ -39,8 +42,9 @@ import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
     FormsModule,
     ApolloModule,
     HttpClientModule,
-    FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule
   ],
   providers: [
     {

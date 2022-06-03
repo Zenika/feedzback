@@ -1,51 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.btn-container {
+  display: flex;
+  flex-direction: row;
+}
+.padTop {
+  padding-top: 30px;
+}
+.row-logo-title {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .home-title {
   font-weight: 700;
   font-size: 16px;
   color: #D52150;
+  padding-top: 50px;
+  padding-left: 10px;
 }
 
 .home-description {
+  text-align: center;
   font-weight: 700;
   font-size: 14px;
   color: #4E4B4B;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
+  width: 50%;
 }
 
-.home-ask-feedback-btn, .home-send-feedback-btn {
+.home-feedback-btn {
   background: #D52150;
-  border-radius: 10px;
   border-color: #D52150;
+  border-radius: 10px;
 }
 
-.btn-margin {
-  margin-top: 55px;
-  margin-bottom: 55px;
+.btn-send-margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 53px;
+}
+.btn-ask-margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 53px;
 }
 
+.btn-pad {
+  padding: 40px;
+  padding-right: 120px;
+  padding-left: 120px;
+}
 
-.home-send-text-btn {
+.btn-text {
   font-weight: 900;
   font-size: 18px;
   text-align: center;
   color: #FFFFFF;
+  padding-left: 10px;
+  padding-top: 5px
+  
 }
 
-.home-ask-text-btn {
-  font-weight: 900;
-  font-size: 18px;
-  text-align: center;
-  color: #FFFFFF;
-}
 
-.home-send-feedback-btn:hover, .home-ask-feedback-btn:hover {
-  background-color: #a41a3f;
-}
-
-.home-send-feedback-icon {
-  color: #FFFFFF;
-}
-
-.home-ask-feedback-icon {
+.btn-icon {
+  padding-left: 10px; 
   color: #FFFFFF;
 }
 
@@ -55,7 +85,13 @@
     0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
-  padding: 15px;
+  justify-content: center;
+  text-align: center;
+  width: 53%;
+}
+
+.home-guide-image{
+  width: 60%;
 }
 
 .home-guide-text {
@@ -64,14 +100,69 @@
   color: #4E4B4B;
 }
 
-.button-row {
-  margin-bottom: 15px;
+@media screen and (max-width:1200px) {
+  .btn-pad {
+    padding: 35px;
+    align-items: center;
+  }
+  .btn-send-margin {
+    margin-right: 15px;
+  }
+  .btn-ask-margin {
+    margin-left: 15px;
+  }
+  
 }
 
-h3 {
-  margin: 0;
+@media screen and (max-width:900px) {
+  .btn-pad {
+    padding: 20px;
+    align-items: center;
+  }
+  .btn-send-margin {
+    margin-right: 15px;
+  }
+  .btn-ask-margin {
+    margin-left: 15px;
+  }
+  
 }
+@media only screen and (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    align-content: center;
+  }
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .row-logo-title {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
 
-.text-align-center {
-  text-align: center;
+  .home-description {
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  .home-card {
+    width: 100%;
+  }
+  .btn-pad {
+    padding: 30px;
+    align-items: center;
+  }
+
+  .btn-icon {
+    padding-bottom: 10px; 
+    color: #FFFFFF;
+  }
+  .btn-send-margin {
+    margin-right: 10px;
+  }
+  .btn-ask-margin {
+    margin-left: 10px;
+  }
 }

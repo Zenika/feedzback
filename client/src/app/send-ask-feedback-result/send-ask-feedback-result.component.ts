@@ -9,15 +9,13 @@ import { Location } from '@angular/common';
 })
 export class SendAskFeedbackResultComponent implements OnInit {
 
+  message!: string
   result!: string
   constructor(private route: ActivatedRoute, private router: Router, private location: Location) {
+    this.message = this.route.snapshot.paramMap.get('message')!
     this.result = this.route.snapshot.paramMap.get('result')!
-
-    if (!this.result)
-      this.router.navigate(['/'])
   }
 
   ngOnInit(): void {
   }
-
 }

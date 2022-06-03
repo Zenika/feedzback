@@ -56,10 +56,10 @@ export class AskFeedbackFormComponent implements OnInit {
         let result = data.data.sendFeedbackRequest;
         if (result === "Votre demande a bien été envoyé") {
           result = "Félicitations! Votre demande vient d’être envoyée à : " + this.senderName?.value;
-          this.router.navigate(['/result', { result: result }])
+          this.router.navigate(['/result', { result: 'true' ,message:result}])
         } else {
           result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
-          this.router.navigate(['/result', { result: result }])
+          this.router.navigate(['/result', { result: 'false', message: result }])
         }
       })
     }
