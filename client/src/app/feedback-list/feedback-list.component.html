@@ -1,0 +1,22 @@
+<ul *ngIf="feedbacks && feedbacks.length !== 0; else empty">
+    <li *ngFor="let feedback of feedbacks" class="flex flex-column">
+        <div class="flex flex-column feedback-row">
+            <p *ngIf="type === feedbackType.Received; else sent_feedbacks">
+                <strong>De:</strong> {{feedback.senderName}}
+                (<a href="mailto:{{feedback.senderEmail}}">{{feedback.senderEmail}}</a>)
+            </p>
+            <ng-template #sent_feedbacks>
+                <p>
+                    <strong>À:</strong> {{feedback.receverName}}
+                    (<a href="mailto:{{feedback.receverEmail}}">{{feedback.receverEmail}}</a>)
+                </p>
+            </ng-template>
+            <p class="date">{{feedback.createdAt | date: 'shortDate' }}</p>
+        </div>
+    </li>
+</ul>
+<ng-template #empty>
+    <div class="empty">
+        <span>Aucun FeedzBack</span>
+    </div>
+</ng-template>

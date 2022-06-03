@@ -1,0 +1,49 @@
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px;
+    min-width: 800px;
+}
+
+h1 {
+    color: #D52150;
+    font-weight: bold;
+}
+
+a {
+    color: #D52150;
+}
+
+small {
+    color: #D52150;
+    font-weight: lighter;
+}
+
+app-tabs {
+    margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        max-width: 500px;
+        min-width: 500px;
+
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .container {
+        max-width: 100%;
+        min-width: 100%;
+    }
+}

@@ -5,15 +5,18 @@ import { HomeComponent } from './home/home.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-form.component';
 import { SignInComponent } from './sign-in/sign-in.component';
-
+import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
 const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path:'ask',component:AskFeedbackFormComponent},
   {path:'send', component:SendFeedbackFormComponent},
   {path:'result', component:SendAskFeedbackResultComponent},
   {path:'sign-in', component:SignInComponent},
+  { path: 'feedbacks', component: MyFeedbacksPageComponent },
   {path:'**',redirectTo:'sign-in'}
-];
+
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

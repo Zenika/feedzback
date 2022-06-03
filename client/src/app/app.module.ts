@@ -16,6 +16,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from  "@angular/fire/compat";
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
+import { TabsComponent } from './tabs/tabs.component';
+import { TabLinkComponent } from './tab-link/tab-link.component';
+import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +30,11 @@ import { SignInComponent } from './sign-in/sign-in.component';
     SendFeedbackFormComponent,
     AskFeedbackFormComponent,
     SignInComponent,
+    MyFeedbacksPageComponent,
+    FeedbackListComponent,
+    TabsComponent,
+    TabLinkComponent,
+    Nl2brPipe,
   ],
   imports: [
     BrowserModule,

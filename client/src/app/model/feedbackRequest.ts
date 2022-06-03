@@ -1,4 +1,4 @@
-export class AskFeedbackRequest {
+export class FeedbackRequest {
     constructor(
         public name: string = '',
         public email: string = '',

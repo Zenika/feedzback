@@ -1,0 +1,27 @@
+div {
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    display: flex;
+}
+
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.75rem;
+    background-color: #f1f1f1;
+    font-size: 1rem;
+    flex: 1 1 0px;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+
+.active {
+    background-color: #ccc;
+}
+
+.active:hover {
+    background-color: #ccc;
+}
