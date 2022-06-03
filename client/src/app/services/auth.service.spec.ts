@@ -1,7 +1,4 @@
-import { InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 
@@ -16,15 +13,11 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule,
-      AngularFireAuthModule],
+      imports: [RouterTestingModule],
       providers: [{provide: AuthService, useValue: authStub}]
     });
     service = TestBed.inject(AuthService)
 
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });

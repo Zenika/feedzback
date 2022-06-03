@@ -13,6 +13,7 @@ import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-fo
 import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import firebase from 'firebase/compat/app'
 import { AngularFireModule } from  "@angular/fire/compat";
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
