@@ -15,6 +15,9 @@ executors:
     resource_class: small
     docker:
       - image: cypress/browsers:node14.16.0-chrome90-ff88
+    environment:
+      FOO: foo
+      FIREBASE: ${FIREBASE_SERVICE_KEY}
    
 
 jobs:
@@ -262,7 +265,7 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         env: 'service-key=${FIRE}'
+         env: 'service-key=${FIREBASE},hey=${FIRE}'
          requires:
             - install-client-dependencies  
          install-command: |
