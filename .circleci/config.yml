@@ -270,6 +270,7 @@ workflows:
          install-command: |
             npm install -f 
             npm install apollo-angular @apollo/client graphql
+            npm i cypress-firebase
          pre-steps: 
             - run: npm install -g concurrently
             
