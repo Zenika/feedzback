@@ -264,6 +264,7 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
+         env: 'service-key=${FIREBASE_SERVICE_KEY}'
          requires:
             - install-client-dependencies  
          install-command: |
