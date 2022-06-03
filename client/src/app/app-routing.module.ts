@@ -16,7 +16,7 @@ const routes: Routes = [
   {path:'**',redirectTo:'sign-in'}
 
 
-
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
