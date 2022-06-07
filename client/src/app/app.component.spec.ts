@@ -7,10 +7,10 @@ import { AuthService } from './services/auth.service';
 
 
 const authStub = {
-  constructor: () => {console.log('constructor called')},
-  oAuthProvider: () => {console.log('login called')},
-  signInWithGoogle: () => {console.log('logout called')},
-  signOut: () => {console.log('sign out!')}
+  constructor: () => jest.fn(),
+  oAuthProvider: () => jest.fn(),
+  signInWithGoogle: () => jest.fn(),
+  signOut: () => jest.fn()
 }
 
 describe('AppComponent', () => {
