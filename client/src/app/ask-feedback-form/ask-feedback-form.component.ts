@@ -39,12 +39,14 @@ export class AskFeedbackFormComponent implements OnInit {
   }
 
   onSubmit() {
+    const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
           askFeedback: new FeedbackRequest(
+            token!,
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,

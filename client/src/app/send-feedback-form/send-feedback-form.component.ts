@@ -45,13 +45,14 @@ export class SendFeedbackFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
           feedbackInput: new Feedback(
+            token!,
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,

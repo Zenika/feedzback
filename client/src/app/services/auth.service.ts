@@ -13,7 +13,7 @@ export class AuthService {
   ) {
     
     this.firebaseAuth.authState.subscribe(async user => {
-      localStorage.setItem('token',await user!.getIdToken())
+      sessionStorage.setItem('token',await user!.getIdToken())
    });
   }
 
@@ -33,7 +33,7 @@ export class AuthService {
   }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
       this.router.navigate(['sign-in'])
     })
   }
