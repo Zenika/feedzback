@@ -263,19 +263,14 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         env: 'service-key=/tmp/sa_key.json'
+         env: 'service-key= ${FIREBASE_SERVICE_KEY}'
          requires:
             - install-client-dependencies  
-         install-command: |
-            npm install -f 
-            npm install apollo-angular @apollo/client graphql
-            npm i cypress-firebase
-            npm i firebase-admin
+         install-command:  npm install -f 
          pre-steps: 
             - run: npm install -g concurrently
             - run: echo ${FIREBASE_SERVICE_KEY} > /tmp/sa_key.json 
 
-            
          yarn: false   
          start: 
            npm run dev
