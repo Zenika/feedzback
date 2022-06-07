@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
 
 
-let authStub = {
+const authStub = {
   constructor: () => {console.log('constructor called')},
   oAuthProvider: () => {console.log('login called')},
   signInWithGoogle: () => {console.log('logout called')},
