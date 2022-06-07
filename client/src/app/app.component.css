@@ -47,42 +47,45 @@
       background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
       opacity 0.55s ease;
       }   
-    #menuToggle span:first-child {
+    #menuToggle span:first-child
+    {
       transform-origin: 0% 0%;
-     }
-    #menuToggle span:nth-last-child(2) {
-     transform-origin: 0% 100%;
-     }
+    }
+    #menuToggle span:nth-last-child(2)
+    {
+      transform-origin: 0% 100%;
+    }
 
-    #menuToggle input:checked ~ span {
+    #menuToggle input:checked ~ span
+    {
       opacity: 1;
       transform: rotate(45deg) translate(-3px, -1px);
       background: #ecedf0;
     }
     #menuToggle input:checked ~ span:nth-last-child(3)
-      {
-        opacity: 0;
-        transform: rotate(0deg) scale(0.2, 0.2);
-      }
-      #menuToggle input:checked ~ span:nth-last-child(2)
-      {
-        transform: rotate(-45deg) translate(0, -1px);
-      }
+    {
+      opacity: 0;
+      transform: rotate(0deg) scale(0.2, 0.2);
+    }
+    #menuToggle input:checked ~ span:nth-last-child(2)
+    {
+      transform: rotate(-45deg) translate(0, -1px);
+    }
     #menu
-      {
-        position:fixed;
-        width: 65%;
-        height: 1000px;
-        box-shadow: 0 0 10px #85888C;
-        margin: -50px 0 0 -50px;
-        padding-left: 50px;
-        padding-right: 50px;
-        padding-top: 125px;
-        text-align: start;
-        background-color: #D52150;
-        transform: translate(-100%, 0);
-        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-      }     
+    {
+      position:fixed;
+      width: 65%;
+      height: 1000px;
+      box-shadow: 0 0 10px #85888C;
+      margin: -50px 0 0 -50px;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 125px;
+      text-align: start;
+      background-color: #D52150;
+      transform: translate(-100%, 0);
+      transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }     
     #menu li
     {
       padding: 10px;
@@ -97,7 +100,7 @@
     }
 }
 nav {
-    height: 60px;
+  height: 60px;
 }
 .menu-item { 
   cursor: pointer;
