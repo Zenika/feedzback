@@ -1,4 +1,3 @@
-
 import { Datastore } from '@google-cloud/datastore';
 import dotEnv from 'dotenv'
 import mailgun from 'mailgun-js';
@@ -46,14 +45,15 @@ const insertFeedback = async (data) => {
     }
   })
 }
-
-export const sendEmail = async ({ sendRequest }) => {
- 
-  const auth  = await  admin.auth().verifyIdToken(sendRequest.token).catch(()=> { return false})
-  if(!auth)
-  return "Vous n'êtes pas authorisé";
   
 export const sendFeedback = async ({ feedbackInput }) => {
+  let errMsg
+  const auth  = await  admin.auth().verifyIdToken(sendRequest.token).catch((error)=> {
+    errMsg = error;
+    return false})
+  if(!auth)
+  return errMsg;
+
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
 

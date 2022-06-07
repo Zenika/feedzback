@@ -18,6 +18,7 @@ type Feedback {
     createdAt: String
 }
 input FeedbackInput {
+    token:String
     senderName:String
     senderEmail:String
     receverEmail: String
