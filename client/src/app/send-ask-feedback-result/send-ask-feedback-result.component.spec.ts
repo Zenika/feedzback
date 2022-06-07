@@ -59,16 +59,31 @@ describe('SendFeedbackResultComponent', () => {
     })
 
   it("Retry button will navigate to send feedback page when it's clicked", ()=>{
-       if(component.result.includes('false')){
+       if(component.result.includes('failed')){
       fixture.debugElement.query(By.css('.btn-retry')).nativeElement.click();
       fixture.detectChanges();
       fixture.whenStable().then(() => {
-        if(component.result ==='falseSend')
+        if(component.result ==='sendFailed')
         expect(location.path()).toEqual('/send');
-        else
-        expect(location.path()).toEqual('/ask');
-        });  
-      } else 
-         expect(fixture.debugElement.query(By.css('.btn-retry'))).toBeNull();
-    })
+      })
+    }
+  })
+  
+
+  it("Retry button will navigate to ask feedback page when it's clicked", ()=>{
+    if(component.result.includes('failed')){
+     fixture.debugElement.query(By.css('.btn-retry')).nativeElement.click();
+     fixture.detectChanges();
+     fixture.whenStable().then(() => {
+       if(component.result ==='askFailed')
+         expect(location.path()).toEqual('/ask');
+       });  
+     } else 
+        expect(fixture.debugElement.query(By.css('.btn-retry'))).toBeNull();
+   })
+  it("When the proccess is successful button retry will be hidden", ()=>{
+    if(component.result.includes('success')){
+        expect(fixture.debugElement.query(By.css('.btn-retry'))).toBeNull();
+   }
+  })
 });
