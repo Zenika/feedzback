@@ -1,12 +1,10 @@
 import { Location } from '@angular/common';
-import { ComponentFixture, TestBed,inject, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AskFeedbackFormComponent } from '../ask-feedback-form/ask-feedback-form.component';
 import { SendFeedbackFormComponent } from '../send-feedback-form/send-feedback-form.component';
-
-
 
 import { HomeComponent } from './home.component';
 
@@ -24,12 +22,10 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
+      declarations: [HomeComponent],
       imports: [RouterTestingModule.withRoutes(routes)]
     })
-    .compileComponents();
-  
-
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -42,10 +38,11 @@ describe('HomeComponent', () => {
 
   });
 
-  it('Home page will be created', ()=>{
+  it('Home page will be created', () => {
     expect(component).toBeTruthy();
   })
 
+<<<<<<< HEAD
   it("Send feedback button will open feedback form when it's clicked", ()=>{
   fixture.debugElement.query(By.css('.btn-send-margin')).nativeElement.click(); 
   fixture.detectChanges();
@@ -62,4 +59,21 @@ describe('HomeComponent', () => {
       expect(location.path()).toEqual('/ask');
       });    
     })
+=======
+  it("Send feedback button will open feedback form when it's clicked", () => {
+    fixture.debugElement.query(By.css('.home-send-feedback-btn')).nativeElement.click();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(location.path()).toEqual('/send');
+    });
+  })
+
+  it("Ask feedback button will open ask feedback form when it's clicked", () => {
+    fixture.debugElement.query(By.css('.home-ask-feedback-btn')).nativeElement.click();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(location.path()).toEqual('/home');
+    });
+  })
+>>>>>>> 8b3e45b06edcd20a37b3cf36509d4cb4fd4ab113
 });

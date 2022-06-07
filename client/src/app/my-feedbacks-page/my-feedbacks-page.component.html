@@ -1,0 +1,16 @@
+<div class="container flex flex-column">
+    <div class="flex justify-content-center">
+        <img src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
+    </div>
+    <a href="">&lt; Retour</a>
+    <h1>Vos feedbacks</h1>
+    <span class="subtitle">Retrouvez tous les feedbacks que vous avez reçus et envoyés</span>
+    <app-tabs>
+        <app-tab-link tabTitle="Feedzbacks reçus">
+            <app-feedback-list [feedbacks]="receivedFeedbacks" [type]="feedbackType.Received"></app-feedback-list>
+        </app-tab-link>
+        <app-tab-link tabTitle="Feedbacks envoyés">
+            <app-feedback-list [feedbacks]="sentFeedbacks" [type]="feedbackType.Sent"></app-feedback-list>
+        </app-tab-link>
+    </app-tabs>
+</div>

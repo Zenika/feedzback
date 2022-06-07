@@ -37,9 +37,13 @@ const insertFeedback = async (data) => {
       'receverName',
       'positiveFeedback',
       'toImprove',
-      'comment'
+      'comment',
+      'createdAt'
     ],
-    data
+    data: {
+      ...data,
+      createdAt: Date.now()
+    }
   })
 }
 
@@ -49,12 +53,13 @@ export const sendEmail = async ({ sendRequest }) => {
   if(!auth)
   return "Vous n'êtes pas authorisé";
   
+export const sendFeedback = async ({ feedbackInput }) => {
   const envi = process.env.NODE_ENV || 'development';
-  const template = replaceHtmlVars(emailTemplate, sendRequest);
+  const template = replaceHtmlVars(emailTemplate, feedbackInput);
 
   const msg = {
-    to: sendRequest.receverEmail,
-    from: sendRequest.email,
+    to: feedbackInput.receverEmail,
+    from: feedbackInput.email,
     subject: 'FeedZback',
     html: template,
   }
@@ -64,7 +69,7 @@ export const sendEmail = async ({ sendRequest }) => {
   }
 
   try {
-    await insertFeedback(sendRequest)
+    await insertFeedback(feedbackInput)
     await myMailgun.messages().send(msg)
     return "sent";
   } catch (e) {

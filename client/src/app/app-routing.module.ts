@@ -8,13 +8,17 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
 const redirectUnauthorizedToSignInPage = () => redirectUnauthorizedTo(['sign-in']);
+import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
 const routes: Routes = [
   {path:'home',component:HomeComponent ,canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
   {path:'ask',component:AskFeedbackFormComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
   {path:'send', component:SendFeedbackFormComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
   {path:'result', component:SendAskFeedbackResultComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage}},
   {path:'sign-in', component:SignInComponent},
+  { path: 'feedbacks', component: MyFeedbacksPageComponent },
   {path:'**',redirectTo:'sign-in'}
+
+
 ];
 
 @NgModule({

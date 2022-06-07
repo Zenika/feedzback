@@ -17,7 +17,15 @@ import firebase from 'firebase/compat/app'
 import { AngularFireModule } from  "@angular/fire/compat";
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
+<<<<<<< HEAD
 import { RouterModule } from '@angular/router';
+=======
+import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
+import { TabsComponent } from './tabs/tabs.component';
+import { TabLinkComponent } from './tab-link/tab-link.component';
+import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
+>>>>>>> acffb93724c3d1c3464eecd95e0ec00da0590743
 
 @NgModule({
   declarations: [
@@ -27,6 +35,11 @@ import { RouterModule } from '@angular/router';
     SendFeedbackFormComponent,
     AskFeedbackFormComponent,
     SignInComponent,
+    MyFeedbacksPageComponent,
+    FeedbackListComponent,
+    TabsComponent,
+    TabLinkComponent,
+    Nl2brPipe,
   ],
   imports: [
     BrowserModule,

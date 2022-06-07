@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
-import { AskFeedbackRequest } from '../model/askFeedbackRequest';
+import { FeedbackRequest } from '../model/feedbackRequest';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -44,7 +44,7 @@ export class AskFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          askFeedback: new AskFeedbackRequest(
+          askFeedback: new FeedbackRequest(
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,
