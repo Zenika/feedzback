@@ -263,7 +263,7 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         env: 'service-key=${FIRE}'
+         env: 'service-key=/TMP/sa_ket.json'
          requires:
             - install-client-dependencies  
          install-command: |
@@ -273,10 +273,14 @@ workflows:
             npm i firebase-admin
          pre-steps: 
             - run: npm install -g concurrently
+            - run: echo ${FIREBASE_SERVICE_KEY} > /tmp/sa_key.json 
+
             
          yarn: false   
          start: 
            npm run dev
+         post-steps:
+           - run: rm /tmp/sa_key.json
          
 
 
