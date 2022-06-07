@@ -6,10 +6,10 @@
     <span></span>
     <ul id="menu">
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
-         <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a></li>
-         <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoiFeedBack</a></li>
-         <li><a class="menu-item" (click)="signOut()" class="menu-item">Se deconnecter</a></li>
-       </ul>  
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >DemandeFeedBack</a></li>
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >EnvoiFeedBack</a></li>
+      <li><a class="menu-item" (click)="signOut()" class="menu-item">Se deconnecter</a></li>
+    </ul>  
   </div>
     <ul><a class="nav-title" routerLink="/home">FeedZback</a></ul>
 </nav>
