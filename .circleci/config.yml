@@ -263,7 +263,7 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         env: 'service-key=/TMP/sa_ket.json'
+         env: 'service-key=/tmp/sa_key.json'
          requires:
             - install-client-dependencies  
          install-command: |
