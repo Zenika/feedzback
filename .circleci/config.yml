@@ -263,22 +263,18 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         env: 'service-key=${FIREBASE_SERVICE_KEY} | base64'
+         env: 'service-key=${FIREBASE_SERVICE_KEY} | base64 -d'
          requires:
             - install-client-dependencies  
          install-command:  npm install -f 
          pre-steps: 
             - run: npm install -g concurrently
-            - run: echo ${FIREBASE_SERVICE_KEY} > /tmp/sa_key.json 
 
          yarn: false   
          start: 
            npm run dev
-         post-steps:
-           - run: rm /tmp/sa_key.json
+    
          
-
-
 
       - deploy-server:
            requires:
