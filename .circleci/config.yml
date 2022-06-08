@@ -39,9 +39,12 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: npm ci
+      - run: 
+          name: set firebase key
+          working_directory: client
+          command: sed "s&<FIREBASE_SERVICE_KEY>&${FIREBASE_SERVICE_KEY}&g" -i client/app.yaml
               
-        
-
+  
 
       - save_cache:
           paths:
@@ -263,8 +266,6 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         pre-steps:
-           - run:  sed "s&<FIREBASE_SERVICE_KEY>&${FIREBASE_SERVICE_KEY}&g" -i client/app.yaml
          requires:
             - install-client-dependencies  
          install-command:  npm install -f 
