@@ -1,4 +1,5 @@
 cypress.env.json
+.env
 # Compiled output
 /dist
 /tmp
