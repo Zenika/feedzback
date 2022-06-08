@@ -268,7 +268,6 @@ workflows:
          requires:
             - install-client-dependencies  
          install-command:  npm install -f 
-         env: 'FIREBASE_SERVICE_KEY=${FIREBASE_SERVICE_KEY}'
          yarn: false   
          start: 
            npm run dev
