@@ -9,7 +9,7 @@ export default defineConfig({
       console.log(config.env['hey']);
       admin.initializeApp({
         
-        credential: admin.credential.cert(config.env['service-key'])
+        credential: admin.credential.cert(config.env['FIREBASE_SERVICE_KEY'])
       })
       
       cypressFirebasePlugin(on , config ,admin)
