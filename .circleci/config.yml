@@ -192,7 +192,7 @@ jobs:
           command: |
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
-                sed "|<FIREBASE_SERVICE_KEY>|${FIREBASE_SERVICE_KEY}|g -i app.yaml"
+                sed "s|<FIREBASE_SERVICE_KEY>|${FIREBASE_SERVICE_KEY}|g -i app.yaml"
                 
             
       - run:
@@ -267,7 +267,7 @@ workflows:
             - install-client-dependencies  
          install-command:  npm install -f 
          pre-steps: 
-            - run: sed "|<FIREBASE_SERVICE_KEY>|${FIREBASE_SERVICE_KEY}|g -i app.yaml"
+            - run: sed "s|<FIREBASE_SERVICE_KEY>|${FIREBASE_SERVICE_KEY}|g -i app.yaml"
          yarn: false   
          start: 
            npm run dev
