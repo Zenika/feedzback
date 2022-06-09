@@ -268,10 +268,10 @@ workflows:
          browser: chrome
          requires:
             - install-client-dependencies  
-         install-command:  npm install -f 
+         install-command:  |
+                npm install -f 
+                echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json
          yarn: false   
-         pre-steps:
-            - run: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
          start: 
            npm run dev
     
