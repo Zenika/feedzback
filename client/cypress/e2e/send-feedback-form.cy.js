@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
-
 const firebase = require("firebase/compat/app");
 require("firebase/compat/auth");
 require("firebase/compat/database");
 require("firebase/compat/firestore");
+import admin from 'firebase-admin'
 const { attachCustomCommands } = require("cypress-firebase");
 require('dotenv').config();
 const firebaseConfig= {
@@ -28,7 +28,6 @@ describe('Send feedback form tests', () => {
     //     })
     //   }
     // }).as('SendFeedback')
-    cy.login(Cypress.env('CYPRESS_TEST_UID'));
    cy.visit('/send')
 
   })

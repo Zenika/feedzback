@@ -14,11 +14,14 @@ const firebaseConfig= {
   appId: "1:370604731143:web:316617cb05f1a3611533a2",
   measurementId: "G-HDCC6605DV",
 };
+firebase.default.initializeApp(firebaseConfig)
+attachCustomCommands({Cypress: Cypress, cy: cy,firebase: firebase.default});
 describe('Ask feedback form tests', () => {
-    firebase.default.initializeApp(firebaseConfig)
-    attachCustomCommands({Cypress: Cypress, cy: cy,firebase: firebase.default});
+
+ 
     beforeEach(() => {
-        cy.login(Cypress.env('CYPRESS_TEST_UID'));
+
+ 
         cy.visit('/ask')
 
     })
