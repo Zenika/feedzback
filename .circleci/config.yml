@@ -43,7 +43,7 @@ jobs:
       - run:
           name: set cypress environment variables
           working_directory: client
-          command: echo ${CYPRESS_ENV} > cypress.env.json 
+          command: echo ${CYPRESS_ENV} > firebase-service-key.json 
 
       - save_cache:
           paths:
