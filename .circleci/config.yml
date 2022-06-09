@@ -39,10 +39,7 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: npm ci
-      - run: 
-          name: set firebase key
-          working_directory: client
-          command: sed "s&<FIREBASE_SERVICE_KEY>&${FIREBASE_SERVICE_KEY}&g" -i client/app.yaml
+
               
   
 
@@ -195,7 +192,7 @@ jobs:
           command: |
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
-                sed "s&<FIREBASE_SERVICE_KEY>&${FIREBASE_SERVICE_KEY}&g" -i app.yaml
+            
                 
             
       - run:
@@ -215,9 +212,9 @@ jobs:
               VERSION="server-${VERSION}"
               if [[ "${VERSION}" == "master" ]]
               then
-              gcloud app deploy --version=$VERSION
+              gcloud app deploy --version=$VERSION --set-env-vars FIREBASE_SERVICE_KEY=${FIREBASE_SERVICE_KEY}
               else
-              gcloud app deploy --version=$VERSION --no-promote
+              gcloud app deploy --version=$VERSION --no-promote --set-env-vars FIREBASE_SERVICE_KEY=${FIREBASE_SERVICE_KEY}
               fi
       
 
@@ -266,6 +263,8 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
+         pre-steps:
+            - run: sed "s&<FIREBASE_SERVICE_KEY>&${FIREBASE_SERVICE_KEY}&g" -i app.yaml
          requires:
             - install-client-dependencies  
          install-command:  npm install -f 
