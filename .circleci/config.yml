@@ -27,7 +27,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v31-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v30-packaging-dependencies-{{ checksum "server/package-lock.json"}}
       - run:
           name: install_client_dependencies
@@ -48,7 +48,7 @@ jobs:
       - save_cache:
           paths:
             - client/node_modules         
-          key: v29-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v31-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - save_cache:
           paths:
@@ -63,7 +63,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v29-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v31-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -119,7 +119,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v29-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
+             - v31-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
 
       - run:
           name: build_front_end
@@ -263,7 +263,7 @@ workflows:
             
       - cypress/run:
          working_directory: client
-         cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         cache-key: v31-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
          requires:
