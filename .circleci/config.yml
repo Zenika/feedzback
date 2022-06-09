@@ -265,7 +265,7 @@ workflows:
          executor: with-chrome
          browser: chrome
          pre-steps:
-            - run: sed "s&<FIREBASE_SERVICE_KEY>&${FIREBASE_SERVICE_KEY}&g" -i app.yaml
+            - run: echo ${CYPRESS_ENV} > cypress.env.json 
          requires:
             - install-client-dependencies  
          install-command:  npm install -f 
