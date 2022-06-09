@@ -272,6 +272,8 @@ workflows:
                 npm install -f 
                 echo ${CYPRESS_ENV} > cypress.env.json
          yarn: false   
+         pre-steps:
+            - run: npm install -g concurrently
          start: 
            npm run dev
     
