@@ -190,6 +190,7 @@ jobs:
           name: set en variables
           working_directory: server
           command: |
+                echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
             
