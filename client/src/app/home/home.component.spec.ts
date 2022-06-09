@@ -42,7 +42,6 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   })
 
-<<<<<<< HEAD
   it("Send feedback button will open feedback form when it's clicked", ()=>{
   fixture.debugElement.query(By.css('.btn-send-margin')).nativeElement.click(); 
   fixture.detectChanges();
@@ -59,7 +58,6 @@ describe('HomeComponent', () => {
       expect(location.path()).toEqual('/ask');
       });    
     })
-=======
   it("Send feedback button will open feedback form when it's clicked", () => {
     fixture.debugElement.query(By.css('.home-send-feedback-btn')).nativeElement.click();
     fixture.detectChanges();
@@ -75,5 +73,4 @@ describe('HomeComponent', () => {
       expect(location.path()).toEqual('/home');
     });
   })
->>>>>>> 8b3e45b06edcd20a37b3cf36509d4cb4fd4ab113
 });
