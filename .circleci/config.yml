@@ -28,7 +28,7 @@ jobs:
       - restore_cache:
           keys:
             - v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v25-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+            - v30-packaging-dependencies-{{ checksum "server/package-lock.json"}}
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -53,7 +53,7 @@ jobs:
       - save_cache:
           paths:
             - server/node_modules         
-          key: v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+          key: v30-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -76,7 +76,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+            - v30-packaging-dependencies-{{ checksum "server/package-lock.json" }}
 
       - run : npm install jest
       
@@ -186,7 +186,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v30-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}      
       - run:
           name: set en variables
