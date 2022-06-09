@@ -270,7 +270,7 @@ workflows:
             - install-client-dependencies  
          install-command:  |
                 npm install -f 
-                echo ${FIREBASE_SERVICE_KEY} > cypress.env.json
+                echo ${CYPRESS_ENV} > cypress.env.json
          yarn: false   
          start: 
            npm run dev
