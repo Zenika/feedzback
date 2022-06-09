@@ -213,9 +213,9 @@ jobs:
               VERSION="server-${VERSION}"
               if [[ "${VERSION}" == "master" ]]
               then
-              gcloud app deploy --version=$VERSION --set-env-vars FIREBASE_SERVICE_KEY=${FIREBASE_SERVICE_KEY}
+              gcloud app deploy --version=$VERSION 
               else
-              gcloud app deploy --version=$VERSION --no-promote --set-env-vars FIREBASE_SERVICE_KEY=${FIREBASE_SERVICE_KEY}
+              gcloud app deploy --version=$VERSION --no-promote 
               fi
       
 
