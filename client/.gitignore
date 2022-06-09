@@ -1,5 +1,6 @@
 cypress.env.json
 .env
+firebase-service-key.json
 # Compiled output
 /dist
 /tmp
