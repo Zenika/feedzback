@@ -58,19 +58,4 @@ describe('HomeComponent', () => {
       expect(location.path()).toEqual('/ask');
       });    
     })
-  it("Send feedback button will open feedback form when it's clicked", () => {
-    fixture.debugElement.query(By.css('.home-send-feedback-btn')).nativeElement.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(location.path()).toEqual('/send');
-    });
-  })
-
-  it("Ask feedback button will open ask feedback form when it's clicked", () => {
-    fixture.debugElement.query(By.css('.home-ask-feedback-btn')).nativeElement.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(location.path()).toEqual('/home');
-    });
-  })
 });

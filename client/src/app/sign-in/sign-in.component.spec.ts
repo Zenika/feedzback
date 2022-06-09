@@ -27,5 +27,8 @@ describe('SignInComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+  it('The component is created', ()=>{
+    expect(component).toBeTruthy();
+  })
 
 });
