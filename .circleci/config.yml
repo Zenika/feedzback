@@ -43,7 +43,7 @@ jobs:
       - run:
           name: set cypress environment variables
           working_directory: client
-          command: echo ${CYPRESS_ENV} > firebase-service-key.json 
+          command: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
 
       - save_cache:
           paths:
@@ -270,6 +270,8 @@ workflows:
             - install-client-dependencies  
          install-command:  npm install -f 
          yarn: false   
+         pre-steps:
+            - run: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
          start: 
            npm run dev
     
