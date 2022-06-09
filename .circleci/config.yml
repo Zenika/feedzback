@@ -39,9 +39,11 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: npm ci
-
-              
-  
+      
+      - run:
+          name: set cypress environment variables
+          working_directory: client
+          command: echo ${CYPRESS_ENV} > cypress.env.json 
 
       - save_cache:
           paths:
@@ -264,8 +266,6 @@ workflows:
          cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
-         pre-steps:
-            - run: echo ${CYPRESS_ENV} > cypress.env.json 
          requires:
             - install-client-dependencies  
          install-command:  npm install -f 
