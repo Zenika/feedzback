@@ -6,6 +6,8 @@ import cors from 'cors';
 import admin from 'firebase-admin'
 import {createRequire} from 'module'
 import dotEnv from 'dotenv'
+import firebaseKey from './firebase-service-key.json' assert {type: 'json'}
+
 
 const server = new ApolloServer({typeDefs, resolvers, introspection: true,
   playground: true});
@@ -15,9 +17,9 @@ const require = createRequire(import.meta.url);
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config()
 }
-const serviceFirebaseAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_KEY);
+//const serviceFirebaseAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_KEY);
 admin.initializeApp({
-  credential: admin.credential.cert(serviceFirebaseAccountKey)
+  credential: admin.credential.cert(firebaseKey)
 })
 
 app.use("*",cors());
