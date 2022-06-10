@@ -271,7 +271,7 @@ workflows:
          install-command:  |
                 npm install -f 
                 echo ${CYPRESS_ENV} > cypress.env.json
-                echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
+                echo ${FIREBASE_SERVICE_KEY} > ../server/firebase-service-key.json 
          yarn: false   
          pre-steps:
             - run: npm install -g concurrently
