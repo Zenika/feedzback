@@ -1,5 +1,6 @@
 export class FeedbackQueryData {
     constructor(
+        public token: String = "",
         public senderName: String = "",
         public senderEmail: String = "",
         public receverEmail: String = "",

@@ -1,2 +1,25 @@
-
-  <router-outlet></router-outlet>
+<nav class="nav-mobile" role="navigation">
+  <div id="menuToggle">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menu">
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >Demande FeedBack</a></li>
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoi FeedBack</a></li>
+      <li><a class="menu-item" (click)="signOut()" class="menu-item">Se deconnecter</a></li>
+    </ul>  
+  </div>
+    <ul><a class="nav-title" routerLink="/home">FeedZback</a></ul>
+</nav>
+<nav class="nav-web">
+  <ul><a class="nav-title" routerLink="/home">FeedZback</a></ul>
+  <ul>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">Acceuil</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >Demande FeedBack</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoie FeedBack</a>
+    <a class="menu-item" (click)="signOut()" >Se deconnecter</a>
+  </ul>  
+</nav>
+ <router-outlet></router-outlet>

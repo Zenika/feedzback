@@ -16,8 +16,12 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:cypress/recommended"
       ],
+      "globals": {
+        "cy": true
+      },
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
@@ -42,7 +46,8 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended"
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:cypress/recommended"
       ],
       "plugins": [
         "eslint-plugin-prettier"

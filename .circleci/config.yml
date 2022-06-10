@@ -14,8 +14,9 @@ executors:
    with-chrome:
     resource_class: small
     docker:
-      - image: cypress/browsers:node14.16.0-chrome90-ff88
-     
+      - image: cypress/browsers:node14.17.6-chrome100-ff98
+
+   
 
 jobs:
   
@@ -26,8 +27,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v25-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+            - v31-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v30-packaging-dependencies-{{ checksum "server/package-lock.json"}}
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -38,19 +39,21 @@ jobs:
           name: install_server_dependencies
           working_directory: server
           command: npm ci
-              
-        
-
+      
+      - run:
+          name: set cypress environment variables
+          working_directory: client
+          command: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
 
       - save_cache:
           paths:
             - client/node_modules         
-          key: v29-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v31-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - save_cache:
           paths:
             - server/node_modules         
-          key: v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+          key: v30-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -60,7 +63,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v29-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v31-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -73,7 +76,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v25-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+            - v30-packaging-dependencies-{{ checksum "server/package-lock.json" }}
 
       - run : npm install jest
       
@@ -116,7 +119,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v29-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
+             - v31-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
 
       - run:
           name: build_front_end
@@ -183,14 +186,16 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v25-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v30-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}      
       - run:
           name: set en variables
           working_directory: server
           command: |
+                echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+            
                 
             
       - run:
@@ -210,9 +215,9 @@ jobs:
               VERSION="server-${VERSION}"
               if [[ "${VERSION}" == "master" ]]
               then
-              gcloud app deploy --version=$VERSION
+              gcloud app deploy --version=$VERSION 
               else
-              gcloud app deploy --version=$VERSION --no-promote
+              gcloud app deploy --version=$VERSION --no-promote 
               fi
       
 
@@ -258,23 +263,22 @@ workflows:
             
       - cypress/run:
          working_directory: client
-         cache-key: v29-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+         cache-key: v31-packaging-dependencies-{{ checksum "client/package-lock.json"}}
          executor: with-chrome
          browser: chrome
          requires:
             - install-client-dependencies  
-         install-command: |
-            npm install -f 
-            npm install apollo-angular @apollo/client graphql
-         pre-steps: 
-            - run: npm install -g concurrently
-            
+         install-command:  |
+                npm install -f 
+                echo ${CYPRESS_ENV} > cypress.env.json
+                echo ${FIREBASE_SERVICE_KEY} > ../server/firebase-service-key.json 
          yarn: false   
+         pre-steps:
+            - run: npm install -g concurrently
          start: 
            npm run dev
+    
          
-
-
 
       - deploy-server:
            requires:

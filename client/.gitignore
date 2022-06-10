@@ -1,5 +1,6 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
 cypress.env.json
+.env
+firebase-service-key.json
 # Compiled output
 /dist
 /tmp

@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../services/auth.service';
+import { authStub } from '../services/authStub';
 import { SignInComponent } from './sign-in.component';
 
 describe('SignInComponent', () => {
@@ -8,7 +10,9 @@ describe('SignInComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SignInComponent ]
+      declarations: [ SignInComponent ],
+      imports: [RouterTestingModule],
+        providers: [{ provide: AuthService, useValue: authStub}]
     })
     .compileComponents();
   });
@@ -18,8 +22,8 @@ describe('SignInComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should create', () => {
+  it('The component is created', ()=>{
     expect(component).toBeTruthy();
-  });
+  })
+
 });

@@ -1,8 +1,27 @@
 /// <reference types="cypress" />
-
+const firebase = require("firebase/compat/app");
+require("firebase/compat/auth");
+require("firebase/compat/database");
+require("firebase/compat/firestore");
+const { attachCustomCommands } = require("cypress-firebase");
+require('dotenv').config();
+const firebaseConfig= {
+  apiKey: "AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc",
+  authDomain: "feedzback-343709.firebaseapp.com",
+  projectId: "feedzback-343709",
+  storageBucket: "feedzback-343709.appspot.com",
+  messagingSenderId: "370604731143",
+  appId: "1:370604731143:web:316617cb05f1a3611533a2",
+  measurementId: "G-HDCC6605DV",
+};
+firebase.default.initializeApp(firebaseConfig)
+attachCustomCommands({Cypress: Cypress, cy: cy,firebase: firebase.default});
 describe('Ask feedback form tests', () => {
 
+ 
     beforeEach(() => {
+
+ 
         cy.visit('/ask')
 
     })

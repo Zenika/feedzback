@@ -13,9 +13,11 @@ import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-fo
 import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import firebase from 'firebase/compat/app'
 import { AngularFireModule } from  "@angular/fire/compat";
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { RouterModule } from '@angular/router';
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { TabsComponent } from './tabs/tabs.component';
@@ -44,7 +46,8 @@ import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
     HttpClientModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule
   ],
   providers: [
     {

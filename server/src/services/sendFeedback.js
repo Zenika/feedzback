@@ -1,4 +1,3 @@
-
 import { Datastore } from '@google-cloud/datastore';
 import dotEnv from 'dotenv'
 import mailgun from 'mailgun-js';
@@ -6,8 +5,10 @@ import * as fs from 'fs';
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import replaceHtmlVars from '../model/replaceHtmlVars.js';
+import admin from 'firebase-admin';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+
 
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/emailModel.html').toString();
 
@@ -44,8 +45,15 @@ const insertFeedback = async (data) => {
     }
   })
 }
-
+  
 export const sendFeedback = async ({ feedbackInput }) => {
+  let errMsg
+  const auth  = await  admin.auth().verifyIdToken(sendRequest.token).catch((error)=> {
+    errMsg = error;
+    return false})
+  if(!auth)
+  return errMsg;
+
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
 
@@ -63,9 +71,9 @@ export const sendFeedback = async ({ feedbackInput }) => {
   try {
     await insertFeedback(feedbackInput)
     await myMailgun.messages().send(msg)
-    return "Votre feedback a été envoyé!";
+    return "sent";
   } catch (e) {
     console.error(e)
-    return "Le feedback n'est pas envoyé, vérifier les données s'il vous plaît"
+    return "error"
   }
 };

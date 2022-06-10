@@ -39,12 +39,14 @@ export class AskFeedbackFormComponent implements OnInit {
   }
 
   onSubmit() {
+    const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
           askFeedback: new FeedbackRequest(
+            token!,
             this.senderName?.value,
             this.senderEmail?.value,
             this.receverName?.value,
@@ -54,12 +56,12 @@ export class AskFeedbackFormComponent implements OnInit {
         },
       }).subscribe((data: any) => {
         let result = data.data.sendFeedbackRequest;
-        if (result === "Votre demande a bien été envoyé") {
+        if (result === 'sent') {
           result = "Félicitations! Votre demande vient d’être envoyée à : " + this.senderName?.value;
-          this.router.navigate(['/result', { result: 'true' ,message:result}])
+          this.router.navigate(['/result', { result: 'success' ,message:result}])
         } else {
           result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
-          this.router.navigate(['/result', { result: 'false', message: result }])
+          this.router.navigate(['/result', { result: 'askFailed', message: result }])
         }
       })
     }

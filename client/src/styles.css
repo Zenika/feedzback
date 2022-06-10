@@ -9,6 +9,7 @@
 }
 
 .btn-primary {
+    border-color: #D52150;
     background-color: #D52150;
 }
 
@@ -17,6 +18,8 @@
 }
 
 .btn-primary:hover {
+    cursor: pointer;
+    border-color: #a41a3f;
     background-color: #a41a3f;
 }
 
@@ -25,6 +28,7 @@
 }
 
 .btn-secondary:hover {
+    cursor: pointer;
     background-color: rgb(186, 67, 67);
 }
 
@@ -62,6 +66,10 @@ input:required, textarea:required {
     border-style: solid;
     border-width: 0.5px;
 }
+
+
+
+
 
 @font-face {
     font-family: "Nunito";
