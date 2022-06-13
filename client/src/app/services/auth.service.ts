@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import * as firebase from '@angular/fire/node_modules/firebase/compat';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class AuthService {
     )
   }
   signInWithGoogle() {
-    return this.oAuthProvider(new auth.GoogleAuthProvider())
+    return this.oAuthProvider(new firebase.default.auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log(err))
   }
   isLogged() {
     const token = localStorage.getItem('token')!

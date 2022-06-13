@@ -9,7 +9,7 @@ import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectL
 
 const redirectUnauthorizedToSignInPage = () => redirectUnauthorizedTo(['sign-in']);
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
-const routes: Routes = [
+const routes: Routes = [  
   {
     path: "", 
     canActivate: [AngularFireAuthGuard],data: { authGuardPipe: redirectUnauthorizedToSignInPage },
