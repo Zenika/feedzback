@@ -270,6 +270,7 @@ workflows:
             - install-client-dependencies  
          install-command:  |
                 npm install -f 
+                npm install apollo-angular @apollo/client graphql
                 echo ${CYPRESS_ENV} > cypress.env.json
                 echo ${FIREBASE_SERVICE_KEY} > ../server/firebase-service-key.json 
          yarn: false   
