@@ -28,7 +28,7 @@ export class AuthService {
     return this.oAuthProvider(new firebase.default.auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log(err))
   }
   isLogged() {
-    const token = localStorage.getItem('token')!
+    const token = sessionStorage.getItem('token')!
     return token === null ? false : true;
   }
   signOut() {

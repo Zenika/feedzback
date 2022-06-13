@@ -17,6 +17,7 @@ const routes: Routes = [
       {path:'home', component:HomeComponent},
       {path:'ask', component:AskFeedbackFormComponent},
       {path:'send', component:SendFeedbackFormComponent},
+      {path:'result', component:SendAskFeedbackResultComponent},
       {path:'feedbacks', component:MyFeedbacksPageComponent}
     ]
   },

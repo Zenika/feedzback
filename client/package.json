@@ -23,6 +23,8 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "algoliasearch": "^4.13.1",
+    "angular-instantsearch": "^4.2.1",
     "apollo-angular": "^3.0.1",
     "concurrently": "^7.1.0",
     "cypress-firebase": "^2.2.1",
