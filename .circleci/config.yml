@@ -10,7 +10,7 @@ version: 2.1 # using 2.1 provides access to orbs and other features
 executors:
    node:
      docker:
-       - image: cimg/node:16.13.0
+       - image: cimg/node:16.14.0
    with-chrome:
     resource_class: small
     docker:
