@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
 import { Feedback } from '../model/feedback';
+import { FeedbackQueryData } from '../model/feedbackQueryData';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -51,7 +52,7 @@ export class SendFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          feedbackInput: new Feedback(
+          feedbackInput: new FeedbackQueryData(
             token!,
             this.senderName?.value,
             this.senderEmail?.value,
