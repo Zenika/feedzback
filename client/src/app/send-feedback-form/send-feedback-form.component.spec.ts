@@ -43,6 +43,7 @@ describe('SendFeedbackFormComponent', () => {
 
   it('champs Votre nom est requis', waitForAsync(() => {
     let name = component.form.controls['senderName'];
+    name.setValue("");
     expect(name.valid).toBeFalsy();
   }))
 
