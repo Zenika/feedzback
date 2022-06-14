@@ -25,8 +25,8 @@ export class SendFeedbackFormComponent implements OnInit {
   `;
 
   public form = new FormGroup({
-    senderEmail: new FormControl(this.queryParams.get('senderEmail'), [Validators.required, Validators.email]),
-    senderName: new FormControl(this.queryParams.get('senderName'), Validators.required),
+    senderEmail: new FormControl(decodeURIComponent(this.queryParams.get('senderEmail')!), [Validators.required, Validators.email]),
+    senderName: new FormControl(decodeURIComponent(this.queryParams.get('senderName')!), Validators.required),
     receverEmail: new FormControl(this.queryParams.get('receverEmail'), [Validators.required, Validators.email]),
     receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
     postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
@@ -66,7 +66,7 @@ export class SendFeedbackFormComponent implements OnInit {
       }).subscribe((data: any) => {
         let result = data.data.sendFeedback;
         if (result === "sent") {
-          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.senderName?.value;
+          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success', message: result }])
         } else {
           result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
