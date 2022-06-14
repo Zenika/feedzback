@@ -12,9 +12,9 @@ export default function replaceHtmlVars(html, message) {
   let comment = '';
   if (message.comment)
     comment = String(message.comment).replace(/\n/g, '<br>');
-
+console.log("reeeee  " + message.receverEmail)
   const template = ejs.render(html, {
-    name: message.receverName,
+    name: message.receverEmail,
     senderName: message.senderName,
     positiveFeedback,
     toImprove,

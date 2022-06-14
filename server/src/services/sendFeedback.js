@@ -48,7 +48,7 @@ const insertFeedback = async (data) => {
   
 export const sendFeedback = async ({ feedbackInput }) => {
   let errMsg
-  const auth  = await  admin.auth().verifyIdToken(sendRequest.token).catch((error)=> {
+  const auth  = await  admin.auth().verifyIdToken(feedbackInput.token).catch((error)=> {
     errMsg = error;
     return false})
   if(!auth)
