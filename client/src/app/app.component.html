@@ -8,6 +8,7 @@
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >Demande FeedBack</a></li>
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoi FeedBack</a></li>
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >Feedbacks</a></li>
       <li><a class="menu-item" *ngIf="isLogged()"  (click)="signOut()" class="menu-item">Se deconnecter</a></li>
     </ul>  
   </div>
@@ -19,6 +20,7 @@
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">Acceuil</a>
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active" >Demande FeedBack</a>
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoie FeedBack</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >Feedbacks</a>
     <a class="menu-item" *ngIf="isLogged()"   (click)="signOut()" >Se deconnecter</a>
   </ul>  
 </nav>

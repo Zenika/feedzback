@@ -25,9 +25,9 @@ export class SendFeedbackFormComponent implements OnInit {
   `;
 
   public form = new FormGroup({
-    senderEmail: new FormControl(decodeURIComponent(this.queryParams.get('senderEmail')!), [Validators.required, Validators.email]),
-    senderName: new FormControl(decodeURIComponent(this.queryParams.get('senderName')!), Validators.required),
-    receverEmail: new FormControl(this.queryParams.get('receverEmail'), [Validators.required, Validators.email]),
+    senderEmail: new FormControl(decodeURIComponent(this.queryParams.get('senderEmail') || ''), [Validators.required, Validators.email]),
+    senderName: new FormControl(this.queryParams.get('senderName'), Validators.required),
+    receverEmail: new FormControl(decodeURIComponent(this.queryParams.get('receverEmail') || ''), [Validators.required, Validators.email]),
     receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
     postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
     toImproveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
