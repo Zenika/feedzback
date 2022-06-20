@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { async } from '@firebase/util';
 import * as auth from 'firebase/auth';
+import { Observable } from 'rxjs/Observable';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  public user:any
   constructor(
     public firebaseAuth: AngularFireAuth,
     public router: Router,
@@ -15,6 +18,7 @@ export class AuthService {
   
     this.firebaseAuth.authState.subscribe(async user => {
       sessionStorage.setItem('token',await user!.getIdToken())
+      this.user = user
    });
   }
 
@@ -22,7 +26,6 @@ export class AuthService {
 
     return this.firebaseAuth.signInWithPopup(provider)
     .then(() => {
-      console.log('navvvvvvvv')
       this.router.navigate(['home'])
     }).catch(error => console.log("ererererer")
     )
@@ -34,6 +37,9 @@ export class AuthService {
     const token = sessionStorage.getItem('token')!
     return token === null ? false : true;
   }
+ getUserDetails () {
+   return this.user
+ }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
       sessionStorage.removeItem('token');
