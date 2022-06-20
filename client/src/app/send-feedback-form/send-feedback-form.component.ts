@@ -56,8 +56,8 @@ export class SendFeedbackFormComponent implements OnInit {
             token!,
             this.senderName?.value,
             this.senderEmail?.value,
-            this.receverName?.value,
             this.receverEmail?.value,
+            this.receverName?.value,
             this.postitiveFeedback?.value,
             this.toImproveFeedback?.value,
             this.comment?.value

@@ -42,7 +42,7 @@ export class MyFeedbacksPageComponent implements OnInit {
     this.apollo.query({
       query: this.query,
       variables: {
-        email: 'heyy@b.com'
+        email: 'bnyat.azizsharif@zenika.com'
       }
     }).pipe(
       map(({ data }) => data),
