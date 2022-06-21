@@ -22,4 +22,16 @@ export const getSentFeedbacks = async (email) => {
   } catch (err) {
     return err;
   }
+
+};
+
+
+export const getFeedbackById = async (id) => {
+  try {
+    const query = datastore.createQuery('feedzback').filter('NOM/ID', '=', id);
+    const [entities] = await datastore.runQuery(query);
+    return entities;
+  } catch (err) {
+    return err;
+  }
 };
