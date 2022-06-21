@@ -3,6 +3,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { map, Subject, takeUntil } from 'rxjs';
 import { Feedback } from '../model/feedback';
 import { FeedbackType } from '../enum/feedback-type';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-my-feedbacks-page',
@@ -36,9 +37,11 @@ export class MyFeedbacksPageComponent implements OnInit {
   public receivedFeedbacks: Feedback[] = [];
   public sentFeedbacks: Feedback[] = [];
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private authService:AuthService) { }
 
   ngOnInit(): void {
+    if(this.authService.isAnonymous())
+      this.authService.signOut();
     this.apollo.query({
       query: this.query,
       variables: {

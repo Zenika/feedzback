@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
 import { FeedbackRequest } from '../model/feedbackRequest';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -11,7 +12,7 @@ import { FeedbackRequest } from '../model/feedbackRequest';
   styleUrls: ['./ask-feedback-form.component.css']
 })
 export class AskFeedbackFormComponent implements OnInit {
-  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) { }
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
   public getFormControlError = getFormControlError
 
@@ -36,6 +37,8 @@ export class AskFeedbackFormComponent implements OnInit {
   get message() { return this.form.get('message') }
 
   ngOnInit(): void {
+    if(this.authService.isAnonymous())
+    this.authService.signOut();
   }
 
   onSubmit() {
