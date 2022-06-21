@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { authStub } from '../services/authStub';
-import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 describe('AskFeedbackFormComponent', () => {
   let component: AskFeedbackFormComponent;

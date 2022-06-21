@@ -6,9 +6,7 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-
-import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { Observable } from 'rxjs';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 export const authStub =  {
   getUserDetails: ()=> jest.fn()
