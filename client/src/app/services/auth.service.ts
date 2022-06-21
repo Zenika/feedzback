@@ -14,8 +14,9 @@ export class AuthService {
   ) {
   
     this.firebaseAuth.authState.subscribe(async user => {
-      if(await user?.getIdToken())
-      sessionStorage.setItem('token',await user!.getIdToken())
+      const token = await user?.getIdToken();
+      if(token !== null)
+      sessionStorage.setItem('token', token!)
       this.user = user
    });
   }
