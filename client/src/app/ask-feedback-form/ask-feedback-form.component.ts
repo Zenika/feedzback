@@ -12,8 +12,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./ask-feedback-form.component.css']
 })
 export class AskFeedbackFormComponent implements OnInit {
-  userEmail? : String
-  userName? : String
+  userEmail? : string
+  userName? : string
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService:AuthService) {
    let user =  this.authService.getUserDetails();
    this.userEmail = user?.email!;
@@ -30,8 +30,6 @@ export class AskFeedbackFormComponent implements OnInit {
   `
 
   public form = new FormGroup({
-    senderEmail: new FormControl(this.queryParams.get('senderEmail'), [Validators.required, Validators.email]),
-    senderName: new FormControl(this.queryParams.get('senderName'), Validators.required),
     receverEmail: new FormControl(this.queryParams.get('receverEmail'), [Validators.required, Validators.email]),
     receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
     message: new FormControl(''),
@@ -45,13 +43,9 @@ export class AskFeedbackFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  setFormGroupAsyncDetails() {
-    this.form.get('senderEmail')?.setValue(this.userEmail)
-    this.form.get('senderName')?.setValue(this.userName)
-    }    
+  
 
   onSubmit() {
-    this.setFormGroupAsyncDetails()
     const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {
@@ -60,8 +54,8 @@ export class AskFeedbackFormComponent implements OnInit {
         variables: {
           askFeedback: new FeedbackRequest(
             token!,
-            this.senderName?.value,
-            this.senderEmail?.value,
+            this.userName,
+            this.userEmail,
             this.receverName?.value,
             this.receverEmail?.value,
             this.message?.value
