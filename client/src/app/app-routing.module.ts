@@ -11,17 +11,10 @@ const redirectUnauthorizedToSignInPage = () => redirectUnauthorizedTo(['sign-in'
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
 import { MasterAuthGuard } from './services/auth-guard/master-auth.guard';
 const routes: Routes = [  
-  {
-    path: "", 
-    canActivate: [MasterAuthGuard],data: { authGuardPipe: redirectUnauthorizedToSignInPage },
-    children: [
-      {path:'home', component:HomeComponent},
-      {path:'ask', component:AskFeedbackFormComponent},
-      {path:'send', component:SendFeedbackFormComponent},
-      {path:'result', component:SendAskFeedbackResultComponent},
-      {path:'feedbacks', component:MyFeedbacksPageComponent}
-    ]
-  },
+  {path:'home', component:HomeComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
+  {path:'ask', component:AskFeedbackFormComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
+  {path:'send', component:SendFeedbackFormComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
+  {path:'feedbacks', component:MyFeedbacksPageComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
   {path:'sign-in', component:SignInComponent},
   {path:'**',redirectTo:'sign-in'}
 ];

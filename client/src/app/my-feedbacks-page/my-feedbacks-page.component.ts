@@ -40,8 +40,6 @@ export class MyFeedbacksPageComponent implements OnInit {
   constructor(private apollo: Apollo, private authService:AuthService) { }
 
   ngOnInit(): void {
-    if(this.authService.isAnonymous())
-      this.authService.signOut();
     this.apollo.query({
       query: this.query,
       variables: {

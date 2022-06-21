@@ -12,7 +12,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./ask-feedback-form.component.css']
 })
 export class AskFeedbackFormComponent implements OnInit {
-  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) { }
+  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router) { 
+
+  }
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
   public getFormControlError = getFormControlError
 
@@ -37,8 +39,6 @@ export class AskFeedbackFormComponent implements OnInit {
   get message() { return this.form.get('message') }
 
   ngOnInit(): void {
-    if(this.authService.isAnonymous())
-    this.authService.signOut();
   }
 
   onSubmit() {

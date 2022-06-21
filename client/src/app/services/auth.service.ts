@@ -33,14 +33,19 @@ export class AuthService {
     return this.oAuthProvider(new auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log("ererererefgfdgg"))
   }
   isLogged() {
-    const token = sessionStorage.getItem('token')!
-    return token === null ? false : true;
+    if(this.user)
+    return true
+    else 
+    return false
   }
   anonymousLogin() {
     return this.firebaseAuth.signInAnonymously();
   }
   isAnonymous() {
-    return this.user.isAnonymous
+    if(this.user) 
+      return this.user.isAnonymous
+    else
+      return false
   }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
