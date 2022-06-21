@@ -14,6 +14,7 @@ export class AuthService {
   ) {
   
     this.firebaseAuth.authState.subscribe(async user => {
+      if(await user?.getIdToken())
       sessionStorage.setItem('token',await user!.getIdToken())
    });
   }
@@ -33,6 +34,14 @@ export class AuthService {
   isLogged() {
     const token = sessionStorage.getItem('token')!
     return token === null ? false : true;
+  }
+  anonymousLogin() {
+    return this.firebaseAuth.signInAnonymously();
+  }
+  isAnonymous() {
+    return this.firebaseAuth.authState.subscribe( user => {
+      console.log(user?.isAnonymous)
+    })
   }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
