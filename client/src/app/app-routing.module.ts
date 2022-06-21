@@ -9,13 +9,13 @@ import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectL
 
 const redirectUnauthorizedToSignInPage = () => redirectUnauthorizedTo(['sign-in']);
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
-import { TokenGuard } from './services/tokenGuard';
+import { MasterAuthGuard } from './services/auth-guard/master-auth.guard';
 const routes: Routes = [  
   {
     path: "", 
-    canActivate: [TokenGuard],data: { authGuardPipe: redirectUnauthorizedToSignInPage },
+    canActivate: [MasterAuthGuard],data: { authGuardPipe: redirectUnauthorizedToSignInPage },
     children: [
-       {path:'home', component:HomeComponent},
+      {path:'home', component:HomeComponent},
       {path:'ask', component:AskFeedbackFormComponent},
       {path:'send', component:SendFeedbackFormComponent},
       {path:'result', component:SendAskFeedbackResultComponent},
@@ -23,7 +23,6 @@ const routes: Routes = [
     ]
   },
   {path:'sign-in', component:SignInComponent},
-  {path:'send', component:SendFeedbackFormComponent ,canActivate: [TokenGuard]},
   {path:'**',redirectTo:'sign-in'}
 ];
 

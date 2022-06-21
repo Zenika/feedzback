@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import * as auth from 'firebase/auth';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private user: any
   constructor(
     public firebaseAuth: AngularFireAuth,
     public router: Router,
@@ -16,6 +16,7 @@ export class AuthService {
     this.firebaseAuth.authState.subscribe(async user => {
       if(await user?.getIdToken())
       sessionStorage.setItem('token',await user!.getIdToken())
+      this.user = user
    });
   }
 
@@ -23,9 +24,8 @@ export class AuthService {
 
     return this.firebaseAuth.signInWithPopup(provider)
     .then(() => {
-      console.log('navvvvvvvv')
       this.router.navigate(['home'])
-    }).catch(error => console.log("ererererer")
+    }).catch(error => console.log(error)
     )
   }
   signInWithGoogle() {
@@ -39,9 +39,7 @@ export class AuthService {
     return this.firebaseAuth.signInAnonymously();
   }
   isAnonymous() {
-    return this.firebaseAuth.authState.subscribe( user => {
-      console.log(user?.isAnonymous)
-    })
+    return this.user.isAnonymous
   }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
