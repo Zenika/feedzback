@@ -12,6 +12,8 @@
     "@google-cloud/datastore": "^6.6.2",
     "@google-cloud/storage": "^5.19.4",
     "@sendgrid/mail": "^7.6.1",
+    "@types/algoliasearch": "^4.0.0",
+    "algoliasearch": "^4.13.1",
     "apollo-server": "^3.6.3",
     "apollo-server-express": "^3.6.3",
     "babel-preset-jest": "^28.0.2",
