@@ -1,0 +1,6 @@
+<h1>Feedback reçu à {{feedback.createdAt}}</h1>
+<h3> De: {{feedback.senderName}}</h3>
+<h3> Email: {{feedback.senderEmail}}</h3>
+<h3> Point positive: {{feedback.positiveFeedback}}</h3>
+<h3>Axes améliorations: {{feedback.toImprove}}</h3>
+<h3 *ngIf="feedback.comment">Comment: {{feedback.comment}}</h3>

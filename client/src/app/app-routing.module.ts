@@ -9,6 +9,7 @@ import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectL
 
 const redirectUnauthorizedToSignInPage = () => redirectUnauthorizedTo(['sign-in']);
 import { MyFeedbacksPageComponent } from './my-feedbacks-page/my-feedbacks-page.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 const routes: Routes = [  
   {
     path: "", 
@@ -18,7 +19,8 @@ const routes: Routes = [
       {path:'ask', component:AskFeedbackFormComponent},
       {path:'send', component:SendFeedbackFormComponent},
       {path:'result', component:SendAskFeedbackResultComponent},
-      {path:'feedbacks', component:MyFeedbacksPageComponent}
+      {path:'feedbacks', component:MyFeedbacksPageComponent},
+      {path:'feedback', component:FeedbackComponent}
     ]
   },
   {path:'sign-in', component:SignInComponent},

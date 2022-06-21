@@ -23,6 +23,7 @@ import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { TabLinkComponent } from './tab-link/tab-link.component';
 import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
     TabsComponent,
     TabLinkComponent,
     Nl2brPipe,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,
