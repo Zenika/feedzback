@@ -5,25 +5,36 @@ import { SendFeedbackFormComponent } from './send-feedback-form.component';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+export const authStub =  {
+  getUserDetails: ()=> jest.fn()
+}
 describe('SendFeedbackFormComponent', () => {
   let component: SendFeedbackFormComponent;
   let fixture: ComponentFixture<SendFeedbackFormComponent>;
-
+  let service: AuthService
   beforeEach(async () => {
+
     await TestBed.configureTestingModule({
-      providers: [Apollo],
+      providers: [Apollo,
+   {provide: AuthService, useValue: authStub}
+    ],
+
       declarations: [SendFeedbackFormComponent],
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
         ApolloTestingModule,
+        AngularFireAuthModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(SendFeedbackFormComponent);
     component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
+    service = TestBed.inject(AuthService)
   });
 
   beforeEach(() => {

@@ -1,9 +1,10 @@
 import { signOut } from "firebase/auth"
 
 export const authStub =  {
-    constructor: () => {console.log('constructor called')},
-    oAuthProvider: () => {console.log('login called')},
-    signInWithGoogle: () => {console.log('logout called')},
+    constructor: () => jest.fn(),
+    oAuthProvider: () => jest.fn(),
+    signInWithGoogle: () => jest.fn(),
+    getUserDetails: ()=> jest.fn(),
     isAnonymous: () => jest.fn(),
     signOut: () => jest.fn()
 }

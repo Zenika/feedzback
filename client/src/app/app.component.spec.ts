@@ -4,14 +4,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
+import { authStub } from './services/authStub';
 
 
-const authStub = {
-  constructor: () => jest.fn(),
-  oAuthProvider: () => jest.fn(),
-  signInWithGoogle: () => jest.fn(),
-  signOut: () => jest.fn()
-}
 
 describe('AppComponent', () => {
   beforeEach(async () => {

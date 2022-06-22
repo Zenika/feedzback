@@ -7,20 +7,24 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { authStub } from '../services/authStub';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
 
 describe('AskFeedbackFormComponent', () => {
   let component: AskFeedbackFormComponent;
   let fixture: ComponentFixture<AskFeedbackFormComponent>;
 
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [Apollo,
-                 {provide: AuthService, useValue: authStub}],
+                 {provide:AuthService,useValue: authStub}],
       declarations: [AskFeedbackFormComponent],
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
         ApolloTestingModule,
+        AngularFireAuthModule
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
