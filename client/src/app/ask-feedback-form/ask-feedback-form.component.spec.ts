@@ -5,6 +5,8 @@ import { AskFeedbackFormComponent } from './ask-feedback-form.component';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { authStub } from '../services/authStub';
 
 describe('AskFeedbackFormComponent', () => {
   let component: AskFeedbackFormComponent;
@@ -12,7 +14,8 @@ describe('AskFeedbackFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [Apollo],
+      providers: [Apollo,
+                 {provide: AuthService, useValue: authStub}],
       declarations: [AskFeedbackFormComponent],
       imports: [
         ReactiveFormsModule,

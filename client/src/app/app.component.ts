@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -8,11 +9,14 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'FeedZback';
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) {}
   signOut() {
     this.authService.signOut();
   }
   isLogged() {
     return this.authService.isLogged();
+  }
+  ask() {
+    this.router.navigate(['/ask'])
   }
 }
