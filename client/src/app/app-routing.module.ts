@@ -15,6 +15,7 @@ const routes: Routes = [
   {path:'ask', component:AskFeedbackFormComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
   {path:'send', component:SendFeedbackFormComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
   {path:'feedbacks', component:MyFeedbacksPageComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
+  {path:'feedback', component:FeedbackComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }}
   {path:'sign-in', component:SignInComponent},
   {path:'**',redirectTo:'sign-in'}
 ];

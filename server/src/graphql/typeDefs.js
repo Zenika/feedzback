@@ -4,10 +4,12 @@ export const typeDefs = gql`
 type Query{
    sentFeedbacks(email: String!): [Feedback!]!
    receivedFeedbacks(email: String!): [Feedback!]!
+   getFeedbackById(id: String!): Feedback!
    getResult:String
 }
 
 type Feedback {
+    id: String
     senderName: String
     senderEmail: String
     receverEmail: String
