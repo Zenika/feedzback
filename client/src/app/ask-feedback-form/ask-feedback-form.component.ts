@@ -20,6 +20,7 @@ export class AskFeedbackFormComponent implements OnInit {
    this.userName  = user?.displayName!;  
      
    }
+
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
   public getFormControlError = getFormControlError
 

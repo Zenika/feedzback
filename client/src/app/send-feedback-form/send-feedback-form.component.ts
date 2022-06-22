@@ -6,7 +6,6 @@ import { Apollo, gql } from 'apollo-angular';
 import { FeedbackQueryData } from '../model/feedbackQueryData';
 import { AuthService } from '../services/auth.service';
 
-
 @Component({
   selector: 'app-send-feedback-form',
   templateUrl: './send-feedback-form.component.html',
