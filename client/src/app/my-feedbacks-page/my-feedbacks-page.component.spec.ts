@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Apollo } from 'apollo-angular';
 import { FeedbackListComponent } from '../feedback-list/feedback-list.component';
 import { AuthService } from '../services/auth.service';
@@ -13,6 +14,7 @@ describe('MyFeedbacksPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       providers: [Apollo,
                   {provide: AuthService, useValue: authStub}],
       declarations: [

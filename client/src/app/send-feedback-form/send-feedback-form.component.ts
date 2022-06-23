@@ -34,30 +34,20 @@ export class SendFeedbackFormComponent implements OnInit {
 ngOnInit(): void {}
 decodedReceverEmail = decodeURIComponent(this.queryParams.get('receverEmail') || '')
 form = new FormGroup({
-  senderEmail: new FormControl(this.userEmail, [Validators.required, Validators.email]),
-  senderName: new FormControl(this.userName, Validators.required),
   receverEmail: new FormControl(this.decodedReceverEmail, [Validators.required, Validators.email]),
   receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
   postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
   toImproveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
   comment: new FormControl(''),
 });
-setFormGroupAsyncDetails() {
-this.form.get('senderEmail')?.setValue(this.userEmail)
-this.form.get('senderName')?.setValue(this.userName)
-}
 
-get senderEmail() { return this.form.get('senderEmail') }
-get senderName() { return this.form.get('senderName') }
 get receverEmail() { return this.form.get('receverEmail') }
 get receverName() { return this.form.get('receverName') }
 get postitiveFeedback() { return this.form.get('postitiveFeedback') }
 get toImproveFeedback() { return this.form.get('toImproveFeedback') }
 get comment() { return this.form.get('comment') }
-  
 
   onSubmit() {
-    this.setFormGroupAsyncDetails();
     const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {
@@ -66,8 +56,8 @@ get comment() { return this.form.get('comment') }
         variables: {
           feedbackInput: new FeedbackQueryData(
             token!,
-            this.senderName?.value,
-            this.senderEmail?.value,
+            this.userName,
+            this.userEmail,
             this.receverEmail?.value,
             this.receverName?.value,
             this.postitiveFeedback?.value,

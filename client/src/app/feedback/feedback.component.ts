@@ -12,7 +12,8 @@ export class FeedbackComponent implements OnInit {
 
   public feedback!: Feedback
   public bn!: String
-  constructor(private activateRouter: ActivatedRoute,private graphqlService: GraphqlService) { }
+  constructor(private activateRouter: ActivatedRoute,private graphqlService: GraphqlService) { 
+  }
 
   ngOnInit(): void {
     const id = this.activateRouter.snapshot.queryParamMap.get('id');
