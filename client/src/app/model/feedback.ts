@@ -1,6 +1,7 @@
 export class Feedback {
     constructor(
-        public token: string,
+        public id: string,
+        public token: string ="",
         public senderName: string = "",
         public senderEmail: string = "",
         public receverEmail: string = "",

@@ -3,7 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
-import { Feedback } from '../model/feedback';
+import { FeedbackQueryData } from '../model/feedbackQueryData';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -11,7 +12,14 @@ import { Feedback } from '../model/feedback';
   styleUrls: ['./send-feedback-form.component.css']
 })
 export class SendFeedbackFormComponent implements OnInit {
-  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router) { }
+  userEmail? : String
+  userName? : String
+  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService)  {
+     let user = this.authService.getUserDetails() 
+     this.userEmail = decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null'? user.email! : decodeURIComponent(this.queryParams.get('senderEmail')!) ;
+     this.userName = this.queryParams.get('senderName') === null? user.displayName! : this.queryParams.get('senderName')!;  
+ 
+   }
 
   private feedbackMaxLength = 500;
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
@@ -23,26 +31,21 @@ export class SendFeedbackFormComponent implements OnInit {
     }
   `;
 
-  public form = new FormGroup({
-    senderEmail: new FormControl(this.queryParams.get('senderEmail'), [Validators.required, Validators.email]),
-    senderName: new FormControl(this.queryParams.get('senderName'), Validators.required),
-    receverEmail: new FormControl(this.queryParams.get('receverEmail'), [Validators.required, Validators.email]),
-    receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
-    postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
-    toImproveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
-    comment: new FormControl(''),
-  });
+ngOnInit(): void {}
+decodedReceverEmail = decodeURIComponent(this.queryParams.get('receverEmail') || '')
+form = new FormGroup({
+  receverEmail: new FormControl(this.decodedReceverEmail, [Validators.required, Validators.email]),
+  receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
+  postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
+  toImproveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]),
+  comment: new FormControl(''),
+});
 
-  get senderEmail() { return this.form.get('senderEmail') }
-  get senderName() { return this.form.get('senderName') }
-  get receverEmail() { return this.form.get('receverEmail') }
-  get receverName() { return this.form.get('receverName') }
-  get postitiveFeedback() { return this.form.get('postitiveFeedback') }
-  get toImproveFeedback() { return this.form.get('toImproveFeedback') }
-  get comment() { return this.form.get('comment') }
-
-  ngOnInit(): void {
-  }
+get receverEmail() { return this.form.get('receverEmail') }
+get receverName() { return this.form.get('receverName') }
+get postitiveFeedback() { return this.form.get('postitiveFeedback') }
+get toImproveFeedback() { return this.form.get('toImproveFeedback') }
+get comment() { return this.form.get('comment') }
 
   onSubmit() {
     const token = sessionStorage.getItem('token');
@@ -51,12 +54,12 @@ export class SendFeedbackFormComponent implements OnInit {
       this.apollo.mutate({
         mutation: this.mutation,
         variables: {
-          feedbackInput: new Feedback(
+          feedbackInput: new FeedbackQueryData(
             token!,
-            this.senderName?.value,
-            this.senderEmail?.value,
-            this.receverName?.value,
+            this.userName,
+            this.userEmail,
             this.receverEmail?.value,
+            this.receverName?.value,
             this.postitiveFeedback?.value,
             this.toImproveFeedback?.value,
             this.comment?.value
@@ -65,7 +68,7 @@ export class SendFeedbackFormComponent implements OnInit {
       }).subscribe((data: any) => {
         let result = data.data.sendFeedback;
         if (result === "sent") {
-          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.senderName?.value;
+          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success', message: result }])
         } else {
           result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."

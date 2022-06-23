@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
 import { FeedbackRequest } from '../model/feedbackRequest';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -11,7 +12,15 @@ import { FeedbackRequest } from '../model/feedbackRequest';
   styleUrls: ['./ask-feedback-form.component.css']
 })
 export class AskFeedbackFormComponent implements OnInit {
-  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router) { }
+  userEmail? : string
+  userName? : string
+  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService:AuthService) {
+   let user =  this.authService.getUserDetails();
+   this.userEmail = user?.email!;
+   this.userName  = user?.displayName!;  
+     
+   }
+
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
   public getFormControlError = getFormControlError
 
@@ -22,8 +31,6 @@ export class AskFeedbackFormComponent implements OnInit {
   `
 
   public form = new FormGroup({
-    senderEmail: new FormControl(this.queryParams.get('senderEmail'), [Validators.required, Validators.email]),
-    senderName: new FormControl(this.queryParams.get('senderName'), Validators.required),
     receverEmail: new FormControl(this.queryParams.get('receverEmail'), [Validators.required, Validators.email]),
     receverName: new FormControl(this.queryParams.get('receverName'), Validators.required),
     message: new FormControl(''),
@@ -35,8 +42,9 @@ export class AskFeedbackFormComponent implements OnInit {
   get receverName() { return this.form.get('receverName') }
   get message() { return this.form.get('message') }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
+
+  
 
   onSubmit() {
     const token = sessionStorage.getItem('token');
@@ -47,8 +55,8 @@ export class AskFeedbackFormComponent implements OnInit {
         variables: {
           askFeedback: new FeedbackRequest(
             token!,
-            this.senderName?.value,
-            this.senderEmail?.value,
+            this.userName,
+            this.userEmail,
             this.receverName?.value,
             this.receverEmail?.value,
             this.message?.value
@@ -57,7 +65,7 @@ export class AskFeedbackFormComponent implements OnInit {
       }).subscribe((data: any) => {
         let result = data.data.sendFeedbackRequest;
         if (result === 'sent') {
-          result = "Félicitations! Votre demande vient d’être envoyée à : " + this.senderName?.value;
+          result = "Félicitations! Votre demande vient d’être envoyée à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success' ,message:result}])
         } else {
           result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."

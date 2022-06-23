@@ -1,6 +1,6 @@
 <ul *ngIf="feedbacks && feedbacks.length !== 0; else empty">
     <li *ngFor="let feedback of feedbacks" class="flex flex-column">
-        <div class="flex flex-column feedback-row">
+        <div [routerLink]="['/feedback']" [queryParams]="{id: feedback.id}" routerLinkActive="router-link-active"  class="flex flex-column feedback-row">
             <p *ngIf="type === feedbackType.Received; else sent_feedbacks">
                 <strong>De:</strong> {{feedback.senderName}}
                 (<a href="mailto:{{feedback.senderEmail}}">{{feedback.senderEmail}}</a>)

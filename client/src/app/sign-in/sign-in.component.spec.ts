@@ -12,7 +12,7 @@ describe('SignInComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ SignInComponent ],
       imports: [RouterTestingModule],
-        providers: [{ provide: AuthService, useValue: authStub}]
+      providers: [{ provide: AuthService, useValue: authStub}]
     })
     .compileComponents();
   });

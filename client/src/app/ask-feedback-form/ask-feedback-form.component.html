@@ -13,22 +13,6 @@
         vous faire ses retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
     <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
-        <h2>Qui êtes-vous ?</h2>
-        <div class="row">
-            <div class="form-input" >
-                <label for="your-email">Votre email *</label>
-                <input type="email" class="input-text form-control your-email" id="your-email" placeholder="pierre.douchon@example.com"
-                    formControlName="senderEmail" required email>
-                 <small  *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
-            </div> 
-            <div class="form-input">
-                <label for="your-name">Votre nom * </label>
-                <input type="text" class="input-text form-control your-email" id="your-name" placeholder="Pierre Duchon" required
-                    formControlName="senderName">
-                <small
-                    *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
-            </div>
-        </div>
         <h2>Qui est votre collègue ?</h2>
         <div class="row">
             <div class="form-input" >

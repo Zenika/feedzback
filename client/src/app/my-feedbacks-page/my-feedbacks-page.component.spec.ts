@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Apollo } from 'apollo-angular';
 import { FeedbackListComponent } from '../feedback-list/feedback-list.component';
+import { AuthService } from '../services/auth.service';
+import { authStub } from '../services/authStub';
 import { TabLinkComponent } from '../tab-link/tab-link.component';
 import { TabsComponent } from '../tabs/tabs.component';
 import { MyFeedbacksPageComponent } from './my-feedbacks-page.component';
@@ -11,7 +14,9 @@ describe('MyFeedbacksPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [Apollo],
+      imports: [RouterTestingModule],
+      providers: [Apollo,
+                  {provide: AuthService, useValue: authStub}],
       declarations: [
         MyFeedbacksPageComponent,
         TabsComponent,
