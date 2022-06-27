@@ -28,13 +28,13 @@ export class AuthService {
    gapi.load('client', async () => {
     console.log('loaded client')
   
-  await  gapi.client.init({
-      apiKey: 'AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc',
-       clientId: '370604731143-th76hjjdiag2vftad9ldvkcbh6ag51qq.apps.googleusercontent.com',
-      discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/people/v1/rest'],
-      plugin_name: "chat",
-       scope: 'https://www.googleapis.com/auth/contacts.other.readonly'
-    })
+  // await  gapi.client.init({
+  //     apiKey: 'AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc',
+  //      clientId: '370604731143-th76hjjdiag2vftad9ldvkcbh6ag51qq.apps.googleusercontent.com',
+  //     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/people/v1/rest'],
+  //     plugin_name: "chat",
+  //      scope: 'https://www.googleapis.com/auth/contacts.other.readonly'
+  //   })
   })
 
   
