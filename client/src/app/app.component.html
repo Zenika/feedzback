@@ -12,11 +12,11 @@
     </ul>  
 
   </div>
-  <img src="../assets/logo-feedZback-final.svg">
+  <img src="../assets/logo-feedZback-final.svg" *ngIf="isLogged()">
   <img src="../assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
 </nav>
 <nav class="nav-web">
-  <img src="../assets/logo-feedZback-final.svg">
+  <img src="../assets/logo-feedZback-final.svg" *ngIf="isLogged()">
   <ul>
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Acceuil&nbsp;&nbsp;</a>
     <a class="menu-item" *ngIf="isLogged()"  [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>

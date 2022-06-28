@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import * as auth from 'firebase/auth';
-import * as firebase from 'firebase/compat/app';
-import { Observable } from 'rxjs';
-/// <reference path="../../../node_modules/@types/gapi/index.d.ts" />
-declare let gapi: any;
 
 @Injectable({
   providedIn: 'root'
@@ -22,72 +18,20 @@ export class AuthService {
       if(token !== null)
       sessionStorage.setItem('token', token!)
       this.user = user
-    
    });
-
-   gapi.load('client', async () => {
-    console.log('loaded client')
-  
-  // await  gapi.client.init({
-  //     apiKey: '',
-  //      clientId: '',
-  //     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/people/v1/rest'],
-  //     plugin_name: "chat",
-  //      scope: 'https://www.googleapis.com/auth/contacts.other.readonly'
-  //   })
-  })
-
-  
-   
   }
 
+  oAuthProvider(provider:any) {
 
-  async fetchGoogleUser() {
-    const googleAuth = gapi.auth2.getAuthInstance()
-    const googleUser = await googleAuth.signIn();
-  
-    const token = googleUser.getAuthResponse().id_token;
-  console.log(token)
-    const credential = firebase.default.auth.GoogleAuthProvider.credential(token);
-    this.firebaseAuth.signInWithCredential(credential)
-   const response = await gapi.client.people.people.connections.list({
-      'resourceName': 'people/me',
-      'pageSize': 10,
-      'personFields': 'names,emailAddresses',
-    });
-    const connections = response.result.connections
-    // const output = connections.map(
-    //   (str: any, person: any) => {
-    //     if (!person.names || person.names.length === 0) {
-    //       return `${str}Missing display name\n`;
-    //     }
-    //     return `${str}${person.names[0].displayName}\n`;
-    //   },
-    //   'Connections:\n');
-  console.log(response)
-}
-
-
-  // oAuthProvider(provider:any) {
-    
-  //   return this.firebaseAuth.signInWithPopup(provider)
-  //   .then((res) => { 
-  //     console.log(res.additionalUserInfo?.profile + 'llllllll')
-  //     fetch(`https://people.googleapis.com/v1/people/${res.additionalUserInfo?.profile}?personFields=names&key=AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc&access_token=${res.credential}`)
-  //     console.log(res.credential?.toJSON().toString() + '   dfgdfghfdhdf')
-    
-  //     console.log('dfgdfgdfgdfhdfhdfhhdfhdgh')
-  //     this.router.navigate(['home'])
-  //   }).catch(error => console.log(error)
-  //   )
-  // }
-  // signInWithGoogle() {
-  //   let provider = new auth.GoogleAuthProvider();
-  //   provider.addScope('profile')
-  //   provider.addScope('email')
-  //   provider.addScope('https://www.googleapis.com/auth/userinfo.email')
-  //   return this.oAuthProvider(provider).then((res)=> console.log('success' + res)).catch((err)=> console.log("ererererefgfdgg"))
-  // }
+    return this.firebaseAuth.signInWithPopup(provider)
+    .then(() => {
+      this.router.navigate(['home'])
+    }).catch(error => console.log(error)
+    )
+  }
+  signInWithGoogle() {
+    return this.oAuthProvider(new auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log("ererererefgfdgg"))
+  }
   isLogged() {
     if(this.user)
     return true
