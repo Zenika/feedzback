@@ -111,7 +111,7 @@ jobs:
             rm temp.txt
             URL=$(echo "$URL" | cut -d':' -f2,3)    
             echo $URL 
-            sed "s,<serverApi>,$URL,g" -i src/environments/environment.prod.ts
+            sed -i -e "s,<serverApi>,$URL,g" src/environments/environment.prod.ts
 
   build:
     executor: node
