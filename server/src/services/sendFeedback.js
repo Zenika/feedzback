@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import replaceHtmlVars from '../model/replaceHtmlVars.js';
 import admin from 'firebase-admin';
+import { google } from 'googleapis';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -47,12 +48,25 @@ const insertFeedback = async (data) => {
 }
   
 export const sendFeedback = async ({ feedbackInput }) => {
+
+
   let errMsg
   const auth  = await  admin.auth().verifyIdToken(feedbackInput.token).catch((error)=> {
     errMsg = error;
     return false})
   if(!auth)
   return errMsg;
+
+  const run = async () => {
+    const { people } = google.people({
+      version: "v1",
+      auth: await google.auth
+  });
+  console.log('dsfsdf ' + people.get({
+    resourceName: 'people/me'
+  }));
+}
+  run();
 
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
