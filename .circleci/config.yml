@@ -112,7 +112,7 @@ jobs:
             URL=$(echo "$URL" | cut -d':' -f2,3)    
             echo $URL 
             sed -i -e "s,<serverApi>,$URL,g" src/environments/environment.prod.ts
-            rm src/environments/environment.prod.ts-e
+            
 
   build:
     executor: node
@@ -176,6 +176,7 @@ jobs:
                 VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
                 VERSION="client-${VERSION}"
                 echo ${VERSION}
+                cat src/environments/environment.prod.ts
                 
 
 
