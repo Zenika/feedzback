@@ -1,4 +1,4 @@
 <div>
-    <button *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">{{tab.title}}</button>
+    <button *ngFor="let tab of tabs" [ngClass]="{'feedbacks-envoyes': tab.title === 'Feedbacks envoyés'}" (click)="selectTab(tab)" [class.active]="tab.active">{{tab.title}}</button>
 </div>
 <ng-content></ng-content>
