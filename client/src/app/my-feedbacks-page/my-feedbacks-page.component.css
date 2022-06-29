@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+.flex-row {
+    flex-direction: row;
+}
+
 .justify-content-center {
     justify-content: center;
 }
@@ -13,11 +17,13 @@
 .container {
     max-width: 800px;
     min-width: 800px;
+    
 }
 
 h1 {
-    color: #D52150;
-    font-weight: bold;
+    color: #D43B6D;
+    font-weight: 900;
+    border-bottom: 2px solid #D43B6D;
 }
 
 a {
