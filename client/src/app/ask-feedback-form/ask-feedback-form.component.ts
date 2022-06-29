@@ -5,7 +5,8 @@ import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
 import { FeedbackRequest } from '../model/feedbackRequest';
 import { AuthService } from '../services/auth.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from '../../environments/environment.prod';
+
 
 @Component({
   selector: 'app-ask-feedback-form',
