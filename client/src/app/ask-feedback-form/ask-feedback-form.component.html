@@ -1,17 +1,15 @@
-<div class="container">
-    <div class="ask-logo">
-        <img class="logo" src="../../assets/feedzback-logo.svg" alt="logo" class="logo">
-    </div>     
+<div class="container">  
     <div class="header-section">
        <div class="description">
-       <a class="return-link"  href="">&lt; Retour</a>  
+        <br>
        <div class="row">
            <img id="vector-arrow" src="../../assets/question-mark.svg" alt="vector-arrow">
            <h1>Demande de feedback</h1> 
-        </div> 
+        </div>
       <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
         vous faire ses retours !</span>
     <small>les champs marqués d’une astérisque sont obligatoires</small>
+    <br>
     <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui est votre collègue ?</h2>
         <div class="row">
@@ -29,6 +27,7 @@
                     *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
             </div>
         </div>
+        <br>
         <h2>Votre demande</h2>
             <div  class="form-input">
                 <div class="message-section">
@@ -39,6 +38,7 @@
                     </textarea>
                 </div>
             </div>   
+            <br>
             <div  class="btn-form">
                 <button id="submit" type="submit" class="btn btn-primary">ENVOYER</button>
             </div>
