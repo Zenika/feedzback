@@ -11,7 +11,6 @@ import { GraphqlService } from '../services/graphql/graphql.service';
 export class FeedbackComponent implements OnInit {
 
   public feedback!: Feedback
-  public bn!: String
   constructor(private activateRouter: ActivatedRoute,private graphqlService: GraphqlService) { 
   }
 
@@ -19,6 +18,7 @@ export class FeedbackComponent implements OnInit {
     const id = this.activateRouter.snapshot.queryParamMap.get('id');
     this.graphqlService.getFeedbackById(id!).subscribe(data => {
       this.feedback = data
+      console.log(this.feedback)
     })
 }
 }

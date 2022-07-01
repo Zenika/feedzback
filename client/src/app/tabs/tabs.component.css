@@ -1,47 +1,120 @@
-div {
-
+.header {
     display: flex;
+    flex-direction: row; 
+    max-width: 800px;
+    min-width: 800px;
 }
 
-.feedbacks-envoyes {
+.taps {
+    display: flex;
+    flex-direction: row;
+    margin-left: 120px;
+}
+
+img {
+    height: 24px;
+    width: 23px;
+    padding: 3px;
+    background-color: #D52150;
+    margin-right: 10px;
+    margin-top: 35px;
+    border-radius: 2px;
+
+}
+h1 {
+    color: #D43B6D;
+    font-weight: bold;
+    font-size: 24px;
+    padding-bottom: -3px;
+    border-end-end-radius: 1px;
+    margin-top: 35px;
+    padding-bottom: 6px;
+}
+.active {
     color: #D52150;
-    border:3px solid  #D52150;
+    border:2px solid  #D52150;
+    background-color: #FFFF;
+    font-weight: 900;
+    line-height: 19px;
+    font-size: 14px;
     border-bottom:0;
-    width:80px;
     height:40px;
     margin:30px;
+    margin-left: 20px;
     margin-right: 10px;
+    padding-inline: 30px;
     position:relative;
     -moz-border-radius:8px 8px 0 0;
     -webkit-border-radius:8px 8px 0 0;
     border-radius: 8px 8px 0 0;
-    padding-top: 5px;
-    padding-left: 35px;
-    padding-right: 90px;
 }
-.feedbacks-envoyes:after,
-.feedbacks-envoyes:before{
+.active:after,
+.active:before{
     content:'';
     width:40px;
     height:30px;
-    border:3px solid #D52150;
+    border:2px solid #D52150;
     position:absolute;
-    bottom:-7.5pt;
-    left: 160px;
+    bottom:-9.6pt;
     border-top:0;
 }
-.feedbacks-envoyes::before {
+.active::before {
     border-right:0;
     -moz-border-radius:0 0 0 8px;
     -webkit-border-radius:0 0 0 8px;
     border-radius: 0 0 0 8px;
-    width: 220px;
-    left: 125px;
+    left: 178.5px;
+    width: 20px;
 }
-.feedbacks-envoyes::after {
+.active::after {
     border-left:0;
     -moz-border-radius:0 0 8px 0;
     -webkit-border-radius:0 0 8px 0;
     border-radius: 0 0 8px 0;
-    left:-43px;
+    padding-inline-start: 355px;
+    left:-397px;
+}
+
+.inactive {
+    background-color: #D52150;
+    border: 0;
+    font-size: 14px;
+    height: 53px;
+    border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0 ;
+    color: #FFFF;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-top: 30px;
+    margin-right: 0;
+    padding-bottom: 10px;
+}
+
+.active-envoyes.active::before {
+   width: 196px;
+}
+.active-recus.active::before {
+    left: 164px;
+}
+.active-envoyes.active {
+    margin-left: 80px;
+    margin-right: 20px;
+}
+.active-recus.active {
+    margin-left: 10px;
+
+}
+
+.active-recus.active::after {
+    padding-inline-start: 565px;
+    left:-607px;
+}
+.inactive-envoyes.inactive {
+margin-left: 77px;
+margin-right: 10px;
+}
+ 
+button {
+    cursor: pointer;
 }

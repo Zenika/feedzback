@@ -1,55 +1,57 @@
-.flex {
+.content {
     display: flex;
 }
-
 .flex-column {
     flex-direction: column;
 }
-
-ul {
-    list-style-type: none;
-    border: 0.5px solid #ccc;
-    padding: 0;
-    margin: 0;
-    overflow: scroll;
+table {
+    border-collapse: collapse;
+    border: 1px solid #F0F1F2;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
-
-li {
-    border-bottom: 0.5px solid #ccc;
-    padding: 1rem;
+table thead tr,
+table tbody tr{
+    border:1px solid #F0F1F2;
+    border-radius: 6px;
 }
-
-li:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
+table tr {
+    border: 5px solid #F0F1F2;;
 }
-
-li:last-child {
-    border: none;
+table th {
+    padding: 15px 85px 15px 5px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+    color: #D52150;
+    text-align: left;
 }
-
+table td {
+    padding: 15px 70px 15px 5px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+table th:nth-child(1),
+table td:nth-child(1) {
+    padding-left: 20px;
+}
+table td:nth-child(4) {
+    text-align: center;
+}
+table th:nth-child(4),
+table td:nth-child(4) {
+    padding-right: 20px;
+}
+table tbody td:nth-child(4) {
+cursor: pointer;
+}
 .empty {
     padding: 1rem;
     border: 0.5px solid #ccc;
+    align-self: center;
 }
-
-.btn {
-    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
-}
-
 .date {
     font-size: 0.8rem;
     color: grey;
-}
-
-p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    margin: 0;
-}
-
-a {
-    font-size: 0.8rem;
 }

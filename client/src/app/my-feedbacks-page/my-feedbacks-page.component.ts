@@ -17,6 +17,7 @@ export class MyFeedbacksPageComponent implements OnInit {
   private query = gql`
     query GetFeedbacks($email: String!){
       receivedFeedbacks(email: $email) {
+        id
         senderEmail
         senderName
         positiveFeedback
@@ -25,11 +26,13 @@ export class MyFeedbacksPageComponent implements OnInit {
         createdAt
       }
       sentFeedbacks(email: $email) {
+        id
         receverEmail
         receverName
         positiveFeedback
         toImprove
         comment
+        createdAt
       }
     }
   `;
@@ -51,6 +54,7 @@ export class MyFeedbacksPageComponent implements OnInit {
     ).subscribe(({ receivedFeedbacks, sentFeedbacks }: any) => {
       this.receivedFeedbacks = receivedFeedbacks
       this.sentFeedbacks = sentFeedbacks
+      console.log(this.receivedFeedbacks)
     })
   }
 
