@@ -3,9 +3,10 @@
     flex-direction: row; 
     max-width: 800px;
     min-width: 800px;
+    justify-content: center;
 }
 
-.taps {
+.tabs {
     display: flex;
     flex-direction: row;
     margin-left: 120px;
@@ -103,9 +104,7 @@ h1 {
 }
 .active-recus.active {
     margin-left: 10px;
-
 }
-
 .active-recus.active::after {
     padding-inline-start: 565px;
     left:-607px;
@@ -117,4 +116,59 @@ margin-right: 10px;
  
 button {
     cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+    .header {
+        max-width: 600px;
+        min-width: 600px;
+        justify-content:flex-start ;
+    }   
+    .tabs {
+        margin-left: 15px;
+    }
+    .active::after {
+        padding-inline-start: 200px;
+        left:-242px;
+    }
+    .active-envoyes.active {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .inactive-envoyes.inactive {
+        margin-left: 5px;
+        margin-right: 5px;
+        }
+    .active-recus.active::before {
+        left: 164px;
+    }
+    .active-recus.active::after {
+        padding-inline-start: 375px;
+        left:-417px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        justify-content:flex-start ;
+        max-width: 600px;
+        min-width: 600px;
+    }
+    .tabs {
+        margin-left: 0;
+    }
+    .active::after {
+        padding-inline-start: 50px;
+        left:-92px;
+    }
+    .active-envoyes.active {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .inactive-envoyes.inactive {
+        margin-left: 5px;
+        margin-right: 5px;
+        }
+    .active-recus.active::before {
+        left: 163.4px;
+    }
 }

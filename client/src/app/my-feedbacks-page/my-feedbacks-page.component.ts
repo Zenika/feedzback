@@ -39,14 +39,16 @@ export class MyFeedbacksPageComponent implements OnInit {
 
   public receivedFeedbacks: Feedback[] = [];
   public sentFeedbacks: Feedback[] = [];
-
-  constructor(private apollo: Apollo, private authService:AuthService) { }
+  public email!: String
+  constructor(private apollo: Apollo, private authService:AuthService) { 
+  this.email = authService.getUserDetails().email;
+  }
 
   ngOnInit(): void {
     this.apollo.query({
       query: this.query,
       variables: {
-        email: 'bnyat.azizsharif@zenika.com'
+        email: this.email
       }
     }).pipe(
       map(({ data }) => data),
