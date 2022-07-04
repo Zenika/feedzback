@@ -2,6 +2,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": [
+      "gapi",
+    ],
     "skipLibCheck": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

@@ -24,6 +24,23 @@ import { TabsComponent } from './tabs/tabs.component';
 import { TabLinkComponent } from './tab-link/tab-link.component';
 import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
 import { FeedbackComponent } from './feedback/feedback.component';
+import {
+  GoogleApiModule, 
+  GoogleApiService, 
+  GoogleAuthService, 
+  NgGapiClientConfig, 
+  NG_GAPI_CONFIG,
+  GoogleApiConfig
+} from "ng-gapi";
+
+let gapiClientConfig: NgGapiClientConfig = {
+  client_id: "370604731143-th76hjjdiag2vftad9ldvkcbh6ag51qq.apps.googleusercontent.com",
+  discoveryDocs: ["https://analyticsreporting.googleapis.com/$discovery/rest?version=v4"],
+  scope: [
+      "https://www.googleapis.com/auth/contacts.readonly",
+      "https://www.googleapis.com/auth/contacts"
+  ].join(" ")
+};
 
 @NgModule({
   declarations: [
@@ -49,7 +66,10 @@ import { FeedbackComponent } from './feedback/feedback.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    RouterModule
+    RouterModule,
+    GoogleApiModule.forRoot({
+      provide: NG_GAPI_CONFIG,
+      useValue: gapiClientConfig})
   ],
   providers: [
     {
