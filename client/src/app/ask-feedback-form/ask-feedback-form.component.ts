@@ -74,4 +74,7 @@ export class AskFeedbackFormComponent implements OnInit {
       })
     }
   }
+  getGoogleContact() {
+    this.authService.fetchGoogleUser();
+  }
 }
