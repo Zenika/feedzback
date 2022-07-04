@@ -8,12 +8,11 @@
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
-      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >Feedbacks</a></li>
+      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes Feedbacks</a></li>
     </ul>  
-
   </div>
-  <img src="../assets/logo-feedZback-final.svg" *ngIf="isLogged()">
-  <img src="../assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
+  <img src="/assets/logo-feedZback-final.svg" *ngIf="isLogged()">
+  <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
 </nav>
 <nav class="nav-web">
   <img src="../assets/logo-feedZback-final.svg" *ngIf="isLogged()">
@@ -21,8 +20,8 @@
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Acceuil&nbsp;&nbsp;</a>
     <a class="menu-item" *ngIf="isLogged()"  [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
-    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Feedbacks&nbsp;&nbsp;</a>
+    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes FeedZbacks&nbsp;&nbsp;</a>
   </ul>  
-  <img src="../assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
+  <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
 </nav>
  <router-outlet></router-outlet>

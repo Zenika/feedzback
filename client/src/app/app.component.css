@@ -23,8 +23,8 @@
       top: 25px;
       z-index: 1;
       user-select: none;
-    }      
-    #menuToggle input {
+    }   
+    #menuToggle input{
       display: flex;
       height: 32;
       width: 40px;
@@ -75,7 +75,7 @@
     #menu
     {
       position:fixed;
-      width: 45%;
+      width: 60%;
       height: 500px;
       box-shadow: 0 0 10px #85888C;
       margin: -50px 0 0 -50px;
@@ -91,7 +91,6 @@
     #menu li
     {
       padding: 10px;
-      padding-right: 30px;
       transition-delay: 2s;
     }  
     #menuToggle input:checked ~ ul
@@ -119,7 +118,7 @@ nav {
     padding-bottom: 7px;
     color: #D52150;
     padding: 10px;
-    padding-right: 150px;
+    padding-right: 45px;
     background-color: #FFE5EC;
     border-radius: 5px;
    } 
@@ -127,7 +126,7 @@ nav {
     height: 37px;
     width: 37px;
     padding-top: 10px;
-    margin-left: 45px;
+    margin-left: 0;
   }
   @media only screen and (min-width: 768px) {
     nav {
@@ -163,6 +162,9 @@ nav {
      } 
     .btn-logout:hover {
      cursor: pointer;
+    }
+    img {
+      width: 17;
     }
     .btn-logout {
       height: 27px;
