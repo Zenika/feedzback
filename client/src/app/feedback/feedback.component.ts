@@ -18,7 +18,6 @@ export class FeedbackComponent implements OnInit {
     const id = this.activateRouter.snapshot.queryParamMap.get('id');
     this.graphqlService.getFeedbackById(id!).subscribe(data => {
       this.feedback = data
-      console.log(this.feedback)
     })
 }
 }
