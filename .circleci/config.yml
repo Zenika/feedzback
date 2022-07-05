@@ -258,8 +258,7 @@ workflows:
           requires:
             - install-client-dependencies
             - unit-test-client
-      
-
+            
       - deploy-server:
            requires:
              - install-client-dependencies

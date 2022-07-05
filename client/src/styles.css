@@ -50,7 +50,7 @@ input:required, textarea:required {
 
 @font-face {
     font-family: "Nunito";
-    src: url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
+    src: url('https://fonts.googleapis.com/css?family=Nunito') format('opentype');
 }
 
 * {

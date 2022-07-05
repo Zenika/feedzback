@@ -11,7 +11,6 @@ import { GraphqlService } from '../services/graphql/graphql.service';
 export class FeedbackComponent implements OnInit {
 
   public feedback!: Feedback
-  public bn!: String
   constructor(private activateRouter: ActivatedRoute,private graphqlService: GraphqlService) { 
   }
 
