@@ -50,6 +50,7 @@ export const sendFeedback = async ({ feedbackInput }) => {
 
 
   let errMsg
+  console.log(feedbackInput.token)
   const auth  = await  admin.auth().verifyIdToken(feedbackInput.token).catch((error)=> {
     errMsg = error;
     return false})
@@ -58,10 +59,9 @@ export const sendFeedback = async ({ feedbackInput }) => {
 
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
-
   const msg = {
     to: feedbackInput.receverEmail,
-    from: feedbackInput.email,
+    from: feedbackInput.senderEmail,
     subject: 'FeedZback',
     html: template,
   }
