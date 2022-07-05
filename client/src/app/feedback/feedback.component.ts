@@ -15,7 +15,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.activateRouter.snapshot.queryParamMap.get('id');
+    const id = this.activateRouter.snapshot.paramMap.get('id');
     this.graphqlService.getFeedbackById(id!).subscribe(data => {
       this.feedback = data
     })
