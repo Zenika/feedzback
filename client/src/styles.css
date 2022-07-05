@@ -7,31 +7,10 @@
     font-weight: 900;
     color: white;
 }
-
 .btn-primary {
-    border-color: #D52150;
-    background-color: #D52150;
+  border: none;
+    background: linear-gradient(88.41deg, #F1203A 0%, #D11F56 100%);
 }
-
-.btn-primary:disabled {
-    background-color: #C0B0B4;
-}
-
-.btn-primary:hover {
-    cursor: pointer;
-    border-color: #a41a3f;
-    background-color: #a41a3f;
-}
-
-.btn-secondary {
-    background-color: #A02C5A;
-}
-
-.btn-secondary:hover {
-    cursor: pointer;
-    background-color: rgb(186, 67, 67);
-}
-
 .input-text {
     background: #FAFAFA;
     border-radius: 10px;
@@ -66,10 +45,6 @@ input:required, textarea:required {
     border-style: solid;
     border-width: 0.5px;
 }
-
-
-
-
 
 @font-face {
     font-family: "Nunito";

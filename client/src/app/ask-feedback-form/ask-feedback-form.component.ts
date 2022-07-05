@@ -5,6 +5,8 @@ import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
 import { FeedbackRequest } from '../model/feedbackRequest';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment.prod';
+
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -47,6 +49,7 @@ export class AskFeedbackFormComponent implements OnInit {
   
 
   onSubmit() {
+    console.log(environment.serverApi + "api")
     const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {
