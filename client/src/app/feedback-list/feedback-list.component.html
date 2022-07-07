@@ -1,52 +1,25 @@
 <div class="content">
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Nom du collègue 
-                </th>
-                <th>
-                   Email du collègue
-                </th>
-                <th>
-                    Date d'envoi
-                </th>
-                <th>
-                    Consulter
-                </th>
-            </tr>    
-        </thead>
-       <tbody *ngIf="feedbacks && feedbacks.length !== 0; else empty">
-        <tr *ngFor="let feedback of feedbacks">
-            <td *ngIf="type === feedbackType.Received; else sent_name">
-                {{feedback.senderName}}
-            </td>
-            <td *ngIf="type === feedbackType.Received; else sent_email">
-                {{feedback.senderEmail}}
-            </td>
-            
-            <td>
-                {{feedback.createdAt | date: 'dd/MM/yyyy-HH:MM' }}
-            </td>
-            <td [routerLink]="['/feedback', feedback.id]" routerLinkActive="router-link-active">
-                <img src="../../assets/eye.svg" height="27" width="27" />
-            </td>
-            <ng-template #sent_name>
-                <td>
+       <div class="list" *ngIf="feedbacks && feedbacks.length !== 0; else empty">
+        <div *ngFor="let feedback of feedbacks">
+            <div *ngIf="type === feedbackType.Received; else sent">
+               <a [routerLink]="['/feedback',feedback.id]" routerLinkActive="router-link-active" > {{feedback.senderName}}</a>
+            <div class="row">
+                <h4>{{feedback.senderEmail}}</h4>
+                <h4> {{feedback.createdAt | date: 'dd/MM/yyyy-HH:MM' }}</h4>
+            </div>
+        </div>
+            <ng-template #sent>
+                <a [routerLink]="['/feedback',feedback.id]" routerLinkActive="router-link-active" >
                 {{feedback.receverName}}
-                </td>
+                </a>
+                <div class="row">
+                 <h4>{{feedback.receverEmail}}</h4> 
+                 <h4> {{feedback.createdAt | date: 'dd/MM/yyyy-HH:MM' }}</h4>    
+                </div>
             </ng-template>
-            <ng-template #sent_email>
-                <td>
-                    {{feedback.receverEmail}}
-                </td>
-            </ng-template>
-        </tr>
-       </tbody>
-    </table>
+        </div>
+    </div>
 </div>
 <ng-template #empty>
-    <tr>
-        <td class="empty" colspan="4" > Aucun FeedZBack </td>
-    </tr>
+        <div class="empty" colspan="4" > Aucun FeedZBack </div>
 </ng-template>

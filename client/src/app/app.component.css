@@ -143,8 +143,8 @@ nav {
         display: none;
        }
     .menu-item{ 
-        font-size: 18px;  
-        margin-left: 45px; 
+        font-size: 16px;  
+        margin-left: 35px; 
         font-weight: 300;
       }
     .menu-item:hover {
@@ -173,3 +173,4 @@ nav {
       margin-left: 45px;
     }
   }
+
