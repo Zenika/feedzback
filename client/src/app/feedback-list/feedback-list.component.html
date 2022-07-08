@@ -1,6 +1,6 @@
 <div class="content">
        <div class="list" *ngIf="feedbacks && feedbacks.length !== 0; else empty">
-        <div *ngFor="let feedback of feedbacks">
+        <div *ngFor="let feedback of feedbacksToDisplay">
             <div *ngIf="type === feedbackType.Received; else sent">
                <a [routerLink]="['/feedback',feedback.id]" routerLinkActive="router-link-active" > {{feedback.senderName}}</a>
             <div class="row">
@@ -20,6 +20,13 @@
         </div>
     </div>
 </div>
+<app-pagination class="pagination"
+    [current]="current"
+    [total]="total"
+    (goTo)="onGoTo($event)"
+    (next)="onNext($event)"
+    (previous)="onPrevious($event)"
+    ></app-pagination>
 <ng-template #empty>
         <div class="empty" colspan="4" > Aucun FeedZBack </div>
 </ng-template>

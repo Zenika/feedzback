@@ -39,6 +39,8 @@ export class MyFeedbacksPageComponent implements OnInit {
 
   public receivedFeedbacks: Feedback[] = [];
   public sentFeedbacks: Feedback[] = [];
+  public totalPagesSent: number = 0
+  public totalPagesRecieve: number = 0
   public email!: String
   constructor(private apollo: Apollo, private authService:AuthService) { 
   this.email = authService.getUserDetails().email;
@@ -56,7 +58,8 @@ export class MyFeedbacksPageComponent implements OnInit {
     ).subscribe(({ receivedFeedbacks, sentFeedbacks }: any) => {
       this.receivedFeedbacks = receivedFeedbacks
       this.sentFeedbacks = sentFeedbacks
-      console.log(this.receivedFeedbacks)
+      this.totalPagesSent = Math.ceil(this.sentFeedbacks.length / 10)
+      this.totalPagesRecieve = Math.ceil(this.receivedFeedbacks.length / 10) 
     })
   }
 

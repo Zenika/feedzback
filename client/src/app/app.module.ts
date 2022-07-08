@@ -24,6 +24,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { TabLinkComponent } from './tab-link/tab-link.component';
 import { Nl2brPipe } from './pipe/nl2br/nl2br.pipe';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     TabLinkComponent,
     Nl2brPipe,
     FeedbackComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
