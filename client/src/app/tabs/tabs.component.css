@@ -9,7 +9,7 @@
 .tabs {
     display: flex;
     flex-direction: row;
-    margin-left: 102px;
+    margin-left: 10%;
 }
 
 img {
@@ -64,7 +64,7 @@ h1 {
     -moz-border-radius:0 0 0 8px;
     -webkit-border-radius:0 0 0 8px;
     border-radius: 0 0 0 8px;
-    left: 186.5px;
+    left: 100%;
     width: 20px;
 }
 .active::after {
@@ -91,12 +91,8 @@ h1 {
     margin-right: 0;
     padding-bottom: 10px;
 }
-
 .active-envoyes.active::before {
    width: 196px;
-}
-.active-recus.active::before {
-    left: 168.7px;
 }
 .active-envoyes.active {
     margin-left: 80px;
@@ -141,9 +137,6 @@ button {
         margin-left: 5px;
         margin-right: 5px;
         }
-    .active-recus.active::before {
-        left: 168.4px;
-    }
     .active-recus.active::after {
         padding-inline-start: 375px;
         left:-417px;
@@ -177,11 +170,7 @@ button {
     }
     .active-envoyes.active::before {
         width: 146px;
-        left: 146.5px;
      }
-    .active-recus.active::before {
-        left: 140.5px;
-    }
     .active-recus.active::after {
         padding-inline-start: 276px;
         left: -318px;
