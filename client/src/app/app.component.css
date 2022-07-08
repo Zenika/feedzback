@@ -3,7 +3,7 @@
     justify-content: center;
     padding: 10px;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 797px) {
     nav {
       display: flex;
       justify-content:space-between;
@@ -128,7 +128,7 @@ nav {
     padding-top: 10px;
     margin-left: 0;
   }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 798px) {
     nav {
         display: flex;
         background-color: #ffffff;
@@ -173,4 +173,3 @@ nav {
       margin-left: 45px;
     }
   }
-
