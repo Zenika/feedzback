@@ -9,7 +9,7 @@
 .tabs {
     display: flex;
     flex-direction: row;
-    margin-left: 120px;
+    margin-left: 102px;
 }
 
 img {
@@ -64,7 +64,7 @@ h1 {
     -moz-border-radius:0 0 0 8px;
     -webkit-border-radius:0 0 0 8px;
     border-radius: 0 0 0 8px;
-    left: 178.5px;
+    left: 186.5px;
     width: 20px;
 }
 .active::after {
@@ -96,7 +96,7 @@ h1 {
    width: 196px;
 }
 .active-recus.active::before {
-    left: 164px;
+    left: 168.7px;
 }
 .active-envoyes.active {
     margin-left: 80px;
@@ -118,6 +118,9 @@ button {
     cursor: pointer;
 }
 @media screen and (max-width: 800px) {
+    h1 {
+        font-size: 22px;
+    }
     .header {
         max-width: 600px;
         min-width: 600px;
@@ -139,14 +142,55 @@ button {
         margin-right: 5px;
         }
     .active-recus.active::before {
-        left: 164px;
+        left: 168.4px;
     }
     .active-recus.active::after {
         padding-inline-start: 375px;
         left:-417px;
     }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
+    .header{
+        max-width: 565px;
+        min-width: 500px;
+        justify-content: center;
+    }
+    .tabs {
+        margin-left: 1px;
+    }
+    .active,
+    .inactive {
+        padding-inline: 10px;
+    }
+    h1 {
+        font-size: 16px;
+        margin-top: 40px;
+    }
+    img {
+        height: 20px;
+        width: 20px;
+        margin-right: 5px;
+    }
+    .active::after {
+        padding-inline-start: 121px;
+        left: -163px;
+    }
+    .active-envoyes.active::before {
+        width: 146px;
+        left: 146.5px;
+     }
+    .active-recus.active::before {
+        left: 140.5px;
+    }
+    .active-recus.active::after {
+        padding-inline-start: 276px;
+        left: -318px;
+    }
+    .active-recus.active {
+        padding-inline: 16px;
+    }
+}
+@media screen and (max-width: 500px) {
     .header {
         flex-direction: column;
         justify-content:flex-start ;
@@ -156,6 +200,12 @@ button {
     .tabs {
         margin-left: 0;
     }
+    .active {
+        padding-inline: 20px;
+    }
+    .inactive {
+        padding-inline: 25px;
+    }
     .active::after {
         padding-inline-start: 50px;
         left:-92px;
@@ -164,11 +214,20 @@ button {
         margin-left: 10px;
         margin-right: 10px;
     }
+    .active-envoyes.active::before {
+        width: 186px;
+        left: 166.5px;
+    }
     .inactive-envoyes.inactive {
         margin-left: 5px;
         margin-right: 5px;
+        padding-inline: 20px;
         }
+    .active-recus.active {
+        padding-inline: 30px;
+    }
+    
     .active-recus.active::before {
-        left: 163.4px;
+        left: 168.4px;
     }
 }

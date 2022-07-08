@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 .btn {
     border: none;
     border-radius: 10px;
@@ -46,11 +47,6 @@ input:required, textarea:required {
     border: #D52150;
     border-style: solid;
     border-width: 0.5px;
-}
-
-@font-face {
-    font-family: "Nunito";
-    src: url('https://fonts.googleapis.com/css?family=Nunito') format('opentype');
 }
 
 * {
