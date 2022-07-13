@@ -19,7 +19,8 @@
             <div  class="form-input">
                 <label for="coworker-email">Email de votre collègue *</label>
                 <input type="email" class="input-text form-control " id="coworker-email"
-                    placeholder="marie.mettrand@example.com" formControlName="receverEmail" required email>
+                    placeholder="marie.mettrand@example.com" formControlName="receverEmail" required email
+                    (click)="getGoogleContacts()">
                 <small
                     *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
             </div>

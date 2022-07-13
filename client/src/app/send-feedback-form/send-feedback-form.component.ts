@@ -77,4 +77,7 @@ get comment() { return this.form.get('comment') }
       })
     }
   }
+  getGoogleContacts() {
+    this.authService.fetchGoogleUser('a');
+  }
 }
