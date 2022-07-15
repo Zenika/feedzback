@@ -9,26 +9,19 @@
         "*.ts"
       ],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json", "e2e/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:cypress/recommended"
+        "plugin:prettier/recommended"
       ],
-      "globals": {
-        "cy": true
-      },
       "rules": {
-        "@angular-eslint/directive-selector": [
+        "@angular-eslint/component-class-suffix": [
           "error",
           {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
+            "suffixes": ["Page", "Component"]
           }
         ],
         "@angular-eslint/component-selector": [
@@ -38,7 +31,17 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@typescript-eslint/member-ordering": 0,
+        "@typescript-eslint/naming-convention": 0
       }
     },
     {
@@ -47,7 +50,7 @@
       ],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
-        "plugin:cypress/recommended"
+        "plugin:prettier/recommended"
       ],
       "plugins": [
         "eslint-plugin-prettier"

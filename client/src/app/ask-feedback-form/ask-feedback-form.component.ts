@@ -78,14 +78,21 @@ export class AskFeedbackFormComponent implements OnInit {
     let key = event?.key
     let query = this.receverEmail?.value
     let code = event?.code
-    console.log(key)
-    if(code === 'Backspace' && query !== null) 
-    this.authService.fetchGoogleUser(query)    
-    else if(query !== null)
-       query = query + key;
-    else if(key === undefined)
-       this.authService.fetchGoogleUser('a')
-    else
-       this.authService.fetchGoogleUser(key!)
-  }
+    if(code === 'Backspace')
+      {
+        query = query.substring(0, query.length -1)
+        if(query.length === 0)
+        this.authService.fetchGoogleUser('a')
+        else
+        this.authService.fetchGoogleUser(query) 
+      } 
+      else if(query !== null)
+      {
+        if(key)
+          query = query + key;
+        this.authService.fetchGoogleUser(query)
+      }
+      else 
+        this.authService.fetchGoogleUser(key!)
+    }
 }

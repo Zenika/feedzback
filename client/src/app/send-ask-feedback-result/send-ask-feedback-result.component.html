@@ -2,9 +2,10 @@
   <div class="result-logo">
     <img class="logo" src="../../assets/logo-feedZback.svg" />
   </div>
-  <div class="result-title">{{message}}</div>
-  <button class="btn btn-primary btn-retry"  *ngIf="result === 'sendFailed'"  routerLink="/send">REESAYER</button>
-  <button class="btn btn-primary btn-retry"  *ngIf="result === 'askFailed'"  routerLink="/ask">REESAYER</button>
-  <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('false')" routerLink="/home">RETOUR À L'ACCUEIL</button>
+  <div class="result-title">{{ message }}</div>
+  <button class="btn btn-primary btn-retry" *ngIf="result === 'sendFailed'" routerLink="/send">REESAYER</button>
+  <button class="btn btn-primary btn-retry" *ngIf="result === 'askFailed'" routerLink="/ask">REESAYER</button>
+  <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('false')" routerLink="/home">
+    RETOUR À L'ACCUEIL
+  </button>
 </div>
- 
