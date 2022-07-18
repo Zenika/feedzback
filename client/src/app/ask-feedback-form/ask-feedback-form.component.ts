@@ -5,6 +5,7 @@ import { getFormControlError } from '../get-form-control-error';
 import { Apollo, gql } from 'apollo-angular';
 import { FeedbackRequest } from '../model/feedbackRequest';
 import { AuthService } from '../services/auth.service';
+import { Contact } from '../model/contact';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -14,6 +15,8 @@ import { AuthService } from '../services/auth.service';
 export class AskFeedbackFormComponent implements OnInit {
   userEmail? : string
   userName? : string
+  emailList : boolean = false
+  contactList!: Contact[]
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService:AuthService) {
    let user =  this.authService.getUserDetails();
    this.userEmail = user?.email!;
@@ -82,17 +85,40 @@ export class AskFeedbackFormComponent implements OnInit {
       {
         query = query.substring(0, query.length -1)
         if(query.length === 0)
-        this.authService.fetchGoogleUser('a')
+          this.authService.fetchGoogleUser('a').then((contacts:Contact[]) => {
+          this.contactList = contacts
+       })
         else
-        this.authService.fetchGoogleUser(query) 
-      } 
+        this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
+          this.contactList = contacts
+        })
+      }
       else if(query !== null)
       {
         if(key)
           query = query + key;
-        this.authService.fetchGoogleUser(query)
+        this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
+          this.contactList = contacts
+        })
       }
       else 
-        this.authService.fetchGoogleUser(key!)
+        this.authService.fetchGoogleUser(key!).then((contacts: Contact[]) => {
+          this.contactList = contacts
+        })
     }
+    showEmailList() {
+      console.log('waya')
+      this.emailList = true
+    }
+    blurInput() {
+    setTimeout(()=> {
+      this.emailList = false
+    },200)
+ 
+    }
+    hideEmailList(eventList:any) {
+      console.log(eventList.email)
+      this.emailList = false
+    }
+
 }

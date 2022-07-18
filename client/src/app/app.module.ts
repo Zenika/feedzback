@@ -32,6 +32,7 @@ import {
   NG_GAPI_CONFIG,
   GoogleApiConfig
 } from "ng-gapi";
+import { ListContactComponent } from './list-contact/list-contact.component';
 
 let gapiClientConfig: NgGapiClientConfig = {
   client_id: "370604731143-th76hjjdiag2vftad9ldvkcbh6ag51qq.apps.googleusercontent.com",
@@ -56,6 +57,7 @@ let gapiClientConfig: NgGapiClientConfig = {
     TabLinkComponent,
     Nl2brPipe,
     FeedbackComponent,
+    ListContactComponent,
   ],
   imports: [
     BrowserModule,

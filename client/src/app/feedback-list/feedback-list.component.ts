@@ -3,7 +3,6 @@ import { Feedback } from '../model/feedback';
 import { FeedbackType } from '../enum/feedback-type';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-feedback-list',
   templateUrl: './feedback-list.component.html',

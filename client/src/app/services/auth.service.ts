@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router,
 } from '@angular/router';
 import * as auth from 'firebase/auth';
+import { Contact } from '../model/contact';
 /// <reference path="../../../node_modules/@types/gapi/index.d.ts" />
 declare let gapi: any;
 
@@ -34,7 +35,7 @@ export class AuthService {
       });
     });
   }
-  async fetchGoogleUser(query: string) {
+  async fetchGoogleUser(query: string) : Promise<Contact[]> {
     const googleAuth = gapi.auth2.getAuthInstance();
     let googleUser = await googleAuth.currentUser.get();
     if(!(await googleAuth.isSignedIn.get()))
@@ -54,8 +55,17 @@ export class AuthService {
       readMask: 'emailAddresses,names',
       sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
     });
-    const connections = response.result.connections;
-    console.log(response);
+  const contacts = response.result.people.map((people:any)=> {
+    return <Contact>
+    {
+     email: people.emailAddresses[0].value,
+     name: people.names ? people.names[0].displayName : 'no name'
+    }
+      
+    })
+    console.log(response.result.people.map((e:any) => e.emailAddresses[0].value));
+    console.log(contacts);
+    return contacts
   }
 
   oAuthProvider(provider: any) {
