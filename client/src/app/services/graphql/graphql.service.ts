@@ -13,6 +13,8 @@ export class GraphqlService {
     getFeedbackById(id: $getFeedbackByIdId) {
       senderName
       senderEmail
+      receverEmail
+      receverName
       positiveFeedback
       toImprove
       comment
