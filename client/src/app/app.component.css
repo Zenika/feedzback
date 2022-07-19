@@ -100,6 +100,10 @@
     .nav-web {
         display: none;
     }
+    .name-icon {
+      display: flex;
+      flex-direction: row;
+    }
 }
 nav {
   height: 60px;
@@ -127,6 +131,14 @@ nav {
     width: 37px;
     padding-top: 10px;
     margin-left: 0;
+  }
+  h4 {
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: 20px;
+    margin-right: 0;
+    color:rgba(0, 0, 0, 0.6);
+    padding: 5px;
   }
   @media only screen and (min-width: 798px) {
     nav {
@@ -167,27 +179,14 @@ nav {
       width: 17;
       margin-left: 0;
     }
-    .wave-name {
-      display: flex;
-      flex-direction: row;
-      margin-left: 40px;
-    }
-    .wave-vector {
-      margin-top: 13px;
-      height: 27px;
-      width: 27px;
-    }
     h4 {
-      margin-top: 10px;
-      margin-left: 5px;
-      margin-right: 0;
-      color: #4E4B4B;
-      padding: 5px;
+      font-size: 16px;
+      margin-left: 20px;
     }
     .btn-logout {
       height: 27px;
       width: 27px;
-      padding-top: 15px;
-      margin-left: 15px;
+      padding-top: 13px;
+      margin-left: 0px;
     }
   }
