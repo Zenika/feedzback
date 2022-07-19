@@ -1,14 +1,14 @@
 <nav class="nav-mobile" role="navigation">
-  <div id="menuToggle">
+  <div id="menuToggle" *ngIf="isLogged()">
     <input type="checkbox" />
     <span></span>
     <span></span>
     <span></span>
     <ul id="menu">
-      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
-      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
-      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
-      <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes Feedbacks</a></li>
+      <li><a class="menu-item" [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
+      <li><a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
+      <li><a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
+      <li><a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes Feedbacks</a></li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" *ngIf="isLogged()">
@@ -16,11 +16,11 @@
 </nav>
 <nav class="nav-web">
   <img src="../assets/logo-feedZback-final.svg" *ngIf="isLogged()">
-  <ul>
-    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Acceuil&nbsp;&nbsp;</a>
-    <a class="menu-item" *ngIf="isLogged()"  [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
-    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
-    <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes FeedZbacks&nbsp;&nbsp;</a>
+  <ul *ngIf="isLogged()">
+    <a class="menu-item" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Acceuil&nbsp;&nbsp;</a>
+    <a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
+    <a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
+    <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes FeedZbacks&nbsp;&nbsp;</a>
   </ul>  
   <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
 </nav>
