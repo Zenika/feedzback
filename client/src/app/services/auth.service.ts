@@ -17,7 +17,7 @@ export class AuthService {
       const token = await user?.getIdToken();
       if(token !== null)
       sessionStorage.setItem('token', token!)
-      this.user = user
+      this.user = user 
    });
   }
 
@@ -49,6 +49,9 @@ export class AuthService {
   }
  getUserDetails () {
    return this.user
+ }
+ getFirstName() {
+  return this.user?.displayName?.split(' ')[0]
  }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{

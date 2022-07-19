@@ -144,7 +144,7 @@ nav {
        }
     .menu-item{ 
         font-size: 16px;  
-        margin-left: 35px; 
+        margin-left: 20px; 
         font-weight: 300;
       }
     .menu-item:hover {
@@ -165,11 +165,29 @@ nav {
     }
     img {
       width: 17;
+      margin-left: 0;
+    }
+    .wave-name {
+      display: flex;
+      flex-direction: row;
+      margin-left: 40px;
+    }
+    .wave-vector {
+      margin-top: 13px;
+      height: 27px;
+      width: 27px;
+    }
+    h4 {
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-right: 0;
+      color: #4E4B4B;
+      padding: 5px;
     }
     .btn-logout {
       height: 27px;
       width: 27px;
       padding-top: 15px;
-      margin-left: 45px;
+      margin-left: 15px;
     }
   }

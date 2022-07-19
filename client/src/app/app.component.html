@@ -9,6 +9,7 @@
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
       <li><a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes Feedbacks</a></li>
+      <li>{{getFirstName()}}</li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" *ngIf="isLogged()">
@@ -23,5 +24,6 @@
     <a class="menu-item" *ngIf="isLogged()" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes FeedZbacks&nbsp;&nbsp;</a>
   </ul>  
   <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
+  <div class="wave-name"><img class="wave-vector" src="/assets/waving.svg"/> <h4>{{getFirstName()}}</h4></div>
 </nav>
  <router-outlet></router-outlet>

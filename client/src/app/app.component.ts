@@ -19,4 +19,8 @@ export class AppComponent {
   ask() {
     this.router.navigate(['/ask'])
   }
+  getFirstName() {
+    console.log(this.authService.getFirstName())
+   return this.authService.getFirstName()
+  }
 }
