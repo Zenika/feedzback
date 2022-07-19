@@ -45,18 +45,19 @@ export class MyFeedbacksPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apollo.query({
+    this.apollo.watchQuery({
       query: this.query,
       variables: {
         email: this.email
-      }
-    }).pipe(
+      },
+      pollInterval: 500
+    
+    }).valueChanges.pipe(
       map(({ data }) => data),
       takeUntil(this.unsubscribe$)
     ).subscribe(({ receivedFeedbacks, sentFeedbacks }: any) => {
       this.receivedFeedbacks = receivedFeedbacks
       this.sentFeedbacks = sentFeedbacks
-      console.log(this.receivedFeedbacks)
     })
   }
 
