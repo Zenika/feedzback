@@ -26,5 +26,6 @@ export class TabsComponent implements AfterContentInit {
   selectTab(tab: TabLinkComponent) {
     this.tabs.toArray().forEach(tab => tab.active = false);
     tab.active = true;
+    console.log('click krd')
   }
 }
