@@ -4,7 +4,7 @@
     flex-direction: column;
     margin-top: 20px;
     max-width: 1500px;
-    min-width: 800px;
+    min-width: 600px;
 }
 .flex-row {
     display: flex;
@@ -42,7 +42,7 @@ h4 {
     padding-left: 180px;
 }
 h4.column-right {
-    padding-left: 140px;
+    padding-left: 182px;
 }
 .flex-row h3 {
     margin-left: 15px;
@@ -81,18 +81,24 @@ h5 {
 .feedback-body {
     margin-left: 15px;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
     .container {
         max-width: 600px;
-        min-height: 600px;
+        min-width: 400px;
         align-items: flex-start;
         margin-left: 40px;
     }
+    .column-right {
+        padding-left: 25px;
+    }
+    h4.column-right {
+        padding-left: 45px;
+    }
 }
-@media only screen and (max-width: 400px){
+@media only screen and (max-width: 500px){
     .container {
         max-width: 300px;
-        min-height: 300px;
+        min-width: 300px;
         align-items: flex-start;
     }
     .flex-row {
