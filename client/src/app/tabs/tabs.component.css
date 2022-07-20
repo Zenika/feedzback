@@ -196,7 +196,7 @@ button {
     }
     .active-envoyes.active::before {
         width: 215px;
-        left: 100%;
+        left: 100.3%;
      }
      .active-recus.active::before {
         width: 55px;
