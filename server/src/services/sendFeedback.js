@@ -61,7 +61,7 @@ export const sendFeedback = async ({ feedbackInput }) => {
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
   const msg = {
     to: feedbackInput.receverEmail,
-    from: feedbackInput.senderEmail,
+    from: 'feedzback@zenika.com',
     subject: 'FeedZback',
     html: template,
   }
