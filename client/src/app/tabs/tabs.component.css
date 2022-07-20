@@ -64,7 +64,7 @@ h1 {
     -moz-border-radius:0 0 0 8px;
     -webkit-border-radius:0 0 0 8px;
     border-radius: 0 0 0 8px;
-    left: 100%;
+    left: 100.3%;
     width: 20px;
 }
 .active::after {
