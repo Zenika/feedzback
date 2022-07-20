@@ -1,6 +1,6 @@
 <nav class="nav-mobile">
   <div class="menuToggle">
-    <input class="checkBox" type="checkbox" id="checkBox" #checkBox/>
+    <input class="checkBox" type="checkbox" #checkBox (change)="checkFocus($event)"/>
     <span></span>
     <span></span>
     <span></span>
