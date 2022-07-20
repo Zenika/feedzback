@@ -145,7 +145,7 @@ button {
 @media screen and (max-width: 650px) {
     .header{
         max-width: 565px;
-        min-width: 500px;
+        min-width: 360px;
         justify-content: center;
     }
     .tabs {
@@ -179,44 +179,31 @@ button {
         padding-inline: 16px;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 480px) {
     .header {
         flex-direction: column;
         justify-content:flex-start ;
-        max-width: 600px;
-        min-width: 600px;
+        max-width: 440px;
+        min-width: 397px;
+    
     }
-    .tabs {
-        margin-left: 0;
-    }
-    .active {
-        padding-inline: 20px;
-    }
+    .active,
     .inactive {
-        padding-inline: 25px;
+        padding-inline: 30px;
     }
-    .active::after {
-        padding-inline-start: 50px;
-        left:-92px;
-    }
-    .active-envoyes.active {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    .active-envoyes.active::before {
-        width: 186px;
-        left: 166.5px;
-    }
-    .inactive-envoyes.inactive {
-        margin-left: 5px;
-        margin-right: 5px;
-        padding-inline: 20px;
-        }
     .active-recus.active {
         padding-inline: 30px;
     }
-    
-    .active-recus.active::before {
-        left: 168.4px;
+    .active-envoyes.active::before {
+        width: 215px;
+     }
+     .active-recus.active::before {
+        width: 55px;
+     }
+}
+@media screen and (max-width: 400px) {
+    .header {
+        max-width: 340px;
+        min-width: 308px;
     }
 }
