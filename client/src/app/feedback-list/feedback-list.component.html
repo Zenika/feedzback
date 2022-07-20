@@ -2,14 +2,14 @@
        <div class="list" *ngIf="feedbacks && feedbacks.length !== 0; else empty">
         <div *ngFor="let feedback of feedbacks">
             <div *ngIf="type === feedbackType.Received; else sent">
-               <a [routerLink]="['/feedback',feedback.id]" routerLinkActive="router-link-active" > {{feedback.senderName}}</a>
+               <a [routerLink]="['/feedback',feedback.id,'Received']" routerLinkActive="router-link-active" > {{feedback.senderName}}</a>
             <div class="row">
                 <h4>{{feedback.senderEmail}}</h4>
                 <h4> {{feedback.createdAt | date: 'dd/MM/yyyy-HH:MM' }}</h4>
             </div>
         </div>
             <ng-template #sent>
-                <a [routerLink]="['/feedback',feedback.id]" routerLinkActive="router-link-active" >
+                <a [routerLink]="['/feedback',feedback.id,'Sent']" routerLinkActive="router-link-active" >
                 {{feedback.receverName}}
                 </a>
                 <div class="row">
