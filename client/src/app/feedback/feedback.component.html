@@ -11,8 +11,7 @@
         <div class="flex-row">
             <div>
                 <h3>Email de Votre collègue</h3>
-                <h4 *ngIf="type === 'Received'"> {{feedback.senderEmail}}</h4>
-                <h4 *ngIf="type === 'Sent'"> {{feedback.receverEmail}}</h4>
+                <h4> {{type === 'Received' ? feedback.senderEmail: feedback.receverEmail}}</h4>
             </div>
             <div>
                 <h3 class="column-right">Nom de votre collègue</h3>
