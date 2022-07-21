@@ -8,7 +8,7 @@
       <li><a class="menu-item" [routerLink]="['/home']" routerLinkActive="active" >Accueil</a></li>
       <li><a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
       <li><a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
-      <li><a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes Feedbacks</a></li>
+      <li><a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes feedbacks</a></li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" *ngIf="isLogged()">
@@ -23,7 +23,7 @@
     <a class="menu-item" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Accueil&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
-    <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes FeedZbacks&nbsp;&nbsp;</a>
+    <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes feedZbacks&nbsp;&nbsp;</a>
   </ul>  
   <h4>{{getFirstName()}}</h4>
   <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
