@@ -47,10 +47,7 @@ const insertFeedback = async (data) => {
 }
   
 export const sendFeedback = async ({ feedbackInput }) => {
-
-
   let errMsg
-  console.log(feedbackInput.token)
   const auth  = await  admin.auth().verifyIdToken(feedbackInput.token).catch((error)=> {
     errMsg = error;
     return false})
@@ -61,14 +58,12 @@ export const sendFeedback = async ({ feedbackInput }) => {
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
   const msg = {
     to: feedbackInput.receverEmail,
-    from: 'feedzback@zenika.com',
+    from: process.env.GENERIC_EMAIL,
     subject: 'FeedZback',
     html: template,
   }
-  if (envi !== 'production') {
+  if (envi !== 'production') 
     msg.to = 'feedzback@zenika.com'
-    msg.from = 'feedzback@zenika.com'
-  }
 
   try {
     await insertFeedback(feedbackInput)
