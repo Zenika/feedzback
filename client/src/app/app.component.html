@@ -1,14 +1,14 @@
 <nav class="nav-mobile" role="navigation">
-  <div id="menuToggle" *ngIf="isLogged()">
-    <input type="checkbox" />
+  <div class="menuToggle" *ngIf="isLogged()">
+    <input class="checkBox" type="checkbox" #checkBox (change)="checkFocus($event)"/>
     <span></span>
     <span></span>
     <span></span>
-    <ul id="menu">
-      <li><a class="menu-item" [routerLink]="['/home']" routerLinkActive="active" >Accueil</a></li>
-      <li><a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
-      <li><a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
-      <li><a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes feedbacks</a></li>
+    <ul class="menu" tabindex="0" (blur)="checkBox.checked= false" id="menu" #menu>
+      <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
+      <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
+      <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
+      <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes feedZbacks</a></li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" *ngIf="isLogged()">
