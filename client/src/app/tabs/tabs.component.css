@@ -53,10 +53,10 @@ h1 {
 .active:before{
     content:'';
     width:40px;
-    height:30px;
+    height:12.3px;
     border:2px solid #D52150;
     position:absolute;
-    bottom:-9.6pt;
+    bottom:-10.3pt;
     border-top:0;
 }
 .active::before {
@@ -64,7 +64,7 @@ h1 {
     -moz-border-radius:0 0 0 8px;
     -webkit-border-radius:0 0 0 8px;
     border-radius: 0 0 0 2px;
-    left: 165px;
+    left: 100%;
     width: 20px;
 }
 .active::after {
@@ -194,9 +194,9 @@ button {
         padding-inline: 30px;
     }
     .active-envoyes.active::before {
-        display: inline-block;
         width: 100%;
         left: 100%;
+        float: left;
      }
      .active-recus.active::before {
         width: 55px;
