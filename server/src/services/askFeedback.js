@@ -28,7 +28,7 @@ export const askFeedback = async ({askFeedback})=> {
     let msg = {
         to: askFeedback.senderEmail,
         from: process.env.GENERIC_EMAIL,
-        subject: "Solliciter un feedback",
+        subject: "Solliciter un feedZback",
         html: template
     }
 
