@@ -39,31 +39,31 @@ h1 {
     line-height: 19px;
     font-size: 14px;
     border-bottom:0;
-    height:40px;
+    height:53px;
     margin:30px;
     margin-left: 20px;
     margin-right: 10px;
     padding-inline: 30px;
     position:relative;
     -moz-border-radius:2px 2px 0 0;
-    -webkit-border-radius:2px 2px 0 0;
+    -webkit-border-radius:0px 1px 2px 2px;
     border-radius: 2px 2px 0 0;
 }
 .active:after,
 .active:before{
     content:'';
     width:40px;
-    height:12.3px;
+    height:1px;
     border:2px solid #D52150;
     position:absolute;
-    bottom:-10.3pt;
+    bottom:-1.3pt;
     border-top:0;
 }
 .active::before {
     border-right:0;
-    -moz-border-radius:0 0 0 8px;
-    -webkit-border-radius:0 0 0 8px;
-    border-radius: 0 0 0 2px;
+    -moz-border-radius:0 0 0 6px;
+    -webkit-border-radius:0 0 0 6px;
+    border-radius: 0 0 0 6px;
     left: 100%;
     width: 20px;
 }
