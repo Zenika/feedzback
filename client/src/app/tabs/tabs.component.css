@@ -106,7 +106,7 @@
     .button {
         font-size: 14px;
         margin: 0px 20px;
-        padding: 10px 20px;
+        padding: 17px 20px;
     }
 
     .button:first-child::before {
@@ -125,6 +125,9 @@
     .header {
         max-width: 400px;
         min-width: 300px;
+    }
+    .button:first-child::before {
+        right: 101%;
     }
 }
 @media screen and (max-width: 380px) {
