@@ -56,7 +56,7 @@ h1 {
     height:1px;
     border:2px solid #D52150;
     position:absolute;
-    bottom:-1.3pt;
+    bottom:-1.9pt;
     border-top:0;
 }
 .active::before {
