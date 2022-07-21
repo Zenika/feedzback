@@ -25,6 +25,7 @@ export class AppComponent {
   checkFocus(event:any) {
     if(event.target.checked)
        this.menu.nativeElement.focus()
+  }
   getFirstName() {
     console.log(this.authService.getFirstName())
    return this.authService.getFirstName()
