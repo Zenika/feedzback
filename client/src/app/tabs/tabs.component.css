@@ -183,9 +183,8 @@ button {
     .header {
         flex-direction: column;
         justify-content:flex-start ;
-        max-width: 440px;
-        min-width: 397px;
-    
+        max-width: 100%;
+        min-width: 100%;
     }
     .active,
     .inactive {
@@ -195,7 +194,8 @@ button {
         padding-inline: 30px;
     }
     .active-envoyes.active::before {
-        width: 215px;
+        display: inline-block;
+        width: 100%;
         left: 100%;
      }
      .active-recus.active::before {

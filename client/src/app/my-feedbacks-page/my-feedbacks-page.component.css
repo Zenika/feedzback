@@ -22,8 +22,8 @@ app-tabs {
 }
 @media screen and (max-width: 800px) {
     .container {
-        max-width: 600px;
-        min-width: 562px;
+        max-width: 100%;
+        min-width: 100%;
         justify-content: center;
     }
 }
@@ -35,13 +35,13 @@ app-tabs {
 
 @media screen and (max-width: 480px) {
     .container {
-        max-width: 448px;
-        min-width: 100px;
+        max-width: 100%;
+        min-width: 100%;
     }
 }
 @media screen and (max-width: 365px) {
     .container {
-        max-width: 348px;
-        min-width: 100px;
+        max-width: 100%;
+        min-width: 100%;
     }
 }
