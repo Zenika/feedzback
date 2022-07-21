@@ -9,7 +9,6 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'FeedZback';
-  isNavbarOpen: boolean = false; 
   @ViewChild('menu',{static: false}) menu!: ElementRef
 
   constructor(public authService: AuthService, private router: Router) {
@@ -23,11 +22,11 @@ export class AppComponent {
   ask() {
     this.router.navigate(['/ask'])
   }
-  toggleNavbar() {
-    this.isNavbarOpen = !this.isNavbarOpen
-  }
   checkFocus(event:any) {
     if(event.target.checked)
        this.menu.nativeElement.focus()
+  getFirstName() {
+    console.log(this.authService.getFirstName())
+   return this.authService.getFirstName()
   }
 }
