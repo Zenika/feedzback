@@ -192,12 +192,13 @@ jobs:
              - v30-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}      
       - run:
-          name: set en variables
+          name: set env variables
           working_directory: server
           command: |
                 echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+                sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
             
                 
             
