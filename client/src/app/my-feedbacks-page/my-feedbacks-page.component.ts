@@ -50,7 +50,7 @@ export class MyFeedbacksPageComponent implements OnInit {
       variables: {
         email: this.email
       },
-      pollInterval: 500
+      pollInterval: 4500
     
     }).valueChanges.pipe(
       map(({ data }) => data),
