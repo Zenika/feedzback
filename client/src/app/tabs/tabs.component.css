@@ -43,8 +43,8 @@
     font-size: 14px;
     border: 2px solid #D52150;
     border-bottom: 0;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     margin: 5px 20px;
     padding: 0px 20px;
 }
