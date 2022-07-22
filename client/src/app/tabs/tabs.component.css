@@ -40,6 +40,8 @@
     box-sizing: border-box;
     position: relative;
     font-size: 14px;
+    background-color: #D52150;
+    color: #FFFF;
     border: 2px solid #D52150;
     border-bottom: 0;
     border-top-left-radius: 8px;
@@ -69,11 +71,6 @@
     color: #D52150;
     background-color: #FFFF;
     font-weight: 900;
-}
-
-.inactive {
-    background-color: #D52150;
-    color: #FFFF;
 }
 
 @media screen and (max-width: 690px) {
