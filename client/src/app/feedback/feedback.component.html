@@ -1,35 +1,35 @@
 <div class="container">
-    <div>
-        <div class="flex-row">
-            <img src="../../assets/feedbacks-icon.svg" height="27" width="27" />
-            <h2>Vos feedZbacks</h2>
-        </div>
-        <div class="return-link-row">
-           <h5>&lt;</h5> <a href="" [routerLink]="['/feedbacks']" routerLinkActive="router-link-active">Retour</a>  
-        </div>
-        <h1>Votre collègue </h1>
-        <div class="flex-row">
-            <div>
-                <h3>Email de Votre collègue</h3>
-                <h4> {{type === 'Received' ? feedback.senderEmail: feedback.receverEmail}}</h4>
+        <div class="header">
+            <div class="flex-row">
+                <img src="../../assets/feedbacks-icon.svg" height="27" width="27" />
+                <h2>Vos feedZbacks</h2>
             </div>
-            <div>
-                <h3 class="column-right">Nom de votre collègue</h3>
-                <h4 class="column-right" *ngIf="type === 'Received'"> {{feedback.senderName}}</h4>
-                <h4 class="column-right" *ngIf="type === 'Sent'"> {{feedback.receverName}}</h4>
+            <div class="return-link-row">
+               <h5>&lt;</h5> <a href="" [routerLink]="['/feedbacks']" routerLinkActive="router-link-active">Retour</a>
             </div>
         </div>
-        <h1 *ngIf="type === 'Received'">Son retour </h1>
-        <h1 *ngIf="type === 'Sent'">Votre retour </h1>
-        <div class="feedback-body">
-            <h3>Points positifs</h3>
-            <h4>{{feedback.positiveFeedback}}</h4>
-            <br>
-            <h3>Axes améliorations</h3>
-            <h4>{{feedback.toImprove}}</h4>
-            <br>
-            <h3 *ngIf="feedback.comment">Commentaire</h3>
-            <h4>{{feedback.comment}}</h4>
-        </div>
-    </div>    
+        <div class="content">
+            <h1>Votre collègue </h1>
+            <div class="flex-row">
+                <div class="first-section">
+                    <h3>Email de Votre collègue</h3>
+                    <h4> {{type === 'Received' ? feedback.senderEmail: feedback.receverEmail}}</h4>
+                </div>
+                <div class="first-section">
+                    <h3 class="column-right">Nom de votre collègue</h3>
+                    <h4 class="column-right" *ngIf="type === 'Received'"> {{feedback.senderName}}</h4>
+                    <h4 class="column-right" *ngIf="type === 'Sent'"> {{feedback.receverName}}</h4>
+                </div>
+            </div>
+            <h1 *ngIf="type === 'Received'">Son retour </h1>
+            <h1 *ngIf="type === 'Sent'">Votre retour </h1>
+            <div class="second-section">
+                <h3>Points positifs</h3>
+                <h4>{{feedback.positiveFeedback}}</h4>
+                <h3>Axes améliorations</h3>
+                <h4>{{feedback.toImprove}}</h4>
+                <h3 *ngIf="feedback.comment">Commentaire</h3>
+                <h4>{{feedback.comment}}</h4>
+            </div>
+        </div>  
 </div>

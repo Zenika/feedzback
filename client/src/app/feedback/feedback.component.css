@@ -3,14 +3,40 @@
     align-items: center;
     flex-direction: column;
     margin-top: 20px;
-    max-width: 1500px;
+}
+.header {
+    margin-right: 390px;
+}
+.content {
+    justify-self: center;
+    justify-content: center;
+    max-width: 800px;
     min-width: 600px;
+    align-items: start;
+    display: flex;
+    flex-direction: column;
 }
 .flex-row {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     text-align: start;
+}
+.first-section {
+    display: flex;
+    flex-direction: column;
+}
+.first-section:first-child {
+    margin:0 10px;
+}
+.first-section:last-child {
+    margin-left:150px;
+}
+.second-section {
+    display: block;
+    margin-left: 10px;
+    width: 500px;
+    overflow-wrap: anywhere;
 }
 h2 {
     color: #D43B6D;
@@ -21,8 +47,9 @@ h1 {
     font-weight: 800;
     font-size: 24px;
     line-height: 33px;
-    margin-left: 5px;
     color: #4E4B4B;
+    margin-right: 0;
+    padding-right: 0;
 }
 h3 {
     font-weight: 600;
@@ -35,20 +62,7 @@ h4 {
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
-    margin-left: 10px;
     color: #000000;
-}
-.column-right {
-    padding-left: 180px;
-}
-h4.column-right {
-    padding-left: 182px;
-}
-.flex-row h3 {
-    margin-left: 15px;
-}
-.flex-row h4 {
-    margin-left: 25px;
 }
 img {
     height: 24px;
@@ -71,43 +85,46 @@ h5 {
     line-height: 18px;
     color: #D43B6D;
     margin-top: 0;
-    margin-right: 2px;  
 }
 .return-link-row {
     margin-top: 20px;
     display: flex;
     flex-direction: row;
 }
-.feedback-body {
-    margin-left: 15px;
-}
+
 @media only screen and (max-width: 600px) {
-    .container {
-        max-width: 600px;
+    .header {
+        margin-right: auto;
+        margin-left: 10px;
+    }
+    .content {
+        max-width: 500px;
         min-width: 400px;
-        align-items: flex-start;
-        margin-left: 40px;
     }
-    .column-right {
-        padding-left: 25px;
+    .first-section:last-child {
+        margin-left: 80px;
     }
-    h4.column-right {
-        padding-left: 45px;
+    .second-section {
+        width: 450px;
     }
 }
 @media only screen and (max-width: 500px){
-    .container {
-        max-width: 300px;
-        min-width: 300px;
-        align-items: flex-start;
+    .content {
+        max-width: 400px;
+        min-width: 200px;
+        text-align: center;
+        align-items: center;
     }
-    .flex-row {
+    .flex-row:not(:first-child) {
         flex-direction: column;
     }
-    h4.column-right {
-        padding-left: 0px;
+    .first-section:first-child,
+    .first-section:last-child {
+        margin-left: 0;
+        text-align: center;
     }
-    .column-right {
-        padding-left: 0px;
+    .second-section {
+        width: 320px
     }
+
 }
