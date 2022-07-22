@@ -1,6 +1,4 @@
 <div class="container">
-    <div class="content-section">
-    <div class="description">
         <div class="row">
             <img id="vector-arrow" src="../../assets/vector-arrow.svg" alt="vector-arrow">
             <h1>Envoi de feedback</h1>
@@ -8,7 +6,6 @@
         <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail contenant vos
             retours !</span>
         <small>les champs marqués d’un astérisque sont obligatoires</small>
-    </div>
     <form [formGroup]="form" id="feedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
         <h2>Qui est votre collègue ?</h2>
         <div class="row">
@@ -29,7 +26,7 @@
         </div>
 
         <h2>Votre retour</h2>
-            <div class="form-input message-section">
+            <div class="form-input">
                 <label for="positive-feedback">Points positifs *</label>
                 <br>
                 <textarea class="textarea form-control" name="positive-feedback" id="positive-feedback"
@@ -38,7 +35,7 @@
                 <small
                     *ngIf="postitiveFeedback?.touched && postitiveFeedback?.invalid">{{getFormControlError(postitiveFeedback!)}}</small>
             </div>
-            <div  class="form-input message-section">
+            <div  class="form-input">
                 <label for="to-improve-feedback">Axes d’améliorations *</label>
                 <br>
                 <textarea class="textarea form-control" name="to-improve-feedback" id="to-improve-feedback"
@@ -48,7 +45,7 @@
                     *ngIf="toImproveFeedback?.touched && toImproveFeedback?.invalid">{{getFormControlError(toImproveFeedback!)}}</small>
 
             </div>
-            <div  class="form-input message-section">
+            <div  class="form-input">
                 <label for="comment">Commentaires</label>
                 <br>
                 <textarea class="textarea form-control" name="comment" id="comment"
