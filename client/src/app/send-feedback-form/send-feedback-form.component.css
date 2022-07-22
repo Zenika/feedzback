@@ -15,9 +15,10 @@
 }
 img {
     background-color: #D52150;
+    border: 2px solid #D52150;
     border-radius: 2px;
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 20px;
     padding: 2px;
     padding-left: 5px;
     margin-right: 5px;
@@ -53,9 +54,6 @@ small {
 }
 a {
     color: #D52150;
-}
-.content-title {
-    padding-left: 3px;
 }
 .textarea {
     resize: vertical;  
