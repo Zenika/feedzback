@@ -4,6 +4,7 @@
     max-width: 800px;
     min-width: 800px;
     justify-content: center;
+    margin-top: 15px;
 }
 
 .tabs {
@@ -13,14 +14,14 @@
 }
 
 img {
-    height: 24px;
-    width: 23px;
-    padding: 3px;
+    height: 23px;
+    width: 26px;
     background-color: #D52150;
-    margin-right: 10px;
-    margin-top: 35px;
+    margin-right: 5px;
+    padding: 2px;
+    margin-top: 39px;
+    border: 2px #D52150;
     border-radius: 2px;
-
 }
 h1 {
     color: #D43B6D;
