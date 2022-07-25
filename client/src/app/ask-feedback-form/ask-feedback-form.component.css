@@ -1,3 +1,6 @@
+.container {
+    z-index: -1;
+}
 .ask-logo {
     display: flex;
     justify-content: center;

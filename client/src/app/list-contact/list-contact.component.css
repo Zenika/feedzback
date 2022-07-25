@@ -22,8 +22,13 @@ li {
     margin: 0;
 }
 li:hover {
+    background-color: #FFE5EC; 
+}
+li:active {
     background-color: #FFE5EC;
-
+}
+.active {
+    background-color: #FFE5EC;
 }
 /* .contact {
     cursor: pointer;

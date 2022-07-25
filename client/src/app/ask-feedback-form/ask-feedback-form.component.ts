@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
-import { Apollo, gql } from 'apollo-angular';
+import { Apollo, gql, Query } from 'apollo-angular';
 import { FeedbackRequest } from '../model/feedbackRequest';
 import { AuthService } from '../services/auth.service';
 import { Contact } from '../model/contact';
+import { ListContactComponent } from '../list-contact/list-contact.component';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -17,11 +18,12 @@ export class AskFeedbackFormComponent implements OnInit {
   userName? : string
   emailList : boolean = false
   contactList!: Contact[]
+  @ViewChild(ListContactComponent) listContact!: ListContactComponent
+
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService:AuthService) {
    let user =  this.authService.getUserDetails();
    this.userEmail = user?.email!;
    this.userName  = user?.displayName!;  
-     
    }
 
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
@@ -81,44 +83,67 @@ export class AskFeedbackFormComponent implements OnInit {
     let key = event?.key
     let query = this.receverEmail?.value
     let code = event?.code
+    
+    if(this.isArrowOrEnter(code!))
+    return
     if(code === 'Backspace')
       {
-        query = query.substring(0, query.length -1)
-        if(query.length === 0)
-          this.authService.fetchGoogleUser('a').then((contacts:Contact[]) => {
-          this.contactList = contacts
-       })
-        else
-        this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
-          this.contactList = contacts
-        })
+        this.backSpaceKey(query);
       }
-      else if(query !== null)
+    else if(query !== null)
+    {
+      if(key)
+        query = query + key;
+      this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
+        this.contactList = contacts
+      })
+    } 
+    else 
+      this.authService.fetchGoogleUser(key!).then((contacts: Contact[]) => {
+        this.contactList = contacts
+      })
+    }
+
+    backSpaceKey(query: string) {
+      this.showEmailList();
+      query = query.substring(0, query.length - 1);
+      if (query.length === 0)
+        this.authService.fetchGoogleUser('a').then((contacts: Contact[]) => {
+          this.contactList = contacts;
+        });
+      else
+        this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
+          this.contactList = contacts;
+        });
+    }
+    isArrowOrEnter(code: String) {
+      if(code === 'ArrowDown')
       {
-        if(key)
-          query = query + key;
-        this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
-          this.contactList = contacts
-        })
+        this.listContact.arrowDown()
+        return true
       }
-      else 
-        this.authService.fetchGoogleUser(key!).then((contacts: Contact[]) => {
-          this.contactList = contacts
-        })
+      else if(code === 'ArrowUp')
+      {
+        this.listContact.arrowUp()
+        return true
+      } else if(code === 'Enter')
+      {
+      this.receverEmail?.setValue(
+        this.contactList[this.listContact.contactIndex].email)
+        this.emailList = false
+        return true;
+      }
+      return false
     }
     showEmailList() {
-      console.log('waya')
       this.emailList = true
     }
     blurInput() {
     setTimeout(()=> {
       this.emailList = false
     },200)
- 
     }
-    hideEmailList(eventList:any) {
-      console.log(eventList.email)
-      this.emailList = false
+    selectContact(event:any) {
+      this.receverEmail?.setValue(event.email)
     }
-
 }

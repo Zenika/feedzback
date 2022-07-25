@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Contact } from '../model/contact';
 
 @Component({
@@ -9,15 +9,31 @@ import { Contact } from '../model/contact';
 export class ListContactComponent implements OnInit {
 
   @Input() contacts!: Contact[]
-  @Output() emailEvent: EventEmitter<boolean> = new EventEmitter()
+  @ViewChild('list', {static:false}) list!: ElementRef
+  @Output() contactEvent: EventEmitter<Contact> = new EventEmitter();
   emailList!: boolean
-  constructor() { }
+  contactIndex: number = 0
+  constructor() {
+    
+   }
 
   ngOnInit(): void {
   }
+  ngAfterViewChecked(): void {
+    this.list.nativeElement.addEventListener('keydown', this.onKeyDown)
+    this.list.nativeElement.val
+  }
+  onKeyDown = (e:any) => {
+    console.log(e)
+  }
+  arrowDown() {
+    this.contactIndex++;
+  }
+  arrowUp() {
+    this.contactIndex--;
+  }
   selectContact(contact: Contact) {
-    console.log('awa  ' + contact)
     this.emailList = false
-    this.emailEvent.emit(this.emailList)
+    this.contactEvent.emit(contact);
   }
 }

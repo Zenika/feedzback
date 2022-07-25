@@ -44,13 +44,15 @@
               (keydown)="getGoogleContact($event)"
               (focus)="showEmailList()"
               (blur)="blurInput()"
+              autocomplete="off"
               required
               email
             />
             <app-list-contact
               [hidden]="!emailList"
-              (emailEvent)="hideEmailList($event)"
+              (contactEvent)="selectContact($event)"
               [contacts]="contactList"
+              #listContact
             ></app-list-contact>
             <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{
               getFormControlError(receverEmail!)

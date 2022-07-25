@@ -45,10 +45,7 @@ export class AuthService {
 
     const scope: String = googleUser.Cc.scope;
     if (!scope.includes('https://www.googleapis.com/auth/directory.readonly')) {
-      googleUser.grant(option).then(
-        function (success: any) {},
-        function (fail: any) {}
-      );
+      googleUser.grant(option);
     }
     const response = await gapi.client.people.people.searchDirectoryPeople({
       query: query === undefined ?'a': query,
@@ -60,11 +57,8 @@ export class AuthService {
     {
      email: people.emailAddresses[0].value,
      name: people.names ? people.names[0].displayName : 'no name'
-    }
-      
+    } 
     })
-    console.log(response.result.people.map((e:any) => e.emailAddresses[0].value));
-    console.log(contacts);
     return contacts
   }
 
@@ -81,9 +75,7 @@ export class AuthService {
     provider.addScope('profile');
     provider.addScope('email');
     provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-    return this.oAuthProvider(provider)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    return this.oAuthProvider(provider);
   }
   isLogged() {
     if (this.user) return true;

@@ -1,7 +1,11 @@
-<ul class="container" *ngIf="contacts && contacts.length !== 0">
-  <li *ngFor="let contact of contacts" (click)="selectContact(contact)">
+<ul class="container" tabindex="0" #list>
+  <li
+    *ngFor="let contact of contacts; let index = index"
+    [class.active]="index == contactIndex"
+    (click)="selectContact(contact)"
+  >
     <div class="contact">
-      <h4 (click)="selectContact(contact)">{{ contact.name }}</h4>
+      <h4>{{ contact.name }}</h4>
       <h4>{{ contact.email }}</h4>
     </div>
   </li>
