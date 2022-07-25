@@ -53,7 +53,6 @@ export class AskFeedbackFormComponent implements OnInit {
   
 
   onSubmit() {
-    console.log(environment.serverApi + "api")
     const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {

@@ -86,9 +86,6 @@ export class AuthService {
     if (this.user) return this.user.isAnonymous;
     else return false;
   }
-  getUserDetails() {
-    return this.user;
-  }
  getUserDetails () {
    return this.user
  }
