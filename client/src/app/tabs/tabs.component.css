@@ -58,6 +58,7 @@ h1 {
     position:absolute;
     bottom:-9.6pt;
     border-top:0;
+    z-index: -1;
 }
 .active::before {
     border-right:0;
@@ -91,7 +92,6 @@ h1 {
     margin-right: 0;
     padding-bottom: 10px;
 }
-
 .active-envoyes.active::before {
    width: 196px;
 }
@@ -107,8 +107,8 @@ h1 {
     left:-607px;
 }
 .inactive-envoyes.inactive {
-margin-left: 77px;
-margin-right: 10px;
+    margin-left: 77px;
+    margin-right: 10px;
 }
  
 button {
