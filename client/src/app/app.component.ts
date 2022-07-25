@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
@@ -9,7 +9,10 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'FeedZback';
-  constructor(public authService: AuthService, private router: Router) {}
+  @ViewChild('menu',{static: false}) menu!: ElementRef
+
+  constructor(public authService: AuthService, private router: Router) {
+  }
   signOut() {
     this.authService.signOut();
   }
@@ -18,5 +21,13 @@ export class AppComponent {
   }
   ask() {
     this.router.navigate(['/ask'])
+  }
+  checkFocus(event:any) {
+    if(event.target.checked)
+       this.menu.nativeElement.focus()
+  }
+  getFirstName() {
+    console.log(this.authService.getFirstName())
+   return this.authService.getFirstName()
   }
 }

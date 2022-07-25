@@ -7,9 +7,8 @@
     max-width: 745px;
     margin: auto;
 }
-.result-logo {
+.row {
     display: flex;
-    justify-content: center;
     margin-bottom: 50px;
 }
 .result-title {
@@ -20,12 +19,22 @@
     color: #4E4B4B;
     margin-bottom: 30px;
 }
+h1 {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 33px;
+    color: #D43B6D;
+    margin-left: 10px;
+    margin-top: 27px;
+}
 
 .btn-return {
     font-weight: 800;
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    background: linear-gradient(88.41deg, #F12134 0%, #C9205A 100%);
+    border-radius: 10px;
 }
 .btn-retry {
     font-weight: 800;
@@ -33,7 +42,25 @@
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 10px;
+    background: linear-gradient(88.41deg, #F12134 0%, #C9205A 100%);
+    border-radius: 10px;
 }
+.ask-vector {
+    border-radius: 2px;
+    padding-left: 5px;
+    margin-top: 14px;
+
+}
+.send-vector {
+    background-color: #D52150;
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    border-radius: 2px;
+    padding-left: 5px;
+    margin-top: 30px;
+}
+
 @media only screen and (max-width:300px) {
     .logo {
         width: 100%;

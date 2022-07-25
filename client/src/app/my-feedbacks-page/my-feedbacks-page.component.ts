@@ -17,6 +17,7 @@ export class MyFeedbacksPageComponent implements OnInit {
   private query = gql`
     query GetFeedbacks($email: String!){
       receivedFeedbacks(email: $email) {
+        id
         senderEmail
         senderName
         positiveFeedback
@@ -25,27 +26,33 @@ export class MyFeedbacksPageComponent implements OnInit {
         createdAt
       }
       sentFeedbacks(email: $email) {
+        id
         receverEmail
         receverName
         positiveFeedback
         toImprove
         comment
+        createdAt
       }
     }
   `;
 
   public receivedFeedbacks: Feedback[] = [];
   public sentFeedbacks: Feedback[] = [];
-
-  constructor(private apollo: Apollo, private authService:AuthService) { }
+  public email!: String
+  constructor(private apollo: Apollo, private authService:AuthService) { 
+  this.email = authService.getUserDetails().email;
+  }
 
   ngOnInit(): void {
-    this.apollo.query({
+    this.apollo.watchQuery({
       query: this.query,
       variables: {
-        email: 'bnyat.azizsharif@zenika.com'
-      }
-    }).pipe(
+        email: this.email
+      },
+      pollInterval: 4500
+    
+    }).valueChanges.pipe(
       map(({ data }) => data),
       takeUntil(this.unsubscribe$)
     ).subscribe(({ receivedFeedbacks, sentFeedbacks }: any) => {

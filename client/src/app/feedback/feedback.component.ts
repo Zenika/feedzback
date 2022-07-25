@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FeedbackType } from '../enum/feedback-type';
 import { Feedback } from '../model/feedback';
 import { GraphqlService } from '../services/graphql/graphql.service';
 
@@ -11,12 +12,14 @@ import { GraphqlService } from '../services/graphql/graphql.service';
 export class FeedbackComponent implements OnInit {
 
   public feedback!: Feedback
-  public bn!: String
+  public type!: String
   constructor(private activateRouter: ActivatedRoute,private graphqlService: GraphqlService) { 
   }
 
   ngOnInit(): void {
-    const id = this.activateRouter.snapshot.queryParamMap.get('id');
+    const id = this.activateRouter.snapshot.paramMap.get('id');
+    this.type = this.activateRouter.snapshot.paramMap.get('type')!
+    console.log(this.type)
     this.graphqlService.getFeedbackById(id!).subscribe(data => {
       this.feedback = data
     })

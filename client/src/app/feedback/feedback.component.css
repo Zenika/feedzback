@@ -1,0 +1,130 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.header {
+    margin-right: 390px;
+}
+.content {
+    justify-self: center;
+    justify-content: center;
+    max-width: 800px;
+    min-width: 600px;
+    align-items: start;
+    display: flex;
+    flex-direction: column;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: start;
+}
+.first-section {
+    display: flex;
+    flex-direction: column;
+}
+.first-section:first-child {
+    margin:0 10px;
+}
+.first-section:last-child {
+    margin-left:150px;
+}
+.second-section {
+    display: block;
+    margin-left: 10px;
+    width: 500px;
+    overflow-wrap: anywhere;
+}
+h2 {
+    color: #D43B6D;
+    font-weight: bold;
+    font-size: 24px;
+}
+h1 {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 33px;
+    color: #4E4B4B;
+    margin-right: 0;
+    padding-right: 0;
+}
+h3 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #605E5E;
+}
+h4 {
+    margin-top: 0;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+img {
+    height: 24px;
+    width: 23px;
+    padding: 3px;
+    background-color: #D52150;
+    margin-right: 10px;
+    margin-top: 18px;
+    border-radius: 2px;
+}
+a {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 18px;
+    color: #D43B6D;
+}
+h5 {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 18px;
+    color: #D43B6D;
+    margin-top: 0;
+}
+.return-link-row {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+@media only screen and (max-width: 600px) {
+    .header {
+        margin-right: auto;
+        margin-left: 10px;
+    }
+    .content {
+        max-width: 500px;
+        min-width: 400px;
+    }
+    .first-section:last-child {
+        margin-left: 80px;
+    }
+    .second-section {
+        width: 450px;
+    }
+}
+@media only screen and (max-width: 500px){
+    .content {
+        max-width: 400px;
+        min-width: 200px;
+        text-align: center;
+        align-items: center;
+    }
+    .flex-row:not(:first-child) {
+        flex-direction: column;
+    }
+    .first-section:first-child,
+    .first-section:last-child {
+        margin-left: 0;
+        text-align: center;
+    }
+    .second-section {
+        width: 320px
+    }
+
+}

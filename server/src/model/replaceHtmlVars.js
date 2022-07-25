@@ -12,14 +12,14 @@ export default function replaceHtmlVars(html, message) {
   let comment = '';
   if (message.comment)
     comment = String(message.comment).replace(/\n/g, '<br>');
-console.log("reeeee  " + message.receverEmail)
+  const envi = process.env.NODE_ENV || 'development';
   const template = ejs.render(html, {
-    name: message.receverEmail,
+    name: message.receverName,
     senderName: message.senderName,
     positiveFeedback,
     toImprove,
     comment,
-    urlClientForm: process.env.URL_CLIENT_FORM
+    urlClientForm: envi === 'production' ? 'http://feedzback.zenika.com/send': process.env.URL_CLIENT_FORM
   })
 
   return template;

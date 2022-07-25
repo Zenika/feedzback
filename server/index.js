@@ -4,16 +4,13 @@ import {typeDefs} from './src/graphql/typeDefs.js';
 import {resolvers} from './src/graphql/resolvers.js';
 import cors from 'cors';
 import admin from 'firebase-admin'
-import {createRequire} from 'module'
 import dotEnv from 'dotenv'
 import firebaseKey from './firebase-service-key.json' assert {type: 'json'}
-
 
 const server = new ApolloServer({typeDefs, resolvers, introspection: true,
   playground: true});
 const app = express();
 
-const require = createRequire(import.meta.url);
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config()
 }

@@ -3,7 +3,7 @@
     justify-content: center;
     padding: 10px;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 797px) {
     nav {
       display: flex;
       justify-content:space-between;
@@ -16,15 +16,15 @@
       padding: 0;
       list-style-type: none;
       }  
-    #menuToggle {
+    .menuToggle {
       display: flex;
       flex-direction: column;
       position: relative;
       top: 25px;
       z-index: 1;
       user-select: none;
-    }      
-    #menuToggle input {
+    }   
+    .menuToggle input{
       display: flex;
       height: 32;
       width: 40px;
@@ -33,7 +33,7 @@
       opacity: 0;
       z-index: 2;
     }   
-    #menuToggle span  {
+    .menuToggle span  {
       display: flex;
       width: 29px;
       height: 2px;
@@ -48,34 +48,34 @@
       background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
       opacity 0.55s ease;
       }   
-    #menuToggle span:first-child
+    .menuToggle span:first-child
     {
       transform-origin: 0% 0%;
     }
-    #menuToggle span:nth-last-child(2)
+    .menuToggle span:nth-last-child(2)
     {
       transform-origin: 0% 100%;
     }
 
-    #menuToggle input:checked ~ span
+    .menuToggle input:checked ~ span
     {
       opacity: 1;
       transform: rotate(45deg) translate(-3px, -1px);
       background: #CB1E5A;
     }
-    #menuToggle input:checked ~ span:nth-last-child(3)
+    .menuToggle input:checked ~ span:nth-last-child(3)
     {
       opacity: 0;
       transform: rotate(0deg) scale(0.2, 0.2);
     }
-    #menuToggle input:checked ~ span:nth-last-child(2)
+    .menuToggle input:checked ~ span:nth-last-child(2)
     {
       transform: rotate(-45deg) translate(0, -1px);
     }
-    #menu
+    .menu
     {
       position:fixed;
-      width: 45%;
+      width: 40%;
       height: 500px;
       box-shadow: 0 0 10px #85888C;
       margin: -50px 0 0 -50px;
@@ -88,18 +88,21 @@
       transform: translate(-100%, 0);
       transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
     }     
-    #menu li
+    .menu li
     {
       padding: 10px;
-      padding-right: 30px;
       transition-delay: 2s;
     }  
-    #menuToggle input:checked ~ ul
+    .menuToggle input:checked ~ ul
     {
       transform: none;
     }
     .nav-web {
         display: none;
+    }
+    .name-icon {
+      display: flex;
+      flex-direction: row;
     }
 }
 nav {
@@ -119,7 +122,7 @@ nav {
     padding-bottom: 7px;
     color: #D52150;
     padding: 10px;
-    padding-right: 150px;
+    padding-right: 45px;
     background-color: #FFE5EC;
     border-radius: 5px;
    } 
@@ -127,9 +130,17 @@ nav {
     height: 37px;
     width: 37px;
     padding-top: 10px;
-    margin-left: 45px;
+    margin-left: 0;
   }
-  @media only screen and (min-width: 768px) {
+  h4 {
+    margin-top: 10px;
+    margin-left: 0px;
+    font-size: 20px;
+    margin-right: 0;
+    color:rgba(0, 0, 0, 0.6);
+    padding: 5px;
+  }
+  @media only screen and (min-width: 798px) {
     nav {
         display: flex;
         background-color: #ffffff;
@@ -144,8 +155,8 @@ nav {
         display: none;
        }
     .menu-item{ 
-        font-size: 18px;  
-        margin-left: 45px; 
+        font-size: 16px;  
+        margin-left: 20px; 
         font-weight: 300;
       }
     .menu-item:hover {
@@ -164,10 +175,18 @@ nav {
     .btn-logout:hover {
      cursor: pointer;
     }
+    img {
+      width: 17;
+      margin-left: 0;
+    }
+    h4 {
+      font-size: 16px;
+      margin-left: 20px;
+    }
     .btn-logout {
       height: 27px;
       width: 27px;
-      padding-top: 15px;
-      margin-left: 45px;
+      padding-top: 13px;
+      margin-left: 0px;
     }
   }

@@ -7,6 +7,7 @@ import { FeedbackRequest } from '../model/feedbackRequest';
 import { AuthService } from '../services/auth.service';
 import { Contact } from '../model/contact';
 import { ListContactComponent } from '../list-contact/list-contact.component';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -52,6 +53,7 @@ export class AskFeedbackFormComponent implements OnInit {
   
 
   onSubmit() {
+    console.log(environment.serverApi + "api")
     const token = sessionStorage.getItem('token');
     this.form.markAllAsTouched()
     if (this.form.valid) {

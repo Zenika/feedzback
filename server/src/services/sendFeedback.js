@@ -56,17 +56,14 @@ export const sendFeedback = async ({ feedbackInput }) => {
 
   const envi = process.env.NODE_ENV || 'development';
   const template = replaceHtmlVars(emailTemplate, feedbackInput);
-
   const msg = {
     to: feedbackInput.receverEmail,
-    from: feedbackInput.email,
+    from: process.env.GENERIC_EMAIL,
     subject: 'FeedZback',
     html: template,
   }
-  if (envi !== 'production') {
+  if (envi !== 'production') 
     msg.to = 'feedzback@zenika.com'
-    msg.from = 'feedzback@zenika.com'
-  }
 
   try {
     await insertFeedback(feedbackInput)

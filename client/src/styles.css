@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
 .btn {
     border: none;
     border-radius: 10px;
@@ -9,8 +9,11 @@
 }
 .btn-primary {
   border: none;
-    background: linear-gradient(88.41deg, #F1203A 0%, #D11F56 100%);
+  background: linear-gradient(88.41deg, #F1203A 0%, #D11F56 100%);
 }
+.btn-primary:hover {
+    cursor: pointer;
+  }
 .input-text {
     background: #FAFAFA;
     border-radius: 10px;
@@ -44,11 +47,6 @@ input:required, textarea:required {
     border: #D52150;
     border-style: solid;
     border-width: 0.5px;
-}
-
-@font-face {
-    font-family: "Nunito";
-    src: url(assets/fonts/Nunito-VariableFont_wght.ttf) format('opentype');
 }
 
 * {

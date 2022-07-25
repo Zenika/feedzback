@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router,
-} from '@angular/router';
+import { Router} from '@angular/router';
 import * as auth from 'firebase/auth';
 import { Contact } from '../model/contact';
 /// <reference path="../../../node_modules/@types/gapi/index.d.ts" />
 declare let gapi: any;
+
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,6 @@ export class AuthService {
     });
 
     gapi.load('client', async () => {
-      console.log('loaded client');
-
       await gapi.client.init({
         apiKey: 'AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc',
         clientId:
@@ -91,6 +89,12 @@ export class AuthService {
   getUserDetails() {
     return this.user;
   }
+ getUserDetails () {
+   return this.user
+ }
+ getFirstName() {
+  return this.user?.displayName?.split(' ')[0]
+ }
   signOut() {
     return this.firebaseAuth.signOut().then(() => {
       sessionStorage.removeItem('token');
