@@ -1,0 +1,38 @@
+<nav aria-label="pagination">
+    <ul>
+        <li>
+            <button
+                aria-label="Go To Previous Page"
+                [attr.aria-disabled]="current === 1"
+                [disabled]="current === 1"
+                (click)="onPrevious(current)"
+            >
+                <img src="/assets/navigate-before.svg"/>
+            </button>
+        </li>
+        <li *ngFor="let page of pages;">
+            <a
+                [attr.aria-current]="page === current ? 'page' : null"
+                [attr.aria-label]="
+                page === current ? 'Page actuelle, Page ' + page : 'Aller à la page ' + page
+                "
+                [class.current]="page === current"
+                tabindex="0"
+                (click)="onGoTo(page)"
+                (keyup.enter)="onGoTo(page)"
+            >
+             {{page}}
+            </a>
+        </li>
+        <li>
+            <button
+                aria-label="Go To Next Page"
+                [attr.aria-disabled]="current === total"
+                [disabled]="current === total"
+                (click)="onNext(current)"
+            >
+                <img src="/assets/navigate-next.svg"/>
+            </button>
+        </li>
+    </ul>
+</nav>
