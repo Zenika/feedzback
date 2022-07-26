@@ -6,7 +6,6 @@
     justify-content: center;
     margin-top: 30px;
 }
-
 .header-title {
     display: flex;
     flex-direction: row;
@@ -15,7 +14,6 @@
     align-items: center;
     margin-bottom: 5px;
 }
-
 .header-title img {
     height: 24px;
     width: 24px;
