@@ -18,7 +18,8 @@ export class AskFeedbackFormComponent implements OnInit {
   userEmail? : string
   userName? : string
   emailList : boolean = false
-  contactList!: Contact[]
+  nameList : boolean = false
+  contacts!: Contact[]
   @ViewChild(ListContactComponent) listContact!: ListContactComponent
 
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService:AuthService) {
@@ -72,7 +73,7 @@ export class AskFeedbackFormComponent implements OnInit {
         let result = data.data.sendFeedbackRequest;
         if (result === 'sent') {
           result = "Félicitations! Votre demande vient d’être envoyée à : " + this.receverName?.value;
-          this.router.navigate(['/result', { result: 'success' ,message:result}])
+          this.router.navigate(['/result', { result: 'success' ,message: result}])
         } else {
           result = "Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
           this.router.navigate(['/result', { result: 'askFailed', message: result }])
@@ -82,69 +83,85 @@ export class AskFeedbackFormComponent implements OnInit {
   }
   getGoogleContact(event?:KeyboardEvent) {
     let key = event?.key
-    let query = this.receverEmail?.value
+    let query = this.emailList ? this.receverEmail?.value : this.receverName?.value
     let code = event?.code
-    
     if(this.isArrowOrEnter(code!))
-    return
+      return
     if(code === 'Backspace')
       {
-        this.backSpaceKey(query);
+        this.backSpaceKey(query, event!);
       }
     else if(query !== null)
-    {
-      if(key)
-        query = query + key;
-      this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
-        this.contactList = contacts
-      })
-    } 
+      {
+        if(key)
+          query = query + key;
+        this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
+          this.contacts = contacts
+        })
+      } 
     else 
       this.authService.fetchGoogleUser(key!).then((contacts: Contact[]) => {
-        this.contactList = contacts
+       this.contacts = contacts
       })
     }
 
-    backSpaceKey(query: string) {
-      this.showEmailList();
+    backSpaceKey(query: string, event: any) {
+      event.target.attributes.id.value === 'coworker-email' ? this.showEmailList() : this.showNameList()
       query = query.substring(0, query.length - 1);
       if (query.length === 0)
         this.authService.fetchGoogleUser('a').then((contacts: Contact[]) => {
-          this.contactList = contacts;
+          this.contacts = contacts;
         });
       else
         this.authService.fetchGoogleUser(query).then((contacts: Contact[]) => {
-          this.contactList = contacts;
+          this.contacts = contacts;
         });
     }
     isArrowOrEnter(code: String) {
       if(code === 'ArrowDown')
       {
-        this.listContact.arrowDown()
+        this.setInputValues(this.listContact.arrowDown());
         return true
       }
       else if(code === 'ArrowUp')
       {
-        this.listContact.arrowUp()
+        this.setInputValues(this.listContact.arrowUp());
         return true
       } else if(code === 'Enter')
       {
-      this.receverEmail?.setValue(
-        this.contactList[this.listContact.contactIndex].email)
-        this.emailList = false
+        let contact = this.contacts[this.listContact.contactIndex]
+        this.setInputValues(contact)
+        this.emailList ? this.emailList = false : this.nameList = false
         return true;
       }
       return false
     }
+  private setInputValues(contact: Contact) {
+    this.receverEmail?.setValue(contact.email);
+    this.receverName?.setValue(contact.name);
+    // this.emailList ? this.emailList = false : this.nameList = false
+  }
+
     showEmailList() {
       this.emailList = true
+      this.nameList = false
     }
-    blurInput() {
-    setTimeout(()=> {
+    showNameList() {
+      this.nameList = true
       this.emailList = false
+    }
+    blurEmailList() {
+    setTimeout(()=> {
+     this.emailList = false 
     },200)
     }
+    blurNameList() {
+      setTimeout(()=> {
+       this.nameList = false 
+      },200)
+      }
     selectContact(event:any) {
       this.receverEmail?.setValue(event.email)
+      this.receverName?.setValue(event.name)
     }
 }

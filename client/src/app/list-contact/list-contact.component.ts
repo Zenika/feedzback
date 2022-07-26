@@ -9,9 +9,8 @@ import { Contact } from '../model/contact';
 export class ListContactComponent implements OnInit {
 
   @Input() contacts!: Contact[]
-  @ViewChild('list', {static:false}) list!: ElementRef
-  @Output() contactEvent: EventEmitter<Contact> = new EventEmitter();
-  emailList!: boolean
+  @Input() isEmailList!: boolean
+  @Output() contactEvent: EventEmitter<Contact> = new EventEmitter()
   contactIndex: number = 0
   constructor() {
     
@@ -19,21 +18,17 @@ export class ListContactComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  ngAfterViewChecked(): void {
-    this.list.nativeElement.addEventListener('keydown', this.onKeyDown)
-    this.list.nativeElement.val
-  }
-  onKeyDown = (e:any) => {
-    console.log(e)
-  }
   arrowDown() {
-    this.contactIndex++;
+   if(this.contactIndex < this.contacts.length)
+     this.contactIndex++;
+     return this.contacts[this.contactIndex]
   }
   arrowUp() {
+    if(this.contactIndex > 0)
     this.contactIndex--;
+    return this.contacts[this.contactIndex]
   }
   selectContact(contact: Contact) {
-    this.emailList = false
     this.contactEvent.emit(contact);
   }
 }

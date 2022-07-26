@@ -1,16 +1,29 @@
-<div class="container">  
-    <div class="header-section">
-       <div class="description">
-        <br>
-       <div class="row">
-           <img id="vector-arrow" src="../../assets/question-mark.svg" alt="vector-arrow">
-           <h1>Demande de feedZback</h1> 
-        </div>
-      <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
-        vous faire ses retours !</span>
-    <small>les champs marqués d’un astérisque sont obligatoires</small>
-    <br>
-    <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
+<div class="container">
+  <div class="header-section">
+    <div class="description">
+      <br />
+      <div class="row">
+        <img
+          id="vector-arrow"
+          src="../../assets/question-mark.svg"
+          alt="vector-arrow"
+        />
+        <h1>Demande de feedZback</h1>
+      </div>
+      <span class="subtitle"
+        >Remplissez les champs ci-dessous et votre collègue recevra directement
+        un mail l’invitant à vous faire ses retours !</span
+      >
+      <small>les champs marqués d’un astérisque sont obligatoires</small>
+      <br />
+      <form
+        [formGroup]="form"
+        id="askFeedbackForm"
+        (ngSubmit)="onSubmit()"
+        #myform="ngForm"
+        (keydown.enter)="$event.preventDefault()"
+        novalidate
+      >
         <h2>Qui est votre collègue ?</h2>
         <div class="row">
           <div class="form-input">
@@ -24,15 +37,17 @@
               (click)="getGoogleContact()"
               (keydown)="getGoogleContact($event)"
               (focus)="showEmailList()"
-              (blur)="blurInput()"
+              (blur)="blurEmailList()"
               autocomplete="off"
               required
               email
+              #emailInput
             />
             <app-list-contact
-              [hidden]="!emailList"
+              *ngIf="emailList"
               (contactEvent)="selectContact($event)"
-              [contacts]="contactList"
+              [contacts]="contacts"
+              [isEmailList]="emailList"
               #listContact
             ></app-list-contact>
             <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{
@@ -48,13 +63,27 @@
               placeholder="Pierre Duchon"
               required
               formControlName="receverName"
+              (click)="getGoogleContact()"
+              (keydown)="getGoogleContact($event)"
+              (focus)="showNameList()"
+              (blur)="blurNameList()"
+              autocomplete="off"
             />
+            <app-list-contact
+              *ngIf="nameList"
+              (contactEvent)="selectContact($event)"
+              [contacts]="contacts"
+              [isEmailList]="emailList"
+              #listContact
+            >
+            </app-list-contact>
+
             <small *ngIf="receverName?.touched && receverName?.invalid">{{
               getFormControlError(receverName!)
             }}</small>
           </div>
         </div>
-        <br>
+        <br />
         <h2>Votre demande</h2>
         <div class="form-input">
           <div class="message-section">
@@ -70,12 +99,11 @@
           </div>
         </div>
         <div class="btn-form">
-          <button id="submit" type="submit" class="btn btn-primary">
+          <button id="submit" type="submit" class="btn btn-primary" #submit>
             ENVOYER
           </button>
         </div>
       </form>
     </div>
-
   </div>
 </div>

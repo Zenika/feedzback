@@ -46,7 +46,7 @@ export class AuthService {
       googleUser.grant(option);
     }
     const response = await gapi.client.people.people.searchDirectoryPeople({
-      query: query === undefined ?'a': query,
+      query: query === undefined? 'a': query,
       readMask: 'emailAddresses,names',
       sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
     });

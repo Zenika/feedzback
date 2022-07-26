@@ -8,6 +8,8 @@ ul {
     margin-top: 0;
     list-style-type: none;
     padding-left: 0;
+    overflow: scroll; 
+    height: 50%;
 }
 h4 {
     margin: 5px;
@@ -24,12 +26,7 @@ li {
 li:hover {
     background-color: #FFE5EC; 
 }
-li:active {
-    background-color: #FFE5EC;
-}
 .active {
     background-color: #FFE5EC;
 }
-/* .contact {
-    cursor: pointer;
-} */
+
