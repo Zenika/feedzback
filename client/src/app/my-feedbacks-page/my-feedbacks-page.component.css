@@ -20,22 +20,17 @@
 app-tabs {
     margin-top: 1.5rem;
 }
-@media screen and (max-width: 800px) {
-    .container {
-        max-width: 600px;
-        min-width: 600px;
-        justify-content: center;
-    }
-}
-@media screen and (max-width: 650px) {
-    .flex {
-        flex-direction: stretch;
-    }
-}
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 690px) {
     .container {
-        max-width: 100%;
-        min-width: 100%;
+      max-width: 600px;
+      min-width: 400px;
     }
-}
+} 
+@media screen and (max-width: 430px) {
+    .container {
+      max-width: 400px;
+      min-width: 200px;
+    }
+} 
+

@@ -1,10 +1,4 @@
-.ask-logo {
-    display: flex;
-    justify-content: center;
-    text-align: start;
-    align-items: flex-start;
-}
-.header-section {
+.container {
     display: flex;
     flex-direction: column;
     justify-items: start;
@@ -12,22 +6,24 @@
     text-align: left;
     max-width: 745px;
     margin: auto;
-
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    align-items: center;
+}
+img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 3px;
 }
 h1 {
     color: #D52150;
     font-weight: bold;
+    font-size: 24px;
 }
-.description {
-    display: flex;
-    flex-direction: column;
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-}
-
 .form-input {
     padding: .5rem;
     color: #605E5E; 
@@ -36,118 +32,39 @@ h1 {
     flex-direction: column;
     align-items: stretch;
 }
-
 .subtitle {
     color: #4E4B4B;
     text-align: start;
+    font-size: 14px;
 }
-
-.logo {
-    margin: 1rem 0 1rem 0;
-}
-
-h2 {
-    margin-bottom: .5rem;
-}
-
 .input-text {
     padding-top: 12px;
     padding-bottom: 12px;
 }
-
-
 small {
     color: #D52150;
     font-weight: lighter;
+    font-size: 14px;
 }
-
 a {
     color: #D52150;
 }
-
 .textarea {
     resize: vertical;  
     padding-bottom: 35px;
-}
-.message-section {
-    display:flex;
-    flex-direction: column;
-    width: 102.3%;
 }
 .btn-form{
     display: flex;
     justify-content: right;
     margin-top: 10px;
 }
-.row {
-    width: 100%;
-}
-#vector-arrow {
-    margin-top: 20px;
-}
-
 @media only screen and (max-width: 600px) {
-    h1 {
-        color: #D52150;
-        font-weight: bold;
-        font-size: 26px;
-        margin-top: 0px;
-    
-    }
-    .row {
-        display: flex;
+    .row:not(:first-child) {
         flex-direction: column;
-       
-    }
-    .message-section {
-        width: 102.3%;
-    }
-    .textarea {
-        resize: vertical;  
-        padding-bottom: 35px;
-      
+        align-items: flex-start;
+        display: contents;
     }
     .btn-form{
         justify-content: center;
     }
-}
-#vector-arrow {
-
-    border-radius: 2px;
-    width: 40px;
-    height: 40px;
-    padding: 4px;
-    padding-left: 5px;
-    margin-top: 23px;
-}
-
-@media only screen and (max-width: 420px){
-    h1 {
-        font-size: 15px;
-    }
-    .description {
-        font-size: 12px;
-    }
-    .return-link{
-        font-size: 12px;
-        margin-right: 0px;
-    }
-    h2 {
-
-     font-size: 12px;   
-    }
-    label {
-        font-size: 12px;
-    }
-
-    #vector-arrow {
-        width: 30px;
-        height: 30px;
-        padding: 4px;
-        padding-left: 5px;
-        margin-top: 5px;
-    }
-    .logo {
-        width: 100%;
-    } 
 }

@@ -1,15 +1,13 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-items: start;
-    align-items: stretch;
-    text-align: left;
     max-width: 745px;
     margin: auto;
 }
 .row {
     display: flex;
-    margin-bottom: 50px;
+    margin: 30px 0;
+    align-items: center;
 }
 .result-title {
     font-weight: 800;
@@ -24,8 +22,7 @@ h1 {
     font-size: 24px;
     line-height: 33px;
     color: #D43B6D;
-    margin-left: 10px;
-    margin-top: 27px;
+    margin-left: 5px;
 }
 
 .btn-return {
@@ -45,24 +42,16 @@ h1 {
     background: linear-gradient(88.41deg, #F12134 0%, #C9205A 100%);
     border-radius: 10px;
 }
-.ask-vector {
-    border-radius: 2px;
-    padding-left: 5px;
-    margin-top: 14px;
 
-}
-.send-vector {
-    background-color: #D52150;
-    width: 20px;
-    height: 20px;
+img {
+    width: 30px;
+    height: 30px;
     padding: 4px;
     border-radius: 2px;
     padding-left: 5px;
-    margin-top: 30px;
 }
-
-@media only screen and (max-width:300px) {
-    .logo {
-        width: 100%;
-    } 
+.set-bg-color {
+    background-color: #D52150;
+    width: 24px;
+    height: 23px;
 }

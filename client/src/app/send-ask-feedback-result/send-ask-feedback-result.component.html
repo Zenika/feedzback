@@ -1,11 +1,7 @@
 <div class="container">
-  <div *ngIf="!send" class="row">
-    <img class="ask-vector"  src="/assets/question-mark.svg">
-    <h1>Demande de feedZback</h1> 
-  </div>
-  <div *ngIf="send" class="row">
-    <img class="send-vector"  src="/assets/vector-arrow.svg">
-    <h1>Envoi de feedZback</h1> 
+  <div class="row">
+    <img [ngClass]="{'set-bg-color': send}" src={{src}}>
+    <h1>{{title}}</h1> 
   </div>
   <div class="result-title">{{ message }}</div>
   <button class="btn btn-primary btn-retry" *ngIf="result === 'sendFailed'" routerLink="/send">REESAYER</button>
