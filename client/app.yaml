@@ -1,16 +1,17 @@
 
 runtime: nodejs16
-secure: always
 
 handlers:
     # Serve all static files with urls ending with a file extension
     - url: /(.*\..+)$
       static_files: dist/client/\1
       upload: dist/(.*\..+)$
+      secure: always
       # catch all handler to index.html
     - url: /.*
       static_files: dist/client/index.html
       upload: dist/client/index.html
+      secure: always
 
 env_variables:
    FIREBASE_SERVICE_KEY: <FIREBASE_SERVICE_KEY>
