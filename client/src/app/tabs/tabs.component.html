@@ -1,12 +1,11 @@
 
 <div class="header">
-    <div style="display: flex;flex-direction: row;">
-        <img src="/assets/feedbacks-icon.svg"/>
+    <div class="header-title">
+        <img src="../../assets/feedbacks-icon.svg"/>
         <h1>Mes feedZbacks</h1>
     </div>
     <div class="tabs">
-    <button *ngFor="let tab of tabs" (click)="selectTab(tab)"[class.active]="tab.active" [ngClass]="{'active-envoyes': tab.active === true && tab.title === 'feedZbacks envoyés',
-     'active-recus': tab.active && tab.title === 'feedZbacks reçus', 'inactive-envoyes': tab.active === false && tab.title === 'feedZbacks envoyés', 'inactive' : tab.active === false}" >{{tab.title}}</button>
+    <button *ngFor="let tab of tabs" (click)="selectTab(tab)" class="button" [class.active]="tab.active">{{tab.title}}</button>
     </div>
 </div>
 <ng-content></ng-content>

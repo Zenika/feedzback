@@ -42,34 +42,42 @@ h4:nth-child(2) {
     font-size: 0.8rem;
     color: grey;
 }
-@media screen and (max-width: 800px) {
-    .list {
-        margin-left: 20px;
-    }
 
-}
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 690px) {
     h4:nth-child(2) {
         margin-top: 5px;
         position: absolute;
-        margin-left: 300px;
     }
     .list {
-        margin-left: 90px;
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+  
+}
+@media screen and (max-width: 550px) {
+    h4:nth-child(2) {
+        margin-top: 5px;
+        position: absolute;
+        margin-left: 340px;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 512px) {
 .content {
     display: flex;
     justify-content: flex-start;
 }
-.list {
-    margin-left: 10px;
-}
 h4:nth-child(2) {
     margin-top: 5px;
     position: absolute;
-    margin-left: 200px;
+    margin-left: 240px;
 }
 
 }
+@media screen and (max-width: 400px) {
+    h4:nth-child(2) {
+        margin-top: 5px;
+        position: absolute;
+        margin-left: 200px;
+    }
+    
+    }
