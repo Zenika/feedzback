@@ -15,10 +15,11 @@
     margin-bottom: 5px;
 }
 .header-title img {
-    height: 24px;
-    width: 24px;
+    height: 23px;
+    width: 21px;
     background-color: #D52150;
     border-radius: 2px;
+    padding: 2px 3px;
     margin: 0 10px;
 }
 
