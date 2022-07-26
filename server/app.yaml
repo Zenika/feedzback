@@ -1,6 +1,7 @@
 
 runtime: nodejs16
 service: server-service
+secure: always
 
 env_variables:
    API_KEY: <API_KEY>
