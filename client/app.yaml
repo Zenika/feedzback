@@ -1,6 +1,6 @@
 
 runtime: nodejs16
-
+secure: always
 
 handlers:
     # Serve all static files with urls ending with a file extension
