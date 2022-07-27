@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
-import { FeedbackQueryData } from '../model/feedbackQueryData';
+import { SendFeedback } from '../model/sendFeedback';
 import { AuthService } from '../services/auth.service';
 import { GraphqlService } from '../services/graphql/graphql.service';
 
@@ -43,7 +43,7 @@ get comment() { return this.form.get('comment') }
 
   onSubmit() {
     const token = sessionStorage.getItem('token');
-    const feedback = new FeedbackQueryData(
+    const feedback = new SendFeedback(
       token!,
       this.userName,
       this.userEmail,

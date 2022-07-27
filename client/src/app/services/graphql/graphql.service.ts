@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { Subject } from 'rxjs';
 import { Feedback } from 'src/app/model/feedback';
-import { FeedbackQueryData } from 'src/app/model/feedbackQueryData';
+import { SendFeedback } from 'src/app/model/sendFeedback';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class GraphqlService {
   }`
   constructor(private apollo: Apollo, private router: Router) { }
    
-  sendFeedback(feedback: FeedbackQueryData) {
+  sendFeedback(feedback: SendFeedback) {
     const token = sessionStorage.getItem('token');
     this.apollo.mutate({
       mutation: this.sendFeedBackMutation,
