@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormControlError } from '../get-form-control-error';
-import { Apollo, gql } from 'apollo-angular';
 import { FeedbackQueryData } from '../model/feedbackQueryData';
 import { AuthService } from '../services/auth.service';
+import { GraphqlService } from '../services/graphql/graphql.service';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -14,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 export class SendFeedbackFormComponent implements OnInit {
   userEmail? : String
   userName? : String
-  constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService)  {
+  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService, private graphqlService: GraphqlService)  {
      let user = this.authService.getUserDetails() 
      this.userEmail = decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null'? user.email! : decodeURIComponent(this.queryParams.get('senderEmail')!) ;
      this.userName = this.queryParams.get('senderName') === null? user.displayName! : this.queryParams.get('senderName')!;  
@@ -24,12 +24,6 @@ export class SendFeedbackFormComponent implements OnInit {
   private feedbackMaxLength = 500;
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
   public getFormControlError = getFormControlError
-
-  private mutation = gql`
-    mutation SendFeedback($feedbackInput: FeedbackInput!){
-      sendFeedback(feedbackInput:$feedbackInput)
-    }
-  `;
 
 ngOnInit(): void {}
 decodedReceverEmail = decodeURIComponent(this.queryParams.get('receverEmail') || '')
@@ -49,32 +43,19 @@ get comment() { return this.form.get('comment') }
 
   onSubmit() {
     const token = sessionStorage.getItem('token');
+    const feedback = new FeedbackQueryData(
+      token!,
+      this.userName,
+      this.userEmail,
+      this.receverEmail?.value,
+      this.receverName?.value,
+      this.postitiveFeedback?.value,
+      this.toImproveFeedback?.value,
+      this.comment?.value
+    )
     this.form.markAllAsTouched()
     if (this.form.valid) {
-      this.apollo.mutate({
-        mutation: this.mutation,
-        variables: {
-          feedbackInput: new FeedbackQueryData(
-            token!,
-            this.userName,
-            this.userEmail,
-            this.receverEmail?.value,
-            this.receverName?.value,
-            this.postitiveFeedback?.value,
-            this.toImproveFeedback?.value,
-            this.comment?.value
-          ),
-        },
-      }).subscribe((data: any) => {
-        let result = data.data.sendFeedback;
-        if (result === "sent") {
-          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.receverName?.value;
-          this.router.navigate(['/result', { result: 'success', message: result }])
-        } else {
-          result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
-          this.router.navigate(['/result', { result: 'sendFailed', message: result }])
-        }
-      })
+      this.graphqlService.sendFeedback(feedback)
     }
   }
 }
