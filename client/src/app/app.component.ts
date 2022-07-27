@@ -27,7 +27,6 @@ export class AppComponent {
        this.menu.nativeElement.focus()
   }
   getFirstName() {
-    console.log(this.authService.getFirstName())
    return this.authService.getFirstName()
   }
 }
