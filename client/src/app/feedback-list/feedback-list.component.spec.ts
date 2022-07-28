@@ -61,13 +61,13 @@ describe('FeedbackListComponent', () => {
   });
   it('should show the sent feedbacks when the feedzbacks envoyés tab is clicked', ()=> {
     const senderName = fixture.debugElement.query(By.css('a'))
-    expect(senderName.nativeElement.textContent.trim()).toEqual(feedbacks[0].receverName)
+    expect(senderName.nativeElement.textContent).toContain(feedbacks[0].receverName)
   });
   it('should show the recevied feedbacks when the feedzbacks reçus tab is clicked', ()=> {
     component.type = FeedbackType.Received
     fixture.detectChanges()
     const senderName = fixture.debugElement.query(By.css('a'))
-    expect(senderName.nativeElement.textContent). toContain(feedbacks[0].senderName)
+    expect(senderName.nativeElement.textContent).toContain(feedbacks[0].senderName)
   });
   it('should open the feedback detail of a sent feedback when the recevier name is clicked in the list', async ()=> {
     fixture.debugElement.query(By.css('a')).nativeElement.click(); 
