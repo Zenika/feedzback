@@ -75,12 +75,12 @@ describe('FeedbackListComponent', () => {
     await fixture.whenStable()
     expect(location.path()).toEqual(`/feedback/${feedbacks[0].id}/Sent`)
   }) 
-  it('should open the feedback detail of a recivied feedback when the sender name is clicked in the list', ()=> {
+  it('should open the feedback detail of a recivied feedback when the sender name is clicked in the list', async ()=> {
     component.type = FeedbackType.Received
     fixture.detectChanges();
     fixture.debugElement.query(By.css('a')).nativeElement.click(); 
-    fixture.whenStable().then(() => {
-      expect(location.path()).toEqual(`/feedback/${feedbacks[0].id}/Received`)
-      })
+    await fixture.whenStable()
+    expect(location.path()).toEqual(`/feedback/${feedbacks[0].id}/Received`)
+      
   })
 });
