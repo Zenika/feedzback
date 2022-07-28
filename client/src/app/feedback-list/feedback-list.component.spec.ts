@@ -67,7 +67,7 @@ describe('FeedbackListComponent', () => {
     component.type = FeedbackType.Received
     fixture.detectChanges()
     const senderName = fixture.debugElement.query(By.css('a'))
-    expect(senderName.nativeElement.textContent.trim()).toEqual(feedbacks[0].senderName)
+    expect(senderName.nativeElement.textContent). toContain(feedbacks[0].senderName)
   });
   it('should open the feedback detail of a sent feedback when the recevier name is clicked in the list', async ()=> {
     fixture.debugElement.query(By.css('a')).nativeElement.click(); 
