@@ -27,11 +27,6 @@ export class AppComponent {
     if(event.target.checked)
        this.menu.nativeElement.focus()
   }
-  setFalseCheckbox() {
-    setTimeout(()=> {
-      this.checkBox.nativeElement.checked = false
-    },100)
-  }
   getFirstName() {
    return this.authService.getFirstName()
   }
