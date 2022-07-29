@@ -20,11 +20,11 @@ a {
     margin-left: 120px;
 }
 .empty {
-    border: 0.5px solid #ccc;
     align-self: center;
     text-align: center;
     padding: 250px;
     margin-left: 100px;
+    font-weight: bold;
 }
 h4 {
     font-weight: 400;

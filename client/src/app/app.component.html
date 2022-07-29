@@ -1,26 +1,26 @@
 <nav class="nav-mobile" role="navigation">
   <div class="menuToggle" *ngIf="isLogged()">
-    <input class="checkBox" type="checkbox" #checkBox (change)="checkFocus($event)"/>
+    <input class="checkBox" type="checkbox" (change)="checkFocus($event)" #checkBox/>
     <span></span>
     <span></span>
     <span></span>
-    <ul class="menu" tabindex="0" (blur)="checkBox.checked= false" id="menu" #menu>
+    <ul class="menu" tabindex="0" (blur)="setFalseCheckbox()" id="menu" #menu>
       <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/home']" routerLinkActive="active" >Acceuil</a></li>
       <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
       <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
       <li><a (click)="checkBox.checked = false" class="menu-item"  [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes feedZbacks</a></li>
     </ul>  
   </div>
-  <img src="/assets/logo-feedZback-final.svg" *ngIf="isLogged()">
+  <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']" *ngIf="isLogged()">
   <div class="name-icon">
     <h4>{{getFirstName()}}</h4>
     <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
   </div>
 </nav>
 <nav class="nav-web">
-  <img src="../assets/logo-feedZback-final.svg" *ngIf="isLogged()">
+  <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']"  *ngIf="isLogged()">
   <ul *ngIf="isLogged()">
-    <a class="menu-item" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Accueil&nbsp;&nbsp;</a>
+    <a class="menu-item" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Acceuil&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes feedZbacks&nbsp;&nbsp;</a>
