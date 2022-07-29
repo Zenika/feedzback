@@ -26,13 +26,11 @@ export class AppComponent {
   checkFocus(event:any) {
     if(event.target.checked)
        this.menu.nativeElement.focus()
-    else 
-      this.menu.nativeElement.blur() 
   }
   setFalseCheckbox() {
     setTimeout(()=> {
       this.checkBox.nativeElement.checked = false
-    },50)
+    },100)
   }
   getFirstName() {
    return this.authService.getFirstName()
