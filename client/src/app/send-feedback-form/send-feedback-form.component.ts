@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth.service';
 export class SendFeedbackFormComponent implements OnInit {
   userEmail? : String
   userName? : String
+  loading?: String
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService)  {
      let user = this.authService.getUserDetails() 
      this.userEmail = decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null'? user.email! : decodeURIComponent(this.queryParams.get('senderEmail')!) ;
@@ -65,8 +66,10 @@ get comment() { return this.form.get('comment') }
             this.comment?.value
           ),
         },
-      }).subscribe((data: any) => {
-        let result = data.data.sendFeedback;
+      }).subscribe(({data, loading} : any) => {
+        if(loading)
+        this.loading = 'loadinggggggggg11111'
+        let result = data.sendFeedback;
         if (result === "sent") {
           result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success', message: result }])
