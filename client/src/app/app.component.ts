@@ -24,7 +24,6 @@ export class AppComponent {
     this.router.navigate(['/ask'])
   }
   checkFocus(event:any) {
-    console.log('jsfsfdd' + event.target.checked)
     if(event.target.checked)
        this.menu.nativeElement.focus()
     else 
