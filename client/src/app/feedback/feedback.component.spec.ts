@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Apollo } from 'apollo-angular';
-import { FeedbackType } from '../enum/feedback-type';
 import { Feedback } from '../model/feedback';
 
 import { FeedbackComponent } from './feedback.component';
@@ -26,7 +25,6 @@ describe('FeedbackComponent', () => {
     fixture = TestBed.createComponent(FeedbackComponent);
     component = fixture.componentInstance;
     component.feedback = feedback;
-    component.type = 'Received'
     fixture.detectChanges();
   });
 
@@ -34,14 +32,15 @@ describe('FeedbackComponent', () => {
     expect(component).toBeTruthy();
   });
   it('should show sender email when the feedback type is receved', ()=> {
-    const receverEmail = fixture.debugElement.query(By.css('h4')).nativeElement.textContent
-    expect(receverEmail).toContain('marie@example.com')
+    component.type = 'Received'
+    fixture.detectChanges();
+    const senderEmail = fixture.debugElement.query(By.css('h4')).nativeElement.textContent
+    expect(senderEmail).toContain('pierre@exemple.com')
   })
   it('should show recever email when the feedback type is sent', ()=> {
     component.type = 'Sent'
     fixture.detectChanges();
     const receverEmail = fixture.debugElement.query(By.css('h4')).nativeElement.textContent
-    expect(receverEmail).toContain('pierre@exemple.com')
+    expect(receverEmail).toContain('marie@example.com')
   })
-  
 });
