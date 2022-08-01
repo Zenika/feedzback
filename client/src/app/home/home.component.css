@@ -6,6 +6,9 @@
 .btn-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  padding: 40px 0;
+  width: 270px;
 }
 .row-title {
   display: flex;
@@ -49,12 +52,6 @@
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 53px;
-}
-
-.btn-pad {
-  padding: 40px;
-  padding-right: 90px;
-  padding-left: 90px;
 }
 
 .btn-text {
@@ -110,9 +107,9 @@
 }
 
 @media screen and (max-width:900px) {
-  .btn-pad {
+  .btn-container {
     padding: 20px;
-    align-items: center;
+    width: 200px;
   }  
 }
 @media only screen and (max-width: 600px) {

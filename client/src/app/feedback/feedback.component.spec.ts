@@ -28,7 +28,6 @@ describe('FeedbackComponent', () => {
   });
 
   it('should create', () => {
- 
     expect(component).toBeTruthy();
   });
 });
