@@ -42,20 +42,17 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   })
 
-  it("Send feedback button will open feedback form when it's clicked", ()=>{
+  it("Send feedback button will open feedback form when it's clicked", async ()=>{
   fixture.debugElement.query(By.css('.btn-send-margin')).nativeElement.click(); 
   fixture.detectChanges();
-  fixture.whenStable().then(() => {
-    expect(location.path()).toEqual('/send');
-    });  
-
+  await fixture.whenStable()
+  expect(location.path()).toEqual('/send');
   })
 
-  it("Ask feedback button will open ask feedback form when it's clicked", ()=>{
+  it("Ask feedback button will open ask feedback form when it's clicked", async ()=>{
     fixture.debugElement.query(By.css('.btn-ask-margin')).nativeElement.click();
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(location.path()).toEqual('/ask');
-      });    
+    await fixture.whenStable()
+    expect(location.path()).toEqual('/ask');
     })
 });
