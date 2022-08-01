@@ -10,6 +10,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'FeedZback';
   @ViewChild('menu',{static: false}) menu!: ElementRef
+  @ViewChild('checkBox', {static: false}) checkBox!: ElementRef
 
   constructor(public authService: AuthService, private router: Router) {
   }
@@ -27,7 +28,6 @@ export class AppComponent {
        this.menu.nativeElement.focus()
   }
   getFirstName() {
-    console.log(this.authService.getFirstName())
    return this.authService.getFirstName()
   }
 }

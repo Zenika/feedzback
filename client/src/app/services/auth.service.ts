@@ -30,7 +30,7 @@ export class AuthService {
     )
   }
   signInWithGoogle() {
-    return this.oAuthProvider(new auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log("ererererefgfdgg"))
+    return this.oAuthProvider(new auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log(err))
   }
   isLogged() {
     if(this.user)

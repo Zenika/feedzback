@@ -43,12 +43,12 @@
 .btn-send-margin {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-right: 53px;
+  margin-left: 53px;
 }
 .btn-ask-margin {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 53px;
+  margin-right: 53px;
 }
 
 .btn-pad {
@@ -66,8 +66,6 @@
   padding-top: 5px
   
 }
-
-
 .btn-icon {
   padding-left: 10px; 
   color: #FFFFFF;
@@ -101,26 +99,21 @@
     align-items: center;
   }
   .btn-send-margin {
-    margin-right: 15px;
-  }
-  .btn-ask-margin {
     margin-left: 15px;
   }
-  
+  .btn-ask-margin {
+    margin-right: 15px;
+  }
+  .home-card {
+    width: 53%;
+  }
 }
 
 @media screen and (max-width:900px) {
   .btn-pad {
     padding: 20px;
     align-items: center;
-  }
-  .btn-send-margin {
-    margin-right: 15px;
-  }
-  .btn-ask-margin {
-    margin-left: 15px;
-  }
-  
+  }  
 }
 @media only screen and (max-width: 600px) {
   .container {
@@ -130,6 +123,8 @@
   .btn-container {
     display: flex;
     flex-direction: column;
+    width: 150px;
+    height: 119px;
   }
   .row-logo-title {
     display: flex;
@@ -143,21 +138,21 @@
   }
 
   .home-card {
-    width: 100%;
+    width: 70%;
   }
-  .btn-pad {
-    padding: 30px;
-    align-items: center;
-  }
-
   .btn-icon {
     padding-bottom: 10px; 
-    color: #FFFFFF;
+  }
+  .btn-icon {
+    padding-left: 0; 
   }
   .btn-send-margin {
-    margin-right: 10px;
+    margin-left: 10px;
   }
   .btn-ask-margin {
-    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .btn-text {
+    padding-left: 0;
   }
 }

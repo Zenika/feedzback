@@ -14,7 +14,9 @@ import { GraphqlService } from '../services/graphql/graphql.service';
 export class SendFeedbackFormComponent implements OnInit {
   userEmail? : String
   userName? : String
+  loading?: boolean = false
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService, private graphqlService: GraphqlService)  {
+
      let user = this.authService.getUserDetails() 
      this.userEmail = decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null'? user.email! : decodeURIComponent(this.queryParams.get('senderEmail')!) ;
      this.userName = this.queryParams.get('senderName') === null? user.displayName! : this.queryParams.get('senderName')!;  
@@ -54,8 +56,7 @@ get comment() { return this.form.get('comment') }
       this.comment?.value
     )
     this.form.markAllAsTouched()
-    if (this.form.valid) {
+    if (this.form.valid) 
       this.graphqlService.sendFeedback(feedback)
-    }
   }
 }

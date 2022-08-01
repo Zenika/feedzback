@@ -5,7 +5,7 @@
                <a [routerLink]="['/feedback',feedback.id,'Received']" routerLinkActive="router-link-active" > {{feedback.senderName}}</a>
             <div class="row">
                 <h4>{{feedback.senderEmail}}</h4>
-                <h4> {{feedback.createdAt | date: 'dd/MM/yyyy-HH:MM' }}</h4>
+                <h4> {{feedback.createdAt | date: 'dd/MM/yyyy' }}</h4>
             </div>
         </div>
             <ng-template #sent>
@@ -14,12 +14,12 @@
                 </a>
                 <div class="row">
                  <h4>{{feedback.receverEmail}}</h4> 
-                 <h4> {{feedback.createdAt | date: 'dd/MM/yyyy-HH:MM' }}</h4>    
+                 <h4> {{feedback.createdAt | date: 'dd/MM/yyyy' }}</h4>    
                 </div>
             </ng-template>
         </div>
     </div>
 </div>
 <ng-template #empty>
-        <div class="empty" colspan="4" > Aucun FeedZBack </div>
+        <div class="empty"> Aucun FeedZBack </div>
 </ng-template>
