@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth.service';
 export class SendFeedbackFormComponent implements OnInit {
   userEmail? : String
   userName? : String
+  loading?: boolean = false
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService)  {
      let user = this.authService.getUserDetails() 
      this.userEmail = decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null'? user.email! : decodeURIComponent(this.queryParams.get('senderEmail')!) ;
@@ -65,13 +66,15 @@ get comment() { return this.form.get('comment') }
             this.comment?.value
           ),
         },
-      }).subscribe((data: any) => {
-        let result = data.data.sendFeedback;
+        useMutationLoading: true
+      }).subscribe(({data, loading} : any) => {
+        this.loading = loading
+        let result = data.sendFeedback;
         if (result === "sent") {
-          result = "Félicitations! Votre feedback vient d’être envoyée à : " + this.receverName?.value;
+          result = "Félicitations! Votre feedZback vient d’être envoyée à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success', message: result }])
         } else {
-          result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+          result = "Désolé ! Votre feedZback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
           this.router.navigate(['/result', { result: 'sendFailed', message: result }])
         }
       })

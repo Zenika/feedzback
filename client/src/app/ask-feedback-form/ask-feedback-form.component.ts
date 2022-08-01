@@ -16,6 +16,7 @@ import { environment } from '../../environments/environment.prod';
 export class AskFeedbackFormComponent implements OnInit {
   userEmail? : string
   userName? : string
+  loading: boolean = false
   constructor(private apollo: Apollo, private activatedRoute: ActivatedRoute, private router: Router, private authService:AuthService) {
    let user =  this.authService.getUserDetails();
    this.userEmail = user?.email!;
@@ -65,8 +66,9 @@ export class AskFeedbackFormComponent implements OnInit {
             this.message?.value
           ),
         },
-      }).subscribe((data: any) => {
-        let result = data.data.sendFeedbackRequest;
+      }).subscribe(({data, loading}: any) => {
+        this.loading = loading
+        let result = data.sendFeedbackRequest;
         if (result === 'sent') {
           result = "Félicitations! Votre demande vient d’être envoyée à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success' ,message:result}])
