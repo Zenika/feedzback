@@ -91,9 +91,6 @@ h5 {
     display: flex;
     flex-direction: row;
 }
-.test {
-    text-align: center;
-}
 
 @media only screen and (max-width: 600px) {
     .header {
