@@ -18,3 +18,22 @@
 
 // Alternatively you can use CommonJS syntax:
 require('./commands')
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/firestore';
+import { attachCustomCommands } from 'cypress-firebase';
+import firebase from 'firebase/compat';
+
+const fbConfig = {
+    apiKey: "AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc",
+    authDomain: "feedzback-343709.firebaseapp.com",
+    projectId: "feedzback-343709",
+    storageBucket: "feedzback-343709.appspot.com",
+    messagingSenderId: "370604731143",
+    appId: "1:370604731143:web:316617cb05f1a3611533a2",
+    measurementId: "G-HDCC6605DV",
+};
+
+firebase.initializeApp(fbConfig);
+
+attachCustomCommands({ Cypress, cy, firebase });

@@ -6,19 +6,19 @@ require("firebase/compat/firestore");
 import admin from 'firebase-admin'
 const { attachCustomCommands } = require("cypress-firebase");
 require('dotenv').config();
-const firebaseConfig= {
-  apiKey: "AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc",
-  authDomain: "feedzback-343709.firebaseapp.com",
-  projectId: "feedzback-343709",
-  storageBucket: "feedzback-343709.appspot.com",
-  messagingSenderId: "370604731143",
-  appId: "1:370604731143:web:316617cb05f1a3611533a2",
-  measurementId: "G-HDCC6605DV",
-};
+// const firebaseConfig= {
+//   apiKey: "AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc",
+//   authDomain: "feedzback-343709.firebaseapp.com",
+//   projectId: "feedzback-343709",
+//   storageBucket: "feedzback-343709.appspot.com",
+//   messagingSenderId: "370604731143",
+//   appId: "1:370604731143:web:316617cb05f1a3611533a2",
+//   measurementId: "G-HDCC6605DV",
+// };
 describe('Send feedback form tests', () => {
-  firebase.default.initializeApp(firebaseConfig)
-  attachCustomCommands({Cypress: Cypress, cy: cy,firebase: firebase.default});
-  beforeEach(() => {
+  // firebase.default.initializeApp(firebaseConfig)
+  // attachCustomCommands({Cypress: Cypress, cy: cy,firebase: firebase.default});
+  beforeEach(async () => {
   
     // cy.intercept('POST','/graphql',req =>{
     //   if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')){   
@@ -28,6 +28,7 @@ describe('Send feedback form tests', () => {
     //     })
     //   }
     // }).as('SendFeedback')
+    cy.login('')
    cy.visit('/send')
 
   })
