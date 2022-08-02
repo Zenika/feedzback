@@ -274,8 +274,6 @@ workflows:
          yarn: false   
          pre-steps:
             - run: npm install -g concurrently
-         parallel: true 
-         parallelism: 2
          start: 
            npm run dev
 
