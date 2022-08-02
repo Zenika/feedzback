@@ -1,8 +1,8 @@
 <nav class="nav-mobile" role="navigation">
-  <div class="menuToggle"  tabindex="0" id="menuToggle"  *ngIf="isLogged()">
+  <div class="menuToggle"  tabindex="0" id="menuToggle" (blur)="blurMenu()" *ngIf="isLogged()">
     <input class="checkBox"  type="checkbox" #checkBox/>
     <div class="burger" (click)="checkBox.checked = !checkBox.checked">
-      <span ></span>
+      <span></span>
       <span></span>
       <span></span>
     </div>

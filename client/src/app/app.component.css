@@ -40,13 +40,14 @@
       width: 40px;
       align-content: flex-end;
       flex-wrap: wrap;
-
+      z-index: 3;
+      padding-top: 1px;
     } 
     .menuToggle span  {
       display: flex;
       width: 29px;
       height: 2px;
-      margin-left: 25px;
+      margin-left: 20px;
       margin-bottom: 5px;
       position: relative;
       background: #CB1E5A;
@@ -57,29 +58,33 @@
       background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
       opacity 0.55s ease;
       }   
-    .menuToggle div span:first-child
+    .menuToggle.burger span:first-child
     {
       transform-origin: 0% 0%;
     }
-    .menuToggle div span:nth-last-child(2)
+    .menuToggle.burger span:nth-last-child(2)
     {
       transform-origin: 0% 100%;
     }
 
-    .menuToggle input:checked ~ div span
+    .menuToggle input:checked ~ .burger span
     {
       opacity: 1;
-      transform: rotate(-45deg) translate(-5.5px, 6.5px);
-      background: #CB1E5A;
+      transform: rotate(-45deg) translate(-4.5px, 6.5px);
     }
-    .menuToggle input:checked ~ div span:nth-last-child(3)
+    .menuToggle input:checked ~ .burger span:nth-last-child(3)
     {
       opacity: 0;
       transform: rotate(0deg) scale(0.2, 0.2);
     }
-    .menuToggle input:checked ~ div span:nth-last-child(2)
+    .menuToggle input:checked ~ .burger span:nth-last-child(2)
     {
-      transform: rotate(45deg) translate(-0.5px, -3.5px);
+      transform: rotate(45deg) translate(2.5px, -1.5px);
+    }
+    .menuToggle input:checked ~ .burger {
+      height: 30px;
+      width: 30px;
+      margin-left: 10px;
     }
     .menu
     {
