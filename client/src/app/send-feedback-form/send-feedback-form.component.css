@@ -36,6 +36,10 @@ h1 {
     flex-direction: column;
     align-items: stretch;
 }
+.form-input:nth-child(1),
+.form-input:nth-child(2) {
+   height: 95px;
+}
 .subtitle {
     color: #4E4B4B;
     text-align: start;
@@ -44,12 +48,11 @@ h1 {
 }
 .input-text {
     padding-top: 12px;
-    padding-bottom: 12px;
+    padding-bottom: 12px
 }
 small {
     color: #D52150;
     font-weight: lighter;
-    margin-top: 10px;
     font-size: 14px;
 }
 a {
@@ -63,6 +66,10 @@ a {
     display: flex;
     justify-content: flex-end;
 }
+label {
+    margin-bottom: 10px;
+}
+
 
 @media only screen and (max-width: 600px) {
     .row:not(:first-child) {

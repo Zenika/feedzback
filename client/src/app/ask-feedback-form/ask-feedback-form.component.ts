@@ -15,11 +15,12 @@ import { GraphqlService } from '../services/graphql/graphql.service';
 export class AskFeedbackFormComponent implements OnInit {
   userEmail? : string
   userName? : string
+
+  loading: boolean = false
   constructor(private activatedRoute: ActivatedRoute, private authService:AuthService, private graphqlService: GraphqlService) {
    let user =  this.authService.getUserDetails();
    this.userEmail = user?.email!;
    this.userName  = user?.displayName!;  
-     
    }
 
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
@@ -38,8 +39,6 @@ export class AskFeedbackFormComponent implements OnInit {
   get message() { return this.form.get('message') }
 
   ngOnInit(): void {}
-
-  
 
   onSubmit() {
     const token = sessionStorage.getItem('token');

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
-import { Subject } from 'rxjs';
+import { Subject, map, takeUntil } from 'rxjs';
 import { Feedback } from 'src/app/model/feedback';
 import { FeedbackRequest } from 'src/app/model/feedbackRequest';
 
@@ -10,11 +10,35 @@ import { FeedbackRequest } from 'src/app/model/feedbackRequest';
 })
 export class GraphqlService {
 
-  private askFeedbackMutation = gql`
+private askFeedbackMutation = gql`
   mutation AskFeedback($askFeedback: AskFeedback!) {
     sendFeedbackRequest(askFeedback: $askFeedback)
   }
-  `
+  private unsubscribe$: Subject<void> = new Subject();
+ 
+  private getFeedbackListQuery = gql`
+    query GetFeedbacks($email: String!){
+      receivedFeedbacks(email: $email) {
+        id
+        senderEmail
+        senderName
+        positiveFeedback
+        toImprove
+        comment
+        createdAt
+      }
+      sentFeedbacks(email: $email) {
+        id
+        receverEmail
+        receverName
+        positiveFeedback
+        toImprove
+        comment
+        createdAt
+      }
+    }
+  `;
+
  private getFeedbackByIdQuery = gql`
  query GetFeedbackById($getFeedbackByIdId: String!) {
     getFeedbackById(id: $getFeedbackByIdId) {
@@ -46,6 +70,23 @@ export class GraphqlService {
         this.router.navigate(['/result', { result: 'askFailed', message: result }])
       }
     })
+    
+  getFeedbackList(email: string) {
+    let subjectList = new Subject<Feedback[]>();
+    this.apollo.watchQuery({
+      query: this.getFeedbackListQuery,
+      variables: {
+        email: email
+      },
+      pollInterval: 4500
+    
+    }).valueChanges.pipe(
+      map(({ data }) => data),
+      takeUntil(this.unsubscribe$)
+    ).subscribe((feedbacks: any) => {
+      subjectList.next(feedbacks)
+    })
+    return subjectList.asObservable()
   }
   getFeedbackById(id:String) {
     let subject = new Subject<Feedback>();
