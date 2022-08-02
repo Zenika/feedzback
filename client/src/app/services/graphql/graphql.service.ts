@@ -61,7 +61,6 @@ private askFeedbackMutation = gql`
   constructor(private apollo: Apollo, private router: Router) { }
    
   sendFeedback(feedback: SendFeedback) {
-    const token = sessionStorage.getItem('token');
     this.apollo.mutate({
       mutation: this.sendFeedBackMutation,
       variables: {
@@ -77,7 +76,7 @@ private askFeedbackMutation = gql`
         this.router.navigate(['/result', { result: 'sendFailed', message: result }])
       }
     })
-
+  }
   askFeedback(feedback: FeedbackRequest) {
     this.apollo.mutate({
       mutation: this.askFeedbackMutation,
@@ -95,7 +94,6 @@ private askFeedbackMutation = gql`
       }
     })
   }
-
   getFeedbackList(email: string) {
     let subjectList = new Subject<Feedback[]>();
     this.apollo.watchQuery({
@@ -113,6 +111,7 @@ private askFeedbackMutation = gql`
     })
     return subjectList.asObservable()
   }
+
   getFeedbackById(id:String) {
     let subject = new Subject<Feedback>();
 
