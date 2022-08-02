@@ -13,7 +13,7 @@ export class GraphqlService {
 private askFeedbackMutation = gql`
   mutation AskFeedback($askFeedback: AskFeedback!) {
     sendFeedbackRequest(askFeedback: $askFeedback)
-  }
+  }`
   private unsubscribe$: Subject<void> = new Subject();
  
   private getFeedbackListQuery = gql`
@@ -70,7 +70,7 @@ private askFeedbackMutation = gql`
         this.router.navigate(['/result', { result: 'askFailed', message: result }])
       }
     })
-    
+  }
   getFeedbackList(email: string) {
     let subjectList = new Subject<Feedback[]>();
     this.apollo.watchQuery({
