@@ -28,7 +28,11 @@ export class FeedbackListComponent implements OnInit {
     
     // ✅ Sort in Ascending order (low to high)
     const sortedAsc = arr1.sort(
-      (objA, objB) => objA.date.getTime() - objB.date.getTime(),
+      (objA, objB) => {
+        console.log(objA.date.getTime() + ' and  ' + objB.date.getTime() )
+        console.log(objA.date.getTime() - objB.date.getTime())
+        return objA.date.getTime() - objB.date.getTime()
+      } 
     );
     console.log(sortedAsc);
   }
@@ -38,7 +42,7 @@ export class FeedbackListComponent implements OnInit {
     const datePipe = new DatePipe("en-US")
   this.sortedFeedbackList = [...this.feedbacks]
 
-     this.sortedFeedbackList.sort((a, b) => new Date(datePipe.transform(a.createdAt, 'shortDate')!).getTime() - new Date(datePipe.transform(b.createdAt, 'shortDate')!).getTime())
+     this.sortedFeedbackList.sort((a, b) => new Date(datePipe.transform(b.createdAt, 'yyyy-MM-dd')!).getTime() - new Date(datePipe.transform(a.createdAt, 'yyyy-MM-dd')!).getTime())
    //  console.log(this.sortedFeedbackList)
 
   }

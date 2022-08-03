@@ -33,8 +33,7 @@ export class AppComponent {
 
   }
   blurMenu() {
-    setTimeout(()=> this.checkBox.nativeElement.checked = false,
-    100)
+ this.checkBox.nativeElement.checked = false
   }
   getFirstName() {
    return this.authService.getFirstName()
