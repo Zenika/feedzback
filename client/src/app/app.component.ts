@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'FeedZback';
-  @ViewChild('menu',{static: false}) menu!: ElementRef
+  @ViewChild('menuToggle',{static: false}) menu!: ElementRef
   @ViewChild('checkBox', {static: false}) checkBox!: ElementRef
 
   constructor(public authService: AuthService, private router: Router) {
@@ -24,8 +24,17 @@ export class AppComponent {
     this.router.navigate(['/ask'])
   }
   checkFocus(event:any) {
+    console.log('input box clicked')
     if(event.target.checked)
-       this.menu.nativeElement.focus()
+    {
+      this.menu.nativeElement.focus()
+      event.stopPropagation()
+    }
+
+  }
+  blurMenu() {
+    setTimeout(()=> this.checkBox.nativeElement.checked = false,
+    100)
   }
   getFirstName() {
    return this.authService.getFirstName()
