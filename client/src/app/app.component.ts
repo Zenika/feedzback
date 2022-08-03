@@ -20,21 +20,12 @@ export class AppComponent {
   isLogged() {
     return this.authService.isLogged();
   }
-  ask() {
-    this.router.navigate(['/ask'])
+  onClickItem(route: String) {
+    this.router.navigate([route])
+    this.hideMenu()
   }
-  checkFocus(event:any) {
-    console.log('input box clicked')
-    if(event.target.checked)
-    {
-      this.menu.nativeElement.focus()
-      event.stopPropagation()
-    }
-
-  }
-  blurMenu() {
-    setTimeout(()=> this.checkBox.nativeElement.checked = false,
-    100)
+  hideMenu() {
+  this.checkBox.nativeElement.checked = false
   }
   getFirstName() {
    return this.authService.getFirstName()
