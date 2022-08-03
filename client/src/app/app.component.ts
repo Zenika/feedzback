@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { event } from 'cypress/types/jquery';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class AppComponent {
   title = 'FeedZback';
   @ViewChild('menuToggle',{static: false}) menu!: ElementRef
   @ViewChild('checkBox', {static: false}) checkBox!: ElementRef
+  indexActivatedItem : number = 0
 
   constructor(public authService: AuthService, private router: Router) {
   }
@@ -20,8 +22,9 @@ export class AppComponent {
   isLogged() {
     return this.authService.isLogged();
   }
-  onClickItem(route: String) {
+  onClickItem(route: String, index: number) {
     this.router.navigate([route])
+    this.indexActivatedItem = index
     this.hideMenu()
   }
   hideMenu() {

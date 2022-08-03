@@ -7,10 +7,10 @@
       <span></span>
     </div>
     <ul class="menu" #menu>
-      <li><a class="menu-item" (click)="onClickItem('/home')" routerLinkActive="active" >Accueil</a></li>
-      <li><a class="menu-item" (click)="onClickItem('/ask')" routerLinkActive="active">Demander</a></li>
-      <li><a class="menu-item" (click)="onClickItem('/send')" routerLinkActive="active" >Envoyer</a></li>
-      <li><a class="menu-item" (click)="onClickItem('/feedbacks')" routerLinkActive="active" >Mes feedZbacks</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/home', 0)" [ngClass]="{'active': indexActivatedItem === 0 }">Accueil</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/ask', 1)" [ngClass]="{'active': indexActivatedItem === 1 }">Demander</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/send',2)" [ngClass]="{'active': indexActivatedItem === 2 }">Envoyer</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/feedbacks',3)" [ngClass]="{'active': indexActivatedItem === 3 }">Mes feedZbacks</a></li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']" *ngIf="isLogged()">
