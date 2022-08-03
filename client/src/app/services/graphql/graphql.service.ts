@@ -3,17 +3,24 @@ import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { Subject, map, takeUntil } from 'rxjs';
 import { Feedback } from 'src/app/model/feedback';
+import { SendFeedback } from 'src/app/model/sendFeedback';
 import { FeedbackRequest } from 'src/app/model/feedbackRequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphqlService {
+ private sendFeedBackMutation = gql`
+  mutation SendFeedback($feedbackInput: FeedbackInput!){
+    sendFeedback(feedbackInput:$feedbackInput)
+  }
+`;
 
 private askFeedbackMutation = gql`
   mutation AskFeedback($askFeedback: AskFeedback!) {
     sendFeedbackRequest(askFeedback: $askFeedback)
   }`
+
   private unsubscribe$: Subject<void> = new Subject();
  
   private getFeedbackListQuery = gql`
@@ -38,7 +45,6 @@ private askFeedbackMutation = gql`
       }
     }
   `;
-
  private getFeedbackByIdQuery = gql`
  query GetFeedbackById($getFeedbackByIdId: String!) {
     getFeedbackById(id: $getFeedbackByIdId) {
@@ -52,8 +58,25 @@ private askFeedbackMutation = gql`
       createdAt
     }
   }`
-  constructor(private apollo: Apollo,private router: Router) { }
-
+  constructor(private apollo: Apollo, private router: Router) { }
+   
+  sendFeedback(feedback: SendFeedback) {
+    this.apollo.mutate({
+      mutation: this.sendFeedBackMutation,
+      variables: {
+        feedbackInput: feedback,
+      },
+    }).subscribe((data: any) => {
+      let result = data.data.sendFeedback;
+      if (result === "sent") {
+        result = "Félicitations! Votre feedback vient d’être envoyée à : " + feedback.receverName;
+        this.router.navigate(['/result', { result: 'success', message: result }])
+      } else {
+        result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+        this.router.navigate(['/result', { result: 'sendFailed', message: result }])
+      }
+    })
+  }
   askFeedback(feedback: FeedbackRequest) {
     this.apollo.mutate({
       mutation: this.askFeedbackMutation,
@@ -88,6 +111,7 @@ private askFeedbackMutation = gql`
     })
     return subjectList.asObservable()
   }
+
   getFeedbackById(id:String) {
     let subject = new Subject<Feedback>();
 
