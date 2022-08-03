@@ -1,6 +1,6 @@
 <div class="content">
        <div class="list" *ngIf="feedbacks && feedbacks.length !== 0; else empty">
-        <div *ngFor="let feedback of feedbacks">
+        <div *ngFor="let feedback of sortedFeedbackList">
             <div *ngIf="type === feedbackType.Received; else sent">
                <a [routerLink]="['/feedback',feedback.id,'Received']" routerLinkActive="router-link-active" > {{feedback.senderName}}</a>
             <div class="row">

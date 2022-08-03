@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FeedbackType } from '../enum/feedback-type';
 import { Feedback } from '../model/feedback';
@@ -19,7 +19,6 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {
     const id = this.activateRouter.snapshot.paramMap.get('id');
     this.type = this.activateRouter.snapshot.paramMap.get('type')!
-    console.log(this.type)
     this.graphqlService.getFeedbackById(id!).subscribe(data => {
       this.feedback = data
     })
