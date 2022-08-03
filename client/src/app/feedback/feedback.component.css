@@ -19,8 +19,6 @@
 .flex-row {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    text-align: start;
 }
 .first-section {
     display: flex;
@@ -120,11 +118,12 @@ h5 {
     }
     .first-section:first-child,
     .first-section:last-child {
-        margin-left: 0;
+        margin: 0;
         text-align: center;
     }
     .second-section {
-        width: 320px
+        width: 320px;
+        margin-left: 0;
     }
 
 }
