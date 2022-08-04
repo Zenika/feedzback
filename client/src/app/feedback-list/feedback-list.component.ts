@@ -29,16 +29,8 @@ export class FeedbackListComponent implements OnInit {
     this.feedbacksToDisplay = this.paginate(this.current, this.perPage)
   }
 
-  public onGoTo(page: number): void {
+  public onChangePage(page: number): void {
     this.current = page
-    this.feedbacksToDisplay = this.paginate(this.current, this.perPage)
-  }
-  public onNext(page: number): void {
-    this.current= page +1
-    this.feedbacksToDisplay = this.paginate(this.current, this.perPage)
-  }
-  public onPrevious(page: number){
-    this.current = page -1
     this.feedbacksToDisplay = this.paginate(this.current, this.perPage)
   }
   public paginate(current: number, perPage: number): Feedback[] {

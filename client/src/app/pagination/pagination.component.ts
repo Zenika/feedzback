@@ -10,24 +10,20 @@ export class PaginationComponent implements OnInit {
   @Input() total: number = 0
   public pages: number[] = []
 
-  @Output() goTo: EventEmitter<number> = new EventEmitter<number>()
-  @Output() next: EventEmitter<number> = new EventEmitter<number>()
-  @Output() previous: EventEmitter<number> = new EventEmitter<number>()
-
-  
+  @Output() onChangePage: EventEmitter<number> = new EventEmitter<number>()
 
   constructor() { }
 
   ngOnInit(): void {
   }
   public onGoTo(page: number) : void {
-    this.goTo.emit(page)
+    this.onChangePage.emit(page)
   }
   public onNext(page: number) : void {
-    this.next.emit(page)
+    this.onChangePage.emit(page +1)
   }
   public onPrevious(page: number): void {
-    this.previous.emit(page)
+    this.onChangePage.emit(page -1)
   }
   private getPages(current: number, total: number): number[] {
     if(total <=7)

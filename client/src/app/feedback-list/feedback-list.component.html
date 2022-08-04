@@ -23,9 +23,7 @@
 <app-pagination class="pagination"
     [current]="current"
     [total]="total"
-    (goTo)="onGoTo($event)"
-    (next)="onNext($event)"
-    (previous)="onPrevious($event)"
+    (onChangePage)="onChangePage($event)"
     ></app-pagination>
 <ng-template #empty>
         <div class="empty" colspan="4" > Aucun FeedZBack </div>
