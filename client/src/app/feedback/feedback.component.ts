@@ -22,7 +22,6 @@ export class FeedbackComponent implements OnInit {
    
     this.graphqlService.getFeedbackById(id!).subscribe(data => {
       this.feedback = data
-      console.log(data)
     })
 }
 }

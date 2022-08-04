@@ -4,9 +4,9 @@
     <h1>{{title}}</h1> 
   </div>
   <div class="result-title">{{message}}</div>
-  <button class="btn btn-primary btn-retry"  *ngIf="result === 'sendFailed'"  routerLink="/send">REESAYER</button>
-  <button class="btn btn-primary btn-retry"  *ngIf="result === 'askFailed'"  routerLink="/ask">REESAYER</button>
-  <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('false')" routerLink={{myRouterLink}}>
-   {{send}} === true? 'Voir le feedback envoyé' : 'RETOUR À L'ACCUEIL' </button>
+  <button class="btn btn-primary btn-retry"  *ngIf="result === 'sendFailed'"  routerLink="/send">Réessayer</button>
+  <button class="btn btn-primary btn-retry"  *ngIf="result === 'askFailed'"  routerLink="/ask">Réessayer</button>
+  <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('false')" routerLink="{{myRouterLink}}">
+   {{send === true? "Voir le feedback envoyé" : "Retour à l'accueil" }} </button>
 </div>
  

@@ -14,7 +14,7 @@ export class SendAskFeedbackResultComponent implements OnInit {
   title!: string
   src!: string
   feedbackId!: string
-  myRouterLink: string = "/home"
+  myRouterLink!: string 
   constructor(private route: ActivatedRoute) {
     this.message = this.route.snapshot.paramMap.get('message')!
     this.result = this.route.snapshot.paramMap.get('result')!
@@ -30,7 +30,7 @@ export class SendAskFeedbackResultComponent implements OnInit {
     {
       this.title = 'Envoi de feedZback'
       this.src = '/assets/vector-arrow.svg'
-      this.myRouterLink = "['/feedback',feedbackId,'Sent']"
+      this.myRouterLink = `/feedback/${this.feedbackId}/Sent`
     }
      
   }
