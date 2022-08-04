@@ -1,6 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FeedbackType } from '../enum/feedback-type';
 import { Feedback } from '../model/feedback';
 import { GraphqlService } from '../services/graphql/graphql.service';
 
