@@ -45,6 +45,10 @@ nav {
     cursor: default;
     text-decoration: none;
   }
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
   
   button {
     background-color: transparent;

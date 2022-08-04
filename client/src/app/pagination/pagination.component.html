@@ -20,8 +20,9 @@
                 tabindex="0"
                 (click)="onGoTo(page)"
                 (keyup.enter)="onGoTo(page)"
+                [class.disabled]="page === -1 ? true : false"
             >
-             {{page}}
+             {{page === -1 ? '......' : page}}
             </a>
         </li>
         <li>
