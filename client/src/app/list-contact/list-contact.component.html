@@ -1,7 +1,7 @@
 <ul class="container" tabindex="0" #list>
   <li
     *ngFor="let contact of contacts; let i = index"
-    [ngClass]="{ active: i === contactIndex }"
+    [class.active]="i === contactIndex"
     (click)="selectContact(contact)"
     #contact
   >
