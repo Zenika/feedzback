@@ -68,9 +68,11 @@ private askFeedbackMutation = gql`
       },
     }).subscribe((data: any) => {
       let result = data.data.sendFeedback;
-      if (result === "sent") {
+      if (result.includes("sent")) {
+        const feedbackId = result.split(':')[1]
+        console.log(result + '   ' + feedbackId)
         result = "Félicitations! Votre feedback vient d’être envoyée à : " + feedback.receverName;
-        this.router.navigate(['/result', { result: 'success', message: result }])
+        this.router.navigate(['/result', { result: 'success', message: result, id: feedbackId }])
       } else {
         result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
         this.router.navigate(['/result', { result: 'sendFailed', message: result }])
