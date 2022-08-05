@@ -71,10 +71,10 @@ get comment() { return this.form.get('comment') }
         this.loading = loading
         let result = data.sendFeedback;
         if (result === "sent") {
-          result = "Félicitations! Votre feedZback vient d’être envoyée à : " + this.receverName?.value;
+          result = "Félicitations ! Votre feedZback vient d’être envoyé à : " + this.receverName?.value;
           this.router.navigate(['/result', { result: 'success', message: result }])
         } else {
-          result = "Désolé ! Votre feedZback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+          result = "Désolé ! Votre feedZback n’a pas été envoyé à cause d’un problème technique...  Veuillez réessayer."
           this.router.navigate(['/result', { result: 'sendFailed', message: result }])
         }
       })
