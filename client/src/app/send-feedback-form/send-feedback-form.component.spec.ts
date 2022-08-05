@@ -7,10 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { authStub } from '../services/authStub';
 
-export const authStub =  {
-  getUserDetails: ()=> jest.fn()
-}
 describe('SendFeedbackFormComponent', () => {
   let component: SendFeedbackFormComponent;
   let fixture: ComponentFixture<SendFeedbackFormComponent>;
@@ -27,7 +25,8 @@ describe('SendFeedbackFormComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         ApolloTestingModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
