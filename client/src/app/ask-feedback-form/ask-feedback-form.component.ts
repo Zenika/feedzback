@@ -40,8 +40,8 @@ export class AskFeedbackFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
-    const token = sessionStorage.getItem('token');
+  async onSubmit() {
+    const token = await this.authService.getUserTokenId()
     const feedback = new FeedbackRequest(
       token!,
       this.userName,

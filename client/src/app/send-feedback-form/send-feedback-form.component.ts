@@ -43,8 +43,8 @@ get postitiveFeedback() { return this.form.get('postitiveFeedback') }
 get toImproveFeedback() { return this.form.get('toImproveFeedback') }
 get comment() { return this.form.get('comment') }
 
-  onSubmit() {
-    const token = sessionStorage.getItem('token');
+ async onSubmit() {
+    const token = await this.authService.getUserTokenId()
     const feedback = new SendFeedback(
       token!,
       this.userName,
