@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const apiKey = process.env.API_KEY;
 const domain = process.env.DOMAIN;
+let feedbackId;
 
 const myMailgun = mailgun({
   apiKey: apiKey,
@@ -43,6 +44,8 @@ const insertFeedback = async (data) => {
       ...data,
       createdAt: Date.now()
     }
+  }).then((res) => {
+    feedbackId =  res[0].mutationResults[0].key.path[0].id
   })
 }
   
@@ -68,9 +71,12 @@ export const sendFeedback = async ({ feedbackInput }) => {
   try {
     await insertFeedback(feedbackInput)
     await myMailgun.messages().send(msg)
-    return "sent";
-  } catch (e) {
-    console.error(e)
-    return "error"
+    const success =  {
+      feedbackId: feedbackId,
+      message: 'sent'
+    }
+    return success;
+  } catch {
+    return { message: 'error'}
   }
 };
