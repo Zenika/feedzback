@@ -255,6 +255,10 @@ workflows:
       - unit-test-server:
           requires:
              - install-client-dependencies
+      - set-serverApi-client:
+          requires:
+             - deploy-server
+
       - build: 
           requires:
             - install-client-dependencies
