@@ -1,4 +1,4 @@
-export class FeedbackQueryData {
+export class SendFeedback {
     constructor(
         public token: String = "",
         public senderName: String = "",

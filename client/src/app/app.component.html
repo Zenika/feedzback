@@ -1,5 +1,5 @@
 <nav class="nav-mobile" role="navigation">
-  <div class="menuToggle"  tabindex="0" id="menuToggle" (blur)="blurMenu()" *ngIf="isLogged()">
+  <div class="menuToggle"  tabindex="0" id="menuToggle" (blur)="hideMenu()" *ngIf="isLogged()">
     <input class="checkBox"  type="checkbox" #checkBox/>
     <div class="burger" (click)="checkBox.checked = !checkBox.checked">
       <span></span>
@@ -7,10 +7,10 @@
       <span></span>
     </div>
     <ul class="menu" #menu>
-      <li><a class="menu-item" [routerLink]="['/home']" routerLinkActive="active" >Accueil</a></li>
-      <li><a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">Demander</a></li>
-      <li><a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >Envoyer</a></li>
-      <li><a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >Mes feedZbacks</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/home')" [ngClass]="{'active': router.url === '/home'}">Accueil</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/ask')" [ngClass]="{'active': router.url === '/ask'}">Demander</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/send')" [ngClass]="{'active': router.url === '/send'}">Envoyer</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/feedbacks')" [ngClass]="{'active': router.url === '/feedbacks'}">Mes feedZbacks</a></li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']" *ngIf="isLogged()">
