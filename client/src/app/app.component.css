@@ -132,8 +132,9 @@ nav {
   font-size: 20px; 
   transition: .5s; 
   }
+  a:hover,
   .active {
-    padding-bottom: 7px;
+    padding-bottom: 7px; 
     color: #D52150;
     padding: 10px;
     padding-right: 11%;
