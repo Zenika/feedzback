@@ -37,9 +37,13 @@ input AskFeedback {
     senderEmail: String!
     text: String
 }
+type SendResult {
+    feedbackId: String
+    message: String!
+}
 
 type Mutation{
-    sendFeedback(feedbackInput: FeedbackInput!):String
-    sendFeedbackRequest(askFeedback: AskFeedback!):String
+    sendFeedback(feedbackInput: FeedbackInput!): SendResult
+    sendFeedbackRequest(askFeedback: AskFeedback!): String
 }
 `;
