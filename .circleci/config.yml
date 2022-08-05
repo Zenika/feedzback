@@ -111,8 +111,8 @@ jobs:
             rm temp.txt
             URL=$(echo "$URL" | cut -d':' -f2,3)    
             echo $URL 
-            sed -i "s,<SERVER_API>,$URL" app.yaml
-            cat app.yaml
+            sed -i "s,<serverApi>,$URL" src/environments/environment.prod.ts
+            cat src/environments/environment.prod.ts
             
 
   build:
@@ -255,9 +255,6 @@ workflows:
       - unit-test-server:
           requires:
              - install-client-dependencies
-      - set-serverApi-client:
-           requires:
-             - deploy-server
       - build: 
           requires:
             - install-client-dependencies

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  serverApi: process.env['SERVER_API'],
+  serverApi: 'SERVER',
   firebaseConfig: {
     apiKey: "AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc",
     authDomain: "feedzback-343709.firebaseapp.com",
