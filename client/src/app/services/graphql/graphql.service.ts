@@ -12,7 +12,10 @@ import { FeedbackRequest } from 'src/app/model/feedbackRequest';
 export class GraphqlService {
  private sendFeedBackMutation = gql`
   mutation SendFeedback($feedbackInput: FeedbackInput!){
-    sendFeedback(feedbackInput:$feedbackInput)
+    sendFeedback(feedbackInput:$feedbackInput) {
+      feedbackId
+      message
+    }
   }
 `;
 
@@ -66,14 +69,16 @@ private askFeedbackMutation = gql`
       variables: {
         feedbackInput: feedback,
       },
-    }).subscribe((data: any) => {
-      let result = data.data.sendFeedback;
-      if (result === "sent") {
-        result = "Félicitations! Votre feedback vient d’être envoyée à : " + feedback.receverName;
-        this.router.navigate(['/result', { result: 'success', message: result }])
+    }).subscribe(({data}: any) => {
+      const result = data.sendFeedback
+      let message = result.message
+      if (message === "sent") {
+        const feedbackId = result.feedbackId
+        message = "Félicitations! Votre feedback vient d’être envoyée à : " + feedback.receverName;
+        this.router.navigate(['/result', { result: 'success', message: message, id: feedbackId }])
       } else {
-        result = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
-        this.router.navigate(['/result', { result: 'sendFailed', message: result }])
+        message = "Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer."
+        this.router.navigate(['/result', { result: 'sendFailed', message: message }])
       }
     })
   }
