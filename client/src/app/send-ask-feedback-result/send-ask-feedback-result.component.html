@@ -7,6 +7,6 @@
   <button class="btn btn-primary btn-retry"  *ngIf="result === 'sendFailed'"  routerLink="/send">Réessayer</button>
   <button class="btn btn-primary btn-retry"  *ngIf="result === 'askFailed'"  routerLink="/ask">Réessayer</button>
   <button class="btn btn-primary btn-return" [class.btn-secondary]="result.includes('false')" routerLink="{{myRouterLink}}">
-   {{send === true? "Voir le feedback envoyé" : "Retour à l'accueil" }} </button>
+   {{send === true? "Voir le feedZback" : "Retour à l'accueil" }} </button>
 </div>
  
