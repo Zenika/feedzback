@@ -58,18 +58,18 @@ export const sendFeedback = async ({ feedbackInput }) => {
   return errMsg;
 
   const envi = process.env.NODE_ENV || 'development';
-  const template = replaceHtmlVars(emailTemplate, feedbackInput);
-  const msg = {
-    to: feedbackInput.receverEmail,
-    from: process.env.GENERIC_EMAIL,
-    subject: 'FeedZback',
-    html: template,
-  }
-  if (envi !== 'production') 
-    msg.to = 'feedzback@zenika.com'
-
   try {
     await insertFeedback(feedbackInput)
+    feedbackInput.feedbackId = feedbackId;
+    const template = replaceHtmlVars(emailTemplate, feedbackInput);
+    const msg = {
+      to: feedbackInput.receverEmail,
+      from: process.env.GENERIC_EMAIL,
+      subject: 'FeedZback',
+      html: template,
+    }
+    if (envi !== 'production') 
+      msg.to = 'feedzback@zenika.com'
     await myMailgun.messages().send(msg)
     const success =  {
       feedbackId: feedbackId,

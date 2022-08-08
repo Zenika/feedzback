@@ -5,22 +5,11 @@ export default function replaceHtmlVars(html, message) {
   if (process.env.NODE_ENV !== 'production') {
     dotEnv.config()
   }
-
-  const positiveFeedback = String(message.positiveFeedback).replace(/\n/g, '<br>');
-  const toImprove = String(message.toImprove).replace(/\n/g, '<br>');
-
-  let comment = '';
-  if (message.comment)
-    comment = String(message.comment).replace(/\n/g, '<br>');
-  const envi = process.env.NODE_ENV || 'development';
+  const feedbackUrl = `/feedback/${message.feedbackId}/Received`;
   const template = ejs.render(html, {
     name: message.receverName,
     senderName: message.senderName,
-    positiveFeedback,
-    toImprove,
-    comment,
-    urlClientForm: envi === 'production' ? 'http://feedzback.zenika.com/send': process.env.URL_CLIENT_FORM
+    urlClient: process.env.URL_CLIENT + feedbackUrl
   })
-
   return template;
 }
