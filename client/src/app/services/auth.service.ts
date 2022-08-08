@@ -14,10 +14,7 @@ export class AuthService {
   ) {
   
     this.firebaseAuth.authState.subscribe(async user => {
-      const token = await user?.getIdToken();
-      if(token !== null)
-      sessionStorage.setItem('token', token!)
-      this.user = user 
+      this.user = user
    });
   }
 
@@ -53,9 +50,12 @@ export class AuthService {
  getFirstName() {
   return this.user?.displayName?.split(' ')[0]
  }
+  async getUserTokenId()  {
+  this.user?.refreshToken
+  return  await this.user?.getIdToken()
+ }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
-      sessionStorage.removeItem('token');
       this.router.navigate(['sign-in'])
     })
   }
