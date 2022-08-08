@@ -7,7 +7,7 @@ export default function replaceHtmlVars(html, message) {
   }
   const feedbackUrl = `/feedback/${message.feedbackId}/Received`;
   const template = ejs.render(html, {
-    name: message.feedbackId,
+    name: message.receverName,
     senderName: message.senderName,
     urlClient: process.env.URL_CLIENT + feedbackUrl
   })
