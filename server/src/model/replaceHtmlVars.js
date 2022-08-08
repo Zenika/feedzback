@@ -5,13 +5,11 @@ export default function replaceHtmlVars(html, message) {
   if (process.env.NODE_ENV !== 'production') {
     dotEnv.config()
   }
-
-  const envi = process.env.NODE_ENV || 'development';
+  const feedbackUrl = `/feedback/${message.feedbackId}/Received`;
   const template = ejs.render(html, {
     name: message.feedbackId,
     senderName: message.senderName,
-    urlClientForm: `http://feedzback.zenika.com/feedback/${message.feedbackId}/Received`
+    urlClient: process.env.URL_CLIENT + feedbackUrl
   })
-
   return template;
 }
