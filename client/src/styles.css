@@ -13,7 +13,7 @@
 }
 .btn-primary:hover {
     cursor: pointer;
-  }
+}
 .input-text {
     background: #FAFAFA;
     border-radius: 10px;
@@ -22,7 +22,6 @@
     resize: none;
     width: 100%;
 }
-
 .textarea {
     background: #FAFAFA;
     border-radius: 10px 10px 0 10px;
@@ -31,24 +30,39 @@
     border-style: solid;
     padding: 10px;
 }
-
-
 .form-control.ng-untouched,
 .form-control.ng-valid {
     border-color: #ccc;
 }
-
 .input-lg.ng-untouched,
 .form-control-lg.ng-valid {
     border-color: #ccc;
 }
-
 input:required, textarea:required {
     border: #D52150;
     border-style: solid;
     border-width: 0.5px;
 }
-
 * {
     font-family: Nunito;
+}
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: rgb(110, 107, 107);
+}
+.github {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(110, 107, 107);
+}
+.github:hover {
+    color: #D52150;
+}
+.github-icon {
+    margin-right: 3px;
+    margin-bottom: 3px;
 }
