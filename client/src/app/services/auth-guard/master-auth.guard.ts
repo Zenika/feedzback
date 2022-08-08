@@ -14,9 +14,15 @@ export class MasterAuthGuard implements CanActivate {
        const urlResult = state.url.split(';');
        if(route.queryParamMap.get('senderEmail') !== null)
        {
-        console.log('detaaa')
          this.authService.anonymousLogin();
          return true
+       }
+       else if(state.url.includes('/feedback') && state.url.includes('Received')){
+       if(this.authService.isLogged())
+         return true
+       this.authService.redirectUrl = state.url
+       this.router.navigate(['sign-in'])
+       return false
        }
        else if(state.url !== '/send' && urlResult[0] !== '/result' && this.authService.isAnonymous())
         {
