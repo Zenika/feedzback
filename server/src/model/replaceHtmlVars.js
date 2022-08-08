@@ -6,20 +6,11 @@ export default function replaceHtmlVars(html, message) {
     dotEnv.config()
   }
 
-  const positiveFeedback = String(message.positiveFeedback).replace(/\n/g, '<br>');
-  const toImprove = String(message.toImprove).replace(/\n/g, '<br>');
-
-  let comment = '';
-  if (message.comment)
-    comment = String(message.comment).replace(/\n/g, '<br>');
   const envi = process.env.NODE_ENV || 'development';
   const template = ejs.render(html, {
-    name: message.receverName,
+    name: message.feedbackId,
     senderName: message.senderName,
-    positiveFeedback,
-    toImprove,
-    comment,
-    urlClientForm: envi === 'production' ? 'http://feedzback.zenika.com/send': process.env.URL_CLIENT_FORM
+    urlClientForm: `http://feedzback.zenika.com/feedback/${message.feedbackId}/Received`
   })
 
   return template;

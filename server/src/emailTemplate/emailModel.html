@@ -16,6 +16,7 @@
       line-height: 23px;
       text-align: center;
       align-items: center;
+      border-top: 10px;
     }
   </style>
 </head>
@@ -24,25 +25,8 @@
   <p>Bonjour <%=name%>
   </p>
   <p>Votre collègue <%=senderName%> vous a fait un feedZback!</p>
-  <p><b>Points positifs</b></p>
-  <p>
-    <%=positiveFeedback%>
-  </p>
-  <p><b>Axes d'améliorations</b></p>
-  <p>
-    <%=toImprove%>
-  </p>
-  <%if (comment !=='' ) { %>
-    <p><b>Commentaires</b></p>
-    <p>
-      <%=comment%>
-    </p>
-    <% } %>
-      <br>
-      <br>
-      <p>Si toi aussi tu souhaites faire un feedzback, rendez-vous sur la plateforme Feedzback</p>
-      <a class="btn" href="<%=urlClientForm%>">FeedZback</a>
-      <p>L’équipe Feedzback</p>
+  <a class="btn" href="<%=urlClientForm%>"> Voir mon feedZback</a>
+  <p>L’équipe Feedzback</p>
 </body>
 
 </html>
