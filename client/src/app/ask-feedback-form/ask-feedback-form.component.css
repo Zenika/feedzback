@@ -6,6 +6,7 @@
     text-align: left;
     max-width: 745px;
     margin: auto;
+    margin-bottom: 300px;
 }
 .row {
     display: flex;

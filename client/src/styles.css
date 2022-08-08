@@ -51,6 +51,7 @@ footer {
     flex-direction: row;
     justify-content: space-evenly;
     color: rgb(110, 107, 107);
+    margin-top: 100px;
 }
 .github {
     display: flex;

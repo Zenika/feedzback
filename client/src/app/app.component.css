@@ -132,7 +132,6 @@ nav {
   font-size: 20px; 
   transition: .5s; 
   }
-  a:hover,
   .active {
     padding-bottom: 7px; 
     color: #D52150;
