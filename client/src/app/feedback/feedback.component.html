@@ -17,8 +17,7 @@
                 </div>
                 <div class="first-section">
                     <h3 class="column-right">Nom de votre collègue</h3>
-                    <h4 class="column-right" *ngIf="type === 'Received'"> {{feedback.senderName}}</h4>
-                    <h4 class="column-right" *ngIf="type === 'Sent'"> {{feedback.receverName}}</h4>
+                    <h4 class="column-right"> {{ type === 'Received' ? feedback.senderName: feedback.receverName}}</h4>
                 </div>
             </div>
             <h1 *ngIf="type === 'Received'">Son retour </h1>
