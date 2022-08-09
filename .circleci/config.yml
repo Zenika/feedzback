@@ -113,7 +113,10 @@ jobs:
             echo $URL 
             sed  "s,<SERVER_API>,$URL,g" -i src/environments/environment.prod.ts
             cat src/environments/environment.prod.ts
-            
+       - persist_to_workspace:
+           root: client
+           paths:
+             - /
 
   build:
     executor: node
