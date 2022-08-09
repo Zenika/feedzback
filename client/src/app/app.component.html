@@ -1,5 +1,5 @@
-<nav class="nav-mobile" role="navigation">
-  <div class="menuToggle"  tabindex="0" id="menuToggle" (blur)="hideMenu()" *ngIf="isLogged()">
+<nav class="nav-mobile" role="navigation"  *ngIf="isLogged()">
+  <div class="menuToggle"  tabindex="0" id="menuToggle" (blur)="hideMenu()">
     <input class="checkBox"  type="checkbox" #checkBox/>
     <div class="burger" (click)="checkBox.checked = !checkBox.checked">
       <span></span>
@@ -13,14 +13,14 @@
       <li><a class="menu-item" (click)="onClickItem('/feedbacks')" [ngClass]="{'active': router.url === '/feedbacks'}">Mes feedZbacks</a></li>
     </ul>  
   </div>
-  <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']" *ngIf="isLogged()">
+  <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']">
   <div class="name-icon">
     <h4>{{getFirstName()}}</h4>
     <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
   </div>
 </nav>
-<nav class="nav-web">
-  <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']"  *ngIf="isLogged()">
+<nav class="nav-web"  *ngIf="isLogged()">
+  <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']">
   <ul *ngIf="isLogged()">
     <a class="menu-item" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Accueil&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
@@ -28,6 +28,6 @@
     <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes feedZbacks&nbsp;&nbsp;</a>
   </ul>  
   <h4>{{getFirstName()}}</h4>
-  <img src="/assets/logout.svg" class="btn-logout"  *ngIf="isLogged()" (click)="signOut()" >
+  <img src="/assets/logout.svg" class="btn-logout" (click)="signOut()" >
 </nav>
  <router-outlet></router-outlet>
