@@ -116,7 +116,7 @@ jobs:
        - persist_to_workspace:
            root: client
            paths:
-             - /*
+             - /src/environments/environment.prod.ts
 
   build:
     executor: node
