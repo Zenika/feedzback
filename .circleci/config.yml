@@ -19,7 +19,6 @@ executors:
    
 
 jobs:
-  
   install-client-dependencies:
     executor:
       name: node
@@ -266,29 +265,18 @@ workflows:
              - install-client-dependencies
       - set-serverApi-client:
           requires:
-             - install-client-dependencies
+             - deploy-server
 
       - build: 
           requires:
-            - install-client-dependencies
             - unit-test-client
             - set-serverApi-client
             
       - deploy-server:
            requires:
-             - install-client-dependencies
              - unit-test-server
-            
 
       - deploy:
             requires:
-               - build
-               - deploy-server
-      
-
-           
-
-
-      
-      
+               - build  
  
