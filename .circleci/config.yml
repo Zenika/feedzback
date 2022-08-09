@@ -127,6 +127,10 @@ jobs:
           name: build_front_end
           working_directory: client
           command:  npm run build
+      - run:
+          name: server url
+          working_directory: client
+          command: cat src/environments/environment.prod.ts
       
       - persist_to_workspace:
           root: client
