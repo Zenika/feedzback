@@ -257,7 +257,7 @@ workflows:
              - install-client-dependencies
       - set-serverApi-client:
           requires:
-             - deploy-server
+             - install-client-dependencies
 
       - build: 
           requires:
