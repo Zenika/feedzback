@@ -122,6 +122,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - attach_workspace:
+          at: client
       - restore_cache:
            keys:
              - v32-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
