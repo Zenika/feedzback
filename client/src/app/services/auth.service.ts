@@ -13,8 +13,8 @@ export class AuthService {
     public firebaseAuth: AngularFireAuth,
     public router: Router,
   ) {
-    this.firebaseAuth.authState.subscribe(async user => {
-      this.user = user
+    this.firebaseAuth.authState.subscribe(user => {
+        this.user = user
    });
   }
 

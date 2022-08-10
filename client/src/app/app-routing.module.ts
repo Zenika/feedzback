@@ -20,7 +20,7 @@ const routes: Routes = [
   {path:'feedback/:id/:type', component:FeedbackComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
   {path:'result', component:SendAskFeedbackResultComponent, canActivate: [MasterAuthGuard], data: { authGuardPipe: redirectUnauthorizedToSignInPage }},
   {path:'sign-in', component:SignInComponent},
-  {path:'**',redirectTo:'sign-in'}
+  {path:'**',redirectTo:'home'}
 ];
 
 @NgModule({
