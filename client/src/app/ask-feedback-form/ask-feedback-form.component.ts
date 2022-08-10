@@ -44,8 +44,8 @@ export class AskFeedbackFormComponent implements OnInit {
     const token = await this.authService.getUserTokenId()
     const feedback = new FeedbackRequest(
       token!,
-      this.userName,
-      this.userEmail,
+      this.userName ? this.userName : 'test@exemple.com',
+      this.userEmail ? this.userEmail : 'test',
       this.receverName?.value,
       this.receverEmail?.value,
       this.message?.value

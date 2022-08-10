@@ -36,7 +36,8 @@ describe('Send feedback form tests', () => {
       cy.get('#coworker-name').type('marie mettrand')
       cy.get('#coworker-email').type('marie.mettrand@example.com')
       cy.get('#positive-feedback').type('les points poitifs sont:......')
-      cy.get('#to-improve-feedback').type('les axes dAmeliorations sont:.....')  
+      cy.get('#to-improve-feedback').type('les axes dAmeliorations sont:.....')
+     
       cy.get('#submit').click();
     })
   })
