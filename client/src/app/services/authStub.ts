@@ -6,5 +6,6 @@ export const authStub =  {
     signInWithGoogle: () => jest.fn(),
     getUserDetails: ()=> jest.fn(),
     isAnonymous: () => jest.fn(),
-    signOut: () => jest.fn()
+    signOut: () => jest.fn(),
+    getUserTokenId: () => jest.fn()
 }

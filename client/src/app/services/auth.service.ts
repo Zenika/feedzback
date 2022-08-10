@@ -8,29 +8,25 @@ import * as auth from 'firebase/auth';
 })
 export class AuthService {
   private user: any
+  public redirectUrl: string = "home"
   constructor(
     public firebaseAuth: AngularFireAuth,
     public router: Router,
   ) {
-  
     this.firebaseAuth.authState.subscribe(async user => {
-      const token = await user?.getIdToken();
-      if(token !== null)
-      sessionStorage.setItem('token', token!)
-      this.user = user 
+      this.user = user
    });
   }
 
-  oAuthProvider(provider:any) {
-
-    return this.firebaseAuth.signInWithPopup(provider)
-    .then(() => {
-      this.router.navigate(['home'])
-    }).catch(error => console.log(error)
-    )
+  async oAuthProvider(provider:any) {
+    return await this.firebaseAuth.signInWithPopup(provider)
   }
-  signInWithGoogle() {
-    return this.oAuthProvider(new auth.GoogleAuthProvider()).then((res)=> console.log('success')).catch((err)=> console.log(err))
+ async signInWithGoogle() {
+    return  this.oAuthProvider(new auth.GoogleAuthProvider()).then((res)=> {
+      this.firebaseAuth.authState.subscribe(() => {
+        this.router.navigate([this.redirectUrl])
+      })
+    }).catch((err)=> console.log(err))
   }
   isLogged() {
     if(this.user)
@@ -53,9 +49,12 @@ export class AuthService {
  getFirstName() {
   return this.user?.displayName?.split(' ')[0]
  }
+  async getUserTokenId()  {
+  this.user?.refreshToken
+  return  await this.user?.getIdToken()
+ }
   signOut() {
     return this.firebaseAuth.signOut().then(() =>{
-      sessionStorage.removeItem('token');
       this.router.navigate(['sign-in'])
     })
   }

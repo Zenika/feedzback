@@ -1,11 +1,11 @@
 <div class="container">
         <div class="header">
             <div class="flex-row">
-                <img src="../../assets/feedbacks-icon.svg" height="27" width="27" />
+                <img src="/assets/feedbacks-icon.svg" height="27" width="27" />
                 <h2>Mes feedZbacks</h2>
             </div>
             <div class="return-link-row">
-               <h5>&lt;</h5> <a href="" [routerLink]="['/feedbacks']" routerLinkActive="router-link-active">Retour</a>
+               <h5>&lt;</h5> <a href="" [routerLink]="['/feedbacks',type]" routerLinkActive="router-link-active">Retour</a>
             </div>
         </div>
         <div class="content">
@@ -17,8 +17,7 @@
                 </div>
                 <div class="first-section">
                     <h3 class="column-right">Nom de votre collègue</h3>
-                    <h4 class="column-right" *ngIf="type === 'Received'"> {{feedback.senderName}}</h4>
-                    <h4 class="column-right" *ngIf="type === 'Sent'"> {{feedback.receverName}}</h4>
+                    <h4 class="column-right"> {{ type === 'Received' ? feedback.senderName: feedback.receverName}}</h4>
                 </div>
             </div>
             <h1 *ngIf="type === 'Received'">Son retour </h1>

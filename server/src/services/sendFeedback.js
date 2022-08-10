@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const apiKey = process.env.API_KEY;
 const domain = process.env.DOMAIN;
+let feedbackId;
 
 const myMailgun = mailgun({
   apiKey: apiKey,
@@ -43,6 +44,8 @@ const insertFeedback = async (data) => {
       ...data,
       createdAt: Date.now()
     }
+  }).then((res) => {
+    feedbackId =  res[0].mutationResults[0].key.path[0].id
   })
 }
   
@@ -54,22 +57,25 @@ export const sendFeedback = async ({ feedbackInput }) => {
   if(!auth)
   return errMsg;
   const envi = process.env.NODE_ENV || 'development';
-  const template = replaceHtmlVars(emailTemplate, feedbackInput);
-  const msg = {
-    to: feedbackInput.receverEmail,
-    from: process.env.GENERIC_EMAIL,
-    subject: 'FeedZback',
-    html: template,
-  }
-  if (envi !== 'production') 
-    msg.to = 'feedzback@zenika.com'
-
   try {
     await insertFeedback(feedbackInput)
+    feedbackInput.feedbackId = feedbackId;
+    const template = replaceHtmlVars(emailTemplate, feedbackInput);
+    const msg = {
+      to: feedbackInput.receverEmail,
+      from: process.env.GENERIC_EMAIL,
+      subject: 'FeedZback',
+      html: template,
+    }
+    if (envi !== 'production') 
+      msg.to = 'feedzback@zenika.com'
     await myMailgun.messages().send(msg)
-    return "sent";
-  } catch (e) {
-    console.error(e)
-    return "error"
+    const success =  {
+      feedbackId: feedbackId,
+      message: 'sent'
+    }
+    return success;
+  } catch {
+    return { message: 'error'}
   }
 };

@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { event } from 'cypress/types/jquery';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -9,10 +10,10 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'FeedZback';
-  @ViewChild('menu',{static: false}) menu!: ElementRef
+  @ViewChild('menuToggle',{static: false}) menu!: ElementRef
   @ViewChild('checkBox', {static: false}) checkBox!: ElementRef
-
-  constructor(public authService: AuthService, private router: Router) {
+  
+  constructor(public authService: AuthService, public router: Router, public active: ActivatedRoute) {
   }
   signOut() {
     this.authService.signOut();
@@ -20,12 +21,13 @@ export class AppComponent {
   isLogged() {
     return this.authService.isLogged();
   }
-  ask() {
-    this.router.navigate(['/ask'])
+  onClickItem(route: String) {
+    this.router.navigate([route]).then(()=> {
+      this.hideMenu()
+    })
   }
-  checkFocus(event:any) {
-    if(event.target.checked)
-       this.menu.nativeElement.focus()
+  hideMenu() {
+  this.checkBox.nativeElement.checked = false
   }
   getFirstName() {
    return this.authService.getFirstName()

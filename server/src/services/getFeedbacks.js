@@ -47,6 +47,4 @@ export const combineEntityAndKey = (entities) => {
     list.push(res)
    }
    return list;
-
 }
-

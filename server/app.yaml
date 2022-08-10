@@ -5,7 +5,7 @@ service: server-service
 env_variables:
    API_KEY: <API_KEY>
    DOMAIN: <DOMAIN>
-   URL_CLIENT_FORM: <URL_CLIENT_FORM>
+   URL_CLIENT: <URL_CLIENT>
    GENERIC_EMAIL: <GENERIC_EMAIL>
    
   

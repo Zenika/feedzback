@@ -15,7 +15,7 @@ Do you want to ask or send feedbacks to your colleges but you afread about negat
 
 ## 🤝 Contributing
 
-Feel free to contribute, open issues and add features  [issues page](https://github.com/Zenika/feedzback/issues).
+Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issues) and add features by opening pull requests.
 
 
 ## Server
