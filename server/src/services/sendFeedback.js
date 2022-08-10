@@ -56,7 +56,6 @@ export const sendFeedback = async ({ feedbackInput }) => {
     return false})
   if(!auth)
   return errMsg;
-
   const envi = process.env.NODE_ENV || 'development';
   try {
     await insertFeedback(feedbackInput)
