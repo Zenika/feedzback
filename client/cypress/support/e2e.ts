@@ -15,5 +15,5 @@ const FIREBASE_CONFIG ={
 }
 firebase.initializeApp(FIREBASE_CONFIG);
 Cypress.Commands.add('login', () => {
-    firebase.auth().signInWithEmailAndPassword(Cypress.env('EMAIL'), Cypress.env('PASSWORD'))
+    firebase.auth().signInWithEmailAndPassword("cypress-test@exemple.com", "ZenikaFeedZback2022")
 })
