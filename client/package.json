@@ -28,7 +28,6 @@
     "angular-instantsearch": "^4.2.1",
     "apollo-angular": "^3.0.1",
     "concurrently": "^7.1.0",
-    "cypress-firebase": "^2.2.1",
     "dotenv": "^16.0.1",
     "firebase": "^9.0.0-beta.8",
     "firebase-admin": "^9.0.0",
