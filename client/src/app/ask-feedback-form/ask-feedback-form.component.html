@@ -1,40 +1,70 @@
-<div class="container">  
-       <div class="row">
-           <img src="/assets/question-mark.svg">
-           <h1>Demande de feedZback</h1> 
-        </div>
-      <span class="subtitle">Remplissez les champs ci-dessous et votre collègue recevra directement un mail l’invitant à
-        vous faire ses retours !</span>
-    <small>les champs marqués d’un astérisque sont obligatoires</small>
-    <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
-        <h2>Qui est votre collègue ?</h2>
-        <div class="row">
-            <div class="form-input" >
-                <label for="coworker-email">Email de votre collègue *</label>
-                <input type="email" class="input-text form-control" id="coworker-email" placeholder="pierre.douchon@example.com"
-                    formControlName="receverEmail" required email>
-                <small  *ngIf="receverEmail?.touched && receverEmail?.invalid">{{getFormControlError(receverEmail!)}}</small>
-            </div>
-            <div class="form-input">
-                <label for="coworker-name">Nom de votre collègue *</label>
-                <input type="text" class="input-text form-control" id="coworker-name" placeholder="Pierre Duchon" required
-                    formControlName="receverName">
-                <small
-                    *ngIf="receverName?.touched && receverName?.invalid">{{getFormControlError(receverName!)}}</small>
-            </div>
-        </div>
-        <h2>Votre demande</h2>
-        <div class="row">
-                <div  class="form-input">
-                    <label for="message">Message</label>
-                    <textarea class="textarea" name="message" id="message"
-                        placeholder="Exemple : Bonjour ! J’ai bientôt mon entretien annuel, et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci !"
-                        formControlName="message">
-                    </textarea>
-                </div>
-            </div>   
-            <div  class="btn-form">
-                <button id="submit" type="submit" class="btn btn-primary">{{ loading? 'Chargement...' : 'ENVOYER'}}</button>
-            </div>
-     </form>
-</div> 
+<div class="container">
+  <div class="row">
+    <img src="/assets/question-mark.svg" />
+    <h1>Demande de feedZback</h1>
+  </div>
+  <span class="subtitle"
+    >Remplissez les champs ci-dessous et votre collègue recevra directement un
+    mail l’invitant à vous faire ses retours !</span
+  >
+  <small>les champs marqués d’un astérisque sont obligatoires</small>
+  <form
+    [formGroup]="form"
+    id="askFeedbackForm"
+    (ngSubmit)="onSubmit()"
+    #myform="ngForm"
+    novalidate
+  >
+    <h2>Qui est votre collègue ?</h2>
+    <div class="row">
+      <div class="form-input">
+        <label for="coworker-email">Email de votre collègue *</label>
+        <input
+          type="email"
+          class="input-text form-control"
+          id="coworker-email"
+          placeholder="pierre.douchon@example.com"
+          formControlName="receverEmail"
+          required
+          email
+        />
+        <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{
+          getFormControlError(receverEmail!)
+        }}</small>
+      </div>
+      <div class="form-input">
+        <label for="coworker-name">Nom de votre collègue *</label>
+        <input
+          type="text"
+          class="input-text form-control"
+          id="coworker-name"
+          placeholder="Pierre Duchon"
+          required
+          formControlName="receverName"
+        />
+        <small *ngIf="receverName?.touched && receverName?.invalid">{{
+          getFormControlError(receverName!)
+        }}</small>
+      </div>
+    </div>
+    <h2>Votre demande</h2>
+    <div class="row">
+      <div class="form-input">
+        <label for="message">Message</label>
+        <textarea
+          class="textarea"
+          name="message"
+          id="message"
+          placeholder="Exemple : Bonjour ! J’ai bientôt mon entretien annuel, et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci !"
+          formControlName="message"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="btn-form">
+      <button id="submit" type="submit" class="btn btn-primary">
+        {{ loading ? "Chargement..." : "ENVOYER" }}
+      </button>
+    </div>
+  </form>
+</div>

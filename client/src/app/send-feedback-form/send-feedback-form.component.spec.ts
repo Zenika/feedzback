@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Apollo } from 'apollo-angular';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,13 +13,11 @@ import { authStub } from '../services/authStub';
 describe('SendFeedbackFormComponent', () => {
   let component: SendFeedbackFormComponent;
   let fixture: ComponentFixture<SendFeedbackFormComponent>;
-  let service: AuthService
+  // eslint-disable-next-line no-unused-vars
+  let service: AuthService;
   beforeEach(async () => {
-
     await TestBed.configureTestingModule({
-      providers: [Apollo,
-   {provide: AuthService, useValue: authStub}
-    ],
+      providers: [Apollo, { provide: AuthService, useValue: authStub }],
 
       declarations: [SendFeedbackFormComponent],
       imports: [
@@ -26,14 +25,13 @@ describe('SendFeedbackFormComponent', () => {
         RouterTestingModule,
         ApolloTestingModule,
         AngularFireAuthModule,
-        
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(SendFeedbackFormComponent);
     component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
-    service = TestBed.inject(AuthService)
+    service = TestBed.inject(AuthService);
   });
 
   beforeEach(() => {
@@ -43,7 +41,7 @@ describe('SendFeedbackFormComponent', () => {
   });
 
   it('should create', waitForAsync(() => {
-    component.onSubmit()
+    component.onSubmit();
     expect(component).toBeTruthy();
   }));
 
@@ -52,80 +50,80 @@ describe('SendFeedbackFormComponent', () => {
   }));
 
   it('champs Nom Zenika de votre collègue est requis', waitForAsync(() => {
-    let name = component.form.controls['receverName'];
+    const name = component.form.controls['receverName'];
     expect(name.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs Nom Zenika de votre collègue est valide quand il est remplis', waitForAsync(() => {
-    let name = component.form.controls['receverName'];
-    name.setValue("Pompidore Pierre")
+    const name = component.form.controls['receverName'];
+    name.setValue('Pompidore Pierre');
     expect(name.valid).toBeTruthy();
-  }))
+  }));
 
   it('champs Email Zenika de votre collègue est requis', waitForAsync(() => {
-    let senderEmail = component.form.controls['receverEmail'];
+    const senderEmail = component.form.controls['receverEmail'];
     expect(senderEmail.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs Email Zenika de votre collègue est valide quand il est remplis', waitForAsync(() => {
-    let senderEmail = component.form.controls['receverEmail'];
-    senderEmail.setValue("marie.mettrand@example.com")
+    const senderEmail = component.form.controls['receverEmail'];
+    senderEmail.setValue('marie.mettrand@example.com');
     expect(senderEmail.valid).toBeTruthy();
-  }))
+  }));
 
   it('champs Votre Email est invalide', waitForAsync(() => {
-    let email = component.form.controls['receverEmail'];
-    email.setValue("salut")
+    const email = component.form.controls['receverEmail'];
+    email.setValue('salut');
     expect(email!.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs points positifs est requis', waitForAsync(() => {
-    let pointsPositifs = component.form.controls['postitiveFeedback'];
+    const pointsPositifs = component.form.controls['postitiveFeedback'];
     expect(pointsPositifs.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs points positifs est valide quand il est remplis', waitForAsync(() => {
-    let pointsPositifs = component.form.controls['postitiveFeedback'];
-    pointsPositifs.setValue("les points positifs:.....")
+    const pointsPositifs = component.form.controls['postitiveFeedback'];
+    pointsPositifs.setValue('les points positifs:.....');
     expect(pointsPositifs.valid).toBeTruthy();
-  }))
+  }));
 
   it('champs points positifs est invalide quand il dépasse les 500 charactères', waitForAsync(() => {
-    let pointsPositifs = component.form.controls['postitiveFeedback'];
-    pointsPositifs.setValue("a".repeat(501))
+    const pointsPositifs = component.form.controls['postitiveFeedback'];
+    pointsPositifs.setValue('a'.repeat(501));
     expect(pointsPositifs.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs axes ameliorations positifs est requis', waitForAsync(() => {
-    let axesAmeliorations = component.form.controls['toImproveFeedback'];
+    const axesAmeliorations = component.form.controls['toImproveFeedback'];
     expect(axesAmeliorations.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs axes ameliorations est valide quand il est remplis', waitForAsync(() => {
-    let axesAmeliorations = component.form.controls['toImproveFeedback'];
-    axesAmeliorations.setValue("les axes ameliorations:.....")
+    const axesAmeliorations = component.form.controls['toImproveFeedback'];
+    axesAmeliorations.setValue('les axes ameliorations:.....');
     expect(axesAmeliorations.valid).toBeTruthy();
-  }))
+  }));
 
   it('champs axes ameliorations est invalide quand il dépasse les 500 charactères', waitForAsync(() => {
-    let pointsPositifs = component.form.controls['toImproveFeedback'];
-    pointsPositifs.setValue("a".repeat(501))
+    const pointsPositifs = component.form.controls['toImproveFeedback'];
+    pointsPositifs.setValue('a'.repeat(501));
     expect(pointsPositifs.valid).toBeFalsy();
-  }))
+  }));
 
   it('Formulaire doit être valide quand tous les champs sont valides', waitForAsync(() => {
-    let receverName = component.form.controls['receverName'];
-    receverName.setValue("Pompidor Pierre")
+    const receverName = component.form.controls['receverName'];
+    receverName.setValue('Pompidor Pierre');
 
-    let receverEmail = component.form.controls['receverEmail'];
-    receverEmail.setValue("marie.mettrand@example.com")
+    const receverEmail = component.form.controls['receverEmail'];
+    receverEmail.setValue('marie.mettrand@example.com');
 
-    let pointsPositifs = component.form.controls['postitiveFeedback'];
-    pointsPositifs.setValue("les points positifs:.....")
+    const pointsPositifs = component.form.controls['postitiveFeedback'];
+    pointsPositifs.setValue('les points positifs:.....');
 
-    let axesAmeliorations = component.form.controls['toImproveFeedback'];
-    axesAmeliorations.setValue("les axes ameliorations:.....")
+    const axesAmeliorations = component.form.controls['toImproveFeedback'];
+    axesAmeliorations.setValue('les axes ameliorations:.....');
 
     expect(component.form.valid).toBeTruthy();
-  }))
+  }));
 });

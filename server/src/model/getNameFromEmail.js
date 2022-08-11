@@ -18,4 +18,4 @@ export default function getNameFromEmail (email) {
     }
   }
   return fname + " " + lname;
-};
+}

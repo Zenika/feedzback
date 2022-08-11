@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Apollo } from 'apollo-angular';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,24 +9,22 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { authStub } from '../services/authStub';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { environment } from 'src/environments/environment.prod';
 
 describe('AskFeedbackFormComponent', () => {
   let component: AskFeedbackFormComponent;
   let fixture: ComponentFixture<AskFeedbackFormComponent>;
-  
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [Apollo,
-                 {provide:AuthService,useValue: authStub}],
+      providers: [Apollo, { provide: AuthService, useValue: authStub }],
       declarations: [AskFeedbackFormComponent],
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
         ApolloTestingModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(AskFeedbackFormComponent);
     component = fixture.debugElement.componentInstance;
@@ -39,8 +38,7 @@ describe('AskFeedbackFormComponent', () => {
   });
 
   it('should create', waitForAsync(() => {
- 
-    component.onSubmit()
+    component.onSubmit();
     expect(component).toBeTruthy();
   }));
 
@@ -49,38 +47,38 @@ describe('AskFeedbackFormComponent', () => {
   }));
 
   it('champs Nom Zenika de votre collègue est requis', waitForAsync(() => {
-    let name = component.form.controls['receverName'];
+    const name = component.form.controls['receverName'];
     expect(name.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs Nom Zenika de votre collègue est valide quand il est remplis', waitForAsync(() => {
-    let name = component.form.controls['receverName'];
-    name.setValue("Pompidore Pierre")
+    const name = component.form.controls['receverName'];
+    name.setValue('Pompidore Pierre');
     expect(name.valid).toBeTruthy();
-  }))
+  }));
 
   it('champs Email Zenika de votre collègue est requis', waitForAsync(() => {
-    let senderEmail = component.form.controls['receverEmail'];
+    const senderEmail = component.form.controls['receverEmail'];
     expect(senderEmail.valid).toBeFalsy();
-  }))
+  }));
 
   it('champs Email Zenika de votre collègue est valide quand il est remplis', waitForAsync(() => {
-    let senderEmail = component.form.controls['receverEmail'];
-    senderEmail.setValue("marie.mettrand@example.com")
+    const senderEmail = component.form.controls['receverEmail'];
+    senderEmail.setValue('marie.mettrand@example.com');
     expect(senderEmail.valid).toBeTruthy();
-  }))
+  }));
 
   it('champs Votre Email est invalide', waitForAsync(() => {
-    let email = component.form.controls['receverEmail'];
-    email.setValue("salut")
+    const email = component.form.controls['receverEmail'];
+    email.setValue('salut');
     expect(email!.valid).toBeFalsy();
-  }))
+  }));
 
   it('Formulaire doit être valide quand tous les champs sont valides', waitForAsync(() => {
-    let receverName = component.form.controls['receverName'];
-    receverName.setValue("Pompidor Pierre")
-    let receverEmail = component.form.controls['receverEmail'];
-    receverEmail.setValue("marie.mettrand@example.com")
+    const receverName = component.form.controls['receverName'];
+    receverName.setValue('Pompidor Pierre');
+    const receverEmail = component.form.controls['receverEmail'];
+    receverEmail.setValue('marie.mettrand@example.com');
     expect(component.form.valid).toBeTruthy();
-  }))
+  }));
 });
