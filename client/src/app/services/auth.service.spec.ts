@@ -4,23 +4,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { authStub } from './authStub';
 
-
 describe('AuthService', () => {
   let service: AuthService;
 
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule,
-                AngularFireAuthModule],
-      providers: [{provide: AuthService, useValue: authStub}]
+      imports: [RouterTestingModule, AngularFireAuthModule],
+      providers: [{ provide: AuthService, useValue: authStub }],
     });
-    service = TestBed.inject(AuthService)
-
+    service = TestBed.inject(AuthService);
   });
-  it('The service is created',()=>{
+  it('The service is created', () => {
     expect(service).toBeTruthy();
-
-  })
-
+  });
 });

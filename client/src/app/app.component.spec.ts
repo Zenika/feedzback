@@ -6,21 +6,14 @@ import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
 import { authStub } from './services/authStub';
 
-
-
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        AngularFireAuthModule
-      ],
-      providers: [{provide:AuthService, useValue: authStub}],
-      declarations: [
-        AppComponent
-      ],
-   
-      schemas:[CUSTOM_ELEMENTS_SCHEMA]
+      imports: [RouterTestingModule, AngularFireAuthModule],
+      providers: [{ provide: AuthService, useValue: authStub }],
+      declarations: [AppComponent],
+
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

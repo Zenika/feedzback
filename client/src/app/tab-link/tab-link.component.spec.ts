@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TabLinkComponent } from './tab-link.component';
 
 describe('TabLinkComponent', () => {
@@ -8,9 +7,8 @@ describe('TabLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TabLinkComponent ]
-    })
-    .compileComponents();
+      declarations: [TabLinkComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

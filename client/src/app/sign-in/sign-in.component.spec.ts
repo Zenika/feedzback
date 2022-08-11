@@ -10,11 +10,10 @@ describe('SignInComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SignInComponent ],
+      declarations: [SignInComponent],
       imports: [RouterTestingModule],
-      providers: [{ provide: AuthService, useValue: authStub}]
-    })
-    .compileComponents();
+      providers: [{ provide: AuthService, useValue: authStub }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -22,8 +21,7 @@ describe('SignInComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('The component is created', ()=>{
+  it('The component is created', () => {
     expect(component).toBeTruthy();
-  })
-
+  });
 });
