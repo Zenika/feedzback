@@ -1,6 +1,3 @@
-
-
-/* global mocks for jsdom */
 const mock = () => {
   let storage: { [key: string]: string } = {};
   return {
@@ -26,15 +23,10 @@ Object.defineProperty(document.body.style, 'transform', {
   },
 });
 
-
-// Necessay for tests to pass on components that use the angular/flex-layout library
 Object.defineProperty(window, 'getComputedStyle', {
   value: () => ({
-      getPropertyValue: (prop: any) => {
-          return '';
-      }
-  })
+    getPropertyValue: (prop: any) => {
+      return '';
+    },
+  }),
 });
-
-/* output shorter and more meaningful Zone error stack traces */
-// Error.stackTraceLimit = 2;

@@ -12,7 +12,7 @@ import { SendFeedbackFormComponent } from './send-feedback-form/send-feedback-fo
 import { AskFeedbackFormComponent } from './ask-feedback-form/ask-feedback-form.component';
 import { SendAskFeedbackResultComponent } from './send-ask-feedback-result/send-ask-feedback-result.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from  "@angular/fire/compat";
+import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { RouterModule } from '@angular/router';
@@ -55,13 +55,13 @@ import { FeedbackComponent } from './feedback/feedback.component';
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: environment.serverApi
-          })
-        }
+            uri: environment.serverApi,
+          }),
+        };
       },
       deps: [HttpLink],
-    }
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
