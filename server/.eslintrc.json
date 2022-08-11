@@ -1,20 +1,14 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true,
         "es2021": true
     },
-    "extends": [
-        "google",
-        "eslint-config-prettier"
-    ],
+    "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
     "rules": {
-        "prettier/prettier": "error"
-    },
-    "plugins": [
-        "eslint-plugin-prettier"
-      ]
+        "no-undef": "off"
+    }
 }
