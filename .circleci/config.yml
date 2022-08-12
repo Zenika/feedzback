@@ -121,6 +121,9 @@ jobs:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+         keys:
+          - v32-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       - run: 
           name: lint-client
           working_directory: client
