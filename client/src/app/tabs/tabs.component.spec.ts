@@ -1,10 +1,10 @@
 /* eslint-disable dot-notation */
-import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TabLinkComponent } from '../tab-link/tab-link.component';
-import { TabsComponent } from './tabs.component';
+import {Component, ViewChild} from '@angular/core';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {RouterTestingModule} from '@angular/router/testing';
+import {TabLinkComponent} from '../tab-link/tab-link.component';
+import {TabsComponent} from './tabs.component';
 
 @Component({
   template: `

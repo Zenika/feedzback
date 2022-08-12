@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Feedback } from '../model/feedback';
-import { FeedbackType } from '../enum/feedback-type';
-import { AuthService } from '../services/auth.service';
-import { GraphqlService } from '../services/graphql/graphql.service';
+import {Component, OnInit} from '@angular/core';
+import {Feedback} from '../model/feedback';
+import {FeedbackType} from '../enum/feedback-type';
+import {AuthService} from '../services/auth.service';
+import {GraphqlService} from '../services/graphql/graphql.service';
 
 @Component({
   selector: 'app-my-feedbacks-page',
@@ -16,17 +16,17 @@ export class MyFeedbacksPageComponent implements OnInit {
   public email!: string;
   constructor(
     private authService: AuthService,
-    private graphqlService: GraphqlService
+    private graphqlService: GraphqlService,
   ) {
     this.email = authService.getUserDetails().email;
   }
 
   ngOnInit(): void {
     this.graphqlService
-      .getFeedbackList(this.email)
-      .subscribe(({ receivedFeedbacks, sentFeedbacks }: any) => {
-        this.receivedFeedbacks = receivedFeedbacks;
-        this.sentFeedbacks = sentFeedbacks;
-      });
+        .getFeedbackList(this.email)
+        .subscribe(({receivedFeedbacks, sentFeedbacks}: any) => {
+          this.receivedFeedbacks = receivedFeedbacks;
+          this.sentFeedbacks = sentFeedbacks;
+        });
   }
 }

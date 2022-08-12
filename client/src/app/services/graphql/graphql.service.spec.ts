@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Apollo } from 'apollo-angular';
+import {TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Apollo} from 'apollo-angular';
 
-import { GraphqlService } from './graphql.service';
+import {GraphqlService} from './graphql.service';
 
 describe('GraphqlService', () => {
   let service: GraphqlService;

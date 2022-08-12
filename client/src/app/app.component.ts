@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +9,13 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'FeedZback';
-  @ViewChild('menuToggle', { static: false }) menu!: ElementRef;
-  @ViewChild('checkBox', { static: false }) checkBox!: ElementRef;
+  @ViewChild('menuToggle', {static: false}) menu!: ElementRef;
+  @ViewChild('checkBox', {static: false}) checkBox!: ElementRef;
 
   constructor(
     public authService: AuthService,
     public router: Router,
-    public active: ActivatedRoute
+    public active: ActivatedRoute,
   ) {}
 
   signOut() {

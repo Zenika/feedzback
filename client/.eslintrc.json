@@ -4,28 +4,38 @@
         "es2021": true
     },
     "extends": [
-        "standard",
-        "prettier"
+        "google"
     ],
-    "globals": {
-        "cy": true,
-        "describe": true,
-        "it": true,
-        "beforeEach": true,
-        "jest": true,
-        "expect": true
-      },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint",
-        "eslint-plugin-prettier"
+        "@typescript-eslint"
     ],
     "rules": {
-        "no-useless-constructor":"off",
-        "prettier/prettier": "error"
-    }
+        "require-jsdoc": "off",
+        "new-cap": "off",
+        "max-len": "off"
+    },
+    "overrides": [
+        {
+          "files": [
+            "*.html"
+          ],
+          "extends": [
+            "plugin:@angular-eslint/template/recommended",
+            "plugin:cypress/recommended"
+          ],
+          "plugins": [
+            "html",
+            "eslint-plugin-prettier"
+          ],
+          "rules": {
+            "no-trailing-spaces": "off",
+            "indent":"off" 
+          }
+        }
+      ]
 }

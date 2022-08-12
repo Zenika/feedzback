@@ -9,7 +9,7 @@
     "test": "ng test --watch=false",
     "dev": "concurrently --kill-others \"npm start\" \"cd ../server && npm install && npm start\"",
     "cypress": "cypress open",
-    "lint": "ng lint"
+    "lint": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
@@ -56,8 +56,11 @@
     "@typescript-eslint/parser": "^5.33.0",
     "cypress": "^10.0.0",
     "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-prettier": "^4.0.0",

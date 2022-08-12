@@ -1,4 +1,4 @@
-import { Nl2brPipe } from './nl2br.pipe';
+import {Nl2brPipe} from './nl2br.pipe';
 
 describe('Nl2brPipePipe', () => {
   it('create an instance', () => {

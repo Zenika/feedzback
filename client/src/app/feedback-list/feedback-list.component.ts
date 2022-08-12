@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
-import { Feedback } from '../model/feedback';
-import { FeedbackType } from '../enum/feedback-type';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, Input, AfterContentChecked} from '@angular/core';
+import {Feedback} from '../model/feedback';
+import {FeedbackType} from '../enum/feedback-type';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-feedback-list',
@@ -26,11 +26,11 @@ export class FeedbackListComponent implements OnInit, AfterContentChecked {
   sortFeedbackList() {
     this.sortedFeedbackList = [...this.feedbacks];
     this.sortedFeedbackList.sort(
-      (a, b) =>
-        new Date(
-          this.datePipe.transform(b.createdAt, 'yyyy-MM-dd')!
-        ).getTime() -
-        new Date(this.datePipe.transform(a.createdAt, 'yyyy-MM-dd')!).getTime()
+        (a, b) =>
+          new Date(
+          this.datePipe.transform(b.createdAt, 'yyyy-MM-dd')!,
+          ).getTime() -
+        new Date(this.datePipe.transform(a.createdAt, 'yyyy-MM-dd')!).getTime(),
     );
   }
 }
