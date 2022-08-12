@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "types": [
-      "gapi",
+      "gapi"
     ],
     "skipLibCheck": true,
     "baseUrl": "./",

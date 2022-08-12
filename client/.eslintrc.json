@@ -7,6 +7,14 @@
         "standard",
         "prettier"
     ],
+    "globals": {
+        "cy": true,
+        "describe": true,
+        "it": true,
+        "beforeEach": true,
+        "jest": true,
+        "expect": true
+      },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",

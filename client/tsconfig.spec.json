@@ -4,18 +4,17 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jest"
+      "jest",
+      "node"
     ],
-    "module": "commonjs",
-    "emitDecoratorMetadata": true,
-    "allowJs": true
+    "module": "ES2022",
+    "emitDecoratorMetadata": true
   },
   "files": [
     "src/test.ts",
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*",
   ]
 }
