@@ -127,11 +127,7 @@ jobs:
       - run: 
           name: lint-client
           working_directory: client
-          command: ng lint
-      - run: 
-          name: lint-server
-          working_directory: server
-          command: ng lint
+          command: npm run lint
          
 
   build:
