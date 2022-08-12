@@ -1,12 +1,12 @@
-import { Location } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Router, Routes } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AskFeedbackFormComponent } from '../ask-feedback-form/ask-feedback-form.component';
-import { SendFeedbackFormComponent } from '../send-feedback-form/send-feedback-form.component';
+import {Location} from '@angular/common';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {Router, Routes} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AskFeedbackFormComponent} from '../ask-feedback-form/ask-feedback-form.component';
+import {SendFeedbackFormComponent} from '../send-feedback-form/send-feedback-form.component';
 
-import { HomeComponent } from './home.component';
+import {HomeComponent} from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,10 +14,10 @@ describe('HomeComponent', () => {
   let location: Location;
   let router: Router;
   const routes: Routes = [
-    { path: 'home', component: HomeComponent },
-    { path: 'send', component: SendFeedbackFormComponent },
-    { path: 'ask', component: AskFeedbackFormComponent },
-    { path: '**', redirectTo: 'home' },
+    {path: 'home', component: HomeComponent},
+    {path: 'send', component: SendFeedbackFormComponent},
+    {path: 'ask', component: AskFeedbackFormComponent},
+    {path: '**', redirectTo: 'home'},
   ];
 
   beforeEach(async () => {
@@ -40,16 +40,16 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("Send feedback button will open feedback form when it's clicked", async () => {
+  it('Send feedback button will open feedback form when it\'s clicked', async () => {
     fixture.debugElement
-      .query(By.css('.btn-send-margin'))
-      .nativeElement.click();
+        .query(By.css('.btn-send-margin'))
+        .nativeElement.click();
     fixture.detectChanges();
     await fixture.whenStable();
     expect(location.path()).toEqual('/send');
   });
 
-  it("Ask feedback button will open ask feedback form when it's clicked", async () => {
+  it('Ask feedback button will open ask feedback form when it\'s clicked', async () => {
     fixture.debugElement.query(By.css('.btn-ask-margin')).nativeElement.click();
     fixture.detectChanges();
     await fixture.whenStable();

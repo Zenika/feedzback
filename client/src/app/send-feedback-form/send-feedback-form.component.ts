@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { getFormControlError } from '../get-form-control-error';
-import { SendFeedback } from '../model/sendFeedback';
-import { AuthService } from '../services/auth.service';
-import { GraphqlService } from '../services/graphql/graphql.service';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {getFormControlError} from '../get-form-control-error';
+import {SendFeedback} from '../model/sendFeedback';
+import {AuthService} from '../services/auth.service';
+import {GraphqlService} from '../services/graphql/graphql.service';
 
 @Component({
   selector: 'app-send-feedback-form',
@@ -18,17 +18,17 @@ export class SendFeedbackFormComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private graphqlService: GraphqlService
+    private graphqlService: GraphqlService,
   ) {
     const user = this.authService.getUserDetails();
     this.userEmail =
-      decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null'
-        ? user.email!
-        : decodeURIComponent(this.queryParams.get('senderEmail')!);
+      decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null' ?
+        user.email! :
+        decodeURIComponent(this.queryParams.get('senderEmail')!);
     this.userName =
-      this.queryParams.get('senderName') === null
-        ? user.displayName!
-        : this.queryParams.get('senderName')!;
+      this.queryParams.get('senderName') === null ?
+        user.displayName! :
+        this.queryParams.get('senderName')!;
   }
 
   private feedbackMaxLength = 500;
@@ -37,7 +37,7 @@ export class SendFeedbackFormComponent implements OnInit {
 
   ngOnInit(): void {}
   decodedReceverEmail = decodeURIComponent(
-    this.queryParams.get('receverEmail') || ''
+      this.queryParams.get('receverEmail') || '',
   );
 
   form = new FormGroup({
@@ -46,8 +46,8 @@ export class SendFeedbackFormComponent implements OnInit {
       Validators.email,
     ]),
     receverName: new FormControl(
-      this.queryParams.get('receverName'),
-      Validators.required
+        this.queryParams.get('receverName'),
+        Validators.required,
     ),
     postitiveFeedback: new FormControl('', [
       Validators.required,
@@ -90,7 +90,7 @@ export class SendFeedbackFormComponent implements OnInit {
       this.receverName?.value,
       this.postitiveFeedback?.value,
       this.toImproveFeedback?.value,
-      this.comment?.value
+      this.comment?.value,
     );
     this.form.markAllAsTouched();
     if (this.form.valid) {

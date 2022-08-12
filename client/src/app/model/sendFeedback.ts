@@ -7,6 +7,6 @@ export class SendFeedback {
     public receverName: String = '',
     public positiveFeedback: String = '',
     public toImprove: String = '',
-    public comment: String = ''
+    public comment: String = '',
   ) {}
 }

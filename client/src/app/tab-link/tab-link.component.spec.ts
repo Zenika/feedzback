@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TabLinkComponent } from './tab-link.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {TabLinkComponent} from './tab-link.component';
 
 describe('TabLinkComponent', () => {
   let component: TabLinkComponent;

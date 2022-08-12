@@ -9,6 +9,6 @@ export class Feedback {
     public positiveFeedback: string = '',
     public toImprove: string = '',
     public comment: string = '',
-    public createdAt: string = ''
+    public createdAt: string = '',
   ) {}
 }

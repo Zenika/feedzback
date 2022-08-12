@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { getFormControlError } from '../get-form-control-error';
-import { AuthService } from '../services/auth.service';
-import { FeedbackRequest } from '../model/feedbackRequest';
-import { GraphqlService } from '../services/graphql/graphql.service';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {getFormControlError} from '../get-form-control-error';
+import {AuthService} from '../services/auth.service';
+import {FeedbackRequest} from '../model/feedbackRequest';
+import {GraphqlService} from '../services/graphql/graphql.service';
 
 @Component({
   selector: 'app-ask-feedback-form',
@@ -20,7 +20,7 @@ export class AskFeedbackFormComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private graphqlService: GraphqlService
+    private graphqlService: GraphqlService,
   ) {
     const user = this.authService.getUserDetails();
     this.userEmail = user?.email!;
@@ -36,8 +36,8 @@ export class AskFeedbackFormComponent {
       Validators.email,
     ]),
     receverName: new FormControl(
-      this.queryParams.get('receverName'),
-      Validators.required
+        this.queryParams.get('receverName'),
+        Validators.required,
     ),
     message: new FormControl(''),
   });
@@ -70,7 +70,7 @@ export class AskFeedbackFormComponent {
       this.userEmail ? this.userEmail : this.testName,
       this.receverName?.value,
       this.receverEmail?.value,
-      this.message?.value
+      this.message?.value,
     );
     this.form.markAllAsTouched();
     if (this.form.valid) {

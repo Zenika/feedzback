@@ -1,14 +1,14 @@
 /* eslint-disable dot-notation */
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Apollo } from 'apollo-angular';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AskFeedbackFormComponent } from './ask-feedback-form.component';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { authStub } from '../services/authStub';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {Apollo} from 'apollo-angular';
+import {ReactiveFormsModule} from '@angular/forms';
+import {AskFeedbackFormComponent} from './ask-feedback-form.component';
+import {ApolloTestingModule} from 'apollo-angular/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {AuthService} from '../services/auth.service';
+import {authStub} from '../services/authStub';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 
 describe('AskFeedbackFormComponent', () => {
   let component: AskFeedbackFormComponent;
@@ -16,7 +16,7 @@ describe('AskFeedbackFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [Apollo, { provide: AuthService, useValue: authStub }],
+      providers: [Apollo, {provide: AuthService, useValue: authStub}],
       declarations: [AskFeedbackFormComponent],
       imports: [
         ReactiveFormsModule,

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -7,8 +7,8 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
-import { AuthService } from '../auth.service';
+import {Observable, switchMap} from 'rxjs';
+import {AuthService} from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +17,12 @@ export class MasterAuthGuard implements CanActivate {
   constructor(
     public activateRoute: ActivatedRoute,
     public authService: AuthService,
-    public router: Router
+    public router: Router,
   ) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot,
   ):
     | boolean
     | UrlTree
@@ -51,13 +51,13 @@ export class MasterAuthGuard implements CanActivate {
       return false;
     } else {
       return this.authService.firebaseAuth.authState.pipe(
-        switchMap(async (authState) => {
-          if (!authState) {
-            this.router.navigate(['sign-in']);
-            return false;
-          }
-          return true;
-        })
+          switchMap(async (authState) => {
+            if (!authState) {
+              this.router.navigate(['sign-in']);
+              return false;
+            }
+            return true;
+          }),
       );
     }
   }

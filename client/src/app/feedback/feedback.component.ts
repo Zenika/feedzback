@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Feedback } from '../model/feedback';
-import { GraphqlService } from '../services/graphql/graphql.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Feedback} from '../model/feedback';
+import {GraphqlService} from '../services/graphql/graphql.service';
 
 @Component({
   selector: 'app-feedback',
@@ -14,7 +14,7 @@ export class FeedbackComponent implements OnInit {
 
   constructor(
     private activateRouter: ActivatedRoute,
-    private graphqlService: GraphqlService
+    private graphqlService: GraphqlService,
   ) {}
 
   ngOnInit(): void {

@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '../services/auth.service';
-import { authStub } from '../services/authStub';
-import { SignInComponent } from './sign-in.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AuthService} from '../services/auth.service';
+import {authStub} from '../services/authStub';
+import {SignInComponent} from './sign-in.component';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -12,7 +12,7 @@ describe('SignInComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SignInComponent],
       imports: [RouterTestingModule],
-      providers: [{ provide: AuthService, useValue: authStub }],
+      providers: [{provide: AuthService, useValue: authStub}],
     }).compileComponents();
   });
 

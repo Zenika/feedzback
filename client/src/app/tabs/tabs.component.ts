@@ -4,9 +4,9 @@ import {
   QueryList,
   AfterContentInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
-import { TabLinkComponent } from '../tab-link/tab-link.component';
+import {TabLinkComponent} from '../tab-link/tab-link.component';
 
 @Component({
   selector: 'app-tabs',

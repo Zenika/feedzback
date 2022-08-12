@@ -1,14 +1,14 @@
 /* eslint-disable dot-notation */
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Apollo } from 'apollo-angular';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SendFeedbackFormComponent } from './send-feedback-form.component';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { authStub } from '../services/authStub';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {Apollo} from 'apollo-angular';
+import {ReactiveFormsModule} from '@angular/forms';
+import {SendFeedbackFormComponent} from './send-feedback-form.component';
+import {ApolloTestingModule} from 'apollo-angular/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {AuthService} from '../services/auth.service';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import {authStub} from '../services/authStub';
 
 describe('SendFeedbackFormComponent', () => {
   let component: SendFeedbackFormComponent;
@@ -17,7 +17,7 @@ describe('SendFeedbackFormComponent', () => {
   let service: AuthService;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [Apollo, { provide: AuthService, useValue: authStub }],
+      providers: [Apollo, {provide: AuthService, useValue: authStub}],
 
       declarations: [SendFeedbackFormComponent],
       imports: [

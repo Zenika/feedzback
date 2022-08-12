@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import {Router} from '@angular/router';
 import * as auth from 'firebase/auth';
 
 @Injectable({
@@ -21,12 +21,12 @@ export class AuthService {
 
   async signInWithGoogle() {
     return this.oAuthProvider(new auth.GoogleAuthProvider())
-      .then((res) => {
-        this.firebaseAuth.authState.subscribe(() => {
-          this.router.navigate([this.redirectUrl]);
-        });
-      })
-      .catch((err) => console.log(err));
+        .then((res) => {
+          this.firebaseAuth.authState.subscribe(() => {
+            this.router.navigate([this.redirectUrl]);
+          });
+        })
+        .catch((err) => console.log(err));
   }
 
   isLogged() {
