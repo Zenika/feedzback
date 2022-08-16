@@ -19,7 +19,7 @@ export function feedbackRequestTemplate (html,{name, email, senderName, senderEm
      { name: senderName,
         senderName: name,
         text: commentaire,
-        urlClientForm: envi === 'production' ? 'http://feedzback.zenika.com/send': process.env.URL_CLIENT_FORM,
+        urlClientForm: process.env.URL_CLIENT,
         params: params
      })
 
