@@ -109,8 +109,13 @@ export class GraphqlService {
             askFeedback: feedback,
           },
         })
-        .subscribe((data: any) => {
-          let result = data.data.sendFeedbackRequest;
+        .subscribe(({data, loading}: any) => {
+          if (loading) {
+            this.loading.next(true);
+          } else {
+            this.loading.next(false);
+          }
+          let result = data.sendFeedbackRequest;
           if (result === 'sent') {
             result =
             'Félicitations ! Votre demande vient d’être envoyée à : ' +
