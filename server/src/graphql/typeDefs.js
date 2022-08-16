@@ -1,3 +1,4 @@
+/** @module graphqlschema */
 import {gql} from 'apollo-server';
 
 /**

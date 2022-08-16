@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --experimental-json-modules index",
     "test": "jest",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "doc": "jsdoc"
   },
   "license": "MIT",
   "dependencies": {
