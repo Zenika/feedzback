@@ -3,12 +3,31 @@
         "browser": true,
         "es2021": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "google"
+    ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "rules": {
-        "no-undef": "off"
-    }
+        "max-len": "off",
+        "require-jsdoc": "off",
+        "assert": "off"
+    },
+    "overrides": [
+        {
+          "files": [
+            "*.html"
+          ],
+          "plugins": [
+            "html",
+            "eslint-plugin-prettier"
+          ],
+          "rules": {
+            "no-trailing-spaces": "off",
+            "indent":"off" 
+          }
+        }
+      ]
 }

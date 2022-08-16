@@ -1,14 +1,14 @@
-export default function getNameFromEmail (email) {
-  const parts = email.split("@");
+export default function getNameFromEmail(email) {
+  const parts = email.split('@');
   const username = parts[0];
-  const delimetres = [".", "-", "_"];
-  let fname = "";
-  let lname = "";
+  const delimetres = ['.', '-', '_'];
+  let fname = '';
+  let lname = '';
   delimetres.forEach(splittingLoop);
 
   // eslint-disable-next-line require-jsdoc
   function splittingLoop(element) {
-    const partsName = username.replace(/\d+/g, "");
+    const partsName = username.replace(/\d+/g, '');
     const num = partsName.indexOf(element);
     if (num > -1) {
       fname = partsName.substring(0, num);
@@ -17,5 +17,5 @@ export default function getNameFromEmail (email) {
       lname = lname.charAt(0).toUpperCase() + lname.slice(1);
     }
   }
-  return fname + " " + lname;
+  return fname + ' ' + lname;
 }

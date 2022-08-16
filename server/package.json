@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node --experimental-json-modules index",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ./"
   },
   "license": "MIT",
   "dependencies": {
@@ -35,9 +36,10 @@
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.1",
-    "eslint": "^8.13.0",
+    "eslint": "^8.21.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "prettier": "2.6.2",

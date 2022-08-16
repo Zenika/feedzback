@@ -117,6 +117,19 @@ jobs:
            paths:
              - src/environments/environment.prod.ts
 
+  lint:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache:
+         keys:
+          - v32-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+      - run: 
+          name: lint-client
+          working_directory: client
+          command: npm run lint
+         
+
   build:
     executor: node
     steps:
@@ -266,11 +279,14 @@ workflows:
       - set-serverApi-client:
           requires:
              - deploy-server
-
+      - lint:
+          requires:
+              - unit-test-client
+              - unit-test-server
       - build: 
           requires:
-            - unit-test-client
             - set-serverApi-client
+            - lint
 
       - cypress/run:
          working_directory: client
