@@ -67,7 +67,7 @@ export const sendFeedback = async ({feedbackInput}) => {
     const msg = {
       to: feedbackInput.receverEmail,
       from: process.env.GENERIC_EMAIL,
-      subject: 'FeedZback',
+      subject: 'Vous avez reçu un feedZback',
       html: template,
     };
     if (envi !== 'production') {
