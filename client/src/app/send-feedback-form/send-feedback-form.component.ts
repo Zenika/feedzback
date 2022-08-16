@@ -29,6 +29,9 @@ export class SendFeedbackFormComponent implements OnInit {
       this.queryParams.get('senderName') === null ?
         user.displayName! :
         this.queryParams.get('senderName')!;
+    graphqlService.loading.subscribe((loading)=> {
+      this.loading = loading;
+    });
   }
 
   private feedbackMaxLength = 500;

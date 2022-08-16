@@ -25,6 +25,9 @@ export class AskFeedbackFormComponent {
     const user = this.authService.getUserDetails();
     this.userEmail = user?.email!;
     this.userName = user?.displayName!;
+    graphqlService.loading.subscribe((loading)=> {
+      this.loading = loading;
+    });
   }
 
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
