@@ -1,27 +1,27 @@
 import ejs from 'ejs';
-import dotEnv from 'dotenv'
+import dotEnv from 'dotenv';
 
-export function feedbackRequestTemplate (html,{name, email, senderName, senderEmail, text}) {
+export function feedbackRequestTemplate(html, {name, email, senderName, senderEmail, text}) {
+  if (process.env.NODE_ENV !== 'production') {
+    dotEnv.config();
+  }
 
-    if (process.env.NODE_ENV !== 'production') {
-        dotEnv.config()
-      }
-
-    const receverEmail =  encodeURIComponent(email);
-    senderEmail = encodeURIComponent(senderEmail);
-    const receverName = name
-    let commentaire='';
-    if(text)
+  const receverEmail = encodeURIComponent(email);
+  senderEmail = encodeURIComponent(senderEmail);
+  const receverName = name;
+  let commentaire='';
+  if (text) {
     commentaire = String(text).replace(/\n/g, '<br>');
-    const envi = process.env.NODE_ENV || 'development';
-    const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
-    const template = ejs.render(html ,
-     { name: senderName,
+  }
+  const envi = process.env.NODE_ENV || 'development';
+  const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
+  const template = ejs.render(html,
+      {name: senderName,
         senderName: name,
         text: commentaire,
         urlClientForm: envi === 'production' ? 'http://feedzback.zenika.com/send': process.env.URL_CLIENT_FORM,
-        params: params
-     })
+        params: params,
+      });
 
-    return template;
+  return template;
 }
