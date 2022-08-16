@@ -5,7 +5,7 @@ import {resolvers} from './src/graphql/resolvers.js';
 import cors from 'cors';
 import admin from 'firebase-admin'
 import dotEnv from 'dotenv'
-import firebaseKey from './firebase-service-key.json' assert {type: 'json'}
+import firebaseKey from './firebase-service-key.json' assert {type: 'json'}  
 
 const server = new ApolloServer({typeDefs, resolvers, introspection: true,
   playground: true});
