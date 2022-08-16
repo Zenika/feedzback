@@ -29,6 +29,7 @@
     "graphql-playground-middleware": "^1.1.2",
     "graphql-tools": "^8.2.0",
     "jest": "^27.4.7",
+    "jsdoc": "^3.6.11",
     "mailgun-js": "^0.22.0",
     "npm": "^8.10.0"
   },
