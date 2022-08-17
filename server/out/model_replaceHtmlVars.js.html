@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: graphqlschema</title>
+    <title>JSDoc: Source: model/replaceHtmlVars.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,118 +17,48 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: graphqlschema</h1>
+    <h1 class="page-title">Source: model/replaceHtmlVars.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id=".typeDefs"><span class="type-signature">(static, constant) </span>typeDefs<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Define all graphql schemas
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="graphql_typeDefs.js.html">graphql/typeDefs.js</a>, <a href="graphql_typeDefs.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import ejs from 'ejs';
+import dotEnv from 'dotenv';
+/**
+ * replacing variables in the template by the message
+ * returns an email template
+ * @param {String} html
+ * @param {String} message
+ * @return {String}
+ */
+export default function replaceHtmlVars(html, message) {
+  if (process.env.NODE_ENV !== 'production') {
+    dotEnv.config();
+  }
+  /**
+   * set feedback Id in the url which the recever could click on it in the received
+   * to see the received feedback
+   */
+  const feedbackUrl = `/feedback/${message.feedbackId}/Received`;
+  /**
+   * replace variable in the html template by using ejs.render
+   * if you take look at the html in emailTemplate you can find name, senderName that will be replaced
+   * in this section
+   */
+  const template = ejs.render(html, {
+    name: message.receverName,
+    senderName: message.senderName,
+    urlClient: process.env.URL_CLIENT + feedbackUrl,
+  });
+  return template;
+}
+</code></pre>
+        </article>
+    </section>
 
 
 

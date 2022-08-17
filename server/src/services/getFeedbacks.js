@@ -52,7 +52,7 @@ export const getSentFeedbacks = async (email) => {
 /**
  * get a specific feedback (sent or received) by Id
  * @param {String} id
- * @return {Array} feedbacks or error in failed case
+ * @return {Object} feedbacks or error in failed case
  */
 export const getFeedbackById = async (id) => {
   try {
@@ -70,6 +70,11 @@ export const getFeedbackById = async (id) => {
   }
 };
 
+/**
+ * Assign each entity to datastore key
+ * @param {Object} entities
+ * @return {Array}
+ */
 export const combineEntityAndKey = (entities) => {
   const list = [];
   for (let i=0; i<entities.length; i++) {

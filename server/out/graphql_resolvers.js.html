@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: graphqlschema</title>
+    <title>JSDoc: Source: graphql/resolvers.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,118 +17,38 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: graphqlschema</h1>
+    <h1 class="page-title">Source: graphql/resolvers.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module Resolvers */
+import {getSentFeedbacks, getReceivedFeedbacks, getFeedbackById} from '../services/getFeedbacks.js';
+import {askFeedback} from '../services/askFeedback.js';
+import {sendFeedback} from '../services/sendFeedback.js';
 
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id=".typeDefs"><span class="type-signature">(static, constant) </span>typeDefs<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Define all graphql schemas
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="graphql_typeDefs.js.html">graphql/typeDefs.js</a>, <a href="graphql_typeDefs.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+/**
+ * Thank to graphql reslover we can call http requests here
+ * Alos we can retreive data from different sources, howerver it's not the case here still,
+  */
+export const resolvers = {
+  Query: {
+    sentFeedbacks: (_, {email}) => getSentFeedbacks(email),
+    receivedFeedbacks: (_, {email}) => getReceivedFeedbacks(email),
+    getFeedbackById: (_, {id}) => getFeedbackById(id),
+  },
+  Mutation: {
+    sendFeedback: async (_, payload) => await sendFeedback(payload),
+    sendFeedbackRequest: async (_, request) => await askFeedback(request),
+  },
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

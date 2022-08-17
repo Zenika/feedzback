@@ -6,6 +6,11 @@ export default function getNameFromEmail(email) {
   let lname = '';
   delimetres.forEach(splittingLoop);
 
+  /**
+   * Extract the first and second name from a given email
+   * @param {String} element
+   * @return {String} fullname
+   */
   // eslint-disable-next-line require-jsdoc
   function splittingLoop(element) {
     const partsName = username.replace(/\d+/g, '');
