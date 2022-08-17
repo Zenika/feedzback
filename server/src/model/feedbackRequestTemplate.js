@@ -13,7 +13,8 @@ export function feedbackRequestTemplate(html, {name, email, senderName, senderEm
   if (text) {
     commentaire = String(text).replace(/\n/g, '<br>');
   }
-  const urlClient = process.env.NODE_ENV !== 'production'? process.env.URL_CLIENT : 'https://feedzback.zenika.com';
+  const urlClient = process.env.NODE_ENV !== 'production'? process.env.URL_CLIENT + '/send' : 'https://feedzback.zenika.com/send';
+
   const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
   const template = ejs.render(html,
       {name: senderName,

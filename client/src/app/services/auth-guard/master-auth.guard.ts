@@ -43,9 +43,9 @@ export class MasterAuthGuard implements CanActivate {
       this.router.navigate(['sign-in']);
       return false;
     } else if (
-      state.url !== '/send' &&
-      urlResult[0] !== '/result' &&
-      this.authService.isAnonymous()
+      this.authService.isAnonymous() &&
+      urlResult[0] !== '/send' &&
+      urlResult[0] !== '/result'
     ) {
       this.authService.signOut();
       return false;

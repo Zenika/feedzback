@@ -75,6 +75,7 @@ export class GraphqlService {
           variables: {
             feedbackInput: feedback,
           },
+          useMutationLoading: true,
         })
         .subscribe(({data, loading}: any) => {
           if (loading) {
@@ -108,6 +109,7 @@ export class GraphqlService {
           variables: {
             askFeedback: feedback,
           },
+          useMutationLoading: true,
         })
         .subscribe(({data, loading}: any) => {
           if (loading) {
