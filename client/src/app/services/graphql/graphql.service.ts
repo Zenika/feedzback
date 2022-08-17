@@ -10,6 +10,7 @@ import {FeedbackRequest} from 'src/app/model/feedbackRequest';
   providedIn: 'root',
 })
 export class GraphqlService {
+  loading: Subject<boolean> = new Subject;
   private sendFeedBackMutation = gql`
     mutation SendFeedback($feedbackInput: FeedbackInput!) {
       sendFeedback(feedbackInput: $feedbackInput) {
@@ -74,8 +75,14 @@ export class GraphqlService {
           variables: {
             feedbackInput: feedback,
           },
+          useMutationLoading: true,
         })
-        .subscribe(({data}: any) => {
+        .subscribe(({data, loading}: any) => {
+          if (loading) {
+            this.loading.next(true);
+          } else {
+            this.loading.next(false);
+          }
           const result = data.sendFeedback;
           let message = result.message;
           if (message === 'sent') {
@@ -102,9 +109,15 @@ export class GraphqlService {
           variables: {
             askFeedback: feedback,
           },
+          useMutationLoading: true,
         })
-        .subscribe((data: any) => {
-          let result = data.data.sendFeedbackRequest;
+        .subscribe(({data, loading}: any) => {
+          if (loading) {
+            this.loading.next(true);
+          } else {
+            this.loading.next(false);
+          }
+          let result = data.sendFeedbackRequest;
           if (result === 'sent') {
             result =
             'Félicitations ! Votre demande vient d’être envoyée à : ' +

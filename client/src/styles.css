@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+html {
+    position: relative;
+    min-height: 100%;
+}
 .btn {
     border: none;
     border-radius: 10px;
@@ -46,12 +50,17 @@ input:required, textarea:required {
 * {
     font-family: Nunito;
 }
+body {
+    margin-bottom: 100px;
+}
 footer {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     color: rgb(110, 107, 107);
-    margin-top: 100px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 .github {
     display: flex;
