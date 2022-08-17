@@ -11,7 +11,12 @@ export class AuthService {
   public redirectUrl: string = 'home';
   constructor(public firebaseAuth: AngularFireAuth, public router: Router) {
     this.firebaseAuth.authState.subscribe((user) => {
-      this.user = user;
+      if (user) {
+        this.user = user;
+        if (this.redirectUrl.includes('Received')) {
+          this.router.navigate([this.redirectUrl]);
+        }
+      }
     });
   }
 
@@ -21,7 +26,7 @@ export class AuthService {
 
   async signInWithGoogle() {
     return this.oAuthProvider(new auth.GoogleAuthProvider())
-        .then((res) => {
+        .then(() => {
           this.firebaseAuth.authState.subscribe(() => {
             this.router.navigate([this.redirectUrl]);
           });
@@ -66,6 +71,7 @@ export class AuthService {
   signOut() {
     return this.firebaseAuth.signOut().then(() => {
       this.router.navigate(['sign-in']);
+      this.user = null;
     });
   }
 }
