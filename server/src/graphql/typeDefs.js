@@ -1,5 +1,9 @@
+/** @module graphqlschema */
 import {gql} from 'apollo-server';
 
+/**
+ * Define all graphql schemas
+ */
 export const typeDefs = gql`
 type Query{
    sentFeedbacks(email: String!): [Feedback!]!

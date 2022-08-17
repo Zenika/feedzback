@@ -1,3 +1,4 @@
+/** @module askFeedback */
 import {feedbackRequestTemplate} from '../model/feedbackRequestTemplate.js';
 import dotEnv from 'dotenv';
 import mailgun from 'mailgun-js';
@@ -22,7 +23,15 @@ const myMailgun = mailgun({
   domain: domain,
 });
 
+/**
+ * Takes an object (AskFeedback) and send it as email template by Mailgun to a requested user
+ * @param {Object} askFeedback
+ * @return {String} result which is sent or error
+ */
 export const askFeedback = async ({askFeedback})=> {
+  /**
+   * set template variables
+   */
   const template = feedbackRequestTemplate(emailTemplate, askFeedback);
   let msg = {
     to: askFeedback.senderEmail,
