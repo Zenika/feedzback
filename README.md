@@ -4,7 +4,7 @@
     <img alt="License: Apache License 2.0" src="https://img.shields.io/badge/License-Apache License 2.0-yellow.svg" />
   </a>
 </p>
-Do you want to ask or send feedbacks to your colleges but you afread about negative consequences? Here you go, FeedZback guide you.
+ You want to ask or send feedbacks to your colleges but you are afraid about negative consequences? Here you go, FeedZback guides you.
 
 ### 🏠 [Homepage](https://feedzback.zenika.com)
 
