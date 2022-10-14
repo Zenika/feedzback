@@ -88,12 +88,6 @@ describe('SendFeedbackFormComponent', () => {
     expect(pointsPositifs.valid).toBeTruthy();
   }));
 
-  it('champs points positifs est invalide quand il dépasse les 500 charactères', waitForAsync(() => {
-    const pointsPositifs = component.form.controls['postitiveFeedback'];
-    pointsPositifs.setValue('a'.repeat(501));
-    expect(pointsPositifs.valid).toBeFalsy();
-  }));
-
   it('champs axes ameliorations positifs est requis', waitForAsync(() => {
     const axesAmeliorations = component.form.controls['toImproveFeedback'];
     expect(axesAmeliorations.valid).toBeFalsy();
@@ -103,12 +97,6 @@ describe('SendFeedbackFormComponent', () => {
     const axesAmeliorations = component.form.controls['toImproveFeedback'];
     axesAmeliorations.setValue('les axes ameliorations:.....');
     expect(axesAmeliorations.valid).toBeTruthy();
-  }));
-
-  it('champs axes ameliorations est invalide quand il dépasse les 500 charactères', waitForAsync(() => {
-    const pointsPositifs = component.form.controls['toImproveFeedback'];
-    pointsPositifs.setValue('a'.repeat(501));
-    expect(pointsPositifs.valid).toBeFalsy();
   }));
 
   it('Formulaire doit être valide quand tous les champs sont valides', waitForAsync(() => {
