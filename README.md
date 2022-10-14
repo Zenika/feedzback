@@ -28,6 +28,7 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
     `URL_CLIENT` your url client form to set into email template
  
  ### Firebase
+    Go to firebase Project console => Project overview => service accounts => Generate new private key
     Create a file firebase-service-key.json and put the service key
     
  ### Run Server
