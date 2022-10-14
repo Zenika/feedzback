@@ -34,7 +34,6 @@ export class SendFeedbackFormComponent implements OnInit {
     });
   }
 
-  private feedbackMaxLength = 500;
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
   public getFormControlError = getFormControlError;
 
@@ -54,11 +53,9 @@ export class SendFeedbackFormComponent implements OnInit {
     ),
     postitiveFeedback: new FormControl('', [
       Validators.required,
-      Validators.maxLength(this.feedbackMaxLength),
     ]),
     toImproveFeedback: new FormControl('', [
       Validators.required,
-      Validators.maxLength(this.feedbackMaxLength),
     ]),
     comment: new FormControl(''),
   });
