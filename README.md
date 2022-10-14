@@ -25,7 +25,11 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
     Create `.env` file and put those variables below in it:
     `API_KEY`= your mailgun Api
     `DOMAIN`= your mailgun domain
-    `URL_CLIENT_FORM` your url client form to set into email template
+    `URL_CLIENT` your url client form to set into email template
+ 
+ ### Firebase
+    Create a file firebase-service-key.json and put the service key
+    
  ### Run Server
    npm start
  ### Test Server
