@@ -21,8 +21,11 @@ export class GraphqlService {
   `;
 
   private askFeedbackMutation = gql`
-    mutation AskFeedback($askFeedback: AskFeedback!) {
-      sendFeedbackRequest(askFeedback: $askFeedback)
+    mutation AskFeedback($askFeedbackInput: AskFeedbackInput!) {
+      sendFeedbackRequest(askFeedbackInput: $askFeedbackInput) {
+        feedbackId
+        message
+      }
     }
   `;
 
@@ -52,19 +55,38 @@ export class GraphqlService {
   `;
 
   private getFeedbackByIdQuery = gql`
-    query GetFeedbackById($getFeedbackByIdId: String!) {
-      getFeedbackById(id: $getFeedbackByIdId) {
-        senderName
-        senderEmail
-        receverEmail
-        receverName
-        positiveFeedback
-        toImprove
-        comment
-        createdAt
-      }
+  query ReceivedAskFeedbacks($email: String!) {
+    receivedAskFeedbacks(email: $email) {
+      id
+      senderName
+      senderEmail
+      receverEmail
+      receverName
+      text
     }
-  `;
+  }`;
+
+ private getAskFeedbackListQuery = gql`
+  query GetAskFeedbacks($email: String!) {
+    receivedAskFeedbacks(email: $email) {
+      id
+      senderName
+      senderEmail
+      receverEmail
+      receverName
+      text
+      createdAt
+    }
+  sentAskFeedbacks(email: $email) {
+    id
+    senderName
+    senderEmail
+    receverEmail
+    receverName
+    text
+    createdAt
+  }
+}`;
 
   constructor(private apollo: Apollo, private router: Router) {}
 
@@ -107,7 +129,7 @@ export class GraphqlService {
         .mutate({
           mutation: this.askFeedbackMutation,
           variables: {
-            askFeedback: feedback,
+            askFeedbackInput: feedback,
           },
           useMutationLoading: true,
         })
@@ -118,7 +140,7 @@ export class GraphqlService {
             this.loading.next(false);
           }
           let result = data.sendFeedbackRequest;
-          if (result === 'sent') {
+          if (result.message === 'sent') {
             result =
             'Félicitations ! Votre demande vient d’être envoyée à : ' +
             feedback.senderName;
@@ -127,11 +149,11 @@ export class GraphqlService {
               {result: 'success', message: result},
             ]);
           } else {
-            result =
+            result.message =
             'Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer.';
             this.router.navigate([
               '/result',
-              {result: 'askFailed', message: result},
+              {result: 'askFailed', message: result.message},
             ]);
           }
         });
@@ -171,5 +193,25 @@ export class GraphqlService {
           subject.next(result.data.getFeedbackById);
         });
     return subject.asObservable();
+  }
+
+  getAskFeedbackList(email: string) {
+    const subjectList = new Subject<FeedbackRequest[]>();
+    this.apollo
+        .watchQuery({
+          query: this.getAskFeedbackListQuery,
+          variables: {
+            email,
+          },
+          pollInterval: 4500,
+        })
+        .valueChanges.pipe(
+            map(({data}) => data),
+            takeUntil(this.unsubscribe$),
+        )
+        .subscribe((askFeedbacks: any) => {
+          subjectList.next(askFeedbacks);
+        });
+    return subjectList.asObservable();
   }
 }

@@ -3,6 +3,7 @@ import {
   ContentChildren,
   QueryList,
   AfterContentInit,
+  Input,
 } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
@@ -14,6 +15,7 @@ import {TabLinkComponent} from '../tab-link/tab-link.component';
   styleUrls: ['./tabs.component.css'],
 })
 export class TabsComponent implements AfterContentInit {
+  @Input('listType') listType!: string;
   @ContentChildren(TabLinkComponent) tabs!: QueryList<TabLinkComponent>;
   type!: String;
   constructor(public activateRouter: ActivatedRoute) {}

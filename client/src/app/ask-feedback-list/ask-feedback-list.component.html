@@ -1,0 +1,34 @@
+<div class="content">
+    <div class="list" *ngIf="askFeedbacks && askFeedbacks.length !== 0; else empty">
+      <div *ngFor="let askFeedback of sortedAskFeedbackList">
+        <div *ngIf="type === feedbackType.Received; else sent">
+          <a
+            [routerLink]="['/askFeedback', askFeedback.id, 'Received']"
+            routerLinkActive="router-link-active"
+          >
+            {{ askFeedback.senderName }}</a
+          >
+          <div class="row">
+            <h4>{{ askFeedback.senderEmail }}</h4>
+            <h4>{{ askFeedback.createdAt | date: "dd/MM/yyyy" }}</h4>
+          </div>
+        </div>
+        <ng-template #sent>
+          <a
+            [routerLink]="['/askFeedback', askFeedback.id, 'Sent']"
+            routerLinkActive="router-link-active"
+          >
+            {{ askFeedback.receverName }}
+          </a>
+          <div class="row">
+            <h4>{{ askFeedback.receverEmail }}</h4>
+            <h4>{{ askFeedback.createdAt | date: "dd/MM/yyyy" }}</h4>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <ng-template #empty>
+    <div class="empty">Aucun FeedZBack</div>
+  </ng-template>
+  
