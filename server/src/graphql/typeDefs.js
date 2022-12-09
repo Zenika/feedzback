@@ -8,6 +8,8 @@ export const typeDefs = gql`
 type Query{
    sentFeedbacks(email: String!): [Feedback!]!
    receivedFeedbacks(email: String!): [Feedback!]!
+   sentAskFeedbacks(email: String!): [AskFeedback!]!
+   receivedAskFeedbacks(email: String!): [AskFeedback!]!
    getFeedbackById(id: String!): Feedback!
    getResult:String
 }
@@ -23,6 +25,15 @@ type Feedback {
     comment: String
     createdAt: String
 }
+type AskFeedback {
+    id: String
+    senderName: String
+    senderEmail: String
+    receverEmail: String
+    receverName: String
+    text: String
+    createdAt: String
+}
 input FeedbackInput {
     token:String
     senderName:String
@@ -33,12 +44,12 @@ input FeedbackInput {
     toImprove:String
     comment:String
 }
-input AskFeedback {
+input AskFeedbackInput {
     token:String
-    name: String!
-    email: String!
     senderName: String!
     senderEmail: String!
+    receverEmail: String!
+    receverName: String!
     text: String
 }
 type SendResult {
@@ -48,6 +59,6 @@ type SendResult {
 
 type Mutation{
     sendFeedback(feedbackInput: FeedbackInput!): SendResult
-    sendFeedbackRequest(askFeedback: AskFeedback!): String
+    sendFeedbackRequest(askFeedbackInput: AskFeedbackInput!): SendResult
 }
 `;

@@ -11,14 +11,14 @@ const datastore = new Datastore(
  * @param {String} email
  * @return {Array} feedbacks or an error in failed case
  */
-export const getReceivedFeedbacks = async (email) => {
+export const getReceivedFeedbacks = async (email, tableName) => {
   try {
     /**
      * feedback is the name of the table in datastore
      * as you see we filter feedbacks by receverEmail
      * @type {Query}
      */
-    const query = datastore.createQuery('feedzback').filter('receverEmail', '=', email);
+    const query = datastore.createQuery(tableName).filter('receverEmail', '=', email);
     const [entities] = await datastore.runQuery(query);
     const res = combineEntityAndKey(entities);
     return res;
@@ -33,14 +33,14 @@ export const getReceivedFeedbacks = async (email) => {
  * @param {String} email
  * @return {Array} feedbacks or error in failed case
  */
-export const getSentFeedbacks = async (email) => {
+export const getSentFeedbacks = async (email, tableName) => {
   try {
     /**
      * feedback is the name of the table in datastore
      * as you see we filter feedbacks by senderEmail
      * @type {Query}
      */
-    const query = datastore.createQuery('feedzback').filter('senderEmail', '=', email);
+    const query = datastore.createQuery(tableName).filter('senderEmail', '=', email);
     const [entities] = await datastore.runQuery(query);
     const res = combineEntityAndKey(entities);
     return res;
@@ -54,7 +54,7 @@ export const getSentFeedbacks = async (email) => {
  * @param {String} id
  * @return {Object} feedbacks or error in failed case
  */
-export const getFeedbackById = async (id) => {
+export const getFeedbackById = async (id, tableName) => {
   try {
     /**
      * feedback is the name of the table in datastore
@@ -62,7 +62,7 @@ export const getFeedbackById = async (id) => {
      * @type {Query}
      */
     const key = datastore.key(['feedzback', parseInt(id, 10)]);
-    const query = datastore.createQuery('feedzback').filter('__key__', '=', key);
+    const query = datastore.createQuery(tableName).filter('__key__', '=', key);
     const [[entity]] = await datastore.runQuery(query);
     return entity;
   } catch (err) {
