@@ -8,7 +8,7 @@ import dotEnv from 'dotenv';
  * @param {Object} param1
  * @return {String}
  */
-export function feedbackRequestTemplate(html, {name, email, senderName, senderEmail, text}) {
+export function feedbackRequestTemplate(html, {senderName, senderEmail, receverName, receverEmail, text}) {
   if (process.env.NODE_ENV !== 'production') {
     dotEnv.config();
   }
@@ -16,9 +16,8 @@ export function feedbackRequestTemplate(html, {name, email, senderName, senderEm
   /**
    * Because we pass them url parameters it's more save to encode emails
    */
-  const receverEmail = encodeURIComponent(email);
+  receverEmail = encodeURIComponent(receverEmail);
   senderEmail = encodeURIComponent(senderEmail);
-  const receverName = name;
   let commentaire='';
   /**
    * as comment is optional we replace html tags in case the request includes a comment (text)
@@ -30,7 +29,7 @@ export function feedbackRequestTemplate(html, {name, email, senderName, senderEm
   const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
   const template = ejs.render(html,
       {name: senderName,
-        senderName: name,
+        senderName: receverName,
         text: commentaire,
         urlClientForm: urlClient,
         params: params,
