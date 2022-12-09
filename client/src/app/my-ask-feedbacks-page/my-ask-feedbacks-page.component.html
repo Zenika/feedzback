@@ -1,0 +1,12 @@
+<div class="flex">
+    <div class="container">
+        <app-tabs listType="Mes demandes">
+            <app-tab-link tabTitle="demandes envoyés">
+                <app-ask-feedback-list [askFeedbacks]="sentAskFeedbacks" [type]="feedbackType.Sent"></app-ask-feedback-list>
+            </app-tab-link>
+            <app-tab-link tabTitle="demandes reçus">
+                <app-ask-feedback-list [askFeedbacks]="receivedAskFeedbacks" [type]="feedbackType.Received"></app-ask-feedback-list>
+            </app-tab-link>  
+        </app-tabs>
+    </div>
+</div>

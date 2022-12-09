@@ -11,6 +11,7 @@
       <li><a class="menu-item" (click)="onClickItem('/ask')" [ngClass]="{'active': router.url === '/ask'}">Demander</a></li>
       <li><a class="menu-item" (click)="onClickItem('/send')" [ngClass]="{'active': router.url === '/send'}">Envoyer</a></li>
       <li><a class="menu-item" (click)="onClickItem('/feedbacks')" [ngClass]="{'active': router.url === '/feedbacks'}">Mes feedZbacks</a></li>
+      <li><a class="menu-item" (click)="onClickItem('/askFeedbacks')" [ngClass]="{'active': router.url === '/askFeedbacks'}">Mes demandes</a></li>
     </ul>  
   </div>
   <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']">
@@ -26,6 +27,7 @@
     <a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
     <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes feedZbacks&nbsp;&nbsp;</a>
+    <a class="menu-item" [routerLink]="['/askFeedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes demandes&nbsp;&nbsp;</a>
   </ul>  
   <h4>{{getFirstName()}}</h4>
   <img src="/assets/logout.svg" class="btn-logout" (click)="signOut()" >
