@@ -39,6 +39,7 @@ const insertAskFeedback = async (data) => {
     data: {
       ...data,
       createdAt: Date.now(),
+      isDone: false
     },
   }).then((res) => {
     feedbackId = res[0].mutationResults[0].key.path[0].id;
@@ -55,7 +56,9 @@ export const askFeedback = async ({askFeedbackInput})=> {
   /**
    * set template variables
    */
-  const template = feedbackRequestTemplate(emailTemplate, askFeedbackInput);
+   await insertAskFeedback(askFeedbackInput);
+   askFeedbackInput.feedbackId = feedbackId;
+  const template = feedbackRequestTemplate(emailTemplate, askFeedbackInput, feedbackId);
   let msg = {
     to: askFeedbackInput.senderEmail,
     from: process.env.GENERIC_EMAIL,
@@ -75,8 +78,6 @@ export const askFeedback = async ({askFeedbackInput})=> {
  /* if (!auth) {
     return 'vous n\'etes pas authorisé';
   }*/
-  await insertAskFeedback(askFeedbackInput);
-  askFeedbackInput.feedbackId = feedbackId;
   await myMailgun.messages().send(msg);
   const result = {
     feedbackId: feedbackId,

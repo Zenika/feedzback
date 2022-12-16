@@ -33,6 +33,7 @@ type AskFeedback {
     receverName: String
     text: String
     createdAt: String
+    isDone: Boolean
 }
 input FeedbackInput {
     token:String
@@ -60,5 +61,6 @@ type SendResult {
 type Mutation{
     sendFeedback(feedbackInput: FeedbackInput!): SendResult
     sendFeedbackRequest(askFeedbackInput: AskFeedbackInput!): SendResult
+    deleteAskFeedbackById(id: String!)
 }
 `;

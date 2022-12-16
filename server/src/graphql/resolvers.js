@@ -2,6 +2,7 @@
 import {getSentFeedbacks, getReceivedFeedbacks, getFeedbackById} from '../services/getFeedbacks.js';
 import {askFeedback} from '../services/askFeedback.js';
 import {sendFeedback} from '../services/sendFeedback.js';
+import {deleteAskOrSentFeedbackById} from '../services/deleteAskSendFeedbacks.js'
 
 export const feedbackTable = 'feedzback';
 export const askFeedbackTable = 'askFeedzback'
@@ -20,5 +21,6 @@ export const resolvers = {
   Mutation: {
     sendFeedback: async (_, payload) => await sendFeedback(payload),
     sendFeedbackRequest: async (_, request) => await askFeedback(request),
+    deleteAskFeedbackById: async (_, {id}) => await deleteAskOrSentFeedbackById(id, askFeedbackTable)
   },
 };
