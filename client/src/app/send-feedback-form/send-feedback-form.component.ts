@@ -14,6 +14,7 @@ import {GraphqlService} from '../services/graphql/graphql.service';
 export class SendFeedbackFormComponent implements OnInit {
   userEmail?: String;
   userName?: String;
+  askFeedbackId?: String;
   loading?: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,13 +26,20 @@ export class SendFeedbackFormComponent implements OnInit {
       decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null' ?
         user.email! :
         decodeURIComponent(this.queryParams.get('senderEmail')!);
+
     this.userName =
       this.queryParams.get('senderName') === null ?
         user.displayName! :
         this.queryParams.get('senderName')!;
+
+    this.askFeedbackId = this.queryParams.get('feedbackId') === null ?
+         undefined: 
+         this.queryParams.get('feedbackId')!;
+        
     graphqlService.loading.subscribe((loading)=> {
       this.loading = loading;
     });
+  
   }
 
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
@@ -94,7 +102,7 @@ export class SendFeedbackFormComponent implements OnInit {
     );
     this.form.markAllAsTouched();
     if (this.form.valid) {
-      this.graphqlService.sendFeedback(feedback);
+      this.graphqlService.sendFeedback(feedback, this.askFeedbackId);
     }
   }
 }

@@ -8,7 +8,7 @@ import dotEnv from 'dotenv';
  * @param {Object} param1
  * @return {String}
  */
-export function feedbackRequestTemplate(html, {senderName, senderEmail, receverName, receverEmail, text}) {
+export function feedbackRequestTemplate(html, {senderName, senderEmail, receverName, receverEmail, text}, feedbackId) {
   if (process.env.NODE_ENV !== 'production') {
     dotEnv.config();
   }
@@ -26,7 +26,7 @@ export function feedbackRequestTemplate(html, {senderName, senderEmail, receverN
     commentaire = String(text).replace(/\n/g, '<br>');
   }
   const urlClient = process.env.NODE_ENV !== 'production'? process.env.URL_CLIENT + '/send' : 'https://feedzback.zenika.com/send';
-  const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
+  const params = new URLSearchParams({feedbackId, senderName, senderEmail, receverName, receverEmail}).toString();
   const template = ejs.render(html,
       {name: senderName,
         senderName: receverName,

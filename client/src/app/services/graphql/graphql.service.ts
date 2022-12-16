@@ -88,9 +88,14 @@ export class GraphqlService {
   }
 }`;
 
+private deleteAskFeedbackById = gql `
+mutation Mutation($deleteAskFeedbackByIdId: String!) {
+  deleteAskFeedbackById(id: $deleteAskFeedbackByIdId)
+}`;
+
   constructor(private apollo: Apollo, private router: Router) {}
 
-  sendFeedback(feedback: SendFeedback) {
+  sendFeedback(feedback: SendFeedback, askFeedbackId?: String) {
     this.apollo
         .mutate({
           mutation: this.sendFeedBackMutation,
@@ -112,6 +117,14 @@ export class GraphqlService {
             message =
             'Félicitations! Votre feedback vient d’être envoyée à : ' +
             feedback.receverName;
+            if (askFeedbackId != undefined) {
+              this.apollo.mutate({
+                mutation: this.deleteAskFeedbackById,
+                variables: {
+                  deleteAskFeedbackByIdId: askFeedbackId
+                }
+              }).subscribe();
+            }
             this.router.navigate([
               '/result',
               {result: 'success', message, id: feedbackId},
