@@ -38,7 +38,8 @@ const insertAskFeedback = async (data) => {
     ],
     data: {
       ...data,
-      createdAt: Date.now(),
+      createdAt: data.createdAt == '' ? Date.now() : data.createdAt,
+      lastResendDate: Date.now(),
       isDone: false
     },
   }).then((res) => {

@@ -33,6 +33,7 @@ type AskFeedback {
     receverName: String
     text: String
     createdAt: String
+    lastResendDate: String
     isDone: Boolean
 }
 input FeedbackInput {
@@ -52,15 +53,17 @@ input AskFeedbackInput {
     receverEmail: String!
     receverName: String!
     text: String
+    createdAt: String
+    lastResendDate: String
 }
 type SendResult {
     feedbackId: String
     message: String!
 }
 
-type Mutation{
+type Mutation {
     sendFeedback(feedbackInput: FeedbackInput!): SendResult
     sendFeedbackRequest(askFeedbackInput: AskFeedbackInput!): SendResult
-    deleteAskFeedbackById(id: String!)
+    deleteAskFeedbackById(id: String!): Boolean
 }
 `;

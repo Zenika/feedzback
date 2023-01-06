@@ -8,5 +8,6 @@ export class AskFeedback {
       public receverEmail: string = '',
       public text: string = '',
       public createdAt: string = '',
+      public lastResendDate: string = ''
     ) {}
   }

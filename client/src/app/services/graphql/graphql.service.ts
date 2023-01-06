@@ -85,6 +85,7 @@ export class GraphqlService {
     receverName
     text
     createdAt
+    lastResendDate
   }
 }`;
 
@@ -118,12 +119,7 @@ mutation Mutation($deleteAskFeedbackByIdId: String!) {
             'Félicitations! Votre feedback vient d’être envoyée à : ' +
             feedback.receverName;
             if (askFeedbackId != undefined) {
-              this.apollo.mutate({
-                mutation: this.deleteAskFeedbackById,
-                variables: {
-                  deleteAskFeedbackByIdId: askFeedbackId
-                }
-              }).subscribe();
+              this.deleteAskFeedback(askFeedbackId);
             }
             this.router.navigate([
               '/result',
@@ -199,7 +195,7 @@ mutation Mutation($deleteAskFeedbackByIdId: String!) {
         .query({
           query: this.getFeedbackByIdQuery,
           variables: {
-            getFeedbackByIdId: id,
+            getFeedbackById: id,
           },
         })
         .subscribe((result: any) => {
@@ -226,5 +222,14 @@ mutation Mutation($deleteAskFeedbackByIdId: String!) {
           subjectList.next(askFeedbacks);
         });
     return subjectList.asObservable();
+  }
+
+  deleteAskFeedback(askFeedbackId: String) {
+    this.apollo.mutate({
+      mutation: this.deleteAskFeedbackById,
+      variables: {
+        deleteAskFeedbackByIdId: askFeedbackId
+      }
+    }).subscribe();
   }
 }
