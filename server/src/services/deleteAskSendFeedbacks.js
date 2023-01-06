@@ -1,6 +1,5 @@
 /** @module getFeedbacks */
 import {Datastore, Query} from '@google-cloud/datastore';
-import { ExceptionMessages } from '@google-cloud/storage/build/src/storage';
 
 const datastore = new Datastore(
     {projectId: 'feedzback-343709'},
@@ -15,8 +14,9 @@ export const deleteAskOrSentFeedbackById = async (id, tableName) => {
        */
       const key = datastore.key([tableName, parseInt(id, 10)]);
       await datastore.delete(key);
+      return true
     } catch (err) {
-      throw new ExceptionMessages(err)
+      return false
     }
   };
   

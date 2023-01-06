@@ -6,5 +6,6 @@ export class FeedbackRequest {
     public receverName: string = '',
     public receverEmail: string = '',
     public text: string = '',
+    public createdAt: string = '',
   ) {}
 }

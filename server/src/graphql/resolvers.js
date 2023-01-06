@@ -21,6 +21,6 @@ export const resolvers = {
   Mutation: {
     sendFeedback: async (_, payload) => await sendFeedback(payload),
     sendFeedbackRequest: async (_, request) => await askFeedback(request),
-    deleteAskFeedbackById: async (_, {id}) => await deleteAskOrSentFeedbackById(id, askFeedbackTable)
+    deleteAskFeedbackById: async (_, {id}) => await deleteAskOrSentFeedbackById(id, askFeedbackTable),
   },
 };
