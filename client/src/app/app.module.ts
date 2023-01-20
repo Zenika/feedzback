@@ -22,8 +22,8 @@ import {TabsComponent} from './tabs/tabs.component';
 import {TabLinkComponent} from './tab-link/tab-link.component';
 import {Nl2brPipe} from './pipe/nl2br/nl2br.pipe';
 import {FeedbackComponent} from './feedback/feedback.component';
-import { MyAskFeedbacksPageComponent } from './my-ask-feedbacks-page/my-ask-feedbacks-page.component';
-import { AskFeedbackListComponent } from './ask-feedback-list/ask-feedback-list.component';
+import {MyAskFeedbacksPageComponent} from './my-ask-feedbacks-page/my-ask-feedbacks-page.component';
+import {AskFeedbackListComponent} from './ask-feedback-list/ask-feedback-list.component';
 @NgModule({
   declarations: [
     AppComponent,

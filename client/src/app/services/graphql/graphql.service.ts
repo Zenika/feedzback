@@ -66,7 +66,7 @@ export class GraphqlService {
     }
   }`;
 
- private getAskFeedbackListQuery = gql`
+  private getAskFeedbackListQuery = gql`
   query GetAskFeedbacks($email: String!) {
     receivedAskFeedbacks(email: $email) {
       id
@@ -89,7 +89,7 @@ export class GraphqlService {
   }
 }`;
 
-private deleteAskFeedbackById = gql `
+  private deleteAskFeedbackById = gql `
 mutation Mutation($deleteAskFeedbackByIdId: String!) {
   deleteAskFeedbackById(id: $deleteAskFeedbackByIdId)
 }`;
@@ -228,8 +228,8 @@ mutation Mutation($deleteAskFeedbackByIdId: String!) {
     this.apollo.mutate({
       mutation: this.deleteAskFeedbackById,
       variables: {
-        deleteAskFeedbackByIdId: askFeedbackId
-      }
+        deleteAskFeedbackByIdId: askFeedbackId,
+      },
     }).subscribe();
   }
 }

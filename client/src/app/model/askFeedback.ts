@@ -1,5 +1,5 @@
 export class AskFeedback {
-    constructor(
+  constructor(
       public id: string,
       public token: string,
       public senderName: string = '',
@@ -8,6 +8,6 @@ export class AskFeedback {
       public receverEmail: string = '',
       public text: string = '',
       public createdAt: string = '',
-      public lastResendDate: string = ''
-    ) {}
-  }
+      public lastResendDate: string = '',
+  ) {}
+}

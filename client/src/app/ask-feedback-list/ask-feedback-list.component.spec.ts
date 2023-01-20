@@ -1,15 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Apollo } from 'apollo-angular';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-import { FeedbackType } from '../enum/feedback-type';
-import { AskFeedback } from '../model/askFeedback';
-import { Nl2brPipe } from '../pipe/nl2br/nl2br.pipe';
-import { AuthService } from '../services/auth.service';
-import { authStub } from '../services/authStub';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Apollo} from 'apollo-angular';
+import {ApolloTestingModule} from 'apollo-angular/testing';
+import {FeedbackType} from '../enum/feedback-type';
+import {AskFeedback} from '../model/askFeedback';
+import {Nl2brPipe} from '../pipe/nl2br/nl2br.pipe';
+import {AuthService} from '../services/auth.service';
+import {authStub} from '../services/authStub';
 
-import { AskFeedbackListComponent } from './ask-feedback-list.component';
+import {AskFeedbackListComponent} from './ask-feedback-list.component';
 
 describe('AskFeedbackListComponent', () => {
   let component: AskFeedbackListComponent;
@@ -27,10 +27,10 @@ describe('AskFeedbackListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, ApolloTestingModule],
-      providers: [ Apollo, {provide: AuthService, useValue: authStub}],
-      declarations: [ AskFeedbackListComponent, Nl2brPipe ]
+      providers: [Apollo, {provide: AuthService, useValue: authStub}],
+      declarations: [AskFeedbackListComponent, Nl2brPipe],
     })
-    .compileComponents();
+        .compileComponents();
   });
 
   beforeEach(() => {

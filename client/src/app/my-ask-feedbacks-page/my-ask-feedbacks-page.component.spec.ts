@@ -1,14 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Apollo } from 'apollo-angular';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-import { AskFeedbackListComponent } from '../ask-feedback-list/ask-feedback-list.component';
-import { AuthService } from '../services/auth.service';
-import { authStub } from '../services/authStub';
-import { TabLinkComponent } from '../tab-link/tab-link.component';
-import { TabsComponent } from '../tabs/tabs.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Apollo} from 'apollo-angular';
+import {ApolloTestingModule} from 'apollo-angular/testing';
+import {AskFeedbackListComponent} from '../ask-feedback-list/ask-feedback-list.component';
+import {AuthService} from '../services/auth.service';
+import {authStub} from '../services/authStub';
+import {TabLinkComponent} from '../tab-link/tab-link.component';
+import {TabsComponent} from '../tabs/tabs.component';
 
-import { MyAskFeedbacksPageComponent } from './my-ask-feedbacks-page.component';
+import {MyAskFeedbacksPageComponent} from './my-ask-feedbacks-page.component';
 
 describe('MyAskFeedbacksPageComponent', () => {
   let component: MyAskFeedbacksPageComponent;
@@ -16,9 +16,9 @@ describe('MyAskFeedbacksPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MyAskFeedbacksPageComponent ]
+      declarations: [MyAskFeedbacksPageComponent],
     })
-    .compileComponents();
+        .compileComponents();
   });
 
   beforeEach(async () => {

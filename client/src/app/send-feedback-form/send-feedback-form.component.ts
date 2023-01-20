@@ -33,13 +33,12 @@ export class SendFeedbackFormComponent implements OnInit {
         this.queryParams.get('senderName')!;
 
     this.askFeedbackId = this.queryParams.get('feedbackId') === null ?
-         undefined: 
+         undefined:
          this.queryParams.get('feedbackId')!;
-        
+
     graphqlService.loading.subscribe((loading)=> {
       this.loading = loading;
     });
-  
   }
 
   private queryParams = this.activatedRoute.snapshot.queryParamMap;
