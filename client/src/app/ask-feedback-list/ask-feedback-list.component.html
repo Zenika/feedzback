@@ -23,12 +23,12 @@
               {{ askFeedback.receverName }}
               </a>
             </h4>
-            <h4>First: {{ askFeedback.createdAt | date: "dd/MM/yyyy" }} </h4>
+            <h4>{{ askFeedback.receverEmail }}</h4>
           </div>
         
           <div class="row">
-            <h4>{{ askFeedback.receverEmail }}</h4>
-            <h4>Last: {{ askFeedback.lastResendDate? 
+            <h4>Date d'envoi: {{ askFeedback.createdAt | date: "dd/MM/yyyy" }} </h4>
+            <h4>Dernière relance: {{ askFeedback.lastResendDate? 
                 (askFeedback.lastResendDate | date: "dd/MM/yyyy") :  (askFeedback.createdAt | date: "dd/MM/yyyy")}}
             </h4>
             <img [src]="loading && askFeedback.id == clickedAskFeedbackId? resendButtonSrc : pauseButtonSrc" height="20" width="20" (click)="resendAskFeedback(askFeedback)"/>

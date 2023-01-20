@@ -12,6 +12,7 @@ import { GraphqlService } from '../services/graphql/graphql.service';
   styleUrls: ['./ask-feedback-list.component.css']
 })
 export class AskFeedbackListComponent implements OnInit {
+  
   @Input() askFeedbacks!: AskFeedback[];
   @Input() type!: FeedbackType;
   public feedbackType: typeof FeedbackType = FeedbackType;
