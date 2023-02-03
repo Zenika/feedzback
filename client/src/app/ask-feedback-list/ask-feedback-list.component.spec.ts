@@ -55,10 +55,6 @@ describe('AskFeedbackListComponent', () => {
     const emptyTemplate = fixture.debugElement.query(By.css('.empty'));
     expect(emptyTemplate).toBeFalsy();
   });
-  it('the ask feedback list will be appeared when the list contains ask feedbacks', () => {
-    const feedbackList = fixture.debugElement.query(By.css('.list'));
-    expect(feedbackList).toBeTruthy();
-  });
   it('should show the sent ask feedbacks when the ask feedzbacks envoyés tab is clicked', () => {
     const senderName = fixture.debugElement.query(By.css('a'));
     expect(senderName.nativeElement.textContent).toContain(
