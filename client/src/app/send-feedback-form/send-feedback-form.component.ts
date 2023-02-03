@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import { param } from 'cypress/types/jquery';
 import {getFormControlError} from '../get-form-control-error';
 import {SendFeedback} from '../model/sendFeedback';
 import {AuthService} from '../services/auth.service';

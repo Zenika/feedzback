@@ -1,6 +1,6 @@
 import {DatePipe} from '@angular/common';
 import {Component, Input, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {FeedbackType} from '../enum/feedback-type';
 import {AskFeedback} from '../model/askFeedback';
 import {FeedbackRequest} from '../model/feedbackRequest';
@@ -72,7 +72,6 @@ export class AskFeedbackListComponent implements OnInit {
   }
 
   sendFeedback(askFeedback: AskFeedback) {
-    this.router.navigate(['send'], {queryParams: askFeedback})
+    this.router.navigate(['send'], {queryParams: askFeedback});
   }
- 
 }
