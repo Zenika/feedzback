@@ -1,5 +1,6 @@
 import {DatePipe} from '@angular/common';
 import {Component, Input, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import {FeedbackType} from '../enum/feedback-type';
 import {AskFeedback} from '../model/askFeedback';
 import {FeedbackRequest} from '../model/feedbackRequest';
@@ -18,11 +19,13 @@ export class AskFeedbackListComponent implements OnInit {
   sortedAskFeedbackList!: AskFeedback[];
   datePipe!: DatePipe;
   loading: boolean = false;
-  resendButtonSrc = '../../assets/loadResendAskFeedback.svg';
-  pauseButtonSrc = '../../assets/resendAskFeedback.svg';
+  resendAskButtonSrc = '/assets/resendAskFeedback.svg';
+  sendButtonSrc = '/assets/vector-arrow.svg';
+  pauseButtonSrc = '/assets/loadResendAskFeedback.svg';
   clickedAskFeedbackId: String = '';
 
   constructor(
+    private router: Router,
     private authService: AuthService,
     private graphqlService: GraphqlService) {
     graphqlService.loading.subscribe((loading) => {
@@ -67,4 +70,9 @@ export class AskFeedbackListComponent implements OnInit {
       console.log(error);
     }
   }
+
+  sendFeedback(askFeedback: AskFeedback) {
+    this.router.navigate(['send'], {queryParams: askFeedback})
+  }
+ 
 }

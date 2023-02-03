@@ -1,6 +1,10 @@
 .content {
+    margin-top: 10px;
+    min-width: 70%;
+    max-width: 80%;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
+    margin-left: 10%;
 }
 .flex-column {
     flex-direction: column;
@@ -8,6 +12,7 @@
 .row {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 a {
     color: #D52150;
@@ -15,36 +20,32 @@ a {
     font-size: 14px;
     line-height: 16px;
 }
-.list {
-    margin-top: 20px;
-    margin-left: 120px;
+button {
+    border: none;
+    padding: none;
+    background-color: transparent;
 }
 .empty {
     align-self: center;
     text-align: center;
-    padding: 250px;
-    margin-left: 100px;
     font-weight: bold;
 }
 h4 {
+    margin-top: 5px;
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
 }
-h4:nth-child(1) {
-    margin-top: 5px;
-}
-h4:nth-child(2) {
-    margin-top: 5px;
-    position: absolute;
-    margin-left: 300px;
+.resend {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    align-items: flex-start;
 }
 img {
-    position: absolute;
     background-color: #D52150;
     border-radius: 3px;
     padding: 2px;
-    margin-left: 480px;
 }
 img:hover {
     cursor: pointer;
@@ -55,54 +56,9 @@ img:hover {
 }
 
 @media screen and (max-width: 690px) {
-    h4:nth-child(2) {
-        margin-left: 250px;
-    }
-    img {
-        margin-left: 430px;
-    }
-    .list {
-        margin-top: 20px;
-        margin-left: 10px;
-    }
-    .empty {
-        padding: 200px;
-        margin-left: 50px;
-    }
-
-  
+    .content {
+        min-width: 90%;
+        max-width: 100%;
+        margin-left: 0;
+    }  
 }
-@media screen and (max-width: 512px) {
-.content {
-    display: flex;
-    justify-content: flex-start;
-}
-h4:nth-child(2) {
-    margin-top: 5px;
-    position: absolute;
-    margin-left: 170px;
-}
-img {
-    margin-left: 340px;
-}
-.empty {
-    padding: 150px;
-    margin-left: 0;
-}
-}
-@media screen and (max-width: 400px) {
-    h4:nth-child(2) {
-        margin-left: 142px;
-    }
-    h4 {
-        font-size: 12.5;
-    }
-    .empty {
-        padding: 100px;
-    }
-    img {
-        margin-left: 310px;
-    
-    }
-    
-    }

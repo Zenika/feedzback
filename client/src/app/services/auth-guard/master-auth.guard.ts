@@ -30,7 +30,9 @@ export class MasterAuthGuard implements CanActivate {
     | Promise<boolean | UrlTree> {
     const urlResult = state.url.split(';');
     if (route.queryParamMap.get('senderEmail') !== null) {
+      if(!this.authService.isLogged)
       this.authService.anonymousLogin();
+      
       return true;
     } else if (
       state.url.includes('/feedback') &&
