@@ -6,13 +6,13 @@ export const environment = {
   production: false,
   serverApi: 'http://localhost:4000/graphql',
   firebaseConfig: {
-    apiKey: 'AIzaSyAKtg1emw7hq7teSDzrhMXmh6uFWC4lDAc',
-    authDomain: 'feedzback-343709.firebaseapp.com',
-    projectId: 'feedzback-343709',
-    storageBucket: 'feedzback-343709.appspot.com',
-    messagingSenderId: '370604731143',
-    appId: '1:370604731143:web:ee815fe3867242fd1533a2',
-    measurementId: 'G-YE9M3ZR11D',
+    apiKey: "AIzaSyB1LI5XWQ1JWZ6fKcYoilV9G6_VgE6-KUo",
+    authDomain: "feedz-back.firebaseapp.com",
+    projectId: "feedz-back",
+    storageBucket: "feedz-back.appspot.com",
+    messagingSenderId: "83058043747",
+    appId: "1:83058043747:web:165d245e30c4002b708156",
+    measurementId: "G-E9BJQJGM8F"
   },
 };
 
