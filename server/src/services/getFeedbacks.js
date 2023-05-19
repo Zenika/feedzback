@@ -2,7 +2,7 @@
 import {Datastore, Query} from '@google-cloud/datastore';
 
 const datastore = new Datastore(
-    {projectId: 'feedzback-343709'},
+    {projectId: 'feedz-back'},
 );
 
 /**
