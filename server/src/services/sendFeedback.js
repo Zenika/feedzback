@@ -89,9 +89,9 @@ export const sendFeedback = async ({feedbackInput}) => {
     errMsg = error;
     return false;
   });
-  if (!auth) {
-    return errMsg;
-  }
+  // if (!auth) {
+  //   return errMsg;
+  // }
   const envi = process.env.NODE_ENV || 'development';
   try {
     await insertFeedback(feedbackInput);
