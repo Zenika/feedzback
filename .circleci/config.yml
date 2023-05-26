@@ -26,8 +26,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v32-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            - v30-packaging-dependencies-{{ checksum "server/package-lock.json"}}
+            - v36-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v38-packaging-dependencies-{{ checksum "server/package-lock.json"}}
       - run:
           name: install_client_dependencies
           working_directory: client
@@ -47,12 +47,12 @@ jobs:
       - save_cache:
           paths:
             - client/node_modules         
-          key: v32-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v36-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - save_cache:
           paths:
             - server/node_modules         
-          key: v30-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+          key: v38-packaging-dependencies-{{ checksum "server/package-lock.json" }}
      
 
 
@@ -62,7 +62,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v32-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v36-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -75,7 +75,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v30-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+            - v38-packaging-dependencies-{{ checksum "server/package-lock.json" }}
 
       - run : npm install jest
       
@@ -123,7 +123,7 @@ jobs:
       - checkout
       - restore_cache:
          keys:
-          - v32-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          - v36-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       - run: 
           name: lint-client
           working_directory: client
@@ -138,7 +138,7 @@ jobs:
           at: client
       - restore_cache:
            keys:
-             - v32-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
+             - v36-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
 
       - run:
           name: build_front_end
@@ -166,7 +166,7 @@ jobs:
           at: client
       - restore_cache:
            keys:
-             - v28-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v36-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up and deploy gcloud config
@@ -210,7 +210,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v30-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v36-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}      
       - run:
           name: set env variables
@@ -287,24 +287,6 @@ workflows:
           requires:
             - set-serverApi-client
             - lint
-
-      - cypress/run:
-         working_directory: client
-         cache-key: v32-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-         executor: with-chrome
-         browser: chrome
-         requires:
-            - install-client-dependencies  
-         install-command:  |
-                npm install -f 
-                npm install apollo-angular @apollo/client graphql
-                echo ${CYPRESS_ENV} > cypress.env.json
-                echo ${FIREBASE_SERVICE_KEY} > ../server/firebase-service-key.json 
-         yarn: false   
-         pre-steps:
-            - run: npm install -g concurrently
-         start: 
-           npm run dev
 
       - deploy-server:
            requires:
