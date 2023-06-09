@@ -290,7 +290,7 @@ workflows:
              - install-client-dependencies
       - set-serverApi-client:
           requires:
-             - deploy-server
+             - deploy-server-prod
       - lint:
           requires:
               - unit-test-client
