@@ -62,7 +62,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v42-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       
       - run:
           name: unit-test
@@ -75,7 +75,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "server/package-lock.json" }}
+            - v42-packaging-dependencies-{{ checksum "server/package-lock.json" }}
 
       - run : npm install jest
       
@@ -123,7 +123,7 @@ jobs:
       - checkout
       - restore_cache:
          keys:
-          - v42-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       - run: 
           name: lint-client
           working_directory: client
@@ -138,7 +138,7 @@ jobs:
           at: client
       - restore_cache:
            keys:
-             - v42-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
+             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
 
       - run:
           name: build_front_end
@@ -171,7 +171,7 @@ jobs:
           at: client
       - restore_cache:
            keys:
-             - v42-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             
       - run:
           name: Set up and deploy gcloud config
@@ -222,7 +222,7 @@ jobs:
       - checkout
       - restore_cache:
            keys:
-             - v42-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}      
       - run:
           name: set env variables
