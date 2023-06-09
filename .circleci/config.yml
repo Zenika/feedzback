@@ -160,6 +160,11 @@ jobs:
   deploy:
     docker:
       - image: google/cloud-sdk
+    parameters:
+      gcloud-key:
+        type: string
+      project-id:
+        type: string
     steps:
       - checkout
       - attach_workspace:
@@ -172,10 +177,10 @@ jobs:
           name: Set up and deploy gcloud config
           working_directory: client
           command: |
-            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
+            echo << parameters.gcloud-key >> > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set project << parameters.project-id >>
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
            
       
@@ -204,9 +209,16 @@ jobs:
 
    
   deploy-server:
-     docker:
+    docker:
       - image: google/cloud-sdk
-     steps:
+    parameters:
+      gcloud-key:
+        type: string
+      project-id:
+        type: string
+      firebase-service-key:
+        type: string
+    steps:
       - checkout
       - restore_cache:
            keys:
@@ -216,7 +228,7 @@ jobs:
           name: set env variables
           working_directory: server
           command: |
-                echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
+                echo << parameters.firebase-service-key >> > firebase-service-key.json 
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
                 sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
@@ -226,10 +238,10 @@ jobs:
       - run:
           name: Set up gcloud config
           command: |
-            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
+            echo << parameters.gcloud-key >> > /tmp/sa_key.json 
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set project << parameters.project-id >>
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
   
       - run:
@@ -289,10 +301,31 @@ workflows:
             - lint
 
       - deploy-server:
-           requires:
+          name: deploy-server-dev
+          gcloud-key: $GCLOUD_KEY_DEV
+          project-id: $GOOGLE_PROJECT_ID_DEV
+          firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
+          requires:
+             - unit-test-server
+  
+      - deploy-server:
+          name: deploy-server-prod
+          gcloud-key: $GCLOUD_KEY
+          project-id: $GOOGLE_PROJECT_ID
+          firebase-service-key: $FIREBASE_SERVICE_KEY
+          requires: 
              - unit-test-server
 
       - deploy:
+            name: deploy-client-dev
+            gcloud-key: $GCLOUD_KEY_DEV
+            project-id: $GOOGLE_PROJECT_ID_DEV
             requires:
                - build  
  
+      - deploy:
+            name: deploy-client-prod
+            gcloud-key: $GCLOUD_KEY
+            project-id: $GOOGLE_PROJECT_ID
+            requires:
+               - build  
