@@ -16,7 +16,7 @@ executors:
     docker:
       - image: cypress/browsers:node16.14.0-chrome99-ff97
 
-   
+
 
 jobs:
   install-client-dependencies:
@@ -32,28 +32,28 @@ jobs:
           name: install_client_dependencies
           working_directory: client
           command: npm ci
-             
-      
+
+
       - run:
           name: install_server_dependencies
           working_directory: server
           command: npm ci
-      
+
       - run:
           name: set cypress environment variables
           working_directory: client
-          command: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json 
+          command: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json
 
       - save_cache:
           paths:
-            - client/node_modules         
+            - client/node_modules
           key: v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
-      
+
       - save_cache:
           paths:
-            - server/node_modules         
+            - server/node_modules
           key: v42-packaging-dependencies-{{ checksum "server/package-lock.json" }}
-     
+
 
 
   unit-test-client:
@@ -63,12 +63,12 @@ jobs:
       - restore_cache:
           keys:
             - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
-      
+
       - run:
           name: unit-test
           working_directory: client
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-  
+
   unit-test-server:
     executor: node
     steps:
@@ -78,26 +78,26 @@ jobs:
             - v42-packaging-dependencies-{{ checksum "server/package-lock.json" }}
 
       - run : npm install jest
-      
+
       - run:
           name: unit-test
           working_directory: server
-          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI    
+          command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 
   set-serverApi-client:
-     docker: 
+     docker:
         - image: google/cloud-sdk
      steps:
        - checkout
        - run:
           name: Set up gcloud config
           command: |
-            echo ${GCLOUD_KEY} > /tmp/sa_key.json 
+            echo ${GCLOUD_KEY} > /tmp/sa_key.json
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
 
        - run:
           name: set url
@@ -108,8 +108,8 @@ jobs:
             gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
             URL=$(sed -n '/versionUrl/,$p' temp.txt)
             rm temp.txt
-            URL=$(echo "$URL" | cut -d':' -f2,3)    
-            echo $URL 
+            URL=$(echo "$URL" | cut -d':' -f2,3)
+            echo $URL
             sed  "s,<SERVER_API>,$URL,g" -i src/environments/environment.prod.ts
             cat src/environments/environment.prod.ts
        - persist_to_workspace:
@@ -124,11 +124,11 @@ jobs:
       - restore_cache:
          keys:
           - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
-      - run: 
+      - run:
           name: lint-client
           working_directory: client
           command: npm run lint
-         
+
 
   build:
     executor: node
@@ -138,7 +138,7 @@ jobs:
           at: client
       - restore_cache:
            keys:
-             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}} 
+             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
 
       - run:
           name: build_front_end
@@ -148,14 +148,14 @@ jobs:
           name: server url
           working_directory: client
           command: cat src/environments/environment.prod.ts
-      
+
       - persist_to_workspace:
           root: client
           paths:
             - dist/*
 
-  
-      
+
+
 
   deploy:
     docker:
@@ -172,42 +172,44 @@ jobs:
       - restore_cache:
            keys:
              - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-            
+
       - run:
           name: Set up and deploy gcloud config
           working_directory: client
           command: |
-            echo << parameters.gcloud-key >> > /tmp/sa_key.json 
+            echo << parameters.gcloud-key >> > /tmp/sa_key.json
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
             gcloud --quiet config set project << parameters.project-id >>
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
-           
-      
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      # - run:
+      #     name: deploy-client
+      #     working_directory: client
+      #     command: |
+      #          VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+      #          VERSION="client-${VERSION}"
+      #          if [[ "${VERSION}" == "master" ]]
+      #          then
+      #          gcloud --quiet app deploy --version=$VERSION
+      #          else
+      #          gcloud --quiet app deploy --version=$VERSION --no-promote
+      #          fi
       - run:
           name: deploy-client
           working_directory: client
-          command: |
-               VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-               VERSION="client-${VERSION}"
-               if [[ "${VERSION}" == "master" ]]
-               then
-               gcloud --quiet app deploy --version=$VERSION
-               else
-               gcloud --quiet app deploy --version=$VERSION --no-promote
-               fi
-      - run:
-          name: test-version-link
-          working_directory: client
-          command: |
-                VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-                VERSION="client-${VERSION}"
-                echo ${VERSION}
-                cat src/environments/environment.prod.ts
-                
+          command: gcloud --quiet app deploy
+      # - run:
+      #     name: test-version-link
+      #     working_directory: client
+      #     command: |
+      #           VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+      #           VERSION="client-${VERSION}"
+      #           echo ${VERSION}
+      #           cat src/environments/environment.prod.ts
 
 
-   
+
+
   deploy-server:
     docker:
       - image: google/cloud-sdk
@@ -223,27 +225,24 @@ jobs:
       - restore_cache:
            keys:
              - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-      - run: echo ${URL_CLIENT_FORM}      
+      - run: echo ${URL_CLIENT_FORM}
       - run:
           name: set env variables
           working_directory: server
           command: |
-                echo << parameters.firebase-service-key >> > firebase-service-key.json 
+                echo << parameters.firebase-service-key >> > firebase-service-key.json
                 sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
                 sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
                 sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
-            
-                
-            
       - run:
           name: Set up gcloud config
           command: |
-            echo << parameters.gcloud-key >> > /tmp/sa_key.json 
+            echo << parameters.gcloud-key >> > /tmp/sa_key.json
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
             gcloud --quiet config set project << parameters.project-id >>
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}  
-  
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+
       - run:
           name: deploy-server
           working_directory: server
@@ -252,13 +251,13 @@ jobs:
               VERSION="server-${VERSION}"
               if [[ "${VERSION}" == "master" ]]
               then
-              gcloud app deploy --version=$VERSION 
+              gcloud app deploy --version=$VERSION
               else
-              gcloud app deploy --version=$VERSION --no-promote 
+              gcloud app deploy --version=$VERSION --no-promote
               fi
-      
 
-      - run: 
+
+      - run:
           name: set server url vraiable
           working_directory: server
           command: |
@@ -267,21 +266,21 @@ jobs:
             gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
             URL=$(sed -n '/versionUrl/,$p' temp.txt)
             rm temp.txt
-            URL=$(echo "$URL" | cut -d':' -f2,3)    
-            echo $URL     
-            sed "s,<URL_CLIENT>,$URL,g" -i app.yaml  
-          
+            URL=$(echo "$URL" | cut -d':' -f2,3)
+            echo $URL
+            sed "s,<URL_CLIENT>,$URL,g" -i app.yaml
 
 
 
-  
-      
+
+
+
 
 workflows:
   matrix-tests:
-    jobs: 
+    jobs:
       - install-client-dependencies
-     
+
       - unit-test-client:
            requires:
               - install-client-dependencies
@@ -295,11 +294,12 @@ workflows:
           requires:
               - unit-test-client
               - unit-test-server
-      - build: 
+      - build:
           requires:
             - set-serverApi-client
             - lint
 
+      # DEV
       - deploy-server:
           name: deploy-server-dev
           gcloud-key: $GCLOUD_KEY_DEV
@@ -307,25 +307,34 @@ workflows:
           firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
           requires:
              - unit-test-server
-  
-      - deploy-server:
-          name: deploy-server-prod
-          gcloud-key: $GCLOUD_KEY
-          project-id: $GOOGLE_PROJECT_ID
-          firebase-service-key: $FIREBASE_SERVICE_KEY
-          requires: 
-             - unit-test-server
+          # filters: &dev-filters
+          #   branches:
+          #     only: dev
 
       - deploy:
             name: deploy-client-dev
             gcloud-key: $GCLOUD_KEY_DEV
             project-id: $GOOGLE_PROJECT_ID_DEV
             requires:
-               - build  
- 
+               - build
+            # filters: *dev-filters
+
+      # PROD
+      - deploy-server:
+          name: deploy-server-prod
+          gcloud-key: $GCLOUD_KEY
+          project-id: $GOOGLE_PROJECT_ID
+          firebase-service-key: $FIREBASE_SERVICE_KEY
+          requires:
+             - unit-test-server
+          filters: &prod-filters
+            branches:
+              only: master
+
       - deploy:
             name: deploy-client-prod
             gcloud-key: $GCLOUD_KEY
             project-id: $GOOGLE_PROJECT_ID
             requires:
-               - build  
+               - build
+            filters: *prod-filters
