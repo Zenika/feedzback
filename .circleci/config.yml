@@ -242,19 +242,22 @@ jobs:
             rm /tmp/sa_key.json
             gcloud --quiet config set project << parameters.project-id >>
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-
       - run:
           name: deploy-server
           working_directory: server
-          command: |
-              VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-              VERSION="server-${VERSION}"
-              if [[ "${VERSION}" == "master" ]]
-              then
-              gcloud app deploy --version=$VERSION
-              else
-              gcloud app deploy --version=$VERSION --no-promote
-              fi
+          command: gcloud app deploy --version=$VERSION
+      # - run:
+      #     name: deploy-server
+      #     working_directory: server
+      #     command: |
+      #         VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+      #         VERSION="server-${VERSION}"
+      #         if [[ "${VERSION}" == "master" ]]
+      #         then
+      #         gcloud app deploy --version=$VERSION
+      #         else
+      #         gcloud app deploy --version=$VERSION --no-promote
+      #         fi
 
 
       - run:
