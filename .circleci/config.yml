@@ -260,18 +260,18 @@ jobs:
       #         fi
 
 
-      - run:
-          name: set server url vraiable
-          working_directory: server
-          command: |
-            VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-            VERSION="server-${VERSION}"
-            gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
-            URL=$(sed -n '/versionUrl/,$p' temp.txt)
-            rm temp.txt
-            URL=$(echo "$URL" | cut -d':' -f2,3)
-            echo $URL
-            sed "s,<URL_CLIENT>,$URL,g" -i app.yaml
+      # - run:
+      #     name: set server url vraiable
+      #     working_directory: server
+      #     command: |
+      #       VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+      #       VERSION="server-${VERSION}"
+      #       gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
+      #       URL=$(sed -n '/versionUrl/,$p' temp.txt)
+      #       rm temp.txt
+      #       URL=$(echo "$URL" | cut -d':' -f2,3)
+      #       echo $URL
+      #       sed "s,<URL_CLIENT>,$URL,g" -i app.yaml
 
 
 
