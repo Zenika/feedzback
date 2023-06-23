@@ -245,7 +245,7 @@ jobs:
       - run:
           name: deploy-server
           working_directory: server
-          command: gcloud app deploy --version=$VERSION
+          command: gcloud app deploy
       # - run:
       #     name: deploy-server
       #     working_directory: server
