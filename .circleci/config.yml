@@ -197,7 +197,7 @@ jobs:
       - run:
           name: deploy-client
           working_directory: client
-          command: gcloud --quiet app deploy
+          command: gcloud --quiet app deploy --version=PROMOTED
       # - run:
       #     name: test-version-link
       #     working_directory: client
@@ -245,7 +245,7 @@ jobs:
       - run:
           name: deploy-server
           working_directory: server
-          command: gcloud app deploy
+          command: gcloud app deploy --version=PROMOTED
       # - run:
       #     name: deploy-server
       #     working_directory: server
