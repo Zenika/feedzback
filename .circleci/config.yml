@@ -5,18 +5,15 @@ orbs:
   browser-tools: circleci/browser-tools@1.2.5
   oss-ci-cd-tooling: apollo/oss-ci-cd-tooling@0.0.20
 
-
 version: 2.1 # using 2.1 provides access to orbs and other features
 executors:
-   node:
-     docker:
-       - image: cimg/node:16.14.0
-   with-chrome:
+  node:
+    docker:
+      - image: cimg/node:16.14.0
+  with-chrome:
     resource_class: small
     docker:
       - image: cypress/browsers:node16.14.0-chrome99-ff97
-
-
 
 jobs:
   install-client-dependencies:
@@ -33,16 +30,15 @@ jobs:
           working_directory: client
           command: npm ci
 
-
       - run:
           name: install_server_dependencies
           working_directory: server
           command: npm ci
 
-      - run:
-          name: set cypress environment variables
-          working_directory: client
-          command: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json
+      # - run:
+      #     name: set cypress environment variables
+      #     working_directory: client
+      #     command: echo ${FIREBASE_SERVICE_KEY} > firebase-service-key.json
 
       - save_cache:
           paths:
@@ -53,8 +49,6 @@ jobs:
           paths:
             - server/node_modules
           key: v42-packaging-dependencies-{{ checksum "server/package-lock.json" }}
-
-
 
   unit-test-client:
     executor: node
@@ -77,85 +71,77 @@ jobs:
           keys:
             - v42-packaging-dependencies-{{ checksum "server/package-lock.json" }}
 
-      - run : npm install jest
+      - run: npm install jest
 
       - run:
           name: unit-test
           working_directory: server
           command: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
+  # set-serverApi-client:
+  #    docker:
+  #       - image: google/cloud-sdk
+  #    steps:
+  #      - checkout
+  #      - run:
+  #         name: Set up gcloud config
+  #         command: |
+  #           echo ${GCLOUD_KEY} > /tmp/sa_key.json
+  #           gcloud auth activate-service-account --key-file=/tmp/sa_key.json
+  #           rm /tmp/sa_key.json
+  #           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+  #           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
 
-  set-serverApi-client:
-     docker:
-        - image: google/cloud-sdk
-     steps:
-       - checkout
-       - run:
-          name: Set up gcloud config
-          command: |
-            echo ${GCLOUD_KEY} > /tmp/sa_key.json
-            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
-            rm /tmp/sa_key.json
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-
-       - run:
-          name: set url
-          working_directory: client
-          command: |
-            VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
-            VERSION="server-${VERSION}"
-            gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
-            URL=$(sed -n '/versionUrl/,$p' temp.txt)
-            rm temp.txt
-            URL=$(echo "$URL" | cut -d':' -f2,3)
-            echo $URL
-            sed  "s,<SERVER_API>,$URL,g" -i src/environments/environment.prod.ts
-            cat src/environments/environment.prod.ts
-       - persist_to_workspace:
-           root: client
-           paths:
-             - src/environments/environment.prod.ts
+  #  - run:
+  #     name: set url
+  #     working_directory: client
+  #     command: |
+  #       VERSION=`echo ${CIRCLE_BRANCH,,} | tr -dc '[:alnum:]\n\r' |  tr  '[:upper:]' '[:lower:]'`
+  #       VERSION="server-${VERSION}"
+  #       gcloud app versions describe ${VERSION} --service=server-service >> temp.txt
+  #       URL=$(sed -n '/versionUrl/,$p' temp.txt)
+  #       rm temp.txt
+  #       URL=$(echo "$URL" | cut -d':' -f2,3)
+  #       echo $URL
+  #       sed  "s,<SERVER_API>,$URL,g" -i src/environments/environment.prod.ts
+  #       cat src/environments/environment.prod.ts
+  #  - persist_to_workspace:
+  #      root: client
+  #      paths:
+  #        - src/environments/environment.prod.ts
 
   lint:
     executor: node
     steps:
       - checkout
       - restore_cache:
-         keys:
-          - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          keys:
+            - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       - run:
           name: lint-client
           working_directory: client
           command: npm run lint
 
-
   build:
     executor: node
+    parameters:
+      environment:
+        type: string
     steps:
       - checkout
       - attach_workspace:
           at: client
       - restore_cache:
-           keys:
-             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
-
+          keys:
+            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
-          command:  npm run build
-      - run:
-          name: server url
-          working_directory: client
-          command: cat src/environments/environment.prod.ts
-
+          command: npm run build --configuration=<< parameters.environment >>
       - persist_to_workspace:
           root: client
           paths:
             - dist/*
-
-
-
 
   deploy:
     docker:
@@ -170,8 +156,8 @@ jobs:
       - attach_workspace:
           at: client
       - restore_cache:
-           keys:
-             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+          keys:
+            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
 
       - run:
           name: Set up and deploy gcloud config
@@ -207,9 +193,6 @@ jobs:
       #           echo ${VERSION}
       #           cat src/environments/environment.prod.ts
 
-
-
-
   deploy-server:
     docker:
       - image: google/cloud-sdk
@@ -223,17 +206,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-           keys:
-             - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+          keys:
+            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}
       - run:
           name: set env variables
           working_directory: server
           command: |
-                echo << parameters.firebase-service-key >> > firebase-service-key.json
-                sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
-                sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
-                sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
+            echo << parameters.firebase-service-key >> > firebase-service-key.json
+            sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
+            sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+            sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
       - run:
           name: Set up gcloud config
           command: |
@@ -259,7 +242,6 @@ jobs:
       #         gcloud app deploy --version=$VERSION --no-promote
       #         fi
 
-
       # - run:
       #     name: set server url vraiable
       #     working_directory: server
@@ -273,71 +255,76 @@ jobs:
       #       echo $URL
       #       sed "s,<URL_CLIENT>,$URL,g" -i app.yaml
 
-
-
-
-
-
-
 workflows:
   matrix-tests:
     jobs:
       - install-client-dependencies
 
       - unit-test-client:
-           requires:
-              - install-client-dependencies
+          requires:
+            - install-client-dependencies
       - unit-test-server:
           requires:
-             - install-client-dependencies
-      - set-serverApi-client:
-          requires:
-             - deploy-server-prod
+            - install-client-dependencies
+      # - set-serverApi-client:
+      #     requires:
+      #        - deploy-server-prod
       - lint:
           requires:
-              - unit-test-client
-              - unit-test-server
-      - build:
-          requires:
-            - set-serverApi-client
-            - lint
-
+            - unit-test-client
+            - unit-test-server
       # DEV
+      - build:
+          name: build-dev
+          environment: staging
+          requires:
+            # - set-serverApi-client
+            - lint
+          # filters: &dev-filters
+          #   branches:
+          #     only: dev
+
       - deploy-server:
           name: deploy-server-dev
           gcloud-key: $GCLOUD_KEY_DEV
           project-id: $GOOGLE_PROJECT_ID_DEV
           firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
           requires:
-             - unit-test-server
-          # filters: &dev-filters
-          #   branches:
-          #     only: dev
-
-      - deploy:
-            name: deploy-client-dev
-            gcloud-key: $GCLOUD_KEY_DEV
-            project-id: $GOOGLE_PROJECT_ID_DEV
-            requires:
-               - build
+            - unit-test-server
             # filters: *dev-filters
 
+      - deploy:
+          name: deploy-client-dev
+          gcloud-key: $GCLOUD_KEY_DEV
+          project-id: $GOOGLE_PROJECT_ID_DEV
+          requires:
+            - build
+          # filters: *dev-filters
+
       # PROD
+      - build:
+          name: build-prod
+          environment: production
+          requires:
+            # - set-serverApi-client
+            - lint
+          filters: &prod-filters
+            branches:
+              only: master
+
       - deploy-server:
           name: deploy-server-prod
           gcloud-key: $GCLOUD_KEY
           project-id: $GOOGLE_PROJECT_ID
           firebase-service-key: $FIREBASE_SERVICE_KEY
           requires:
-             - unit-test-server
-          filters: &prod-filters
-            branches:
-              only: master
+            - unit-test-server
+          filters: *prod-filters
 
       - deploy:
-            name: deploy-client-prod
-            gcloud-key: $GCLOUD_KEY
-            project-id: $GOOGLE_PROJECT_ID
-            requires:
-               - build
-            filters: *prod-filters
+          name: deploy-client-prod
+          gcloud-key: $GCLOUD_KEY
+          project-id: $GOOGLE_PROJECT_ID
+          requires:
+            - build
+          filters: *prod-filters
