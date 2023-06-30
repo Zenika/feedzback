@@ -137,7 +137,7 @@ jobs:
       - run:
           name: build_front_end
           working_directory: client
-          command: npm run build --configuration=<< parameters.environment >>
+          command: npm run build -- --configuration=<< parameters.environment >>
       - persist_to_workspace:
           root: client
           paths:
