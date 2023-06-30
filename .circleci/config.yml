@@ -298,7 +298,7 @@ workflows:
           gcloud-key: $GCLOUD_KEY_DEV
           project-id: $GOOGLE_PROJECT_ID_DEV
           requires:
-            - build
+            - build-dev
           # filters: *dev-filters
 
       # PROD
@@ -326,5 +326,5 @@ workflows:
           gcloud-key: $GCLOUD_KEY
           project-id: $GOOGLE_PROJECT_ID
           requires:
-            - build
+            - build-prod
           filters: *prod-filters
