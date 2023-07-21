@@ -12,11 +12,24 @@ const __dirname = dirname(__filename);
 const emailTemplate = fs.readFileSync(__dirname +
    '/../emailTemplate/emailModel.html').toString();
 
+  
+let datastore;   
 /**
  * configure environement in case if it's not in production mode
  */
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config();
+  /**
+ * configure datastore
+ */
+ datastore = new Datastore({
+  projectId: 'feedz-back',
+  apiEndpoint: process.env.DATASTORE_API
+ });
+} else {
+  datastore = new Datastore({
+    projectId: 'feedz-back',
+   });
 }
 
 /**
@@ -39,12 +52,7 @@ const myMailgun = mailgun({
   domain: domain,
 });
 
-/**
- * configure datastore
- */
-const datastore = new Datastore({
-  projectId: 'feedz-back',
-});
+
 
 /**
  * this function will insert the feedback in datastore after sending it
@@ -101,7 +109,7 @@ export const sendFeedback = async ({feedbackInput}) => {
      * @type {String}
      */
     const template = replaceHtmlVars(emailTemplate, feedbackInput);
-
+    
     /**
      * prepare message object to pass as argument in Mailgun
      * in case if it's in dev mode we send the feedback to the generic email

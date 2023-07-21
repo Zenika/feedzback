@@ -8,11 +8,27 @@ import {dirname} from 'path';
 import admin from 'firebase-admin';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import {Datastore, Query} from '@google-cloud/datastore';
 
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/askFeedbackModel.html').toString();
 
+let datastore;   
+/**
+ * configure environement in case if it's not in production mode
+ */
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config();
+  /**
+  * configure datastore
+  */
+  datastore = new Datastore({
+   projectId: 'feedz-back',
+   apiEndpoint: process.env.DATASTORE_API
+ });
+} else {
+  datastore = new Datastore({
+    projectId: 'feedz-back',
+   });
 }
 
 const apiKey = process.env.API_KEY;

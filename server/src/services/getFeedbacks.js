@@ -1,9 +1,25 @@
 /** @module getFeedbacks */
 import {Datastore, Query} from '@google-cloud/datastore';
+import dotEnv from 'dotenv';
 
-const datastore = new Datastore(
-    {projectId: 'feedz-back'},
-);
+let datastore;   
+/**
+ * configure environement in case if it's not in production mode
+ */
+if (process.env.NODE_ENV !== 'production') {
+  dotEnv.config();
+  /**
+  * configure datastore
+  */
+  datastore = new Datastore({
+    projectId: 'feedz-back',
+    apiEndpoint: process.env.DATASTORE_API
+ });
+} else {
+  datastore = new Datastore({
+    projectId: 'feedz-back',
+   });
+}
 
 /**
  * get recieved feedbacks for a specified user
