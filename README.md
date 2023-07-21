@@ -26,7 +26,7 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
     `API_KEY`= your mailgun Api
     `DOMAIN`= your mailgun domain
     `URL_CLIENT_FORM` your url client form to set into email template
-    `DatastoreApi` yout endpoint datastore in order to simulate it in local
+    `DatastoreApi` your local datastore endpoint in order to simulate it in local
  ### Run Server
    npm start
  ### Test Server
