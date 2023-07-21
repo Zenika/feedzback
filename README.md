@@ -26,6 +26,7 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
     `API_KEY`= your mailgun Api
     `DOMAIN`= your mailgun domain
     `URL_CLIENT_FORM` your url client form to set into email template
+    `DatastoreApi` yout endpoint datastore in order to simulate it in local
  ### Run Server
    npm start
  ### Test Server
@@ -43,4 +44,9 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
   ng test
  ### Run e2e tests
   npm run cypress
+ ### Setup datastore emulator
+  setp 1: download it in your local
+  gcloud components install cloud-datastore-emulator
+  step 2: run it
+  gcloud beta emulators datastore start
    
