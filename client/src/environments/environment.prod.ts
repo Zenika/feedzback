@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  serverApi: '<SERVER_API>/graphql',
+  serverApi: 'https://server-service-dot-feedz-back.oa.r.appspot.com/graphql',
   firebaseConfig: {
     apiKey: "AIzaSyB1LI5XWQ1JWZ6fKcYoilV9G6_VgE6-KUo",
     authDomain: "feedz-back.firebaseapp.com",
