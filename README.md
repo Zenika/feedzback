@@ -46,7 +46,7 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
   npm run cypress
  ### Setup datastore emulator
   setp 1: download it in your local
-  gcloud components install cloud-datastore-emulator
+in your shell run `gcloud components install cloud-datastore-emulator`
   step 2: run it
   gcloud beta emulators datastore start
    
