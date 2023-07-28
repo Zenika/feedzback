@@ -37,14 +37,14 @@ h4:nth-child(1) {
 h4:nth-child(2) {
     margin-top: 5px;
     position: absolute;
-    margin-left: 500px;
+    margin-left: 300px;
 }
 img {
     position: absolute;
     background-color: #D52150;
     border-radius: 3px;
     padding: 2px;
-    margin-left: 600px;
+    margin-left: 480px;
 }
 img:hover {
     cursor: pointer;
@@ -56,7 +56,10 @@ img:hover {
 
 @media screen and (max-width: 690px) {
     h4:nth-child(2) {
-        margin-left: 350px;
+        margin-left: 250px;
+    }
+    img {
+        margin-left: 430px;
     }
     .list {
         margin-top: 20px;
@@ -66,18 +69,7 @@ img:hover {
         padding: 200px;
         margin-left: 50px;
     }
-    img {
-        margin-left: 460px;
-    }
-  
-}
-@media screen and (max-width: 550px) {
-    h4:nth-child(2) {
-        margin-left: 320px;
-    }
-    img {
-        margin-left: 430px;
-    }
+
   
 }
 @media screen and (max-width: 512px) {
@@ -88,7 +80,7 @@ img:hover {
 h4:nth-child(2) {
     margin-top: 5px;
     position: absolute;
-    margin-left: 230px;
+    margin-left: 170px;
 }
 img {
     margin-left: 340px;
@@ -100,18 +92,17 @@ img {
 }
 @media screen and (max-width: 400px) {
     h4:nth-child(2) {
-        margin-left: 180px;
+        margin-left: 142px;
     }
     h4 {
-        font-size: 10px;
+        font-size: 12.5;
     }
     .empty {
         padding: 100px;
     }
     img {
-        margin-left: 270px;
-        height: 16px;
-        width: 14px;
+        margin-left: 310px;
+    
     }
     
     }
