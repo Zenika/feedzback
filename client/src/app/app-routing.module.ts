@@ -9,7 +9,7 @@ import {redirectUnauthorizedTo} from '@angular/fire/compat/auth-guard';
 import {MyFeedbacksPageComponent} from './my-feedbacks-page/my-feedbacks-page.component';
 import {MasterAuthGuard} from './services/auth-guard/master-auth.guard';
 import {FeedbackComponent} from './feedback/feedback.component';
-import { MyAskFeedbacksPageComponent } from './my-ask-feedbacks-page/my-ask-feedbacks-page.component';
+import {MyAskFeedbacksPageComponent} from './my-ask-feedbacks-page/my-ask-feedbacks-page.component';
 
 const redirectUnauthorizedToSignInPage = () =>
   redirectUnauthorizedTo(['sign-in']);
