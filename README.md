@@ -23,8 +23,8 @@ Feel free to contribute, open [issues](https://github.com/Zenika/feedzback/issue
     Make sure you installed npm packages
  ### Environment Variables
     Create `.env` file and put those variables below in it:
-    `API_KEY`= your mailgun Api
-    `DOMAIN`= your mailgun domain
+    `MAILGUN_API_KEY`= your mailgun Api
+    `MAILGUN_DOMAIN`= your mailgun domain
     `URL_CLIENT_FORM` your url client form to set into email template
     `DatastoreApi` your local datastore endpoint in order to simulate it in local
  ### Run Server
