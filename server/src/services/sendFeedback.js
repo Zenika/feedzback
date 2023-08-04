@@ -1,6 +1,5 @@
 /** @module sendFeedback */
-import {Datastore} from '@google-cloud/datastore';
-import dotEnv from 'dotenv';
+import datastore from '../../index.js'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
 import {fileURLToPath} from 'url';
@@ -12,25 +11,6 @@ const __dirname = dirname(__filename);
 const emailTemplate = fs.readFileSync(__dirname +
    '/../emailTemplate/emailModel.html').toString();
 
-  
-let datastore;   
-/**
- * configure environement in case if it's not in production mode
- */
-if (process.env.NODE_ENV !== 'production') {
-  dotEnv.config();
-  /**
- * configure datastore
- */
- datastore = new Datastore({
-  projectId: 'feedz-back',
-  apiEndpoint: process.env.DATASTORE_API
- });
-} else {
-  datastore = new Datastore({
-    projectId: 'feedz-back',
-   });
-}
 
 /**
  * get apiKey and domain of zenika mailgun account
@@ -51,8 +31,6 @@ const myMailgun = mailgun({
   apiKey: apiKey,
   domain: domain,
 });
-
-
 
 /**
  * this function will insert the feedback in datastore after sending it

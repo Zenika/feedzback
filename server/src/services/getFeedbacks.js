@@ -1,26 +1,6 @@
 /** @module getFeedbacks */
-import {Datastore, Query} from '@google-cloud/datastore';
-import dotEnv from 'dotenv';
-
-let datastore;   
-/**
- * configure environement in case if it's not in production mode
- */
-if (process.env.NODE_ENV !== 'production') {
-  dotEnv.config();
-  /**
-  * configure datastore
-  */
-  datastore = new Datastore({
-    projectId: 'feedz-back',
-    apiEndpoint: process.env.DATASTORE_API
- });
-} else {
-  datastore = new Datastore({
-    projectId: 'feedz-back',
-   });
-}
-
+import {Query} from '@google-cloud/datastore.js';
+import datastore from '../../index.js'
 /**
  * get recieved feedbacks for a specified user
  *  the feedbacks will be return according to the email user passed as argument
@@ -56,7 +36,7 @@ export const getSentFeedbacks = async (email) => {
      * as you see we filter feedbacks by senderEmail
      * @type {Query}
      */
-    const query = datastore.createQuery('feedzback').filter('senderEmail', '=', email);
+    const query = datasto.createQuery('feedzback').filter('senderEmail', '=', email);
     const [entities] = await datastore.runQuery(query);
     const res = combineEntityAndKey(entities);
     return res;
