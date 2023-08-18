@@ -22,8 +22,8 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * get apiKey and domain of zenika mailgun account
  */
-const apiKey = process.env.API_KEY;
-const domain = process.env.DOMAIN;
+const apiKey = process.env.MAILGUN_API_KEY;
+const domain = process.env.MAILGUN_DOMAIN;
 
 /**
  * the objectif of feedbackId to sendback id of sent feedback to client in case

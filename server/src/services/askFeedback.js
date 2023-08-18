@@ -15,8 +15,8 @@ if (process.env.NODE_ENV !== 'production') {
   dotEnv.config();
 }
 
-const apiKey = process.env.API_KEY;
-const domain = process.env.DOMAIN;
+const apiKey = process.env.MAILGUN_API_KEY;
+const domain = process.env.MAILGUN_DOMAIN;
 
 const myMailgun = mailgun({
   apiKey: apiKey,
