@@ -3,8 +3,8 @@ runtime: nodejs16
 service: server-service
 
 env_variables:
-   API_KEY: <API_KEY>
-   DOMAIN: <DOMAIN>
+   MAILGUN_API_KEY: <API_KEY>
+   MAILGUN_DOMAIN: <DOMAIN>
    URL_CLIENT: <URL_CLIENT>
    GENERIC_EMAIL: <GENERIC_EMAIL>
    
