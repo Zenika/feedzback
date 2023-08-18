@@ -6,6 +6,8 @@ import cors from 'cors';
 import admin from 'firebase-admin';
 import dotEnv from 'dotenv';
 import {readFileSync} from 'fs';
+const { Datastore } = require('@google-cloud/datastore');
+
 
 
 const firebaseKey = JSON.parse(readFileSync('./firebase-service-key.json'));
@@ -16,8 +18,24 @@ const server = new ApolloServer({typeDefs, resolvers, introspection: true,
   playground: true});
 const app = express();
 
+
+/**
+ * Datastore setup
+ */
+let datastore;   
+/**
+ * configure environement in case if it's not in production mode
+ */
 if (process.env.NODE_ENV !== 'production') {
   dotEnv.config();
+  datastore = new Datastore({
+    projectId: 'feedz-back',
+    apiEndpoint: process.env.DATASTORE_API
+ });
+} else {
+  datastore = new Datastore({
+    projectId: 'feedz-back',
+   });
 }
 /**
  * configure firebase admin
@@ -40,3 +58,5 @@ server.start().then(()=>{
   },
   );
 });
+
+module.exports = datastore;
