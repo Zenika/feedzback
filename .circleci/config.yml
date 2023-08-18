@@ -224,7 +224,7 @@ jobs:
       - run:
           name: test
           working_directory: server
-          command: cat firebase-service-key.json
+          command: cat app.yaml
       - run:
           name: Set up gcloud config
           command: |
