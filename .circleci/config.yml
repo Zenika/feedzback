@@ -221,7 +221,7 @@ jobs:
             sed "s/<API_KEY>/<< parameters.mailgun-key >>/g" -i app.yaml
             sed "s/<DOMAIN>/<< parameters.mailgun-domain >>/g" -i app.yaml
             sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
-      - run: firebase-service-key.json
+      - run: cat firebase-service-key.json
       - run:
           name: Set up gcloud config
           command: |
