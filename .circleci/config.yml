@@ -218,8 +218,8 @@ jobs:
           working_directory: server
           command: |
             echo << parameters.firebase-service-key >> > firebase-service-key.json
-            sed "s/<API_KEY>/${<< parameters.mailgun-key >>}/g" -i app.yaml
-            sed "s/<DOMAIN>/${<< parameters.mailgun-domain >>}/g" -i app.yaml
+            sed "s/<API_KEY>/<< parameters.mailgun-key >>/g" -i app.yaml
+            sed "s/<DOMAIN>/<< parameters.mailgun-domain >>/g" -i app.yaml
             sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
       - run:
           name: Set up gcloud config
