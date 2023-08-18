@@ -197,6 +197,10 @@ jobs:
     docker:
       - image: google/cloud-sdk
     parameters:
+      mailgun-key:
+        type: string
+      mailgun-domain:
+        type: string
       gcloud-key:
         type: string
       project-id:
@@ -214,8 +218,8 @@ jobs:
           working_directory: server
           command: |
             echo << parameters.firebase-service-key >> > firebase-service-key.json
-            sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
-            sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+            sed "s/<API_KEY>/${<< parameters.mailgun-key >>}/g" -i app.yaml
+            sed "s/<DOMAIN>/${<< parameters.mailgun-domain >>}/g" -i app.yaml
             sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
       - run:
           name: Set up gcloud config
@@ -280,18 +284,20 @@ workflows:
           requires:
             # - set-serverApi-client
             - lint
-          filters: &dev-filters
-            branches:
-              only: dev
+          # filters: &dev-filters
+          #   branches:
+          #     only: dev
 
       - deploy-server:
           name: deploy-server-dev
+          mailgun-key: $MAILGUN_KEY_DEV
+          mailgun-domain: $MAILGUN_DOMAIN_DEV
           gcloud-key: $GCLOUD_KEY_DEV
           project-id: $GOOGLE_PROJECT_ID_DEV
           firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
           requires:
             - unit-test-server
-          filters: *dev-filters
+          # filters: *dev-filters
 
       - deploy:
           name: deploy-client-dev
@@ -299,7 +305,7 @@ workflows:
           project-id: $GOOGLE_PROJECT_ID_DEV
           requires:
             - build-dev
-          filters: *dev-filters
+          # filters: *dev-filters
 
       # PROD
       - build:
@@ -314,6 +320,8 @@ workflows:
 
       - deploy-server:
           name: deploy-server-prod
+          mailgun-key: $API_KEY
+          mailgun-domain: $DOMAIN
           gcloud-key: $GCLOUD_KEY
           project-id: $GOOGLE_PROJECT_ID
           firebase-service-key: $FIREBASE_SERVICE_KEY
