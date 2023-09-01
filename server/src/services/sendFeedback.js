@@ -43,7 +43,7 @@ const myMailgun = mailgun({
  * configure datastore
  */
 const datastore = new Datastore({
-  projectId: 'feedz-back',
+  projectId: 'feedzbackdev-389312',
 });
 
 /**
