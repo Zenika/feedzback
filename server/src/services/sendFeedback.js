@@ -1,6 +1,5 @@
 /** @module sendFeedback */
-import {Datastore} from '@google-cloud/datastore';
-import dotEnv from 'dotenv';
+import datastore from '../../index.js'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
 import {fileURLToPath} from 'url';
@@ -12,12 +11,6 @@ const __dirname = dirname(__filename);
 const emailTemplate = fs.readFileSync(__dirname +
    '/../emailTemplate/emailModel.html').toString();
 
-/**
- * configure environement in case if it's not in production mode
- */
-if (process.env.NODE_ENV !== 'production') {
-  dotEnv.config();
-}
 
 /**
  * get apiKey and domain of zenika mailgun account
@@ -37,13 +30,6 @@ let feedbackId;
 const myMailgun = mailgun({
   apiKey: apiKey,
   domain: domain,
-});
-
-/**
- * configure datastore
- */
-const datastore = new Datastore({
-  projectId: 'feedzbackdev-389312',
 });
 
 /**
@@ -103,7 +89,7 @@ export const sendFeedback = async ({feedbackInput}) => {
      * @type {String}
      */
     const template = replaceHtmlVars(emailTemplate, feedbackInput);
-
+    
     /**
      * prepare message object to pass as argument in Mailgun
      * in case if it's in dev mode we send the feedback to the generic email
