@@ -289,7 +289,7 @@ workflows:
       - build:
           name: build-dev
           environment: staging
-          requires:
+         # requires:
             # - set-serverApi-client
            # - lint
           # filters: &dev-filters
