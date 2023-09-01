@@ -145,7 +145,7 @@ jobs:
       - run:
           name: install_client_dependencies
           working_directory: client
-          command: npm install @angular/cli      
+          command: sudo npm install -g @angular/cli      
       - run:
           name: build_front_end
           working_directory: client
