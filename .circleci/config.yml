@@ -289,8 +289,8 @@ workflows:
       - build:
           name: build-dev
           environment: staging
-         # requires:
-            # - set-serverApi-client
+          requires:
+            - install-client-dependencies
            # - lint
           # filters: &dev-filters
           #   branches:
