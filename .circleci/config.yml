@@ -23,7 +23,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v41-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v44-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v42-packaging-dependencies-{{ checksum "server/package-lock.json"}}
       - run:
           name: install_client_dependencies
@@ -32,7 +32,8 @@ jobs:
       - run:
           name: install_client_dependencies
           working_directory: client
-          command: npm i @angular/cli
+          command: npm install -g @angular/cli
+
       - run:
           name: install_server_dependencies
           working_directory: server
@@ -46,7 +47,7 @@ jobs:
       - save_cache:
           paths:
             - client/node_modules
-          key: v41-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v44-packaging-dependencies-{{ checksum "client/package-lock.json" }}
 
       - save_cache:
           paths:
@@ -59,7 +60,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v41-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v44-packaging-dependencies-{{ checksum "client/package-lock.json" }}
 
       - run:
           name: unit-test
@@ -119,7 +120,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v41-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v44-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       - run:
           name: lint-client
           working_directory: client
@@ -136,7 +137,7 @@ jobs:
           at: client
       - restore_cache:
           keys:
-            - v41-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v44-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -160,7 +161,7 @@ jobs:
           at: client
       - restore_cache:
           keys:
-            - v41-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v44-packaging-dependencies-{{ checksum "client/package-lock.json"}}
 
       - run:
           name: Set up and deploy gcloud config
@@ -214,7 +215,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v41-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v44-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}
       - run:
           name: set env variables
