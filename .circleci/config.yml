@@ -29,10 +29,6 @@ jobs:
           name: install_client_dependencies
           working_directory: client
           command: npm ci
-      - run:
-          name: install_client_dependencies
-          working_directory: client
-          command: npm install @angular/cli
 
       - run:
           name: install_server_dependencies
@@ -139,17 +135,9 @@ jobs:
           keys:
             - v45-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
-          name: install_client_dependencies
-          working_directory: client
-          command: npm ci
-      - run:
-          name: install_client_dependencies
-          working_directory: client
-          command: sudo npm install -g @angular/cli      
-      - run:
           name: build_front_end
           working_directory: client
-          command: ng build --configuration=<< parameters.environment >>
+          command: npm run build -- --configuration=<< parameters.environment >>
       - persist_to_workspace:
           root: client
           paths:
@@ -286,20 +274,19 @@ workflows:
       - unit-test-server:
           requires:
             - install-client-dependencies
-      # - set-serverApi-client:
-      #     requires:
-      #        - deploy-server-prod
+      - set-serverApi-client:
+          requires:
+             - deploy-server-prod
       - lint:
           requires:
-           # - unit-test-client
+            - unit-test-client
             - unit-test-server
       # DEV
       - build:
           name: build-dev
           environment: staging
           requires:
-            - install-client-dependencies
-           # - lint
+            - lint
           # filters: &dev-filters
           #   branches:
           #     only: dev
