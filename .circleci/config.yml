@@ -32,7 +32,7 @@ jobs:
       - run:
           name: install_client_dependencies
           working_directory: client
-          command: npm i -g @angular/cli
+          command: npm i @angular/cli
       - run:
           name: install_server_dependencies
           working_directory: server
