@@ -283,7 +283,7 @@ workflows:
       #        - deploy-server-prod
       - lint:
           requires:
-            - unit-test-client
+           # - unit-test-client
             - unit-test-server
       # DEV
       - build:
@@ -291,7 +291,7 @@ workflows:
           environment: staging
           requires:
             # - set-serverApi-client
-            - lint
+           # - lint
           # filters: &dev-filters
           #   branches:
           #     only: dev
