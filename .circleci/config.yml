@@ -139,6 +139,14 @@ jobs:
           keys:
             - v45-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
+          name: install_client_dependencies
+          working_directory: client
+          command: npm ci
+      - run:
+          name: install_client_dependencies
+          working_directory: client
+          command: npm install @angular/cli      
+      - run:
           name: build_front_end
           working_directory: client
           command: ng build --configuration=<< parameters.environment >>
