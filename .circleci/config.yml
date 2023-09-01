@@ -232,7 +232,7 @@ jobs:
             echo << parameters.gcloud-key >> > /tmp/sa_key.json
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
-            gcloud --quiet config set project << parameters.project-id >>
+            gcloud --quiet config set project << parameters.gcloud-project-id >>
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run:
           name: deploy-server
