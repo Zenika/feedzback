@@ -274,9 +274,9 @@ workflows:
       - unit-test-server:
           requires:
             - install-client-dependencies
-      - set-serverApi-client:
-          requires:
-             - deploy-server-prod
+      # - set-serverApi-client:
+      #     requires:
+      #        - deploy-server-prod
       - lint:
           requires:
             - unit-test-client
