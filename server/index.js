@@ -44,7 +44,7 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseKey),
 });
 
-app.use('*', cors());
+app.use(cors());
 /**
  * configure port and start server
  */
