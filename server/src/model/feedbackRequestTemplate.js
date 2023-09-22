@@ -8,7 +8,7 @@ import dotEnv from 'dotenv';
  * @param {Object} param1
  * @return {String}
  */
-export function feedbackRequestTemplate(html, {name, email, senderName, senderEmail, text}) {
+export function feedbackRequestTemplate(html, {email, name, senderEmail, text}) {
   if (process.env.NODE_ENV !== 'production') {
     dotEnv.config();
   }
@@ -16,9 +16,9 @@ export function feedbackRequestTemplate(html, {name, email, senderName, senderEm
   /**
    * Because we pass them url parameters it's more save to encode emails
    */
-  const receverEmail = encodeURIComponent(email);
+  const receverEmail = encodeURIComponent(senderEmail);
+  const recever = receverEmail.split('%')[0];
   senderEmail = encodeURIComponent(senderEmail);
-  const receverName = name;
   let commentaire='';
   /**
    * as comment is optional we replace html tags in case the request includes a comment (text)
@@ -27,9 +27,9 @@ export function feedbackRequestTemplate(html, {name, email, senderName, senderEm
     commentaire = String(text).replace(/\n/g, '<br>');
   }
   const urlClient = process.env.NODE_ENV !== 'production'? process.env.URL_CLIENT + '/send' : 'https://feedzback.zenika.com/send';
-  const params = new URLSearchParams({senderName, senderEmail, receverName, receverEmail}).toString();
+  const params = new URLSearchParams({name, senderEmail, receverEmail}).toString();
   const template = ejs.render(html,
-      {name: senderName,
+      {email: recever,
         senderName: name,
         text: commentaire,
         urlClientForm: urlClient,

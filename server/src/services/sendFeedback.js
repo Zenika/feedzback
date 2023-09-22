@@ -1,5 +1,5 @@
 /** @module sendFeedback */
-import datastore from '../../index.js'
+import { datastore } from '../../index.js'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
 import {fileURLToPath} from 'url';
@@ -17,7 +17,6 @@ const emailTemplate = fs.readFileSync(__dirname +
  */
 const apiKey = process.env.API_KEY;
 const domain = process.env.DOMAIN;
-
 /**
  * the objectif of feedbackId to sendback id of sent feedback to client in case
  * user wants to watch his feedback after sending it
@@ -82,6 +81,8 @@ export const sendFeedback = async ({feedbackInput}) => {
   try {
     await insertFeedback(feedbackInput);
     feedbackInput.feedbackId = feedbackId;
+
+    
     /**
      * set html template variables
      * @type {String}
@@ -108,7 +109,7 @@ export const sendFeedback = async ({feedbackInput}) => {
       message: 'sent',
     };
     return success;
-  } catch {
-    return {message: 'error'};
+  } catch (error) {
+    return {message: error};
   }
 };

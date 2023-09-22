@@ -37,7 +37,6 @@ input AskFeedback {
     token:String
     name: String!
     email: String!
-    senderName: String!
     senderEmail: String!
     text: String
 }

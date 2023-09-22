@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const emailTemplate = fs.readFileSync(__dirname + '/../emailTemplate/askFeedbackModel.html').toString();
 
-
+dotEnv.config();
 const apiKey = process.env.API_KEY;
 const domain = process.env.DOMAIN;
 

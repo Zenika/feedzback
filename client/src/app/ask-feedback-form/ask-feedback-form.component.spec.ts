@@ -46,17 +46,6 @@ describe('AskFeedbackFormComponent', () => {
     expect(component.form.valid).toBeFalsy();
   }));
 
-  it('champs Nom Zenika de votre collègue est requis', waitForAsync(() => {
-    const name = component.form.controls['receverName'];
-    expect(name.valid).toBeFalsy();
-  }));
-
-  it('champs Nom Zenika de votre collègue est valide quand il est remplis', waitForAsync(() => {
-    const name = component.form.controls['receverName'];
-    name.setValue('Pompidore Pierre');
-    expect(name.valid).toBeTruthy();
-  }));
-
   it('champs Email Zenika de votre collègue est requis', waitForAsync(() => {
     const senderEmail = component.form.controls['receverEmail'];
     expect(senderEmail.valid).toBeFalsy();
@@ -75,10 +64,8 @@ describe('AskFeedbackFormComponent', () => {
   }));
 
   it('Formulaire doit être valide quand tous les champs sont valides', waitForAsync(() => {
-    const receverName = component.form.controls['receverName'];
-    receverName.setValue('Pompidor Pierre');
     const receverEmail = component.form.controls['receverEmail'];
-    receverEmail.setValue('marie.mettrand@example.com');
+    receverEmail.setValue('marie.mettrand@example.com;pierre.bourdon@example.com');
     expect(component.form.valid).toBeTruthy();
   }));
 });

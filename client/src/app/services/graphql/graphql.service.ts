@@ -120,8 +120,7 @@ export class GraphqlService {
           let result = data.sendFeedbackRequest;
           if (result === 'sent') {
             result =
-            'Félicitations ! Votre demande vient d’être envoyée à : ' +
-            feedback.senderName;
+            'Félicitations ! Votre demande vient d’être envoyée';
             this.router.navigate([
               '/result',
               {result: 'success', message: result},

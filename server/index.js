@@ -6,7 +6,7 @@ import cors from 'cors';
 import admin from 'firebase-admin';
 import dotEnv from 'dotenv';
 import {readFileSync} from 'fs';
-const { Datastore } = require('@google-cloud/datastore');
+import { Datastore } from  '@google-cloud/datastore';
 
 
 
@@ -59,4 +59,4 @@ server.start().then(()=>{
   );
 });
 
-module.exports = datastore;
+export {datastore};
