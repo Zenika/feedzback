@@ -6,8 +6,7 @@ import cors from 'cors';
 import admin from 'firebase-admin';
 import dotEnv from 'dotenv';
 import {readFileSync} from 'fs';
-const { Datastore } = require('@google-cloud/datastore');
-
+import { Datastore } from '@google-cloud/datastore';
 
 
 const firebaseKey = JSON.parse(readFileSync('./firebase-service-key.json'));
@@ -22,19 +21,20 @@ const app = express();
 /**
  * Datastore setup
  */
-let datastore;   
+let datastore;
 /**
  * configure environement in case if it's not in production mode
  */
 if (process.env.NODE_ENV !== 'production') {
+  console.log(process.env.API_KEY)
   dotEnv.config();
   datastore = new Datastore({
-    projectId: 'feedz-back',
+    projectId: process.env.GCLOUD_PROJECT_ID,
     apiEndpoint: process.env.DATASTORE_API
  });
 } else {
   datastore = new Datastore({
-    projectId: 'feedz-back',
+    projectId: process.env.GCLOUD_PROJECT_ID,
    });
 }
 /**
@@ -44,7 +44,7 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseKey),
 });
 
-app.use('*', cors());
+app.use(cors());
 /**
  * configure port and start server
  */
@@ -59,4 +59,4 @@ server.start().then(()=>{
   );
 });
 
-module.exports = datastore;
+export default datastore;

@@ -23,7 +23,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v45-packaging-dependencies-{{ checksum "client/package-lock.json"}}
             - v42-packaging-dependencies-{{ checksum "server/package-lock.json"}}
       - run:
           name: install_client_dependencies
@@ -43,7 +43,7 @@ jobs:
       - save_cache:
           paths:
             - client/node_modules
-          key: v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+          key: v45-packaging-dependencies-{{ checksum "client/package-lock.json" }}
 
       - save_cache:
           paths:
@@ -56,7 +56,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v45-packaging-dependencies-{{ checksum "client/package-lock.json" }}
 
       - run:
           name: unit-test
@@ -116,7 +116,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "client/package-lock.json" }}
+            - v45-packaging-dependencies-{{ checksum "client/package-lock.json" }}
       - run:
           name: lint-client
           working_directory: client
@@ -133,7 +133,7 @@ jobs:
           at: client
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v45-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run:
           name: build_front_end
           working_directory: client
@@ -149,7 +149,7 @@ jobs:
     parameters:
       gcloud-key:
         type: string
-      project-id:
+      gcloud-project-id:
         type: string
     steps:
       - checkout
@@ -157,7 +157,7 @@ jobs:
           at: client
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v45-packaging-dependencies-{{ checksum "client/package-lock.json"}}
 
       - run:
           name: Set up and deploy gcloud config
@@ -166,7 +166,7 @@ jobs:
             echo << parameters.gcloud-key >> > /tmp/sa_key.json
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
-            gcloud --quiet config set project << parameters.project-id >>
+            gcloud --quiet config set project << parameters.gcloud-project-id >>
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       # - run:
       #     name: deploy-client
@@ -197,9 +197,13 @@ jobs:
     docker:
       - image: google/cloud-sdk
     parameters:
+      mailgun-key:
+        type: string
+      mailgun-domain:
+        type: string
       gcloud-key:
         type: string
-      project-id:
+      gcloud-project-id:
         type: string
       firebase-service-key:
         type: string
@@ -207,23 +211,28 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v40-packaging-dependencies-{{ checksum "client/package-lock.json"}}
+            - v45-packaging-dependencies-{{ checksum "client/package-lock.json"}}
       - run: echo ${URL_CLIENT_FORM}
       - run:
           name: set env variables
           working_directory: server
           command: |
             echo << parameters.firebase-service-key >> > firebase-service-key.json
-            sed "s/<API_KEY>/${API_KEY}/g" -i app.yaml
-            sed "s/<DOMAIN>/${DOMAIN}/g" -i app.yaml
+            sed "s/<API_KEY>/<< parameters.mailgun-key >>/g" -i app.yaml
+            sed "s/<DOMAIN>/<< parameters.mailgun-domain >>/g" -i app.yaml
             sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
+            sed "s/<GCLOUD_PROJECT_ID>/<< parameters.gcloud-project-id >>/g" -i app.yaml
+      - run:
+          name: test
+          working_directory: server
+          command: cat app.yaml
       - run:
           name: Set up gcloud config
           command: |
             echo << parameters.gcloud-key >> > /tmp/sa_key.json
             gcloud auth activate-service-account --key-file=/tmp/sa_key.json
             rm /tmp/sa_key.json
-            gcloud --quiet config set project << parameters.project-id >>
+            gcloud --quiet config set project << parameters.gcloud-project-id >>
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run:
           name: deploy-server
@@ -278,7 +287,6 @@ workflows:
           name: build-dev
           environment: staging
           requires:
-            # - set-serverApi-client
             - lint
           filters: &dev-filters
             branches:
@@ -286,8 +294,10 @@ workflows:
 
       - deploy-server:
           name: deploy-server-dev
+          mailgun-key: $MAILGUN_KEY_DEV
+          mailgun-domain: $MAILGUN_DOMAIN_DEV
           gcloud-key: $GCLOUD_KEY_DEV
-          project-id: $GOOGLE_PROJECT_ID_DEV
+          gcloud-project-id: $GOOGLE_PROJECT_ID_DEV
           firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
           requires:
             - unit-test-server
@@ -296,7 +306,7 @@ workflows:
       - deploy:
           name: deploy-client-dev
           gcloud-key: $GCLOUD_KEY_DEV
-          project-id: $GOOGLE_PROJECT_ID_DEV
+          gcloud-project-id: $GOOGLE_PROJECT_ID_DEV
           requires:
             - build-dev
           filters: *dev-filters
@@ -314,8 +324,10 @@ workflows:
 
       - deploy-server:
           name: deploy-server-prod
+          mailgun-key: $API_KEY
+          mailgun-domain: $DOMAIN
           gcloud-key: $GCLOUD_KEY
-          project-id: $GOOGLE_PROJECT_ID
+          gcloud-project-id: $GOOGLE_PROJECT_ID
           firebase-service-key: $FIREBASE_SERVICE_KEY
           requires:
             - unit-test-server
@@ -324,7 +336,7 @@ workflows:
       - deploy:
           name: deploy-client-prod
           gcloud-key: $GCLOUD_KEY
-          project-id: $GOOGLE_PROJECT_ID
+          gcloud-project-id: $GOOGLE_PROJECT_ID
           requires:
             - build-prod
           filters: *prod-filters

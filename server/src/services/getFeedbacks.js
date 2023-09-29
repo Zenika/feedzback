@@ -1,5 +1,5 @@
 /** @module getFeedbacks */
-import {Query} from '@google-cloud/datastore.js';
+import {Query} from '@google-cloud/datastore';
 import datastore from '../../index.js'
 /**
  * get recieved feedbacks for a specified user
@@ -36,7 +36,7 @@ export const getSentFeedbacks = async (email) => {
      * as you see we filter feedbacks by senderEmail
      * @type {Query}
      */
-    const query = datasto.createQuery('feedzback').filter('senderEmail', '=', email);
+    const query = datastore.createQuery('feedzback').filter('senderEmail', '=', email);
     const [entities] = await datastore.runQuery(query);
     const res = combineEntityAndKey(entities);
     return res;
