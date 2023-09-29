@@ -65,7 +65,6 @@ const insertFeedback = async (data) => {
  * the object will contains the feedback id
  */
 export const sendFeedback = async ({feedbackInput}) => {
-  console.log("heyyyyyyyy from sendfeedback")
   let errMsg;
   /**
    * when user send a request from client side this request should hold a valid token and the below code verify the user token
@@ -79,7 +78,6 @@ export const sendFeedback = async ({feedbackInput}) => {
   // if (!auth) {
   //   return errMsg;
   // }
-  console.log("====================== ", process.env);
   const envi = process.env.NODE_ENV || 'development';
   try {
     await insertFeedback(feedbackInput);
