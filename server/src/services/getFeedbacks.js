@@ -1,5 +1,5 @@
 /** @module getFeedbacks */
-import {Query} from '@google-cloud/datastore.js';
+import {Query} from '@google-cloud/datastore';
 import datastore from '../../index.js'
 /**
  * get recieved feedbacks for a specified user
