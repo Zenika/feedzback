@@ -1,5 +1,6 @@
 /** @module getFeedbacks */
-import { datastore } from '../../index.js'
+import {Query} from '@google-cloud/datastore';
+import datastore from '../../index.js'
 /**
  * get recieved feedbacks for a specified user
  *  the feedbacks will be return according to the email user passed as argument
