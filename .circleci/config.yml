@@ -288,9 +288,9 @@ workflows:
           environment: staging
           requires:
             - lint
-          # filters: &dev-filters
-          #   branches:
-          #     only: dev
+          filters: &dev-filters
+            branches:
+              only: dev
 
       - deploy-server:
           name: deploy-server-dev
@@ -301,7 +301,7 @@ workflows:
           firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
           requires:
             - unit-test-server
-          # filters: *dev-filters
+          filters: *dev-filters
 
       - deploy:
           name: deploy-client-dev
@@ -309,7 +309,7 @@ workflows:
           gcloud-project-id: $GOOGLE_PROJECT_ID_DEV
           requires:
             - build-dev
-          # filters: *dev-filters
+          filters: *dev-filters
 
       # PROD
       - build:
