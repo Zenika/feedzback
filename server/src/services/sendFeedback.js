@@ -1,5 +1,5 @@
 /** @module sendFeedback */
-import { datastore } from '../../index.js'
+import datastore from '../../index.js'
 import mailgun from 'mailgun-js';
 import * as fs from 'fs';
 import {fileURLToPath} from 'url';
