@@ -4,10 +4,10 @@
     <h1>Demande de feedZback</h1>
   </div>
   <span class="subtitle"
-    >Remplissez les champs ci-dessous et votre collègue recevra directement un
-    mail l’invitant à vous faire ses retours !</span
+    >Remplissez les champs ci-dessous et vos collègues recevront directement un
+    mail l’invitant à vous faire leurs retours !</span
   >
-  <small>les champs marqués d’un astérisque sont obligatoires</small>
+  <span class="marc">les champs marqués d’un astérisque sont obligatoires</span>
   <form
     [formGroup]="form"
     id="askFeedbackForm"
@@ -15,39 +15,24 @@
     #myform="ngForm"
     novalidate
   >
-    <h2>Qui est votre collègue ?</h2>
     <div class="row">
       <div class="form-input">
-        <label for="coworker-email">Email de votre collègue *</label>
+        <label for="coworker-email">Email(s)* <small class="small-title"> séparés par ";"</small></label>
         <input
           type="email"
           class="input-text form-control"
           id="coworker-email"
-          placeholder="pierre.douchon@example.com"
+          placeholder="pierre.douchon@example.com;danielle.bourdon@example.com"
           formControlName="receverEmail"
           required
-          email
+          
         />
         <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{
           getFormControlError(receverEmail!)
         }}</small>
       </div>
-      <div class="form-input">
-        <label for="coworker-name">Nom de votre collègue *</label>
-        <input
-          type="text"
-          class="input-text form-control"
-          id="coworker-name"
-          placeholder="Pierre Duchon"
-          required
-          formControlName="receverName"
-        />
-        <small *ngIf="receverName?.touched && receverName?.invalid">{{
-          getFormControlError(receverName!)
-        }}</small>
-      </div>
+    
     </div>
-    <h2>Votre demande</h2>
     <div class="row">
       <div class="form-input">
         <label for="message">Message</label>

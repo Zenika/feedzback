@@ -47,10 +47,14 @@ h1 {
     padding-bottom: 12px;
     margin-top: 10px;
 }
-small {
+.marc {
     color: #D52150;
     font-weight: lighter;
     font-size: 14px;
+}
+.small-title {
+    font-weight: lighter;
+    font-size: 12px; 
 }
 a {
     color: #D52150;
@@ -59,11 +63,12 @@ a {
     resize: vertical;  
     padding-bottom: 65px;
     margin-top: 10px;
+    width: 98.4%;
 }
 .btn-form{
     display: flex;
     justify-content: right;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 @media only screen and (max-width: 600px) {
