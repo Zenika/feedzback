@@ -10,6 +10,6 @@ export class SignInComponent {
   constructor(private authService: AuthService) {}
 
   signInWithGoogle() {
-    this.authService.signInWithGoogle();
+    this.authService.signInWithGoogle().subscribe();
   }
 }

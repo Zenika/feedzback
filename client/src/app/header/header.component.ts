@@ -30,6 +30,6 @@ export class HeaderComponent implements OnDestroy {
   }
 
   signOut() {
-    this.authService.signOut();
+    this.authService.signOut().subscribe();
   }
 }

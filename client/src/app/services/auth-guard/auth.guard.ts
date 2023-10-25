@@ -5,8 +5,8 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import {tap} from 'rxjs';
-import {AuthService} from '../auth.service';
+import {map, tap} from 'rxjs';
+import {AuthService, AUTH_REDIRECT_PARAM} from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +16,11 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.hasSenderEmail(route)) {
-      return this.authService.signInAnonymously().then(() => true);
+      return this.authService.signInAnonymously();
     }
 
     if (this.isNotSendOrResult(state)) {
-      return this.authService.signOut().then(() => false);
+      return this.authService.signOut().pipe(map(() => false));
     }
 
     return this.authService.isLogged$.pipe(
@@ -28,8 +28,7 @@ export class AuthGuard implements CanActivate {
           if (isLogged) {
             return;
           }
-          this.authService.redirectUrlAfterSignIn = state.url;
-          this.router.navigate(['sign-in']);
+          this.router.navigate(['sign-in'], {queryParams: {[AUTH_REDIRECT_PARAM]: state.url}});
         }),
     );
   }
