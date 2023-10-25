@@ -1,0 +1,43 @@
+<ng-container *ngIf="isLogged$ | async">
+  <nav class="nav-mobile" role="navigation" >
+    <div class="menuToggle"  tabindex="0" id="menuToggle" (blur)="isMenuOpen = false">
+      <input class="checkBox"  type="checkbox" [checked]="isMenuOpen" />
+
+      <div class="burger" (click)="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul class="menu" #menu>
+        <li><a class="menu-item" routerLink='/home' routerLinkActive="active">Accueil</a></li>
+        <li><a class="menu-item" routerLink='/ask' routerLinkActive="active">Demander</a></li>
+        <li><a class="menu-item" routerLink='/send' routerLinkActive="active">Envoyer</a></li>
+        <li><a class="menu-item" routerLink='/feedbacks' routerLinkActive="active">Mes feedZbacks</a></li>
+      </ul>
+    </div>
+
+    <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']">
+
+    <div class="name-icon">
+      <h4>{{firstName$ | async}}</h4>
+
+      <img src="/assets/logout.svg" class="btn-logout" (click)="signOut()" >
+    </div>
+  </nav>
+
+  <nav class="nav-web">
+    <img src="/assets/logo-feedZback-final.svg" [routerLink]="['/home']">
+
+    <ul>
+      <a class="menu-item" [routerLink]="['/home']" routerLinkActive="active">&nbsp;&nbsp;Accueil&nbsp;&nbsp;</a>
+      <a class="menu-item" [routerLink]="['/ask']" routerLinkActive="active">&nbsp;&nbsp;Demander&nbsp;&nbsp;</a>
+      <a class="menu-item" [routerLink]="['/send']" routerLinkActive="active" >&nbsp;&nbsp;Envoyer&nbsp;&nbsp;</a>
+      <a class="menu-item" [routerLink]="['/feedbacks']" routerLinkActive="active" >&nbsp;&nbsp;Mes feedZbacks&nbsp;&nbsp;</a>
+    </ul>
+
+    <h4>{{firstName$ | async}}</h4>
+
+    <img src="/assets/logout.svg" class="btn-logout" (click)="signOut()" >
+  </nav>
+</ng-container>

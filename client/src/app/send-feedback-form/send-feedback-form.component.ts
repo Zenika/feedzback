@@ -20,14 +20,14 @@ export class SendFeedbackFormComponent implements OnInit {
     private authService: AuthService,
     private graphqlService: GraphqlService,
   ) {
-    const user = this.authService.getUserDetails();
+    const user = this.authService.userSnapshot;
     this.userEmail =
       decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null' ?
-        user.email! :
+        user?.email! :
         decodeURIComponent(this.queryParams.get('senderEmail')!);
     this.userName =
       this.queryParams.get('senderName') === null ?
-        user.displayName! :
+        user?.displayName! :
         this.queryParams.get('senderName')!;
     graphqlService.loading.subscribe((loading)=> {
       this.loading = loading;

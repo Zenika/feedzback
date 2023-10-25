@@ -13,13 +13,12 @@ export class MyFeedbacksPageComponent implements OnInit {
   public feedbackType: typeof FeedbackType = FeedbackType;
   public receivedFeedbacks: Feedback[] = [];
   public sentFeedbacks: Feedback[] = [];
-  public email!: string;
+  public email = this.authService.userSnapshot?.email!;
+
   constructor(
     private authService: AuthService,
     private graphqlService: GraphqlService,
-  ) {
-    this.email = authService.getUserDetails().email;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.graphqlService

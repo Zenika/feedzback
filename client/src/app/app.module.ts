@@ -15,13 +15,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {SignInComponent} from './sign-in/sign-in.component';
-import {RouterModule} from '@angular/router';
 import {MyFeedbacksPageComponent} from './my-feedbacks-page/my-feedbacks-page.component';
 import {FeedbackListComponent} from './feedback-list/feedback-list.component';
 import {TabsComponent} from './tabs/tabs.component';
 import {TabLinkComponent} from './tab-link/tab-link.component';
 import {Nl2brPipe} from './pipe/nl2br/nl2br.pipe';
 import {FeedbackComponent} from './feedback/feedback.component';
+import {HeaderComponent} from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,8 @@ import {FeedbackComponent} from './feedback/feedback.component';
     TabLinkComponent,
     Nl2brPipe,
     FeedbackComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,6 @@ import {FeedbackComponent} from './feedback/feedback.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    RouterModule,
   ],
   providers: [
     {

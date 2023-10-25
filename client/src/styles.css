@@ -3,6 +3,11 @@ html {
     position: relative;
     min-height: 100%;
 }
+
+body {
+  margin: 0;
+}
+
 .btn {
     border: none;
     border-radius: 10px;

@@ -7,10 +7,10 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {AuthService} from '../auth.service';
 import {authStub} from '../authStub';
 
-import {MasterAuthGuard} from './master-auth.guard';
+import {AuthGuard} from './auth.guard';
 
 describe('MasterAuthGuard', () => {
-  let guard: MasterAuthGuard;
+  let guard: AuthGuard;
   const firebaseAuthGuardStub = {
     canActivate: () => jest.fn(),
   };
@@ -22,7 +22,7 @@ describe('MasterAuthGuard', () => {
         {provide: AngularFireAuthGuard, useValue: firebaseAuthGuardStub},
       ],
     });
-    guard = TestBed.inject(MasterAuthGuard);
+    guard = TestBed.inject(AuthGuard);
   });
 
   it('should be created', () => {

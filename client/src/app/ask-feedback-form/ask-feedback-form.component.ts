@@ -22,10 +22,10 @@ export class AskFeedbackFormComponent {
     private authService: AuthService,
     private graphqlService: GraphqlService,
   ) {
-    const user = this.authService.getUserDetails();
+    const user = this.authService.userSnapshot;
     this.userEmail = user?.email!;
     this.userName = user?.displayName!;
-    graphqlService.loading.subscribe((loading)=> {
+    graphqlService.loading.subscribe((loading) => {
       this.loading = loading;
     });
   }
@@ -39,7 +39,7 @@ export class AskFeedbackFormComponent {
   public form = new FormGroup({
     receverEmail: new FormControl(this.receiverEmailValue, [
       Validators.required,
-      this.multipleEmailsValidator
+      this.multipleEmailsValidator,
     ]),
     message: new FormControl(''),
   });
@@ -60,18 +60,18 @@ export class AskFeedbackFormComponent {
     return this.form.get('message');
   }
 
-  multipleEmailsValidator(control: AbstractControl): ValidationErrors | null{
+  multipleEmailsValidator(control: AbstractControl): ValidationErrors | null {
     const emailArray = control.value
-      .split(';')
-      .map((email: string) => email.trim())
-      .filter((email: string) => !!email); // Remove empty elements
+        .split(';')
+        .map((email: string) => email.trim())
+        .filter((email: string) => !!email); // Remove empty elements
 
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      for (const email of emailArray) {
-        if (!emailPattern.test(email)) {
-          return { invalidEmail: true };
-        }
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    for (const email of emailArray) {
+      if (!emailPattern.test(email)) {
+        return {invalidEmail: true};
       }
+    }
 
     return null; // Validation passed
   }
@@ -79,7 +79,7 @@ export class AskFeedbackFormComponent {
   async onSubmit() {
     const token = await this.authService.getUserTokenId();
     const emails = this.receverEmail?.value.split(';').map((email: String) => email.trim());
-    for(const senderEmail of emails) {
+    for (const senderEmail of emails) {
       const feedback = new FeedbackRequest(
         token!,
         this.userName ? this.userName : this.testEmail,
@@ -91,8 +91,6 @@ export class AskFeedbackFormComponent {
       if (this.form.valid) {
         this.graphqlService.askFeedback(feedback);
       }
+    }
   }
-  }
-
-
 }
