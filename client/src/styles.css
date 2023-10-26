@@ -19,8 +19,10 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 1em;
-  border: none;
   border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: #333;
   padding: 10px 75px 10px 75px;
   font-weight: bold;
 }
@@ -33,6 +35,7 @@ textarea {
 }
 
 .btn-primary {
+  border-color: transparent;
   background: linear-gradient(88.41deg, #f1203a 0%, #d11f56 100%);
   color: white;
 }

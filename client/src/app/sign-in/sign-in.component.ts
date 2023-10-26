@@ -7,9 +7,16 @@ import {AuthService} from '../services/auth.service';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
+  disabled = false;
+
   constructor(private authService: AuthService) {}
 
   signInWithGoogle() {
-    this.authService.signInWithGoogle().subscribe();
+    this.disabled = true;
+    this.authService.signInWithGoogle().subscribe((success) => {
+      if (!success) {
+        this.disabled = false;
+      }
+    });
   }
 }
