@@ -1,0 +1,6 @@
+/.angular
+/coverage
+/dist
+
+# Copy/pasted from source code: https://github.com/primefaces/primeng-sass-theme/releases
+/projects/coface-icon-tools/styles/src/primeng-sass-theme
