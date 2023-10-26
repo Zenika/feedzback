@@ -1,0 +1,30 @@
+.app-sign-in {
+  height: 100%;
+  display: flex;
+
+  &__inner {
+    position: relative;
+    margin: auto;
+    padding: calc((3rem + 147px) / 2) 3rem 3rem 3rem;
+    border: solid 3px;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
+    border-color: #d52150;
+    text-align: center;
+  }
+
+  &__logo {
+    position: absolute;
+    height: 147px;
+    top: calc(-147px / 2);
+    width: 279px;
+    left: calc(50% - 279px / 2);
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    background-color: white;
+  }
+
+  &__title {
+    margin: 0 0 2rem 0;
+  }
+}

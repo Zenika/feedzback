@@ -1,0 +1,43 @@
+.app-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 'header' 'main' 'footer';
+
+  &__header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+  }
+
+  &__main {
+    grid-area: main;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  &__footer {
+    grid-area: footer;
+  }
+
+  &-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media only screen and (max-width: 767.98px) {
+    &__header {
+      box-shadow: none;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}

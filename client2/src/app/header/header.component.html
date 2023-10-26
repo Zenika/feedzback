@@ -1,0 +1,24 @@
+<ng-container *ngIf="isLogged$ | async">
+  <div class="app-header__burger">
+    <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
+  </div>
+
+  <a class="app-header__logo" routerLink="/home">
+    <img src="/assets/logo.svg" height="56" alt="" />
+  </a>
+
+  <nav class="app-header-menu app-header-menu-target" [class.app-header-menu--visible]="isMenuOpen">
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/home"> Accueil </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/ask"> Demander </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/send"> Envoyer </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
+      Mes&nbsp;feedZbacks
+    </a>
+  </nav>
+
+  <button class="app-header__sign-out" (click)="signOut()">
+    {{ firstName$ | async }}
+
+    <img src="/assets/logout.svg" height="27" alt="" />
+  </button>
+</ng-container>

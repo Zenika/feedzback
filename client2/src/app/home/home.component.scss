@@ -1,0 +1,32 @@
+.app-home {
+  display: block;
+  text-align: center;
+
+  &__title {
+    font-size: 1.8rem;
+    color: #d52150;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+
+    @media only screen and (max-width: 767.98px) {
+      flex-grow: 1;
+    }
+
+    @media only screen and (max-width: 519.98px) {
+      flex-direction: column;
+    }
+  }
+
+  &-guide__desc {
+    font-size: 1.2rem;
+  }
+
+  &-guide__image {
+    width: 90%;
+    max-width: 420px;
+  }
+}

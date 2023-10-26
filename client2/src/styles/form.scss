@@ -1,0 +1,66 @@
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 10px 75px 10px 75px;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .btn {
+    flex-direction: column;
+    padding: 15px 30px;
+  }
+}
+
+.btn-primary {
+  border-color: transparent;
+  background: linear-gradient(88.41deg, #f1203a 0%, #d11f56 100%);
+  color: white;
+}
+
+.input-text {
+  background: #fafafa;
+  border-radius: 10px;
+  border: none;
+  padding: 5px;
+  resize: none;
+  width: 100%;
+}
+
+.textarea {
+  background: #fafafa;
+  border-radius: 10px 10px 0 10px;
+  border-color: #ccc;
+  border-width: 0.5px;
+  border-style: solid;
+  padding: 10px;
+}
+
+.form-control.ng-untouched,
+.form-control.ng-valid {
+  border-color: #ccc;
+}
+
+.input-lg.ng-untouched,
+.form-control-lg.ng-valid {
+  border-color: #ccc;
+}
+
+input:required,
+textarea:required {
+  border: #d52150;
+  border-style: solid;
+  border-width: 0.5px;
+}

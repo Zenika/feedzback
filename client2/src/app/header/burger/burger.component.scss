@@ -1,0 +1,46 @@
+.app-burger {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30px;
+  width: 30px;
+
+  &__line {
+    height: 2px;
+    border-radius: 3px;
+    background: #cb1e5a;
+    transition:
+      transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+      opacity 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    &:nth-child(1) {
+      transform-origin: left;
+      transform: translateY(3px);
+    }
+
+    &:nth-child(2) {
+      transform-origin: right;
+    }
+
+    &:nth-child(3) {
+      transform-origin: left;
+      transform: translateY(-3px);
+    }
+  }
+
+  &--active &__line:nth-child(1) {
+    transform: translateX(4.5px) rotate(45deg);
+  }
+
+  &--active &__line:nth-child(2) {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  &--active &__line:nth-child(3) {
+    transform: translateX(4.5px) rotate(-45deg);
+  }
+}

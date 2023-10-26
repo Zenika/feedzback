@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@fontsource/nunito/400.css';
+@import '../node_modules/@fontsource/nunito/600.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+@import "./styles/form";
