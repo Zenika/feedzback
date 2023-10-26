@@ -26,6 +26,7 @@
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^16.0.1",
     "@angular-devkit/build-angular": "^16.2.8",
     "@angular-eslint/builder": "16.2.0",
     "@angular-eslint/eslint-plugin": "16.2.0",
@@ -34,17 +35,12 @@
     "@angular-eslint/template-parser": "16.2.0",
     "@angular/cli": "^16.2.8",
     "@angular/compiler-cli": "^16.2.0",
-    "@types/jasmine": "~4.3.0",
+    "@types/jest": "^29.5.6",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
-    "jasmine-core": "~4.6.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jest": "^29.7.0",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
     "typescript": "~5.1.3"
