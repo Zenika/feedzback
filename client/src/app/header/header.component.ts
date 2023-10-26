@@ -1,7 +1,7 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, HostListener, OnDestroy} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
-import {filter} from 'rxjs';
+import {delay, filter} from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,18 +15,20 @@ export class HeaderComponent implements OnDestroy {
 
   isMenuOpen = false;
 
+  @HostListener('document:click', ['$event.target']) onClick(target: HTMLElement) {
+    if (!target.closest('.app-header-menu-target')) {
+      this.isMenuOpen = false;
+    }
+  }
+
   private subscription = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd), delay(350))
       .subscribe(() => (this.isMenuOpen = false));
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
   }
 
   signOut() {

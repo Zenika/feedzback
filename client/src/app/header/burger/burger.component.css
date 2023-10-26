@@ -1,0 +1,44 @@
+:host {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30px;
+  width: 30px;
+}
+
+i {
+  height: 2px;
+  border-radius: 3px;
+  background: #CB1E5A;
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), opacity 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+i:nth-child(1) {
+  transform-origin: left;
+  transform: translateY(3px);
+}
+
+i:nth-child(2) {
+  transform-origin: right;
+}
+
+i:nth-child(3) {
+  transform-origin: left;
+  transform: translateY(-3px);
+}
+
+:host.burger--active i:nth-child(1) {
+  transform: translateX(4.5px) rotate(45deg);
+}
+
+:host.burger--active i:nth-child(2) {
+  transform: scale(0);
+  opacity: 0;
+}
+
+:host.burger--active i:nth-child(3) {
+  transform: translateX(4.5px) rotate(-45deg);
+}

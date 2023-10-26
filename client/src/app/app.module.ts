@@ -21,8 +21,10 @@ import {TabsComponent} from './tabs/tabs.component';
 import {TabLinkComponent} from './tab-link/tab-link.component';
 import {Nl2brPipe} from './pipe/nl2br/nl2br.pipe';
 import {FeedbackComponent} from './feedback/feedback.component';
-import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
+import {HeaderComponent} from './header/header.component';
+import {BurgerComponent} from './header/burger/burger.component';
+import {LayoutModule} from './shared/layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import {FooterComponent} from './footer/footer.component';
     FeedbackComponent,
     HeaderComponent,
     FooterComponent,
+    BurgerComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import {FooterComponent} from './footer/footer.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    LayoutModule,
   ],
   providers: [
     {

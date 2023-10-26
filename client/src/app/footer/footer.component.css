@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(110, 107, 107);
+}
+
+.github {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+.github:hover {
+  color: #D52150;
+}

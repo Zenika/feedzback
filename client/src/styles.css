@@ -1,83 +1,73 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+
 html {
-    position: relative;
-    min-height: 100%;
+  font-family: Nunito;
 }
 
 body {
   margin: 0;
 }
 
+button,
+input,
+textarea {
+  font: inherit;
+}
+
 .btn {
-    border: none;
-    border-radius: 10px;
-    padding: 10px 75px 10px 75px;
-    font-style: normal;
-    font-weight: 900;
-    color: white;
-}
-.btn-primary {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
   border: none;
-  background: linear-gradient(88.41deg, #F1203A 0%, #D11F56 100%);
+  border-radius: 10px;
+  padding: 10px 75px 10px 75px;
+  font-weight: bold;
 }
-.btn-primary:hover {
-    cursor: pointer;
+
+@media only screen and (max-width: 767.98px) {
+  .btn {
+    flex-direction: column;
+    padding: 15px 30px;
+  }
 }
+
+.btn-primary {
+  background: linear-gradient(88.41deg, #f1203a 0%, #d11f56 100%);
+  color: white;
+}
+
 .input-text {
-    background: #FAFAFA;
-    border-radius: 10px;
-    border: none;
-    padding: 5px;
-    resize: none;
-    width: 100%;
+  background: #fafafa;
+  border-radius: 10px;
+  border: none;
+  padding: 5px;
+  resize: none;
+  width: 100%;
 }
+
 .textarea {
-    background: #FAFAFA;
-    border-radius: 10px 10px 0 10px;
-    border-color: #ccc;
-    border-width: 0.5px;
-    border-style: solid;
-    padding: 10px;
+  background: #fafafa;
+  border-radius: 10px 10px 0 10px;
+  border-color: #ccc;
+  border-width: 0.5px;
+  border-style: solid;
+  padding: 10px;
 }
+
 .form-control.ng-untouched,
 .form-control.ng-valid {
-    border-color: #ccc;
+  border-color: #ccc;
 }
+
 .input-lg.ng-untouched,
 .form-control-lg.ng-valid {
-    border-color: #ccc;
+  border-color: #ccc;
 }
-input:required, textarea:required {
-    border: #D52150;
-    border-style: solid;
-    border-width: 0.5px;
-}
-* {
-    font-family: Nunito;
-}
-body {
-    margin-bottom: 100px;
-}
-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    color: rgb(110, 107, 107);
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-.github {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    text-decoration: none;
-    color: rgb(110, 107, 107);
-}
-.github:hover {
-    color: #D52150;
-}
-.github-icon {
-    margin-right: 3px;
-    margin-bottom: 3px;
+
+input:required,
+textarea:required {
+  border: #d52150;
+  border-style: solid;
+  border-width: 0.5px;
 }

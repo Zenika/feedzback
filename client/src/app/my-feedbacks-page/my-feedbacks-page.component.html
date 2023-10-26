@@ -1,12 +1,12 @@
 <div class="flex">
     <div class="container">
         <app-tabs>
-            <app-tab-link tabTitle="feedZbacks envoyés">
+            <app-tab-link tabTitle="envoyés">
                 <app-feedback-list [feedbacks]="sentFeedbacks" [type]="feedbackType.Sent"></app-feedback-list>
             </app-tab-link>
-            <app-tab-link tabTitle="feedZbacks reçus">
+            <app-tab-link tabTitle="reçus">
                 <app-feedback-list [feedbacks]="receivedFeedbacks" [type]="feedbackType.Received"></app-feedback-list>
-            </app-tab-link>  
+            </app-tab-link>
         </app-tabs>
     </div>
 </div>
