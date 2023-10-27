@@ -47,23 +47,6 @@
     }
   }
 
-  &__sign-out {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    color: rgba(0, 0, 0, 0.6);
-    transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-
-    &:hover {
-      color: #d52150;
-    }
-  }
-
   @media only screen and (min-width: 768px) {
     padding: 0.25rem 0;
 
@@ -78,13 +61,12 @@
 
     &__burger {
       z-index: 99;
-      flex-basis: 20%;
-      justify-content: flex-start;
+      flex-basis: 30%;
     }
 
     &__sign-out {
-      flex-basis: 20%;
-      justify-content: flex-end;
+      flex-basis: 30%;
+      text-align: right;
     }
 
     &-menu {

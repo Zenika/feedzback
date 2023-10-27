@@ -1,16 +1,19 @@
 @import '../node_modules/@fontsource/nunito/400.css';
 @import '../node_modules/@fontsource/nunito/600.css';
 
+@import './styles/material';
+// @import './styles/form';
+
 * {
   box-sizing: border-box;
 }
 
-html {
-  font-family: 'Nunito', sans-serif;
+html,
+body {
+  height: 100%;
 }
 
 body {
   margin: 0;
+  font-family: 'Nunito', sans-serif;
 }
-
-@import "./styles/form";

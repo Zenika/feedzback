@@ -3,14 +3,15 @@
   text-align: center;
 
   &__title {
-    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
     color: #d52150;
   }
 
   &__actions {
+    margin-bottom: 1.5rem;
     display: flex;
-    justify-content: space-evenly;
-    gap: 1rem;
+    justify-content: center;
+    gap: 1.5rem;
 
     @media only screen and (max-width: 767.98px) {
       flex-grow: 1;
@@ -21,11 +22,7 @@
     }
   }
 
-  &-guide__desc {
-    font-size: 1.2rem;
-  }
-
-  &-guide__image {
+  &__guide {
     width: 90%;
     max-width: 420px;
   }

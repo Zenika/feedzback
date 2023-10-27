@@ -4,7 +4,7 @@
   </div>
 
   <a class="app-header__logo" routerLink="/home">
-    <img src="/assets/logo.svg" height="56" alt="" />
+    <img src="/assets/svg-icons/logo.svg" height="56" alt="" />
   </a>
 
   <nav class="app-header-menu app-header-menu-target" [class.app-header-menu--visible]="isMenuOpen">
@@ -16,9 +16,10 @@
     </a>
   </nav>
 
-  <button class="app-header__sign-out" (click)="signOut()">
-    {{ firstName$ | async }}
-
-    <img src="/assets/logout.svg" height="27" alt="" />
-  </button>
+  <div class="app-header__sign-out">
+    <button mat-button (click)="signOut()">
+      {{ firstName$ | async }}
+      <mat-icon svgIcon="logout" iconPositionEnd color="primary"></mat-icon>
+    </button>
+  </div>
 </ng-container>

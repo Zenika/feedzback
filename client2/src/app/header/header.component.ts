@@ -1,5 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
@@ -8,7 +10,7 @@ import { BurgerComponent } from './burger/burger.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [AsyncPipe, NgIf, RouterLinkActive, RouterLinkWithHref, BurgerComponent],
+  imports: [AsyncPipe, NgIf, RouterLinkActive, RouterLinkWithHref, MatButtonModule, MatIconModule, BurgerComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None,
