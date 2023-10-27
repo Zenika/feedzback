@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <img src="/assets/question-mark.svg" alt="" />
+
+    <h1>Demande de feedZback</h1>
+  </div>
+
+  <span class="subtitle">
+    Remplissez les champs ci-dessous et vos collègues recevront directement un mail l’invitant à vous faire leurs
+    retours !
+  </span>
+
+  <span class="marc">les champs marqués d’un astérisque sont obligatoires</span>
+
+  <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
+    <div class="row">
+      <div class="form-input">
+        <label for="coworker-email">Email(s)* <small class="small-title"> séparés par ";"</small></label>
+        <input
+          type="email"
+          class="input-text form-control"
+          id="coworker-email"
+          placeholder="pierre.douchon@example.com;danielle.bourdon@example.com"
+          formControlName="receverEmail"
+          required
+        />
+        <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{ getFormControlError(receverEmail!) }}</small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-input">
+        <label for="message">Message</label>
+        <textarea
+          class="textarea"
+          name="message"
+          id="message"
+          placeholder="Exemple : Bonjour ! J’ai bientôt mon entretien annuel, et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci !"
+          formControlName="message"
+        >
+        </textarea>
+      </div>
+    </div>
+
+    <div class="btn-form">
+      <button id="submit" type="submit" class="btn btn-primary">
+        {{ loading ? 'Chargement...' : 'ENVOYER' }}
+      </button>
+    </div>
+  </form>
+</div>
