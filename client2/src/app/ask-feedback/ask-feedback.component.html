@@ -25,7 +25,7 @@
       placeholder="jean.dupont@zenika.com  john.doe@zenika.com"
     />
     <mat-hint align="start">Séparez les emails par des espaces</mat-hint>
-    <mat-error>{{ receiverEmailsErrorMsg }}</mat-error>
+    <mat-error>{{ form.controls.receiverEmails.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 
   <mat-form-field class="app-ask-feedback__field">

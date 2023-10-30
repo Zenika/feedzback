@@ -12,6 +12,7 @@ import {
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/forms/multiple-emails.validators';
+import { ValidationErrorMessagePipe } from '../shared/forms/validation-error-message.pipe';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
@@ -19,7 +20,16 @@ import { AskFeedback } from '../shared/types/ask-feedback.types';
 @Component({
   selector: 'app-ask-feedback',
   standalone: true,
-  imports: [NgFor, NgIf, ReactiveFormsModule, MatButtonModule, MatIconModule, MatInputModule, MessageComponent],
+  imports: [
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    ValidationErrorMessagePipe,
+    MessageComponent,
+  ],
   templateUrl: './ask-feedback.component.html',
   styleUrls: ['./ask-feedback.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -39,17 +49,6 @@ export class AskFeedbackComponent {
     receiverEmails: new FormControl(this.receiverEmail, [multipleEmailsValidatorFactory()]),
     message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
-
-  get receiverEmailsErrorMsg() {
-    const error: undefined | string[] = this.form.controls.receiverEmails.errors?.['multipleEmails'];
-    if (!error) {
-      return null;
-    }
-    if (!error.length) {
-      return 'Champ requis';
-    }
-    return `Email(s) invalide(s): ${error.join(', ')}`;
-  }
 
   submitInProgress = false;
 
