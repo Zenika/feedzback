@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as auth from 'firebase/auth';
@@ -21,6 +21,12 @@ import { AUTH_REDIRECT_PARAM } from './auth.config';
   providedIn: 'root',
 })
 export class AuthService {
+  private firebaseAuth = inject(AngularFireAuth);
+
+  private router = inject(Router);
+
+  private activatedRoute = inject(ActivatedRoute);
+
   userSnapshot?: firebase.User | null;
 
   private _user$ = new ReplaySubject<firebase.User | null>(1);
@@ -39,11 +45,7 @@ export class AuthService {
     distinctUntilChanged(),
   );
 
-  constructor(
-    private firebaseAuth: AngularFireAuth,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-  ) {
+  constructor() {
     this.firebaseAuth.authState.subscribe((user) => {
       this.userSnapshot = user;
       this._user$.next(user);

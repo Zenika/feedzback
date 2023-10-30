@@ -25,6 +25,23 @@
   }
 
   &__title {
-    margin: 0 0 2rem 0;
+    margin: 0 0 2rem 0 !important;
+  }
+
+  &__action {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5em 4.5em;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    background-color: #f6f6f6;
+    color: #333;
+    font-size: 1rem;
+
+    @media only screen and (max-width: 767.98px) {
+      flex-direction: column;
+    }
   }
 }

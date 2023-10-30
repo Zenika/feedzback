@@ -1,107 +1,105 @@
-import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
+import { concatMap, from, map, toArray } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
-import { getFormControlError } from '../shared/forms/get-form-control-error';
+import {
+  MULTIPLE_EMAILS_SEP,
+  getMultipleEmails,
+  multipleEmailsValidatorFactory,
+} from '../shared/forms/multiple-emails.validators';
 import { GraphQLService } from '../shared/graphql/graphql.service';
-import { AskFeedback } from '../shared/types/feedbackRequest';
+import { MessageComponent } from '../shared/message/message.component';
+import { AskFeedback } from '../shared/types/ask-feedback.types';
 
 @Component({
   selector: 'app-ask-feedback',
   standalone: true,
-  imports: [NgIf, FormsModule, ReactiveFormsModule], // !FIXME: don't use `FormsModule`
+  imports: [NgFor, NgIf, ReactiveFormsModule, MatButtonModule, MatIconModule, MatInputModule, MessageComponent],
   templateUrl: './ask-feedback.component.html',
   styleUrls: ['./ask-feedback.component.scss'],
-  //encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
 })
 export class AskFeedbackComponent {
-  userEmail?: string;
-  userName?: string;
-  loading = false;
-  testEmail = 'test@exemple.com';
-  testName = 'test';
+  private activatedRoute = inject(ActivatedRoute);
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private graphqlService: GraphQLService,
-  ) {
-    const user = this.authService.userSnapshot;
-    this.userEmail = user?.email ?? undefined;
-    this.userName = user?.displayName ?? undefined;
+  private authService = inject(AuthService);
 
-    graphqlService.loading.subscribe((loading) => (this.loading = loading));
-  }
+  private graphQLService = inject(GraphQLService);
 
-  private queryParams = this.activatedRoute.snapshot.queryParamMap;
+  private receiverEmail = this.activatedRoute.snapshot.queryParamMap.get('receverEmail') || '';
 
-  getFormControlError = getFormControlError; // TODO: create a pipe for this feature
-
-  private receiverEmailValue = this.queryParams.get('receverEmail') || '';
+  protected messageMaxLength = 500;
 
   form = new FormGroup({
-    receverEmail: new FormControl(this.receiverEmailValue, [Validators.required, this.multipleEmailsValidator]),
-    message: new FormControl(''),
+    receiverEmails: new FormControl(this.receiverEmail, [multipleEmailsValidatorFactory()]),
+    message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
 
-  get senderEmail() {
-    return this.form.get('senderEmail');
-  }
-
-  get senderName() {
-    return this.form.get('senderName');
-  }
-
-  get receverEmail() {
-    return this.form.get('receverEmail');
-  }
-
-  get message() {
-    return this.form.get('message');
-  }
-
-  multipleEmailsValidator(control: AbstractControl): ValidationErrors | null {
-    const emailArray = control.value
-      .split(';')
-      .map((email: string) => email.trim())
-      .filter((email: string) => !!email);
-
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    for (const email of emailArray) {
-      if (!emailPattern.test(email)) {
-        return { invalidEmail: true };
-      }
+  get receiverEmailsErrorMsg() {
+    const error: undefined | string[] = this.form.controls.receiverEmails.errors?.['multipleEmails'];
+    if (!error) {
+      return null;
     }
-
-    return null;
+    if (!error.length) {
+      return 'Champ requis';
+    }
+    return `Email(s) invalide(s): ${error.join(', ')}`;
   }
+
+  submitInProgress = false;
+
+  sentEmails: string[] = [];
+
+  remainingUnsentEmails: string[] = [];
 
   async onSubmit() {
     const token = await this.authService.getUserTokenId();
-    const emails = this.receverEmail?.value?.split(';').map((email) => email.trim()) ?? [];
-    for (const senderEmail of emails) {
-      const feedback: AskFeedback = {
-        token: token!,
-        name: this.userName ? this.userName : this.testEmail,
-        email: this.userEmail ? this.userEmail : this.testName,
-        senderEmail: senderEmail,
-        text: this.message?.value ?? '',
-      };
-
-      this.form.markAllAsTouched();
-
-      if (this.form.valid) {
-        this.graphqlService.askFeedback(feedback);
-      }
+    if (!token || this.form.invalid) {
+      return;
     }
+    this.disableForm(true);
+
+    const receiverEmails = getMultipleEmails(this.form.controls.receiverEmails.value);
+    from(receiverEmails)
+      .pipe(
+        concatMap((receiverEmail) => this.graphQLService.askFeedback(this.buildAskFeedback(receiverEmail, token))),
+        map(({ data }) => data?.sendFeedbackRequest === 'sent'),
+        toArray(),
+      )
+      .subscribe((results) => {
+        this.sentEmails = [...this.sentEmails, ...receiverEmails.filter((_, index) => results[index])];
+        this.remainingUnsentEmails = receiverEmails.filter((_, index) => !results[index]);
+
+        this.setReceiverEmails(this.remainingUnsentEmails);
+
+        if (this.remainingUnsentEmails.length) {
+          this.disableForm(false);
+        }
+      });
+  }
+
+  private disableForm(submitInProgress: boolean) {
+    this.form[submitInProgress ? 'disable' : 'enable']();
+    this.submitInProgress = submitInProgress;
+  }
+
+  private buildAskFeedback(receiverEmail: string, token: string): AskFeedback {
+    return {
+      token,
+      name: this.authService.userSnapshot?.displayName ?? '',
+      email: this.authService.userSnapshot?.email ?? '',
+      senderEmail: receiverEmail, // !FIXME: the `senderEmail` is indeed the email of the receiver...
+      text: this.form.controls.message.value ?? '',
+    };
+  }
+
+  private setReceiverEmails(emails: string[]) {
+    this.form.controls.receiverEmails.setValue(emails.join(MULTIPLE_EMAILS_SEP));
+    this.form.controls.receiverEmails.updateValueAndValidity();
   }
 }

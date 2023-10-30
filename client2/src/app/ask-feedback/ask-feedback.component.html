@@ -1,51 +1,45 @@
-<div class="container">
-  <div class="row">
-    <img src="/assets/svg-icons/question-mark.svg" alt="" />
+<h1>
+  <mat-icon style="transform: scale(1.5)">live_help</mat-icon>
+  Demande de feedZback
+</h1>
 
-    <h1>Demande de feedZback</h1>
-  </div>
+<app-message *ngIf="sentEmails.length" type="success">
+  <strong>Félicitations&nbsp;!</strong><br />
+  Votre demande a bien été envoyée au(x) destinataire(s) suivant(s)&nbsp;:<br />
+  {{ sentEmails.join(', ') }}
+</app-message>
 
-  <span class="subtitle">
-    Remplissez les champs ci-dessous et vos collègues recevront directement un mail l’invitant à vous faire leurs
-    retours !
-  </span>
+<app-message *ngIf="remainingUnsentEmails.length" type="danger">
+  <strong>Oops&nbsp;!</strong><br />
+  Une erreur s'est produite lors de l'envoi au(x) destinataire(s) suivant(s)&nbsp;:<br />
+  {{ remainingUnsentEmails.join(', ') }}
+</app-message>
 
-  <span class="marc">les champs marqués d’un astérisque sont obligatoires</span>
+<form *ngIf="!sentEmails.length || remainingUnsentEmails.length" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="app-ask-feedback__field">
+    <mat-label>Emails de vos collègues</mat-label>
+    <input
+      [formControl]="form.controls.receiverEmails"
+      type="email"
+      matInput
+      placeholder="jean.dupont@zenika.com  john.doe@zenika.com"
+    />
+    <mat-hint align="start">Séparez les emails par des espaces</mat-hint>
+    <mat-error>{{ receiverEmailsErrorMsg }}</mat-error>
+  </mat-form-field>
 
-  <form [formGroup]="form" id="askFeedbackForm" (ngSubmit)="onSubmit()" #myform="ngForm" novalidate>
-    <div class="row">
-      <div class="form-input">
-        <label for="coworker-email">Email(s)* <small class="small-title"> séparés par ";"</small></label>
-        <input
-          type="email"
-          class="input-text form-control"
-          id="coworker-email"
-          placeholder="pierre.douchon@example.com;danielle.bourdon@example.com"
-          formControlName="receverEmail"
-          required
-        />
-        <small *ngIf="receverEmail?.touched && receverEmail?.invalid">{{ getFormControlError(receverEmail!) }}</small>
-      </div>
-    </div>
+  <mat-form-field class="app-ask-feedback__field">
+    <mat-label>Message</mat-label>
+    <textarea
+      #message
+      [formControl]="form.controls.message"
+      [maxlength]="messageMaxLength"
+      matInput
+      rows="5"
+      placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
+    ></textarea>
+    <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
+  </mat-form-field>
 
-    <div class="row">
-      <div class="form-input">
-        <label for="message">Message</label>
-        <textarea
-          class="textarea"
-          name="message"
-          id="message"
-          placeholder="Exemple : Bonjour ! J’ai bientôt mon entretien annuel, et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci !"
-          formControlName="message"
-        >
-        </textarea>
-      </div>
-    </div>
-
-    <div class="btn-form">
-      <button id="submit" type="submit" class="btn btn-primary">
-        {{ loading ? 'Chargement...' : 'ENVOYER' }}
-      </button>
-    </div>
-  </form>
-</div>
+  <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+</form>

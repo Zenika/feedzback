@@ -1,4 +1,4 @@
-export interface SendFeedback {
+export type SendFeedback = {
   token: string;
   senderName: string;
   senderEmail: string;
@@ -7,4 +7,4 @@ export interface SendFeedback {
   positiveFeedback: string;
   toImprove: string;
   comment: string;
-}
+};

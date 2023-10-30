@@ -2,10 +2,7 @@
 //    `src/assets/svg-icons`
 
 export const svgIconNames = [
-  'ask-feedback',
-  'google-icon',
-  'logo',
-  'logout',
-  'question-mark',
-  'send-feedback',
+  'app-icon-github',
+  'app-icon-google',
+  'app-icon-logo',
 ];

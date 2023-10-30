@@ -8,14 +8,50 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
+// Palette // TODO: Finalize the palette...
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+$client-palette: (
+  50: #fbe9e7,
+  100: #ffccbc,
+  200: #ffab91,
+  300: #ff8a65,
+  400: #ff7043,
+  500: #d52150,
+  600: #d52150,
+  700: #d52150,
+  800: #d52150,
+  900: #d52150,
+  A100: #d52150,
+  A200: #d52150,
+  A400: #d52150,
+  A700: #d52150,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$client-primary: mat.define-palette(mat.$indigo-palette);
-$client-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$client-primary: mat.define-palette($client-palette);
+$client-accent: mat.define-palette($client-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$client-warn: mat.define-palette(mat.$red-palette);
+$client-warn: mat.define-palette($client-palette);
 
 $client-typography-level: mat.define-typography-level(
   $font-size: 1rem,
@@ -29,6 +65,7 @@ $client-typography: mat.define-typography-config(
   $font-family: '"Nunito", sans-serif',
   $body-1: $client-typography-level,
   $body-2: $client-typography-level,
+  $button: $client-typography-level,
 );
 
 // Create the theme object. A theme consists of configurations for individual

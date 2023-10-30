@@ -1,10 +1,10 @@
 <div class="app-sign-in__inner">
-  <img class="app-sign-in__logo" src="/assets/svg-icons/logo.svg" alt="" />
+  <img class="app-sign-in__logo" src="/assets/svg-icons/app-icon-logo.svg" alt="" />
 
   <h2 class="app-sign-in__title">Demandez ou envoyez du feedback à vos collègues&nbsp;!</h2>
 
-  <button type="button" class="btn" [disabled]="disabled" (click)="signInWithGoogle()">
-    <img src="/assets/svg-icons/google-icon.svg" alt="" />
+  <button class="app-sign-in__action" type="button" [disabled]="disabled" (click)="signInWithGoogle()">
+    <mat-icon svgIcon="app-icon-google" style="transform: scale(1.2)"></mat-icon>
     Connectez-vous avec Google
   </button>
 </div>

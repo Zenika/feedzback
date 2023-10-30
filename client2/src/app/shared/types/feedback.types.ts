@@ -1,4 +1,4 @@
-export interface Feedback {
+export type Feedback = {
   id: string;
   token: string;
   senderName: string;
@@ -9,4 +9,4 @@ export interface Feedback {
   toImprove: string;
   comment: string;
   createdAt: string;
-}
+};

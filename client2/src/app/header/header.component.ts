@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
@@ -16,9 +16,11 @@ import { BurgerComponent } from './burger/burger.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnDestroy {
-  firstName$ = this.authService.firstName$;
+  private authService = inject(AuthService);
 
-  isLogged$ = this.authService.isLogged$;
+  private router = inject(Router);
+
+  firstName$ = this.authService.firstName$;
 
   isMenuOpen = false;
 
@@ -36,11 +38,6 @@ export class HeaderComponent implements OnDestroy {
       delay(350),
     )
     .subscribe(() => (this.isMenuOpen = false));
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

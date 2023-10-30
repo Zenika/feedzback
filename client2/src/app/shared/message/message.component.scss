@@ -1,0 +1,37 @@
+.app-message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid transparent;
+
+  &--info {
+    border-color: rgb(158, 197, 254);
+    background-color: rgb(207, 226, 255);
+    color: rgb(5, 44, 101);
+  }
+
+  &--success {
+    border-color: rgb(163, 207, 187);
+    background-color: rgb(209, 231, 221);
+    color: rgb(10, 54, 34);
+  }
+
+  &--danger {
+    border-color: rgb(241, 174, 181);
+    background-color: rgb(248, 215, 218);
+    color: rgb(88, 21, 28);
+  }
+
+  &--light {
+    border-color: rgb(226, 227, 229);
+    background-color: rgb(252, 252, 253);
+    color: rgb(73, 80, 87);
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+}

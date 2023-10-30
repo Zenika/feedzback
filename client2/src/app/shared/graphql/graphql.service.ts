@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { AskFeedback } from '../types/ask-feedback.types';
 import { Feedback } from '../types/feedback.types';
-import { AskFeedback } from '../types/feedbackRequest';
 import { SendFeedback } from '../types/send-feedback.types';
 
 // !FIXME: service should not subscribe but return an observable
@@ -13,6 +13,10 @@ import { SendFeedback } from '../types/send-feedback.types';
   providedIn: 'root',
 })
 export class GraphQLService {
+  private apollo = inject(Apollo);
+
+  private router = inject(Router);
+
   loading = new Subject<boolean>(); // !FIXME: remove this and just return an observable in the methods
 
   private unsubscribe$ = new Subject<void>();
@@ -70,11 +74,6 @@ export class GraphQLService {
     }
   `;
 
-  constructor(
-    private apollo: Apollo,
-    private router: Router,
-  ) {}
-
   sendFeedback(feedback: SendFeedback) {
     // !FIXME: should not subscribe but return an observable
     this.apollo
@@ -104,28 +103,11 @@ export class GraphQLService {
   }
 
   askFeedback(feedback: AskFeedback) {
-    // !FIXME: should not subscribe but return an observable
-    this.apollo
-      .mutate({
-        mutation: this.askFeedbackMutation,
-        variables: { askFeedback: feedback },
-        useMutationLoading: true,
-      })
-      .subscribe(({ data, loading }) => {
-        if (loading) {
-          this.loading.next(true);
-        } else {
-          this.loading.next(false);
-        }
-        let result = (data as any).sendFeedbackRequest; // !FIXME: what is the type of result?
-        if (result === 'sent') {
-          result = 'Félicitations ! Votre demande vient d’être envoyée';
-          this.router.navigate(['/result', { result: 'success', message: result }]);
-        } else {
-          result = 'Désolé ! Votre demande n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer.';
-          this.router.navigate(['/result', { result: 'askFailed', message: result }]);
-        }
-      });
+    return this.apollo.mutate<{ sendFeedbackRequest: 'sent' | any }>({
+      // !FIXME: i don't know the value when request fails...
+      mutation: this.askFeedbackMutation,
+      variables: { askFeedback: feedback },
+    });
   }
 
   getFeedbackList(email: string): Observable<Feedback[]> {
