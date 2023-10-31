@@ -1,0 +1,55 @@
+<h1 class="app-g-page-title">
+  <mat-icon>forum</mat-icon>
+  FeedZback
+  <ng-container *ngIf="type && feedback">
+    {{ type === feedbackType.received ? 'reçu de ' + feedback.senderName : 'envoyé à ' + feedback.receverName }}
+  </ng-container>
+</h1>
+
+<app-message *ngIf="feedback === null" type="danger">
+  <strong>Oops&nbsp;!</strong><br />
+  Ce FeedZback est introuvable.
+</app-message>
+
+<div *ngIf="type && feedback" class="app-feedback-details__addons">
+  <mat-icon style="vertical-align: text-bottom; transform: scale(0.75)">email</mat-icon>
+  {{ type === feedbackType.received ? feedback.senderEmail : feedback.receverEmail }}
+  <br />
+  <mat-icon style="vertical-align: text-bottom; transform: scale(0.75)">calendar_today</mat-icon>
+  {{ feedback.createdAt | date }}
+</div>
+
+<ng-container *ngIf="feedback">
+  <div class="app-feedback-details__flex">
+    <mat-card class="app-feedback-details__flex-item">
+      <mat-card-header>
+        <mat-card-title><mat-icon>verified</mat-icon> Points positifs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>{{ feedback.positiveFeedback }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="app-feedback-details__flex-item">
+      <mat-card-header>
+        <mat-card-title><mat-icon>self_improvement</mat-icon> Axes d'améliorations</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>{{ feedback.toImprove }}</mat-card-content>
+    </mat-card>
+  </div>
+
+  <ng-container *ngIf="feedback.comment">
+    <h2 style="margin-top: 1.5rem; margin-bottom: 0"><mat-icon>notes</mat-icon> Commentaires</h2>
+    <p>{{ feedback.comment }}</p>
+  </ng-container>
+</ng-container>
+
+<p *ngIf="type" style="margin-top: 1.5rem">
+  <a
+    [routerLink]="['/feedbacks']"
+    [queryParams]="{ type: type }"
+    class="app-g-link app-g-link--no-underline"
+    style="padding: 0.5rem 0.5rem 0.5rem 0"
+  >
+    <mat-icon style="vertical-align: text-bottom">arrow_back</mat-icon>
+    retour
+  </a>
+</p>

@@ -1,12 +1,19 @@
-export type Feedback = {
+export type FeedbackBase = {
   id: string;
-  token: string;
-  senderName: string;
-  senderEmail: string;
-  receverEmail: string; // !FIXME: rename `receiverEmail`
-  receverName: string; // !FIXME: rename `receiverName`
   positiveFeedback: string;
   toImprove: string;
   comment: string;
   createdAt: string;
 };
+
+export type ReceivedFeedback = FeedbackBase & {
+  senderName: string;
+  senderEmail: string;
+};
+
+export type SentFeedback = FeedbackBase & {
+  receverEmail: string; // !FIXME: rename `receiverEmail`
+  receverName: string; // !FIXME: rename `receiverName`
+};
+
+export type Feedback = ReceivedFeedback & SentFeedback;

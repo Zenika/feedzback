@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable, catchError, map, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { AskFeedback } from '../types/ask-feedback.types';
-import { Feedback } from '../types/feedback.types';
+import { Feedback, ReceivedFeedback, SentFeedback } from '../types/feedback.types';
 import { SendFeedback } from '../types/send-feedback.types';
 
 @Injectable({
@@ -100,22 +100,25 @@ export class GraphQLService {
     );
   }
 
-  getFeedbackList(email: string): Observable<Feedback[]> {
+  getFeedbackList(email: string) {
     return this.apollo
-      .watchQuery<Feedback[]>({
+      .query<{ receivedFeedbacks: ReceivedFeedback[]; sentFeedbacks: SentFeedback[] }>({
         query: this.getFeedbackListQuery,
         variables: { email },
-        pollInterval: 4500,
+        fetchPolicy: 'no-cache',
       })
-      .valueChanges.pipe(map(({ data }) => data));
+      .pipe(map(({ data }) => data));
   }
 
-  getFeedbackById(id: string): Observable<Feedback> {
+  getFeedbackById(id: string) {
     return this.apollo
       .query<{ getFeedbackById: Feedback }>({
         query: this.getFeedbackByIdQuery,
         variables: { getFeedbackByIdId: id }, // !FIXME: bad naming `IdId`
       })
-      .pipe(map((result) => result.data.getFeedbackById));
+      .pipe(
+        map(({ data }) => data.getFeedbackById),
+        catchError(() => of(null)),
+      );
   }
 }

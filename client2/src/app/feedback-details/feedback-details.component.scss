@@ -1,0 +1,20 @@
+.app-feedback-details {
+  &__addons {
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+  }
+
+  &__flex {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media only screen and (min-width: 768px) {
+      flex-direction: row;
+    }
+
+    &-item {
+      flex-grow: 1;
+    }
+  }
+}
