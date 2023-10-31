@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -13,7 +13,7 @@ import { ReceivedFeedback, SentFeedback } from '../shared/types/feedback.types';
 @Component({
   selector: 'app-my-feedbacks',
   standalone: true,
-  imports: [DatePipe, RouterLink, MatIconModule, MatTableModule, MatTabsModule],
+  imports: [NgIf, DatePipe, RouterLink, MatIconModule, MatTableModule, MatTabsModule],
   templateUrl: './my-feedbacks.component.html',
   styleUrls: ['./my-feedbacks.component.scss'],
   encapsulation: ViewEncapsulation.None,
