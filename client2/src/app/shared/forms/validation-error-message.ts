@@ -1,13 +1,13 @@
 import { ValidationErrors } from '@angular/forms';
 
 export const getValidationErrorMessage = (errors: ValidationErrors | null): string | null => {
-  if (errors?.['required'] || errors?.['multipleEmails'].length === 0) {
+  if (errors?.['required'] || errors?.['multipleEmails']?.length === 0) {
     return 'Champ requis';
   }
   if (errors?.['email']) {
     return 'Email invalide';
   }
-  if (errors?.['multipleEmails'].length > 0) {
+  if (errors?.['multipleEmails']?.length > 0) {
     return `Email(s) invalide(s): ${errors?.['multipleEmails'].join(', ')}`;
   }
   if (errors?.['minlength']) {

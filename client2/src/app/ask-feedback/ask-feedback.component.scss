@@ -1,8 +1,8 @@
-h1 {
-  color: #D52150;
-}
-
 .app-ask-feedback {
+  &__title {
+    color: #d52150;
+  }
+
   &__field {
     margin-bottom: 1rem;
     width: 100%;

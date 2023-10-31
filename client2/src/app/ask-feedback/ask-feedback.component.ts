@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, from, map, toArray } from 'rxjs';
+import { concatMap, from, toArray } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
 import {
   MULTIPLE_EMAILS_SEP,
@@ -67,7 +67,6 @@ export class AskFeedbackComponent {
     from(receiverEmails)
       .pipe(
         concatMap((receiverEmail) => this.graphQLService.askFeedback(this.buildAskFeedback(receiverEmail, token))),
-        map(({ data }) => data?.sendFeedbackRequest === 'sent'),
         toArray(),
       )
       .subscribe((results) => {

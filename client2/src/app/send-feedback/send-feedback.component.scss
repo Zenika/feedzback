@@ -1,0 +1,17 @@
+.app-send-feedback {
+  &__title {
+    color: #d52150;
+  }
+
+  @media only screen and (min-width: 768px) {
+    &__flex {
+      display: flex;
+      gap: 2rem;
+    }
+  }
+
+  &__field {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}

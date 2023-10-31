@@ -1,0 +1,74 @@
+<h1 class="app-send-feedback__title">
+  <mat-icon style="transform: scale(1.2)">send</mat-icon>
+  Envoi de feedZback
+</h1>
+
+<app-message *ngIf="feedbackId" type="success">
+  <strong>Félicitations&nbsp;!</strong><br />
+  Votre feedZback a bien été envoyé à&nbsp;: {{ form.controls.receverName.value }}.<br />
+  <a [routerLink]="['/feedback', feedbackId, 'sent']">Consulter mon feedZback</a>.
+</app-message>
+
+<app-message *ngIf="hasError" type="danger">
+  <strong>Oops&nbsp;!</strong><br />
+  Une erreur s'est produite lors de l'envoi.
+</app-message>
+
+<form *ngIf="!feedbackId" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="app-send-feedback__flex">
+    <mat-form-field appearance="outline" class="app-send-feedback__field">
+      <mat-label>Email de votre collègue</mat-label>
+      <input [formControl]="form.controls.receverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
+      <mat-error>{{ form.controls.receverEmail.errors | validationErrorMessage }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="app-send-feedback__field">
+      <mat-label>Nom de votre collègue</mat-label>
+      <input [formControl]="form.controls.receverName" type="text" matInput placeholder="Jean Dupont" />
+      <mat-error>{{ form.controls.receverName.errors | validationErrorMessage }}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-label>Points positifs</mat-label>
+    <textarea
+      #postitiveFeedback
+      [formControl]="form.controls.postitiveFeedback"
+      [maxlength]="messageMaxLength"
+      matInput
+      rows="4"
+      placeholder="Dans le cadre de la mission XXX,tes collègues viennent souvent te voir pour te demander de l’aide. Tu prends le temps de bien leur expliquer si quelque chose n’est pas compris. Je trouve que tu es très à l’écoute de tes collègues et tu leur permets de monter en compétences : bravo et merci pour ça."
+    ></textarea>
+    <mat-hint align="start">{{ postitiveFeedback.value.length }} / {{ messageMaxLength }}</mat-hint>
+    <mat-error>{{ form.controls.postitiveFeedback.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-label>Axes d’améliorations</mat-label>
+    <textarea
+      #toImproveFeedback
+      [formControl]="form.controls.toImproveFeedback"
+      [maxlength]="messageMaxLength"
+      matInput
+      rows="4"
+      placeholder="La semaine dernière, tu as travaillé sur le même sujet pendant 5 jours sans pour autant demander de l’aide. Il s’est avéré que tu avais un blocage. Cela m’a déçu et agacé que tu ne nous demandes pas d’aide. J’aimerais que tu viennes nous voir la prochaine fois, afin que tu ne restes pas bloqué(e) aussi longtemps."
+    ></textarea>
+    <mat-hint align="start">{{ toImproveFeedback.value.length }} / {{ messageMaxLength }}</mat-hint>
+    <mat-error>{{ form.controls.toImproveFeedback.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-label>Commentaire</mat-label>
+    <textarea
+      #comment
+      [formControl]="form.controls.comment"
+      [maxlength]="messageMaxLength"
+      matInput
+      rows="4"
+      placeholder="Merci pour ta demande de feedZback !"
+    ></textarea>
+    <mat-hint align="start">{{ comment.value.length }} / {{ messageMaxLength }}</mat-hint>
+  </mat-form-field>
+
+  <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+</form>

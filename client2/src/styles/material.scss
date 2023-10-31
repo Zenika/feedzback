@@ -41,7 +41,7 @@ $client-palette: (
     A200: $dark-primary-text,
     A400: $light-primary-text,
     A700: $light-primary-text,
-  )
+  ),
 );
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -58,7 +58,7 @@ $client-typography-level: mat.define-typography-level(
   $line-height: 1.3,
   $font-weight: 400,
   $font-family: '"Nunito", sans-serif',
-  $letter-spacing: normal
+  $letter-spacing: normal,
 );
 
 $client-typography: mat.define-typography-config(

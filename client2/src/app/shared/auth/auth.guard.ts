@@ -17,6 +17,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   };
 
   if (hasSenderEmail()) {
+    // !FIXME: Does not seems to work... We get the following error:
+    // !FIXME: FirebaseError: Firebase: This operation is restricted to administrators only. (auth/admin-restricted-operation).
     return authService.signInAnonymously();
   }
 

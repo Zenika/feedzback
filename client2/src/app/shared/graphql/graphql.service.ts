@@ -1,13 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { AskFeedback } from '../types/ask-feedback.types';
 import { Feedback } from '../types/feedback.types';
 import { SendFeedback } from '../types/send-feedback.types';
-
-// !FIXME: service should not subscribe but return an observable
-// !FIXME: service should not handle messages and routing
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +11,11 @@ import { SendFeedback } from '../types/send-feedback.types';
 export class GraphQLService {
   private apollo = inject(Apollo);
 
-  private router = inject(Router);
-
-  loading = new Subject<boolean>(); // !FIXME: remove this and just return an observable in the methods
-
-  private unsubscribe$ = new Subject<void>();
+  private askFeedbackMutation = gql`
+    mutation AskFeedback($askFeedback: AskFeedback!) {
+      sendFeedbackRequest(askFeedback: $askFeedback)
+    }
+  `;
 
   private sendFeedBackMutation = gql`
     mutation SendFeedback($feedbackInput: FeedbackInput!) {
@@ -27,12 +23,6 @@ export class GraphQLService {
         feedbackId
         message
       }
-    }
-  `;
-
-  private askFeedbackMutation = gql`
-    mutation AskFeedback($askFeedback: AskFeedback!) {
-      sendFeedbackRequest(askFeedback: $askFeedback)
     }
   `;
 
@@ -74,40 +64,40 @@ export class GraphQLService {
     }
   `;
 
-  sendFeedback(feedback: SendFeedback) {
-    // !FIXME: should not subscribe but return an observable
-    this.apollo
-      .mutate({
-        mutation: this.sendFeedBackMutation,
-        variables: { feedbackInput: feedback },
-        useMutationLoading: true,
+  askFeedback(feedback: AskFeedback) {
+    // !FIXME: i don't know the value when request fails...
+    return this.apollo
+      .mutate<{ sendFeedbackRequest?: 'sent' }>({
+        mutation: this.askFeedbackMutation,
+        variables: { askFeedback: feedback },
       })
-      .subscribe(({ data, loading }) => {
-        if (loading) {
-          this.loading.next(true);
-        } else {
-          this.loading.next(false);
-        }
-        const result = (data as any).sendFeedback;
-        let message = result.message;
-        if (message === 'sent') {
-          const feedbackId = result.feedbackId;
-          message = 'Félicitations! Votre feedback vient d’être envoyée à : ' + feedback.receverName;
-          this.router.navigate(['/result', { result: 'success', message, id: feedbackId }]);
-        } else {
-          message =
-            'Désolé ! Votre feedback n’a pas été envoyée à cause d’un problème technique...  Veuillez réessayer.';
-          this.router.navigate(['/result', { result: 'sendFailed', message }]);
-        }
-      });
+      .pipe(
+        map(({ data }) => data?.sendFeedbackRequest === 'sent'),
+        catchError(() => of(false)),
+      );
   }
 
-  askFeedback(feedback: AskFeedback) {
-    return this.apollo.mutate<{ sendFeedbackRequest: 'sent' | any }>({
-      // !FIXME: i don't know the value when request fails...
-      mutation: this.askFeedbackMutation,
-      variables: { askFeedback: feedback },
-    });
+  sendFeedback(feedback: SendFeedback) {
+    // !FIXME: the response API is strange...
+    return (
+      this.apollo
+        // TODO: the mutate<TYPE> must be confirmed and improved...
+        // TODO: i'm not sure of the feedbackId type (string or number...?). Let say string for now...
+        .mutate<{ sendFeedback?: { message: 'sent'; feedbackId: string } | { message: undefined } }>({
+          mutation: this.sendFeedBackMutation,
+          variables: { feedbackInput: feedback },
+        })
+        .pipe(
+          map(({ data }) => {
+            if (data?.sendFeedback?.message === 'sent') {
+              return data?.sendFeedback.feedbackId;
+            } else {
+              return false;
+            }
+          }),
+          catchError(() => of(false)),
+        )
+    );
   }
 
   getFeedbackList(email: string): Observable<Feedback[]> {
@@ -117,10 +107,7 @@ export class GraphQLService {
         variables: { email },
         pollInterval: 4500,
       })
-      .valueChanges.pipe(
-        map(({ data }) => data),
-        takeUntil(this.unsubscribe$),
-      );
+      .valueChanges.pipe(map(({ data }) => data));
   }
 
   getFeedbackById(id: string): Observable<Feedback> {

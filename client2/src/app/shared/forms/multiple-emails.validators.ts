@@ -1,6 +1,8 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-export const getEmailPattern = () => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+// Source: https://github.com/angular/angular/blob/main/packages/forms/src/validators.ts
+const EMAIL_REGEXP =
+  /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export const MULTIPLE_EMAILS_SEP = ' ';
 
@@ -15,7 +17,7 @@ export const multipleEmailsValidatorFactory =
   (control: AbstractControl): ValidationErrors | null => {
     const emails = getMultipleEmails(control.value, emailSeparator);
 
-    const multipleEmails = emails.filter((email) => !getEmailPattern().test(email)); // List of invalid emails
+    const multipleEmails = emails.filter((email) => !EMAIL_REGEXP.test(email)); // List of invalid emails
 
     const hasErrors = multipleEmails.length || (required && emails.length - multipleEmails.length === 0);
 

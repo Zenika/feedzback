@@ -5,7 +5,7 @@
   margin-bottom: 1.5rem;
   padding: 1rem;
   border-radius: 0.25rem;
-  border: 1px solid transparent;
+  border: 0px solid transparent; // Use `1px` instead of `0px` to display the border
 
   &--info {
     border-color: rgb(158, 197, 254);
