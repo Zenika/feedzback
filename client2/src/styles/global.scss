@@ -1,0 +1,35 @@
+// Note: global styles starts with `.app-g-*`.
+
+h1.app-g-page-title {
+  display: flex;
+  align-items: center;
+  gap: calc(1rem + 1vw);
+  color: #d52150;
+
+  mat-icon {
+    transform-origin: left;
+    transform: scale(1.5);
+
+    @media only screen and (min-width: 1200px) {
+      transform: scale(2);
+    }
+  }
+}
+
+.app-g-link {
+  &,
+  &:link,
+  &:visited {
+    transition: color ease 0.3s;
+    color: #d52150;
+  }
+
+  &:hover,
+  &:active {
+    color: rgb(213 33 80 / 0.8);
+  }
+
+  &--no-underline {
+    text-decoration: none !important;
+  }
+}
