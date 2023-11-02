@@ -1,7 +1,7 @@
 import { ValidationErrors } from '@angular/forms';
 
 export const getValidationErrorMessage = (errors: ValidationErrors | null): string | null => {
-  if (errors?.['required'] || errors?.['multipleEmails']?.length === 0) {
+  if (errors?.['required']) {
     return 'Champ requis';
   }
   if (errors?.['email']) {

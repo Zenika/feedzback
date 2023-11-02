@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
+import { DemoComponent } from './demo/demo.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
 import { HomeComponent } from './home/home.component';
 import { MyFeedbacksComponent } from './my-feedbacks/my-feedbacks.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { SendFeedbackComponent } from './send-feedback/send-feedback.component';
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -23,29 +25,40 @@ export const routes: Routes = [
     path: 'ask',
     component: AskFeedbackComponent,
     canActivate: [authGuard],
+    title: 'FeedZback - Demander',
   },
   {
     path: 'send',
     component: SendFeedbackComponent,
     canActivate: [authGuard],
+    title: 'FeedZback - Envoyer',
   },
   {
     path: 'feedbacks',
     component: MyFeedbacksComponent,
     canActivate: [authGuard],
+    title: 'FeedZback - Mes feedZbacks',
   },
   {
     path: 'feedback/:id/:type', // !FIXME: should be 'feedbacks/:id/:type'
     component: FeedbackDetailsComponent,
     canActivate: [authGuard],
+    title: 'FeedZback - FeedZback détaillé',
   },
   {
     path: 'sign-in',
     component: SignInComponent,
     canActivate: [signInGuard],
+    title: 'FeedZback - Se connecter',
   },
-  /*{
+  {
+    path: 'demo',
+    component: DemoComponent,
+    title: 'FeedZback - Demo content',
+  },
+  {
     path: '**',
-    redirectTo: '/home',
-  },*/
+    component: NotFoundComponent,
+    title: 'FeeddZback - Page introuvable',
+  },
 ];

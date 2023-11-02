@@ -8,9 +8,8 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
-  @HostBinding('class.app-home') hasCss = true;
+  @HostBinding('class.app-g-landing') hasCss = true;
 }

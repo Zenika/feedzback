@@ -20,9 +20,9 @@ import { SendFeedback } from '../shared/types/send-feedback.types';
     ReactiveFormsModule,
     RouterLink,
     MatButtonModule,
-    MatIconModule,
     MatInputModule,
     ValidationErrorMessagePipe,
+    MatIconModule,
     MessageComponent,
   ],
   templateUrl: './send-feedback.component.html',
@@ -36,9 +36,9 @@ export class SendFeedbackComponent {
 
   private graphQLService = inject(GraphQLService);
 
-  private receverEmail: string = this.activatedRoute.snapshot.params['receverEmail'] ?? '';
+  private receverEmail: string = this.activatedRoute.snapshot.queryParams['receverEmail'] ?? '';
 
-  private receverName: string = this.activatedRoute.snapshot.params['receverName'] ?? '';
+  private receverName: string = this.activatedRoute.snapshot.queryParams['receverName'] ?? '';
 
   protected messageMaxLength = 500;
 
@@ -66,10 +66,10 @@ export class SendFeedbackComponent {
 
     this.graphQLService.sendFeedback(this.buildSendFeedback(token)).subscribe((feedbackId) => {
       this.hasError = feedbackId === false;
-      if (this.hasError) {
+      if (feedbackId === false) {
         this.disableForm(false);
       } else {
-        this.feedbackId = feedbackId as string;
+        this.feedbackId = feedbackId;
       }
     });
   }

@@ -1,6 +1,6 @@
 <h1 class="app-g-page-title">
-  <mat-icon>send</mat-icon>
-  Envoi de feedZback
+  <mat-icon>reviews</mat-icon>
+  J'envoie mon feedZback
 </h1>
 
 <app-message *ngIf="feedbackId" type="success">
@@ -64,7 +64,7 @@
       [formControl]="form.controls.comment"
       [maxlength]="messageMaxLength"
       matInput
-      rows="4"
+      rows="3"
       placeholder="Merci pour ta demande de feedZback !"
     ></textarea>
     <mat-hint align="start">{{ comment.value.length }} / {{ messageMaxLength }}</mat-hint>

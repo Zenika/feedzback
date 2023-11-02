@@ -16,6 +16,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return authService.isAnonymousSnapshot() && urlResult !== '/send' && urlResult !== '/result';
   };
 
+  // TODO: move each special use-case in a dedicated guard...
   if (hasSenderEmail()) {
     // !FIXME: Does not seems to work... We get the following error:
     // !FIXME: FirebaseError: Firebase: This operation is restricted to administrators only. (auth/admin-restricted-operation).

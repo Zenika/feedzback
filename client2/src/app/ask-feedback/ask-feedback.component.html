@@ -1,6 +1,6 @@
 <h1 class="app-g-page-title">
   <mat-icon>live_help</mat-icon>
-  Demande de feedZback
+  Je demande du feedZback
 </h1>
 
 <app-message *ngIf="sentEmails.length" type="success">
@@ -22,9 +22,9 @@
       [formControl]="form.controls.receiverEmails"
       type="email"
       matInput
-      placeholder="jean.dupont@zenika.com  john.doe@zenika.com"
+      placeholder="jean.dupont@zenika.com ; john.doe@zenika.com"
     />
-    <mat-hint align="start">Séparez les emails par des espaces</mat-hint>
+    <mat-hint align="start">Séparez les emails par des points virgules</mat-hint>
     <mat-error>{{ form.controls.receiverEmails.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 
@@ -35,7 +35,7 @@
       [formControl]="form.controls.message"
       [maxlength]="messageMaxLength"
       matInput
-      rows="5"
+      rows="4"
       placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
     ></textarea>
     <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>

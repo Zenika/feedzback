@@ -1,9 +1,18 @@
 .app-header {
   position: relative;
+  padding: 0.25rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2.5em;
+
+  > * {
+    flex-grow: 1;
+  }
+
+  &__burger,
+  &-logout {
+    width: 1%;
+  }
 
   &__logo {
     line-height: 0;
@@ -11,6 +20,7 @@
 
   &-menu {
     display: flex;
+    justify-content: center;
     gap: 1.25em;
     padding: 0 1.25em;
 
@@ -47,44 +57,65 @@
     }
   }
 
-  &__sign-out button {
-    cursor: pointer;
+  &-logout {
+    position: relative;
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    gap: 0.5em;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    color: rgba(0, 0, 0, 0.6);
-    transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    justify-content: flex-end;
 
-    &:hover {
-      color: #d52150;
+    &__inner {
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
+      color: rgba(0, 0, 0, 0.6);
+      transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      &:hover {
+        color: #d52150;
+      }
+    }
+
+    &__name {
+      flex-grow: 1;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @media only screen and (max-width: 991.98px) {
+        display: none;
+      }
+    }
+
+    &__icon {
+      flex-shrink: 0;
     }
   }
 
   @media only screen and (min-width: 768px) {
-    padding: 0.25rem 0;
-
     &__burger {
       display: none;
+    }
+
+    &__logo {
+      width: 1%;
     }
   }
 
   @media only screen and (max-width: 767.98px) {
-    justify-content: space-between;
-    padding: 0.25em 0;
-
     &__burger {
       z-index: 99;
-      flex-basis: 30%;
     }
 
-    &__sign-out {
-      flex-basis: 30%;
-      display: flex;
-      justify-content: flex-end;
+    &__logo {
+      text-align: center;
     }
 
     &-menu {

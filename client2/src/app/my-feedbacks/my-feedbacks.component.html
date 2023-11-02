@@ -1,80 +1,81 @@
-<h1 class="app-g-page-title">
-  <mat-icon>forum</mat-icon>
-  Mes feedZbacks
-</h1>
+<h1 class="app-g-page-title"><mat-icon>forum</mat-icon> Mes feedZbacks</h1>
 
-<mat-tab-group
-  animationDuration="0ms"
-  class="app-my-feedbacks__table"
-  [selectedIndex]="tabIndex"
-  (selectedTabChange)="onTabIndexChange($event.index)"
->
+<mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="onTabIndexChange($event.index)">
   <mat-tab label="reçus">
-    <table *ngIf="receivedFeedbacks.length; else noFeedbacks" mat-table [dataSource]="receivedFeedbacks">
-      <ng-container matColumnDef="senderName">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
-        <td mat-cell *matCellDef="let element">{{ element.senderName }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="senderEmail">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.senderEmail }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.createdAt | date }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <a [routerLink]="['/feedback', element.id, feedbackType.received]" class="app-g-link">
-            <mat-icon>visibility</mat-icon>
-          </a>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="receivedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: receivedColumns"></tr>
-    </table>
+    <ng-container
+      [ngTemplateOutlet]="table"
+      [ngTemplateOutletContext]="{ $implicit: receivedFeedbacks, type: feedbackType.received }"
+    ></ng-container>
   </mat-tab>
 
-  <mat-tab label="envoyés" class="app-my-feedbacks__table">
-    <table *ngIf="sentFeedbacks.length; else noFeedbacks" mat-table [dataSource]="sentFeedbacks">
-      <ng-container matColumnDef="receverName">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
-        <td mat-cell *matCellDef="let element">{{ element.receverName }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="receverEmail">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element">{{ element.receverEmail }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.createdAt | date: 'shortDate' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <a [routerLink]="['/feedback', element.id, feedbackType.sent]" class="app-g-link">
-            <mat-icon>visibility</mat-icon>
-          </a>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="sentColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: sentColumns"></tr>
-    </table>
+  <mat-tab label="envoyés">
+    <ng-container
+      [ngTemplateOutlet]="table"
+      [ngTemplateOutletContext]="{ $implicit: sentFeedbacks, type: feedbackType.sent }"
+    ></ng-container>
   </mat-tab>
 </mat-tab-group>
 
+<ng-template #table let-feedbacks let-type="type" appMyFeedbacksTemplateContext>
+  <div class="app-my-feedbacks__table-container">
+    <table *ngIf="feedbacks.length; else noFeedbacks" mat-table [dataSource]="feedbacks">
+      <ng-container matColumnDef="actions" sticky>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" class="app-my-feedbacks-actions">
+          <div class="app-my-feedbacks-actions__inner">
+            <a
+              [routerLink]="['/feedback', nf(element).id, type]"
+              matTooltip="Voir les détails du feedZback"
+              class="app-g-link"
+            >
+              <mat-icon>visibility</mat-icon>
+            </a>
+
+            <a
+              routerLink="/ask"
+              [queryParams]="{ receverEmail: nf(element).email }"
+              matTooltip="Demander un feedZback"
+              class="app-g-link"
+            >
+              <mat-icon>live_help</mat-icon>
+            </a>
+
+            <a
+              routerLink="/send"
+              [queryParams]="{ receverEmail: nf(element).email, receverName: nf(element).name }"
+              matTooltip="Envoyer un feedZback"
+              class="app-g-link"
+            >
+              <mat-icon>reviews</mat-icon>
+            </a>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let element">{{ nf(element).name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ nf(element).email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let element">{{ nf(element).createdAt | date: 'shortDate' }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+</ng-template>
+
 <ng-template #noFeedbacks>
-  <div style="margin-top: 3.5rem; text-align: center; font-style: italic; opacity: 0.6">
+  <div *ngIf="fetched" style="margin-top: 3.5rem; text-align: center; font-style: italic; opacity: 0.6">
     <mat-icon style="vertical-align: text-bottom">sentiment_dissatisfied</mat-icon>
-    Aucun feedZBack
+    Aucun feedZback
   </div>
 </ng-template>

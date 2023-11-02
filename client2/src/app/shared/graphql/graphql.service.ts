@@ -92,10 +92,10 @@ export class GraphQLService {
             if (data?.sendFeedback?.message === 'sent') {
               return data?.sendFeedback.feedbackId;
             } else {
-              return false;
+              return false as const;
             }
           }),
-          catchError(() => of(false)),
+          catchError(() => of(false as const)),
         )
     );
   }
@@ -108,6 +108,7 @@ export class GraphQLService {
         fetchPolicy: 'no-cache',
       })
       .pipe(map(({ data }) => data));
+    // TODO: missing catchError...
   }
 
   getFeedbackById(id: string) {

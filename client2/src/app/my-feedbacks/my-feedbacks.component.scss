@@ -1,0 +1,16 @@
+.app-my-feedbacks {
+  &__table-container {
+    width: 100%;
+    overflow: auto;
+  }
+
+  &-actions {
+    // Warning: this width should be adapted depending on the number of actions
+    width: 80px;
+
+    &__inner {
+      display: flex;
+      gap: 0.25rem;
+    }
+  }
+}

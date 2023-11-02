@@ -11,7 +11,7 @@
     gap: 0.5em;
     text-decoration: none;
     color: inherit;
-    transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    transition: color 200ms ease;
 
     &:hover {
       color: #d52150;

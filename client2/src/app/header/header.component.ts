@@ -20,9 +20,11 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
-  firstName$ = this.authService.firstName$;
+  protected firstName$ = this.authService.firstName$;
 
-  isMenuOpen = false;
+  protected isLogged$ = this.authService.isLogged$;
+
+  protected isMenuOpen = false;
 
   @HostBinding('class.app-header') hasCss = true;
 

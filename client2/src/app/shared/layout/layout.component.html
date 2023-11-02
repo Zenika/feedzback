@@ -8,6 +8,8 @@
   <ng-content select="[appLayoutMain]" />
 </main>
 
-<footer class="app-layout__footer app-layout-container">
-  <ng-content select="[appLayoutFooter]" />
+<footer class="app-layout__footer">
+  <div class="app-layout-container">
+    <ng-content select="[appLayoutFooter]" />
+  </div>
 </footer>

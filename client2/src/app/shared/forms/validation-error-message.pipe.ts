@@ -3,6 +3,7 @@ import { ValidationErrors } from '@angular/forms';
 import { getValidationErrorMessage } from './validation-error-message';
 
 @Pipe({
+  pure: false,
   name: 'validationErrorMessage',
   standalone: true,
 })

@@ -7,7 +7,6 @@ import { AuthService } from '../shared/auth/auth.service';
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class SignInComponent {
@@ -15,7 +14,7 @@ export class SignInComponent {
 
   protected disabled = false;
 
-  @HostBinding('class.app-sign-in') hasCss = true;
+  @HostBinding('class.app-g-landing') hasCss = true;
 
   signInWithGoogle() {
     this.disabled = true;

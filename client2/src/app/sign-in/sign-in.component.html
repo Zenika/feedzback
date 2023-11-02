@@ -1,10 +1,20 @@
-<div class="app-sign-in__inner">
-  <img class="app-sign-in__logo" src="/assets/svg-icons/app-icon-logo.svg" alt="" />
+<h1 class="app-g-landing__title mat-headline-3">Demandez ou envoyez du feedback à vos collègues&nbsp;!</h1>
 
-  <h2 class="app-sign-in__title">Demandez ou envoyez du feedback à vos collègues&nbsp;!</h2>
+<div class="app-g-landing-links">
+  <button
+    class="app-g-landing-links__item mat-body-strong"
+    type="button"
+    [disabled]="disabled"
+    (click)="signInWithGoogle()"
+  >
+    <mat-icon
+      class="app-g-landing-links__icon"
+      style="border-radius: 50%; background-color: white"
+      svgIcon="app-icon-google"
+    ></mat-icon>
 
-  <button class="app-sign-in__action" type="button" [disabled]="disabled" (click)="signInWithGoogle()">
-    <mat-icon svgIcon="app-icon-google" style="transform: scale(1.2)"></mat-icon>
     Connectez-vous avec Google
   </button>
 </div>
+
+<img src="assets/images/logo-zenika.svg" height="48" alt="Logo Zenika" />

@@ -25,8 +25,8 @@ import { AskFeedback } from '../shared/types/ask-feedback.types';
     NgIf,
     ReactiveFormsModule,
     MatButtonModule,
-    MatIconModule,
     MatInputModule,
+    MatIconModule,
     ValidationErrorMessagePipe,
     MessageComponent,
   ],
@@ -41,7 +41,7 @@ export class AskFeedbackComponent {
 
   private graphQLService = inject(GraphQLService);
 
-  private receiverEmail = this.activatedRoute.snapshot.queryParamMap.get('receverEmail') || '';
+  private receiverEmail: string = this.activatedRoute.snapshot.queryParams['receverEmail'] ?? '';
 
   protected messageMaxLength = 500;
 
