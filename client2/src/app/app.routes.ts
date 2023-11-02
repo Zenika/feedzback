@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
 import { DemoComponent } from './demo/demo.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
+import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
 import { MyFeedbacksComponent } from './my-feedbacks/my-feedbacks.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -50,6 +51,11 @@ export const routes: Routes = [
     component: SignInComponent,
     canActivate: [signInGuard],
     title: 'FeedZback - Se connecter',
+  },
+  {
+    path: 'guide',
+    component: GuideComponent,
+    title: 'FeedZback - Guide',
   },
   {
     path: 'demo',

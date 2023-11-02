@@ -6,6 +6,10 @@ h1.app-g-page-title {
   gap: calc(1rem + 1vw);
   color: #d52150;
 
+  &--center {
+    justify-content: center;
+  }
+
   mat-icon {
     transform-origin: left;
     transform: scale(1.5);
@@ -20,12 +24,14 @@ h1.app-g-page-title {
   &,
   &:link,
   &:visited {
+    text-decoration: none;
     transition: color ease 0.3s;
     color: #d52150;
   }
 
   &:hover,
   &:active {
+    text-decoration: underline;
     color: rgb(213 33 80 / 0.8);
   }
 
