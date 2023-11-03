@@ -9,6 +9,13 @@ $grid-breakpoints: (
   xxl: 1400px,
 );
 
+$breakpoint-xs: map.get($grid-breakpoints, xs);
+$breakpoint-sm: map.get($grid-breakpoints, sm);
+$breakpoint-md: map.get($grid-breakpoints, md);
+$breakpoint-lg: map.get($grid-breakpoints, lg);
+$breakpoint-xl: map.get($grid-breakpoints, xl);
+$breakpoint-xxl: map.get($grid-breakpoints, xxl);
+
 @mixin media-breakpoint-up($breakpoint) {
   @if map-has-key($grid-breakpoints, $breakpoint) == false {
     @error 'Invalid breakpoint value: "#{$breakpoint}" (allowed values: xs, sm, md, lg, xl, xxl)';

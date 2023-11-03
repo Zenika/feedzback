@@ -3,8 +3,10 @@
 .app-layout {
   min-height: 100vh;
   display: grid;
+
   // see: https://stackoverflow.com/questions/52861086/why-does-minmax0-1fr-work-for-long-elements-while-1fr-doesnt
   grid-template-columns: minmax(0, 1fr);
+
   grid-template-rows: auto 1fr auto;
   grid-template-areas: 'header' 'main' 'footer';
 
@@ -32,7 +34,7 @@
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    max-width: 960px;
+    max-width: app.$breakpoint-lg;
     margin: 0 auto;
     padding-left: 1rem;
     padding-right: 1rem;

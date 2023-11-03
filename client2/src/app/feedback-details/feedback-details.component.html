@@ -49,11 +49,7 @@
 </ng-container>
 
 <p *ngIf="type" class="app-feedback-details__back">
-  <a
-    [routerLink]="['/feedbacks']"
-    [queryParams]="{ type: type }"
-    class="app-g-link app-g-link--no-underline"
-  >
+  <a [routerLink]="['/feedbacks']" [queryParams]="{ type: type }" class="app-g-link app-g-link--no-underline">
     <mat-icon>arrow_back</mat-icon>
     retour
   </a>
