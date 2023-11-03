@@ -1,8 +1,8 @@
-// Note: global styles starts with `.app-g-*`.
+// Note: global styles starts with `.gbl-*`.
 
 @use './mixins.scss' as m;
 
-.app-g-landing {
+.gbl-landing {
   height: 100%;
   display: flex;
   flex-direction: column;

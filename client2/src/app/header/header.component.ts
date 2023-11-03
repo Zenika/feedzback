@@ -16,6 +16,8 @@ import { BurgerComponent } from './burger/burger.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnDestroy {
+  @HostBinding('class.app-header') hasCss = true;
+
   private authService = inject(AuthService);
 
   private router = inject(Router);
@@ -25,8 +27,6 @@ export class HeaderComponent implements OnDestroy {
   protected isLogged$ = this.authService.isLogged$;
 
   protected isMenuOpen = false;
-
-  @HostBinding('class.app-header') hasCss = true;
 
   @HostListener('document:click', ['$event.target']) onClick(target: HTMLElement) {
     if (!target.closest('.app-header-menu-target')) {

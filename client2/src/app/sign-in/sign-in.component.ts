@@ -14,7 +14,7 @@ export class SignInComponent {
 
   protected disabled = false;
 
-  @HostBinding('class.app-g-landing') hasCss = true;
+  @HostBinding('class.gbl-landing') hasCss = true;
 
   signInWithGoogle() {
     this.disabled = true;

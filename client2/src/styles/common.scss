@@ -1,8 +1,8 @@
-// Note: global styles starts with `.app-g-*`.
+// Note: global styles starts with `.gbl-*`.
 
 @use './mixins.scss' as m;
 
-h1.app-g-page-title {
+h1.gbl-page-title {
   display: flex;
   align-items: center;
   gap: calc(1rem + 1vw);
@@ -22,7 +22,7 @@ h1.app-g-page-title {
   }
 }
 
-.app-g-link {
+.gbl-link {
   &,
   &:link,
   &:visited {

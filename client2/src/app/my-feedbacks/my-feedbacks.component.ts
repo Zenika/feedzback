@@ -1,5 +1,5 @@
 import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -32,6 +32,8 @@ import { NormalizedFeedback } from './my-feedbacks.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class MyFeedbacksComponent implements OnInit {
+  @HostBinding('class.app-my-feedbacks') hasCss = true;
+
   @Input({
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
   })

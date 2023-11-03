@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import { MessageComponent } from '../shared/message/message.component';
 import { SendFeedback } from '../shared/types/send-feedback.types';
 
 @Component({
-  selector: 'app-send-feedback-form',
+  selector: 'app-send-feedback',
   standalone: true,
   imports: [
     NgFor,
@@ -30,6 +30,8 @@ import { SendFeedback } from '../shared/types/send-feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class SendFeedbackComponent {
+  @HostBinding('class.app-send-feedback') hasCss = true;
+
   private activatedRoute = inject(ActivatedRoute);
 
   private authService = inject(AuthService);

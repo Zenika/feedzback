@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,6 +35,8 @@ import { AskFeedback } from '../shared/types/ask-feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class AskFeedbackComponent {
+  @HostBinding('class.app-ask-feedback') hasCss = true;
+
   private activatedRoute = inject(ActivatedRoute);
 
   private authService = inject(AuthService);

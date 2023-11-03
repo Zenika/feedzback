@@ -1,5 +1,5 @@
 import { DatePipe, NgIf } from '@angular/common';
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -18,6 +18,8 @@ import { FeedbackType } from './feedback-details.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackDetailsComponent implements OnInit {
+  @HostBinding('class.app-feedback-details') hasCss = true;
+
   private graphQLService = inject(GraphQLService);
 
   @Input({ required: true }) id!: string;
