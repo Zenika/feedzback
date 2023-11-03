@@ -10,9 +10,14 @@
       flex-direction: row;
       gap: 1.5rem;
     }
+
+    mat-icon {
+      vertical-align: text-bottom;
+      transform: scale(0.75);
+    }
   }
 
-  &__flex {
+  &-box {
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -21,8 +26,28 @@
       flex-direction: row;
     }
 
-    &-item {
+    &__item {
       flex-grow: 1;
+    }
+
+    mat-icon {
+      transform: scale(1.2);
+    }
+  }
+
+  &__comment-title {
+    margin: 1.5rem 0 0 0 !important;
+  }
+
+  &__back {
+    margin-top: 1.5rem;
+
+    a {
+      padding: 0.5rem 0.5rem 0.5rem 0;
+    }
+
+    mat-icon {
+      vertical-align: text-bottom;
     }
   }
 }

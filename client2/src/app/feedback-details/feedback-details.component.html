@@ -13,57 +13,48 @@
 
 <div *ngIf="type && feedback" class="app-feedback-details__addons">
   <div>
-    <mat-icon style="vertical-align: text-bottom; transform: scale(0.75)">email</mat-icon>
+    <mat-icon>email</mat-icon>
     {{ type === feedbackType.received ? feedback.senderEmail : feedback.receverEmail }}
   </div>
 
   <div>
-    <mat-icon style="vertical-align: text-bottom; transform: scale(0.75)">calendar_today</mat-icon>
+    <mat-icon>calendar_today</mat-icon>
     {{ feedback.createdAt | date }}
   </div>
 </div>
 
 <ng-container *ngIf="feedback">
-  <div class="app-feedback-details__flex">
-    <mat-card class="app-feedback-details__flex-item">
+  <div class="app-feedback-details-box">
+    <mat-card appearance="outlined" class="app-feedback-details-box__item">
       <mat-card-header>
-        <mat-card-title>
-          <mat-icon>social_leaderboard</mat-icon>
-          Points positifs
-        </mat-card-title>
+        <mat-card-title><mat-icon>new_releases</mat-icon> Points positifs</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        <p class="mat-h4" style="margin-top: 0.5rem">{{ feedback.positiveFeedback }}</p>
-      </mat-card-content>
+
+      <mat-card-content class="mat-h4">{{ feedback.positiveFeedback }}</mat-card-content>
     </mat-card>
 
-    <mat-card class="app-feedback-details__flex-item">
+    <mat-card appearance="outlined" class="app-feedback-details-box__item">
       <mat-card-header>
-        <mat-card-title>
-          <mat-icon>self_improvement</mat-icon>
-          Axes d'améliorations
-        </mat-card-title>
+        <mat-card-title><mat-icon>moving</mat-icon> Axes d'améliorations</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        <p class="mat-h4" style="margin-top: 0.5rem">{{ feedback.toImprove }}</p>
-      </mat-card-content>
+
+      <mat-card-content class="mat-h4">{{ feedback.toImprove }}</mat-card-content>
     </mat-card>
   </div>
 
   <ng-container *ngIf="feedback.comment">
-    <h2 style="margin-top: 1.5rem; margin-bottom: 0"><mat-icon>notes</mat-icon> Commentaires</h2>
-    <p class="mat-h4" style="margin-top: 0.5rem">{{ feedback.comment }}</p>
+    <h2 class="app-feedback-details__comment-title"><mat-icon>notes</mat-icon> Commentaires</h2>
+    <p class="mat-h4">{{ feedback.comment }}</p>
   </ng-container>
 </ng-container>
 
-<p *ngIf="type" style="margin-top: 1.5rem">
+<p *ngIf="type" class="app-feedback-details__back">
   <a
     [routerLink]="['/feedbacks']"
     [queryParams]="{ type: type }"
     class="app-g-link app-g-link--no-underline"
-    style="padding: 0.5rem 0.5rem 0.5rem 0"
   >
-    <mat-icon style="vertical-align: text-bottom">arrow_back</mat-icon>
+    <mat-icon>arrow_back</mat-icon>
     retour
   </a>
 </p>
