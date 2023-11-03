@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
-import { DemoComponent } from './demo/demo.component';
+import { DemoContentComponent } from './demo-content/demo-content.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
@@ -59,7 +59,7 @@ export const routes: Routes = [
   },
   {
     path: 'demo',
-    component: DemoComponent,
+    component: DemoContentComponent,
     title: 'FeedZback - Demo content',
   },
   {
