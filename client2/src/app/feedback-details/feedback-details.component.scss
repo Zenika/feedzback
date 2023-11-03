@@ -1,3 +1,5 @@
+@use '../app.scss' as app;
+
 .app-feedback-details {
   &__addons {
     margin-bottom: 1.5rem;
@@ -6,7 +8,7 @@
     white-space: nowrap;
     opacity: 0.7;
 
-    @media only screen and (min-width: 768px) {
+    @include app.media-breakpoint-up(md) {
       flex-direction: row;
       gap: 1.5rem;
     }
@@ -22,7 +24,7 @@
     flex-direction: column;
     gap: 2rem;
 
-    @media only screen and (min-width: 768px) {
+    @include app.media-breakpoint-up(md) {
       flex-direction: row;
     }
 

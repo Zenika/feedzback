@@ -1,3 +1,5 @@
+@use './mixins.scss' as m;
+
 .app-g-landing {
   height: 100%;
   display: flex;
@@ -36,7 +38,7 @@
     background-color: rgb(255 255 255 / 0.65);
     color: #d52150;
 
-    @media only screen and (max-width: 519.98px) {
+    @include m.media-breakpoint-down(sm) {
       padding: 1.5rem;
     }
   }
@@ -47,7 +49,7 @@
     justify-content: space-evenly;
     gap: 2rem;
 
-    @media only screen and (max-width: 519.98px) {
+    @include m.media-breakpoint-down(sm) {
       flex-direction: column;
       gap: 1.5rem;
     }
@@ -66,7 +68,7 @@
       font-size: 1.25rem;
       transition: all ease 150ms;
 
-      @media only screen and (max-width: 767.98px) {
+      @include m.media-breakpoint-down(md) {
         flex-direction: column;
         gap: 0.75rem;
       }

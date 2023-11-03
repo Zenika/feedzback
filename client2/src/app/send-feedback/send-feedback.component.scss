@@ -1,5 +1,7 @@
+@use '../app.scss' as app;
+
 .app-send-feedback {
-  @media only screen and (min-width: 768px) {
+  @include app.media-breakpoint-up(md) {
     &__flex {
       display: flex;
       gap: 2rem;

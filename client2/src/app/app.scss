@@ -1,0 +1,13 @@
+// Use this file in your Angular components style
+//
+// Example:
+// --------
+// @use '../app.scss' as app;
+//
+// .app-some-component {
+//   @include app.media-breakpoint-up(md) {
+//     font-size: 5rem;
+//   }
+// }
+
+@forward '../styles/mixins.scss';

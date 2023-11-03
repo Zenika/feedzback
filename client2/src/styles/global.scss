@@ -1,5 +1,7 @@
 // Note: global styles starts with `.app-g-*`.
 
+@use './mixins.scss' as m;
+
 h1.app-g-page-title {
   display: flex;
   align-items: center;
@@ -14,7 +16,7 @@ h1.app-g-page-title {
     transform-origin: left;
     transform: scale(1.5);
 
-    @media only screen and (min-width: 1200px) {
+    @include m.media-breakpoint-up(xl) {
       transform: scale(2);
     }
   }

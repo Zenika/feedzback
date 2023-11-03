@@ -1,0 +1,30 @@
+@use 'sass:map';
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+@mixin media-breakpoint-up($breakpoint) {
+  @if map-has-key($grid-breakpoints, $breakpoint) == false {
+    @error 'Invalid breakpoint value: "#{$breakpoint}" (allowed values: xs, sm, md, lg, xl, xxl)';
+  }
+
+  @media only screen and (min-width: map.get($grid-breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @if map-has-key($grid-breakpoints, $breakpoint) == false {
+    @error 'Invalid breakpoint value: "#{$breakpoint}" (allowed values: xs, sm, md, lg, xl, xxl)';
+  }
+
+  @media only screen and (max-width: #{map.get($grid-breakpoints, $breakpoint) - 0.02}) {
+    @content;
+  }
+}
