@@ -1,13 +1,10 @@
-import { NgFor } from '@angular/common';
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, HostBinding, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ALLOWED_EMAIL_DOMAINS } from 'src/app/shared/validation/allowed-email-domains/allowed-email-domain.provider';
-import { allowedEmailDomainsValidatorFactory } from 'src/app/shared/validation/allowed-email-domains/allowed-email-domains.validator';
-import { MULTIPLE_EMAILS_PLACEHOLDER } from 'src/app/shared/validation/multiple-emails.validator';
 import { ValidationErrorMessagePipe } from '../../shared/validation/validation-error-message.pipe';
 
 @Component({
@@ -15,6 +12,7 @@ import { ValidationErrorMessagePipe } from '../../shared/validation/validation-e
   standalone: true,
   imports: [
     NgFor,
+    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
@@ -31,12 +29,14 @@ export class EmailsFormComponent implements OnInit {
 
   @Input({ required: true }) emailsFormArray!: FormArray<FormControl<string | null>>;
 
-  multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
+  @Input() set initialEmailValues(emails: string[]) {
+    emails.forEach(email => this.addReceiverEmail(email))
+  }
 
-  private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
+  @Input() maxLength = 5;
 
-  private buildEmailControl() {
-    return new FormControl('', [Validators.required, Validators.email, this.allowedEmailDomainsValidator]);
+  get canAddEmail(): boolean {
+    return this.emailsFormArray.controls.length < this.maxLength;
   }
 
   ngOnInit(): void {
@@ -45,13 +45,14 @@ export class EmailsFormComponent implements OnInit {
     }
   }
 
-  protected addReceiverEmail() {
-    this.emailsFormArray.controls.push(this.buildEmailControl());
-    //this.emailsFormArray.updateValueAndValidity();
+  protected addReceiverEmail(email = '') {
+    if (!this.canAddEmail) {
+      return;
+    }
+    this.emailsFormArray.controls.push(new FormControl(email, [Validators.required, Validators.email]));
   }
 
   protected removeReceiverEmail(index: number) {
     this.emailsFormArray.removeAt(index);
-    // this.emailsFormArray.updateValueAndValidity();
   }
 }

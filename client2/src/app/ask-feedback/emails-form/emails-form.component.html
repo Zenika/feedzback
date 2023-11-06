@@ -1,18 +1,36 @@
-<div class="app-emails-form-field" *ngFor="let control of emailsFormArray.controls; let index = index">
+<div class="app-emails-form-field" *ngFor="let control of emailsFormArray.controls; let index = index; let last = last">
+  <mat-form-field appearance="outline" class="app-emails-form-field__ctrl">
+    <mat-label>Email de votre collègue{{ emailsFormArray.controls.length > 1 ? ' n°' + (index + 1) : '' }}</mat-label>
+
+    <input [formControl]="control" type="email" matInput placeholder="jean.dupont@zenika.com" />
+
+    <mat-error>{{ control.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
   <button
+    *ngIf="!last"
     type="button"
-    mat-icon-button
-    color="primary"
-    matTooltip="Adjouter une adresse email"
+    mat-fab
+    color="warn"
+    matTooltip="Supprimer cette adresse email"
     class="app-emails-form-field__btn"
+    tabIndex="-1"
+    (click)="removeReceiverEmail(index)"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+
+  <button
+    *ngIf="last"
+    type="button"
+    mat-fab
+    color="primary"
+    matTooltip="Ajouter une adresse email"
+    class="app-emails-form-field__btn"
+    tabIndex="-1"
+    [disabled]="!canAddEmail"
     (click)="addReceiverEmail()"
   >
     <mat-icon>add</mat-icon>
   </button>
-
-  <mat-form-field appearance="outline" class="app-emails-form-field__ctrl">
-    <mat-label>Email de votre collègue {{ index + 1 }}</mat-label>
-    <input [formControl]="control" type="email" matInput [placeholder]="multipleEmailsPlaceholder" />
-    <mat-error>{{ control.errors | validationErrorMessage }}</mat-error>
-  </mat-form-field>
 </div>
