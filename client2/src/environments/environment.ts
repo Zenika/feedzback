@@ -15,8 +15,11 @@ const apolloOptions: ApolloOptions = {
   uri: '',
 };
 
+const allowedEmailDomains = ['zenika.com'];
+
 export const environment = {
   production: true,
   firebaseOptions,
   apolloOptions,
+  allowedEmailDomains,
 };

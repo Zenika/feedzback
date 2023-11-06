@@ -15,8 +15,11 @@ const apolloOptions: ApolloOptions = {
   uri: 'http://localhost:4000/graphql',
 };
 
+const allowedEmailDomains = ['zenika.com'];
+
 export const environment = {
   production: false,
   firebaseOptions,
   apolloOptions,
+  allowedEmailDomains,
 };

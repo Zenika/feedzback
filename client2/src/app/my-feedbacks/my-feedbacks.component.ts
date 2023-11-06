@@ -9,6 +9,7 @@ import { getFeedbackType } from '../feedback-details/feedback-details.helpers';
 import { FeedbackType } from '../feedback-details/feedback-details.types';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
+import { AllowedEmailDomainsPipe } from '../shared/validation/allowed-email-domains/allowed-email-domains.pipe';
 import { MyFeedbacksTemplateContextDirective } from './my-feedbacks.directive';
 import { normalizeReceivedFeedbacks, normalizeSentFeedbacks } from './my-feedbacks.helpers';
 import { NormalizedFeedback } from './my-feedbacks.types';
@@ -26,6 +27,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
     MatTooltipModule,
     MatIconModule,
     MyFeedbacksTemplateContextDirective,
+    AllowedEmailDomainsPipe,
   ],
   templateUrl: './my-feedbacks.component.html',
   styleUrls: ['./my-feedbacks.component.scss'],

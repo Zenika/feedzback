@@ -32,6 +32,7 @@
             </a>
 
             <a
+              *ngIf="nf(element).email | allowedEmailDomains"
               routerLink="/ask"
               [queryParams]="{ receverEmail: nf(element).email }"
               matTooltip="Demander un feedZback"
@@ -41,6 +42,7 @@
             </a>
 
             <a
+              *ngIf="nf(element).email | allowedEmailDomains"
               routerLink="/send"
               [queryParams]="{ receverEmail: nf(element).email, receverName: nf(element).name }"
               matTooltip="Envoyer un feedZback"

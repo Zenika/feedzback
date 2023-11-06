@@ -6,10 +6,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
-import { ValidationErrorMessagePipe } from '../shared/forms/validation-error-message.pipe';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { SendFeedback } from '../shared/types/send-feedback.types';
+import { ALLOWED_EMAIL_DOMAINS } from '../shared/validation/allowed-email-domains/allowed-email-domain.provider';
+import { allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains/allowed-email-domains.validator';
+import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
 
 @Component({
   selector: 'app-send-feedback',
@@ -58,11 +60,17 @@ export class SendFeedbackComponent {
 
   protected messageMaxLength = 500;
 
+  private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
+
   form = new FormGroup({
     senderEmail: new FormControl(this.defaultSenderEmail, [Validators.required, Validators.email]),
     senderName: new FormControl(this.defaultSenderName, Validators.required),
 
-    receverEmail: new FormControl(this.getQueryParam('receverEmail'), [Validators.required, Validators.email]),
+    receverEmail: new FormControl(this.getQueryParam('receverEmail'), [
+      Validators.required,
+      Validators.email,
+      this.allowedEmailDomainsValidator,
+    ]),
     receverName: new FormControl(this.getQueryParam('receverName'), Validators.required),
 
     positiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
@@ -102,7 +110,7 @@ export class SendFeedbackComponent {
   private buildSendFeedback(token: string): SendFeedback {
     return {
       token,
-      ...this.form.value as Omit<SendFeedback, 'token'>,
+      ...(this.form.value as Omit<SendFeedback, 'token'>),
     };
   }
 

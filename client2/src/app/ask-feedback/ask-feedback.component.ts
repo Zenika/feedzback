@@ -7,15 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
+import { GraphQLService } from '../shared/graphql/graphql.service';
+import { MessageComponent } from '../shared/message/message.component';
+import { AskFeedback } from '../shared/types/ask-feedback.types';
 import {
   MULTIPLE_EMAILS_SEP,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../shared/forms/multiple-emails.validators';
-import { ValidationErrorMessagePipe } from '../shared/forms/validation-error-message.pipe';
-import { GraphQLService } from '../shared/graphql/graphql.service';
-import { MessageComponent } from '../shared/message/message.component';
-import { AskFeedback } from '../shared/types/ask-feedback.types';
+} from '../shared/validation/multiple-emails.validator';
+import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
 
 @Component({
   selector: 'app-ask-feedback',
