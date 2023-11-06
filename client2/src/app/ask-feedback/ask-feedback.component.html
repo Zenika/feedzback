@@ -22,9 +22,9 @@
       [formControl]="form.controls.receiverEmails"
       type="email"
       matInput
-      placeholder="jean.dupont@zenika.com ; john.doe@zenika.com"
+      [placeholder]="multipleEmailsPlaceholder"
     />
-    <mat-hint align="start">Séparez les emails par des points virgules</mat-hint>
+    <mat-hint align="start">Séparez les emails par des virgules</mat-hint>
     <mat-error>{{ form.controls.receiverEmails.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 

@@ -11,6 +11,7 @@ import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
 import {
+  MULTIPLE_EMAILS_PLACEHOLDER,
   MULTIPLE_EMAILS_SEP,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
@@ -51,6 +52,8 @@ export class AskFeedbackComponent {
     receiverEmails: new FormControl(this.receiverEmail, [multipleEmailsValidatorFactory()]),
     message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
+
+  multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
   submitInProgress = false;
 
