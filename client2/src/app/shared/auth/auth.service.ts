@@ -35,13 +35,21 @@ export class AuthService {
 
   firstName$ = this._user$.pipe(map((user) => user?.displayName?.split(' ')[0]));
 
-  isLogged$ = this._user$.pipe(
+  /**
+   * Logged user can be a known user or an anonymous user
+   */
+  isSignedIn$ = this._user$.pipe(
     map((user) => user !== null),
     distinctUntilChanged(),
   );
 
+  isKnownUser$ = this._user$.pipe(
+    map((user) => user?.isAnonymous === false),
+    distinctUntilChanged(),
+  );
+
   isAnonymous$ = this._user$.pipe(
-    map((user) => user?.isAnonymous),
+    map((user) => user?.isAnonymous === true),
     distinctUntilChanged(),
   );
 
@@ -52,26 +60,27 @@ export class AuthService {
     });
   }
 
-  signInAnonymously(): Observable<boolean> {
-    return from(this.firebaseAuth.signInAnonymously()).pipe(
-      map(() => true),
+  signInWithGoogle(): Observable<boolean> {
+    return from(this.firebaseAuth.signInWithPopup(new auth.GoogleAuthProvider())).pipe(
+      concatMap(() => this.isKnownUser$),
+      first((isKnownUser) => isKnownUser),
+      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
       catchError(() => of(false)),
     );
   }
 
-  signInWithGoogle(): Observable<boolean> {
-    return from(this.firebaseAuth.signInWithPopup(new auth.GoogleAuthProvider())).pipe(
-      concatMap(() => this.isLogged$),
-      first((isLogged) => isLogged),
-      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
+  signInAnonymously(): Observable<boolean> {
+    return from(this.firebaseAuth.signInAnonymously()).pipe(
+      concatMap(() => this.isAnonymous$),
+      first((isAnonymous) => isAnonymous),
       catchError(() => of(false)),
     );
   }
 
   signOut(): Observable<boolean> {
     return from(this.firebaseAuth.signOut()).pipe(
-      concatMap(() => this.isLogged$),
-      first((isLogged) => !isLogged),
+      concatMap(() => this.isSignedIn$),
+      first((isSignedIn) => !isSignedIn),
       tap(() => this.router.navigate(['/sign-in'])),
       catchError(() => of(false)),
     );

@@ -1,5 +1,5 @@
 <div class="app-header__burger">
-  <app-burger *ngIf="isLogged$ | async" class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
+  <app-burger *ngIf="isKnownUser$ | async" class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
 </div>
 
 <div class="app-header__logo">
@@ -9,7 +9,7 @@
 </div>
 
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
-  <ng-container *ngIf="isLogged$ | async">
+  <ng-container *ngIf="isKnownUser$ | async">
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/home"> Accueil </a>
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/ask"> Demander </a>
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/send"> Envoyer </a>
@@ -19,10 +19,10 @@
   </ng-container>
 </nav>
 
-<div class="app-header-logout">
-  <button *ngIf="isLogged$ | async" class="app-header-logout__inner" (click)="signOut()">
-    <span class="app-header-logout__name">{{ firstName$ | async }}</span>
+<div class="app-header-sign-out">
+  <button *ngIf="isSignedIn$ | async" class="app-header-sign-out__inner" (click)="signOut()">
+    <span class="app-header-sign-out__name">{{ firstName$ | async }}</span>
 
-    <mat-icon class="app-header-logout__icon" color="primary">power_settings_new</mat-icon>
+    <mat-icon class="app-header-sign-out__icon" color="primary">power_settings_new</mat-icon>
   </button>
 </div>

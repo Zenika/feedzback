@@ -38,17 +38,35 @@ export class SendFeedbackComponent {
 
   private graphQLService = inject(GraphQLService);
 
-  private receverEmail: string = this.activatedRoute.snapshot.queryParams['receverEmail'] ?? '';
+  protected isAnonymous = this.authService.userSnapshot?.isAnonymous;
 
-  private receverName: string = this.activatedRoute.snapshot.queryParams['receverName'] ?? '';
+  private get defaultSenderEmail(): string {
+    return this.isAnonymous
+      ? this.activatedRoute.snapshot.queryParams['senderEmail']
+      : this.authService.userSnapshot?.email;
+  }
+
+  private get defaultSenderName(): string {
+    return this.isAnonymous
+      ? this.activatedRoute.snapshot.queryParams['senderName']
+      : this.authService.userSnapshot?.displayName;
+  }
+
+  private getQueryParam(key: string): string {
+    return this.activatedRoute.snapshot.queryParams[key] ?? '';
+  }
 
   protected messageMaxLength = 500;
 
   form = new FormGroup({
-    receverEmail: new FormControl(this.receverEmail, [Validators.required, Validators.email]),
-    receverName: new FormControl(this.receverName, Validators.required),
-    postitiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
-    toImproveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
+    senderEmail: new FormControl(this.defaultSenderEmail, [Validators.required, Validators.email]),
+    senderName: new FormControl(this.defaultSenderName, Validators.required),
+
+    receverEmail: new FormControl(this.getQueryParam('receverEmail'), [Validators.required, Validators.email]),
+    receverName: new FormControl(this.getQueryParam('receverName'), Validators.required),
+
+    positiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
+    toImprove: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
     comment: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
 
@@ -84,13 +102,11 @@ export class SendFeedbackComponent {
   private buildSendFeedback(token: string): SendFeedback {
     return {
       token,
-      senderName: this.activatedRoute.snapshot.params['senderName'] ?? this.authService.userSnapshot?.displayName ?? '',
-      senderEmail: this.activatedRoute.snapshot.params['senderEmail'] ?? this.authService.userSnapshot?.email ?? '',
-      receverEmail: this.form.controls.receverEmail.value ?? '',
-      receverName: this.form.controls.receverName.value ?? '',
-      positiveFeedback: this.form.controls.postitiveFeedback.value ?? '',
-      toImprove: this.form.controls.toImproveFeedback.value ?? '',
-      comment: this.form.controls.comment.value ?? '',
+      ...this.form.value as Omit<SendFeedback, 'token'>,
     };
+  }
+
+  protected signOut() {
+    this.authService.signOut().subscribe();
   }
 }

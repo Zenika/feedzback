@@ -30,7 +30,7 @@
       radial-gradient(rgb(255 255 255 / 0.5), transparent 65%, rgb(213 33 80 / 0.4)),
       url('/assets/images/landing-bg.jpg') center no-repeat;
     background-size: cover;
-    opacity: 0.65;
+    opacity: 0.5;
   }
 
   &__title {
@@ -48,12 +48,13 @@
   &-links {
     margin: 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 2rem;
 
     @include m.media-breakpoint-down(sm) {
+      flex-wrap: nowrap;
       flex-direction: column;
-      gap: 1.5rem;
     }
 
     &__item {

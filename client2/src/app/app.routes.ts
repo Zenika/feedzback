@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { MyFeedbacksComponent } from './my-feedbacks/my-feedbacks.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SendFeedbackComponent } from './send-feedback/send-feedback.component';
+import { sendFeedbackGuard } from './send-feedback/send-feedback.guard';
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
@@ -31,7 +32,7 @@ export const routes: Routes = [
   {
     path: 'send',
     component: SendFeedbackComponent,
-    canActivate: [authGuard],
+    canActivate: [sendFeedbackGuard],
     title: 'FeedZback - Envoyer',
   },
   {

@@ -14,6 +14,8 @@ import { MessageType } from './message.types';
 export class MessageComponent {
   @Input() type: MessageType = 'light';
 
+  @Input() icon?: string;
+
   @HostBinding('class') get css() {
     return `app-message app-message--${this.type}`;
   }

@@ -26,6 +26,7 @@ h1.gbl-page-title {
   &,
   &:link,
   &:visited {
+    cursor: pointer; // usefull when used like this: `<div class="gbl-link" role="presentation" (click)="onClick()">Link</div>`
     text-decoration: none;
     transition: color ease 0.3s;
     color: #d52150;

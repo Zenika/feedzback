@@ -1,5 +1,5 @@
-<mat-icon class="app-message__icon" *ngIf="iconMap[type] as icon">
-  {{ icon }}
+<mat-icon class="app-message__icon" *ngIf="(icon ?? iconMap[type]) as iconValue">
+  {{ iconValue }}
 </mat-icon>
 
 <div class="app-message__content">

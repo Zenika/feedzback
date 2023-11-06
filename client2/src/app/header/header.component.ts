@@ -24,7 +24,9 @@ export class HeaderComponent implements OnDestroy {
 
   protected firstName$ = this.authService.firstName$;
 
-  protected isLogged$ = this.authService.isLogged$;
+  protected isKnownUser$ = this.authService.isKnownUser$;
+
+  protected isSignedIn$ = this.authService.isSignedIn$;
 
   protected isMenuOpen = false;
 
@@ -45,7 +47,7 @@ export class HeaderComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  signOut() {
+  protected signOut() {
     this.authService.signOut().subscribe();
   }
 }
