@@ -1,0 +1,18 @@
+<div class="app-emails-form-field" *ngFor="let control of emailsFormArray.controls; let index = index">
+  <button
+    type="button"
+    mat-icon-button
+    color="primary"
+    matTooltip="Adjouter une adresse email"
+    class="app-emails-form-field__btn"
+    (click)="addReceiverEmail()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <mat-form-field appearance="outline" class="app-emails-form-field__ctrl">
+    <mat-label>Email de votre collègue {{ index + 1 }}</mat-label>
+    <input [formControl]="control" type="email" matInput [placeholder]="multipleEmailsPlaceholder" />
+    <mat-error>{{ control.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+</div>
