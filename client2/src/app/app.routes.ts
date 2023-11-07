@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AskFeedbackV1Component } from './ask-feedback-v1/ask-feedback-v1.component';
 import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
 import { DemoContentComponent } from './demo-content/demo-content.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
@@ -26,6 +27,12 @@ export const routes: Routes = [
   {
     path: 'ask',
     component: AskFeedbackComponent,
+    canActivate: [authGuard],
+    title: 'FeedZback - Demander',
+  },
+  {
+    path: 'ask-v1',
+    component: AskFeedbackV1Component,
     canActivate: [authGuard],
     title: 'FeedZback - Demander',
   },

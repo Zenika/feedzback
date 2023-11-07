@@ -1,6 +1,6 @@
-<div class="app-emails-form-field" *ngFor="let control of emailsFormArray.controls; let index = index; let last = last">
+<div class="app-emails-form-field" *ngFor="let control of formArray.controls; let index = index; let last = last">
   <mat-form-field appearance="outline" class="app-emails-form-field__ctrl">
-    <mat-label>Email de votre collègue{{ emailsFormArray.controls.length > 1 ? ' n°' + (index + 1) : '' }}</mat-label>
+    <mat-label>Email de votre collègue{{ formArray.controls.length > 1 ? ' n°' + (index + 1) : '' }}</mat-label>
 
     <input [formControl]="control" type="email" matInput placeholder="jean.dupont@zenika.com" />
 
@@ -8,29 +8,28 @@
   </mat-form-field>
 
   <button
-    *ngIf="!last"
+    *ngIf="formArray.controls.length > 1"
     type="button"
-    mat-fab
+    mat-icon-button
     color="warn"
-    matTooltip="Supprimer cette adresse email"
+    matTooltip="Retirer cet email"
     class="app-emails-form-field__btn"
     tabIndex="-1"
-    (click)="removeReceiverEmail(index)"
+    (click)="removeAt(index)"
   >
-    <mat-icon>remove</mat-icon>
+    <mat-icon>delete</mat-icon>
   </button>
 
   <button
-    *ngIf="last"
+    *ngIf="last && canAdd"
     type="button"
-    mat-fab
+    mat-icon-button
     color="primary"
-    matTooltip="Ajouter une adresse email"
+    matTooltip="Ajouter un email"
     class="app-emails-form-field__btn"
     tabIndex="-1"
-    [disabled]="!canAddEmail"
-    (click)="addReceiverEmail()"
+    (click)="add()"
   >
-    <mat-icon>add</mat-icon>
+    <mat-icon>add_circle</mat-icon>
   </button>
 </div>

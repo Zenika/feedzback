@@ -27,32 +27,36 @@ import { ValidationErrorMessagePipe } from '../../shared/validation/validation-e
 export class EmailsFormComponent implements OnInit {
   @HostBinding('class.app-emails-form') hasCss = true;
 
-  @Input({ required: true }) emailsFormArray!: FormArray<FormControl<string | null>>;
+  @Input() formArray = new FormArray<FormControl<string | null>>([]);
 
-  @Input() set initialEmailValues(emails: string[]) {
-    emails.forEach(email => this.addReceiverEmail(email))
+  @Input() set values(emails: string[]) {
+    this.formArray.clear();
+    emails.forEach((email) => this.add(email));
   }
 
-  @Input() maxLength = 5;
+  @Input() limit = 5;
 
-  get canAddEmail(): boolean {
-    return this.emailsFormArray.controls.length < this.maxLength;
+  get canAdd(): boolean {
+    return this.formArray.controls.length < this.limit;
   }
 
   ngOnInit(): void {
-    if (!this.emailsFormArray.controls.length) {
-      this.addReceiverEmail();
+    if (!this.formArray.controls.length) {
+      this.add();
     }
   }
 
-  protected addReceiverEmail(email = '') {
-    if (!this.canAddEmail) {
+  protected add(email = '') {
+    if (!this.canAdd) {
       return;
     }
-    this.emailsFormArray.controls.push(new FormControl(email, [Validators.required, Validators.email]));
+    this.formArray.push(new FormControl(email, [Validators.required, Validators.email]));
   }
 
-  protected removeReceiverEmail(index: number) {
-    this.emailsFormArray.removeAt(index);
+  protected removeAt(index: number) {
+    if (this.formArray.length === 1) {
+      return;
+    }
+    this.formArray.removeAt(index);
   }
 }

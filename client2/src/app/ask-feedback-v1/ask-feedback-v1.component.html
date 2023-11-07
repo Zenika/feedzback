@@ -16,9 +16,19 @@
 </app-message>
 
 <form *ngIf="!sentEmails.length || remainingUnsentEmails.length" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-emails-form [formArray]="form.controls.receiverEmails" [values]="receiverEmails"></app-emails-form>
+  <mat-form-field appearance="outline" class="app-ask-feedback-v1__field">
+    <mat-label>Emails de vos collègues</mat-label>
+    <input
+      [formControl]="form.controls.receiverEmails"
+      type="email"
+      matInput
+      [placeholder]="multipleEmailsPlaceholder"
+    />
+    <mat-hint align="start">Séparez les emails par des virgules</mat-hint>
+    <mat-error>{{ form.controls.receiverEmails.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
 
-  <mat-form-field appearance="outline" class="app-ask-feedback__field">
+  <mat-form-field appearance="outline" class="app-ask-feedback-v1__field">
     <mat-label>Message</mat-label>
     <textarea
       #message

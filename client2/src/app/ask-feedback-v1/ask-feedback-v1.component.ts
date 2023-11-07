@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -10,11 +10,16 @@ import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
+import {
+  MULTIPLE_EMAILS_PLACEHOLDER,
+  MULTIPLE_EMAILS_SEP,
+  getMultipleEmails,
+  multipleEmailsValidatorFactory,
+} from '../shared/validation/multiple-emails.validator';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
-import { EmailsFormComponent } from './emails-form/emails-form.component';
 
 @Component({
-  selector: 'app-ask-feedback',
+  selector: 'app-ask-feedback-v1',
   standalone: true,
   imports: [
     NgFor,
@@ -24,15 +29,14 @@ import { EmailsFormComponent } from './emails-form/emails-form.component';
     MatInputModule,
     MatIconModule,
     ValidationErrorMessagePipe,
-    EmailsFormComponent,
     MessageComponent,
   ],
-  templateUrl: './ask-feedback.component.html',
-  styleUrls: ['./ask-feedback.component.scss'],
+  templateUrl: './ask-feedback-v1.component.html',
+  styleUrls: ['./ask-feedback-v1.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AskFeedbackComponent {
-  @HostBinding('class.app-ask-feedback') hasCss = true;
+export class AskFeedbackV1Component {
+  @HostBinding('class.app-ask-feedback-v1') hasCss = true;
 
   private activatedRoute = inject(ActivatedRoute);
 
@@ -40,14 +44,16 @@ export class AskFeedbackComponent {
 
   private graphQLService = inject(GraphQLService);
 
-  protected receiverEmails: string[] = [this.activatedRoute.snapshot.queryParams['receverEmail'] ?? ''];
+  private receiverEmail: string = this.activatedRoute.snapshot.queryParams['receverEmail'] ?? '';
 
   protected messageMaxLength = 500;
 
   form = new FormGroup({
-    receiverEmails: new FormArray<FormControl<string | null>>([]),
+    receiverEmails: new FormControl(this.receiverEmail, [multipleEmailsValidatorFactory()]),
     message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
+
+  multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
   submitInProgress = false;
 
@@ -62,7 +68,7 @@ export class AskFeedbackComponent {
     }
     this.disableForm(true);
 
-    const receiverEmails = this.form.controls.receiverEmails.value as string[];
+    const receiverEmails = getMultipleEmails(this.form.controls.receiverEmails.value);
     from(receiverEmails)
       .pipe(
         concatMap((receiverEmail) => this.graphQLService.askFeedback(this.buildAskFeedback(receiverEmail, token))),
@@ -72,7 +78,7 @@ export class AskFeedbackComponent {
         this.sentEmails = [...this.sentEmails, ...receiverEmails.filter((_, index) => results[index])];
         this.remainingUnsentEmails = receiverEmails.filter((_, index) => !results[index]);
 
-        this.receiverEmails = this.remainingUnsentEmails;
+        this.setReceiverEmails(this.remainingUnsentEmails);
 
         if (this.remainingUnsentEmails.length) {
           this.disableForm(false);
@@ -93,5 +99,10 @@ export class AskFeedbackComponent {
       senderEmail: receiverEmail, // !FIXME: the `senderEmail` is indeed the email of the receiver...
       text: this.form.controls.message.value ?? '',
     };
+  }
+
+  private setReceiverEmails(emails: string[]) {
+    this.form.controls.receiverEmails.setValue(emails.join(MULTIPLE_EMAILS_SEP));
+    this.form.controls.receiverEmails.updateValueAndValidity();
   }
 }
