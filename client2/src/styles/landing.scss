@@ -1,6 +1,7 @@
 // Note: global styles starts with `.gbl-*`.
 
-@use './mixins.scss' as m;
+@use './variables' as v;
+@use './mixins' as m;
 
 .gbl-landing {
   height: 100%;
@@ -10,35 +11,40 @@
   gap: 2rem;
   text-align: center;
 
-  &::before,
-  &::after {
-    content: '';
-    position: fixed;
-    z-index: -1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+  @if v.$use-background {
+    &::before,
+    &::after {
+      content: '';
+      position: fixed;
+      z-index: -1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
 
-  &::before {
-    background-color: #fff;
-  }
+    &::before {
+      background-color: #fff;
+    }
 
-  &::after {
-    background:
-      radial-gradient(rgb(255 255 255 / 0.5), transparent 65%, rgb(213 33 80 / 0.4)),
-      url('/assets/images/landing-bg.jpg') center no-repeat;
-    background-size: cover;
-    opacity: 0.5;
+    &::after {
+      background:
+        radial-gradient(rgb(255 255 255 / 0.5), transparent 65%, rgb(213 33 80 / 0.4)),
+        url('/assets/images/landing-bg.jpg') center no-repeat;
+      background-size: cover;
+      opacity: 0.5;
+    }
   }
 
   &__title {
     margin: 0 !important;
-    padding: 1.5rem 3rem;
-    border-radius: 0.5rem;
-    background-color: rgb(255 255 255 / 0.65);
     color: #d52150;
+
+    @if v.$use-background {
+      padding: 1.5rem 3rem;
+      border-radius: 0.5rem;
+      background-color: rgb(255 255 255 / 0.65);
+    }
 
     @include m.media-breakpoint-down(sm) {
       padding: 1.5rem;
