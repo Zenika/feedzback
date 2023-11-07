@@ -16,7 +16,7 @@
     Connectez-vous avec Google
   </button>
 
-  <div class="app-sign-in-guest">
+  <div *ngIf="signInAsGuest" class="app-sign-in-guest">
     <div class="app-sign-in-guest__sep app-sign-in-sep"><span class="app-sign-in-sep__inner">OU</span></div>
 
     <a class="gbl-link" routerLink="/send" [queryParams]="{ guest: true }">
