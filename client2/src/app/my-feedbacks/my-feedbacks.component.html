@@ -22,34 +22,15 @@
       <ng-container matColumnDef="actions" sticky>
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element" class="app-my-feedbacks-actions">
-          <div class="app-my-feedbacks-actions__inner">
-            <a
-              [routerLink]="['/feedback', nf(element).id, type]"
-              matTooltip="Voir les détails du feedZback"
-              class="gbl-link"
-            >
-              <mat-icon>visibility</mat-icon>
-            </a>
-
-            <a
-              routerLink="/ask"
-              [queryParams]="{ receverEmail: nf(element).email }"
-              matTooltip="Demander un feedZback"
-              class="gbl-link"
-            >
-              <mat-icon>live_help</mat-icon>
-            </a>
-
-            <a
-              *ngIf="nf(element).email | allowedEmailDomains"
-              routerLink="/send"
-              [queryParams]="{ receverEmail: nf(element).email, receverName: nf(element).name }"
-              matTooltip="Envoyer un feedZback"
-              class="gbl-link"
-            >
-              <mat-icon>reviews</mat-icon>
-            </a>
-          </div>
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Voir les détails du feedZback"
+            matTooltipPosition="right"
+            [routerLink]="['/feedback', nf(element).id, type]"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
         </td>
       </ng-container>
 
@@ -76,7 +57,6 @@
 
 <ng-template #noFeedbacks>
   <div *ngIf="fetched" class="app-my-feedbacks__empty">
-    <mat-icon>sentiment_dissatisfied</mat-icon>
-    Aucun feedZback
+    <mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback
   </div>
 </ng-template>

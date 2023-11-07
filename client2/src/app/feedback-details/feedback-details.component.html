@@ -2,7 +2,7 @@
   <mat-icon>forum</mat-icon>
   FeedZback
   <ng-container *ngIf="type && feedback">
-    {{ type === feedbackType.received ? 'reçu de ' + feedback.senderName : 'envoyé à ' + feedback.receverName }}
+    {{ type === feedbackType.received ? 'reçu de' : 'envoyé à' }} {{ colleagueName }}
   </ng-container>
 </h1>
 
@@ -12,45 +12,51 @@
 </app-message>
 
 <div *ngIf="type && feedback" class="app-feedback-details__addons">
-  <div>
-    <mat-icon>email</mat-icon>
-    {{ type === feedbackType.received ? feedback.senderEmail : feedback.receverEmail }}
-  </div>
+  <div><mat-icon>email</mat-icon>{{ colleagueEmail }}</div>
 
-  <div>
-    <mat-icon>calendar_today</mat-icon>
-    {{ feedback.createdAt | date }}
-  </div>
+  <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+
+  <a class="gbl-link" routerLink="/ask" [queryParams]="{ receverEmail: colleagueEmail }">
+    <mat-icon>live_help</mat-icon>Demander
+  </a>
+
+  <a
+    class="gbl-link"
+    *ngIf="colleagueEmail | allowedEmailDomains"
+    routerLink="/send"
+    [queryParams]="{ receverEmail: colleagueEmail, receverName: colleagueName }"
+  >
+    <mat-icon>reviews</mat-icon>Envoyer
+  </a>
 </div>
 
 <ng-container *ngIf="feedback">
-  <div class="app-feedback-details-box">
-    <mat-card appearance="outlined" class="app-feedback-details-box__item">
-      <mat-card-header>
-        <mat-card-title><mat-icon>new_releases</mat-icon> Points positifs</mat-card-title>
-      </mat-card-header>
+  <mat-card appearance="outlined" class="app-feedback-details-item">
+    <mat-card-header>
+      <mat-card-title class="app-feedback-details-item__title">
+        <mat-icon>new_releases</mat-icon> Points positifs
+      </mat-card-title>
+    </mat-card-header>
 
-      <mat-card-content class="mat-h4">{{ feedback.positiveFeedback }}</mat-card-content>
-    </mat-card>
+    <mat-card-content>{{ feedback.positiveFeedback }}</mat-card-content>
+  </mat-card>
 
-    <mat-card appearance="outlined" class="app-feedback-details-box__item">
-      <mat-card-header>
-        <mat-card-title><mat-icon>moving</mat-icon> Axes d'améliorations</mat-card-title>
-      </mat-card-header>
+  <mat-card appearance="outlined" class="app-feedback-details-item">
+    <mat-card-header>
+      <mat-card-title class="app-feedback-details-item__title">
+        <mat-icon>moving</mat-icon> Axes d'améliorations
+      </mat-card-title>
+    </mat-card-header>
 
-      <mat-card-content class="mat-h4">{{ feedback.toImprove }}</mat-card-content>
-    </mat-card>
+    <mat-card-content>{{ feedback.toImprove }}</mat-card-content>
+  </mat-card>
+
+  <div *ngIf="feedback.comment" class="app-feedback-details-item">
+    <h2 class="app-feedback-details-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
+    <p>{{ feedback.comment }}</p>
   </div>
-
-  <ng-container *ngIf="feedback.comment">
-    <h2 class="app-feedback-details__comment-title"><mat-icon>notes</mat-icon> Commentaires</h2>
-    <p class="mat-h4">{{ feedback.comment }}</p>
-  </ng-container>
 </ng-container>
 
-<p *ngIf="type" class="app-feedback-details__back">
-  <a [routerLink]="['/feedbacks']" [queryParams]="{ type: type }" class="gbl-link gbl-link--no-underline">
-    <mat-icon>arrow_back</mat-icon>
-    retour
-  </a>
-</p>
+<button *ngIf="type" mat-flat-button [routerLink]="['/feedbacks']" [queryParams]="{ type: type }">
+  <mat-icon>arrow_back</mat-icon> Mes feedZbacks
+</button>

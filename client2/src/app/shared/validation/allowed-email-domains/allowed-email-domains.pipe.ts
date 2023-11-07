@@ -9,7 +9,7 @@ import { isAllowedEmailDomain } from './allowed-email-domains';
 export class AllowedEmailDomainsPipe implements PipeTransform {
   private allowedEmailDomains = inject(ALLOWED_EMAIL_DOMAINS);
 
-  transform(email: string): boolean {
-    return isAllowedEmailDomain(email, this.allowedEmailDomains);
+  transform(email: string | null | undefined): boolean {
+    return email ? isAllowedEmailDomain(email, this.allowedEmailDomains) : false;
   }
 }

@@ -5,13 +5,7 @@
   }
 
   &-actions {
-    // Warning: this width should be adapted depending on the number of actions
-    width: 80px;
-
-    &__inner {
-      display: flex;
-      gap: 0.25rem;
-    }
+    width: 1%;
   }
 
   &__empty {
