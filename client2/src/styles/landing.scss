@@ -38,6 +38,7 @@
 
   &__title {
     margin: 0 !important;
+    text-wrap: balance;
     color: #d52150;
 
     @if v.$use-background {
