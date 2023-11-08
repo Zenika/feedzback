@@ -27,8 +27,8 @@ export class GraphQLService {
   `;
 
   private getFeedbackListQuery = gql`
-    query GetFeedbacks($email: String!) {
-      receivedFeedbacks(email: $email) {
+    query GetFeedbacks($email: String!, $token: String!) {
+      receivedFeedbacks(email: $email, token: $token) {
         id
         senderEmail
         senderName
@@ -37,7 +37,7 @@ export class GraphQLService {
         comment
         createdAt
       }
-      sentFeedbacks(email: $email) {
+      sentFeedbacks(email: $email, token: $token) {
         id
         receverEmail
         receverName
@@ -50,8 +50,8 @@ export class GraphQLService {
   `;
 
   private getFeedbackByIdQuery = gql`
-    query GetFeedbackById($getFeedbackByIdId: String!) {
-      getFeedbackById(id: $getFeedbackByIdId) {
+    query GetFeedbackById($getFeedbackById: String!, $token: String!) {
+      getFeedbackById(id: $getFeedbackById, token: $token) {
         senderName
         senderEmail
         receverEmail
@@ -100,22 +100,22 @@ export class GraphQLService {
     );
   }
 
-  getFeedbackList(email: string) {
+  getFeedbackList(email: string, token: string) {
     return this.apollo
       .query<{ receivedFeedbacks: ReceivedFeedback[]; sentFeedbacks: SentFeedback[] }>({
         query: this.getFeedbackListQuery,
-        variables: { email },
+        variables: { email, token },
         fetchPolicy: 'no-cache',
       })
       .pipe(map(({ data }) => data));
     // TODO: missing catchError...
   }
 
-  getFeedbackById(id: string) {
+  getFeedbackById(id: string, token: string) {
     return this.apollo
       .query<{ getFeedbackById: Feedback }>({
         query: this.getFeedbackByIdQuery,
-        variables: { getFeedbackByIdId: id }, // !FIXME: bad naming `IdId`
+        variables: { getFeedbackById: id, token },
       })
       .pipe(
         map(({ data }) => data.getFeedbackById),

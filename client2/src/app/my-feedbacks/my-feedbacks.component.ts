@@ -61,9 +61,13 @@ export class MyFeedbacksComponent implements OnInit {
 
   protected fetched = false;
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    const token = await this.authService.getUserTokenId();
+    if (!token) {
+      return;
+    }
     this.graphQLService
-      .getFeedbackList(this.authService.userSnapshot?.email ?? '')
+      .getFeedbackList(this.authService.userSnapshot?.email ?? '', token)
       .subscribe(({ receivedFeedbacks, sentFeedbacks }) => {
         this.receivedFeedbacks = normalizeReceivedFeedbacks(receivedFeedbacks);
         this.sentFeedbacks = normalizeSentFeedbacks(sentFeedbacks);

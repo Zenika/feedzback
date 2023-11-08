@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { Feedback } from '../shared/types/feedback.types';
@@ -31,6 +32,8 @@ import { FeedbackType } from './feedback-details.types';
 export class FeedbackDetailsComponent implements OnInit {
   @HostBinding('class.app-feedback-details') hasCss = true;
 
+  private authService = inject(AuthService);
+
   private graphQLService = inject(GraphQLService);
 
   @Input({ required: true }) id!: string;
@@ -53,9 +56,13 @@ export class FeedbackDetailsComponent implements OnInit {
     return this.type === this.feedbackType.received ? this.feedback?.senderName : this.feedback?.receverName;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const token = await this.authService.getUserTokenId();
+    if (!token) {
+      return;
+    }
     if (this.type) {
-      this.graphQLService.getFeedbackById(this.id).subscribe((feedback) => (this.feedback = feedback));
+      this.graphQLService.getFeedbackById(this.id, token).subscribe((feedback) => (this.feedback = feedback));
     } else {
       this.feedback = null;
     }

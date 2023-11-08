@@ -6,9 +6,9 @@ import {gql} from 'apollo-server';
  */
 export const typeDefs = gql`
 type Query{
-   sentFeedbacks(email: String!): [Feedback!]!
-   receivedFeedbacks(email: String!): [Feedback!]!
-   getFeedbackById(id: String!): Feedback!
+   sentFeedbacks(email: String!, token: String!): [Feedback!]!
+   receivedFeedbacks(email: String!, token: String!): [Feedback!]!
+   getFeedbackById(id: String!, token: String!): Feedback!
    getResult:String
 }
 

@@ -1,14 +1,18 @@
 /** @module getFeedbacks */
-import {Query} from '@google-cloud/datastore';
-import datastore from '../../index.js'
+import admin from 'firebase-admin';
+import datastore from '../../index.js';
+
 /**
  * get recieved feedbacks for a specified user
  *  the feedbacks will be return according to the email user passed as argument
  * @param {String} email
+ * @param {String} token
  * @return {Array} feedbacks or an error in failed case
  */
-export const getReceivedFeedbacks = async (email) => {
+export const getReceivedFeedbacks = async (email, token) => {
   try {
+    await admin.auth().verifyIdToken(token);
+
     /**
      * feedback is the name of the table in datastore
      * as you see we filter feedbacks by receverEmail
@@ -19,7 +23,8 @@ export const getReceivedFeedbacks = async (email) => {
     const res = combineEntityAndKey(entities);
     return res;
   } catch (err) {
-    return err;
+    console.error(err);
+    return [];
   }
 };
 
@@ -27,10 +32,13 @@ export const getReceivedFeedbacks = async (email) => {
  * get sent feedbacks for a specific user
  * the feedbacks will be return according to the email user passed as argument
  * @param {String} email
+ * @param {String} token
  * @return {Array} feedbacks or error in failed case
  */
-export const getSentFeedbacks = async (email) => {
+export const getSentFeedbacks = async (email, token) => {
   try {
+    await admin.auth().verifyIdToken(token);
+
     /**
      * feedback is the name of the table in datastore
      * as you see we filter feedbacks by senderEmail
@@ -41,17 +49,21 @@ export const getSentFeedbacks = async (email) => {
     const res = combineEntityAndKey(entities);
     return res;
   } catch (err) {
-    return err;
+    console.error(err);
+    return [];
   }
 };
 
 /**
  * get a specific feedback (sent or received) by Id
  * @param {String} id
+ * @param {String} token
  * @return {Object} feedbacks or error in failed case
  */
-export const getFeedbackById = async (id) => {
+export const getFeedbackById = async (id, token) => {
   try {
+    await admin.auth().verifyIdToken(token);
+
     /**
      * feedback is the name of the table in datastore
      * as you see we filter feedbacks by key which is the id of each row in the table
@@ -62,7 +74,8 @@ export const getFeedbackById = async (id) => {
     const [[entity]] = await datastore.runQuery(query);
     return entity;
   } catch (err) {
-    return err;
+    console.error(err);
+    return {};
   }
 };
 
