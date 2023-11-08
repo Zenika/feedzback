@@ -19,7 +19,7 @@ import {
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
 
 @Component({
-  selector: 'app-ask-feedback-v1',
+  selector: 'app-ask-feedback-simple',
   standalone: true,
   imports: [
     NgFor,
@@ -31,12 +31,12 @@ import { ValidationErrorMessagePipe } from '../shared/validation/validation-erro
     ValidationErrorMessagePipe,
     MessageComponent,
   ],
-  templateUrl: './ask-feedback-v1.component.html',
-  styleUrls: ['./ask-feedback-v1.component.scss'],
+  templateUrl: './ask-feedback-simple.component.html',
+  styleUrls: ['./ask-feedback-simple.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AskFeedbackV1Component {
-  @HostBinding('class.app-ask-feedback-v1') hasCss = true;
+export class AskFeedbackSimpleComponent {
+  @HostBinding('class.app-ask-feedback-simple') hasCss = true;
 
   private activatedRoute = inject(ActivatedRoute);
 
