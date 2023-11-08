@@ -12,10 +12,10 @@ import {GraphqlService} from '../services/graphql/graphql.service';
 export class FeedbackComponent implements OnInit {
   feedback!: Feedback;
 
-  type = this.activateRouter.snapshot.paramMap.get('type');
+  type = this.activatedRoute.snapshot.paramMap.get('type');
 
   constructor(
-    private activateRouter: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private graphqlService: GraphqlService,
   ) {}
@@ -25,7 +25,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   private async getFeedbackById() {
-    const id = this.activateRouter.snapshot.paramMap.get('id')!;
+    const id = this.activatedRoute.snapshot.paramMap.get('id')!;
     const token = await this.authService.getUserTokenId();
 
     this.graphqlService.getFeedbackById({id, token}).subscribe((data) => {

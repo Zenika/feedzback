@@ -3,6 +3,8 @@ import {By} from '@angular/platform-browser';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Apollo} from 'apollo-angular';
 import {Feedback} from '../model/feedback';
+import {AuthService} from '../services/auth.service';
+import {authStub} from '../services/authStub';
 import {FeedbackComponent} from './feedback.component';
 
 describe('FeedbackComponent', () => {
@@ -25,7 +27,7 @@ describe('FeedbackComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [FeedbackComponent],
-      providers: [Apollo],
+      providers: [Apollo, {provide: AuthService, useValue: authStub}],
     }).compileComponents();
   });
 
