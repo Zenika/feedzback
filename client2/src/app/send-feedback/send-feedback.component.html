@@ -9,7 +9,7 @@
 
   <span *ngIf="isAnonymous" class="gbl-link" role="presentation" (click)="signOut()">Vous pouvez vous déconnecter</span>
 
-  <a *ngIf="!isAnonymous" [routerLink]="['/feedback', feedbackId, 'sent']">Consulter mon feedZback</a>
+  <a *ngIf="!isAnonymous" [routerLink]="['/feedback', feedbackId, 'sent']" class="gbl-link">Consulter mon feedZback</a>
 </app-message>
 
 <app-message *ngIf="hasError" type="danger">

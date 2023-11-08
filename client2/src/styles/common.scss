@@ -29,7 +29,7 @@ h1.gbl-page-title {
   &:visited {
     cursor: pointer; // usefull when used like this: `<div class="gbl-link" role="presentation" (click)="onClick()">Link</div>`
     text-decoration: none;
-    transition: color ease 0.3s;
+    transition: color 250ms ease;
     color: #d52150;
   }
 
@@ -41,5 +41,33 @@ h1.gbl-page-title {
 
   &--no-underline {
     text-decoration: none !important;
+  }
+
+  &--back-btn {
+    position: absolute;
+    top: 0rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+    padding: 0.25rem 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: smaller;
+    color: rgb(110, 107, 107);
+    text-decoration: none !important;
+
+    mat-icon {
+      transform: scale(0.75);
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
+
+    &:hover {
+      color: #d52150;
+
+      mat-icon {
+        transform: translateX(-0.25rem);
+      }
+    }
   }
 }

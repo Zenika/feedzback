@@ -1,3 +1,12 @@
+<button
+  *ngIf="type"
+  class="gbl-link gbl-link--back-btn"
+  [routerLink]="['/feedbacks']"
+  [queryParams]="{ type: type }"
+>
+  <mat-icon>arrow_back</mat-icon> Mes feedZbacks
+</button>
+
 <h1 class="gbl-page-title">
   <mat-icon>forum</mat-icon>
   FeedZback
@@ -56,7 +65,3 @@
     <p>{{ feedback.comment }}</p>
   </div>
 </ng-container>
-
-<button *ngIf="type" mat-flat-button [routerLink]="['/feedbacks']" [queryParams]="{ type: type }">
-  <mat-icon>arrow_back</mat-icon> Mes feedZbacks
-</button>

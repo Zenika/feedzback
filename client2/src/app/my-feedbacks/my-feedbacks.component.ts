@@ -1,5 +1,6 @@
 import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -9,6 +10,8 @@ import { Router, RouterLink } from '@angular/router';
 import { getFeedbackType } from '../feedback-details/feedback-details.helpers';
 import { FeedbackType } from '../feedback-details/feedback-details.types';
 import { AuthService } from '../shared/auth/auth.service';
+import { BreakpointService } from '../shared/breakpoint';
+import { DivisionComponent } from '../shared/division/division.component';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MyFeedbacksTemplateContextDirective } from './my-feedbacks.directive';
 import { normalizeReceivedFeedbacks, normalizeSentFeedbacks } from './my-feedbacks.helpers';
@@ -27,6 +30,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
     MatTabsModule,
     MatTooltipModule,
     MatIconModule,
+    DivisionComponent,
     MyFeedbacksTemplateContextDirective,
   ],
   templateUrl: './my-feedbacks.component.html',
@@ -55,11 +59,22 @@ export class MyFeedbacksComponent implements OnInit {
 
   protected sentFeedbacks: NormalizedFeedback[] = [];
 
-  protected columns: (keyof NormalizedFeedback | 'actions')[] = ['actions', 'name', 'email', 'createdAt'];
-
   protected feedbackType = FeedbackType;
 
   protected fetched = false;
+
+  protected isMobile = false;
+
+  protected columns: (keyof NormalizedFeedback | 'actions' | 'mixed')[] = ['email', 'createdAt', 'actions'];
+
+  constructor() {
+    inject(BreakpointService)
+      .device$.pipe(takeUntilDestroyed())
+      .subscribe((device) => {
+        this.isMobile = device === 'mobile';
+        this.columns = this.isMobile ? ['mixed', 'actions'] : ['email', 'createdAt', 'actions'];
+      });
+  }
 
   async ngOnInit() {
     const token = await this.authService.getUserTokenId();

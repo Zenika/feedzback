@@ -19,26 +19,6 @@
 <ng-template #table let-feedbacks let-type="type" appMyFeedbacksTemplateContext>
   <div class="app-my-feedbacks__table-container">
     <table *ngIf="feedbacks.length; else noFeedbacks" mat-table [dataSource]="feedbacks">
-      <ng-container matColumnDef="actions" sticky>
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" class="app-my-feedbacks-actions">
-          <button
-            mat-icon-button
-            color="primary"
-            matTooltip="Voir les détails du feedZback"
-            matTooltipPosition="right"
-            [routerLink]="['/feedback', nf(element).id, type]"
-          >
-            <mat-icon>visibility</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
-        <td mat-cell *matCellDef="let element">{{ nf(element).name }}</td>
-      </ng-container>
-
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef>Email</th>
         <td mat-cell *matCellDef="let element">{{ nf(element).email }}</td>
@@ -49,6 +29,31 @@
         <td mat-cell *matCellDef="let element">{{ nf(element).createdAt | date: 'shortDate' }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="mixed">
+        <th mat-header-cell *matHeaderCellDef>
+          <app-division a="Email" b="Date"></app-division>
+        </th>
+        <td mat-cell *matCellDef="let element" class="app-my-feedbacks__mobile">
+          <strong>{{ nf(element).email }}</strong><br />
+          <small>{{ nf(element).createdAt | date: 'shortDate' }}</small>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" class="app-my-feedbacks-actions">
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Voir les détails du feedZback"
+            matTooltipPosition="left"
+            [routerLink]="['/feedback', nf(element).id, type]"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
       <tr mat-row *matRowDef="let row; columns: columns"></tr>
     </table>
@@ -56,7 +61,5 @@
 </ng-template>
 
 <ng-template #noFeedbacks>
-  <div *ngIf="fetched" class="app-my-feedbacks__empty">
-    <mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback
-  </div>
+  <div *ngIf="fetched" class="app-my-feedbacks__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback</div>
 </ng-template>

@@ -76,7 +76,7 @@
       background: linear-gradient(88.41deg, #f1203a 0%, #d11f56 100%);
       color: #fff;
       font-size: 1.25rem;
-      transition: all ease 150ms;
+      transition: all 250ms ease;
 
       @include m.media-breakpoint-down(md) {
         flex-direction: column;
