@@ -1,13 +1,20 @@
-<button class="gbl-link gbl-link--back" routerLink="../"><mat-icon>arrow_back</mat-icon> retour</button>
+<button class="gbl-link gbl-link--back" routerLink="/"><mat-icon>arrow_back</mat-icon> accueil</button>
 
-<div *ngIf="state.receiverEmails" class="app-ask-feedback-success__container">
-  <mat-icon class="app-ask-feedback-success__icon" color="primary">task_alt</mat-icon>
+<ng-container *ngIf="state.receiverEmails">
+  <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
 
   <div>
-    <h1 class="gbl-page-title">Votre demande de feedZback a bien été envoyée à&nbsp;:</h1>
+    <h1 class="gbl-info__title">Votre demande de feedZback a bien été envoyée à&nbsp;:</h1>
 
     <ul class="app-ask-feedback-success__list">
       <li *ngFor="let email of state.receiverEmails">{{ email }}</li>
     </ul>
   </div>
-</div>
+
+  <div class="gbl-info__buttons">
+    <button mat-stroked-button color="primary" routerLink="../">
+      <mat-icon>live_help</mat-icon>
+      Faire une autre demande de feedZback
+    </button>
+  </div>
+</ng-container>

@@ -1,33 +1,5 @@
 .app-ask-feedback-success {
-  text-align: center;
-
-  &__container {
-    height: 100%;
-    display: flex;
-    gap: 4rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__icon {
-    margin: 2rem 0 1rem 0;
-    transform: scale(5);
-    animation: appAskFeedbackSucccessAnim 1s cubic-bezier(0.77, 0.2, 0.05, 1);
-  }
-
   &__list {
     display: inline-block;
-  }
-}
-
-@keyframes appAskFeedbackSucccessAnim {
-  from {
-    opacity: 0;
-    transform: scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(5);
   }
 }

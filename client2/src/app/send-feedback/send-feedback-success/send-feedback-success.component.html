@@ -1,25 +1,29 @@
-<button class="gbl-link gbl-link--back" routerLink="../"><mat-icon>arrow_back</mat-icon> retour</button>
+<button class="gbl-link gbl-link--back" routerLink="/"><mat-icon>arrow_back</mat-icon> accueil</button>
 
-<div *ngIf="state.receiverEmail" class="app-send-feedback-success__container">
-  <mat-icon class="app-send-feedback-success__icon" color="primary">task_alt</mat-icon>
+<ng-container *ngIf="state.receiverEmail">
+  <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
 
   <div>
-    <h1 class="gbl-page-title" style="display: inline-flex">Votre feedZback a bien été envoyé à&nbsp;:</h1>
+    <h1 class="gbl-info__title">Votre feedZback a bien été envoyé à&nbsp;:</h1>
     <p>{{ state.receiverEmail }}</p>
   </div>
 
-  <button
-    *ngIf="state.feedbackId"
-    mat-stroked-button
-    color="primary"
-    [routerLink]="['/feedback', state.feedbackId, 'sent']"
-  >
-    <mat-icon>visibility</mat-icon>
-    Consulter mon feedZback
-  </button>
+  <div class="gbl-info__buttons">
+    <ng-container *ngIf="state.feedbackId">
+      <button mat-stroked-button color="primary" [routerLink]="['/feedback', state.feedbackId, 'sent']">
+        <mat-icon>visibility</mat-icon>
+        Consulter mon feedZback
+      </button>
 
-  <button *ngIf="!state.feedbackId" mat-stroked-button color="primary" (click)="signOut()">
-    Vous pouvez vous déconnecter
-    <mat-icon iconPositionEnd>logout</mat-icon>
-  </button>
-</div>
+      <button mat-stroked-button color="primary" routerLink="../">
+        <mat-icon>send</mat-icon>
+        Envoyer un autre feedZback
+      </button>
+    </ng-container>
+
+    <button *ngIf="!state.feedbackId" mat-stroked-button color="primary" (click)="signOut()">
+      Vous pouvez vous déconnecter
+      <mat-icon iconPositionEnd>logout</mat-icon>
+    </button>
+  </div>
+</ng-container>

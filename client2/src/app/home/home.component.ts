@@ -11,5 +11,5 @@ import { RouterLink } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
-  @HostBinding('class.gbl-landing') hasLandingCss = true;
+  @HostBinding('class.gbl-landing') hasGlobalCss = true;
 }

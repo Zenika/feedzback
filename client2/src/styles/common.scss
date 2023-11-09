@@ -47,6 +47,7 @@ h1.gbl-page-title {
   &--back {
     position: absolute;
     top: 0rem;
+    left: 1rem; // same as left-padding of the `grid-area: main`
     display: flex;
     align-items: center;
     gap: 0.25em;

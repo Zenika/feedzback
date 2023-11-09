@@ -16,7 +16,7 @@ import { AuthService } from '../shared/auth/auth.service';
 export class SignInComponent {
   @HostBinding('class.app-sign-in') hasCss = true;
 
-  @HostBinding('class.gbl-landing') hasLandingCss = true;
+  @HostBinding('class.gbl-landing') hasGlobalCss = true;
 
   private authService = inject(AuthService);
 

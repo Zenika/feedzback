@@ -11,11 +11,10 @@ import { SendFeedbackSuccess } from './send-feedback-success.types';
   standalone: true,
   imports: [NgIf, RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './send-feedback-success.component.html',
-  styleUrls: ['./send-feedback-success.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class SendFeedbackSuccessComponent {
-  @HostBinding('class.app-send-feedback-success') hasCss = true;
+  @HostBinding('class.gbl-info') hasGlobalCss = true;
 
   protected state: SendFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
 
