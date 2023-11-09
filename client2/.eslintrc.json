@@ -1,6 +1,11 @@
 {
   "root": true,
   "ignorePatterns": ["projects/**/*"],
+  "extends": ["prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "warn"
+  },
   "overrides": [
     {
       "files": ["*.ts"],
