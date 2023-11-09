@@ -88,7 +88,6 @@ export class AskFeedbackComponent {
   private buildAskFeedback(receiverEmail: string, token: string): AskFeedback {
     return {
       token,
-      name: this.authService.userSnapshot?.displayName ?? '',
       email: this.authService.userSnapshot?.email ?? '',
       senderEmail: receiverEmail, // !FIXME: the `senderEmail` is indeed the email of the receiver...
       text: this.form.controls.message.value ?? '',

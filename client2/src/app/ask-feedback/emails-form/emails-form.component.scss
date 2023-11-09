@@ -1,18 +1,10 @@
 .app-emails-form {
-  display: block;
-
-  &-field {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.25rem;
+  &__field {
     margin-bottom: 1rem;
+    width: 100%;
+  }
 
-    &__btn {
-      flex-shrink: 0;
-    }
-
-    &__ctrl {
-      flex-grow: 1;
-    }
+  &__action {
+    margin-right: 4px;
   }
 }

@@ -8,8 +8,7 @@ export const sendFeedbackGuard: CanActivateFn = (route, state) => {
   if (
     (environment.signInAsGuest && route.queryParamMap.has('guest')) ||
     // TODO: use a hash stored in database to allow anonymous sign-in...
-    route.queryParamMap.has('senderEmail') ||
-    route.queryParamMap.has('senderName')
+    route.queryParamMap.has('senderEmail')
   ) {
     return inject(AuthService).signInAnonymously();
   }

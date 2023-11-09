@@ -31,7 +31,6 @@ export class GraphQLService {
       receivedFeedbacks(email: $email, token: $token) {
         id
         senderEmail
-        senderName
         positiveFeedback
         toImprove
         comment
@@ -40,7 +39,6 @@ export class GraphQLService {
       sentFeedbacks(email: $email, token: $token) {
         id
         receverEmail
-        receverName
         positiveFeedback
         toImprove
         comment
@@ -52,10 +50,8 @@ export class GraphQLService {
   private getFeedbackByIdQuery = gql`
     query GetFeedbackById($getFeedbackById: String!, $token: String!) {
       getFeedbackById(id: $getFeedbackById, token: $token) {
-        senderName
         senderEmail
         receverEmail
-        receverName
         positiveFeedback
         toImprove
         comment

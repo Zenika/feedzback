@@ -52,10 +52,6 @@ export class FeedbackDetailsComponent implements OnInit {
     return this.type === this.feedbackType.received ? this.feedback?.senderEmail : this.feedback?.receverEmail;
   }
 
-  get colleagueName() {
-    return this.type === this.feedbackType.received ? this.feedback?.senderName : this.feedback?.receverName;
-  }
-
   async ngOnInit() {
     const token = await this.authService.getUserTokenId();
     if (!token) {

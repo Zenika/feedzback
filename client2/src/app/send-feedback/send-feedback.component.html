@@ -5,7 +5,7 @@
 
 <app-message *ngIf="feedbackId" type="success">
   <strong>Félicitations&nbsp;!</strong><br />
-  Votre feedZback a bien été envoyé à&nbsp;: {{ form.controls.receverName.value }}.<br />
+  Votre feedZback a bien été envoyé.<br />
 
   <span *ngIf="isAnonymous" class="gbl-link" role="presentation" (click)="signOut()">Vous pouvez vous déconnecter</span>
 
@@ -21,36 +21,20 @@
   <ng-container *ngIf="isAnonymous">
     <h3><mat-icon>voice_selection</mat-icon> Vous</h3>
 
-    <div class="app-send-feedback__flex">
-      <mat-form-field appearance="outline" class="app-send-feedback__field">
-        <mat-label>Votre email</mat-label>
-        <input [formControl]="form.controls.senderEmail" type="email" matInput placeholder="marie.durand@gmail.com" />
-        <mat-error>{{ form.controls.senderEmail.errors | validationErrorMessage }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="app-send-feedback__field">
-        <mat-label>Votre nom</mat-label>
-        <input [formControl]="form.controls.senderName" type="text" matInput placeholder="Marie Durand" />
-        <mat-error>{{ form.controls.senderName.errors | validationErrorMessage }}</mat-error>
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" class="app-send-feedback__field">
+      <mat-label>Votre email</mat-label>
+      <input [formControl]="form.controls.senderEmail" type="email" matInput placeholder="marie.durand@gmail.com" />
+      <mat-error>{{ form.controls.senderEmail.errors | validationErrorMessage }}</mat-error>
+    </mat-form-field>
 
     <h3><mat-icon>hearing</mat-icon> Votre collègue</h3>
   </ng-container>
 
-  <div class="app-send-feedback__flex">
-    <mat-form-field appearance="outline" class="app-send-feedback__field">
-      <mat-label>Email de votre collègue</mat-label>
-      <input [formControl]="form.controls.receverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
-      <mat-error>{{ form.controls.receverEmail.errors | validationErrorMessage }}</mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="app-send-feedback__field">
-      <mat-label>Nom de votre collègue</mat-label>
-      <input [formControl]="form.controls.receverName" type="text" matInput placeholder="Jean Dupont" />
-      <mat-error>{{ form.controls.receverName.errors | validationErrorMessage }}</mat-error>
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-label>Email de votre collègue</mat-label>
+    <input [formControl]="form.controls.receverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
+    <mat-error>{{ form.controls.receverEmail.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
 
   <mat-form-field appearance="outline" class="app-send-feedback__field">
     <mat-label>Points positifs</mat-label>

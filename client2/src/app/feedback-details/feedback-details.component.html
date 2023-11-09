@@ -1,9 +1,4 @@
-<button
-  *ngIf="type"
-  class="gbl-link gbl-link--back-btn"
-  [routerLink]="['/feedbacks']"
-  [queryParams]="{ type: type }"
->
+<button *ngIf="type" class="gbl-link gbl-link--back" [routerLink]="['/feedbacks']" [queryParams]="{ type: type }">
   <mat-icon>arrow_back</mat-icon> Mes feedZbacks
 </button>
 
@@ -11,7 +6,7 @@
   <mat-icon>forum</mat-icon>
   FeedZback
   <ng-container *ngIf="type && feedback">
-    {{ type === feedbackType.received ? 'reçu de' : 'envoyé à' }} {{ colleagueName }}
+    {{ type === feedbackType.received ? 'reçu' : 'envoyé' }}
   </ng-container>
 </h1>
 
@@ -33,7 +28,7 @@
     class="gbl-link"
     *ngIf="colleagueEmail | allowedEmailDomains"
     routerLink="/send"
-    [queryParams]="{ receverEmail: colleagueEmail, receverName: colleagueName }"
+    [queryParams]="{ receverEmail: colleagueEmail }"
   >
     <mat-icon>send</mat-icon>Envoyer
   </a>

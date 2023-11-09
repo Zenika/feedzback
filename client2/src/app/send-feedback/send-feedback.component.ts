@@ -48,12 +48,6 @@ export class SendFeedbackComponent {
       : this.authService.userSnapshot?.email;
   }
 
-  private get defaultSenderName(): string {
-    return this.isAnonymous
-      ? this.activatedRoute.snapshot.queryParams['senderName']
-      : this.authService.userSnapshot?.displayName;
-  }
-
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
   }
@@ -64,15 +58,11 @@ export class SendFeedbackComponent {
 
   form = new FormGroup({
     senderEmail: new FormControl(this.defaultSenderEmail, [Validators.required, Validators.email]),
-    senderName: new FormControl(this.defaultSenderName, Validators.required),
-
     receverEmail: new FormControl(this.getQueryParam('receverEmail'), [
       Validators.required,
       Validators.email,
       this.allowedEmailDomainsValidator,
     ]),
-    receverName: new FormControl(this.getQueryParam('receverName'), Validators.required),
-
     positiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
     toImprove: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
     comment: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
