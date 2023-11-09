@@ -1,10 +1,10 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
@@ -12,15 +12,14 @@ import { SendFeedback } from '../shared/types/send-feedback.types';
 import { ALLOWED_EMAIL_DOMAINS } from '../shared/validation/allowed-email-domains/allowed-email-domain.provider';
 import { allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains/allowed-email-domains.validator';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
+import { SendFeedbackSuccess } from './send-feedback-success/send-feedback-success.types';
 
 @Component({
   selector: 'app-send-feedback',
   standalone: true,
   imports: [
-    NgFor,
     NgIf,
     ReactiveFormsModule,
-    RouterLink,
     MatButtonModule,
     MatInputModule,
     ValidationErrorMessagePipe,
@@ -33,6 +32,8 @@ import { ValidationErrorMessagePipe } from '../shared/validation/validation-erro
 })
 export class SendFeedbackComponent {
   @HostBinding('class.app-send-feedback') hasCss = true;
+
+  private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
 
@@ -88,6 +89,7 @@ export class SendFeedbackComponent {
         this.disableForm(false);
       } else {
         this.feedbackId = feedbackId;
+        this.navigateToSuccess();
       }
     });
   }
@@ -104,7 +106,11 @@ export class SendFeedbackComponent {
     };
   }
 
-  protected signOut() {
-    this.authService.signOut().subscribe();
+  private navigateToSuccess() {
+    const state: SendFeedbackSuccess = {
+      receiverEmail: this.form.value.receverEmail as string,
+      feedbackId: this.isAnonymous ? undefined : this.feedbackId,
+    };
+    this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
   }
 }

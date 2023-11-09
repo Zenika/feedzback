@@ -4,8 +4,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
+import { AskFeedbackSuccess } from '../ask-feedback/ask-feedback-success/ask-feedback-success.types';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
@@ -37,6 +38,8 @@ import { ValidationErrorMessagePipe } from '../shared/validation/validation-erro
 })
 export class AskFeedbackSimpleComponent {
   @HostBinding('class.app-ask-feedback-simple') hasCss = true;
+
+  private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
 
@@ -82,6 +85,8 @@ export class AskFeedbackSimpleComponent {
 
         if (this.remainingUnsentEmails.length) {
           this.disableForm(false);
+        } else {
+          this.navigateToSuccess();
         }
       });
   }
@@ -103,5 +108,12 @@ export class AskFeedbackSimpleComponent {
   private setReceiverEmails(emails: string[]) {
     this.form.controls.receiverEmails.setValue(emails.join(MULTIPLE_EMAILS_SEP));
     this.form.controls.receiverEmails.updateValueAndValidity();
+  }
+
+  private navigateToSuccess() {
+    const state: AskFeedbackSuccess = {
+      receiverEmails: this.sentEmails,
+    };
+    this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
   }
 }

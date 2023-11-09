@@ -1,0 +1,13 @@
+<button class="gbl-link gbl-link--back" routerLink="../"><mat-icon>arrow_back</mat-icon> retour</button>
+
+<div *ngIf="state.receiverEmails" class="app-ask-feedback-success__container">
+  <mat-icon class="app-ask-feedback-success__icon" color="primary">task_alt</mat-icon>
+
+  <div>
+    <h1 class="gbl-page-title">Votre demande de feedZback a bien été envoyée à&nbsp;:</h1>
+
+    <ul class="app-ask-feedback-success__list">
+      <li *ngFor="let email of state.receiverEmails">{{ email }}</li>
+    </ul>
+  </div>
+</div>

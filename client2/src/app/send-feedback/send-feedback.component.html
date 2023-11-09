@@ -3,15 +3,6 @@
   J'envoie mon feedZback
 </h1>
 
-<app-message *ngIf="feedbackId" type="success">
-  <strong>Félicitations&nbsp;!</strong><br />
-  Votre feedZback a bien été envoyé.<br />
-
-  <span *ngIf="isAnonymous" class="gbl-link" role="presentation" (click)="signOut()">Vous pouvez vous déconnecter</span>
-
-  <a *ngIf="!isAnonymous" [routerLink]="['/feedback', feedbackId, 'sent']" class="gbl-link">Consulter mon feedZback</a>
-</app-message>
-
 <app-message *ngIf="hasError" type="danger">
   <strong>Oops&nbsp;!</strong><br />
   Une erreur s'est produite lors de l'envoi.

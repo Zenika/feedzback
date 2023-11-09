@@ -6,6 +6,7 @@ h1.gbl-page-title {
   display: flex;
   align-items: center;
   gap: calc(1rem + 1vw);
+  text-wrap: balance;
   color: #d52150;
 
   &--center {

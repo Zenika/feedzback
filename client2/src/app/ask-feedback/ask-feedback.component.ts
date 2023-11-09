@@ -4,13 +4,14 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
+import { AskFeedbackSuccess } from './ask-feedback-success/ask-feedback-success.types';
 import { EmailsFormComponent } from './emails-form/emails-form.component';
 
 @Component({
@@ -33,6 +34,8 @@ import { EmailsFormComponent } from './emails-form/emails-form.component';
 })
 export class AskFeedbackComponent {
   @HostBinding('class.app-ask-feedback') hasCss = true;
+
+  private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
 
@@ -76,6 +79,8 @@ export class AskFeedbackComponent {
 
         if (this.remainingUnsentEmails.length) {
           this.disableForm(false);
+        } else {
+          this.navigateToSuccess();
         }
       });
   }
@@ -92,5 +97,12 @@ export class AskFeedbackComponent {
       senderEmail: receiverEmail, // !FIXME: the `senderEmail` is indeed the email of the receiver...
       text: this.form.controls.message.value ?? '',
     };
+  }
+
+  private navigateToSuccess() {
+    const state: AskFeedbackSuccess = {
+      receiverEmails: ['a@a', 'b@b'], // this.form.value.receiverEmails as string[],
+    };
+    this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
   }
 }

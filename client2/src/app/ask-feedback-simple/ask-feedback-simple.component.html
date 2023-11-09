@@ -5,13 +5,13 @@
 
 <app-message *ngIf="sentEmails.length" type="success">
   <strong>Félicitations&nbsp;!</strong><br />
-  Votre demande a bien été envoyée au(x) destinataire(s) suivant(s)&nbsp;:<br />
+  Votre demande a bien été envoyée à&nbsp;:<br />
   {{ sentEmails.join(', ') }}
 </app-message>
 
 <app-message *ngIf="remainingUnsentEmails.length" type="danger">
   <strong>Oops&nbsp;!</strong><br />
-  Une erreur s'est produite lors de l'envoi au(x) destinataire(s) suivant(s)&nbsp;:<br />
+  Une erreur s'est produite lors de l'envoi à&nbsp;:<br />
   {{ remainingUnsentEmails.join(', ') }}
 </app-message>
 
