@@ -1,19 +1,23 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 import { AuthService } from './auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-
+export const authFactory = (authService: AuthService, router: Router, redirectAfterSignIn: string) => {
   return authService.isKnownUser$.pipe(
     tap((isKnownUser) => {
       if (isKnownUser) {
         return;
       }
-      router.navigate(['/sign-in'], { queryParams: { [AUTH_REDIRECT_PARAM]: state.url } });
+      router.navigate(['/sign-in'], { queryParams: { [AUTH_REDIRECT_PARAM]: redirectAfterSignIn } });
     }),
   );
+};
+
+export const authGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  return authFactory(authService, router, state.url);
 };
