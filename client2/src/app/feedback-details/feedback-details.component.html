@@ -16,9 +16,9 @@
 </app-message>
 
 <div *ngIf="type && feedback" class="app-feedback-details__addons">
-  <div><mat-icon>email</mat-icon>{{ colleagueEmail }}</div>
-
   <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+
+  <div><mat-icon>email</mat-icon>{{ colleagueEmail }}</div>
 
   <a class="gbl-link" routerLink="/ask" [queryParams]="{ receverEmail: colleagueEmail }">
     <mat-icon>live_help</mat-icon>Demander
@@ -30,7 +30,7 @@
     routerLink="/send"
     [queryParams]="{ receverEmail: colleagueEmail }"
   >
-    <mat-icon>send</mat-icon>Envoyer
+    <mat-icon>chat</mat-icon>Donner
   </a>
 </div>
 

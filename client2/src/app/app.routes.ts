@@ -54,7 +54,7 @@ export const routes: Routes = [
     path: 'send',
     component: SendFeedbackComponent,
     canActivate: [sendFeedbackGuard],
-    title: 'FeedZback - Envoyer',
+    title: 'FeedZback - Donner',
   },
   {
     path: 'send/success',

@@ -1,6 +1,6 @@
 <h1 class="gbl-page-title">
-  <mat-icon>send</mat-icon>
-  J'envoie mon feedZback
+  <mat-icon>chat</mat-icon>
+  Je donne du feedZback
 </h1>
 
 <app-message *ngIf="hasError" type="danger">
@@ -68,5 +68,5 @@
     <mat-hint align="start">{{ comment.value.length }} / {{ messageMaxLength }}</mat-hint>
   </mat-form-field>
 
-  <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+  <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Valider</button>
 </form>
