@@ -1,13 +1,4 @@
 .app-my-feedbacks {
-  &__table-container {
-    width: 100%;
-    overflow: auto;
-  }
-
-  &-actions {
-    width: 1%;
-  }
-
   &__empty {
     margin-top: 3.5rem;
     text-align: center;
@@ -17,10 +8,5 @@
     mat-icon {
       vertical-align: text-bottom;
     }
-  }
-
-  &__mobile {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
   }
 }

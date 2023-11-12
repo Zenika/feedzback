@@ -47,7 +47,7 @@ $client-theme: mat.define-light-theme(
 @include mat.tooltip-theme($client-theme);
 @include mat.form-field-theme($client-theme);
 @include mat.input-theme($client-theme);
-//@include mat.select-theme($client-theme);
+@include mat.select-theme($client-theme);
 //@include mat.autocomplete-theme($client-theme);
 //@include mat.dialog-theme($client-theme);
 //@include mat.chips-theme($client-theme);
@@ -56,7 +56,7 @@ $client-theme: mat.define-light-theme(
 //@include mat.slider-theme($client-theme);
 //@include mat.menu-theme($client-theme);
 //@include mat.list-theme($client-theme);
-//@include mat.paginator-theme($client-theme);
+@include mat.paginator-theme($client-theme);
 @include mat.tabs-theme($client-theme);
 //@include mat.checkbox-theme($client-theme);
 @include mat.button-theme($client-theme);

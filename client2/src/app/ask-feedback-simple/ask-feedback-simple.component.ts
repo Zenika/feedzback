@@ -52,7 +52,7 @@ export class AskFeedbackSimpleComponent {
   protected messageMaxLength = 500;
 
   form = new FormGroup({
-    receiverEmails: new FormControl(this.receiverEmail, [multipleEmailsValidatorFactory()]),
+    receiverEmails: new FormControl(this.receiverEmail, [Validators.required, multipleEmailsValidatorFactory()]),
     message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
 
