@@ -14,13 +14,13 @@ import { FeedbackType } from '../shared/feedback/feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackDetailsComponent {
-  @Input({ required: true }) id!: string;
-
   @Input({
     required: true,
     transform: (value: string) => getFeedbackType(value),
   })
   type?: FeedbackType;
+
+  @Input({ required: true }) id!: string;
 
   protected feedbackType = FeedbackType;
 }

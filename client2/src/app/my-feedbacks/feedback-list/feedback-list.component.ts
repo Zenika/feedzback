@@ -59,7 +59,7 @@ export class FeedbackListComponent implements AfterViewInit {
 
   @ViewChild(MatSort) sort?: MatSort;
 
-  protected readonly pageSizeOptions = [5, 10, 25, 100];
+  protected readonly pageSizeOptions = [10, 25, 100];
 
   protected get hasPaginator() {
     return this.dataSource.data.length > this.pageSizeOptions[0];

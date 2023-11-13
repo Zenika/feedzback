@@ -33,8 +33,7 @@
         color="primary"
         matTooltip="Voir les détails du feedZback"
         matTooltipPosition="left"
-        [routerLink]="['/feedbacks', nf(element).id, type]"
-        queryParamsHandling="preserve"
+        [routerLink]="['/feedbacks', type, nf(element).id]"
       >
         <mat-icon>visibility</mat-icon>
       </button>

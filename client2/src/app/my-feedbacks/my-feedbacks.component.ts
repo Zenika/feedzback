@@ -2,7 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
 import { getFeedbackType } from '../shared/feedback/feedback.helpers';
 import { FeedbackType } from '../shared/feedback/feedback.types';
@@ -33,6 +33,8 @@ export class MyFeedbacksComponent implements OnInit {
 
   private router = inject(Router);
 
+  private activatedRoute = inject(ActivatedRoute);
+
   private authService = inject(AuthService);
 
   private graphQLService = inject(GraphQLService);
@@ -61,6 +63,6 @@ export class MyFeedbacksComponent implements OnInit {
 
   protected onTabIndexChange(index: number) {
     const type: FeedbackType = index === 0 ? FeedbackType.received : FeedbackType.sent;
-    this.router.navigate([], { queryParams: { type } });
+    this.router.navigate(['../', type], { relativeTo: this.activatedRoute });
   }
 }
