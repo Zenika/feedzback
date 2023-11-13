@@ -2,21 +2,37 @@
 
 <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="onTabIndexChange($event.index)">
   <mat-tab label="reçus">
+    <ng-container [ngTemplateOutlet]="filterTmplRef" />
+
     <app-feedback-list
       *ngIf="feedbackType.received.length; else noFeedbacks"
       [type]="feedbackType.received"
       [feedbacks]="receivedFeedbacks"
+      [filter]="filter"
     ></app-feedback-list>
   </mat-tab>
 
   <mat-tab label="envoyés">
+    <ng-container [ngTemplateOutlet]="filterTmplRef" />
+
     <app-feedback-list
       *ngIf="feedbackType.sent.length; else noFeedbacks"
       [type]="feedbackType.sent"
       [feedbacks]="sentFeedbacks"
+      [filter]="filter"
     ></app-feedback-list>
   </mat-tab>
 </mat-tab-group>
+
+<ng-template #filterTmplRef>
+  <mat-form-field appearance="fill" style="margin-top: 1rem; width: 100%">
+    <input #input matInput placeholder="Rechercher un feedZback" [value]="filter" (keyup)="filter = input.value" />
+
+    <mat-icon *ngIf="filter" matIconSuffix style="cursor: pointer" role="button" (click)="filter = ''">close</mat-icon>
+
+    <mat-icon matIconSuffix>search</mat-icon>
+  </mat-form-field>
+</ng-template>
 
 <ng-template #noFeedbacks>
   <div *ngIf="fetched" class="app-my-feedbacks__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback</div>

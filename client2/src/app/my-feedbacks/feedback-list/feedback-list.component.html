@@ -1,8 +1,3 @@
-<mat-form-field appearance="fill" style="margin-top: 1rem; width: 100%">
-  <input #input matInput placeholder="Rechercher un feedZback" (keyup)="applyFilter(input.value)" />
-  <mat-icon matIconSuffix>search</mat-icon>
-</mat-form-field>
-
 <table *ngIf="dataSource" mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
@@ -45,12 +40,12 @@
 
   <tr class="mat-row" *matNoDataRow>
     <td
-      *ngIf="input.value"
+      *ngIf="filter"
       class="mat-cell"
       [attr.colspan]="columns.length"
       style="padding: 1.5rem; text-align: center; font-style: italic; color: #777"
     >
-      Pas de résultat pour "{{ input.value }}".
+      Pas de résultat pour "{{ filter }}".
     </td>
   </tr>
 </table>

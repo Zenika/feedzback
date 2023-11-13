@@ -1,10 +1,19 @@
 import { DatePipe, NgIf } from '@angular/common';
-import { AfterViewInit, Component, HostBinding, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostBinding,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -26,7 +35,6 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
-    MatInputModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
@@ -37,17 +45,20 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
   styleUrls: ['./feedback-list.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FeedbackListComponent implements AfterViewInit {
+export class FeedbackListComponent implements OnChanges, AfterViewInit {
   @HostBinding('class.app-feedback-list') hasCss = true;
+
+  @Input({ required: true }) type!: FeedbackType;
+
+  @Input({ transform: (value?: string) => value?.trim().toLowerCase() }) filter?: string;
 
   @Input({ required: true }) set feedbacks(value: NormalizedFeedback[]) {
     this.dataSource = new MatTableDataSource(value);
     this.linkDataSource();
+    this.applyFilter();
   }
 
   dataSource!: MatTableDataSource<NormalizedFeedback>;
-
-  @Input({ required: true }) type!: FeedbackType;
 
   protected feedbackType = FeedbackType;
 
@@ -74,13 +85,15 @@ export class FeedbackListComponent implements AfterViewInit {
       });
   }
 
-  ngAfterViewInit() {
-    this.linkDataSource();
+  ngOnChanges({ filter }: SimpleChanges): void {
+    if (filter) {
+      this.applyFilter();
+    }
   }
 
-  protected applyFilter(filter: string) {
-    this.dataSource.filter = filter.trim().toLowerCase();
-    this.dataSource.paginator?.firstPage();
+  ngAfterViewInit() {
+    this.linkDataSource();
+    this.applyFilter();
   }
 
   // "nf" means "normalized feedback"
@@ -89,9 +102,18 @@ export class FeedbackListComponent implements AfterViewInit {
   }
 
   private linkDataSource() {
-    if (this.paginator && this.sort) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    if (!this.paginator || !this.sort) {
+      return;
     }
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  private applyFilter() {
+    if (!this.dataSource.paginator) {
+      return;
+    }
+    this.dataSource.filter = this.filter ?? '';
+    this.dataSource.paginator.firstPage();
   }
 }

@@ -1,6 +1,7 @@
-import { NgIf } from '@angular/common';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
@@ -14,7 +15,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
 @Component({
   selector: 'app-my-feedbacks',
   standalone: true,
-  imports: [NgIf, MatTabsModule, MatIconModule, FeedbackListComponent],
+  imports: [NgIf, NgTemplateOutlet, MatTabsModule, MatIconModule, MatInputModule, FeedbackListComponent],
   templateUrl: './my-feedbacks.component.html',
   styleUrls: ['./my-feedbacks.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -27,9 +28,11 @@ export class MyFeedbacksComponent implements OnInit {
   })
   type: FeedbackType = FeedbackType.received;
 
-  get tabIndex() {
+  protected get tabIndex() {
     return this.type === FeedbackType.received ? 0 : 1;
   }
+
+  protected filter = '';
 
   private router = inject(Router);
 
