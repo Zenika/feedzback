@@ -1,0 +1,52 @@
+<ng-container *ngIf="feedback$ | async as feedback">
+  <app-message *ngIf="feedback === null" type="danger">
+    <strong>Oops&nbsp;!</strong><br />
+    Ce feedZback est introuvable.
+  </app-message>
+
+  <div *ngIf="type && feedback" class="app-feedback__addons">
+    <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+
+    <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
+
+    <a class="gbl-link" routerLink="/ask" [queryParams]="{ receverEmail: geColleagueEmail(feedback) }">
+      <mat-icon>live_help</mat-icon>Demander
+    </a>
+
+    <a
+      class="gbl-link"
+      *ngIf="geColleagueEmail(feedback) | allowedEmailDomains"
+      routerLink="/send"
+      [queryParams]="{ receverEmail: geColleagueEmail(feedback) }"
+    >
+      <mat-icon>chat</mat-icon>Donner
+    </a>
+  </div>
+
+  <ng-container *ngIf="feedback">
+    <mat-card appearance="outlined" class="app-feedback-item">
+      <mat-card-header>
+        <mat-card-title class="app-feedback-item__title">
+          <mat-icon>new_releases</mat-icon> Points positifs
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>{{ feedback.positiveFeedback }}</mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="app-feedback-item">
+      <mat-card-header>
+        <mat-card-title class="app-feedback-item__title">
+          <mat-icon>moving</mat-icon> Axes d'améliorations
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>{{ feedback.toImprove }}</mat-card-content>
+    </mat-card>
+
+    <div *ngIf="feedback.comment" class="app-feedback-item">
+      <h2 class="app-feedback-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
+      <p>{{ feedback.comment }}</p>
+    </div>
+  </ng-container>
+</ng-container>

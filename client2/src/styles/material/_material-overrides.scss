@@ -1,0 +1,19 @@
+@use './material-palette' as p;
+
+/* ----- Dialog ----- */
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-color: #fafafa;
+  --mdc-dialog-supporting-text-color: p.$dark-primary-text;
+  --mdc-dialog-subhead-color: #d52150;
+}
+
+.mdc-dialog__title {
+  border-bottom: 1px solid #ddd !important;
+  background-color: white;
+}
+
+.mdc-dialog__actions {
+  border-top: 1px solid #ddd !important;
+  background-color: white;
+}

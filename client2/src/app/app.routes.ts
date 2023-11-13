@@ -6,6 +6,7 @@ import { DemoContentComponent } from './demo-content/demo-content.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
+import { FeedbackItemComponent } from './my-feedbacks/feedback-item/feedback-item.component';
 import { MyFeedbacksComponent } from './my-feedbacks/my-feedbacks.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SendFeedbackSuccessComponent } from './send-feedback/send-feedback-success/send-feedback-success.component';
@@ -67,6 +68,13 @@ export const routes: Routes = [
     component: MyFeedbacksComponent,
     canActivate: [authGuard],
     title: 'FeedZback - Mes feedZbacks',
+    children: [
+      {
+        path: ':id/:type',
+        component: FeedbackItemComponent,
+        title: 'FeedZback - Détails du FeedZback',
+      },
+    ],
   },
   {
     path: 'feedback/:id/:type', // !FIXME: should be 'feedbacks/:id/:type'

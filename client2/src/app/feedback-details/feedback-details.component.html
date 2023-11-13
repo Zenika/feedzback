@@ -1,62 +1,12 @@
-<button *ngIf="type" class="gbl-link gbl-link--back" [routerLink]="['/feedbacks']" [queryParams]="{ type: type }">
-  <mat-icon>arrow_back</mat-icon> mes feedZbacks
-</button>
+<ng-container *ngIf="type">
+  <button *ngIf="type" class="gbl-link gbl-link--back" [routerLink]="['/feedbacks']" [queryParams]="{ type: type }">
+    <mat-icon>arrow_back</mat-icon> mes feedZbacks
+  </button>
 
-<h1 class="gbl-page-title">
-  <mat-icon>forum</mat-icon>
-  FeedZback
-  <ng-container *ngIf="type && feedback">
-    {{ type === feedbackType.received ? 'reçu' : 'envoyé' }}
-  </ng-container>
-</h1>
+  <h1 class="gbl-page-title">
+    <mat-icon>forum</mat-icon>
+    FeedZback {{ type === feedbackType.received ? 'reçu' : 'envoyé' }}
+  </h1>
 
-<app-message *ngIf="feedback === null" type="danger">
-  <strong>Oops&nbsp;!</strong><br />
-  Ce feedZback est introuvable.
-</app-message>
-
-<div *ngIf="type && feedback" class="app-feedback-details__addons">
-  <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
-
-  <div><mat-icon>email</mat-icon>{{ colleagueEmail }}</div>
-
-  <a class="gbl-link" routerLink="/ask" [queryParams]="{ receverEmail: colleagueEmail }">
-    <mat-icon>live_help</mat-icon>Demander
-  </a>
-
-  <a
-    class="gbl-link"
-    *ngIf="colleagueEmail | allowedEmailDomains"
-    routerLink="/send"
-    [queryParams]="{ receverEmail: colleagueEmail }"
-  >
-    <mat-icon>chat</mat-icon>Donner
-  </a>
-</div>
-
-<ng-container *ngIf="feedback">
-  <mat-card appearance="outlined" class="app-feedback-details-item">
-    <mat-card-header>
-      <mat-card-title class="app-feedback-details-item__title">
-        <mat-icon>new_releases</mat-icon> Points positifs
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>{{ feedback.positiveFeedback }}</mat-card-content>
-  </mat-card>
-
-  <mat-card appearance="outlined" class="app-feedback-details-item">
-    <mat-card-header>
-      <mat-card-title class="app-feedback-details-item__title">
-        <mat-icon>moving</mat-icon> Axes d'améliorations
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>{{ feedback.toImprove }}</mat-card-content>
-  </mat-card>
-
-  <div *ngIf="feedback.comment" class="app-feedback-details-item">
-    <h2 class="app-feedback-details-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
-    <p>{{ feedback.comment }}</p>
-  </div>
+  <app-feedback [type]="type" [id]="id" />
 </ng-container>

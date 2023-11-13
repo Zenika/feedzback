@@ -33,7 +33,8 @@
         color="primary"
         matTooltip="Voir les détails du feedZback"
         matTooltipPosition="left"
-        [routerLink]="['/feedback', nf(element).id, type]"
+        [routerLink]="['/feedbacks', nf(element).id, type]"
+        queryParamsHandling="preserve"
       >
         <mat-icon>visibility</mat-icon>
       </button>
@@ -45,6 +46,7 @@
 
   <tr class="mat-row" *matNoDataRow>
     <td
+      *ngIf="input.value"
       class="mat-cell"
       [attr.colspan]="columns.length"
       style="padding: 1.5rem; text-align: center; font-style: italic; color: #777"
@@ -59,3 +61,5 @@
   [pageSizeOptions]="pageSizeOptions"
   aria-label="Sélectionner le nombre de feedZbacks par page"
 ></mat-paginator>
+
+<router-outlet />

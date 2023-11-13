@@ -1,0 +1,11 @@
+<ng-template #dialogTmplRef>
+  <ng-container *ngIf="type">
+    <h1 mat-dialog-title>FeedZback {{ type === feedbackType.received ? 'reçu' : 'envoyé' }}</h1>
+
+    <app-feedback mat-dialog-content [type]="type" [id]="id" />
+
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close cdkFocusInitial>Fermer</button>
+    </div>
+  </ng-container>
+</ng-template>

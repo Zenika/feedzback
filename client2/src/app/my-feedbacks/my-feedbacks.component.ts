@@ -3,9 +3,9 @@ import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
-import { getFeedbackType } from '../feedback-details/feedback-details.helpers';
-import { FeedbackType } from '../feedback-details/feedback-details.types';
 import { AuthService } from '../shared/auth/auth.service';
+import { getFeedbackType } from '../shared/feedback/feedback.helpers';
+import { FeedbackType } from '../shared/feedback/feedback.types';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { normalizeReceivedFeedbacks, normalizeSentFeedbacks } from './my-feedbacks.helpers';

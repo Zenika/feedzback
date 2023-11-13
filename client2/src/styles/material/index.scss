@@ -49,7 +49,7 @@ $client-theme: mat.define-light-theme(
 @include mat.input-theme($client-theme);
 @include mat.select-theme($client-theme);
 //@include mat.autocomplete-theme($client-theme);
-//@include mat.dialog-theme($client-theme);
+@include mat.dialog-theme($client-theme);
 //@include mat.chips-theme($client-theme);
 //@include mat.slide-toggle-theme($client-theme);
 //@include mat.radio-theme($client-theme);
@@ -78,3 +78,6 @@ $client-theme: mat.define-light-theme(
 //@include mat.sort-theme($client-theme);
 //@include mat.toolbar-theme($client-theme);
 //@include mat.tree-theme($client-theme);
+
+// Angular material customization for this App
+@import './material-overrides';

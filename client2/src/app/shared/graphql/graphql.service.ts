@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { AskFeedback } from '../types/ask-feedback.types';
 import { Feedback, ReceivedFeedback, SentFeedback } from '../types/feedback.types';
 import { SendFeedback } from '../types/send-feedback.types';
@@ -60,7 +60,7 @@ export class GraphQLService {
     }
   `;
 
-  askFeedback(feedback: AskFeedback) {
+  askFeedback(feedback: AskFeedback): Observable<boolean> {
     // !FIXME: i don't know the value when request fails...
     return this.apollo
       .mutate<{ sendFeedbackRequest?: 'sent' }>({
@@ -73,7 +73,7 @@ export class GraphQLService {
       );
   }
 
-  sendFeedback(feedback: SendFeedback) {
+  sendFeedback(feedback: SendFeedback): Observable<string | false> {
     // !FIXME: the response API is strange...
     return (
       this.apollo
@@ -107,7 +107,7 @@ export class GraphQLService {
     // TODO: missing catchError...
   }
 
-  getFeedbackById(id: string, token: string) {
+  getFeedbackById(id: string, token: string): Observable<Feedback | null> {
     return this.apollo
       .query<{ getFeedbackById: Feedback }>({
         query: this.getFeedbackByIdQuery,

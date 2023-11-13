@@ -2,16 +2,17 @@ import { DatePipe, NgIf } from '@angular/common';
 import { AfterViewInit, Component, HostBinding, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
-import { BreakpointService } from 'src/app/shared/breakpoint';
-import { FeedbackType } from '../../feedback-details/feedback-details.types';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { BreakpointService } from '../../shared/breakpoint';
 import { DivisionComponent } from '../../shared/division/division.component';
+import { FeedbackType } from '../../shared/feedback/feedback.types';
 import { NormalizedFeedback } from '../my-feedbacks.types';
 
 @Component({
@@ -21,7 +22,9 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
     NgIf,
     DatePipe,
     RouterLink,
+    RouterOutlet,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatInputModule,
     MatPaginatorModule,
