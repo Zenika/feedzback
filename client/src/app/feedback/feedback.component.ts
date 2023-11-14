@@ -10,7 +10,7 @@ import {GraphqlService} from '../services/graphql/graphql.service';
   styleUrls: ['./feedback.component.css'],
 })
 export class FeedbackComponent implements OnInit {
-  feedback!: Feedback;
+  feedback?: Feedback;
 
   type = this.activatedRoute.snapshot.paramMap.get('type');
 

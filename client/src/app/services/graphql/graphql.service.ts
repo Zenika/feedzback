@@ -80,6 +80,7 @@ export class GraphqlService {
         .subscribe(({data, loading}: any) => {
           if (loading) {
             this.loading.next(true);
+            return;
           } else {
             this.loading.next(false);
           }
@@ -114,6 +115,7 @@ export class GraphqlService {
         .subscribe(({data, loading}: any) => {
           if (loading) {
             this.loading.next(true);
+            return;
           } else {
             this.loading.next(false);
           }
