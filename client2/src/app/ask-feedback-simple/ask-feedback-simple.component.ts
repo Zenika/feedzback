@@ -1,7 +1,8 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,24 +14,23 @@ import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
-  MULTIPLE_EMAILS_SEP,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/validation/multiple-emails.validator';
-import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
+import { EmailsFieldComponent } from './emails-field/emails-field.component';
 
 @Component({
   selector: 'app-ask-feedback-simple',
   standalone: true,
   imports: [
-    NgFor,
     NgIf,
     ReactiveFormsModule,
     MatButtonModule,
+    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ValidationErrorMessagePipe,
     MessageComponent,
+    EmailsFieldComponent,
   ],
   templateUrl: './ask-feedback-simple.component.html',
   styleUrls: ['./ask-feedback-simple.component.scss'],
@@ -52,7 +52,10 @@ export class AskFeedbackSimpleComponent {
   protected messageMaxLength = 500;
 
   form = new FormGroup({
-    receiverEmails: new FormControl(this.receiverEmail, [Validators.required, multipleEmailsValidatorFactory()]),
+    receiverEmails: new FormControl(this.receiverEmail ? [this.receiverEmail] : [], {
+      nonNullable: true,
+      validators: [Validators.required, multipleEmailsValidatorFactory()],
+    }),
     message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
   });
 
@@ -106,7 +109,7 @@ export class AskFeedbackSimpleComponent {
   }
 
   private setReceiverEmails(emails: string[]) {
-    this.form.controls.receiverEmails.setValue(emails.join(MULTIPLE_EMAILS_SEP));
+    this.form.controls.receiverEmails.setValue(emails);
     this.form.controls.receiverEmails.updateValueAndValidity();
   }
 

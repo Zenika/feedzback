@@ -1,11 +1,20 @@
 import { NgIf } from '@angular/common';
-import { AfterViewInit, Component, Input, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { first } from 'rxjs';
-import { FeedbackComponent } from 'src/app/shared/feedback/feedback.component';
+import { Subscription } from 'rxjs';
+import { FeedbackComponent } from '../../shared/feedback/feedback.component';
 import { getFeedbackType } from '../../shared/feedback/feedback.helpers';
 import { FeedbackType } from '../../shared/feedback/feedback.types';
 
@@ -16,7 +25,7 @@ import { FeedbackType } from '../../shared/feedback/feedback.types';
   templateUrl: './feedback-dialog.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class FeedbackDialogComponent implements AfterViewInit {
+export class FeedbackDialogComponent implements AfterViewInit, OnDestroy {
   @ViewChild('dialogTmplRef') dialogTmplRef!: TemplateRef<unknown>;
 
   @Input({ required: true }) id!: string;
@@ -31,6 +40,8 @@ export class FeedbackDialogComponent implements AfterViewInit {
 
   private router = inject(Router);
 
+  private subscription?: Subscription;
+
   private get typeFromParentRoute() {
     return getFeedbackType(this.activatedRoute.parent?.snapshot.params['type']);
   }
@@ -40,18 +51,29 @@ export class FeedbackDialogComponent implements AfterViewInit {
     if (!this.type) {
       return;
     }
+    this.subscription = this.openDialog();
+  }
 
-    this.openDialog();
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe(); // This is tricky: prevent `this.goBack()` to be executed!
+    this.closeDialog();
   }
 
   private openDialog() {
     if (this.dialog.openDialogs.length) {
       return;
     }
-    this.dialog
+    return this.dialog
       .open(this.dialogTmplRef, { width: '100%' })
       .afterClosed()
-      .pipe(first())
-      .subscribe(() => this.router.navigate(['../'], { relativeTo: this.activatedRoute }));
+      .subscribe(() => this.goBack());
+  }
+
+  private goBack() {
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+  }
+
+  private closeDialog() {
+    this.dialog.closeAll();
   }
 }

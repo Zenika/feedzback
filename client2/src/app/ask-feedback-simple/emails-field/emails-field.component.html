@@ -1,0 +1,30 @@
+<mat-form-field appearance="outline" class="app-emails-field__field">
+  <mat-label>Emails de vos collègues</mat-label>
+
+  <mat-chip-grid #chipGrid aria-label="Saisissez les emails de vos collègues" [formControl]="emails">
+    <mat-chip-row
+      *ngFor="let email of emails.value"
+      [class.app-emails-field__error]="isInvalidEmail(email)"
+      [aria-description]="'Editer ' + email"
+      [editable]="true"
+      (edited)="edit(email, $event)"
+      (removed)="remove(email)"
+    >
+      {{ email }}
+
+      <button matChipRemove [attr.aria-label]="'Effacer ' + email"><mat-icon>cancel</mat-icon></button>
+    </mat-chip-row>
+
+    <input
+      [placeholder]="multipleEmailsPlaceholder"
+      [matChipInputFor]="chipGrid"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="true"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-grid>
+
+  <mat-hint align="start">Séparez les emails par des virgules</mat-hint>
+
+  <mat-error>{{ emails.errors | validationErrorMessage }}</mat-error>
+</mat-form-field>

@@ -2,6 +2,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,6 +23,7 @@ import { EmailsFormComponent } from './emails-form/emails-form.component';
     NgIf,
     ReactiveFormsModule,
     MatButtonModule,
+    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     ValidationErrorMessagePipe,
@@ -101,7 +103,7 @@ export class AskFeedbackComponent {
 
   private navigateToSuccess() {
     const state: AskFeedbackSuccess = {
-      receiverEmails: ['a@a', 'b@b'], // this.form.value.receiverEmails as string[],
+      receiverEmails: this.form.value.receiverEmails as string[],
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
   }

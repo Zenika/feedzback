@@ -8,11 +8,11 @@ export const MULTIPLE_EMAILS_SEP = ',';
 
 export const MULTIPLE_EMAILS_PLACEHOLDER = `jean.dupont@zenika.com${MULTIPLE_EMAILS_SEP} john.doe@zenika.com`;
 
-export const getMultipleEmails = (input: string | null | undefined, separator = MULTIPLE_EMAILS_SEP): string[] =>
-  (input ?? '')
-    .split(separator)
-    .map((email) => email.trim())
-    .filter((email) => email);
+export const getMultipleEmails = (
+  input: string[] | string | null | undefined,
+  separator = MULTIPLE_EMAILS_SEP,
+): string[] =>
+  (Array.isArray(input) ? input : (input ?? '').split(separator)).map((email) => email.trim()).filter((email) => email);
 
 export const multipleEmailsValidatorFactory =
   (required = true, emailSeparator = MULTIPLE_EMAILS_SEP) =>

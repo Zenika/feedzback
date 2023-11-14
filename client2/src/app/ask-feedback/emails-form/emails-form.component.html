@@ -1,37 +1,39 @@
-<div *ngFor="let control of formArray.controls; let index = index; let last = last">
-  <mat-form-field appearance="outline" class="app-emails-form__field">
-    <mat-label>Email de votre collègue{{ formArray.controls.length > 1 ? ' n°' + (index + 1) : '' }}</mat-label>
+<mat-form-field
+  *ngFor="let control of formArray.controls; let index = index; let last = last"
+  appearance="outline"
+  class="app-emails-form__field"
+>
+  <mat-label>Email de votre collègue{{ formArray.controls.length > 1 ? ' n°' + (index + 1) : '' }}</mat-label>
 
-    <input [formControl]="control" type="email" matInput placeholder="jean.dupont@zenika.com" />
+  <input [formControl]="control" type="email" matInput placeholder="jean.dupont@zenika.com" />
 
-    <mat-error>{{ control.errors | validationErrorMessage }}</mat-error>
+  <mat-error>{{ control.errors | validationErrorMessage }}</mat-error>
 
-    <button
-      *ngIf="formArray.controls.length > 1"
-      type="button"
-      class="app-emails-form__action"
-      matIconSuffix
-      mat-icon-button
-      color="primary"
-      matTooltip="Retirer cet email"
-      tabIndex="-1"
-      (click)="removeAt(index)"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+  <button
+    *ngIf="formArray.controls.length > 1"
+    type="button"
+    class="app-emails-form__action"
+    matIconSuffix
+    mat-icon-button
+    color="primary"
+    matTooltip="Retirer cet email"
+    tabIndex="-1"
+    (click)="removeAt(index)"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
 
-    <button
-      *ngIf="last && canAdd"
-      type="button"
-      class="app-emails-form__action"
-      matIconSuffix
-      mat-icon-button
-      color="primary"
-      matTooltip="Ajouter un email"
-      tabIndex="-1"
-      (click)="add()"
-    >
-      <mat-icon>add_circle</mat-icon>
-    </button>
-  </mat-form-field>
-</div>
+  <button
+    *ngIf="last && canAdd"
+    type="button"
+    class="app-emails-form__action"
+    matIconSuffix
+    mat-icon-button
+    color="primary"
+    matTooltip="Ajouter un email"
+    tabIndex="-1"
+    (click)="add()"
+  >
+    <mat-icon>add_circle</mat-icon>
+  </button>
+</mat-form-field>

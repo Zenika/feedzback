@@ -1,5 +1,6 @@
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -15,7 +16,15 @@ import { NormalizedFeedback } from './my-feedbacks.types';
 @Component({
   selector: 'app-my-feedbacks',
   standalone: true,
-  imports: [NgIf, NgTemplateOutlet, MatTabsModule, MatIconModule, MatInputModule, FeedbackListComponent],
+  imports: [
+    NgIf,
+    NgTemplateOutlet,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    FeedbackListComponent,
+  ],
   templateUrl: './my-feedbacks.component.html',
   styleUrls: ['./my-feedbacks.component.scss'],
   encapsulation: ViewEncapsulation.None,
