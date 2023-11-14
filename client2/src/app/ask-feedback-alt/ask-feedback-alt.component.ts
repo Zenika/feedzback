@@ -16,7 +16,7 @@ import { AskFeedbackSuccess } from './ask-feedback-success/ask-feedback-success.
 import { EmailsFormComponent } from './emails-form/emails-form.component';
 
 @Component({
-  selector: 'app-ask-feedback',
+  selector: 'app-ask-feedback-alt',
   standalone: true,
   imports: [
     NgFor,
@@ -30,12 +30,12 @@ import { EmailsFormComponent } from './emails-form/emails-form.component';
     EmailsFormComponent,
     MessageComponent,
   ],
-  templateUrl: './ask-feedback.component.html',
-  styleUrls: ['./ask-feedback.component.scss'],
+  templateUrl: './ask-feedback-alt.component.html',
+  styleUrls: ['./ask-feedback-alt.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AskFeedbackComponent {
-  @HostBinding('class.app-ask-feedback') hasCss = true;
+export class AskFeedbackAltComponent {
+  @HostBinding('class.app-ask-feedback-alt') hasCss = true;
 
   private router = inject(Router);
 

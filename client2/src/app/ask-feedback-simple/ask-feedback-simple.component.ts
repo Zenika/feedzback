@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { AskFeedbackSuccess } from '../ask-feedback/ask-feedback-success/ask-feedback-success.types';
+import { AskFeedbackSuccess } from '../ask-feedback-alt/ask-feedback-success/ask-feedback-success.types';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';

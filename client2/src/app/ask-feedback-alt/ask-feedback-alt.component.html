@@ -18,7 +18,7 @@
 <form *ngIf="!sentEmails.length || remainingUnsentEmails.length" [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-emails-form [formArray]="form.controls.receiverEmails" [values]="receiverEmails"></app-emails-form>
 
-  <mat-form-field appearance="outline" class="app-ask-feedback__field">
+  <mat-form-field appearance="outline" class="app-ask-feedback-alt__field">
     <mat-label>Message</mat-label>
     <textarea
       #message
