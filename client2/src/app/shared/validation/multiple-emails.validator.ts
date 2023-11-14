@@ -6,13 +6,24 @@ export const EMAIL_REGEXP =
 
 export const MULTIPLE_EMAILS_SEP = ',';
 
-export const MULTIPLE_EMAILS_PLACEHOLDER = `jean.dupont@zenika.com${MULTIPLE_EMAILS_SEP} john.doe@zenika.com`;
+export const MULTIPLE_EMAILS_PLACEHOLDER = `jean.dupont@gmail.com${MULTIPLE_EMAILS_SEP} john.doe@zenika.com`;
+
+/**
+ * @example
+ * extractEmailFromInput('John Doe <john.doe@gmail.com>') === 'john.doe@gmail.com';
+ * extractEmailFromInput('<john.doe@gmail.com>') === 'john.doe@gmail.com';
+ * extractEmailFromInput('john.doe@gmail.com') === 'john.doe@gmail.com';
+ */
+export const extractEmailFromInput = (input: string) => (input.match(/<([^>]+)>/)?.[1] ?? input).trim();
 
 export const getMultipleEmails = (
   input: string[] | string | null | undefined,
   separator = MULTIPLE_EMAILS_SEP,
-): string[] =>
-  (Array.isArray(input) ? input : (input ?? '').split(separator)).map((email) => email.trim()).filter((email) => email);
+): string[] => {
+  return (Array.isArray(input) ? input : (input ?? '').split(separator))
+    .map(extractEmailFromInput)
+    .filter((email) => email);
+};
 
 export const multipleEmailsValidatorFactory =
   (required = true, emailSeparator = MULTIPLE_EMAILS_SEP) =>
