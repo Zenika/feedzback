@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { AskFeedbackSuccess } from '../ask-feedback-alt/ask-feedback-success/ask-feedback-success.types';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
@@ -17,10 +16,11 @@ import {
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/validation/multiple-emails.validator';
+import { AskFeedbackSuccess } from './ask-feedback-success/ask-feedback-success.types';
 import { EmailsFieldComponent } from './emails-field/emails-field.component';
 
 @Component({
-  selector: 'app-ask-feedback-simple',
+  selector: 'app-ask-feedback',
   standalone: true,
   imports: [
     NgIf,
@@ -32,12 +32,12 @@ import { EmailsFieldComponent } from './emails-field/emails-field.component';
     MessageComponent,
     EmailsFieldComponent,
   ],
-  templateUrl: './ask-feedback-simple.component.html',
-  styleUrls: ['./ask-feedback-simple.component.scss'],
+  templateUrl: './ask-feedback.component.html',
+  styleUrls: ['./ask-feedback.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AskFeedbackSimpleComponent {
-  @HostBinding('class.app-ask-feedback-simple') hasCss = true;
+export class AskFeedbackComponent {
+  @HostBinding('class.app-ask-feedback') hasCss = true;
 
   private router = inject(Router);
 

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AskFeedbackAltComponent } from './ask-feedback-alt/ask-feedback-alt.component';
-import { AskFeedbackSuccessComponent } from './ask-feedback-alt/ask-feedback-success/ask-feedback-success.component';
-import { AskFeedbackSimpleComponent } from './ask-feedback-simple/ask-feedback-simple.component';
+import { AskFeedbackSuccessComponent } from './ask-feedback/ask-feedback-success/ask-feedback-success.component';
+import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
 import { DemoContentComponent } from './demo-content/demo-content.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
 import { GuideComponent } from './guide/guide.component';
@@ -29,7 +29,7 @@ export const routes: Routes = [
   },
   {
     path: 'ask',
-    component: AskFeedbackSimpleComponent,
+    component: AskFeedbackComponent,
     canActivate: [authGuard],
     title: 'FeedZback - Demander',
   },

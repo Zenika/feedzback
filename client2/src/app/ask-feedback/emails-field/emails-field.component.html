@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline" class="app-emails-field__field">
   <mat-label>Emails de vos collègues</mat-label>
 
-  <mat-chip-grid #chipGrid aria-label="Saisissez les emails de vos collègues" [formControl]="emails">
+  <mat-chip-grid #chipGrid [formControl]="emails" aria-label="Saisissez les emails de vos collègues">
     <mat-chip-row
       *ngFor="let email of emails.value"
       [class.app-emails-field__error]="isInvalidEmail(email)"

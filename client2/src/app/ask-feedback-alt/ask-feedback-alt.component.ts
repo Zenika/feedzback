@@ -7,12 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
+import { AskFeedbackSuccess } from '../ask-feedback/ask-feedback-success/ask-feedback-success.types';
 import { AuthService } from '../shared/auth/auth.service';
 import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
-import { AskFeedbackSuccess } from './ask-feedback-success/ask-feedback-success.types';
 import { EmailsFormComponent } from './emails-form/emails-form.component';
 
 @Component({
