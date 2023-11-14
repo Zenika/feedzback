@@ -29,8 +29,8 @@ export class GraphqlService {
   private unsubscribe$: Subject<void> = new Subject();
 
   private getFeedbackListQuery = gql`
-    query GetFeedbacks($email: String!) {
-      receivedFeedbacks(email: $email) {
+    query GetFeedbacks($email: String!, $token: String!) {
+      receivedFeedbacks(email: $email, token: $token) {
         id
         senderEmail
         senderName
@@ -39,7 +39,7 @@ export class GraphqlService {
         comment
         createdAt
       }
-      sentFeedbacks(email: $email) {
+      sentFeedbacks(email: $email, token: $token) {
         id
         receverEmail
         receverName
@@ -52,8 +52,8 @@ export class GraphqlService {
   `;
 
   private getFeedbackByIdQuery = gql`
-    query GetFeedbackById($getFeedbackByIdId: String!) {
-      getFeedbackById(id: $getFeedbackByIdId) {
+    query GetFeedbackById($getFeedbackById: String!, $token: String!) {
+      getFeedbackById(id: $getFeedbackById, token: $token) {
         senderName
         senderEmail
         receverEmail
@@ -80,6 +80,7 @@ export class GraphqlService {
         .subscribe(({data, loading}: any) => {
           if (loading) {
             this.loading.next(true);
+            return;
           } else {
             this.loading.next(false);
           }
@@ -114,6 +115,7 @@ export class GraphqlService {
         .subscribe(({data, loading}: any) => {
           if (loading) {
             this.loading.next(true);
+            return;
           } else {
             this.loading.next(false);
           }
@@ -136,13 +138,14 @@ export class GraphqlService {
         });
   }
 
-  getFeedbackList(email: string) {
+  getFeedbackList({email, token}: {email: string, token: string}) {
     const subjectList = new Subject<Feedback[]>();
     this.apollo
         .watchQuery({
           query: this.getFeedbackListQuery,
           variables: {
             email,
+            token,
           },
           pollInterval: 4500,
         })
@@ -156,14 +159,15 @@ export class GraphqlService {
     return subjectList.asObservable();
   }
 
-  getFeedbackById(id: String) {
+  getFeedbackById({id, token}: {id: string, token: string}) {
     const subject = new Subject<Feedback>();
 
     this.apollo
         .query({
           query: this.getFeedbackByIdQuery,
           variables: {
-            getFeedbackByIdId: id,
+            getFeedbackById: id,
+            token,
           },
         })
         .subscribe((result: any) => {

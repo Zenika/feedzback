@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Feedback} from '../model/feedback';
+import {AuthService} from '../services/auth.service';
 import {GraphqlService} from '../services/graphql/graphql.service';
 
 @Component({
@@ -9,18 +10,25 @@ import {GraphqlService} from '../services/graphql/graphql.service';
   styleUrls: ['./feedback.component.css'],
 })
 export class FeedbackComponent implements OnInit {
-  public feedback!: Feedback;
-  public type!: String;
+  feedback?: Feedback;
+
+  type = this.activatedRoute.snapshot.paramMap.get('type');
 
   constructor(
-    private activateRouter: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private graphqlService: GraphqlService,
   ) {}
 
   ngOnInit(): void {
-    const id = this.activateRouter.snapshot.paramMap.get('id');
-    this.type = this.activateRouter.snapshot.paramMap.get('type')!;
-    this.graphqlService.getFeedbackById(id!).subscribe((data) => {
+    this.getFeedbackById();
+  }
+
+  private async getFeedbackById() {
+    const id = this.activatedRoute.snapshot.paramMap.get('id')!;
+    const token = await this.authService.getUserTokenId();
+
+    this.graphqlService.getFeedbackById({id, token}).subscribe((data) => {
       this.feedback = data;
     });
   }

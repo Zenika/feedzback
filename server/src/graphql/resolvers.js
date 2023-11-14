@@ -9,9 +9,9 @@ import {sendFeedback} from '../services/sendFeedback.js';
   */
 export const resolvers = {
   Query: {
-    sentFeedbacks: (_, {email}) => getSentFeedbacks(email),
-    receivedFeedbacks: (_, {email}) => getReceivedFeedbacks(email),
-    getFeedbackById: (_, {id}) => getFeedbackById(id),
+    sentFeedbacks: (_, {email, token}) => getSentFeedbacks(email, token),
+    receivedFeedbacks: (_, {email, token}) => getReceivedFeedbacks(email, token),
+    getFeedbackById: (_, {id, token}) => getFeedbackById(id, token),
   },
   Mutation: {
     sendFeedback: async (_, payload) => await sendFeedback(payload),
