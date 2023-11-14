@@ -18,7 +18,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../shared/breakpoint';
 import { DivisionComponent } from '../../shared/division/division.component';
 import { FeedbackType } from '../../shared/feedback/feedback.types';
@@ -31,7 +31,6 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
     NgIf,
     DatePipe,
     RouterLink,
-    RouterOutlet,
     MatButtonModule,
     MatDialogModule,
     MatIconModule,

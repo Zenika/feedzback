@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
 import { getFeedbackType } from '../shared/feedback/feedback.helpers';
 import { FeedbackType } from '../shared/feedback/feedback.types';
@@ -20,6 +20,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
   imports: [
     NgIf,
     NgTemplateOutlet,
+    RouterOutlet,
     MatTabsModule,
     MatFormFieldModule,
     MatButtonModule,
