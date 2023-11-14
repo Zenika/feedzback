@@ -25,10 +25,12 @@
 </mat-tab-group>
 
 <ng-template #filterTmplRef>
-  <mat-form-field appearance="fill" style="margin-top: 1rem; width: 100%">
+  <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
     <input #input matInput placeholder="Rechercher un feedZback" [value]="filter" (keyup)="filter = input.value" />
 
-    <mat-icon *ngIf="filter" matIconSuffix style="cursor: pointer" role="button" (click)="filter = ''">close</mat-icon>
+    <mat-icon *ngIf="filter" mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">
+      close
+    </mat-icon>
 
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>

@@ -64,7 +64,7 @@ export class FeedbackDialogComponent implements AfterViewInit, OnDestroy {
       return;
     }
     return this.dialog
-      .open(this.dialogTmplRef, { width: '100%' })
+      .open(this.dialogTmplRef, { width: '90vw', maxWidth: '768px' })
       .afterClosed()
       .subscribe(() => this.goBack());
   }

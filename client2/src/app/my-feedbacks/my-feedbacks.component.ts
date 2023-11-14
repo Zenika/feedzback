@@ -1,5 +1,6 @@
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -21,6 +22,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
     NgTemplateOutlet,
     MatTabsModule,
     MatFormFieldModule,
+    MatButtonModule,
     MatIconModule,
     MatInputModule,
     FeedbackListComponent,

@@ -9,4 +9,13 @@
       vertical-align: text-bottom;
     }
   }
+
+  &__filter {
+    margin-top: 1rem;
+    width: 100%;
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
 }
