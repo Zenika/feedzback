@@ -112,6 +112,7 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
     if (!this.dataSource.paginator) {
       return;
     }
+    this.dataSource.filterPredicate = (data, filter) => data.email.toLowerCase().includes(filter);
     this.dataSource.filter = this.filter ?? '';
     this.dataSource.paginator.firstPage();
   }

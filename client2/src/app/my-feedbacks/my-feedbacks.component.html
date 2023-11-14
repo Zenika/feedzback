@@ -26,7 +26,7 @@
 
 <ng-template #filterTmplRef>
   <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
-    <input #input matInput placeholder="Rechercher un feedZback" [value]="filter" (keyup)="filter = input.value" />
+    <input #input matInput placeholder="Rechercher par l'email" [value]="filter" (keyup)="filter = input.value" />
 
     <mat-icon *ngIf="filter" mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">
       close
