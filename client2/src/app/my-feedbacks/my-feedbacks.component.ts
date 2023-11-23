@@ -31,7 +31,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
   styleUrls: ['./my-feedbacks.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MyFeedbacksComponent implements OnInit {
+export default class MyFeedbacksComponent implements OnInit {
   @HostBinding('class.app-my-feedbacks') hasCss = true;
 
   @Input({

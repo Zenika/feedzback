@@ -26,6 +26,6 @@ export class SendFeedbackSuccessComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } });
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.65 } });
   }
 }
