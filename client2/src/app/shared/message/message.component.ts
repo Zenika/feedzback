@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageType } from './message.types';
@@ -6,7 +6,7 @@ import { MessageType } from './message.types';
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [NgClass, NgIf, MatIconModule],
+  imports: [NgClass, MatIconModule],
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
   encapsulation: ViewEncapsulation.None,

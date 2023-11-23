@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,7 @@ import { BurgerComponent } from './burger/burger.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [AsyncPipe, NgIf, RouterLinkActive, RouterLinkWithHref, MatButtonModule, MatIconModule, BurgerComponent],
+  imports: [AsyncPipe, RouterLinkActive, RouterLinkWithHref, MatButtonModule, MatIconModule, BurgerComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None,

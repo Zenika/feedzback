@@ -3,33 +3,39 @@
   Je demande du feedZback
 </h1>
 
-<app-message *ngIf="sentEmails.length" type="success">
-  <strong>Félicitations&nbsp;!</strong><br />
-  Votre demande a bien été envoyée à&nbsp;:<br />
-  {{ sentEmails.join(', ') }}
-</app-message>
+@if (sentEmails.length) {
+  <app-message type="success">
+    <strong>Félicitations&nbsp;!</strong><br />
+    Votre demande a bien été envoyée à&nbsp;:<br />
+    {{ sentEmails.join(', ') }}
+  </app-message>
+}
 
-<app-message *ngIf="remainingUnsentEmails.length" type="danger">
-  <strong>Oops&nbsp;!</strong><br />
-  Une erreur s'est produite lors de l'envoi à&nbsp;:<br />
-  {{ remainingUnsentEmails.join(', ') }}
-</app-message>
+@if (remainingUnsentEmails.length) {
+  <app-message type="danger">
+    <strong>Oops&nbsp;!</strong><br />
+    Une erreur s'est produite lors de l'envoi à&nbsp;:<br />
+    {{ remainingUnsentEmails.join(', ') }}
+  </app-message>
+}
 
-<form *ngIf="!sentEmails.length || remainingUnsentEmails.length" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-emails-form [formArray]="form.controls.receiverEmails" [values]="receiverEmails"></app-emails-form>
+@if (!sentEmails.length || remainingUnsentEmails.length) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-emails-form [formArray]="form.controls.receiverEmails" [values]="receiverEmails"></app-emails-form>
 
-  <mat-form-field appearance="outline" class="app-ask-feedback-alt__field">
-    <mat-label>Message</mat-label>
-    <textarea
-      #message
-      [formControl]="form.controls.message"
-      [maxlength]="messageMaxLength"
-      matInput
-      rows="4"
-      placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
-    ></textarea>
-    <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="app-ask-feedback-alt__field">
+      <mat-label>Message</mat-label>
+      <textarea
+        #message
+        [formControl]="form.controls.message"
+        [maxlength]="messageMaxLength"
+        matInput
+        rows="4"
+        placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
+      ></textarea>
+      <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
+    </mat-form-field>
 
-  <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Valider</button>
-</form>
+    <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Valider</button>
+  </form>
+}

@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { NgFor } from '@angular/common';
+
 import { Component, HostBinding, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatChipEditedEvent, MatChipGrid, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -18,7 +18,6 @@ import { ValidationErrorMessagePipe } from '../../shared/validation/validation-e
   selector: 'app-emails-field',
   standalone: true,
   imports: [
-    NgFor,
     ReactiveFormsModule,
     MatChipsModule,
     MatFormFieldModule,

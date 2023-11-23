@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -21,7 +20,7 @@ import { FeedbackType } from '../../shared/feedback/feedback.types';
 @Component({
   selector: 'app-feedback-dialog',
   standalone: true,
-  imports: [NgIf, RouterLink, MatButtonModule, MatDialogModule, MatIconModule, FeedbackComponent],
+  imports: [RouterLink, MatButtonModule, MatDialogModule, MatIconModule, FeedbackComponent],
   templateUrl: './feedback-dialog.component.html',
   encapsulation: ViewEncapsulation.None,
 })

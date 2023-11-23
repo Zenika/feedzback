@@ -1,4 +1,4 @@
-import { DOCUMENT, NgIf } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,7 @@ import { SendFeedbackSuccess } from './send-feedback-success.types';
 @Component({
   selector: 'app-send-feedback-success',
   standalone: true,
-  imports: [NgIf, RouterLink, MatButtonModule, MatIconModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './send-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,
 })

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -9,7 +8,7 @@ import { FeedbackType } from '../shared/feedback/feedback.types';
 @Component({
   selector: 'app-feedback-details',
   standalone: true,
-  imports: [NgIf, RouterLink, MatIconModule, FeedbackComponent],
+  imports: [RouterLink, MatIconModule, FeedbackComponent],
   templateUrl: './feedback-details.component.html',
   encapsulation: ViewEncapsulation.None,
 })

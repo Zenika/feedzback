@@ -1,4 +1,4 @@
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -28,7 +28,6 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
   selector: 'app-feedback-list',
   standalone: true,
   imports: [
-    NgIf,
     DatePipe,
     RouterLink,
     MatButtonModule,

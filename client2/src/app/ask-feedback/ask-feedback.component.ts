@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,7 +22,6 @@ import { EmailsFieldComponent } from './emails-field/emails-field.component';
   selector: 'app-ask-feedback',
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +18,6 @@ import { SendFeedbackSuccess } from './send-feedback-success/send-feedback-succe
   selector: 'app-send-feedback',
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,

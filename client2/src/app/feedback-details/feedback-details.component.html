@@ -1,5 +1,5 @@
-<ng-container *ngIf="type">
-  <button *ngIf="type" class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', type]">
+@if (type) {
+  <button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', type]">
     <mat-icon>arrow_back</mat-icon> mes feedZbacks
   </button>
 
@@ -9,4 +9,4 @@
   </h1>
 
   <app-feedback [type]="type" [id]="id" />
-</ng-container>
+}

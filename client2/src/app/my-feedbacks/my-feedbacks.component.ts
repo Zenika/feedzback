@@ -1,4 +1,4 @@
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,7 +18,6 @@ import { NormalizedFeedback } from './my-feedbacks.types';
   selector: 'app-my-feedbacks',
   standalone: true,
   imports: [
-    NgIf,
     NgTemplateOutlet,
     RouterOutlet,
     MatTabsModule,

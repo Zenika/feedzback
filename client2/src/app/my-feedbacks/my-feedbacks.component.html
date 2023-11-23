@@ -2,42 +2,44 @@
 
 <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="onTabIndexChange($event.index)">
   <mat-tab label="reçus">
-    <ng-container [ngTemplateOutlet]="filterTmplRef" />
+    <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-    <app-feedback-list
-      *ngIf="feedbackType.received.length; else noFeedbacks"
-      [type]="feedbackType.received"
-      [feedbacks]="receivedFeedbacks"
-      [filter]="filter"
-    ></app-feedback-list>
+    @if (feedbackType.received.length) {
+      <app-feedback-list
+        [type]="feedbackType.received"
+        [feedbacks]="receivedFeedbacks"
+        [filter]="filter"
+      ></app-feedback-list>
+    } @else if (fetched) {
+      <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
+    }
   </mat-tab>
 
   <mat-tab label="envoyés">
-    <ng-container [ngTemplateOutlet]="filterTmplRef" />
+    <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-    <app-feedback-list
-      *ngIf="feedbackType.sent.length; else noFeedbacks"
-      [type]="feedbackType.sent"
-      [feedbacks]="sentFeedbacks"
-      [filter]="filter"
-    ></app-feedback-list>
+    @if (feedbackType.sent.length) {
+      <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sentFeedbacks" [filter]="filter"></app-feedback-list>
+    } @else if (fetched) {
+      <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
+    }
   </mat-tab>
 </mat-tab-group>
 
-<ng-template #filterTmplRef>
+<ng-template #filterTmpl>
   <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
     <input #input matInput placeholder="Rechercher par l'email" [value]="filter" (keyup)="filter = input.value" />
 
-    <mat-icon *ngIf="filter" mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">
-      close
-    </mat-icon>
+    @if (filter) {
+      <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''"> close </mat-icon>
+    }
 
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>
 </ng-template>
 
-<ng-template #noFeedbacks>
-  <div *ngIf="fetched" class="app-my-feedbacks__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback</div>
+<ng-template #noFeedbacksTmpl>
+  <div class="app-my-feedbacks__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback</div>
 </ng-template>
 
 <router-outlet />

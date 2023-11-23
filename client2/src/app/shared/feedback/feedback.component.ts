@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, HostBinding, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +18,6 @@ import { FeedbackType } from './feedback.types';
   selector: 'app-feedback',
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     DatePipe,
     RouterLink,

@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LayoutModule } from './shared/layout/layout.module';
@@ -6,7 +6,7 @@ import { LayoutModule } from './shared/layout/layout.module';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AsyncPipe, NgIf, RouterOutlet, LayoutModule],
+  imports: [AsyncPipe, RouterOutlet, LayoutModule],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,
 })

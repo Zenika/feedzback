@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,8 +18,6 @@ import { EmailsFormComponent } from './emails-form/emails-form.component';
   selector: 'app-ask-feedback-alt',
   standalone: true,
   imports: [
-    NgFor,
-    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,

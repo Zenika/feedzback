@@ -1,4 +1,3 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, HostBinding, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,8 +11,6 @@ import { ValidationErrorMessagePipe } from '../../shared/validation/validation-e
   selector: 'app-emails-form',
   standalone: true,
   imports: [
-    NgFor,
-    NgIf,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
