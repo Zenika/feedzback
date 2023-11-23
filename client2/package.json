@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "bundle-visualizer": "ng build --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -"
   },
   "private": true,
   "dependencies": {
