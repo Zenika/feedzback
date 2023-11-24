@@ -51,9 +51,10 @@ export const askFeedback = async ({askFeedback})=> {
   const res = await myMailgun.messages().send(msg).then(()=> {
     return 'sent';
   })
-      .catch(()=> {
-        return 'error';
+      .catch((e)=> {
+        return e;
       });
+
 
   return res;
 };
