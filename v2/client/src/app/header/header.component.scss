@@ -1,0 +1,169 @@
+@use '../app.scss' as app;
+
+.app-header {
+  position: relative;
+  padding: 0.25rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > * {
+    flex-grow: 1;
+  }
+
+  &__burger,
+  &-sign-out {
+    width: 1%;
+  }
+
+  &__logo {
+    line-height: 0;
+  }
+
+  &-menu {
+    display: flex;
+    justify-content: center;
+    gap: 1.25em;
+    padding: 0 1.25em;
+
+    &__item {
+      position: relative;
+      padding: 1.25em 0.25em;
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.6);
+      transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      &:hover,
+      &--active {
+        color: #d52150;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0.75em;
+        height: 4px;
+        left: 50%;
+        width: 0%;
+        opacity: 0;
+        border-radius: 4px;
+        background-color: #d52150;
+        transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+      }
+
+      &--active::after {
+        left: 0%;
+        width: 100%;
+        opacity: 1;
+      }
+    }
+  }
+
+  &-sign-out {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+
+    &__inner {
+      width: 100%;
+      cursor: pointer;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
+      color: rgba(0, 0, 0, 0.6);
+      transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      &:hover {
+        color: #d52150;
+      }
+    }
+
+    &__name {
+      flex-grow: 1;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @include app.media-breakpoint-down(lg) {
+        display: none;
+      }
+    }
+
+    &__icon {
+      flex-shrink: 0;
+    }
+  }
+
+  @include app.media-breakpoint-up(md) {
+    &__burger {
+      display: none;
+    }
+
+    &__logo {
+      width: 1%;
+    }
+  }
+
+  @include app.media-breakpoint-down(md) {
+    &__burger {
+      z-index: 99;
+    }
+
+    &__logo {
+      text-align: center;
+    }
+
+    &-menu {
+      position: fixed;
+      z-index: 98;
+      box-sizing: border-box;
+      top: 0em;
+      width: 220px;
+      left: -220px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+      padding: 80px 2em 1em 0;
+      box-shadow: 0 0 0px #85888c;
+      border-bottom-right-radius: 5px;
+      background-color: #ffffff;
+      transition:
+        left 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+        box-shadow 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      &--visible {
+        left: 0px;
+        box-shadow: 0 0 10px #85888c;
+      }
+
+      /* --- V1 --- */
+      &__item::after {
+        left: 0%;
+        width: 100%;
+        height: 0px;
+        bottom: 1.25em;
+      }
+
+      &__item--active::after {
+        height: 4px;
+        bottom: 0.75em;
+      }
+
+      /* --- V2 --- */
+      //&__item::after {
+      //  left: 100%;
+      //}
+
+      //&__item--active::after {
+      //  left: 0%;
+      //}
+    }
+  }
+}

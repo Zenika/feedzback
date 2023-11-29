@@ -1,0 +1,48 @@
+// Read very carefully: https://material.angular.io/guide/typography
+// But the official document doesn't seem to be entirely accurate.
+// So I tried to clarify all that...
+
+// headline-1, headline-2, headline-3, headline-4 -> One-off header, usually at the top of the page
+// headline-5 -> <h1>
+// headline-6 -> <h2>
+// subtitle-1 -> <h3>
+// body-1     -> Form fields
+// body-2     -> Body text
+// subtitle-2 -> Body strong
+// caption    -> Smaller body and hint text
+
+// Note: the font-size for <h1> to <h3> is inspired from Bootstrap typography
+// More infos: https://getbootstrap.com/docs/5.3/content/typography/
+
+@use '@angular/material' as mat;
+
+$client-font-family: '"Nunito", sans-serif';
+
+$client-typography-base: mat.define-typography-level(
+  $font-size: 1rem,
+  $line-height: 1.5,
+  $font-weight: 400,
+  $font-family: $client-font-family,
+  $letter-spacing: normal,
+);
+
+$client-typography: mat.define-typography-config(
+  $font-family: $client-font-family,
+
+  $headline-1: mat.define-typography-level(calc(1.525rem + 3.3vw), 1.2, 300, $client-font-family, normal),
+  $headline-2: mat.define-typography-level(calc(1.475rem + 2.7vw), 1.2, 300, $client-font-family, normal),
+  $headline-3: mat.define-typography-level(calc(1.425rem + 2.1vw), 1.2, 300, $client-font-family, normal),
+  $headline-4: mat.define-typography-level(calc(1.375rem + 1.5vw), 1.2, 300, $client-font-family, normal),
+  /* <h1> */ $headline-5: mat.define-typography-level(calc(1.375rem + 1.5vw), 1.2, 500, $client-font-family, normal),
+  /* <h2> */ $headline-6: mat.define-typography-level(calc(1.325rem + 0.9vw), 1.2, 500, $client-font-family, normal),
+  /* <h3> */ $subtitle-1: mat.define-typography-level(calc(1.3rem + 0.6vw), 1.2, 500, $client-font-family, normal),
+  /* Form fields */ $body-1: mat.define-typography-level(1rem, 1.5, 400, $client-font-family, normal),
+  /* Body text */ $body-2: $client-typography-base,
+  /* Body strong */ $subtitle-2: mat.define-typography-level(null, 1.5, 500, $client-font-family, normal),
+  $caption: mat.define-typography-level(0.85rem, 1.5, 400, $client-font-family, normal),
+  $overline: $client-typography-base,
+
+  $button: mat.define-typography-level(1rem, 1.5, 500, $client-font-family, normal),
+);
+
+@include mat.typography-hierarchy($client-typography);

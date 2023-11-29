@@ -1,0 +1,49 @@
+@use '../../app.scss' as app;
+
+.app-layout {
+  min-height: 100vh;
+  display: grid;
+
+  // see: https://stackoverflow.com/questions/52861086/why-does-minmax0-1fr-work-for-long-elements-while-1fr-doesnt
+  grid-template-columns: minmax(0, 1fr);
+
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 'header' 'main' 'footer';
+
+  &__header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+  }
+
+  &__main {
+    grid-area: main;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  &__footer {
+    grid-area: footer;
+    background-color: rgb(255 255 255 / 0.3);
+  }
+
+  &-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: app.$breakpoint-lg;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @include app.media-breakpoint-down(md) {
+    &__header {
+      box-shadow: none;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}

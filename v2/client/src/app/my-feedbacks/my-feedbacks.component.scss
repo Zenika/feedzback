@@ -1,0 +1,21 @@
+.app-my-feedbacks {
+  &__empty {
+    margin-top: 3.5rem;
+    text-align: center;
+    font-style: italic;
+    opacity: 0.6;
+
+    mat-icon {
+      vertical-align: text-bottom;
+    }
+  }
+
+  &__filter {
+    margin-top: 1rem;
+    width: 100%;
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}

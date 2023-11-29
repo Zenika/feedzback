@@ -1,0 +1,29 @@
+<button class="gbl-link gbl-link--back" routerLink="/"><mat-icon>arrow_back</mat-icon> accueil</button>
+
+@if (state.receiverEmail) {
+  <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
+
+  <div>
+    <h1 class="gbl-info__title">FeedZback envoyé à&nbsp;:</h1>
+    <p>{{ state.receiverEmail }}</p>
+  </div>
+
+  <div class="gbl-info__buttons">
+    @if (state.feedbackId) {
+      <button mat-stroked-button color="primary" [routerLink]="['/feedback/sent', state.feedbackId]">
+        <mat-icon>visibility</mat-icon>
+        Consulter mon feedZback
+      </button>
+
+      <button mat-stroked-button color="primary" routerLink="../">
+        <mat-icon>chat</mat-icon>
+        Donner un autre feedZback
+      </button>
+    } @else {
+      <button mat-stroked-button color="primary" (click)="signOut()">
+        Vous pouvez vous déconnecter
+        <mat-icon iconPositionEnd>logout</mat-icon>
+      </button>
+    }
+  </div>
+}

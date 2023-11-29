@@ -1,0 +1,22 @@
+<button class="gbl-link gbl-link--back" routerLink="/"><mat-icon>arrow_back</mat-icon> accueil</button>
+
+@if (state.receiverEmails) {
+  <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
+
+  <div>
+    <h1 class="gbl-info__title">Demande de feedZback envoyée à&nbsp;:</h1>
+
+    <ul class="app-ask-feedback-success__list">
+      @for (email of state.receiverEmails; track email) {
+        <li>{{ email }}</li>
+      }
+    </ul>
+  </div>
+
+  <div class="gbl-info__buttons">
+    <button mat-stroked-button color="primary" routerLink="../">
+      <mat-icon>live_help</mat-icon>
+      Faire une autre demande de feedZback
+    </button>
+  </div>
+}

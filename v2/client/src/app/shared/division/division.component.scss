@@ -1,0 +1,15 @@
+.app-division {
+  display: inline-box;
+
+  &__a {
+    vertical-align: super;
+  }
+
+  &__slash {
+    vertical-align: bottom;
+  }
+
+  &__b {
+    vertical-align: sub;
+  }
+}

@@ -1,0 +1,43 @@
+$sep-height: 2px;
+$sep-bg-color: #bbb;
+$sep-box-shadow: 0 1px 0 rgba(255 255 255 / 0.3);
+
+.app-sign-in {
+  &-guest {
+    flex-basis: 100%;
+
+    &__sep {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &-sep {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(50% - $sep-height / 2);
+      height: $sep-height;
+      border-radius: $sep-height;
+      background-color: $sep-bg-color;
+      box-shadow: $sep-box-shadow;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
+      border-radius: 2.5rem;
+      background-color: $sep-bg-color;
+      box-shadow: $sep-box-shadow;
+      text-align: center;
+      color: #fff;
+    }
+  }
+}

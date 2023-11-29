@@ -1,0 +1,75 @@
+// Note: global styles starts with `.gbl-*`.
+
+@use './mixins.scss' as m;
+
+h1.gbl-page-title {
+  display: flex;
+  align-items: center;
+  gap: calc(1rem + 1vw);
+  text-wrap: balance;
+  color: #d52150;
+
+  &--center {
+    justify-content: center;
+  }
+
+  mat-icon {
+    flex-shrink: 0;
+    transform-origin: left;
+    transform: scale(1.5);
+
+    @include m.media-breakpoint-up(xl) {
+      transform: scale(2);
+    }
+  }
+}
+
+.gbl-link {
+  &,
+  &:link,
+  &:visited {
+    cursor: pointer; // usefull when used like this: `<div class="gbl-link" role="presentation" (click)="onClick()">Link</div>`
+    text-decoration: none;
+    transition: color 250ms ease;
+    color: #d52150;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+    color: rgb(213 33 80 / 0.8);
+  }
+
+  &--no-underline {
+    text-decoration: none !important;
+  }
+
+  &--back {
+    position: absolute;
+    top: 0rem;
+    left: 1rem; // same as left-padding of the `grid-area: main`
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+    padding: 0.25rem 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: smaller;
+    color: rgb(110, 107, 107);
+    text-decoration: none !important;
+
+    mat-icon {
+      transform: scale(0.75);
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
+
+    &:hover {
+      color: #d52150;
+
+      mat-icon {
+        transform: translateX(-0.25rem);
+      }
+    }
+  }
+}

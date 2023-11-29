@@ -1,0 +1,32 @@
+<div class="app-header__burger">
+  @if (isKnownUser$ | async) {
+    <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
+  }
+</div>
+
+<div class="app-header__logo">
+  <a routerLink="/home">
+    <img src="assets/images/logo-feedzback.svg" height="56" alt="" />
+  </a>
+</div>
+
+<nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
+  @if (isKnownUser$ | async) {
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/home"> Accueil </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/ask"> Demander </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/send"> Donner </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
+      Mes&nbsp;feedZbacks
+    </a>
+  }
+</nav>
+
+<div class="app-header-sign-out">
+  @if (isSignedIn$ | async) {
+    <button class="app-header-sign-out__inner" (click)="signOut()">
+      <span class="app-header-sign-out__name">{{ firstName$ | async }}</span>
+
+      <mat-icon class="app-header-sign-out__icon" color="primary">power_settings_new</mat-icon>
+    </button>
+  }
+</div>

@@ -1,0 +1,39 @@
+@for (control of formArray.controls; track control; let index = $index; let last = $last) {
+  <mat-form-field appearance="outline" class="app-emails-form__field">
+    <mat-label>Email de votre collègue{{ formArray.controls.length > 1 ? ' n°' + (index + 1) : '' }}</mat-label>
+
+    <input [formControl]="control" type="email" matInput placeholder="jean.dupont@zenika.com" />
+
+    <mat-error>{{ control.errors | validationErrorMessage }}</mat-error>
+
+    @if (formArray.controls.length > 1) {
+      <button
+        type="button"
+        class="app-emails-form__action"
+        matIconSuffix
+        mat-icon-button
+        color="primary"
+        matTooltip="Retirer cet email"
+        tabIndex="-1"
+        (click)="removeAt(index)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
+
+    @if (last && canAdd) {
+      <button
+        type="button"
+        class="app-emails-form__action"
+        matIconSuffix
+        mat-icon-button
+        color="primary"
+        matTooltip="Ajouter un email"
+        tabIndex="-1"
+        (click)="add()"
+      >
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+}

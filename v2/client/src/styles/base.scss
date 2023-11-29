@@ -1,0 +1,66 @@
+@use './variables' as v;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+
+  @if v.$use-background {
+    &::before {
+      content: '';
+      position: fixed;
+      z-index: -1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: radial-gradient(circle at 35% 15%, rgb(255 255 255 / 0.75), transparent 35%),
+        radial-gradient(rgb(255 255 255 / 0.5), transparent 75%, rgb(213 33 80 / 0.2)),
+        linear-gradient(-25deg, #ebf3f5, #ebf3f5 49%, rgb(235 243 245 / 0.65) 50%, #fee9e3 50%, #fee9e3);
+    }
+  } @else {
+    background-color: #fafafa;
+  }
+}
+
+ul,
+ol {
+  margin: 0 0 1rem 1rem;
+
+  ul,
+  ol {
+    margin: 0;
+    padding: 0 0 0 2rem;
+  }
+}
+
+li {
+  &::marker {
+    color: #d52150;
+  }
+}
+
+ul {
+  list-style: none;
+  padding-left: 0.5em;
+
+  > li {
+    padding-left: 0.5em;
+
+    &::marker {
+      content: '◦';
+    }
+
+    ul > li::marker {
+      content: '→';
+    }
+  }
+}
