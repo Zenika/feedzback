@@ -2,13 +2,13 @@ import { FirebaseOptions } from '@angular/fire/app';
 import { Options as ApolloOptions } from 'apollo-angular/http';
 
 const firebaseOptions: FirebaseOptions = {
-  apiKey: 'AIzaSyDkkgGTo54Osh-rFa3kmpDaDY15xN8Ois0',
-  authDomain: 'feedzbackdev-389312.firebaseapp.com',
-  projectId: 'feedzbackdev-389312',
-  storageBucket: 'feedzbackdev-389312.appspot.com',
-  messagingSenderId: '241997452771',
-  appId: '1:241997452771:web:f543b1756557362424bcd6',
-  measurementId: 'G-7BX0QVS63J',
+  apiKey: "AIzaSyBY-HULaNWkEPCoQWCIy3vOB2KB98z4HGs",
+  authDomain: "feedzback-v2-dev.firebaseapp.com",
+  projectId: "feedzback-v2-dev",
+  storageBucket: "feedzback-v2-dev.appspot.com",
+  messagingSenderId: "195593920321",
+  appId: "1:195593920321:web:e9d6255b8ef9a46466cbc0",
+  measurementId: "G-29CT4FJL84"
 };
 
 const apolloOptions: ApolloOptions = {

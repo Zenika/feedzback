@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as auth from 'firebase/auth';
-import firebase from 'firebase/compat/app';
+import { GoogleAuthProvider } from 'firebase/auth';
+import type firebase from 'firebase/compat/app';
 import {
   Observable,
   ReplaySubject,
@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   signInWithGoogle(): Observable<boolean> {
-    return from(this.firebaseAuth.signInWithPopup(new auth.GoogleAuthProvider())).pipe(
+    return from(this.firebaseAuth.signInWithPopup(new GoogleAuthProvider())).pipe(
       concatMap(() => this.isKnownUser$),
       first((isKnownUser) => isKnownUser),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
