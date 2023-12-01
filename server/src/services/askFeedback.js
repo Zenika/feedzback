@@ -37,9 +37,9 @@ export const askFeedback = async ({askFeedback})=> {
   };
 
   console.log("======= NODE_ENV: ", process.env.NODE_ENV)
-  // if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     msg.to = 'feedzback@zenika.com';
-  // }
+  }
 
   const auth = await admin.auth().verifyIdToken(askFeedback.token).catch(()=> {
     return false;
@@ -51,7 +51,6 @@ export const askFeedback = async ({askFeedback})=> {
     return 'sent';
   })
       .catch((e)=> {
-        console.log("================ EMAIL: ", msg.to);
         return e;
       });
 
