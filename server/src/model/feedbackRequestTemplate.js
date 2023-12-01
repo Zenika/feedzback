@@ -1,5 +1,7 @@
 import ejs from 'ejs';
 import dotEnv from 'dotenv';
+import getNameFromEmail from "./getNameFromEmail.js"
+
 
 /**
  * Replace request feedback html template variables by the given feedback which includes
@@ -8,7 +10,7 @@ import dotEnv from 'dotenv';
  * @param {Object} param1
  * @return {String}
  */
-export function feedbackRequestTemplate(html, {email, name, senderEmail, text}) {
+export function feedbackRequestTemplate(html, {email, senderName, senderEmail, text}) {
   if (process.env.NODE_ENV !== 'production') {
     dotEnv.config();
   }
@@ -20,6 +22,7 @@ export function feedbackRequestTemplate(html, {email, name, senderEmail, text}) 
   const recever = receverEmail.split('%')[0];
   senderEmail = encodeURIComponent(senderEmail);
   let commentaire='';
+  const receiverName = getNameFromEmail(email);
   /**
    * as comment is optional we replace html tags in case the request includes a comment (text)
    */
@@ -27,10 +30,10 @@ export function feedbackRequestTemplate(html, {email, name, senderEmail, text}) 
     commentaire = String(text).replace(/\n/g, '<br>');
   }
   const urlClient = process.env.NODE_ENV !== 'production'? process.env.URL_CLIENT + '/send' : 'https://feedzback.zenika.com/send';
-  const params = new URLSearchParams({name, senderEmail, receverEmail}).toString();
+  const params = new URLSearchParams({senderName, senderEmail, receiverName, receverEmail}).toString();
   const template = ejs.render(html,
       {email: recever,
-        senderName: name,
+        senderName: senderName,
         text: commentaire,
         urlClientForm: urlClient,
         params: params,
