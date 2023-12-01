@@ -25,10 +25,7 @@ export class SendFeedbackFormComponent implements OnInit {
       decodeURIComponent(this.queryParams.get('senderEmail')!) === 'null' ?
         user.email! :
         decodeURIComponent(this.queryParams.get('senderEmail')!);
-    this.userName =
-      this.queryParams.get('senderName') === null ?
-        user.displayName! :
-        this.queryParams.get('senderName')!;
+    this.userName = user.displayName;
     graphqlService.loading.subscribe((loading)=> {
       this.loading = loading;
     });
@@ -49,7 +46,7 @@ export class SendFeedbackFormComponent implements OnInit {
       Validators.email,
     ]),
     receverName: new FormControl(
-        this.queryParams.get('receverName'),
+       '',
         Validators.required,
     ),
     postitiveFeedback: new FormControl('', [
