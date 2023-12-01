@@ -7,11 +7,6 @@ export class FirebaseController {
 
   @Get()
   async get() {
-    return (
-      await this.firebaseService.firestore
-        .collection('hello')
-        .doc('world')
-        .set({ ok: true })
-    );
+    return await this.firebaseService.firestore.collection('hello').doc('world').set({ ok: true });
   }
 }

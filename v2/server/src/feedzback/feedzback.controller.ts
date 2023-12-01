@@ -17,17 +17,16 @@ export class FeedzbackController {
     return { feedzback: true };
   }
 
-
   @Get('list')
   getFeedbacks() {
-    const senderEmail = this.authService.user?.email!;
+    const senderEmail = this.authService.user?.email ?? '';
 
     return this.feedzbackService.getFeedbacks(senderEmail);
   }
 
   @Post('send')
   sendFeedback(@Body() sendFeedbackDto: SendFeedbackDto) {
-    const senderEmail = this.authService.user?.email!;
+    const senderEmail = this.authService.user?.email ?? '';
 
     return this.feedzbackService.sendFeedback({ senderEmail, ...sendFeedbackDto });
   }

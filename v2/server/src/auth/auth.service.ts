@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { DecodedIdToken } from 'firebase-admin/auth';
-import { ReplaySubject } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable()

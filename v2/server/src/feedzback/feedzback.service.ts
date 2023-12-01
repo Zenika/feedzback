@@ -12,7 +12,7 @@ export class FeedzbackService {
       .doc(userEmail)
       .collection('sent')
       .listDocuments();
-   
+
     return Promise.all(docRefs.map((docRef) => docRef.get())).then((docSnapshots) =>
       docSnapshots.map((docSnapshot) => ({ id: docSnapshot.id, ...docSnapshot.data() })),
     );
