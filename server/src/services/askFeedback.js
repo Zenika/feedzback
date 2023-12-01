@@ -36,11 +36,9 @@ export const askFeedback = async ({askFeedback})=> {
     html: template,
   };
 
+  console.log("======= NODE_ENV: ", process.env.NODE_ENV)
   if (process.env.NODE_ENV !== 'production') {
-    msg = {
-      ...msg,
-      to: 'feedzback@zenika.com',
-    };
+    msg.to = 'feedzback@zenika.com';
   }
 
   const auth = await admin.auth().verifyIdToken(askFeedback.token).catch(()=> {
