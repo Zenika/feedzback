@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LayoutModule } from './shared/layout/layout.module';
+import { LayoutModule } from './shared/ui/layout/layout.module';
 
 @Component({
   selector: 'app-root',

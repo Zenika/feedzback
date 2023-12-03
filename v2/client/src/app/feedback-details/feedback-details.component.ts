@@ -1,9 +1,9 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { FeedbackComponent } from '../shared/feedback/feedback.component';
-import { getFeedbackType } from '../shared/feedback/feedback.helpers';
-import { FeedbackType } from '../shared/feedback/feedback.types';
+import { FeedbackComponent } from '../shared/ui/feedback/feedback.component';
+import { getFeedbackType } from '../shared/ui/feedback/feedback.helpers';
+import { FeedbackType } from '../shared/ui/feedback/feedback.types';
 
 @Component({
   selector: 'app-feedback-details',

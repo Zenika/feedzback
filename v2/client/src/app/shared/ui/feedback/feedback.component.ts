@@ -6,10 +6,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { ReplaySubject, of, switchMap } from 'rxjs';
-import { MessageComponent } from '../../shared/message/message.component';
-import { Feedback } from '../../shared/types/feedback.types';
-import { AllowedEmailDomainsPipe } from '../../shared/validation/allowed-email-domains/allowed-email-domains.pipe';
-import { ApiService } from '../api/api.service';
+import { ApiService } from '../../api/api.service';
+import { Feedback } from '../../types/feedback.types';
+import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains/allowed-email-domains.pipe';
+import { MessageComponent } from '../message/message.component';
 import { getFeedbackType } from './feedback.helpers';
 import { FeedbackType } from './feedback.types';
 

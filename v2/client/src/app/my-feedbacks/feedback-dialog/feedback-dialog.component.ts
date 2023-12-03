@@ -13,9 +13,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FeedbackComponent } from '../../shared/feedback/feedback.component';
-import { getFeedbackType } from '../../shared/feedback/feedback.helpers';
-import { FeedbackType } from '../../shared/feedback/feedback.types';
+import { FeedbackComponent } from '../../shared/ui/feedback/feedback.component';
+import { getFeedbackType } from '../../shared/ui/feedback/feedback.helpers';
+import { FeedbackType } from '../../shared/ui/feedback/feedback.types';
 
 @Component({
   selector: 'app-feedback-dialog',

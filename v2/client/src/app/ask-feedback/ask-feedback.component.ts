@@ -8,8 +8,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { ApiService } from '../shared/api/api.service';
-import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
+import { MessageComponent } from '../shared/ui/message/message.component';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
