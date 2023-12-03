@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { SendFeedbackDto } from 'src/feedzback/dto/send-feedback.dto';
+import { SendFeedzbackDto } from 'src/feedzback/dto/send-feedzback.dto';
 import { FirebaseService } from '../firebase/firebase.service';
+import { AskFeedzbackModel } from './models/ask-feedzback.model';
 
 @Injectable()
 export class FeedzbackService {
   constructor(private firebaseService: FirebaseService) {}
+
+  async ask(model: AskFeedzbackModel): Promise<{ id: string }> {
+    const { id } = await (await this.firebaseService.firestore.collection('feedzback').add(model)).get();
+    return { id };
+  }
 
   async getFeedbacks(userEmail: string) {
     const docRefs = await this.firebaseService.firestore
@@ -18,7 +24,7 @@ export class FeedzbackService {
     );
   }
 
-  sendFeedback(sendFeedback: SendFeedbackDto & { senderEmail: string }) {
+  sendFeedback(sendFeedback: SendFeedzbackDto & { senderEmail: string }) {
     this.firebaseService.firestore
       .collection('feedzback')
       .doc(sendFeedback.receiverEmail)

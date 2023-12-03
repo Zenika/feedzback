@@ -1,4 +1,4 @@
-export type SendFeedbackDto = {
+export type SendFeedzbackDto = {
   receiverEmail: string;
   positiveFeedback: string;
   toImprove: string;

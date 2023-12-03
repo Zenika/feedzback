@@ -51,7 +51,7 @@ $client-theme: mat.define-light-theme(
 //@include mat.autocomplete-theme($client-theme);
 @include mat.dialog-theme($client-theme);
 //@include mat.chips-theme($client-theme);
-//@include mat.slide-toggle-theme($client-theme);
+@include mat.slide-toggle-theme($client-theme);
 //@include mat.radio-theme($client-theme);
 //@include mat.slider-theme($client-theme);
 //@include mat.menu-theme($client-theme);

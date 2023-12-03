@@ -36,6 +36,12 @@
       <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
+    <div class="app-ask-feedback__field">
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        Partager le FeedZback avec mon manager
+      </mat-slide-toggle>
+    </div>
+
     <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Valider</button>
   </form>
 }

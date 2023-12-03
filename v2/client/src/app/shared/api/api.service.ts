@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { AskFeedback } from '../types/ask-feedback.types';
 import { AskedFeedback, CheckAskedFeedback } from '../types/asked-feedback.types';
@@ -11,15 +12,16 @@ import { SendFeedback } from '../types/send-feedback.types';
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(
-    private httpClient: HttpClient,
-    private authService: AuthService,
-  ) {}
+  private httpClient = inject(HttpClient);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private authService = inject(AuthService);
+
+  private apiBaseUrl = environment.apiBaseUrl;
+
   askFeedback(askFeedback: AskFeedback): Observable<boolean> {
-    console.log(askFeedback);
-    return of(true);
+    return this.httpClient.post<boolean>(`${this.apiBaseUrl}/feedzback/ask`, askFeedback, {
+      headers: this.authorizationHeader,
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

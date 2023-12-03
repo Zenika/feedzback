@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { AuthService } from '../auth/auth.service';
-import { SendFeedbackDto } from './dto/send-feedback.dto';
+import { AskFeedzbackDto } from './dto/ask-feedzback.dto';
+import { SendFeedzbackDto } from './dto/send-feedzback.dto';
 import { FeedzbackService } from './feedzback.service';
 
 @Controller('feedzback')
@@ -11,6 +12,12 @@ export class FeedzbackController {
     private authService: AuthService,
     private feedzbackService: FeedzbackService,
   ) {}
+
+  @Post('ask')
+  ask(@Body() { recipient: senderEmail, message, shared }: AskFeedzbackDto) {
+    const receiverEmail = this.authService.user?.email ?? '';
+    return this.feedzbackService.ask({ senderEmail, receiverEmail, message, shared });
+  }
 
   @Get()
   get() {
@@ -25,7 +32,7 @@ export class FeedzbackController {
   }
 
   @Post('send')
-  sendFeedback(@Body() sendFeedbackDto: SendFeedbackDto) {
+  sendFeedback(@Body() sendFeedbackDto: SendFeedzbackDto) {
     const senderEmail = this.authService.user?.email ?? '';
 
     return this.feedzbackService.sendFeedback({ senderEmail, ...sendFeedbackDto });

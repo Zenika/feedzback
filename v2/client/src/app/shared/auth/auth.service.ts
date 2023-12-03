@@ -27,6 +27,7 @@ export class AuthService {
 
   private activatedRoute = inject(ActivatedRoute);
 
+  // !FIXME: je crois que la librairie refresh le token quand c'est nécessaire. Or, ici on a figé sa valeur... :(
   idToken?: string;
 
   userSnapshot?: firebase.User | null;

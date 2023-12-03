@@ -1,9 +1,10 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { ApiService } from '../shared/api/api.service';
@@ -25,6 +26,7 @@ import { EmailsFieldComponent } from './emails-field/emails-field.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSlideToggleModule,
     MatIconModule,
     MessageComponent,
     EmailsFieldComponent,
@@ -46,12 +48,12 @@ export class AskFeedbackComponent {
 
   protected messageMaxLength = 500;
 
-  form = new FormGroup({
-    recipients: new FormControl(this.recipient ? [this.recipient] : [], {
-      nonNullable: true,
-      validators: [Validators.required, multipleEmailsValidatorFactory()],
-    }),
-    message: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
+  private formBuilder = inject(NonNullableFormBuilder);
+
+  form = this.formBuilder.group({
+    recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
+    message: ['', [Validators.maxLength(this.messageMaxLength)]],
+    shared: [true],
   });
 
   multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
@@ -96,7 +98,8 @@ export class AskFeedbackComponent {
   private buildAskFeedback(recipient: string): AskFeedback {
     return {
       recipient,
-      message: this.form.controls.message.value ?? '',
+      message: this.form.controls.message.value,
+      shared: this.form.controls.shared.value,
     };
   }
 
