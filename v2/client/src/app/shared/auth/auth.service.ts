@@ -27,6 +27,8 @@ export class AuthService {
 
   private activatedRoute = inject(ActivatedRoute);
 
+  idToken?: string;
+
   userSnapshot?: firebase.User | null;
 
   private _user$ = new ReplaySubject<firebase.User | null>(1);
@@ -54,7 +56,8 @@ export class AuthService {
   );
 
   constructor() {
-    this.firebaseAuth.authState.subscribe((user) => {
+    this.firebaseAuth.authState.subscribe(async (user) => {
+      this.idToken = await user?.getIdToken();
       this.userSnapshot = user;
       this._user$.next(user);
     });
@@ -84,14 +87,5 @@ export class AuthService {
       tap(() => this.router.navigate(['/sign-in'])),
       catchError(() => of(false)),
     );
-  }
-
-  async getUserTokenId() {
-    return await this.userSnapshot?.getIdToken();
-  }
-
-  // !FIXME: should be removed
-  isAnonymousSnapshot() {
-    return this.userSnapshot?.isAnonymous;
   }
 }

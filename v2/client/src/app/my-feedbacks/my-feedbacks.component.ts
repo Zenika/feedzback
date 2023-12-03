@@ -6,10 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { AuthService } from '../shared/auth/auth.service';
+import { ApiService } from '../shared/api/api.service';
 import { getFeedbackType } from '../shared/feedback/feedback.helpers';
 import { FeedbackType } from '../shared/feedback/feedback.types';
-import { GraphQLService } from '../shared/graphql/graphql.service';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { normalizeReceivedFeedbacks, normalizeSentFeedbacks } from './my-feedbacks.helpers';
 import { NormalizedFeedback } from './my-feedbacks.types';
@@ -49,9 +48,7 @@ export default class MyFeedbacksComponent implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
 
-  private authService = inject(AuthService);
-
-  private graphQLService = inject(GraphQLService);
+  private apiService = inject(ApiService);
 
   protected receivedFeedbacks: NormalizedFeedback[] = [];
 
@@ -62,17 +59,11 @@ export default class MyFeedbacksComponent implements OnInit {
   protected fetched = false;
 
   async ngOnInit() {
-    const token = await this.authService.getUserTokenId();
-    if (!token) {
-      return;
-    }
-    this.graphQLService
-      .getFeedbackList(this.authService.userSnapshot?.email ?? '', token)
-      .subscribe(({ receivedFeedbacks, sentFeedbacks }) => {
-        this.receivedFeedbacks = normalizeReceivedFeedbacks(receivedFeedbacks);
-        this.sentFeedbacks = normalizeSentFeedbacks(sentFeedbacks);
-        this.fetched = true;
-      });
+    this.apiService.getFeedbackList().subscribe(({ receivedFeedbacks, sentFeedbacks }) => {
+      this.receivedFeedbacks = normalizeReceivedFeedbacks(receivedFeedbacks);
+      this.sentFeedbacks = normalizeSentFeedbacks(sentFeedbacks);
+      this.fetched = true;
+    });
   }
 
   protected onTabIndexChange(index: number) {

@@ -6,8 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { AuthService } from '../shared/auth/auth.service';
-import { GraphQLService } from '../shared/graphql/graphql.service';
+import { ApiService } from '../shared/api/api.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { AskFeedback } from '../shared/types/ask-feedback.types';
 import {
@@ -41,16 +40,14 @@ export class AskFeedbackComponent {
 
   private activatedRoute = inject(ActivatedRoute);
 
-  private authService = inject(AuthService);
+  private apiService = inject(ApiService);
 
-  private graphQLService = inject(GraphQLService);
-
-  private receiverEmail: string = this.activatedRoute.snapshot.queryParams['receverEmail'] ?? '';
+  private recipient: string = this.activatedRoute.snapshot.queryParams['recipient'] ?? '';
 
   protected messageMaxLength = 500;
 
   form = new FormGroup({
-    receiverEmails: new FormControl(this.receiverEmail ? [this.receiverEmail] : [], {
+    recipients: new FormControl(this.recipient ? [this.recipient] : [], {
       nonNullable: true,
       validators: [Validators.required, multipleEmailsValidatorFactory()],
     }),
@@ -66,23 +63,22 @@ export class AskFeedbackComponent {
   remainingUnsentEmails: string[] = [];
 
   async onSubmit() {
-    const token = await this.authService.getUserTokenId();
-    if (!token || this.form.invalid) {
+    if (this.form.invalid) {
       return;
     }
     this.disableForm(true);
 
-    const receiverEmails = getMultipleEmails(this.form.controls.receiverEmails.value);
-    from(receiverEmails)
+    const recipients = getMultipleEmails(this.form.controls.recipients.value);
+    from(recipients)
       .pipe(
-        concatMap((receiverEmail) => this.graphQLService.askFeedback(this.buildAskFeedback(receiverEmail, token))),
+        concatMap((recipient) => this.apiService.askFeedback(this.buildAskFeedback(recipient))),
         toArray(),
       )
       .subscribe((results) => {
-        this.sentEmails = [...this.sentEmails, ...receiverEmails.filter((_, index) => results[index])];
-        this.remainingUnsentEmails = receiverEmails.filter((_, index) => !results[index]);
+        this.sentEmails = [...this.sentEmails, ...recipients.filter((_, index) => results[index])];
+        this.remainingUnsentEmails = recipients.filter((_, index) => !results[index]);
 
-        this.setReceiverEmails(this.remainingUnsentEmails);
+        this.setRecipients(this.remainingUnsentEmails);
 
         if (this.remainingUnsentEmails.length) {
           this.disableForm(false);
@@ -97,23 +93,21 @@ export class AskFeedbackComponent {
     this.submitInProgress = submitInProgress;
   }
 
-  private buildAskFeedback(receiverEmail: string, token: string): AskFeedback {
+  private buildAskFeedback(recipient: string): AskFeedback {
     return {
-      token,
-      email: this.authService.userSnapshot?.email ?? '',
-      senderEmail: receiverEmail, // !FIXME: the `senderEmail` is indeed the email of the receiver...
-      text: this.form.controls.message.value ?? '',
+      recipient,
+      message: this.form.controls.message.value ?? '',
     };
   }
 
-  private setReceiverEmails(emails: string[]) {
-    this.form.controls.receiverEmails.setValue(emails);
-    this.form.controls.receiverEmails.updateValueAndValidity();
+  private setRecipients(emails: string[]) {
+    this.form.controls.recipients.setValue(emails);
+    this.form.controls.recipients.updateValueAndValidity();
   }
 
   private navigateToSuccess() {
     const state: AskFeedbackSuccess = {
-      receiverEmails: this.sentEmails,
+      recipients: this.sentEmails,
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
   }

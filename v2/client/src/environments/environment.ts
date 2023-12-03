@@ -1,5 +1,4 @@
 import { FirebaseOptions } from '@angular/fire/app';
-import { Options as ApolloOptions } from 'apollo-angular/http';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: '',
@@ -11,14 +10,10 @@ const firebaseOptions: FirebaseOptions = {
   measurementId: '',
 };
 
-const apolloOptions: ApolloOptions = {
-  uri: '',
-};
-
 export const environment = {
   production: true,
   firebaseOptions,
-  apolloOptions,
+  apiBaseUrl: '',
   allowedEmailDomains: ['zenika.com'],
   signInAsGuest: false,
 };

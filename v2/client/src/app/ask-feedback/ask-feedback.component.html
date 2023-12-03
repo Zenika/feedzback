@@ -21,7 +21,7 @@
 
 @if (!sentEmails.length || remainingUnsentEmails.length) {
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-emails-field class="app-ask-feedback__field" [emails]="form.controls.receiverEmails" />
+    <app-emails-field class="app-ask-feedback__field" [emails]="form.controls.recipients" />
 
     <mat-form-field appearance="outline" class="app-ask-feedback__field">
       <mat-label>Message</mat-label>

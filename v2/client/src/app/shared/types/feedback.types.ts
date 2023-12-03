@@ -11,7 +11,7 @@ export type ReceivedFeedback = FeedbackBase & {
 };
 
 export type SentFeedback = FeedbackBase & {
-  receverEmail: string; // !FIXME: rename `receiverEmail`
+  receiverEmail: string;
 };
 
 export type Feedback = ReceivedFeedback & SentFeedback;

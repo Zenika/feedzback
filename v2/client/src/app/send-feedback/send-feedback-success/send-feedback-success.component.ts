@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { AuthService } from '../../shared/auth/auth.service';
 import { SendFeedbackSuccess } from './send-feedback-success.types';
@@ -21,11 +21,17 @@ export class SendFeedbackSuccessComponent implements AfterViewInit {
 
   private authService = inject(AuthService);
 
+  private router = inject(Router);
+
   protected signOut() {
     this.authService.signOut().subscribe();
   }
 
   ngAfterViewInit(): void {
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.65 } });
+    if (this.state.receiverEmail) {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.65 } });
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

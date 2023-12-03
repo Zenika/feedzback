@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AskFeedbackAltComponent } from './ask-feedback-alt/ask-feedback-alt.component';
 import { AskFeedbackSuccessComponent } from './ask-feedback/ask-feedback-success/ask-feedback-success.component';
 import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
 import { DemoContentComponent } from './demo-content/demo-content.component';
@@ -35,19 +34,7 @@ export const routes: Routes = [
   {
     path: 'ask/success',
     component: AskFeedbackSuccessComponent,
-    canActivate: [sendFeedbackGuard],
-    title: 'FeedZback - Demande réussie',
-  },
-  {
-    path: 'ask-alt',
-    component: AskFeedbackAltComponent,
     canActivate: [authGuard],
-    title: 'FeedZback - Demander',
-  },
-  {
-    path: 'ask-alt/success',
-    component: AskFeedbackSuccessComponent,
-    canActivate: [sendFeedbackGuard],
     title: 'FeedZback - Demande réussie',
   },
   {
@@ -59,7 +46,6 @@ export const routes: Routes = [
   {
     path: 'send/success',
     component: SendFeedbackSuccessComponent,
-    canActivate: [sendFeedbackGuard],
     title: 'FeedZback - Envoi réussi',
   },
   {

@@ -7,7 +7,6 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { provideBaseHref } from './shared/base-href.provider';
-import { provideGraphQL } from './shared/graphql/graphql.providers';
 import { provideI18n } from './shared/i18n/i18n.providers';
 import { provideSvgIcons } from './shared/icons/icons.provider';
 import { provideMatPaginatorIntl } from './shared/material/paginator-intl.provider';
@@ -23,7 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
     importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseOptions), AngularFireAuthModule),
-    provideGraphQL(),
     provideMatPaginatorIntl(),
   ],
 };

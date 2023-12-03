@@ -3,6 +3,14 @@
   Je donne du feedZback
 </h1>
 
+@if (askedFeedbackDetails) {
+  <app-message type="info">
+    Vous répondez à la demande de FeedZback qui vous a été envoyée par
+    <strong>{{ askedFeedbackDetails.receiverEmail }}</strong
+    >.
+  </app-message>
+}
+
 @if (hasError) {
   <app-message type="danger">
     <strong>Oops&nbsp;!</strong><br />
@@ -17,8 +25,13 @@
 
       <mat-form-field appearance="outline" class="app-send-feedback__field">
         <mat-label>Votre email</mat-label>
-        <input [formControl]="form.controls.senderEmail" type="email" matInput placeholder="marie.durand@gmail.com" />
-        <mat-error>{{ form.controls.senderEmail.errors | validationErrorMessage }}</mat-error>
+        <input
+          [value]="askedFeedbackDetails?.senderEmail"
+          readonly
+          type="email"
+          matInput
+          placeholder="marie.durand@gmail.com"
+        />
       </mat-form-field>
 
       <h3><mat-icon>hearing</mat-icon> Votre collègue</h3>
@@ -26,8 +39,14 @@
 
     <mat-form-field appearance="outline" class="app-send-feedback__field">
       <mat-label>Email de votre collègue</mat-label>
-      <input [formControl]="form.controls.receverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
-      <mat-error>{{ form.controls.receverEmail.errors | validationErrorMessage }}</mat-error>
+      <input
+        [formControl]="form.controls.receiverEmail"
+        [readonly]="!!askedFeedbackDetails"
+        type="email"
+        matInput
+        placeholder="jean.dupont@zenika.com"
+      />
+      <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="app-send-feedback__field">

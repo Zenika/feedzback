@@ -1,3 +1,3 @@
 export type AskFeedbackSuccess = {
-  receiverEmails: string[];
+  recipients: string[];
 };

@@ -5,12 +5,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { ReplaySubject, combineLatestWith, of, switchMap } from 'rxjs';
-import { AuthService } from '../../shared/auth/auth.service';
-import { GraphQLService } from '../../shared/graphql/graphql.service';
+import { ReplaySubject, of, switchMap } from 'rxjs';
 import { MessageComponent } from '../../shared/message/message.component';
 import { Feedback } from '../../shared/types/feedback.types';
 import { AllowedEmailDomainsPipe } from '../../shared/validation/allowed-email-domains/allowed-email-domains.pipe';
+import { ApiService } from '../api/api.service';
 import { getFeedbackType } from './feedback.helpers';
 import { FeedbackType } from './feedback.types';
 
@@ -35,9 +34,7 @@ import { FeedbackType } from './feedback.types';
 export class FeedbackComponent implements OnChanges {
   @HostBinding('class.app-feedback') hasCss = true;
 
-  private authService = inject(AuthService);
-
-  private graphQLService = inject(GraphQLService);
+  private apiService = inject(ApiService);
 
   @Input({ required: true }) id!: string;
 
@@ -50,14 +47,13 @@ export class FeedbackComponent implements OnChanges {
   protected feedbackType = FeedbackType;
 
   protected geColleagueEmail(feedback: Feedback): string | undefined {
-    return this.type === this.feedbackType.received ? feedback.senderEmail : feedback.receverEmail;
+    return this.type === this.feedbackType.received ? feedback.senderEmail : feedback.receiverEmail;
   }
 
   protected inputs$ = new ReplaySubject<{ id: string; type?: FeedbackType }>(1);
 
   protected feedback$ = this.inputs$.pipe(
-    combineLatestWith(this.authService.getUserTokenId()),
-    switchMap(([{ id, type }, token]) => (type && token ? this.graphQLService.getFeedbackById(id, token) : of(null))),
+    switchMap(({ id, type }) => (type ? this.apiService.getFeedbackById(id) : of(null))),
   );
 
   ngOnChanges({ id, type }: SimpleChanges): void {

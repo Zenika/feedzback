@@ -5,14 +5,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../shared/api/api.service';
 import { AuthService } from '../shared/auth/auth.service';
-import { GraphQLService } from '../shared/graphql/graphql.service';
 import { MessageComponent } from '../shared/message/message.component';
 import { SendFeedback } from '../shared/types/send-feedback.types';
 import { ALLOWED_EMAIL_DOMAINS } from '../shared/validation/allowed-email-domains/allowed-email-domain.provider';
 import { allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains/allowed-email-domains.validator';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
 import { SendFeedbackSuccess } from './send-feedback-success/send-feedback-success.types';
+import { SendFeedbackService } from './send-feedback.service';
 
 @Component({
   selector: 'app-send-feedback',
@@ -37,17 +38,11 @@ export class SendFeedbackComponent {
 
   private activatedRoute = inject(ActivatedRoute);
 
-  private authService = inject(AuthService);
+  protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
 
-  private graphQLService = inject(GraphQLService);
+  protected askedFeedbackDetails = inject(SendFeedbackService).askedFeedbackDetails;
 
-  protected isAnonymous = this.authService.userSnapshot?.isAnonymous;
-
-  private get defaultSenderEmail(): string {
-    return this.isAnonymous
-      ? this.activatedRoute.snapshot.queryParams['senderEmail']
-      : this.authService.userSnapshot?.email;
-  }
+  private apiService = inject(ApiService);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
@@ -58,8 +53,7 @@ export class SendFeedbackComponent {
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
   form = new FormGroup({
-    senderEmail: new FormControl(this.defaultSenderEmail, [Validators.required, Validators.email]),
-    receverEmail: new FormControl(this.getQueryParam('receverEmail'), [
+    receiverEmail: new FormControl(this.getQueryParam('receiverEmail'), [
       Validators.required,
       Validators.email,
       this.allowedEmailDomainsValidator,
@@ -76,22 +70,33 @@ export class SendFeedbackComponent {
   feedbackId?: string;
 
   async onSubmit() {
-    const token = await this.authService.getUserTokenId();
-    if (!token || this.form.invalid) {
+    if (this.form.invalid) {
       return;
     }
     this.hasError = false;
     this.disableForm(true);
 
-    this.graphQLService.sendFeedback(this.buildSendFeedback(token)).subscribe((feedbackId) => {
-      this.hasError = feedbackId === false;
-      if (feedbackId === false) {
-        this.disableForm(false);
-      } else {
-        this.feedbackId = feedbackId;
-        this.navigateToSuccess();
-      }
-    });
+    if (this.askedFeedbackDetails) {
+      this.apiService
+        .sendAskedFeedback(this.form.value as SendFeedback, this.askedFeedbackDetails.recipientToken)
+        .subscribe((success) => {
+          if (!success) {
+            this.disableForm(false);
+          } else {
+            this.navigateToSuccess();
+          }
+        });
+    } else {
+      this.apiService.sendFeedback(this.form.value as SendFeedback).subscribe((feedbackId) => {
+        this.hasError = feedbackId === false;
+        if (feedbackId === false) {
+          this.disableForm(false);
+        } else {
+          this.feedbackId = feedbackId;
+          this.navigateToSuccess();
+        }
+      });
+    }
   }
 
   private disableForm(submitInProgress: boolean) {
@@ -99,16 +104,9 @@ export class SendFeedbackComponent {
     this.submitInProgress = submitInProgress;
   }
 
-  private buildSendFeedback(token: string): SendFeedback {
-    return {
-      token,
-      ...(this.form.value as Omit<SendFeedback, 'token'>),
-    };
-  }
-
   private navigateToSuccess() {
     const state: SendFeedbackSuccess = {
-      receiverEmail: this.form.value.receverEmail as string,
+      receiverEmail: this.form.value.receiverEmail as string,
       feedbackId: this.isAnonymous ? undefined : this.feedbackId,
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
