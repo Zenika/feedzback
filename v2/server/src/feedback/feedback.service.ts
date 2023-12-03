@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { SendFeedzbackDto } from 'src/feedzback/dto/send-feedzback.dto';
+import { SendFeedbackDto } from 'src/feedback/feedback.dto';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AskFeedzbackModel } from './models/ask-feedzback.model';
+import { AskFeedback } from './feedback.types';
 
 @Injectable()
-export class FeedzbackService {
+export class FeedbackService {
   constructor(private firebaseService: FirebaseService) {}
 
-  async ask(model: AskFeedzbackModel): Promise<{ id: string }> {
-    const { id } = await (await this.firebaseService.firestore.collection('feedzback').add(model)).get();
+  async ask(model: AskFeedback): Promise<{ id: string }> {
+    const { id } = await (await this.firebaseService.firestore.collection('feedback').add(model)).get();
     return { id };
   }
 
   async getFeedbacks(userEmail: string) {
     const docRefs = await this.firebaseService.firestore
-      .collection('feedzback')
+      .collection('feedback')
       .doc(userEmail)
       .collection('sent')
       .listDocuments();
@@ -24,16 +24,16 @@ export class FeedzbackService {
     );
   }
 
-  sendFeedback(sendFeedback: SendFeedzbackDto & { senderEmail: string }) {
+  sendFeedback(sendFeedback: SendFeedbackDto & { senderEmail: string }) {
     this.firebaseService.firestore
-      .collection('feedzback')
+      .collection('feedback')
       .doc(sendFeedback.receiverEmail)
       .collection('received')
       .add(sendFeedback);
 
     if (sendFeedback.senderEmail.includes('@zenika.com')) {
       this.firebaseService.firestore
-        .collection('feedzback')
+        .collection('feedback')
         .doc(sendFeedback.senderEmail)
         .collection('sent')
         .add(sendFeedback);

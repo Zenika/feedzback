@@ -1,6 +1,6 @@
 import { IsBoolean, IsEmail, IsString } from 'class-validator';
 
-export class AskFeedzbackDto {
+export class AskFeedbackDto {
   @IsEmail()
   recipient: string;
 
@@ -10,3 +10,10 @@ export class AskFeedzbackDto {
   @IsBoolean()
   shared: boolean;
 }
+
+export type SendFeedbackDto = {
+  receiverEmail: string;
+  positiveFeedback: string;
+  toImprove: string;
+  comment: string;
+};
