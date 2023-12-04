@@ -4,9 +4,9 @@
   &__addons {
     margin-bottom: 1.5rem;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     gap: 0.5rem;
-    white-space: nowrap;
     opacity: 0.7;
 
     @include app.media-breakpoint-up(md) {
@@ -15,7 +15,12 @@
       gap: 1.5rem;
     }
 
+    > * {
+      display: flex;
+    }
+
     mat-icon {
+      flex-shrink: 0;
       margin-right: 0.25rem;
       vertical-align: bottom;
       transform: scale(0.9);

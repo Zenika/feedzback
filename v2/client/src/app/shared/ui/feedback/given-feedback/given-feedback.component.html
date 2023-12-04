@@ -40,3 +40,16 @@
     <p>{{ feedback.comment }}</p>
   </div>
 }
+
+@if (feedback.shared) {
+  <div class="app-given-feedback__addons">
+    <div>
+      <mat-icon>share</mat-icon>
+      @if (type === feedbackType.received) {
+        Ce FeedZback est partagé avec votre manager
+      } @else {
+        Ce FeedZback est partagé avec le manager de votre collègue
+      }
+    </div>
+  </div>
+}
