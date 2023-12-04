@@ -89,8 +89,12 @@ export const routes: Routes = [
     title: 'FeedZback - Demo content',
   },
   {
-    path: '**',
+    path: 'not-found',
     component: NotFoundComponent,
     title: 'FeeddZback - Page introuvable',
+  },
+  {
+    path: '**',
+    redirectTo: '/not-found',
   },
 ];

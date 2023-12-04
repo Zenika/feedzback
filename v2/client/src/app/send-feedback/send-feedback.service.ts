@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
-
-export type AskedFeedbackDetails = {
-  senderEmail: string;
-  receiverEmail: string;
-  recipientToken: string;
-};
+import { AskedFeedback } from '../shared/feedback/feedback.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SendFeedbackService {
-  askedFeedbackDetails?: AskedFeedbackDetails;
+  askedFeedback?: AskedFeedback;
 
   init() {
-    this.askedFeedbackDetails = undefined;
+    this.askedFeedback = undefined;
   }
 
-  set(value: AskedFeedbackDetails) {
-    this.askedFeedbackDetails = value;
+  set(value: AskedFeedback) {
+    this.askedFeedback = value;
   }
 }

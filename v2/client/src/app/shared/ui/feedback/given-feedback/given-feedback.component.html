@@ -1,0 +1,42 @@
+<div class="app-given-feedback__addons">
+  <div><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
+
+  <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
+
+  <a class="gbl-link" routerLink="/ask" [queryParams]="{ recipient: geColleagueEmail(feedback) }">
+    <mat-icon>live_help</mat-icon>Demander
+  </a>
+
+  @if (geColleagueEmail(feedback) | allowedEmailDomains) {
+    <a class="gbl-link" routerLink="/send" [queryParams]="{ receiverEmail: geColleagueEmail(feedback) }">
+      <mat-icon>chat</mat-icon>Donner
+    </a>
+  }
+</div>
+
+<mat-card appearance="outlined" class="app-given-feedback-item">
+  <mat-card-header>
+    <mat-card-title class="app-given-feedback-item__title">
+      <mat-icon>new_releases</mat-icon> Points positifs
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>{{ feedback.positive }}</mat-card-content>
+</mat-card>
+
+<mat-card appearance="outlined" class="app-given-feedback-item">
+  <mat-card-header>
+    <mat-card-title class="app-given-feedback-item__title">
+      <mat-icon>moving</mat-icon> Axes d'améliorations
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>{{ feedback.negative }}</mat-card-content>
+</mat-card>
+
+@if (feedback.comment) {
+  <div class="app-given-feedback-item">
+    <h2 class="app-given-feedback-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
+    <p>{{ feedback.comment }}</p>
+  </div>
+}

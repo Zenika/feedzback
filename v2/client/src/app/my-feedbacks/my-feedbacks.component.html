@@ -5,11 +5,7 @@
     <ng-container [ngTemplateOutlet]="filterTmpl" />
 
     @if (feedbackType.received.length) {
-      <app-feedback-list
-        [type]="feedbackType.received"
-        [feedbacks]="receivedFeedbacks"
-        [filter]="filter"
-      ></app-feedback-list>
+      <app-feedback-list [type]="feedbackType.received" [feedbacks]="received" [filter]="filter"></app-feedback-list>
     } @else if (fetched) {
       <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
     }
@@ -19,7 +15,7 @@
     <ng-container [ngTemplateOutlet]="filterTmpl" />
 
     @if (feedbackType.sent.length) {
-      <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sentFeedbacks" [filter]="filter"></app-feedback-list>
+      <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sent" [filter]="filter"></app-feedback-list>
     } @else if (fetched) {
       <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
     }

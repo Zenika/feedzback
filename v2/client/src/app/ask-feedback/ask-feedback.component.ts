@@ -7,8 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { ApiService } from '../shared/api/api.service';
-import { AskFeedback } from '../shared/types/ask-feedback.types';
+import { AskFeedbackDto } from '../shared/feedback/feedback.dto';
+import { FeedbackService } from '../shared/feedback/feedback.service';
 import { MessageComponent } from '../shared/ui/message/message.component';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
@@ -42,13 +42,13 @@ export class AskFeedbackComponent {
 
   private activatedRoute = inject(ActivatedRoute);
 
-  private apiService = inject(ApiService);
+  private formBuilder = inject(NonNullableFormBuilder);
+
+  private feedbackService = inject(FeedbackService);
 
   private recipient: string = this.activatedRoute.snapshot.queryParams['recipient'] ?? '';
 
   protected messageMaxLength = 500;
-
-  private formBuilder = inject(NonNullableFormBuilder);
 
   form = this.formBuilder.group({
     recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
@@ -73,7 +73,7 @@ export class AskFeedbackComponent {
     const recipients = getMultipleEmails(this.form.controls.recipients.value);
     from(recipients)
       .pipe(
-        concatMap((recipient) => this.apiService.askFeedback(this.buildAskFeedback(recipient))),
+        concatMap((recipient) => this.feedbackService.ask(this.buildDto(recipient))),
         toArray(),
       )
       .subscribe((results) => {
@@ -95,7 +95,7 @@ export class AskFeedbackComponent {
     this.submitInProgress = submitInProgress;
   }
 
-  private buildAskFeedback(recipient: string): AskFeedback {
+  private buildDto(recipient: string): AskFeedbackDto {
     return {
       recipient,
       message: this.form.controls.message.value,

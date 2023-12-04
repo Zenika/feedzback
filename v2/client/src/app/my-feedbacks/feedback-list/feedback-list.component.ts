@@ -62,7 +62,7 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
 
   protected isMobile = false;
 
-  protected columns: (keyof NormalizedFeedback | 'actions' | 'mixed')[] = ['email', 'createdAt', 'actions'];
+  protected columns: (keyof NormalizedFeedback | 'actions' | 'mixed')[] = ['email', 'date', 'actions'];
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
@@ -79,7 +79,7 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
       .device$.pipe(takeUntilDestroyed())
       .subscribe((device) => {
         this.isMobile = device === 'mobile';
-        this.columns = this.isMobile ? ['mixed', 'actions'] : ['email', 'createdAt', 'actions'];
+        this.columns = this.isMobile ? ['mixed', 'actions'] : ['email', 'date', 'actions'];
       });
   }
 

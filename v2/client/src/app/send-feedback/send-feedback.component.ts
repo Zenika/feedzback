@@ -1,13 +1,13 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../shared/api/api.service';
 import { AuthService } from '../shared/auth/auth.service';
-import { SendFeedback } from '../shared/types/send-feedback.types';
+import { FeedbackService } from '../shared/feedback/feedback.service';
 import { MessageComponent } from '../shared/ui/message/message.component';
 import { ALLOWED_EMAIL_DOMAINS } from '../shared/validation/allowed-email-domains/allowed-email-domain.provider';
 import { allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains/allowed-email-domains.validator';
@@ -24,6 +24,7 @@ import { SendFeedbackService } from './send-feedback.service';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSlideToggleModule,
     ValidationErrorMessagePipe,
     MessageComponent,
   ],
@@ -38,11 +39,13 @@ export class SendFeedbackComponent {
 
   private activatedRoute = inject(ActivatedRoute);
 
+  private formBuilder = inject(NonNullableFormBuilder);
+
   protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
 
-  protected askedFeedbackDetails = inject(SendFeedbackService).askedFeedbackDetails;
+  protected askedFeedback = inject(SendFeedbackService).askedFeedback;
 
-  private apiService = inject(ApiService);
+  private feedbackService = inject(FeedbackService);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
@@ -52,15 +55,15 @@ export class SendFeedbackComponent {
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
-  form = new FormGroup({
-    receiverEmail: new FormControl(this.getQueryParam('receiverEmail'), [
-      Validators.required,
-      Validators.email,
-      this.allowedEmailDomainsValidator,
-    ]),
-    positiveFeedback: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
-    toImprove: new FormControl('', [Validators.required, Validators.maxLength(this.messageMaxLength)]),
-    comment: new FormControl('', [Validators.maxLength(this.messageMaxLength)]),
+  form = this.formBuilder.group({
+    receiverEmail: [
+      this.askedFeedback?.receiverEmail ?? this.getQueryParam('receiverEmail'),
+      [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
+    ],
+    positive: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
+    negative: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
+    comment: ['', [Validators.maxLength(this.messageMaxLength)]],
+    shared: [this.askedFeedback?.shared ?? true],
   });
 
   submitInProgress = false;
@@ -76,23 +79,27 @@ export class SendFeedbackComponent {
     this.hasError = false;
     this.disableForm(true);
 
-    if (this.askedFeedbackDetails) {
-      this.apiService
-        .sendAskedFeedback(this.form.value as SendFeedback, this.askedFeedbackDetails.recipientToken)
+    const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
+
+    if (this.askedFeedback) {
+      this.feedbackService
+        .sendAsked({ id: this.askedFeedback.id, positive, negative, comment })
         .subscribe((success) => {
           if (!success) {
+            this.hasError = true;
             this.disableForm(false);
           } else {
+            this.feedbackId = this.isAnonymous ? undefined : this.askedFeedback?.id;
             this.navigateToSuccess();
           }
         });
     } else {
-      this.apiService.sendFeedback(this.form.value as SendFeedback).subscribe((feedbackId) => {
-        this.hasError = feedbackId === false;
-        if (feedbackId === false) {
+      this.feedbackService.send({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
+        this.hasError = !id;
+        if (!id) {
           this.disableForm(false);
         } else {
-          this.feedbackId = feedbackId;
+          this.feedbackId = id;
           this.navigateToSuccess();
         }
       });

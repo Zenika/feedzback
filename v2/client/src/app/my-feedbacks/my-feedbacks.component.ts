@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { ApiService } from '../shared/api/api.service';
+import { FeedbackService } from '../shared/feedback/feedback.service';
 import { getFeedbackType } from '../shared/ui/feedback/feedback.helpers';
 import { FeedbackType } from '../shared/ui/feedback/feedback.types';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
@@ -48,20 +48,20 @@ export default class MyFeedbacksComponent implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
 
-  private apiService = inject(ApiService);
+  private feedbackService = inject(FeedbackService);
 
-  protected receivedFeedbacks: NormalizedFeedback[] = [];
+  protected received: NormalizedFeedback[] = [];
 
-  protected sentFeedbacks: NormalizedFeedback[] = [];
+  protected sent: NormalizedFeedback[] = [];
 
   protected feedbackType = FeedbackType;
 
   protected fetched = false;
 
   async ngOnInit() {
-    this.apiService.getFeedbackList().subscribe(({ receivedFeedbacks, sentFeedbacks }) => {
-      this.receivedFeedbacks = normalizeReceivedFeedbacks(receivedFeedbacks);
-      this.sentFeedbacks = normalizeSentFeedbacks(sentFeedbacks);
+    this.feedbackService.getList().subscribe(({ received, sent }) => {
+      this.received = normalizeReceivedFeedbacks(received);
+      this.sent = normalizeSentFeedbacks(sent);
       this.fetched = true;
     });
   }

@@ -1,6 +1,5 @@
-// ----- Feedback -----
-
 export type Feedback = {
+  id: string;
   senderEmail: string;
   receiverEmail: string;
   positive: string;
@@ -13,13 +12,8 @@ export type Feedback = {
   updatedAt: number;
 };
 
-export type FeedbackWithId = Feedback & FeedbackIdObj;
-
-export type FeedbackIdObj = { id: string };
-
-// ----- AskedFeedback -----
-
 export type AskedFeedback = {
+  id: string;
   senderEmail: string;
   receiverEmail: string;
   message: string;
@@ -28,13 +22,11 @@ export type AskedFeedback = {
   createdAt: number;
 };
 
-export type AskedFeedbackWithId = AskedFeedback & FeedbackIdObj;
-
-// ----- TypedFeedbacks -----
+export type FeedbackIdObj = Pick<Feedback, 'id'>;
 
 export type TypedFeedbacks = {
-  received: Feedback[];
   sent: Feedback[];
+  received: Feedback[];
   asked: AskedFeedback[];
   waitingForSend: AskedFeedback[];
 };

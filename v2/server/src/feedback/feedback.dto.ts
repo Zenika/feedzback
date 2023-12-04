@@ -11,9 +11,33 @@ export class AskFeedbackDto {
   shared: boolean;
 }
 
-export type SendFeedbackDto = {
-  receiverEmail: string;
-  positiveFeedback: string;
-  toImprove: string;
+export class SendAskedFeedbackDto {
+  @IsString()
+  id: string;
+
+  @IsString()
+  positive: string;
+
+  @IsString()
+  negative: string;
+
+  @IsString()
   comment: string;
-};
+}
+
+export class SendFeedbackDto {
+  @IsEmail()
+  receiverEmail: string;
+
+  @IsString()
+  positive: string;
+
+  @IsString()
+  negative: string;
+
+  @IsString()
+  comment: string;
+
+  @IsBoolean()
+  shared: boolean;
+}
