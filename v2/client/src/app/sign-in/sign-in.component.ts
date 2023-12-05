@@ -1,7 +1,6 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
@@ -9,7 +8,6 @@ import { AuthService } from '../shared/auth/auth.service';
   standalone: true,
   imports: [RouterLink, MatIconModule],
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class SignInComponent {
@@ -20,8 +18,6 @@ export class SignInComponent {
   private authService = inject(AuthService);
 
   protected disabled = false;
-
-  protected signInAsGuest = environment.signInAsGuest;
 
   signInWithGoogle() {
     this.disabled = true;

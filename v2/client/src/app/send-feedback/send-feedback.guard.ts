@@ -17,11 +17,6 @@ export const sendFeedbackGuard = (route: ActivatedRouteSnapshot, state: RouterSt
   return combineLatest([authService.isKnownUser$, authService.isAnonymous$]).pipe(
     first(),
     switchMap(([isKnownUser, isAnonymous]) => {
-      // !DEPRECATED
-      // if (environment.signInAsGuest && route.queryParamMap.has('guest')) {
-      //  return authService.signInAnonymously();
-      // }
-
       const { id } = route.queryParams;
       if (id) {
         return feedbackService.checkAsked(id).pipe(

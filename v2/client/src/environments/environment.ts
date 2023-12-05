@@ -15,5 +15,4 @@ export const environment = {
   firebaseOptions,
   apiBaseUrl: '',
   allowedEmailDomains: ['zenika.com'],
-  signInAsGuest: false,
 };
