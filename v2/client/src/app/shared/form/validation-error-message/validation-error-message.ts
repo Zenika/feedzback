@@ -1,4 +1,6 @@
 import { ValidationErrors } from '@angular/forms';
+import { ALLOWED_EMAIL_DOMAINS_ERROR_KEY } from '../allowed-email-domains/allowed-email-domains.validator';
+import { MULTIPLE_EMAILS_ERROR_KEY } from '../multiple-emails';
 
 export const getValidationErrorMessage = (errors: ValidationErrors | null): string | null => {
   if (errors?.['required']) {
@@ -7,11 +9,11 @@ export const getValidationErrorMessage = (errors: ValidationErrors | null): stri
   if (errors?.['email']) {
     return 'Email invalide';
   }
-  if (errors?.['multipleEmails']?.length > 0) {
-    return `Email(s) invalide(s): ${errors?.['multipleEmails'].join(', ')}`;
+  if (errors?.[MULTIPLE_EMAILS_ERROR_KEY]?.length > 0) {
+    return `Email(s) invalide(s): ${errors?.[MULTIPLE_EMAILS_ERROR_KEY].join(', ')}`;
   }
-  if (errors?.['allowedEmailDomains']) {
-    return `Domaine(s) autorisé(s): ${errors?.['allowedEmailDomains'].join(', ')}`;
+  if (errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY]) {
+    return `Domaine(s) autorisé(s): ${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', ')}`;
   }
   if (errors?.['minlength']) {
     return `${errors?.['minlength'].requiredLength} charactères au minimum`;

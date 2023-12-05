@@ -8,10 +8,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
 import { FeedbackService } from '../shared/feedback/feedback.service';
+import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
+import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
 import { MessageComponent } from '../shared/ui/message/message.component';
-import { ALLOWED_EMAIL_DOMAINS } from '../shared/validation/allowed-email-domains/allowed-email-domain.provider';
-import { allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains/allowed-email-domains.validator';
-import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message.pipe';
 import { SendFeedbackSuccess } from './send-feedback-success/send-feedback-success.types';
 import { SendFeedbackService } from './send-feedback.service';
 

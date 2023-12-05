@@ -26,6 +26,8 @@ export const getMultipleEmails = (
     .filter((email) => email);
 };
 
+export const MULTIPLE_EMAILS_ERROR_KEY = 'multipleEmails';
+
 export const multipleEmailsValidatorFactory =
   (required = true, emailSeparator = MULTIPLE_EMAILS_SEP) =>
   (control: AbstractControl): ValidationErrors | null => {
@@ -33,7 +35,7 @@ export const multipleEmailsValidatorFactory =
 
     const multipleEmails = emails.filter((email) => !EMAIL_REGEXP.test(email)); // List of invalid emails
     if (multipleEmails.length) {
-      return { multipleEmails };
+      return { [MULTIPLE_EMAILS_ERROR_KEY]: multipleEmails };
     }
 
     if (required && !emails.length) {

@@ -11,8 +11,8 @@ import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../../shared/validation/multiple-emails.validator';
-import { ValidationErrorMessagePipe } from '../../shared/validation/validation-error-message.pipe';
+} from '../../shared/form/multiple-emails';
+import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message/validation-error-message.pipe';
 
 @Component({
   selector: 'app-emails-field',

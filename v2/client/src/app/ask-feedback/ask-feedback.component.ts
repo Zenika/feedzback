@@ -9,12 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { AskFeedbackDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { MessageComponent } from '../shared/ui/message/message.component';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../shared/validation/multiple-emails.validator';
+} from '../shared/form/multiple-emails';
+import { MessageComponent } from '../shared/ui/message/message.component';
 import { AskFeedbackSuccess } from './ask-feedback-success/ask-feedback-success.types';
 import { EmailsFieldComponent } from './emails-field/emails-field.component';
 

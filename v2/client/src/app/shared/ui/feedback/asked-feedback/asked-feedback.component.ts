@@ -6,7 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AskedFeedback } from '../../../feedback/feedback.types';
-import { AllowedEmailDomainsPipe } from '../../../validation/allowed-email-domains/allowed-email-domains.pipe';
+import { AllowedEmailDomainsPipe } from '../../../form/allowed-email-domains';
 import { MessageComponent } from '../../message/message.component';
 import { FeedbackType } from '../feedback.types';
 
