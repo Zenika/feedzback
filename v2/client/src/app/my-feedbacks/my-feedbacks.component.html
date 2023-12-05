@@ -4,7 +4,7 @@
   <mat-tab label="reçus">
     <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-    @if (feedbackType.received.length) {
+    @if (received.length) {
       <app-feedback-list [type]="feedbackType.received" [feedbacks]="received" [filter]="filter"></app-feedback-list>
     } @else if (fetched) {
       <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
@@ -14,7 +14,7 @@
   <mat-tab label="envoyés">
     <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-    @if (feedbackType.sent.length) {
+    @if (sent.length) {
       <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sent" [filter]="filter"></app-feedback-list>
     } @else if (fetched) {
       <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
