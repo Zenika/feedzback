@@ -58,8 +58,6 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
 
   dataSource!: MatTableDataSource<NormalizedFeedback>;
 
-  protected feedbackType = FeedbackType;
-
   protected isMobile = false;
 
   protected columns: (keyof NormalizedFeedback | 'actions' | 'mixed')[] = ['email', 'date', 'actions'];

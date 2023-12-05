@@ -1,6 +1,22 @@
 <ng-template #dialogTmplRef>
   @if (type) {
-    <h1 mat-dialog-title>FeedZback {{ type === feedbackType.received ? 'reçu' : 'envoyé' }}</h1>
+    <h1 mat-dialog-title>
+      FeedZback
+      @switch (type) {
+        @case (feedbackType.sent) {
+          envoyé
+        }
+        @case (feedbackType.received) {
+          reçu
+        }
+        @case (feedbackType.asked) {
+          demandé
+        }
+        @case (feedbackType.pending) {
+          en attente
+        }
+      }
+    </h1>
 
     <app-feedback mat-dialog-content [type]="type" [id]="id" />
 

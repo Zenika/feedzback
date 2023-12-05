@@ -29,10 +29,10 @@ export type FeedbackIdObj = {
 };
 
 export type TypedFeedbacks = {
-  received: Feedback[];
   sent: Feedback[];
+  received: Feedback[];
   asked: AskedFeedback[];
-  waitingForSend: AskedFeedback[];
+  pending: AskedFeedback[];
 };
 
 // ----- Other types -----
@@ -40,6 +40,8 @@ export type TypedFeedbacks = {
 export const FeedbackType = {
   sent: 'sent',
   received: 'received',
+  asked: 'asked',
+  pending: 'pending',
 } as const;
 
 export type FeedbackType = (typeof FeedbackType)[keyof typeof FeedbackType];

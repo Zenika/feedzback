@@ -11,7 +11,7 @@ export const isSentFeedback = (value: AnyFeedbackWithId, userEmail: string): val
 export const isAskedFeedback = (value: AnyFeedbackWithId, userEmail: string): value is AskedFeedbackWithId =>
   value.status === 'asked' && value.receiverEmail === userEmail;
 
-export const isWaitingForSendFeedback = (value: AnyFeedbackWithId, userEmail: string): value is AskedFeedbackWithId =>
+export const isPendingFeedback = (value: AnyFeedbackWithId, userEmail: string): value is AskedFeedbackWithId =>
   value.status === 'asked' && value.senderEmail === userEmail;
 
 export const mapToTypedFeedbacks = (feedbacks: AnyFeedbackWithId[], userEmail: string): TypedFeedbacks =>
@@ -23,8 +23,8 @@ export const mapToTypedFeedbacks = (feedbacks: AnyFeedbackWithId[], userEmail: s
         list.sent.push(feedback);
       } else if (isAskedFeedback(feedback, userEmail)) {
         list.asked.push(feedback);
-      } else if (isWaitingForSendFeedback(feedback, userEmail)) {
-        list.waitingForSend.push(feedback);
+      } else if (isPendingFeedback(feedback, userEmail)) {
+        list.pending.push(feedback);
       }
       return list;
     },
@@ -32,6 +32,6 @@ export const mapToTypedFeedbacks = (feedbacks: AnyFeedbackWithId[], userEmail: s
       received: [],
       sent: [],
       asked: [],
-      waitingForSend: [],
+      pending: [],
     } as TypedFeedbacks,
   );

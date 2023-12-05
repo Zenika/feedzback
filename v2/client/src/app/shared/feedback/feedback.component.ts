@@ -26,6 +26,8 @@ export class FeedbackComponent implements OnChanges {
   })
   type?: FeedbackType;
 
+  protected feedbackType = FeedbackType;
+
   protected inputs$ = new ReplaySubject<{ id: string; type?: FeedbackType }>(1);
 
   protected feedback$ = this.inputs$.pipe(

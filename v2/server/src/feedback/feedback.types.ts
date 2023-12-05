@@ -32,7 +32,7 @@ export type TypedFeedbacks = {
   received: Feedback[];
   sent: Feedback[];
   asked: AskedFeedback[];
-  waitingForSend: AskedFeedback[];
+  pending: AskedFeedback[];
 };
 
 // ----- FeedbackIdObj -----

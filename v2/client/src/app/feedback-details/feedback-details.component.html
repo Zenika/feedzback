@@ -5,7 +5,21 @@
 
   <h1 class="gbl-page-title">
     <mat-icon>forum</mat-icon>
-    FeedZback {{ type === feedbackType.received ? 'reçu' : 'envoyé' }}
+    FeedZback
+    @switch (type) {
+      @case (feedbackType.sent) {
+        envoyé
+      }
+      @case (feedbackType.received) {
+        reçu
+      }
+      @case (feedbackType.asked) {
+        demandé
+      }
+      @case (feedbackType.pending) {
+        en attente
+      }
+    }
   </h1>
 
   <app-feedback [type]="type" [id]="id" />
