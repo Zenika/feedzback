@@ -11,6 +11,7 @@ import {
   from,
   map,
   of,
+  switchMap,
   tap,
 } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
@@ -25,9 +26,6 @@ export class AuthService {
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
-
-  // !FIXME: je crois que la librairie refresh le token quand c'est nécessaire. Or, ici on a figé sa valeur... :(
-  idToken?: string;
 
   userSnapshot?: User | null;
 
@@ -56,8 +54,7 @@ export class AuthService {
   );
 
   constructor() {
-    this.firebaseAuth.onAuthStateChanged(async (user) => {
-      this.idToken = await user?.getIdToken();
+    this.firebaseAuth.onAuthStateChanged((user) => {
       this.userSnapshot = user;
       this._user$.next(user);
     });
@@ -86,6 +83,17 @@ export class AuthService {
       first((isSignedIn) => !isSignedIn),
       tap(() => this.router.navigate(['/sign-in'])),
       catchError(() => of(false)),
+    );
+  }
+
+  getIdToken(): Observable<string | null> {
+    return from(this.userSnapshot?.getIdToken() ?? Promise.resolve(null));
+  }
+
+  withBearerToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+    return this.getIdToken().pipe(
+      map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
+      switchMap(request),
     );
   }
 }

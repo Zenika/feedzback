@@ -17,9 +17,11 @@ export class FeedbackService {
   private apiBaseUrl = environment.apiBaseUrl;
 
   ask(dto: AskFeedbackDto) {
-    return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/ask`, dto, { headers: this.authorizationHeader })
-      .pipe(catchError(() => of(false)));
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient
+        .post<boolean>(`${this.apiBaseUrl}/feedback/ask`, dto, { headers })
+        .pipe(catchError(() => of(false))),
+    );
   }
 
   checkAsked(id: string) {
@@ -33,24 +35,20 @@ export class FeedbackService {
   }
 
   send(dto: SendFeedbackDto) {
-    return this.httpClient.post<Partial<FeedbackIdObj>>(`${this.apiBaseUrl}/feedback/send`, dto, {
-      headers: this.authorizationHeader,
-    });
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.post<Partial<FeedbackIdObj>>(`${this.apiBaseUrl}/feedback/send`, dto, { headers }),
+    );
   }
 
   getList() {
-    return this.httpClient.get<TypedFeedbacks>(`${this.apiBaseUrl}/feedback/list`, {
-      headers: this.authorizationHeader,
-    });
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<TypedFeedbacks>(`${this.apiBaseUrl}/feedback/list`, { headers }),
+    );
   }
 
   getItem(id: string) {
-    return this.httpClient.get<Feedback | AskedFeedback | null>(`${this.apiBaseUrl}/feedback/item/${id}`, {
-      headers: this.authorizationHeader,
-    });
-  }
-
-  get authorizationHeader() {
-    return { Authorization: `Bearer ${this.authService.idToken}` };
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<Feedback | AskedFeedback | null>(`${this.apiBaseUrl}/feedback/item/${id}`, { headers }),
+    );
   }
 }
