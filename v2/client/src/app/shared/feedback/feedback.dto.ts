@@ -1,17 +1,17 @@
-export type AskFeedbackDto = {
+export type FeedbackRequestDto = {
   recipient: string;
   message: string;
   shared: boolean;
 };
 
-export type SendAskedFeedbackDto = {
+export type GiveRequestedFeedbackDto = {
   token: string;
   positive: string;
   negative: string;
   comment: string;
 };
 
-export type SendFeedbackDto = {
+export type GiveFeedbackDto = {
   receiverEmail: string;
   positive: string;
   negative: string;

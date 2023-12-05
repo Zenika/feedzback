@@ -5,27 +5,27 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
 import { FeedbackService } from '../feedback.service';
-import { AskedFeedback, FeedbackType } from '../feedback.types';
+import { FeedbackRequest, FeedbackType } from '../feedback.types';
 
 @Component({
-  selector: 'app-asked-feedback',
+  selector: 'app-requested-feedback',
   standalone: true,
   imports: [DatePipe, MatButtonModule, MatIconModule, AllowedEmailDomainsPipe],
-  templateUrl: './asked-feedback.component.html',
-  styleUrl: './asked-feedback.component.scss',
+  templateUrl: './requested-feedback.component.html',
+  styleUrl: './requested-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class AskedFeedbackComponent {
-  @HostBinding('class.app-asked-feedback') hasCss = true;
+export class RequestedFeedbackComponent {
+  @HostBinding('class.app-requested-feedback') hasCss = true;
 
-  @Input({ required: true }) feedback!: AskedFeedback;
+  @Input({ required: true }) feedback!: FeedbackRequest;
 
   @Input({ required: true }) type!: FeedbackType;
 
   protected feedbackType = FeedbackType;
 
-  protected geColleagueEmail(feedback: AskedFeedback): string | undefined {
-    return this.type === this.feedbackType.asked ? feedback.senderEmail : feedback.receiverEmail;
+  protected geColleagueEmail(feedback: FeedbackRequest): string | undefined {
+    return this.type === this.feedbackType.sentRequest ? feedback.senderEmail : feedback.receiverEmail;
   }
 
   private feedbackService = inject(FeedbackService);
@@ -34,7 +34,7 @@ export class AskedFeedbackComponent {
 
   protected giveNow() {
     this.feedbackService
-      .revealTokenId(this.feedback.id)
-      .subscribe(({ token }) => this.router.navigate(['/send'], { queryParams: { token } }));
+      .revealRequestTokenId(this.feedback.id)
+      .subscribe(({ token }) => this.router.navigate(['/give'], { queryParams: { token } }));
   }
 }

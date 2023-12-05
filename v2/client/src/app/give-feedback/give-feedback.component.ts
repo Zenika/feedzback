@@ -11,11 +11,11 @@ import { FeedbackService } from '../shared/feedback/feedback.service';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
 import { MessageComponent } from '../shared/ui/message/message.component';
-import { SendFeedbackSuccess } from './send-feedback-success/send-feedback-success.types';
-import { SendFeedbackService } from './send-feedback.service';
+import { GiveFeedbackSuccess } from './give-feedback-success/give-feedback-success.types';
+import { GiveFeedbackService } from './give-feedback.service';
 
 @Component({
-  selector: 'app-send-feedback',
+  selector: 'app-give-feedback',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -27,12 +27,12 @@ import { SendFeedbackService } from './send-feedback.service';
     ValidationErrorMessagePipe,
     MessageComponent,
   ],
-  templateUrl: './send-feedback.component.html',
-  styleUrl: './send-feedback.component.scss',
+  templateUrl: './give-feedback.component.html',
+  styleUrl: './give-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class SendFeedbackComponent {
-  @HostBinding('class.app-send-feedback') hasCss = true;
+export class GiveFeedbackComponent {
+  @HostBinding('class.app-give-feedback') hasCss = true;
 
   private router = inject(Router);
 
@@ -42,7 +42,7 @@ export class SendFeedbackComponent {
 
   protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
 
-  protected sendFeedbackService = inject(SendFeedbackService);
+  protected giveFeedbackService = inject(GiveFeedbackService);
 
   private feedbackService = inject(FeedbackService);
 
@@ -56,13 +56,13 @@ export class SendFeedbackComponent {
 
   form = this.formBuilder.group({
     receiverEmail: [
-      this.sendFeedbackService.askedFeedback?.receiverEmail ?? this.getQueryParam('receiverEmail'),
+      this.giveFeedbackService.request?.receiverEmail ?? this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
     ],
     positive: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     negative: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     comment: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [this.sendFeedbackService.askedFeedback?.shared ?? true],
+    shared: [this.giveFeedbackService.request?.shared ?? true],
   });
 
   submitInProgress = false;
@@ -80,20 +80,20 @@ export class SendFeedbackComponent {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    if (this.sendFeedbackService.token) {
+    if (this.giveFeedbackService.token) {
       this.feedbackService
-        .sendAsked({ token: this.sendFeedbackService.token, positive, negative, comment })
+        .giveRequested({ token: this.giveFeedbackService.token, positive, negative, comment })
         .subscribe((success) => {
           if (!success) {
             this.hasError = true;
             this.disableForm(false);
           } else {
-            this.feedbackId = this.isAnonymous ? undefined : this.sendFeedbackService.askedFeedback?.id;
+            this.feedbackId = this.isAnonymous ? undefined : this.giveFeedbackService.request?.id;
             this.navigateToSuccess();
           }
         });
     } else {
-      this.feedbackService.send({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
+      this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
         this.hasError = !id;
         if (!id) {
           this.disableForm(false);
@@ -111,7 +111,7 @@ export class SendFeedbackComponent {
   }
 
   private navigateToSuccess() {
-    const state: SendFeedbackSuccess = {
+    const state: GiveFeedbackSuccess = {
       receiverEmail: this.form.value.receiverEmail as string,
       feedbackId: this.isAnonymous ? undefined : this.feedbackId,
     };

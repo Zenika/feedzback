@@ -4,23 +4,23 @@ import { EMPTY, Observable, catchError, combineLatest, first, of, switchMap, tap
 import { authFactory } from '../shared/auth/auth.guard';
 import { AuthService } from '../shared/auth/auth.service';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { SendFeedbackService } from './send-feedback.service';
+import { GiveFeedbackService } from './give-feedback.service';
 
-export const sendFeedbackGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+export const giveFeedbackGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
   const authService = inject(AuthService);
   const feedbackService = inject(FeedbackService);
-  const sendFeedbackService = inject(SendFeedbackService);
+  const giveFeedbackService = inject(GiveFeedbackService);
   const router = inject(Router);
 
-  sendFeedbackService.init();
+  giveFeedbackService.init();
 
   return combineLatest([authService.isKnownUser$, authService.isAnonymous$]).pipe(
     first(),
     switchMap(([isKnownUser, isAnonymous]) => {
       const { token } = route.queryParams;
       if (token) {
-        return feedbackService.checkAsked(token).pipe(
-          tap((askedFeedback) => sendFeedbackService.set(token, askedFeedback)),
+        return feedbackService.checkRequest(token).pipe(
+          tap((request) => giveFeedbackService.set(token, request)),
           switchMap(() => {
             if (isKnownUser || isAnonymous) {
               return of(true);

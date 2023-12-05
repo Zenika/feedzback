@@ -2,16 +2,16 @@ import { AsyncPipe } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { ReplaySubject, map, of, switchMap } from 'rxjs';
 import { MessageComponent } from '../ui/message/message.component';
-import { AskedFeedbackComponent } from './asked-feedback/asked-feedback.component';
 import { FeedbackService } from './feedback.service';
 import { FeedbackType } from './feedback.types';
 import { getFeedbackType } from './feedback.utils';
 import { GivenFeedbackComponent } from './given-feedback/given-feedback.component';
+import { RequestedFeedbackComponent } from './requested-feedback/requested-feedback.component';
 
 @Component({
   selector: 'app-feedback',
   standalone: true,
-  imports: [AsyncPipe, MessageComponent, AskedFeedbackComponent, GivenFeedbackComponent],
+  imports: [AsyncPipe, MessageComponent, GivenFeedbackComponent, RequestedFeedbackComponent],
   templateUrl: './feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })

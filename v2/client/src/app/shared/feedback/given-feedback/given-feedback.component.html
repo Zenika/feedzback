@@ -3,12 +3,12 @@
 
   <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
 
-  <a class="gbl-link" routerLink="/ask" [queryParams]="{ recipient: geColleagueEmail(feedback) }">
+  <a class="gbl-link" routerLink="/request" [queryParams]="{ recipient: geColleagueEmail(feedback) }">
     <mat-icon>live_help</mat-icon>Demander
   </a>
 
   @if (geColleagueEmail(feedback) | allowedEmailDomains) {
-    <a class="gbl-link" routerLink="/send" [queryParams]="{ receiverEmail: geColleagueEmail(feedback) }">
+    <a class="gbl-link" routerLink="/give" [queryParams]="{ receiverEmail: geColleagueEmail(feedback) }">
       <mat-icon>chat</mat-icon>Donner
     </a>
   }

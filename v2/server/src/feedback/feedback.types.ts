@@ -8,41 +8,49 @@ export type Feedback = {
   comment: string;
   message: string;
   shared: boolean;
-  status: 'given';
+  status: FeedbackStatus;
   createdAt: number;
   updatedAt: number;
 };
-export type FeedbackWithId = Feedback & FeedbackIdObj;
 
-// ----- AskedFeedback -----
+export const FeedbackStatus = 'given';
+export type FeedbackStatus = typeof FeedbackStatus;
 
-export type AskedFeedback = {
+export type FeedbackWithId = Feedback & IdObject;
+
+// ----- FeedbackRequest -----
+
+export type FeedbackRequest = {
   senderEmail: string;
   receiverEmail: string;
   message: string;
   shared: boolean;
-  status: 'asked';
+  status: FeedbackRequestStatus;
   createdAt: number;
 };
-export type AskedFeedbackWithId = AskedFeedback & FeedbackIdObj;
+
+export const FeedbackRequestStatus = 'requested';
+export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
+
+export type FeedbackRequestWithId = FeedbackRequest & IdObject;
 
 // ----- TypedFeedbacks -----
 
 export type TypedFeedbacks = {
   received: Feedback[];
   sent: Feedback[];
-  asked: AskedFeedback[];
-  pending: AskedFeedback[];
+  sentRequest: FeedbackRequest[];
+  receivedRequest: FeedbackRequest[];
 };
 
-// ----- FeedbackIdObj -----
+// ----- IdObject -----
 
-export type FeedbackIdObj = { id: string };
+export type IdObject = { id: string };
 
-// ----- AskedFeedbackToken -----
+// ----- TokenObject -----
 
-export type AskedFeedbackToken = { feedbackId: string };
+export type TokenObject = { token: string };
 
-// ----- TokenIdObj -----
+// ----- FeedbackRequestToken -----
 
-export type TokenIdObj = { token: string };
+export type FeedbackRequestToken = { feedbackId: string };

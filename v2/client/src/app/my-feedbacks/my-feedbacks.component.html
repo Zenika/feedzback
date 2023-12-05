@@ -21,19 +21,27 @@
     }
   </mat-tab>
 
-  @if (asked.length) {
+  @if (sentRequest.length) {
     <mat-tab label="demandés">
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-      <app-feedback-list [type]="feedbackType.asked" [feedbacks]="asked" [filter]="filter"></app-feedback-list>
+      <app-feedback-list
+        [type]="feedbackType.sentRequest"
+        [feedbacks]="sentRequest"
+        [filter]="filter"
+      ></app-feedback-list>
     </mat-tab>
   }
 
-  @if (pending.length) {
+  @if (receivedRequest.length) {
     <mat-tab label="en attente">
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-      <app-feedback-list [type]="feedbackType.pending" [feedbacks]="pending" [filter]="filter"></app-feedback-list>
+      <app-feedback-list
+        [type]="feedbackType.receivedRequest"
+        [feedbacks]="receivedRequest"
+        [filter]="filter"
+      ></app-feedback-list>
     </mat-tab>
   }
 </mat-tab-group>

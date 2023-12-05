@@ -5,19 +5,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { AuthService } from '../../shared/auth/auth.service';
-import { SendFeedbackSuccess } from './send-feedback-success.types';
+import { GiveFeedbackSuccess } from './give-feedback-success.types';
 
 @Component({
-  selector: 'app-send-feedback-success',
+  selector: 'app-give-feedback-success',
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
-  templateUrl: './send-feedback-success.component.html',
+  templateUrl: './give-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SendFeedbackSuccessComponent implements AfterViewInit {
+export class GiveFeedbackSuccessComponent implements AfterViewInit {
   @HostBinding('class.gbl-info') hasGlobalCss = true;
 
-  protected state: SendFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
+  protected state: GiveFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
 
   private authService = inject(AuthService);
 

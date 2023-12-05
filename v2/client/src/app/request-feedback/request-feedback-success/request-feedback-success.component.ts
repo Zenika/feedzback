@@ -3,20 +3,20 @@ import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { AskFeedbackSuccess } from './ask-feedback-success.types';
+import { RequestFeedbackSuccess } from './request-feedback-success.types';
 
 @Component({
-  selector: 'app-ask-feedback-success',
+  selector: 'app-request-feedback-success',
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
-  templateUrl: './ask-feedback-success.component.html',
-  styleUrl: './ask-feedback-success.component.scss',
+  templateUrl: './request-feedback-success.component.html',
+  styleUrl: './request-feedback-success.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class AskFeedbackSuccessComponent {
-  @HostBinding('class.app-ask-feedback-success') hasCss = true;
+export class RequestFeedbackSuccessComponent {
+  @HostBinding('class.app-request-feedback-success') hasCss = true;
 
   @HostBinding('class.gbl-info') hasGlobalCss = true;
 
-  protected state: AskFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
+  protected state: RequestFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
 }

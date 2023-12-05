@@ -1,6 +1,6 @@
 @use '../app.scss' as app;
 
-.app-send-feedback {
+.app-give-feedback {
   @include app.media-breakpoint-up(md) {
     &__flex {
       display: flex;

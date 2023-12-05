@@ -2,9 +2,9 @@ import { Body, Controller, Get, HttpStatus, Param, Post, Res, UseGuards } from '
 import { Response } from 'express';
 import { AuthGuard } from '../auth/auth.guard';
 import { AuthService } from '../auth/auth.service';
-import { AskFeedbackDto, SendAskedFeedbackDto, SendFeedbackDto } from './feedback.dto';
+import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import { FeedbackService } from './feedback.service';
-import { TokenIdObj } from './feedback.types';
+import { TokenObject } from './feedback.types';
 
 @Controller('feedback')
 export class FeedbackController {
@@ -18,20 +18,20 @@ export class FeedbackController {
     return { ok: await this.feedbackService.ping() };
   }
 
-  @Post('ask')
+  @Post('request')
   @UseGuards(AuthGuard)
-  async ask(@Body() { recipient: senderEmail, message, shared }: AskFeedbackDto) {
+  async request(@Body() { recipient: senderEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
-    const tokenId = await this.feedbackService.ask({ senderEmail, receiverEmail, message, shared });
+    const tokenId = await this.feedbackService.request({ senderEmail, receiverEmail, message, shared });
 
     // TODO: Send the secret `tokenId` by email to the `recipient`
 
     return !!tokenId;
   }
 
-  @Get('asked/:token')
-  async checkAsked(@Param('token') tokenId: string, @Res({ passthrough: true }) res: Response) {
-    const feedback = await this.feedbackService.checkAsked(tokenId);
+  @Get('check-request/:token')
+  async checkRequest(@Param('token') tokenId: string, @Res({ passthrough: true }) res: Response) {
+    const feedback = await this.feedbackService.checkRequest(tokenId);
     if (!feedback) {
       res.status(HttpStatus.NOT_FOUND).send();
       return;
@@ -39,28 +39,28 @@ export class FeedbackController {
     return feedback;
   }
 
-  @Get('reveal-token/:id')
+  @Get('reveal-request-token/:id')
   @UseGuards(AuthGuard)
-  async revealTokenId(@Param('id') feedbackId: string, @Res({ passthrough: true }) res: Response) {
+  async revealRequestTokenId(@Param('id') feedbackId: string, @Res({ passthrough: true }) res: Response) {
     const senderEmail = this.authService.userEmail!;
-    const tokenId = await this.feedbackService.revealTokenId(senderEmail, feedbackId);
+    const tokenId = await this.feedbackService.revealRequestTokenId(feedbackId, senderEmail);
     if (!tokenId) {
       res.status(HttpStatus.NOT_FOUND).send();
       return;
     }
-    return { token: tokenId } as TokenIdObj;
+    return { token: tokenId } as TokenObject;
   }
 
-  @Post('send-asked')
-  sendAsked(@Body() { token, positive, negative, comment }: SendAskedFeedbackDto) {
-    return this.feedbackService.sendAsked(token, { positive, negative, comment });
+  @Post('give-requested')
+  giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+    return this.feedbackService.giveRequested(token, { positive, negative, comment });
   }
 
-  @Post('send')
+  @Post('give')
   @UseGuards(AuthGuard)
-  send(@Body() dto: SendFeedbackDto) {
+  give(@Body() dto: GiveFeedbackDto) {
     const senderEmail = this.authService.userEmail!;
-    return this.feedbackService.send({ senderEmail, ...dto });
+    return this.feedbackService.give({ senderEmail, ...dto });
   }
 
   @Get('list')

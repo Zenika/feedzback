@@ -9,43 +9,45 @@ export type Feedback = {
   comment: string;
   message: string;
   shared: boolean;
-  status: 'given';
+  status: FeedbackStatus;
   createdAt: number;
   updatedAt: number;
 };
 
-export type AskedFeedback = {
+export const FeedbackStatus = 'given';
+export type FeedbackStatus = typeof FeedbackStatus;
+
+export type FeedbackRequest = {
   id: string;
   senderEmail: string;
   receiverEmail: string;
   message: string;
   shared: boolean;
-  status: 'asked';
+  status: FeedbackRequestStatus;
   createdAt: number;
 };
 
-export type TokenIdObj = {
-  token: string;
-};
-
-export type FeedbackIdObj = {
-  id: string;
-};
+export const FeedbackRequestStatus = 'requested';
+export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type TypedFeedbacks = {
-  sent: Feedback[];
   received: Feedback[];
-  asked: AskedFeedback[];
-  pending: AskedFeedback[];
+  sent: Feedback[];
+  sentRequest: FeedbackRequest[];
+  receivedRequest: FeedbackRequest[];
 };
 
-// ----- Other types -----
+export type IdObject = { id: string };
+
+export type TokenObject = { token: string };
+
+// ----- Internal types -----
 
 export const FeedbackType = {
-  sent: 'sent',
   received: 'received',
-  asked: 'asked',
-  pending: 'pending',
+  sent: 'sent',
+  sentRequest: 'sentRequest',
+  receivedRequest: 'receivedRequest',
 } as const;
 
 export type FeedbackType = (typeof FeedbackType)[keyof typeof FeedbackType];

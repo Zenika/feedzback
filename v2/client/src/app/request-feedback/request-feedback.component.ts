@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { AskFeedbackDto } from '../shared/feedback/feedback.dto';
+import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
@@ -15,11 +15,11 @@ import {
   multipleEmailsValidatorFactory,
 } from '../shared/form/multiple-emails';
 import { MessageComponent } from '../shared/ui/message/message.component';
-import { AskFeedbackSuccess } from './ask-feedback-success/ask-feedback-success.types';
 import { EmailsFieldComponent } from './emails-field/emails-field.component';
+import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
 
 @Component({
-  selector: 'app-ask-feedback',
+  selector: 'app-request-feedback',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -31,12 +31,12 @@ import { EmailsFieldComponent } from './emails-field/emails-field.component';
     MessageComponent,
     EmailsFieldComponent,
   ],
-  templateUrl: './ask-feedback.component.html',
-  styleUrl: './ask-feedback.component.scss',
+  templateUrl: './request-feedback.component.html',
+  styleUrl: './request-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class AskFeedbackComponent {
-  @HostBinding('class.app-ask-feedback') hasCss = true;
+export class RequestFeedbackComponent {
+  @HostBinding('class.app-request-feedback') hasCss = true;
 
   private router = inject(Router);
 
@@ -73,7 +73,7 @@ export class AskFeedbackComponent {
     const recipients = getMultipleEmails(this.form.controls.recipients.value);
     from(recipients)
       .pipe(
-        concatMap((recipient) => this.feedbackService.ask(this.buildDto(recipient))),
+        concatMap((recipient) => this.feedbackService.request(this.buildDto(recipient))),
         toArray(),
       )
       .subscribe((results) => {
@@ -95,7 +95,7 @@ export class AskFeedbackComponent {
     this.submitInProgress = submitInProgress;
   }
 
-  private buildDto(recipient: string): AskFeedbackDto {
+  private buildDto(recipient: string): FeedbackRequestDto {
     return {
       recipient,
       message: this.form.controls.message.value,
@@ -109,7 +109,7 @@ export class AskFeedbackComponent {
   }
 
   private navigateToSuccess() {
-    const state: AskFeedbackSuccess = {
+    const state: RequestFeedbackSuccess = {
       recipients: this.sentEmails,
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });

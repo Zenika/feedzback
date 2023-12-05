@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
-import { AskFeedbackSuccessComponent } from './ask-feedback/ask-feedback-success/ask-feedback-success.component';
-import { AskFeedbackComponent } from './ask-feedback/ask-feedback.component';
 import { DemoContentComponent } from './demo-content/demo-content.component';
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
+import { GiveFeedbackSuccessComponent } from './give-feedback/give-feedback-success/give-feedback-success.component';
+import { GiveFeedbackComponent } from './give-feedback/give-feedback.component';
+import { giveFeedbackGuard } from './give-feedback/give-feedback.guard';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
 import { FeedbackDialogComponent } from './my-feedbacks/feedback-dialog/feedback-dialog.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { SendFeedbackSuccessComponent } from './send-feedback/send-feedback-success/send-feedback-success.component';
-import { SendFeedbackComponent } from './send-feedback/send-feedback.component';
-import { sendFeedbackGuard } from './send-feedback/send-feedback.guard';
+import { RequestFeedbackSuccessComponent } from './request-feedback/request-feedback-success/request-feedback-success.component';
+import { RequestFeedbackComponent } from './request-feedback/request-feedback.component';
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
@@ -26,26 +26,26 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'ask',
-    component: AskFeedbackComponent,
+    path: 'request',
+    component: RequestFeedbackComponent,
     canActivate: [authGuard],
     title: 'FeedZback - Demander',
   },
   {
-    path: 'ask/success',
-    component: AskFeedbackSuccessComponent,
+    path: 'request/success',
+    component: RequestFeedbackSuccessComponent,
     canActivate: [authGuard],
     title: 'FeedZback - Demande réussie',
   },
   {
-    path: 'send',
-    component: SendFeedbackComponent,
-    canActivate: [sendFeedbackGuard],
+    path: 'give',
+    component: GiveFeedbackComponent,
+    canActivate: [giveFeedbackGuard],
     title: 'FeedZback - Donner',
   },
   {
-    path: 'send/success',
-    component: SendFeedbackSuccessComponent,
+    path: 'give/success',
+    component: GiveFeedbackSuccessComponent,
     title: 'FeedZback - Envoi réussi',
   },
   {

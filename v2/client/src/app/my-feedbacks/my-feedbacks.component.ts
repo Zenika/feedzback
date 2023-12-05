@@ -12,10 +12,10 @@ import { getFeedbackType } from '../shared/feedback/feedback.utils';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { NormalizedFeedback } from './my-feedbacks.types';
 import {
-  normalizeAskedFeedbacks,
-  normalizePendingFeedbacks,
   normalizeReceivedFeedbacks,
+  normalizeReceivedRequests,
   normalizeSentFeedbacks,
+  normalizeSentRequests,
 } from './my-feedbacks.utils';
 
 @Component({
@@ -59,20 +59,20 @@ export default class MyFeedbacksComponent implements OnInit {
 
   protected sent: NormalizedFeedback[] = [];
 
-  protected asked: NormalizedFeedback[] = [];
+  protected sentRequest: NormalizedFeedback[] = [];
 
-  protected pending: NormalizedFeedback[] = [];
+  protected receivedRequest: NormalizedFeedback[] = [];
 
   protected feedbackType = FeedbackType;
 
   protected fetched = false;
 
   async ngOnInit() {
-    this.feedbackService.getList().subscribe(({ received, sent, asked, pending }) => {
+    this.feedbackService.getList().subscribe(({ received, sent, sentRequest, receivedRequest }) => {
       this.received = normalizeReceivedFeedbacks(received);
       this.sent = normalizeSentFeedbacks(sent);
-      this.asked = normalizeAskedFeedbacks(asked);
-      this.pending = normalizePendingFeedbacks(pending);
+      this.sentRequest = normalizeSentRequests(sentRequest);
+      this.receivedRequest = normalizeReceivedRequests(receivedRequest);
 
       this.fetched = true;
     });

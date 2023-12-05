@@ -13,8 +13,10 @@
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
   @if (isKnownUser$ | async) {
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/home"> Accueil </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/ask"> Demander </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/send"> Donner </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/request">
+      Demander
+    </a>
+    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/give"> Donner </a>
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
       Mes&nbsp;feedZbacks
     </a>

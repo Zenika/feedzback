@@ -3,13 +3,13 @@
   Je donne du feedZback
 </h1>
 
-@if (sendFeedbackService.askedFeedback) {
+@if (giveFeedbackService.request) {
   <app-message type="info">
     Vous répondez à la demande de FeedZback qui vous a été envoyée par
-    <strong>{{ sendFeedbackService.askedFeedback.receiverEmail }}</strong
+    <strong>{{ giveFeedbackService.request.receiverEmail }}</strong
     >.
 
-    @if (sendFeedbackService.askedFeedback.shared) {
+    @if (giveFeedbackService.request.shared) {
       <br />
       Notez que votre réponse sera partagée avec son manager.
     }
@@ -28,10 +28,10 @@
     @if (isAnonymous) {
       <h3><mat-icon>voice_selection</mat-icon> Vous</h3>
 
-      <mat-form-field appearance="outline" class="app-send-feedback__field">
+      <mat-form-field appearance="outline" class="app-give-feedback__field">
         <mat-label>Votre email</mat-label>
         <input
-          [value]="sendFeedbackService.askedFeedback?.senderEmail"
+          [value]="giveFeedbackService.request?.senderEmail"
           readonly
           type="email"
           matInput
@@ -42,11 +42,11 @@
       <h3><mat-icon>hearing</mat-icon> Votre collègue</h3>
     }
 
-    <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-form-field appearance="outline" class="app-give-feedback__field">
       <mat-label>Email de votre collègue</mat-label>
       <input
         [formControl]="form.controls.receiverEmail"
-        [readonly]="!!sendFeedbackService.askedFeedback"
+        [readonly]="!!giveFeedbackService.request"
         type="email"
         matInput
         placeholder="jean.dupont@zenika.com"
@@ -54,7 +54,7 @@
       <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-form-field appearance="outline" class="app-give-feedback__field">
       <mat-label>Points positifs</mat-label>
       <textarea
         #positive
@@ -68,7 +68,7 @@
       <mat-error>{{ form.controls.positive.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-form-field appearance="outline" class="app-give-feedback__field">
       <mat-label>Axes d’améliorations</mat-label>
       <textarea
         #negative
@@ -82,7 +82,7 @@
       <mat-error>{{ form.controls.negative.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="app-send-feedback__field">
+    <mat-form-field appearance="outline" class="app-give-feedback__field">
       <mat-label>Commentaire</mat-label>
       <textarea
         #comment
@@ -95,8 +95,8 @@
       <mat-hint align="start">{{ comment.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
-    @if (!sendFeedbackService.askedFeedback) {
-      <div class="app-send-feedback__field">
+    @if (!giveFeedbackService.request) {
+      <div class="app-give-feedback__field">
         <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
           Partager le FeedZback avec le manager de votre collègue
         </mat-slide-toggle>

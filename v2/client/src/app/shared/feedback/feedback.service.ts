@@ -3,8 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { AskFeedbackDto, SendAskedFeedbackDto, SendFeedbackDto } from './feedback.dto';
-import { AskedFeedback, Feedback, FeedbackIdObj, TokenIdObj, TypedFeedbacks } from './feedback.types';
+import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
+import { Feedback, FeedbackRequest, IdObject, TokenObject, TypedFeedbacks } from './feedback.types';
 
 @Injectable({
   providedIn: 'root',
@@ -16,33 +16,33 @@ export class FeedbackService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
-  ask(dto: AskFeedbackDto) {
+  request(dto: FeedbackRequestDto) {
     return this.authService.withBearerToken((headers) =>
       this.httpClient
-        .post<boolean>(`${this.apiBaseUrl}/feedback/ask`, dto, { headers })
+        .post<boolean>(`${this.apiBaseUrl}/feedback/request`, dto, { headers })
         .pipe(catchError(() => of(false))),
     );
   }
 
-  checkAsked(token: string) {
-    return this.httpClient.get<AskedFeedback>(`${this.apiBaseUrl}/feedback/asked/${token}`);
+  checkRequest(token: string) {
+    return this.httpClient.get<FeedbackRequest>(`${this.apiBaseUrl}/feedback/check-request/${token}`);
   }
 
-  revealTokenId(feedbackId: string) {
+  revealRequestTokenId(feedbackId: string) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<TokenIdObj>(`${this.apiBaseUrl}/feedback/reveal-token/${feedbackId}`, { headers }),
+      this.httpClient.get<TokenObject>(`${this.apiBaseUrl}/feedback/reveal-request-token/${feedbackId}`, { headers }),
     );
   }
 
-  sendAsked(dto: SendAskedFeedbackDto) {
+  giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/send-asked`, dto)
+      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
       .pipe(catchError(() => of(false)));
   }
 
-  send(dto: SendFeedbackDto) {
+  give(dto: GiveFeedbackDto) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.post<Partial<FeedbackIdObj>>(`${this.apiBaseUrl}/feedback/send`, dto, { headers }),
+      this.httpClient.post<Partial<IdObject>>(`${this.apiBaseUrl}/feedback/give`, dto, { headers }),
     );
   }
 
@@ -54,7 +54,7 @@ export class FeedbackService {
 
   getItem(id: string) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<Feedback | AskedFeedback | null>(`${this.apiBaseUrl}/feedback/item/${id}`, { headers }),
+      this.httpClient.get<Feedback | FeedbackRequest | null>(`${this.apiBaseUrl}/feedback/item/${id}`, { headers }),
     );
   }
 }

@@ -1,21 +1,21 @@
-<div class="app-asked-feedback__addons">
+<div class="app-requested-feedback__addons">
   <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
 
   <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
 </div>
 
 @if (feedback.message) {
-  <div class="app-asked-feedback-item">
-    <h2 class="app-asked-feedback-item__title"><mat-icon>notes</mat-icon> Message</h2>
+  <div class="app-requested-feedback-item">
+    <h2 class="app-requested-feedback-item__title"><mat-icon>notes</mat-icon> Message</h2>
     <p>{{ feedback.message }}</p>
   </div>
 }
 
 @if (feedback.shared) {
-  <div class="app-asked-feedback__addons">
+  <div class="app-requested-feedback__addons">
     <div>
       <mat-icon>share</mat-icon>
-      @if (type === feedbackType.asked) {
+      @if (type === feedbackType.sentRequest) {
         Ce FeedZback sera partagé avec votre manager
       } @else {
         Ce FeedZback sera partagé avec le manager de votre collègue
@@ -25,11 +25,11 @@
 }
 
 <!-- TODO: Feature NOT implemented
-@if (type === feedbackType.asked) {
+@if (type === feedbackType.sentRequest) {
   <button mat-raised-button color="primary">Relancer</button>
 }
 -->
 
-@if (type === feedbackType.pending) {
+@if (type === feedbackType.receivedRequest) {
   <button mat-raised-button color="primary" (click)="giveNow()">Donner</button>
 }
