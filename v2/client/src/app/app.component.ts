@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
@@ -8,7 +7,7 @@ import { LayoutModule } from './shared/ui/layout/layout.module';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AsyncPipe, RouterOutlet, HeaderComponent, FooterComponent, LayoutModule],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, LayoutModule],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,
 })

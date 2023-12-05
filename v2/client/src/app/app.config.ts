@@ -1,7 +1,5 @@
-import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -15,13 +13,12 @@ import { provideAllowedEmailDomains } from './shared/validation/allowed-email-do
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideAnimations(),
     provideI18n(),
     provideBaseHref(),
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
-    importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseOptions), AngularFireAuthModule),
     provideMatPaginatorIntl(),
   ],
 };

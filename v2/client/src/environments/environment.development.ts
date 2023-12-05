@@ -1,4 +1,4 @@
-import { FirebaseOptions } from '@angular/fire/app';
+import { FirebaseOptions } from 'firebase/app';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: 'AIzaSyBY-HULaNWkEPCoQWCIy3vOB2KB98z4HGs',

@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GoogleAuthProvider } from 'firebase/auth';
-import type firebase from 'firebase/compat/app';
+import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
 import {
   Observable,
   ReplaySubject,
@@ -15,13 +13,14 @@ import {
   of,
   tap,
 } from 'rxjs';
+import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private firebaseAuth = inject(AngularFireAuth);
+  private firebaseAuth = inject(FirebaseService).auth;
 
   private router = inject(Router);
 
@@ -30,9 +29,9 @@ export class AuthService {
   // !FIXME: je crois que la librairie refresh le token quand c'est nécessaire. Or, ici on a figé sa valeur... :(
   idToken?: string;
 
-  userSnapshot?: firebase.User | null;
+  userSnapshot?: User | null;
 
-  private _user$ = new ReplaySubject<firebase.User | null>(1);
+  private _user$ = new ReplaySubject<User | null>(1);
 
   user$ = this._user$.asObservable();
 
@@ -57,7 +56,7 @@ export class AuthService {
   );
 
   constructor() {
-    this.firebaseAuth.authState.subscribe(async (user) => {
+    this.firebaseAuth.onAuthStateChanged(async (user) => {
       this.idToken = await user?.getIdToken();
       this.userSnapshot = user;
       this._user$.next(user);
@@ -65,7 +64,7 @@ export class AuthService {
   }
 
   signInWithGoogle(): Observable<boolean> {
-    return from(this.firebaseAuth.signInWithPopup(new GoogleAuthProvider())).pipe(
+    return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
       concatMap(() => this.isKnownUser$),
       first((isKnownUser) => isKnownUser),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
@@ -74,7 +73,7 @@ export class AuthService {
   }
 
   signInAnonymously(): Observable<boolean> {
-    return from(this.firebaseAuth.signInAnonymously()).pipe(
+    return from(signInAnonymously(this.firebaseAuth)).pipe(
       concatMap(() => this.isAnonymous$),
       first((isAnonymous) => isAnonymous),
       catchError(() => of(false)),
