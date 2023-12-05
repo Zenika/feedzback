@@ -5,10 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { AskedFeedback } from '../../../feedback/feedback.types';
-import { AllowedEmailDomainsPipe } from '../../../form/allowed-email-domains';
-import { MessageComponent } from '../../message/message.component';
-import { FeedbackType } from '../feedback.types';
+import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
+import { MessageComponent } from '../../ui/message/message.component';
+import { AskedFeedback, FeedbackType } from '../feedback.types';
 
 @Component({
   selector: 'app-asked-feedback',

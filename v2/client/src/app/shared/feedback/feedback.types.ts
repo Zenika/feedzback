@@ -1,3 +1,5 @@
+// ----- API types -----
+
 export type Feedback = {
   id: string;
   senderEmail: string;
@@ -22,11 +24,22 @@ export type AskedFeedback = {
   createdAt: number;
 };
 
-export type FeedbackIdObj = Pick<Feedback, 'id'>;
+export type FeedbackIdObj = {
+  id: string;
+};
 
 export type TypedFeedbacks = {
-  sent: Feedback[];
   received: Feedback[];
+  sent: Feedback[];
   asked: AskedFeedback[];
   waitingForSend: AskedFeedback[];
 };
+
+// ----- Other types -----
+
+export const FeedbackType = {
+  sent: 'sent',
+  received: 'received',
+} as const;
+
+export type FeedbackType = (typeof FeedbackType)[keyof typeof FeedbackType];

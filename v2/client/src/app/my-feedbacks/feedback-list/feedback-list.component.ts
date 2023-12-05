@@ -20,8 +20,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../shared/breakpoint';
+import { FeedbackType } from '../../shared/feedback/feedback.types';
 import { DivisionComponent } from '../../shared/ui/division/division.component';
-import { FeedbackType } from '../../shared/ui/feedback/feedback.types';
 import { NormalizedFeedback } from '../my-feedbacks.types';
 
 @Component({

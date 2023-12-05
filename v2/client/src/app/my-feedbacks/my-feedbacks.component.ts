@@ -7,11 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { getFeedbackType } from '../shared/ui/feedback/feedback.helpers';
-import { FeedbackType } from '../shared/ui/feedback/feedback.types';
+import { FeedbackType } from '../shared/feedback/feedback.types';
+import { getFeedbackType } from '../shared/feedback/feedback.utils';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
-import { normalizeReceivedFeedbacks, normalizeSentFeedbacks } from './my-feedbacks.helpers';
 import { NormalizedFeedback } from './my-feedbacks.types';
+import { normalizeReceivedFeedbacks, normalizeSentFeedbacks } from './my-feedbacks.utils';
 
 @Component({
   selector: 'app-my-feedbacks',
