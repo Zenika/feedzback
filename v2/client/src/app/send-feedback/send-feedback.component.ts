@@ -42,7 +42,7 @@ export class SendFeedbackComponent {
 
   protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
 
-  protected askedFeedback = inject(SendFeedbackService).askedFeedback;
+  protected sendFeedbackService = inject(SendFeedbackService);
 
   private feedbackService = inject(FeedbackService);
 
@@ -56,13 +56,13 @@ export class SendFeedbackComponent {
 
   form = this.formBuilder.group({
     receiverEmail: [
-      this.askedFeedback?.receiverEmail ?? this.getQueryParam('receiverEmail'),
+      this.sendFeedbackService.askedFeedback?.receiverEmail ?? this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
     ],
     positive: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     negative: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     comment: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [this.askedFeedback?.shared ?? true],
+    shared: [this.sendFeedbackService.askedFeedback?.shared ?? true],
   });
 
   submitInProgress = false;
@@ -80,15 +80,15 @@ export class SendFeedbackComponent {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    if (this.askedFeedback) {
+    if (this.sendFeedbackService.token) {
       this.feedbackService
-        .sendAsked({ id: this.askedFeedback.id, positive, negative, comment })
+        .sendAsked({ token: this.sendFeedbackService.token, positive, negative, comment })
         .subscribe((success) => {
           if (!success) {
             this.hasError = true;
             this.disableForm(false);
           } else {
-            this.feedbackId = this.isAnonymous ? undefined : this.askedFeedback?.id;
+            this.feedbackId = this.isAnonymous ? undefined : this.sendFeedbackService.askedFeedback?.id;
             this.navigateToSuccess();
           }
         });

@@ -9,7 +9,7 @@ export class AskFeedbackDto {
 }
 
 export class SendAskedFeedbackDto {
-  @IsString() id: string;
+  @IsString() token: string;
 
   @IsString() positive: string;
 

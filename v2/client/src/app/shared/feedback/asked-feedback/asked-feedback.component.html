@@ -31,5 +31,5 @@
 -->
 
 @if (type === feedbackType.pending) {
-  <button mat-raised-button color="primary" routerLink="/send" [queryParams]="{ id: feedback.id }">Donner</button>
+  <button mat-raised-button color="primary" (click)="giveNow()">Donner</button>
 }

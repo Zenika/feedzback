@@ -17,10 +17,10 @@ export const sendFeedbackGuard = (route: ActivatedRouteSnapshot, state: RouterSt
   return combineLatest([authService.isKnownUser$, authService.isAnonymous$]).pipe(
     first(),
     switchMap(([isKnownUser, isAnonymous]) => {
-      const { id } = route.queryParams;
-      if (id) {
-        return feedbackService.checkAsked(id).pipe(
-          tap((askedFeedback) => sendFeedbackService.set(askedFeedback)),
+      const { token } = route.queryParams;
+      if (token) {
+        return feedbackService.checkAsked(token).pipe(
+          tap((askedFeedback) => sendFeedbackService.set(token, askedFeedback)),
           switchMap(() => {
             if (isKnownUser || isAnonymous) {
               return of(true);

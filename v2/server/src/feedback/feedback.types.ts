@@ -38,3 +38,11 @@ export type TypedFeedbacks = {
 // ----- FeedbackIdObj -----
 
 export type FeedbackIdObj = { id: string };
+
+// ----- AskedFeedbackToken -----
+
+export type AskedFeedbackToken = { feedbackId: string };
+
+// ----- TokenIdObj -----
+
+export type TokenIdObj = { token: string };

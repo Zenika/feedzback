@@ -4,6 +4,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { AskFeedbackDto, SendAskedFeedbackDto, SendFeedbackDto } from './feedback.dto';
 import { FeedbackService } from './feedback.service';
+import { TokenIdObj } from './feedback.types';
 
 @Controller('feedback')
 export class FeedbackController {
@@ -19,14 +20,18 @@ export class FeedbackController {
 
   @Post('ask')
   @UseGuards(AuthGuard)
-  ask(@Body() { recipient: senderEmail, message, shared }: AskFeedbackDto) {
+  async ask(@Body() { recipient: senderEmail, message, shared }: AskFeedbackDto) {
     const receiverEmail = this.authService.userEmail!;
-    return this.feedbackService.ask({ senderEmail, receiverEmail, message, shared });
+    const tokenId = await this.feedbackService.ask({ senderEmail, receiverEmail, message, shared });
+
+    // TODO: Send the secret `tokenId` by email to the `recipient`
+
+    return !!tokenId;
   }
 
-  @Get('asked/:id')
-  async checkAsked(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
-    const feedback = await this.feedbackService.checkAsked(id);
+  @Get('asked/:token')
+  async checkAsked(@Param('token') tokenId: string, @Res({ passthrough: true }) res: Response) {
+    const feedback = await this.feedbackService.checkAsked(tokenId);
     if (!feedback) {
       res.status(HttpStatus.NOT_FOUND).send();
       return;
@@ -34,9 +39,21 @@ export class FeedbackController {
     return feedback;
   }
 
+  @Get('reveal-token/:id')
+  @UseGuards(AuthGuard)
+  async revealTokenId(@Param('id') feedbackId: string, @Res({ passthrough: true }) res: Response) {
+    const senderEmail = this.authService.userEmail!;
+    const tokenId = await this.feedbackService.revealTokenId(senderEmail, feedbackId);
+    if (!tokenId) {
+      res.status(HttpStatus.NOT_FOUND).send();
+      return;
+    }
+    return { token: tokenId } as TokenIdObj;
+  }
+
   @Post('send-asked')
-  sendAsked(@Body() { id, positive, negative, comment }: SendAskedFeedbackDto) {
-    return this.feedbackService.sendAsked(id, { positive, negative, comment });
+  sendAsked(@Body() { token, positive, negative, comment }: SendAskedFeedbackDto) {
+    return this.feedbackService.sendAsked(token, { positive, negative, comment });
   }
 
   @Post('send')

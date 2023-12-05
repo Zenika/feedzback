@@ -4,7 +4,7 @@ import { catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { AskFeedbackDto, SendAskedFeedbackDto, SendFeedbackDto } from './feedback.dto';
-import { AskedFeedback, Feedback, FeedbackIdObj, TypedFeedbacks } from './feedback.types';
+import { AskedFeedback, Feedback, FeedbackIdObj, TokenIdObj, TypedFeedbacks } from './feedback.types';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,14 @@ export class FeedbackService {
     );
   }
 
-  checkAsked(id: string) {
-    return this.httpClient.get<AskedFeedback>(`${this.apiBaseUrl}/feedback/asked/${id}`);
+  checkAsked(token: string) {
+    return this.httpClient.get<AskedFeedback>(`${this.apiBaseUrl}/feedback/asked/${token}`);
+  }
+
+  revealTokenId(feedbackId: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<TokenIdObj>(`${this.apiBaseUrl}/feedback/reveal-token/${feedbackId}`, { headers }),
+    );
   }
 
   sendAsked(dto: SendAskedFeedbackDto) {

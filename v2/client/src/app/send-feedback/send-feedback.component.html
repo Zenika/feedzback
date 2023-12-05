@@ -3,13 +3,13 @@
   Je donne du feedZback
 </h1>
 
-@if (askedFeedback) {
+@if (sendFeedbackService.askedFeedback) {
   <app-message type="info">
     Vous répondez à la demande de FeedZback qui vous a été envoyée par
-    <strong>{{ askedFeedback.receiverEmail }}</strong
+    <strong>{{ sendFeedbackService.askedFeedback.receiverEmail }}</strong
     >.
 
-    @if (askedFeedback.shared) {
+    @if (sendFeedbackService.askedFeedback.shared) {
       <br />
       Notez que votre réponse sera partagée avec son manager.
     }
@@ -31,7 +31,7 @@
       <mat-form-field appearance="outline" class="app-send-feedback__field">
         <mat-label>Votre email</mat-label>
         <input
-          [value]="askedFeedback?.senderEmail"
+          [value]="sendFeedbackService.askedFeedback?.senderEmail"
           readonly
           type="email"
           matInput
@@ -46,7 +46,7 @@
       <mat-label>Email de votre collègue</mat-label>
       <input
         [formControl]="form.controls.receiverEmail"
-        [readonly]="!!askedFeedback"
+        [readonly]="!!sendFeedbackService.askedFeedback"
         type="email"
         matInput
         placeholder="jean.dupont@zenika.com"
@@ -95,7 +95,7 @@
       <mat-hint align="start">{{ comment.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
-    @if (!askedFeedback) {
+    @if (!sendFeedbackService.askedFeedback) {
       <div class="app-send-feedback__field">
         <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
           Partager le FeedZback avec le manager de votre collègue

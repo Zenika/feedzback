@@ -5,7 +5,7 @@ export type AskFeedbackDto = {
 };
 
 export type SendAskedFeedbackDto = {
-  id: string;
+  token: string;
   positive: string;
   negative: string;
   comment: string;

@@ -5,13 +5,16 @@ import { AskedFeedback } from '../shared/feedback/feedback.types';
   providedIn: 'root',
 })
 export class SendFeedbackService {
+  token?: string;
   askedFeedback?: AskedFeedback;
 
   init() {
+    this.token = undefined;
     this.askedFeedback = undefined;
   }
 
-  set(value: AskedFeedback) {
+  set(token: string, value: AskedFeedback) {
+    this.token = token;
     this.askedFeedback = value;
   }
 }

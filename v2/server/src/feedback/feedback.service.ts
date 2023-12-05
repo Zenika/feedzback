@@ -2,7 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { FieldPath, Filter } from 'firebase-admin/firestore';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AskFeedbackParams, SendAskedFeedbackParams, SendFeedbackParams } from './feedback.params';
-import { AskedFeedback, AskedFeedbackWithId, Feedback, FeedbackIdObj, FeedbackWithId } from './feedback.types';
+import {
+  AskedFeedback,
+  AskedFeedbackToken,
+  AskedFeedbackWithId,
+  Feedback,
+  FeedbackIdObj,
+  FeedbackWithId,
+} from './feedback.types';
 import { mapToTypedFeedbacks } from './feedback.utils';
 
 @Injectable()
@@ -27,18 +34,32 @@ export class FeedbackService {
         status: 'asked',
         createdAt: Date.now(),
       };
-      await this.firebaseService.firestore.collection('feedback').add(askedFeedback);
-      return true;
+      const feedbackId = (await this.firebaseService.firestore.collection('feedback').add(askedFeedback)).id;
+
+      const askedFeedbackToken: AskedFeedbackToken = {
+        feedbackId,
+      };
+      const tokenId = (await this.firebaseService.firestore.collection('askedFeedbackToken').add(askedFeedbackToken))
+        .id;
+
+      return tokenId;
     } catch {
-      return false;
+      return null;
     }
   }
 
-  async checkAsked(id: string) {
+  async checkAsked(tokenId: string) {
     try {
+      const tokenDoc = await this.firebaseService.firestore.collection('askedFeedbackToken').doc(tokenId).get();
+
+      if (!tokenDoc.exists) {
+        throw new Error();
+      }
+      const { feedbackId } = tokenDoc.data() as AskedFeedbackToken;
+
       const query = await this.firebaseService.firestore
         .collection('feedback')
-        .where(FieldPath.documentId(), '==', id)
+        .where(FieldPath.documentId(), '==', feedbackId)
         .where('status', '==', 'asked')
         .get();
 
@@ -53,9 +74,41 @@ export class FeedbackService {
     }
   }
 
-  async sendAsked(id: string, { positive, negative, comment }: SendAskedFeedbackParams) {
+  async revealTokenId(senderEmail: string, feedbackId: string) {
     try {
-      const askedFeedback = await this.checkAsked(id);
+      const feedbackDoc = (
+        await this.firebaseService.firestore
+          .collection('feedback')
+          .where(FieldPath.documentId(), '==', feedbackId)
+          .where('senderEmail', '==', senderEmail)
+          .where('status', '==', 'asked')
+          .get()
+      ).docs.at(0);
+
+      if (!feedbackDoc) {
+        throw new Error();
+      }
+
+      const tokenDoc = (
+        await this.firebaseService.firestore
+          .collection('askedFeedbackToken')
+          .where('feedbackId', '==', feedbackId)
+          .get()
+      ).docs.at(0);
+
+      if (!tokenDoc) {
+        throw new Error();
+      }
+
+      return tokenDoc.id;
+    } catch {
+      return null;
+    }
+  }
+
+  async sendAsked(tokenId: string, { positive, negative, comment }: SendAskedFeedbackParams) {
+    try {
+      const askedFeedback = await this.checkAsked(tokenId);
       if (!askedFeedback) {
         return false;
       }
@@ -66,7 +119,8 @@ export class FeedbackService {
         status: 'given',
         updatedAt: Date.now(),
       };
-      await this.firebaseService.firestore.collection('feedback').doc(id).update(partialFeedback);
+      await this.firebaseService.firestore.collection('feedback').doc(askedFeedback.id).update(partialFeedback);
+      await this.firebaseService.firestore.collection('askedFeedbackToken').doc(tokenId).delete();
       return true;
     } catch {
       return false;

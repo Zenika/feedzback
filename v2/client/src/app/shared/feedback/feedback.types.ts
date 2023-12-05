@@ -24,6 +24,10 @@ export type AskedFeedback = {
   createdAt: number;
 };
 
+export type TokenIdObj = {
+  token: string;
+};
+
 export type FeedbackIdObj = {
   id: string;
 };
