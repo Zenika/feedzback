@@ -79,7 +79,13 @@ export default class MyFeedbacksComponent implements OnInit {
   }
 
   protected onTabIndexChange(index: number) {
-    const type: FeedbackType = index === 0 ? FeedbackType.received : FeedbackType.sent;
+    const feedbackTypeMap: Record<number, FeedbackType> = {
+      0: FeedbackType.received,
+      1: FeedbackType.sent,
+      2: this.sent.length ? FeedbackType.sentRequest : FeedbackType.receivedRequest,
+      3: FeedbackType.receivedRequest,
+    };
+    const type: FeedbackType = feedbackTypeMap[index];
     this.router.navigate(['../', type], { relativeTo: this.activatedRoute });
   }
 }
