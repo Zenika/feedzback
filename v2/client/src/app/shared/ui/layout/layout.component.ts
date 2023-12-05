@@ -4,7 +4,7 @@ import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
   selector: 'app-layout',
   standalone: true,
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
+  styleUrl: './layout.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class LayoutComponent {

@@ -10,7 +10,7 @@ import { AskFeedbackSuccess } from './ask-feedback-success.types';
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './ask-feedback-success.component.html',
-  styleUrls: ['./ask-feedback-success.component.scss'],
+  styleUrl: './ask-feedback-success.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class AskFeedbackSuccessComponent {

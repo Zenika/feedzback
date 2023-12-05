@@ -40,7 +40,7 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
     DivisionComponent,
   ],
   templateUrl: './feedback-list.component.html',
-  styleUrls: ['./feedback-list.component.scss'],
+  styleUrl: './feedback-list.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackListComponent implements OnChanges, AfterViewInit {

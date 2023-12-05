@@ -27,7 +27,7 @@ import { NormalizedFeedback } from './my-feedbacks.types';
     FeedbackListComponent,
   ],
   templateUrl: './my-feedbacks.component.html',
-  styleUrls: ['./my-feedbacks.component.scss'],
+  styleUrl: './my-feedbacks.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export default class MyFeedbacksComponent implements OnInit {

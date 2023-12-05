@@ -29,7 +29,7 @@ import { SendFeedbackService } from './send-feedback.service';
     MessageComponent,
   ],
   templateUrl: './send-feedback.component.html',
-  styleUrls: ['./send-feedback.component.scss'],
+  styleUrl: './send-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class SendFeedbackComponent {

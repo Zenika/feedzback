@@ -26,7 +26,7 @@ import { ValidationErrorMessagePipe } from '../../shared/validation/validation-e
     ValidationErrorMessagePipe,
   ],
   templateUrl: './emails-field.component.html',
-  styleUrls: ['./emails-field.component.scss'],
+  styleUrl: './emails-field.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class EmailsFieldComponent {

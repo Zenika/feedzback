@@ -8,7 +8,7 @@ import { MessageType } from './message.types';
   standalone: true,
   imports: [NgClass, MatIconModule],
   templateUrl: './message.component.html',
-  styleUrls: ['./message.component.scss'],
+  styleUrl: './message.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class MessageComponent {

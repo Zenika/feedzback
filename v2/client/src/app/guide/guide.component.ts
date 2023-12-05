@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './guide.component.html',
-  styleUrls: ['./guide.component.scss'],
+  styleUrl: './guide.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class GuideComponent {

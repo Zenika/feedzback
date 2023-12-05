@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './division.component.html',
-  styleUrls: ['./division.component.scss'],
+  styleUrl: './division.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class DivisionComponent {

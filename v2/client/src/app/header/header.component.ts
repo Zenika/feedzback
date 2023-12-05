@@ -12,7 +12,7 @@ import { BurgerComponent } from './burger/burger.component';
   standalone: true,
   imports: [AsyncPipe, RouterLinkActive, RouterLinkWithHref, MatButtonModule, MatIconModule, BurgerComponent],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  styleUrl: './header.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnDestroy {

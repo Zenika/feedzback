@@ -32,7 +32,7 @@ import { EmailsFieldComponent } from './emails-field/emails-field.component';
     EmailsFieldComponent,
   ],
   templateUrl: './ask-feedback.component.html',
-  styleUrls: ['./ask-feedback.component.scss'],
+  styleUrl: './ask-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class AskFeedbackComponent {

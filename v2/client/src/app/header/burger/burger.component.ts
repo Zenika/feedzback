@@ -4,7 +4,7 @@ import { Component, EventEmitter, HostBinding, HostListener, Input, Output, View
   selector: 'app-burger',
   standalone: true,
   templateUrl: './burger.component.html',
-  styleUrls: ['./burger.component.scss'],
+  styleUrl: './burger.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class BurgerComponent {
