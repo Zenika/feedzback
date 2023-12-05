@@ -12,10 +12,7 @@ export type Feedback = {
   createdAt: number;
   updatedAt: number;
 };
-
 export type FeedbackWithId = Feedback & FeedbackIdObj;
-
-export type FeedbackIdObj = { id: string };
 
 // ----- AskedFeedback -----
 
@@ -27,7 +24,6 @@ export type AskedFeedback = {
   status: 'asked';
   createdAt: number;
 };
-
 export type AskedFeedbackWithId = AskedFeedback & FeedbackIdObj;
 
 // ----- TypedFeedbacks -----
@@ -38,3 +34,7 @@ export type TypedFeedbacks = {
   asked: AskedFeedback[];
   waitingForSend: AskedFeedback[];
 };
+
+// ----- FeedbackIdObj -----
+
+export type FeedbackIdObj = { id: string };

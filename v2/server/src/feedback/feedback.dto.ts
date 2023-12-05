@@ -1,43 +1,31 @@
 import { IsBoolean, IsEmail, IsString } from 'class-validator';
 
 export class AskFeedbackDto {
-  @IsEmail()
-  recipient: string;
+  @IsEmail() recipient: string;
 
-  @IsString()
-  message: string;
+  @IsString() message: string;
 
-  @IsBoolean()
-  shared: boolean;
+  @IsBoolean() shared: boolean;
 }
 
 export class SendAskedFeedbackDto {
-  @IsString()
-  id: string;
+  @IsString() id: string;
 
-  @IsString()
-  positive: string;
+  @IsString() positive: string;
 
-  @IsString()
-  negative: string;
+  @IsString() negative: string;
 
-  @IsString()
-  comment: string;
+  @IsString() comment: string;
 }
 
 export class SendFeedbackDto {
-  @IsEmail()
-  receiverEmail: string;
+  @IsEmail() receiverEmail: string;
 
-  @IsString()
-  positive: string;
+  @IsString() positive: string;
 
-  @IsString()
-  negative: string;
+  @IsString() negative: string;
 
-  @IsString()
-  comment: string;
+  @IsString() comment: string;
 
-  @IsBoolean()
-  shared: boolean;
+  @IsBoolean() shared: boolean;
 }

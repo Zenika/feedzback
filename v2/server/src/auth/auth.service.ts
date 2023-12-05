@@ -4,7 +4,15 @@ import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable()
 export class AuthService {
-  user?: DecodedIdToken | null;
+  private user?: DecodedIdToken | null;
+
+  get isAuthenticated() {
+    return this.user !== null;
+  }
+
+  get userEmail() {
+    return this.user?.email;
+  }
 
   constructor(private readonly firebaseService: FirebaseService) {}
 

@@ -8,14 +8,19 @@ import { FeedbackService } from './feedback.service';
 @Controller('feedback')
 export class FeedbackController {
   constructor(
-    private authService: AuthService,
-    private feedbackService: FeedbackService,
+    private readonly authService: AuthService,
+    private readonly feedbackService: FeedbackService,
   ) {}
+
+  @Get('ping')
+  async ping() {
+    return { ok: await this.feedbackService.ping() };
+  }
 
   @Post('ask')
   @UseGuards(AuthGuard)
   ask(@Body() { recipient: senderEmail, message, shared }: AskFeedbackDto) {
-    const receiverEmail = this.authService.user?.email as string;
+    const receiverEmail = this.authService.userEmail!;
     return this.feedbackService.ask({ senderEmail, receiverEmail, message, shared });
   }
 
@@ -37,21 +42,21 @@ export class FeedbackController {
   @Post('send')
   @UseGuards(AuthGuard)
   send(@Body() dto: SendFeedbackDto) {
-    const senderEmail = this.authService.user?.email as string;
+    const senderEmail = this.authService.userEmail!;
     return this.feedbackService.send({ senderEmail, ...dto });
   }
 
   @Get('list')
   @UseGuards(AuthGuard)
   getList() {
-    const userEmail = this.authService.user?.email as string;
+    const userEmail = this.authService.userEmail!;
     return this.feedbackService.getList(userEmail);
   }
 
   @Get('item/:id')
   @UseGuards(AuthGuard)
   getItem(@Param('id') id: string) {
-    const userEmail = this.authService.user?.email as string;
+    const userEmail = this.authService.userEmail!;
     return this.feedbackService.getItem(userEmail, id);
   }
 }

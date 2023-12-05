@@ -10,13 +10,13 @@ import { AppConfig } from '../config/config.types';
 
 @Injectable()
 export class FirebaseService {
-  private serviceAccount: ServiceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
+  private readonly serviceAccount: ServiceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
-  private app = initializeApp({ credential: cert(this.serviceAccount) });
+  private readonly app = initializeApp({ credential: cert(this.serviceAccount) });
 
-  auth = getAuth(this.app);
+  readonly auth = getAuth(this.app);
 
-  firestore = getFirestore(this.app);
+  readonly firestore = getFirestore(this.app);
 
   constructor(private configService: ConfigService<AppConfig>) {}
 }

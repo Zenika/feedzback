@@ -1,22 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, Filter } from 'firebase-admin/firestore';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AskFeedbackParams, SendFeedbackParams } from './feedback.params';
+import { AskFeedbackParams, SendAskedFeedbackParams, SendFeedbackParams } from './feedback.params';
 import { AskedFeedback, AskedFeedbackWithId, Feedback, FeedbackIdObj, FeedbackWithId } from './feedback.types';
 import { mapToTypedFeedbacks } from './feedback.utils';
 
 @Injectable()
 export class FeedbackService {
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(private readonly firebaseService: FirebaseService) {}
 
-  async ask(params: AskFeedbackParams) {
-    const feedback: AskedFeedback = {
-      ...params,
-      status: 'asked',
-      createdAt: Date.now(),
-    };
+  async ping() {
     try {
-      await this.firebaseService.firestore.collection('feedback').add(feedback);
+      return !!(await this.firebaseService.firestore.collection('feedback').get());
+    } catch {
+      return false;
+    }
+  }
+
+  async ask({ senderEmail, receiverEmail, message, shared }: AskFeedbackParams) {
+    try {
+      const askedFeedback: AskedFeedback = {
+        senderEmail,
+        receiverEmail,
+        message,
+        shared,
+        status: 'asked',
+        createdAt: Date.now(),
+      };
+      await this.firebaseService.firestore.collection('feedback').add(askedFeedback);
       return true;
     } catch {
       return false;
@@ -42,20 +53,20 @@ export class FeedbackService {
     }
   }
 
-  async sendAsked(id: string, { positive, negative, comment }: Pick<Feedback, 'positive' | 'negative' | 'comment'>) {
+  async sendAsked(id: string, { positive, negative, comment }: SendAskedFeedbackParams) {
     try {
       const askedFeedback = await this.checkAsked(id);
-      if (askedFeedback?.status !== 'asked') {
+      if (!askedFeedback) {
         return false;
       }
-      const data: Partial<Feedback> = {
+      const partialFeedback: Partial<Feedback> = {
         positive,
         negative,
         comment,
         status: 'given',
         updatedAt: Date.now(),
       };
-      await this.firebaseService.firestore.collection('feedback').doc(id).update(data);
+      await this.firebaseService.firestore.collection('feedback').doc(id).update(partialFeedback);
       return true;
     } catch {
       return false;
@@ -97,9 +108,11 @@ export class FeedbackService {
         .collection('feedback')
         .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
         .get();
+
       const feedbacks = query.docs.map(
         (doc) => ({ id: doc.id, ...doc.data() }) as FeedbackWithId | AskedFeedbackWithId,
       );
+
       return mapToTypedFeedbacks(feedbacks, userEmail);
     } catch {
       return mapToTypedFeedbacks([], '');
