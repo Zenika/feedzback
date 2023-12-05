@@ -7,8 +7,8 @@ import { routes } from './app.routes';
 import { provideBaseHref } from './shared/base-href/base-href.provider';
 import { provideAllowedEmailDomains } from './shared/form/allowed-email-domains';
 import { provideI18n } from './shared/i18n/i18n.providers';
+import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
 import { provideSvgIcons } from './shared/icons/icons.provider';
-import { provideMatPaginatorIntl } from './shared/ui/material/paginator-intl.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,9 +16,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideI18n(),
+    provideMatPaginatorIntl(),
     provideBaseHref(),
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
-    provideMatPaginatorIntl(),
   ],
 };
