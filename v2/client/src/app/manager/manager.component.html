@@ -3,16 +3,14 @@
   FeedZbacks partagés
 </h1>
 
-<form [formGroup]="form">
-  <mat-form-field appearance="outline" style="width: 100%">
-    <mat-label>Liste des consultants</mat-label>
-    <mat-select [formControl]="form.controls.consultant">
-      @for (consultant of managerService.consultants; track consultant) {
-        <mat-option [value]="consultant">{{ consultant }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-</form>
+<mat-form-field appearance="outline" style="width: 100%">
+  <mat-label>Liste des consultants</mat-label>
+  <mat-select [value]="consultant" (valueChange)="consultantChange($event)">
+    @for (consultant of consultants; track consultant) {
+      <mat-option [value]="consultant">{{ consultant }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
 
 @if (feedbacks$ | async; as feedbacks) {
   @if (feedbacks.length) {
