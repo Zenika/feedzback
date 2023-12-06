@@ -61,43 +61,12 @@
 
   &-sign-out {
     position: relative;
-    overflow: hidden;
     display: flex;
     justify-content: flex-end;
 
-    &__inner {
-      width: 100%;
+    &__photo {
       cursor: pointer;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 0.5em;
-      padding: 0;
-      border: none;
-      background: none;
-      font: inherit;
-      color: rgba(0, 0, 0, 0.6);
-      transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-
-      &:hover {
-        color: #d52150;
-      }
-    }
-
-    &__name {
-      flex-grow: 1;
-      text-align: right;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      @include app.media-breakpoint-down(lg) {
-        display: none;
-      }
-    }
-
-    &__icon {
-      flex-shrink: 0;
+      border-radius: 24px;
     }
   }
 

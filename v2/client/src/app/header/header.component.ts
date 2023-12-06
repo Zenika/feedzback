@@ -2,6 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
@@ -10,7 +11,15 @@ import { BurgerComponent } from './burger/burger.component';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [AsyncPipe, RouterLinkActive, RouterLinkWithHref, MatButtonModule, MatIconModule, BurgerComponent],
+  imports: [
+    AsyncPipe,
+    RouterLinkActive,
+    RouterLinkWithHref,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    BurgerComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -22,7 +31,7 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
-  protected firstName$ = this.authService.firstName$;
+  protected photoUrl$ = this.authService.photoUrl$;
 
   protected isKnownUser$ = this.authService.isKnownUser$;
 

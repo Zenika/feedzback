@@ -33,7 +33,7 @@ export class AuthService {
 
   user$ = this._user$.asObservable();
 
-  firstName$ = this._user$.pipe(map((user) => user?.displayName?.split(' ')[0]));
+  photoUrl$ = this._user$.pipe(map((user) => user?.photoURL));
 
   /**
    * Logged user can be a known user or an anonymous user
