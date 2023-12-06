@@ -1,5 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Res, UseGuards } from '@nestjs/common';
-import { Response } from 'express';
+import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
@@ -30,23 +29,21 @@ export class FeedbackController {
   }
 
   @Get('check-request/:token')
-  async checkRequest(@Param('token') tokenId: string, @Res({ passthrough: true }) res: Response) {
+  async checkRequest(@Param('token') tokenId: string) {
     const feedback = await this.feedbackService.checkRequest(tokenId);
     if (!feedback) {
-      res.status(HttpStatus.NOT_FOUND).send();
-      return;
+      throw new BadRequestException();
     }
     return feedback;
   }
 
   @Get('reveal-request-token/:id')
   @UseGuards(AuthGuard)
-  async revealRequestTokenId(@Param('id') feedbackId: string, @Res({ passthrough: true }) res: Response) {
+  async revealRequestTokenId(@Param('id') feedbackId: string) {
     const senderEmail = this.authService.userEmail!;
     const tokenId = await this.feedbackService.revealRequestTokenId(feedbackId, senderEmail);
     if (!tokenId) {
-      res.status(HttpStatus.NOT_FOUND).send();
-      return;
+      throw new BadRequestException();
     }
     return { token: tokenId } as TokenObject;
   }
