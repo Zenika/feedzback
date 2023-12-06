@@ -1,16 +1,9 @@
 import { DatePipe } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  HostBinding,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { AfterViewInit, Component, HostBinding, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -23,22 +16,32 @@ import { managerFeedbackListAnimations } from './manager-feedback-list.animation
 @Component({
   selector: 'app-manager-feedback-list',
   standalone: true,
-  imports: [DatePipe, RouterLink, MatButtonModule, MatIconModule, MatPaginatorModule, MatSortModule, MatTableModule],
+  imports: [
+    DatePipe,
+    RouterLink,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+  ],
   templateUrl: './manager-feedback-list.component.html',
   styleUrl: './manager-feedback-list.component.scss',
   animations: managerFeedbackListAnimations,
   encapsulation: ViewEncapsulation.None,
 })
-export class ManagerFeedbackListComponent implements OnChanges, AfterViewInit {
+export class ManagerFeedbackListComponent implements AfterViewInit {
   @HostBinding('class.app-manager-feedback-list') hasCss = true;
-
-  @Input({ transform: (value?: string) => value?.trim().toLowerCase() }) filter?: string;
 
   @Input({ required: true }) set feedbacks(value: Feedback[]) {
     this.dataSource = new MatTableDataSource(value);
     this.linkDataSource();
     this.applyFilter();
   }
+
+  protected filter = '';
 
   protected dataSource!: MatTableDataSource<Feedback>;
 
@@ -57,12 +60,6 @@ export class ManagerFeedbackListComponent implements OnChanges, AfterViewInit {
   }
 
   protected feedbackType = FeedbackType;
-
-  ngOnChanges({ filter }: SimpleChanges): void {
-    if (filter) {
-      this.applyFilter();
-    }
-  }
 
   ngAfterViewInit() {
     this.linkDataSource();
@@ -84,6 +81,11 @@ export class ManagerFeedbackListComponent implements OnChanges, AfterViewInit {
     this.dataSource.filterPredicate = (data, filter) => data.senderEmail.toLowerCase().includes(filter);
     this.dataSource.filter = this.filter ?? '';
     this.dataSource.paginator.firstPage();
+  }
+
+  protected onFilter(value: string) {
+    this.filter = value;
+    this.applyFilter();
   }
 
   // "f" means "feedback"

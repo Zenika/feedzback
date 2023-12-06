@@ -12,12 +12,12 @@
       }
     </mat-select>
   </mat-form-field>
-
-  @if (feedbacks$ | async; as feedbacks) {
-    @if (feedbacks.length) {
-      <app-manager-feedback-list [feedbacks]="feedbacks" />
-    } @else {
-      <div class="app-manager__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback partagé</div>
-    }
-  }
 </form>
+
+@if (feedbacks$ | async; as feedbacks) {
+  @if (feedbacks.length) {
+    <app-manager-feedback-list [feedbacks]="feedbacks" />
+  } @else {
+    <div class="app-manager__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback partagé</div>
+  }
+}

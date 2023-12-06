@@ -7,6 +7,15 @@
     width: 1%;
   }
 
+  &__filter {
+    margin-top: 1rem;
+    width: 100%;
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+
   &__row {
     cursor: pointer;
     transition: background-color 225ms ease;
