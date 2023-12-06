@@ -44,7 +44,7 @@ export default class MyFeedbacksComponent implements OnInit {
   type: FeedbackType = FeedbackType.received;
 
   protected get tabIndex() {
-    return this.type === FeedbackType.received ? 0 : 1;
+    return this.feedbackTypeToTabIndex(this.type);
   }
 
   protected filter = '';
@@ -79,13 +79,27 @@ export default class MyFeedbacksComponent implements OnInit {
   }
 
   protected onTabIndexChange(index: number) {
+    const type = this.tabIndexToFeedbackType(index);
+    this.router.navigate(['../', type], { relativeTo: this.activatedRoute });
+  }
+
+  private tabIndexToFeedbackType(index: number) {
     const feedbackTypeMap: Record<number, FeedbackType> = {
       0: FeedbackType.received,
       1: FeedbackType.sent,
-      2: this.sent.length ? FeedbackType.sentRequest : FeedbackType.receivedRequest,
+      2: this.sentRequest.length ? FeedbackType.sentRequest : FeedbackType.receivedRequest,
       3: FeedbackType.receivedRequest,
     };
-    const type: FeedbackType = feedbackTypeMap[index];
-    this.router.navigate(['../', type], { relativeTo: this.activatedRoute });
+    return feedbackTypeMap[index];
+  }
+
+  private feedbackTypeToTabIndex(type: FeedbackType) {
+    const tabIndexMap: Record<FeedbackType, number> = {
+      [FeedbackType.received]: 0,
+      [FeedbackType.sent]: 1,
+      [FeedbackType.sentRequest]: 2,
+      [FeedbackType.receivedRequest]: this.sentRequest.length ? 3 : 2,
+    };
+    return tabIndexMap[type];
   }
 }
