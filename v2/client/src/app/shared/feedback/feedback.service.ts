@@ -52,6 +52,20 @@ export class FeedbackService {
     );
   }
 
+  getManagerConsultants() {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<string[] | null>(`${this.apiBaseUrl}/feedback/manager/consultants`, { headers }),
+    );
+  }
+
+  getManagerConsultantFeedbacks(consultantEmail: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<Feedback[]>(`${this.apiBaseUrl}/feedback/manager/consultants/${consultantEmail}`, {
+        headers,
+      }),
+    );
+  }
+
   getItem(id: string) {
     return this.authService.withBearerToken((headers) =>
       this.httpClient.get<Feedback | FeedbackRequest | null>(`${this.apiBaseUrl}/feedback/item/${id}`, { headers }),

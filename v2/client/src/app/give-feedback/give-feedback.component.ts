@@ -1,4 +1,4 @@
-import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, Input, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +12,7 @@ import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../s
 import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
 import { MessageComponent } from '../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from './give-feedback-success/give-feedback-success.types';
-import { GiveFeedbackService } from './give-feedback.service';
+import { GiveFeedbackData, RequestWithToken } from './give-feedback.types';
 
 @Component({
   selector: 'app-give-feedback',
@@ -31,8 +31,10 @@ import { GiveFeedbackService } from './give-feedback.service';
   styleUrl: './give-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent {
+export class GiveFeedbackComponent implements GiveFeedbackData {
   @HostBinding('class.app-give-feedback') hasCss = true;
+
+  @Input() requestWithToken?: RequestWithToken;
 
   private router = inject(Router);
 
@@ -41,8 +43,6 @@ export class GiveFeedbackComponent {
   private formBuilder = inject(NonNullableFormBuilder);
 
   protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
-
-  protected giveFeedbackService = inject(GiveFeedbackService);
 
   private feedbackService = inject(FeedbackService);
 
@@ -56,13 +56,13 @@ export class GiveFeedbackComponent {
 
   form = this.formBuilder.group({
     receiverEmail: [
-      this.giveFeedbackService.request?.receiverEmail ?? this.getQueryParam('receiverEmail'),
+      this.requestWithToken?.receiverEmail ?? this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
     ],
     positive: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     negative: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     comment: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [this.giveFeedbackService.request?.shared ?? true],
+    shared: [this.requestWithToken?.shared ?? true],
   });
 
   submitInProgress = false;
@@ -80,15 +80,15 @@ export class GiveFeedbackComponent {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    if (this.giveFeedbackService.token) {
+    if (this.requestWithToken?.token) {
       this.feedbackService
-        .giveRequested({ token: this.giveFeedbackService.token, positive, negative, comment })
+        .giveRequested({ token: this.requestWithToken.token, positive, negative, comment })
         .subscribe((success) => {
           if (!success) {
             this.hasError = true;
             this.disableForm(false);
           } else {
-            this.feedbackId = this.isAnonymous ? undefined : this.giveFeedbackService.request?.id;
+            this.feedbackId = this.isAnonymous ? undefined : this.requestWithToken?.id;
             this.navigateToSuccess();
           }
         });

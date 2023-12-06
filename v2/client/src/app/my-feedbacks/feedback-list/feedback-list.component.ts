@@ -56,7 +56,7 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
     this.applyFilter();
   }
 
-  dataSource!: MatTableDataSource<NormalizedFeedback>;
+  protected dataSource!: MatTableDataSource<NormalizedFeedback>;
 
   protected isMobile = false;
 

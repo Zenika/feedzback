@@ -1,0 +1,23 @@
+<h1 class="gbl-page-title">
+  <mat-icon>hub</mat-icon>
+  FeedZbacks partagés
+</h1>
+
+<form [formGroup]="form">
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Liste des consultants</mat-label>
+    <mat-select [formControl]="form.controls.consultant">
+      @for (consultant of managerService.consultants; track consultant) {
+        <mat-option [value]="consultant">{{ consultant }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (feedbacks$ | async; as feedbacks) {
+    @if (feedbacks.length) {
+      <app-manager-feedback-list [feedbacks]="feedbacks" />
+    } @else {
+      <div class="app-manager__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback partagé</div>
+    }
+  }
+</form>

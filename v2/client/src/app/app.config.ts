@@ -4,6 +4,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { provideManager } from './manager/manager.provider';
+import { provideAuth } from './shared/auth/auth.provider';
 import { provideBaseHref } from './shared/base-href/base-href.provider';
 import { provideAllowedEmailDomains } from './shared/form/allowed-email-domains';
 import { provideI18n } from './shared/i18n/i18n.providers';
@@ -20,5 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideBaseHref(),
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
+    provideAuth(),
+    provideManager(),
   ],
 };

@@ -6,6 +6,7 @@ import { GiveFeedbackComponent } from './give-feedback/give-feedback.component';
 import { giveFeedbackGuard } from './give-feedback/give-feedback.guard';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
+import { managerGuard } from './manager/manager.guard';
 import { FeedbackDialogComponent } from './my-feedbacks/feedback-dialog/feedback-dialog.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RequestFeedbackSuccessComponent } from './request-feedback/request-feedback-success/request-feedback-success.component';
@@ -71,6 +72,12 @@ export const routes: Routes = [
     component: FeedbackDetailsComponent,
     canActivate: [authGuard],
     title: 'FeedZback - Détails',
+  },
+  {
+    path: 'manager',
+    loadComponent: () => import('./manager/manager.component'),
+    canActivate: [authGuard, managerGuard],
+    title: 'FeedZback - Manager',
   },
   {
     path: 'sign-in',

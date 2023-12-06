@@ -76,4 +76,18 @@ export class FeedbackController {
     const userEmail = this.authService.userEmail!;
     return this.feedbackService.getItem(userEmail, id);
   }
+
+  @Get('manager/consultants')
+  @UseGuards(AuthGuard)
+  getManagerConsultants() {
+    const managerEmail = this.authService.userEmail!;
+    return this.feedbackService.getManagerConsultants(managerEmail);
+  }
+
+  @Get('manager/consultants/:email')
+  @UseGuards(AuthGuard)
+  getManagerConsultantFeedbacks(@Param('email') consultantEmail: string) {
+    const managerEmail = this.authService.userEmail!;
+    return this.feedbackService.getManagerConsultantFeedbacks(managerEmail, consultantEmail);
+  }
 }

@@ -1,0 +1,82 @@
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Envoyé par</th>
+    <td mat-cell *matCellDef="let element">{{ f(element).senderEmail }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+    <td mat-cell *matCellDef="let element">{{ f(element).updatedAt | date: 'shortDate' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary">
+        @if (expandedFeedback === element) {
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        } @else {
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
+      <div [@detailExpand]="element === expandedFeedback ? 'expanded' : 'collapsed'">
+        <div class="app-manager-feedback-list__item">
+          @if (f(element).message) {
+            <h3><mat-icon>send</mat-icon> Demande initiale</h3>
+            <p>{{ f(element).message }}</p>
+          }
+
+          <h3><mat-icon>new_releases</mat-icon> Points positifs</h3>
+          <p>{{ f(element).positive }}</p>
+
+          <h3><mat-icon>moving</mat-icon> Axes d'améliorations</h3>
+          <p>{{ f(element).negative }}</p>
+
+          @if (f(element).comment) {
+            <h3><mat-icon>notes</mat-icon> Commentaires</h3>
+            <p>{{ f(element).comment }}</p>
+          }
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let element; columns: columns"
+    class="app-manager-feedback-list__row"
+    [class.app-manager-feedback-list__row--expanded]="expandedFeedback === element"
+    (click)="expandedFeedback = expandedFeedback === element ? null : element"
+  ></tr>
+
+  <tr
+    mat-row
+    *matRowDef="let element; columns: ['expandedDetail']"
+    class="app-manager-feedback-list__row-detail"
+    [class.app-manager-feedback-list__row-detail--collapsed]="expandedFeedback !== element"
+  ></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    @if (filter) {
+      <td
+        class="mat-cell"
+        [attr.colspan]="columns.length"
+        style="padding: 1.5rem; text-align: center; font-style: italic; color: #777"
+      >
+        Pas de résultat pour "{{ filter }}".
+      </td>
+    }
+  </tr>
+</table>
+
+<mat-paginator
+  [style.display]="hasPaginator ? undefined : 'none'"
+  [pageSizeOptions]="pageSizeOptions"
+  aria-label="Sélectionner le nombre de feedZbacks par page"
+></mat-paginator>

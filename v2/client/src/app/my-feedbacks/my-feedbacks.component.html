@@ -1,50 +1,56 @@
 <h1 class="gbl-page-title"><mat-icon>forum</mat-icon> Mes feedZbacks</h1>
 
-<mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="onTabIndexChange($event.index)">
-  <mat-tab label="reçus">
-    <ng-container [ngTemplateOutlet]="filterTmpl" />
-
-    @if (received.length) {
-      <app-feedback-list [type]="feedbackType.received" [feedbacks]="received" [filter]="filter"></app-feedback-list>
-    } @else if (fetched) {
-      <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
-    }
-  </mat-tab>
-
-  <mat-tab label="envoyés">
-    <ng-container [ngTemplateOutlet]="filterTmpl" />
-
-    @if (sent.length) {
-      <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sent" [filter]="filter"></app-feedback-list>
-    } @else if (fetched) {
-      <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
-    }
-  </mat-tab>
-
-  @if (sentRequest.length) {
-    <mat-tab label="demandés">
+@if (fetched) {
+  <mat-tab-group
+    animationDuration="0ms"
+    [selectedIndex]="tabIndex"
+    (selectedTabChange)="onTabIndexChange($event.index)"
+  >
+    <mat-tab label="reçus">
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-      <app-feedback-list
-        [type]="feedbackType.sentRequest"
-        [feedbacks]="sentRequest"
-        [filter]="filter"
-      ></app-feedback-list>
+      @if (received.length) {
+        <app-feedback-list [type]="feedbackType.received" [feedbacks]="received" [filter]="filter"></app-feedback-list>
+      } @else {
+        <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
+      }
     </mat-tab>
-  }
 
-  @if (receivedRequest.length) {
-    <mat-tab label="en attente">
+    <mat-tab label="envoyés">
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-      <app-feedback-list
-        [type]="feedbackType.receivedRequest"
-        [feedbacks]="receivedRequest"
-        [filter]="filter"
-      ></app-feedback-list>
+      @if (sent.length) {
+        <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sent" [filter]="filter"></app-feedback-list>
+      } @else {
+        <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
+      }
     </mat-tab>
-  }
-</mat-tab-group>
+
+    @if (sentRequest.length) {
+      <mat-tab label="demandés">
+        <ng-container [ngTemplateOutlet]="filterTmpl" />
+
+        <app-feedback-list
+          [type]="feedbackType.sentRequest"
+          [feedbacks]="sentRequest"
+          [filter]="filter"
+        ></app-feedback-list>
+      </mat-tab>
+    }
+
+    @if (receivedRequest.length) {
+      <mat-tab label="en attente">
+        <ng-container [ngTemplateOutlet]="filterTmpl" />
+
+        <app-feedback-list
+          [type]="feedbackType.receivedRequest"
+          [feedbacks]="receivedRequest"
+          [filter]="filter"
+        ></app-feedback-list>
+      </mat-tab>
+    }
+  </mat-tab-group>
+}
 
 <ng-template #filterTmpl>
   <mat-form-field appearance="fill" class="app-my-feedbacks__filter">

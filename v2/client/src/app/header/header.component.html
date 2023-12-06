@@ -20,6 +20,11 @@
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
       Mes&nbsp;feedZbacks
     </a>
+    @if (isManager) {
+      <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/manager">
+        Manager
+      </a>
+    }
   }
 </nav>
 

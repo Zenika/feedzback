@@ -192,4 +192,36 @@ export class FeedbackService {
       return null;
     }
   }
+
+  async getManagerConsultants(managerEmail: string) {
+    try {
+      const managerDoc = await this.firebaseService.firestore.collection('manager').doc(managerEmail).get();
+      if (!managerDoc.exists) {
+        throw new Error();
+      }
+      const { consultants } = managerDoc.data() as { consultants: string[] };
+      return consultants;
+    } catch {
+      return null;
+    }
+  }
+
+  async getManagerConsultantFeedbacks(managerEmail: string, consultantEmail: string) {
+    try {
+      const consultants = await this.getManagerConsultants(managerEmail);
+      if (!consultants?.includes(consultantEmail)) {
+        throw new Error();
+      }
+
+      const feedbackQuery = await this.firebaseService.firestore
+        .collection('feedback')
+        .where('receiverEmail', '==', consultantEmail)
+        .where('status', '==', FeedbackStatus)
+        .where('shared', '==', true)
+        .get();
+      return feedbackQuery.docs.map((feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId);
+    } catch {
+      return [] as FeedbackWithId[];
+    }
+  }
 }
