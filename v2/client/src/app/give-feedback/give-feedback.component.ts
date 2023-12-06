@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +31,7 @@ import { GiveFeedbackData, RequestWithToken } from './give-feedback.types';
   styleUrl: './give-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements GiveFeedbackData {
+export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
   @HostBinding('class.app-give-feedback') hasCss = true;
 
   @Input() requestWithToken?: RequestWithToken;
@@ -56,13 +56,13 @@ export class GiveFeedbackComponent implements GiveFeedbackData {
 
   form = this.formBuilder.group({
     receiverEmail: [
-      this.requestWithToken?.receiverEmail ?? this.getQueryParam('receiverEmail'),
+      this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
     ],
     positive: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     negative: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
     comment: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [this.requestWithToken?.shared ?? true],
+    shared: [true],
   });
 
   submitInProgress = false;
@@ -70,6 +70,14 @@ export class GiveFeedbackComponent implements GiveFeedbackData {
   hasError = false;
 
   feedbackId?: string;
+
+  ngOnInit(): void {
+    if (this.requestWithToken) {
+      this.form.controls.receiverEmail.setValue(this.requestWithToken.receiverEmail);
+      this.form.controls.shared.setValue(this.requestWithToken.shared);
+      this.form.updateValueAndValidity();
+    }
+  }
 
   async onSubmit() {
     if (this.form.invalid) {
