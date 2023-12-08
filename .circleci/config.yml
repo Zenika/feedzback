@@ -207,6 +207,8 @@ jobs:
         type: string
       firebase-service-key:
         type: string
+      client-url:
+        type: string  
       environment:
         type: string
     steps:
@@ -225,6 +227,7 @@ jobs:
             sed "s/<GENERIC_EMAIL>/${GENERIC_EMAIL}/g" -i app.yaml
             sed "s/<GCLOUD_PROJECT_ID>/<< parameters.gcloud-project-id >>/g" -i app.yaml
             sed "s/<NODE_ENV>/<< parameters.environment >>/g" -i app.yaml
+            sed "s/<URL_CLIENT>/<< parameters.client-url >>/g" -i app.yaml
       - run:
           name: test
           working_directory: server
@@ -302,6 +305,7 @@ workflows:
           gcloud-key: $GCLOUD_KEY_DEV
           gcloud-project-id: $GOOGLE_PROJECT_ID_DEV
           firebase-service-key: $FIREBASE_SERVICE_KEY_DEV
+          client-url: https://feedzbackdev.znk.io/send
           environment: staging
           requires:
             - unit-test-server
@@ -333,6 +337,7 @@ workflows:
           gcloud-key: $GCLOUD_KEY
           gcloud-project-id: $GOOGLE_PROJECT_ID
           firebase-service-key: $FIREBASE_SERVICE_KEY
+          client-url: https://feedzback.zenika.com/send
           environment: production
           requires:
             - unit-test-server

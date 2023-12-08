@@ -25,7 +25,7 @@ export function feedbackRequestTemplate(html, {email,senderName, senderEmail, te
   */
   const receverEmail = email;
   email = senderEmail;
-  const urlClient = process.env.NODE_ENV !== 'production'? process.env.URL_CLIENT + '/send' : 'https://feedzback.zenika.com/send';
+  const urlClient = process.env.URL_CLIENT;
   const params = new URLSearchParams({email, receverEmail}).toString();
   const template = ejs.render(html,
       {
