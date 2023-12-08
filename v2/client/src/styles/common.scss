@@ -7,7 +7,7 @@ h1.gbl-page-title {
   align-items: center;
   gap: calc(1rem + 1vw);
   text-wrap: balance;
-  color: #d52150;
+  color: #df2147;
 
   &--center {
     justify-content: center;
@@ -31,7 +31,7 @@ h1.gbl-page-title {
     cursor: pointer; // usefull when used like this: `<div class="gbl-link" role="presentation" (click)="onClick()">Link</div>`
     text-decoration: none;
     transition: color 250ms ease;
-    color: #d52150;
+    color: #df2147;
   }
 
   &:hover,
@@ -65,7 +65,7 @@ h1.gbl-page-title {
     }
 
     &:hover {
-      color: #d52150;
+      color: #df2147;
 
       mat-icon {
         transform: translateX(-0.25rem);

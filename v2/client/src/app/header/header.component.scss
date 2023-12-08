@@ -35,7 +35,7 @@
 
       &:hover,
       &--active {
-        color: #d52150;
+        color: #df2147;
       }
 
       &::after {
@@ -47,7 +47,7 @@
         width: 0%;
         opacity: 0;
         border-radius: 4px;
-        background-color: #d52150;
+        background-color: #df2147;
         transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       }
 

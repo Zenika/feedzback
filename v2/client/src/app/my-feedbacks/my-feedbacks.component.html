@@ -56,7 +56,7 @@
   <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
     <input #input matInput placeholder="Rechercher par l'email" [value]="filter" (keyup)="filter = input.value" />
     @if (filter) {
-      <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''"> close </mat-icon>
+      <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">close</mat-icon>
     }
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>

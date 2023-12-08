@@ -3,10 +3,6 @@
   width: 100%;
   overflow: auto;
 
-  &__expand {
-    width: 1%;
-  }
-
   &__filter {
     margin-top: 1rem;
     width: 100%;
@@ -14,6 +10,10 @@
     mat-icon {
       cursor: pointer;
     }
+  }
+
+  &__expand {
+    width: 1%;
   }
 
   &__row {
@@ -33,7 +33,7 @@
     &--expanded > td {
       transition: color 225ms ease;
       border-bottom-width: 0;
-      color: #d52150;
+      color: #df2147;
       font-weight: bold;
     }
   }
