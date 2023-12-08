@@ -25,17 +25,16 @@ let datastore;
 /**
  * configure environement in case if it's not in production mode
  */
-if (process.env.NODE_ENV !== 'production') {
-  console.log(process.env.API_KEY)
-  dotEnv.config();
-  datastore = new Datastore({
-    projectId: process.env.GCLOUD_PROJECT_ID,
-    apiEndpoint: process.env.DATASTORE_API
- });
-} else {
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   datastore = new Datastore({
     projectId: process.env.GCLOUD_PROJECT_ID,
    });
+} else {
+   dotEnv.config();
+   datastore = new Datastore({
+     projectId: process.env.GCLOUD_PROJECT_ID,
+     apiEndpoint: process.env.DATASTORE_API
+  });
 }
 /**
  * configure firebase admin
