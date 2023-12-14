@@ -1,4 +1,4 @@
-import { FeedbackRequestWithId, FeedbackWithId, TypedFeedbacks } from './feedback.types';
+import { FeedbackRequestWithId, FeedbackWithId, TypedFeedbacks } from './feedback-db.types';
 
 type AnyFeedbackWithId = FeedbackWithId | FeedbackRequestWithId;
 

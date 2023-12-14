@@ -1,15 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AuthModule } from 'src/auth/auth.module';
-import { EmailModule } from 'src/email/email.module';
-import { AuthMiddleware } from '../auth/auth.middleware';
-import { FirebaseModule } from '../firebase/firebase.module';
+import { AuthMiddleware, AuthModule } from '../core/auth';
+import { EmailModule } from '../core/email/email.module';
+import { FirebaseModule } from '../core/firebase';
+import { FeedbackDbService } from './feedback-db/feedback-db.service';
+import { FeedbackEmailController } from './feedback-email/feedback-email.controller';
+import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import { FeedbackController } from './feedback.controller';
-import { FeedbackService } from './feedback.service';
 
 @Module({
   imports: [AuthModule, FirebaseModule, EmailModule],
-  controllers: [FeedbackController],
-  providers: [FeedbackService],
+  controllers: [FeedbackController, FeedbackEmailController],
+  providers: [FeedbackDbService, FeedbackEmailService],
 })
 export class FeedbackModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

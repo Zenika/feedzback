@@ -1,10 +1,10 @@
 import { ServiceAccount } from 'firebase-admin/app';
 import { MailgunClientOptions } from 'mailgun.js';
 
-export type AppEnvironment = 'developement' | 'production';
+export type AppEnv = 'developement' | 'production';
 
 export type AppConfig = {
-  environment: AppEnvironment;
+  appEnv: AppEnv;
 
   firebaseServiceAccount: Required<ServiceAccount>;
 

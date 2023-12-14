@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DecodedIdToken } from 'firebase-admin/auth';
-import { FirebaseService } from '../firebase/firebase.service';
+import { FirebaseService } from '../firebase';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
     return this.user?.email;
   }
 
-  constructor(private readonly firebaseService: FirebaseService) {}
+  constructor(private firebaseService: FirebaseService) {}
 
   async authenticateUser(idToken?: string): Promise<void> {
     try {

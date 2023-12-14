@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, Filter } from 'firebase-admin/firestore';
-import { FirebaseService } from '../firebase/firebase.service';
-import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback.params';
+import { FirebaseService } from '../../core/firebase';
+import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
   FeedbackRequest,
@@ -11,16 +11,16 @@ import {
   FeedbackStatus,
   FeedbackWithId,
   IdObject,
-} from './feedback.types';
-import { mapToTypedFeedbacks } from './feedback.utils';
+} from './feedback-db.types';
+import { mapToTypedFeedbacks } from './feedback-db.utils';
 
 @Injectable()
-export class FeedbackService {
-  constructor(private readonly firebaseService: FirebaseService) {}
+export class FeedbackDbService {
+  constructor(private firebaseService: FirebaseService) {}
 
   async ping() {
     try {
-      return !!(await this.firebaseService.firestore.collection('feedback').get());
+      return !!(await this.firebaseService.db.collection('feedback').get());
     } catch {
       return false;
     }
@@ -36,12 +36,12 @@ export class FeedbackService {
         status: FeedbackRequestStatus,
         createdAt: Date.now(),
       };
-      const feedbackId = (await this.firebaseService.firestore.collection('feedback').add(request)).id;
+      const feedbackId = (await this.firebaseService.db.collection('feedback').add(request)).id;
 
       const token: FeedbackRequestToken = {
         feedbackId,
       };
-      const tokenId = (await this.firebaseService.firestore.collection('feedbackRequestToken').add(token)).id;
+      const tokenId = (await this.firebaseService.db.collection('feedbackRequestToken').add(token)).id;
 
       return tokenId;
     } catch {
@@ -51,14 +51,14 @@ export class FeedbackService {
 
   async checkRequest(tokenId: string) {
     try {
-      const tokenDoc = await this.firebaseService.firestore.collection('feedbackRequestToken').doc(tokenId).get();
+      const tokenDoc = await this.firebaseService.db.collection('feedbackRequestToken').doc(tokenId).get();
 
       if (!tokenDoc.exists) {
         throw new Error();
       }
       const { feedbackId } = tokenDoc.data() as FeedbackRequestToken;
 
-      const requestQuery = await this.firebaseService.firestore
+      const requestQuery = await this.firebaseService.db
         .collection('feedback')
         .where(FieldPath.documentId(), '==', feedbackId)
         .where('status', '==', FeedbackRequestStatus)
@@ -78,7 +78,7 @@ export class FeedbackService {
   async revealRequestTokenId(feedbackId: string, senderEmail: string) {
     try {
       const feedbackDoc = (
-        await this.firebaseService.firestore
+        await this.firebaseService.db
           .collection('feedback')
           .where(FieldPath.documentId(), '==', feedbackId)
           .where('senderEmail', '==', senderEmail)
@@ -91,10 +91,7 @@ export class FeedbackService {
       }
 
       const tokenDoc = (
-        await this.firebaseService.firestore
-          .collection('feedbackRequestToken')
-          .where('feedbackId', '==', feedbackId)
-          .get()
+        await this.firebaseService.db.collection('feedbackRequestToken').where('feedbackId', '==', feedbackId).get()
       ).docs.at(0);
 
       if (!tokenDoc) {
@@ -120,8 +117,8 @@ export class FeedbackService {
         status: FeedbackStatus,
         updatedAt: Date.now(),
       };
-      await this.firebaseService.firestore.collection('feedback').doc(request.id).update(partialFeedback);
-      await this.firebaseService.firestore.collection('feedbackRequestToken').doc(tokenId).delete();
+      await this.firebaseService.db.collection('feedback').doc(request.id).update(partialFeedback);
+      await this.firebaseService.db.collection('feedbackRequestToken').doc(tokenId).delete();
       return true;
     } catch {
       return false;
@@ -149,7 +146,7 @@ export class FeedbackService {
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      const feedbackRef = await this.firebaseService.firestore.collection('feedback').add(feedback);
+      const feedbackRef = await this.firebaseService.db.collection('feedback').add(feedback);
       const { id } = await feedbackRef.get();
       return { id } as IdObject;
     } catch {
@@ -159,7 +156,7 @@ export class FeedbackService {
 
   async getList(userEmail: string) {
     try {
-      const feedbackQuery = await this.firebaseService.firestore
+      const feedbackQuery = await this.firebaseService.db
         .collection('feedback')
         .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
         .get();
@@ -176,7 +173,7 @@ export class FeedbackService {
 
   async getItem(userEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
     try {
-      const feedbackQuery = await this.firebaseService.firestore
+      const feedbackQuery = await this.firebaseService.db
         .collection('feedback')
         .where(FieldPath.documentId(), '==', id)
         .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
@@ -195,7 +192,7 @@ export class FeedbackService {
 
   async getManagerConsultants(managerEmail: string) {
     try {
-      const managerDoc = await this.firebaseService.firestore.collection('manager').doc(managerEmail).get();
+      const managerDoc = await this.firebaseService.db.collection('manager').doc(managerEmail).get();
       if (!managerDoc.exists) {
         throw new Error();
       }
@@ -213,7 +210,7 @@ export class FeedbackService {
         throw new Error();
       }
 
-      const feedbackQuery = await this.firebaseService.firestore
+      const feedbackQuery = await this.firebaseService.db
         .collection('feedback')
         .where('receiverEmail', '==', consultantEmail)
         .where('status', '==', FeedbackStatus)

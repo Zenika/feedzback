@@ -1,4 +1,4 @@
-import { Feedback } from './feedback.types';
+import { Feedback } from './feedback-db.types';
 
 export type FeedbackRequestParams = Pick<Feedback, 'senderEmail' | 'receiverEmail' | 'message' | 'shared'>;
 

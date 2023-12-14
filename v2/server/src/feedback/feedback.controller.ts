@@ -1,38 +1,38 @@
 import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { EmailService } from 'src/email/email.service';
-import { AuthGuard } from '../auth/auth.guard';
-import { AuthService } from '../auth/auth.service';
+import { AuthGuard, AuthService } from '../core/auth';
+import { FeedbackDbService } from './feedback-db/feedback-db.service';
+import { TokenObject } from './feedback-db/feedback-db.types';
+import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
-import { FeedbackService } from './feedback.service';
-import { TokenObject } from './feedback.types';
 
 @Controller('feedback')
 export class FeedbackController {
   constructor(
-    private readonly authService: AuthService,
-    private readonly feedbackService: FeedbackService,
-    private readonly emailService: EmailService,
+    private authService: AuthService,
+    private feedbackDbService: FeedbackDbService,
+    private feedbackEmailService: FeedbackEmailService,
   ) {}
 
   @Get('ping')
   async ping() {
-    return { ok: await this.feedbackService.ping() };
+    return { ok: await this.feedbackDbService.ping() };
   }
 
   @Post('request')
   @UseGuards(AuthGuard)
   async request(@Body() { recipient: senderEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
-    const tokenId = await this.feedbackService.request({ senderEmail, receiverEmail, message, shared });
+    const tokenId = await this.feedbackDbService.request({ senderEmail, receiverEmail, message, shared });
     if (!tokenId) {
       return false;
     }
-    return await this.emailService.sendFeedbackRequest(senderEmail, receiverEmail, message, tokenId);
+    return true;
+    // return await this.feedbackEmailService.sendFeedbackRequest(senderEmail, receiverEmail, message, tokenId);
   }
 
   @Get('check-request/:token')
   async checkRequest(@Param('token') tokenId: string) {
-    const feedback = await this.feedbackService.checkRequest(tokenId);
+    const feedback = await this.feedbackDbService.checkRequest(tokenId);
     if (!feedback) {
       throw new BadRequestException();
     }
@@ -43,7 +43,7 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   async revealRequestTokenId(@Param('id') feedbackId: string) {
     const senderEmail = this.authService.userEmail!;
-    const tokenId = await this.feedbackService.revealRequestTokenId(feedbackId, senderEmail);
+    const tokenId = await this.feedbackDbService.revealRequestTokenId(feedbackId, senderEmail);
     if (!tokenId) {
       throw new BadRequestException();
     }
@@ -52,41 +52,41 @@ export class FeedbackController {
 
   @Post('give-requested')
   giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
-    return this.feedbackService.giveRequested(token, { positive, negative, comment });
+    return this.feedbackDbService.giveRequested(token, { positive, negative, comment });
   }
 
   @Post('give')
   @UseGuards(AuthGuard)
   give(@Body() dto: GiveFeedbackDto) {
     const senderEmail = this.authService.userEmail!;
-    return this.feedbackService.give({ senderEmail, ...dto });
+    return this.feedbackDbService.give({ senderEmail, ...dto });
   }
 
   @Get('list')
   @UseGuards(AuthGuard)
   getList() {
     const userEmail = this.authService.userEmail!;
-    return this.feedbackService.getList(userEmail);
+    return this.feedbackDbService.getList(userEmail);
   }
 
   @Get('item/:id')
   @UseGuards(AuthGuard)
   getItem(@Param('id') id: string) {
     const userEmail = this.authService.userEmail!;
-    return this.feedbackService.getItem(userEmail, id);
+    return this.feedbackDbService.getItem(userEmail, id);
   }
 
   @Get('manager/consultants')
   @UseGuards(AuthGuard)
   getManagerConsultants() {
     const managerEmail = this.authService.userEmail!;
-    return this.feedbackService.getManagerConsultants(managerEmail);
+    return this.feedbackDbService.getManagerConsultants(managerEmail);
   }
 
   @Get('manager/consultants/:email')
   @UseGuards(AuthGuard)
   getManagerConsultantFeedbacks(@Param('email') consultantEmail: string) {
     const managerEmail = this.authService.userEmail!;
-    return this.feedbackService.getManagerConsultantFeedbacks(managerEmail, consultantEmail);
+    return this.feedbackDbService.getManagerConsultantFeedbacks(managerEmail, consultantEmail);
   }
 }
