@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ServiceAccount, cert, initializeApp } from 'firebase-admin/app';
+import { cert, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 import { AppConfig } from '../config/config.types';
@@ -10,7 +10,7 @@ import { AppConfig } from '../config/config.types';
 
 @Injectable()
 export class FirebaseService {
-  private readonly serviceAccount: ServiceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
+  private readonly serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
   private readonly app = initializeApp({ credential: cert(this.serviceAccount) });
 

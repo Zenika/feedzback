@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { EmailService } from 'src/email/email.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
@@ -10,6 +11,7 @@ export class FeedbackController {
   constructor(
     private readonly authService: AuthService,
     private readonly feedbackService: FeedbackService,
+    private readonly emailService: EmailService,
   ) {}
 
   @Get('ping')
@@ -22,10 +24,10 @@ export class FeedbackController {
   async request(@Body() { recipient: senderEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
     const tokenId = await this.feedbackService.request({ senderEmail, receiverEmail, message, shared });
-
-    // TODO: Send the secret `tokenId` by email to the `recipient`
-
-    return !!tokenId;
+    if (!tokenId) {
+      return false;
+    }
+    return await this.emailService.sendFeedbackRequest(senderEmail, receiverEmail, message, tokenId);
   }
 
   @Get('check-request/:token')

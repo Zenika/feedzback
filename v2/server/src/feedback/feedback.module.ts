@@ -1,12 +1,13 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthModule } from 'src/auth/auth.module';
+import { EmailModule } from 'src/email/email.module';
 import { AuthMiddleware } from '../auth/auth.middleware';
 import { FirebaseModule } from '../firebase/firebase.module';
 import { FeedbackController } from './feedback.controller';
 import { FeedbackService } from './feedback.service';
 
 @Module({
-  imports: [AuthModule, FirebaseModule],
+  imports: [AuthModule, FirebaseModule, EmailModule],
   controllers: [FeedbackController],
   providers: [FeedbackService],
 })
