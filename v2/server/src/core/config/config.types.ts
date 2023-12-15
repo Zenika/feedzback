@@ -6,6 +6,8 @@ export type AppEnv = 'developement' | 'production';
 export type AppConfig = {
   appEnv: AppEnv;
 
+  clientUrl: string;
+
   firebaseServiceAccount: Required<ServiceAccount>;
 
   mailgunClientOptions: MailgunClientOptions;

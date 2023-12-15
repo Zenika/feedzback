@@ -4,6 +4,8 @@ import { getAppEnvironment } from './config.utils';
 export const appConfig = (): AppConfig => ({
   appEnv: getAppEnvironment(process.env.NODE_ENV),
 
+  clientUrl: process.env.CLIENT_URL!,
+
   firebaseServiceAccount: {
     projectId: process.env.FIREBASE_PROJECT_ID!,
     privateKey: process.env.FIREBASE_PRIVATE_KEY!,

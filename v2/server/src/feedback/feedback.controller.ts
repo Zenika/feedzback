@@ -26,8 +26,7 @@ export class FeedbackController {
     if (!tokenId) {
       return false;
     }
-    return true;
-    // return await this.feedbackEmailService.sendFeedbackRequest(senderEmail, receiverEmail, message, tokenId);
+    return await this.feedbackEmailService.sendFeedbackRequest(senderEmail, receiverEmail, message, tokenId);
   }
 
   @Get('check-request/:token')
