@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { renderFile } from 'ejs';
 import { join } from 'path';
-import { AppConfig } from '../../core/config';
+import { AppConfig } from '../../config';
 import { ContextService } from '../../core/context';
 import { givenContentMap, requestedContentMap } from './feedback-email-builder.config';
 import { GivenContent, GivenData, RequestedContent, RequestedData } from './feedback-email-builder.types';

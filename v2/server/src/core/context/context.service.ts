@@ -3,15 +3,13 @@ import { Request } from 'express';
 
 @Injectable()
 export class ContextService {
-  base!: string;
-
-  path!: string;
+  serverBaseUrl!: string;
 
   languages!: string[];
 
   setFrom(req: Request) {
-    this.base = `${req.protocol}://${req.get('Host')}`;
-    this.path = req.originalUrl;
+    this.serverBaseUrl = `${req.protocol}://${req.get('Host')}`;
+
     this.languages = req.acceptsLanguages();
   }
 }
