@@ -122,7 +122,7 @@ export class FeedbackDbService {
     try {
       const request = await this.checkRequest(tokenId);
       if (!request) {
-        return false;
+        return null;
       }
       const partialFeedback: Partial<Feedback> = {
         positive,
@@ -133,9 +133,11 @@ export class FeedbackDbService {
       };
       await this.feedbackCollection.doc(request.id).update(partialFeedback);
       await this.feedbackRequestTokenCollection.doc(tokenId).delete();
-      return true;
+
+      const { senderEmail, receiverEmail, id: feedbackId } = request;
+      return { senderEmail, receiverEmail, feedbackId };
     } catch {
-      return false;
+      return null;
     }
   }
 

@@ -49,15 +49,24 @@ export class FeedbackController {
   }
 
   @Post('give-requested')
-  giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
-    return this.feedbackDbService.giveRequested(token, { positive, negative, comment });
+  async giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+    const infos = await this.feedbackDbService.giveRequested(token, { positive, negative, comment });
+    if (!infos) {
+      return false;
+    }
+    await this.feedbackEmailService.given(infos.senderEmail, infos.receiverEmail, infos.feedbackId);
+    return true;
   }
 
   @Post('give')
   @UseGuards(AuthGuard)
-  give(@Body() dto: GiveFeedbackDto) {
+  async give(@Body() dto: GiveFeedbackDto) {
     const senderEmail = this.authService.userEmail!;
-    return this.feedbackDbService.give({ senderEmail, ...dto });
+    const partialIdObject = await this.feedbackDbService.give({ senderEmail, ...dto });
+    if (partialIdObject.id) {
+      await this.feedbackEmailService.given(senderEmail, dto.receiverEmail, partialIdObject.id);
+    }
+    return partialIdObject;
   }
 
   @Get('list')
@@ -73,6 +82,8 @@ export class FeedbackController {
     const userEmail = this.authService.userEmail!;
     return this.feedbackDbService.getItem(userEmail, id);
   }
+
+  /* ----- Manager ----- */
 
   @Get('manager/consultants')
   @UseGuards(AuthGuard)

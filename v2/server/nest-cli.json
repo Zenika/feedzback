@@ -4,6 +4,6 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "assets": ["feedback/feedback-email-builder/templates/**"]
+    "assets": ["feedback/feedback-email/feedback-email-builder/templates/**"]
   }
 }
