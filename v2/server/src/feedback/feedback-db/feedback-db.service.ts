@@ -12,6 +12,7 @@ import {
   FeedbackStatus,
   FeedbackWithId,
   IdObject,
+  ManagerData,
 } from './feedback-db.types';
 import { mapToTypedFeedbacks } from './feedback-db.utils';
 
@@ -207,7 +208,7 @@ export class FeedbackDbService {
       if (!managerDoc.exists) {
         throw new Error();
       }
-      const { consultants } = managerDoc.data() as { consultants: string[] };
+      const { consultants } = managerDoc.data() as ManagerData;
       return consultants;
     } catch {
       return null;

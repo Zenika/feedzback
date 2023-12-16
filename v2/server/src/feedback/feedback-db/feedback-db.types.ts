@@ -54,3 +54,13 @@ export type TokenObject = { token: string };
 // ----- FeedbackRequestToken -----
 
 export type FeedbackRequestToken = { feedbackId: string };
+
+// ----- Manager -----
+
+export type Manager = {
+  [managerEmail: string]: ManagerData;
+};
+
+export type ManagerData = {
+  consultants: string[];
+};

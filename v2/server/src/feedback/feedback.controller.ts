@@ -1,7 +1,6 @@
 import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
-import { FeedbackDbService } from './feedback-db/feedback-db.service';
-import { TokenObject } from './feedback-db/feedback-db.types';
+import { FeedbackDbService, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 
@@ -26,7 +25,7 @@ export class FeedbackController {
     if (!tokenId) {
       return false;
     }
-    return await this.feedbackEmailService.sendFeedbackRequest(senderEmail, receiverEmail, message, tokenId);
+    return await this.feedbackEmailService.requested(senderEmail, receiverEmail, message, tokenId);
   }
 
   @Get('check-request/:token')

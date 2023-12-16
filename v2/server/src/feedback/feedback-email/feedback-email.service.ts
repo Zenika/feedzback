@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EmailService } from 'src/core/email';
 import { AppConfig } from '../../config';
-import { FeedbackEmailBuilderService } from '../feedback-email-builder/feedback-email-builder.service';
+import { FeedbackEmailBuilderService } from '../feedback-email-builder/';
 import { EMAIL_DEFAULT_FROM_FIELD, EMAIL_DEV_TO_FIELD } from './feedback-email.config';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class FeedbackEmailService {
     private emailService: EmailService,
   ) {}
 
-  async sendFeedbackRequest(senderEmail: string, receiverEmail: string, message: string, tokenId: string) {
+  async requested(senderEmail: string, receiverEmail: string, message: string, tokenId: string) {
     const { subject, html } = await this.feedbackEmailBuilderService.requested(receiverEmail, message, tokenId);
 
     return this.emailService.send({
