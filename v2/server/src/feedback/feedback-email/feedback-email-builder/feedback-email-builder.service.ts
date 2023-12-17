@@ -6,7 +6,7 @@ import { AppConfig } from '../../../core/config';
 import { ContextService } from '../../../core/context';
 import { givenContentMap, requestedContentMap } from './feedback-email-builder.config';
 import { GivenContent, GivenData, RequestedContent, RequestedData } from './feedback-email-builder.types';
-import { matchLanguage } from './feedback-email-builder.utils';
+import { matchLanguage, uglifyEmail } from './feedback-email-builder.utils';
 
 @Injectable()
 export class FeedbackEmailBuilderService {
@@ -24,7 +24,7 @@ export class FeedbackEmailBuilderService {
   async requested(receiverEmail: string, message: string, tokenId: string) {
     const content: RequestedContent = requestedContentMap[this.language];
     const data: RequestedData = {
-      receiverEmail,
+      receiverEmail: uglifyEmail(receiverEmail),
       message,
       cta: `${this.configService.get('clientUrl')}/give?token=${tokenId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
@@ -38,7 +38,7 @@ export class FeedbackEmailBuilderService {
   async given(senderEmail: string, feedbackId: string) {
     const content: GivenContent = givenContentMap[this.language];
     const data: GivenData = {
-      senderEmail,
+      senderEmail: uglifyEmail(senderEmail),
       cta: `${this.configService.get('clientUrl')}/feedback/received/${feedbackId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };

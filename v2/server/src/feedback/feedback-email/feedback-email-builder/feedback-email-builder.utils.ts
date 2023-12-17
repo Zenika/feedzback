@@ -10,3 +10,5 @@ export const matchLanguage = (languages: string[]): Language => {
     DEFAULT_LANGUAGE
   );
 };
+
+export const uglifyEmail = (email: string) => email.replace('@', '<span>@</span>').replaceAll('.', '<span>.</span>');
