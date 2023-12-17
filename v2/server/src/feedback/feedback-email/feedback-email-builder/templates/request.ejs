@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="<%= content.lang %>">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content.title %></title>
-</head>
-<body>
-  <h1><%= content.title %></h1>
+<%- include('partials/header', { content: content, data: data }); %>
 
-  <p><%= content.message %> : <%= data.receiverEmail %>.</p>
-  
-  <% if (data.message) { %><p><%= data.message %></p><% } %>
-  
-  <p><a href="<%= data.cta %>"><%= content.cta %></a></p>
-</body>
-</html>
+<%= content.message %> <strong><%= data.receiverEmail %></strong>.
+
+<% if (data.message) { %>
+  <div style="height: 16px; line-height: 16px; font-size: 16px;">&nbsp;</div>
+  <%= data.message %>
+<% } %>
+
+<%- include('partials/footer', { content: content, data: data }); %>

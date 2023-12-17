@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { renderFile } from 'ejs';
+import { Data, renderFile } from 'ejs';
 import { join } from 'path';
 import { AppConfig } from '../../../core/config';
 import { ContextService } from '../../../core/context';
@@ -27,10 +27,11 @@ export class FeedbackEmailBuilderService {
       receiverEmail,
       message,
       cta: `${this.configService.get('clientUrl')}/give?token=${tokenId}`,
+      serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {
       subject: content.title,
-      html: await renderFile(join(this.templatesPath, 'request.ejs'), { content, data }, { async: true }),
+      html: await this.renderFile('request.ejs', { content, data }),
     };
   }
 
@@ -39,10 +40,23 @@ export class FeedbackEmailBuilderService {
     const data: GivenData = {
       senderEmail,
       cta: `${this.configService.get('clientUrl')}/feedback/received/${feedbackId}`,
+      serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {
       subject: content.title,
-      html: await renderFile(join(this.templatesPath, 'given.ejs'), { content, data }, { async: true }),
+      html: await this.renderFile('given.ejs', { content, data }),
     };
+  }
+
+  private renderFile(relativePath: string, data: Data) {
+    return new Promise<string>((resolve, reject) => {
+      renderFile(join(this.templatesPath, relativePath), data, (err, srt) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(srt);
+        }
+      });
+    });
   }
 }

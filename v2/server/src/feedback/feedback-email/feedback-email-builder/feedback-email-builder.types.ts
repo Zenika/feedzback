@@ -13,6 +13,7 @@ export type RequestedData = {
   receiverEmail: string;
   message: string;
   cta: string;
+  serverBaseUrl: string;
 };
 
 /* ----- Given feedback ----- */
@@ -27,4 +28,5 @@ export type GivenContent = {
 export type GivenData = {
   senderEmail: string;
   cta: string;
+  serverBaseUrl: string;
 };

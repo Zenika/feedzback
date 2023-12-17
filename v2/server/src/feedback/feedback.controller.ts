@@ -85,6 +85,7 @@ export class FeedbackController {
 
   /* ----- Manager ----- */
 
+  // TODO: move to `account` controller
   @Get('manager/consultants')
   @UseGuards(AuthGuard)
   getManagerConsultants() {

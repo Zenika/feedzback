@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="<%= content.lang %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/svg+xml" href="<%= data.serverBaseUrl %>/favicon.svg" />
+
+    <title><%= content.title %></title>
+  </head>
+  <body
+    style="
+      margin: 0px;
+      background-color: #eeeeee;
+      font-family: Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.3;
+    "
+  >
+    <table
+      role="presentation"
+      width="100%"
+      style="width: 100%; border-collapse: collapse; border: none; background-color: #eeeeee"
+    >
+      <tr style="border: none">
+        <td style="border: none; padding: 24px">
+          <div
+            style="
+              margin: 0px auto;
+              padding: 24px;
+              max-width: 600px;
+              border-radius: 8px;
+              box-shadow: 0 4px 4px #dddddd;
+              border: 1px solid #dddddd;
+              background-color: #ffffff;
+              font-family: Helvetica, sans-serif;
+              font-size: 16px;
+              line-height: 1.3;
+              letter-spacing: 0.4px;
+            "
+          >
+            <div style="line-height: 0; text-align: center;">
+              <img
+                src="<%= data.serverBaseUrl %>/logo-feedzback.svg"
+                style="border: none"
+                width="137"
+                height="72"
+                alt="FeedZback Logo"
+              />
+            </div>
+
+            <div style="height: 20px; line-height: 20px; font-size: 20px">&nbsp;</div>
+
+            <span style="font-size: 20px; color: #df2147"><%= content.title %></span>
+
+            <div style="height: 16px; line-height: 16px; font-size: 16px">&nbsp;</div>
