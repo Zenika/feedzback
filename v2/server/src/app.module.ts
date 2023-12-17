@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppConfigModule } from './config';
 import { AuthMiddleware, AuthModule } from './core/auth';
+import { AppConfigModule } from './core/config';
 import { ContextMiddleware, ContextModule } from './core/context';
 import { FeedbackModule } from './feedback/feedback.module';
 

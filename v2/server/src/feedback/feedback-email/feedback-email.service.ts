@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EmailService } from 'src/core/email';
-import { AppConfig } from '../../config';
+import { AppConfig } from '../../core/config';
 import { FeedbackEmailBuilderService } from './feedback-email-builder';
 import { EMAIL_DEFAULT_FROM_FIELD, EMAIL_DEV_TO_FIELD } from './feedback-email.config';
 
