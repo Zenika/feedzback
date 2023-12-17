@@ -39,7 +39,7 @@
     }
 
     @if (receivedRequest.length) {
-      <mat-tab label="en attente">
+      <mat-tab label="à donner">
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
         <app-feedback-list
@@ -54,7 +54,7 @@
 
 <ng-template #filterTmpl>
   <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
-    <input #input matInput placeholder="Rechercher par l'email" [value]="filter" (keyup)="filter = input.value" />
+    <input #input matInput placeholder="Rechercher par email" [value]="filter" (keyup)="filter = input.value" />
     @if (filter) {
       <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">close</mat-icon>
     }

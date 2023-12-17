@@ -1,6 +1,6 @@
 <h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
-  Je donne du feedZback
+  Donner du feedZback
 </h1>
 
 @if (requestWithToken) {
@@ -59,12 +59,12 @@
       <textarea
         #positive
         [formControl]="form.controls.positive"
-        [maxlength]="messageMaxLength"
+        [maxlength]="feedbackMaxLength"
         matInput
         rows="4"
         placeholder="Dans le cadre de la mission, tes collègues viennent souvent te voir pour te demander de l’aide. Tu prends le temps de bien leur expliquer si quelque chose n’est pas compris. Je trouve que tu es très à l’écoute de tes collègues et tu leur permets de monter en compétences : bravo et merci pour ça."
       ></textarea>
-      <mat-hint align="start">{{ positive.value.length }} / {{ messageMaxLength }}</mat-hint>
+      <mat-hint align="start">{{ positive.value.length }} / {{ feedbackMaxLength }}</mat-hint>
       <mat-error>{{ form.controls.positive.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>
 
@@ -73,12 +73,12 @@
       <textarea
         #negative
         [formControl]="form.controls.negative"
-        [maxlength]="messageMaxLength"
+        [maxlength]="feedbackMaxLength"
         matInput
         rows="4"
         placeholder="La semaine dernière, tu as travaillé sur le même sujet pendant 5 jours sans pour autant demander de l’aide. Il s’est avéré que tu avais un blocage. Cela m’a déçu et agacé que tu ne nous demandes pas d’aide. J’aimerais que tu viennes nous voir la prochaine fois, afin que tu ne restes pas bloqué(e) aussi longtemps."
       ></textarea>
-      <mat-hint align="start">{{ negative.value.length }} / {{ messageMaxLength }}</mat-hint>
+      <mat-hint align="start">{{ negative.value.length }} / {{ feedbackMaxLength }}</mat-hint>
       <mat-error>{{ form.controls.negative.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>
 
@@ -87,12 +87,12 @@
       <textarea
         #comment
         [formControl]="form.controls.comment"
-        [maxlength]="messageMaxLength"
+        [maxlength]="commentMaxLength"
         matInput
         rows="3"
         placeholder="Merci pour ta demande de feedZback !"
       ></textarea>
-      <mat-hint align="start">{{ comment.value.length }} / {{ messageMaxLength }}</mat-hint>
+      <mat-hint align="start">{{ comment.value.length }} / {{ commentMaxLength }}</mat-hint>
     </mat-form-field>
 
     @if (!requestWithToken) {

@@ -50,7 +50,9 @@ export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
   }
 
-  protected messageMaxLength = 500;
+  protected feedbackMaxLength = 2000;
+
+  protected commentMaxLength = 500;
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
@@ -59,9 +61,9 @@ export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
       this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
     ],
-    positive: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
-    negative: ['', [Validators.required, Validators.maxLength(this.messageMaxLength)]],
-    comment: ['', [Validators.maxLength(this.messageMaxLength)]],
+    positive: ['', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]],
+    negative: ['', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]],
+    comment: ['', [Validators.maxLength(this.commentMaxLength)]],
     shared: [true],
   });
 

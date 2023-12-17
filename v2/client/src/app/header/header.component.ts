@@ -3,7 +3,7 @@ import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inj
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { ManagerService } from '../manager/manager.service';
 import { AuthService } from '../shared/auth/auth.service';
@@ -14,6 +14,7 @@ import { BurgerComponent } from './burger/burger.component';
   standalone: true,
   imports: [
     AsyncPipe,
+    RouterLink,
     RouterLinkActive,
     RouterLinkWithHref,
     MatButtonModule,

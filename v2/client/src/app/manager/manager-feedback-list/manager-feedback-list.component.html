@@ -1,5 +1,5 @@
 <mat-form-field appearance="fill" class="app-manager-feedback-list__filter">
-  <input #input matInput placeholder="Rechercher par l'email" [value]="filter" (keyup)="onFilter(input.value)" />
+  <input #input matInput placeholder="Rechercher par email" [value]="filter" (keyup)="onFilter(input.value)" />
   @if (filter) {
     <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="onFilter('')">close</mat-icon>
   }
