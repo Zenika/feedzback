@@ -12,7 +12,6 @@ import {
   FeedbackStatus,
   FeedbackWithId,
   IdObject,
-  ManagerData,
 } from './feedback-db.types';
 import { mapToTypedFeedbacks } from './feedback-db.utils';
 
@@ -28,212 +27,142 @@ export class FeedbackDbService {
     return this.db.collection(Collection.feedbackRequestToken);
   }
 
-  private get managerCollection() {
-    return this.db.collection(Collection.manager);
-  }
-
   constructor(private firebaseService: FirebaseService) {}
 
   async ping() {
-    try {
-      return !!(await this.feedbackCollection.get());
-    } catch {
-      return false;
-    }
+    return !!(await this.feedbackCollection.get());
   }
 
   async request({ senderEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
-    try {
-      const request: FeedbackRequest = {
-        senderEmail,
-        receiverEmail,
-        message,
-        shared,
-        status: FeedbackRequestStatus,
-        createdAt: Date.now(),
-      };
-      const feedbackId = (await this.feedbackCollection.add(request)).id;
+    const request: FeedbackRequest = {
+      senderEmail,
+      receiverEmail,
+      message,
+      shared,
+      status: FeedbackRequestStatus,
+      createdAt: Date.now(),
+    };
+    const feedbackId = (await this.feedbackCollection.add(request)).id;
 
-      const token: FeedbackRequestToken = {
-        feedbackId,
-      };
-      const tokenId = (await this.feedbackRequestTokenCollection.add(token)).id;
+    const token: FeedbackRequestToken = {
+      feedbackId,
+    };
+    const tokenId = (await this.feedbackRequestTokenCollection.add(token)).id;
 
-      return tokenId;
-    } catch {
-      return null;
-    }
+    return tokenId;
   }
 
   async checkRequest(tokenId: string) {
-    try {
-      const tokenDoc = await this.feedbackRequestTokenCollection.doc(tokenId).get();
-
-      if (!tokenDoc.exists) {
-        throw new Error();
-      }
-      const { feedbackId } = tokenDoc.data() as FeedbackRequestToken;
-
-      const requestQuery = await this.feedbackCollection
-        .where(FieldPath.documentId(), '==', feedbackId)
-        .where('status', '==', FeedbackRequestStatus)
-        .get();
-
-      const requestDoc = requestQuery.docs.at(0);
-      if (!requestDoc) {
-        throw new Error();
-      }
-
-      return { id: requestDoc.id, ...requestDoc.data() } as FeedbackRequestWithId;
-    } catch {
+    const tokenDoc = await this.feedbackRequestTokenCollection.doc(tokenId).get();
+    if (!tokenDoc.exists) {
       return null;
     }
+
+    const { feedbackId } = tokenDoc.data() as FeedbackRequestToken;
+
+    const requestQuery = await this.feedbackCollection
+      .where(FieldPath.documentId(), '==', feedbackId)
+      .where('status', '==', FeedbackRequestStatus)
+      .get();
+
+    const requestDoc = requestQuery.docs.at(0);
+    if (!requestDoc) {
+      return null;
+    }
+
+    return { id: requestDoc.id, ...requestDoc.data() } as FeedbackRequestWithId;
   }
 
   async revealRequestTokenId(feedbackId: string, senderEmail: string) {
-    try {
-      const feedbackDoc = (
-        await this.feedbackCollection
-          .where(FieldPath.documentId(), '==', feedbackId)
-          .where('senderEmail', '==', senderEmail)
-          .where('status', '==', FeedbackRequestStatus)
-          .get()
-      ).docs.at(0);
-
-      if (!feedbackDoc) {
-        throw new Error();
-      }
-
-      const tokenDoc = (await this.feedbackRequestTokenCollection.where('feedbackId', '==', feedbackId).get()).docs.at(
-        0,
-      );
-
-      if (!tokenDoc) {
-        throw new Error();
-      }
-
-      return tokenDoc.id;
-    } catch {
+    const feedbackDoc = (
+      await this.feedbackCollection
+        .where(FieldPath.documentId(), '==', feedbackId)
+        .where('senderEmail', '==', senderEmail)
+        .where('status', '==', FeedbackRequestStatus)
+        .get()
+    ).docs.at(0);
+    if (!feedbackDoc) {
       return null;
     }
+
+    const tokenDoc = (await this.feedbackRequestTokenCollection.where('feedbackId', '==', feedbackId).get()).docs.at(0);
+    if (!tokenDoc) {
+      return null;
+    }
+
+    return tokenDoc.id;
   }
 
   async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
-    try {
-      const request = await this.checkRequest(tokenId);
-      if (!request) {
-        return null;
-      }
-      const partialFeedback: Partial<Feedback> = {
-        positive,
-        negative,
-        comment,
-        status: FeedbackStatus,
-        updatedAt: Date.now(),
-      };
-      await this.feedbackCollection.doc(request.id).update(partialFeedback);
-      await this.feedbackRequestTokenCollection.doc(tokenId).delete();
-
-      const { senderEmail, receiverEmail, id: feedbackId } = request;
-      return { senderEmail, receiverEmail, feedbackId };
-    } catch {
+    const request = await this.checkRequest(tokenId);
+    if (!request) {
       return null;
     }
+
+    const partialFeedback: Partial<Feedback> = {
+      positive,
+      negative,
+      comment,
+      status: FeedbackStatus,
+      updatedAt: Date.now(),
+    };
+    await this.feedbackCollection.doc(request.id).update(partialFeedback);
+    await this.feedbackRequestTokenCollection.doc(tokenId).delete();
+
+    const { senderEmail, receiverEmail, id: feedbackId } = request;
+    return { senderEmail, receiverEmail, feedbackId };
   }
 
-  async give({
-    senderEmail,
-    receiverEmail,
-    positive,
-    negative,
-    comment,
-    shared,
-  }: GiveFeedbackParams): Promise<Partial<IdObject>> {
-    try {
-      const feedback: Feedback = {
-        senderEmail,
-        receiverEmail,
-        positive,
-        negative,
-        comment,
-        message: '',
-        shared,
-        status: FeedbackStatus,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      };
-      const feedbackRef = await this.feedbackCollection.add(feedback);
-      const { id } = await feedbackRef.get();
-      return { id } as IdObject;
-    } catch {
-      return { id: undefined } as Partial<IdObject>;
-    }
+  async give({ senderEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+    const feedback: Feedback = {
+      senderEmail,
+      receiverEmail,
+      positive,
+      negative,
+      comment,
+      message: '',
+      shared,
+      status: FeedbackStatus,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    const feedbackRef = await this.feedbackCollection.add(feedback);
+    const { id } = await feedbackRef.get();
+    return { id } as IdObject;
   }
 
   async getList(userEmail: string) {
-    try {
-      const feedbackQuery = await this.feedbackCollection
-        .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
-        .get();
+    const feedbackQuery = await this.feedbackCollection
+      .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
+      .get();
 
-      const feedbacks = feedbackQuery.docs.map(
-        (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId | FeedbackRequestWithId,
-      );
+    const feedbacks = feedbackQuery.docs.map(
+      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId | FeedbackRequestWithId,
+    );
 
-      return mapToTypedFeedbacks(feedbacks, userEmail);
-    } catch {
-      return mapToTypedFeedbacks([], '');
-    }
+    return mapToTypedFeedbacks(feedbacks, userEmail);
   }
 
   async getItem(userEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
-    try {
-      const feedbackQuery = await this.feedbackCollection
-        .where(FieldPath.documentId(), '==', id)
-        .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
-        .get();
+    const feedbackQuery = await this.feedbackCollection
+      .where(FieldPath.documentId(), '==', id)
+      .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
+      .get();
 
-      const feedbackDoc = feedbackQuery.docs.at(0);
-      if (!feedbackDoc) {
-        throw new Error();
-      }
-
-      return { id: feedbackDoc.id, ...feedbackDoc.data() } as FeedbackWithId | FeedbackRequestWithId;
-    } catch {
+    const feedbackDoc = feedbackQuery.docs.at(0);
+    if (!feedbackDoc) {
       return null;
     }
+
+    return { id: feedbackDoc.id, ...feedbackDoc.data() } as FeedbackWithId | FeedbackRequestWithId;
   }
 
-  /** @deprecated */
-  async getManagerConsultants(managerEmail: string) {
-    try {
-      const managerDoc = await this.managerCollection.doc(managerEmail).get();
-      if (!managerDoc.exists) {
-        throw new Error();
-      }
-      const { consultants } = managerDoc.data() as ManagerData;
-      return consultants;
-    } catch {
-      return null;
-    }
-  }
-
-  /** @deprecated */
-  async getManagerConsultantFeedbacks(managerEmail: string, consultantEmail: string) {
-    try {
-      const consultants = await this.getManagerConsultants(managerEmail);
-      if (!consultants?.includes(consultantEmail)) {
-        throw new Error();
-      }
-
-      const feedbackQuery = await this.feedbackCollection
-        .where('receiverEmail', '==', consultantEmail)
-        .where('status', '==', FeedbackStatus)
-        .where('shared', '==', true)
-        .get();
-      return feedbackQuery.docs.map((feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId);
-    } catch {
-      return [] as FeedbackWithId[];
-    }
+  async getManagedFeedbacks(managedEmail: string) {
+    const feedbackQuery = await this.feedbackCollection
+      .where('receiverEmail', '==', managedEmail)
+      .where('status', '==', FeedbackStatus)
+      .where('shared', '==', true)
+      .get();
+    return feedbackQuery.docs.map((feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId);
   }
 }

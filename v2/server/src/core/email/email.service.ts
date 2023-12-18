@@ -13,12 +13,6 @@ export class EmailService {
   constructor(private configService: ConfigService<AppConfig>) {}
 
   async send({ from, to, subject, html }: Required<Pick<MailgunMessageData, 'from' | 'to' | 'subject' | 'html'>>) {
-    try {
-      await this.mailgunClient.messages.create(this.options.username, { from, to, subject, html });
-      return true;
-    } catch (err) {
-      console.error(err); // TODO: Need an App logger...
-      return false;
-    }
+    await this.mailgunClient.messages.create(this.options.username, { from, to, subject, html });
   }
 }

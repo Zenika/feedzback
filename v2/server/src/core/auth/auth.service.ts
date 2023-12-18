@@ -6,7 +6,7 @@ import { FirebaseService } from '../firebase';
 export class AuthService {
   private user?: DecodedIdToken | null;
 
-  get isAuthenticated() {
+  get isUserAuthenticated() {
     return this.user !== null;
   }
 

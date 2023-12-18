@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { ConsultantDbService } from '../consultant/consultant-db';
 import { AuthGuard, AuthService } from '../core/auth';
 import { FeedbackDbService, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
@@ -10,6 +11,7 @@ export class FeedbackController {
     private authService: AuthService,
     private feedbackDbService: FeedbackDbService,
     private feedbackEmailService: FeedbackEmailService,
+    private consultantDbService: ConsultantDbService,
   ) {}
 
   @Get('ping')
@@ -22,10 +24,7 @@ export class FeedbackController {
   async request(@Body() { recipient: senderEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
     const tokenId = await this.feedbackDbService.request({ senderEmail, receiverEmail, message, shared });
-    if (!tokenId) {
-      return false;
-    }
-    return await this.feedbackEmailService.requested(senderEmail, receiverEmail, message, tokenId);
+    await this.feedbackEmailService.requested(senderEmail, receiverEmail, message, tokenId);
   }
 
   @Get('check-request/:token')
@@ -83,20 +82,14 @@ export class FeedbackController {
     return this.feedbackDbService.getItem(userEmail, id);
   }
 
-  /* ----- Manager ----- */
-
-  // TODO: move to `account` controller
-  @Get('manager/consultants')
+  @Get('managed/:email')
   @UseGuards(AuthGuard)
-  getManagerConsultants() {
+  async getManagedFeedbacks(@Param('email') managedEmail: string) {
     const managerEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getManagerConsultants(managerEmail);
-  }
-
-  @Get('manager/consultants/:email')
-  @UseGuards(AuthGuard)
-  getManagerConsultantFeedbacks(@Param('email') consultantEmail: string) {
-    const managerEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getManagerConsultantFeedbacks(managerEmail, consultantEmail);
+    const managedEmails = (await this.consultantDbService.get(managerEmail))?.managedEmails;
+    if (!managedEmails?.includes(managedEmail)) {
+      throw new BadRequestException();
+    }
+    return await this.feedbackDbService.getManagedFeedbacks(managedEmail);
   }
 }

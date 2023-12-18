@@ -1,4 +1,4 @@
 import { ConfigModule } from '@nestjs/config';
-import { appConfig } from './config';
+import { appConfigLoader } from './config';
 
-export const AppConfigModule = ConfigModule.forRoot({ load: [appConfig], isGlobal: true });
+export const AppConfigModule = ConfigModule.forRoot({ load: [appConfigLoader] });

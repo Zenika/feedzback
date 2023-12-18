@@ -7,6 +7,6 @@ export class AuthGuard implements CanActivate {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(context: ExecutionContext): boolean {
-    return this.authService.isAuthenticated;
+    return this.authService.isUserAuthenticated;
   }
 }

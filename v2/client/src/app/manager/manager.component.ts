@@ -52,7 +52,7 @@ export default class ManagerComponent implements ManagerData {
   protected feedbacks$ = this.consultant$.pipe(
     switchMap((consultant) => {
       if (this.consultants.includes(consultant)) {
-        return this.feedbackService.getManagerConsultantFeedbacks(consultant);
+        return this.feedbackService.getManagedFeedbacks(consultant);
       } else {
         return of([]);
       }

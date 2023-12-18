@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { catchError, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
@@ -18,9 +18,10 @@ export class FeedbackService {
 
   request(dto: FeedbackRequestDto) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient
-        .post<boolean>(`${this.apiBaseUrl}/feedback/request`, dto, { headers })
-        .pipe(catchError(() => of(false))),
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
+        map(() => true),
+        catchError(() => of(false)),
+      ),
     );
   }
 
@@ -40,9 +41,11 @@ export class FeedbackService {
       .pipe(catchError(() => of(false)));
   }
 
-  give(dto: GiveFeedbackDto) {
+  give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.post<Partial<IdObject>>(`${this.apiBaseUrl}/feedback/give`, dto, { headers }),
+      this.httpClient
+        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers })
+        .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
     );
   }
 
@@ -52,23 +55,17 @@ export class FeedbackService {
     );
   }
 
-  getManagerConsultants() {
-    return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<string[] | null>(`${this.apiBaseUrl}/feedback/manager/consultants`, { headers }),
-    );
-  }
-
-  getManagerConsultantFeedbacks(consultantEmail: string) {
-    return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<Feedback[]>(`${this.apiBaseUrl}/feedback/manager/consultants/${consultantEmail}`, {
-        headers,
-      }),
-    );
-  }
-
   getItem(id: string) {
     return this.authService.withBearerToken((headers) =>
       this.httpClient.get<Feedback | FeedbackRequest | null>(`${this.apiBaseUrl}/feedback/item/${id}`, { headers }),
+    );
+  }
+
+  getManagedFeedbacks(managedEmail: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<Feedback[]>(`${this.apiBaseUrl}/feedback/managed/${managedEmail}`, {
+        headers,
+      }),
     );
   }
 }

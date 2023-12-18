@@ -13,85 +13,51 @@ export class ConsultantDbService {
 
   constructor(private firebaseService: FirebaseService) {}
 
-  async getAndSetIfNotExists(consultantEmail: string) {
-    const doc = await this.consultantCollection.doc(consultantEmail).get();
-    if (doc.exists) {
-      return doc.data() as ConsultantData;
-    }
-
-    const consultantData: ConsultantData = {
-      managerEmail: '',
-      managedEmails: [],
-    };
-    await this.consultantCollection.doc(consultantEmail).set(consultantData);
-    return consultantData;
-  }
-
-  async updateManager(consultantEmail: string, managerEmail: string) {
-    const consultantDoc = await this.getAndSetIfNotExists(consultantEmail);
-
-    const currentManagerEmail = consultantDoc.managerEmail;
-    if (currentManagerEmail && currentManagerEmail !== managerEmail) {
-      await this.getAndSetIfNotExists(currentManagerEmail);
-      await this.setManagedForExistingConsultant(currentManagerEmail, consultantEmail, 'remove');
-    }
-
-    await this.setManagerForExistingConsultant(consultantEmail, managerEmail);
-
-    await this.getAndSetIfNotExists(managerEmail);
-    await this.setManagedForExistingConsultant(managerEmail, consultantEmail, 'add');
-  }
-
-  private async setManagerForExistingConsultant(consultantEmail: string, managerEmail: string) {
+  async get(consultantEmail: string) {
     const consultantDoc = await this.consultantCollection.doc(consultantEmail).get();
     if (consultantDoc.exists) {
-      throw new Error();
+      return consultantDoc.data() as ConsultantData;
     }
+    return null;
+  }
+
+  async updateManager(consultantEmail: string, newManagerEmail: string) {
+    const consultantDoc = await this.get(consultantEmail);
+
+    const oldManagerEmail = consultantDoc?.managerEmail;
+    if (oldManagerEmail === newManagerEmail) {
+      return;
+    }
+    if (oldManagerEmail) {
+      await this.updateManagedEmailsField(oldManagerEmail, consultantEmail, 'remove');
+    }
+
+    await this.updateManagerEmailField(consultantEmail, newManagerEmail);
+
+    await this.updateManagedEmailsField(newManagerEmail, consultantEmail, 'add');
+  }
+
+  private async updateManagerEmailField(consultantEmail: string, managerEmail: string) {
     const partialConsultantData: Partial<ConsultantData> = {
       managerEmail,
     };
-    await this.consultantCollection.doc(consultantEmail).update(partialConsultantData);
+    await this.consultantCollection.doc(consultantEmail).set(partialConsultantData, { merge: true });
   }
 
-  private async setManagedForExistingConsultant(
-    consultantEmail: string,
-    managedEmail: string,
-    action: 'add' | 'remove',
-  ) {
+  private async updateManagedEmailsField(consultantEmail: string, managedEmail: string, action: 'add' | 'remove') {
     const consultantDoc = await this.consultantCollection.doc(consultantEmail).get();
-    if (consultantDoc.exists) {
-      throw new Error();
-    }
-    const { managedEmails } = consultantDoc.data() as ConsultantData;
 
-    // Implementation (1)
-    const newManagedEmails = managedEmails.filter((_managedEmail) => _managedEmail !== managedEmail);
+    const currentManagedEmails = (consultantDoc.exists && (consultantDoc.data() as ConsultantData).managedEmails) || [];
+
+    const managedEmails = currentManagedEmails.filter((_managedEmail) => _managedEmail !== managedEmail);
     if (action === 'add') {
-      newManagedEmails.push(managedEmail);
-    }
-    newManagedEmails.sort();
-
-    const partialConsultantData: Partial<ConsultantData> = {
-      managedEmails: newManagedEmails,
-    };
-    await this.consultantCollection.doc(consultantEmail).update(partialConsultantData);
-
-    /*
-    // Implementation (2)
-    const managedEmailIndex = managedEmails.indexOf(managedEmail);
-    if (action === 'add' && managedEmailIndex === -1) {
       managedEmails.push(managedEmail);
       managedEmails.sort();
-    } else if (action === 'remove' && managedEmailIndex !== -1) {
-      managedEmails.splice(managedEmailIndex, 1);
-    } else {
-      return;
     }
 
     const partialConsultantData: Partial<ConsultantData> = {
       managedEmails,
     };
-    await this.consultantCollection.doc(consultantEmail).update(partialConsultantData);
-    */
+    await this.consultantCollection.doc(consultantEmail).set(partialConsultantData, { merge: true });
   }
 }

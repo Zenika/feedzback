@@ -5,6 +5,7 @@ import { ConsultantController } from './consultant.controller';
 
 @Module({
   imports: [AuthModule, ConsultantDbModule],
+  exports: [ConsultantDbModule],
   controllers: [ConsultantController],
 })
 export class ConsultantModule {}

@@ -1,10 +1,8 @@
-// ----- Consultant -----
-
 export type Consultant = {
   [consultantEmail: string]: ConsultantData;
 };
 
 export type ConsultantData = {
-  managerEmail: string;
-  managedEmails: string[];
+  managerEmail?: string;
+  managedEmails?: string[];
 };

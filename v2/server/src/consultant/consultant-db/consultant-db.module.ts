@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { FirebaseModule } from 'src/core/firebase';
+import { FirebaseModule } from '../../core/firebase';
 import { ConsultantDbService } from './consultant-db.service';
 
 @Module({

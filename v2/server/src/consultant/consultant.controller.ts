@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { ConsultantDbService } from './consultant-db';
 import { UpdateManagerDto } from './consultant.dto';
+import { buildRequiredConsultantData } from './consultant.utils';
 
 @Controller('consultant')
 export class ConsultantController {
@@ -12,9 +13,9 @@ export class ConsultantController {
 
   @Get('')
   @UseGuards(AuthGuard)
-  get() {
+  async get() {
     const consultantEmail = this.authService.userEmail!;
-    return this.consultantDbService.getAndSetIfNotExists(consultantEmail);
+    return buildRequiredConsultantData(await this.consultantDbService.get(consultantEmail));
   }
 
   @Post('manager')

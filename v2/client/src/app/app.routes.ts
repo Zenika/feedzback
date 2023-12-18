@@ -14,6 +14,7 @@ import { RequestFeedbackComponent } from './request-feedback/request-feedback.co
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
+import { ConsultantComponent } from './consultant/consultant.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +73,12 @@ export const routes: Routes = [
     component: FeedbackDetailsComponent,
     canActivate: [authGuard],
     title: 'FeedZback - Détails',
+  },
+  {
+    path: 'consultant',
+    canActivate: [authGuard],
+    component: ConsultantComponent,
+    title: 'FeedZback - Mon profil consultant',
   },
   {
     path: 'manager',

@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { tap } from 'rxjs';
-import { FeedbackService } from '../shared/feedback/feedback.service';
+import { ConsultantService } from '../shared/consultant/consultant.service';
+
+// TODO: move to observables or signals for reactivity...
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +12,18 @@ export class ManagerService {
 
   consultants: string[] = [];
 
-  private feedbackService = inject(FeedbackService);
+  private consultantService = inject(ConsultantService);
 
   init() {
-    return this.feedbackService.getManagerConsultants().pipe(
-      tap((consultants) => {
-        this.isManager = !!consultants;
-        this.consultants = consultants ?? [];
+    return this.consultantService.get().pipe(
+      tap(({ managedEmails: consultants }) => {
+        this.isManager = consultants.length > 0;
+        this.consultants = consultants;
       }),
     );
+  }
+
+  updateManager(managerEmail: string) {
+    return this.consultantService.updateManager(managerEmail).pipe(tap(() => this.init()));
   }
 }
