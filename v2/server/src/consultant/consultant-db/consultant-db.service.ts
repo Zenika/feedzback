@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { FirebaseService } from '../../core/firebase';
 import { Collection } from './consultant-db.config';
 import { ConsultantData } from './consultant-db.types';
+import { isEmptyConsultantData } from './consultant-db.utils';
 
 @Injectable()
 export class ConsultantDbService {
@@ -45,19 +46,21 @@ export class ConsultantDbService {
   }
 
   private async updateManagedEmailsField(consultantEmail: string, managedEmail: string, action: 'add' | 'remove') {
-    const consultantDoc = await this.consultantCollection.doc(consultantEmail).get();
+    const oldConsultantData = await this.get(consultantEmail);
 
-    const currentManagedEmails = (consultantDoc.exists && (consultantDoc.data() as ConsultantData).managedEmails) || [];
-
-    const managedEmails = currentManagedEmails.filter((_managedEmail) => _managedEmail !== managedEmail);
+    const managedEmails = (oldConsultantData?.managedEmails ?? []).filter((email) => email !== managedEmail);
     if (action === 'add') {
       managedEmails.push(managedEmail);
       managedEmails.sort();
     }
 
-    const partialConsultantData: Partial<ConsultantData> = {
-      managedEmails,
-    };
-    await this.consultantCollection.doc(consultantEmail).set(partialConsultantData, { merge: true });
+    const newConsultantData: ConsultantData = { ...oldConsultantData, managedEmails };
+    const consultantDoc = this.consultantCollection.doc(consultantEmail);
+
+    if (isEmptyConsultantData(newConsultantData)) {
+      await consultantDoc.delete();
+    } else {
+      await consultantDoc.set(newConsultantData);
+    }
   }
 }

@@ -30,19 +30,10 @@ export class ConsultantComponent {
   protected submitInProgress = false;
 
   protected form = inject(NonNullableFormBuilder).group({
-    managerEmail: [''],
+    managerEmail: [this.consultantService.data().managerEmail],
   });
 
   protected managedEmails: string[] = [];
-
-  constructor() {
-    this.consultantService.get().subscribe((data) => {
-      this.form.controls.managerEmail.setValue(data.managerEmail);
-      this.form.updateValueAndValidity();
-
-      this.managedEmails = data.managedEmails;
-    });
-  }
 
   protected onSubmit() {
     this.submitInProgress = true;

@@ -7,9 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BehaviorSubject, of, switchMap } from 'rxjs';
+import { ConsultantService } from '../shared/consultant/consultant.service';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { ManagerFeedbackListComponent } from './manager-feedback-list/manager-feedback-list.component';
-import { ManagerService } from './manager.service';
 import { ManagerData } from './manager.types';
 
 @Component({
@@ -45,7 +45,7 @@ export default class ManagerComponent implements ManagerData {
 
   protected activatedRoute = inject(ActivatedRoute);
 
-  protected consultants = inject(ManagerService).consultants;
+  protected consultants = inject(ConsultantService).data().managedEmails;
 
   protected feedbackService = inject(FeedbackService);
 

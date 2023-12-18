@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { UpdateManagerDto } from './consultant.dto';
@@ -15,11 +16,18 @@ export class ConsultantService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
-  get() {
+  private _data = signal<ConsultantData>({ managerEmail: '', managedEmails: [] });
+
+  data = computed(() => this._data());
+
+  isManager = computed(() => this._data().managedEmails.length > 0);
+
+  fetchData() {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<ConsultantData>(`${this.apiBaseUrl}/consultant`, {
-        headers,
-      }),
+      this.httpClient.get<ConsultantData>(`${this.apiBaseUrl}/consultant`, { headers }).pipe(
+        tap((data) => this._data.set(data)),
+        map(() => undefined),
+      ),
     );
   }
 
