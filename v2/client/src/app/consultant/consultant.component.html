@@ -14,7 +14,7 @@
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="app-consultant__field">
-    <mat-label>Email de votre manager</mat-label>
+    <mat-label>Email de mon manager</mat-label>
     <input [formControl]="form.controls.managerEmail" matInput placeholder="jean.dupont@zenika.com" />
     <mat-error>{{ form.controls.managerEmail.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
