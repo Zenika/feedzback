@@ -3,6 +3,15 @@
   Mon profil consultant
 </h1>
 
+@switch (success) {
+  @case (false) {
+    <app-message type="danger">Désolé, une erreur s'est produite.</app-message>
+  }
+  @case (true) {
+    <app-message type="success">Votre profil a bien été mis à jour.</app-message>
+  }
+}
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="app-consultant__field">
     <mat-label>Email de votre manager</mat-label>
@@ -10,15 +19,5 @@
     <mat-error>{{ form.controls.managerEmail.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 
-  <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+  <button [disabled]="submitButtonDisabled" mat-raised-button color="primary">Mettre à jour</button>
 </form>
-
-<hr />
-
-<h3>Liste des managés</h3>
-
-<ul>
-  @for (email of managedEmails; track email) {
-    <li>{{ email }}</li>
-  }
-</ul>
