@@ -57,10 +57,12 @@ export type FeedbackRequestToken = { feedbackId: string };
 
 // ----- Manager -----
 
+/** @deprecated */
 export type Manager = {
   [managerEmail: string]: ManagerData;
 };
 
+/** @deprecated */
 export type ManagerData = {
   consultants: string[];
 };

@@ -204,6 +204,7 @@ export class FeedbackDbService {
     }
   }
 
+  /** @deprecated */
   async getManagerConsultants(managerEmail: string) {
     try {
       const managerDoc = await this.managerCollection.doc(managerEmail).get();
@@ -217,6 +218,7 @@ export class FeedbackDbService {
     }
   }
 
+  /** @deprecated */
   async getManagerConsultantFeedbacks(managerEmail: string, consultantEmail: string) {
     try {
       const consultants = await this.getManagerConsultants(managerEmail);
