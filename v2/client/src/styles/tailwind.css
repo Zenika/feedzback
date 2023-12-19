@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Warning: Tailwind "Preflight" breaks some Angular material components
+
+  Learn more about this issue and a hack to solve it:
+     https://github.com/tailwindlabs/tailwindcss/discussions/9993
+
+  If you enable the following hack, then you can enable "Preflight" in `tailwind.config.ts`
+*/
+/*
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
+  .mdc-notched-outline__notch {
+  border-right-style: hidden;
+}
+.mat-mdc-input-element {
+  box-shadow: none !important;
+}
+*/
