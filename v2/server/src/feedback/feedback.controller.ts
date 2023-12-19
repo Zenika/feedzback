@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ConsultantDbService } from '../consultant/consultant-db';
 import { AuthGuard, AuthService } from '../core/auth';
+import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
@@ -11,7 +11,7 @@ export class FeedbackController {
     private authService: AuthService,
     private feedbackDbService: FeedbackDbService,
     private feedbackEmailService: FeedbackEmailService,
-    private consultantDbService: ConsultantDbService,
+    private employeeDbService: EmployeeDbService,
   ) {}
 
   @Get('ping')
@@ -86,7 +86,7 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   async getManagedFeedbacks(@Param('email') managedEmail: string) {
     const managerEmail = this.authService.userEmail!;
-    const managedEmails = (await this.consultantDbService.get(managerEmail))?.managedEmails;
+    const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;
     if (!managedEmails?.includes(managedEmail)) {
       throw new BadRequestException();
     }

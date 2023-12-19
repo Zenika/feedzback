@@ -1,4 +1,4 @@
-export type ConsultantData = {
+export type EmployeeData = {
   managerEmail: string;
   managedEmails: string[];
 };

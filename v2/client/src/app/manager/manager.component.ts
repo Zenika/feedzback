@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BehaviorSubject, of, switchMap } from 'rxjs';
-import { ConsultantService } from '../shared/consultant/consultant.service';
+import { EmployeeService } from '../shared/employee/employee.service';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { ManagerFeedbackListComponent } from './manager-feedback-list/manager-feedback-list.component';
 import { ManagerData } from './manager.types';
@@ -32,35 +32,35 @@ import { ManagerData } from './manager.types';
 export default class ManagerComponent implements ManagerData {
   @HostBinding('class.app-manager') hasCss = true;
 
-  protected consultant$ = new BehaviorSubject<string>('');
+  protected employee$ = new BehaviorSubject<string>('');
 
-  @Input() set consultant(value: string) {
-    this.consultant$.next(value);
+  @Input() set employee(value: string) {
+    this.employee$.next(value);
   }
-  get consultant() {
-    return this.consultant$.value;
+  get employee() {
+    return this.employee$.value;
   }
 
   protected router = inject(Router);
 
   protected activatedRoute = inject(ActivatedRoute);
 
-  protected consultants = inject(ConsultantService).data().managedEmails;
+  protected employees = inject(EmployeeService).data().managedEmails;
 
   protected feedbackService = inject(FeedbackService);
 
-  protected feedbacks$ = this.consultant$.pipe(
-    switchMap((consultant) => {
-      if (this.consultants.includes(consultant)) {
-        return this.feedbackService.getManagedFeedbacks(consultant);
+  protected feedbacks$ = this.employee$.pipe(
+    switchMap((employee) => {
+      if (this.employees.includes(employee)) {
+        return this.feedbackService.getManagedFeedbacks(employee);
       } else {
         return of([]);
       }
     }),
   );
 
-  protected consultantChange(consultant: string) {
-    const queryParams: ManagerData = { consultant };
+  protected employeeChange(employee: string) {
+    const queryParams: ManagerData = { employee };
     this.router.navigate([], { relativeTo: this.activatedRoute, queryParams });
   }
 }

@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth/auth.service';
-import { ConsultantService } from '../shared/consultant/consultant.service';
+import { EmployeeService } from '../shared/employee/employee.service';
 import { BurgerComponent } from './burger/burger.component';
 
 @Component({
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
-  protected isManager = inject(ConsultantService).isManager;
+  protected isManager = inject(EmployeeService).isManager;
 
   protected photoUrl$ = this.authService.photoUrl$;
 

@@ -11,10 +11,10 @@ import { FeedbackDialogComponent } from './my-feedbacks/feedback-dialog/feedback
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RequestFeedbackSuccessComponent } from './request-feedback/request-feedback-success/request-feedback-success.component';
 import { RequestFeedbackComponent } from './request-feedback/request-feedback.component';
+import { SettingsComponent } from './settings/settings.component';
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
-import { ConsultantComponent } from './consultant/consultant.component';
 
 export const routes: Routes = [
   {
@@ -77,7 +77,7 @@ export const routes: Routes = [
   {
     path: 'settings',
     canActivate: [authGuard],
-    component: ConsultantComponent,
+    component: SettingsComponent,
     title: 'FeedZback - Paramètres',
   },
   {

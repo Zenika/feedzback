@@ -1,22 +1,22 @@
 import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
 import { firstValueFrom, of, switchMap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { ConsultantService } from './consultant.service';
+import { EmployeeService } from './employee.service';
 
-export const provideConsultant = (): FactoryProvider => ({
+export const provideEmployee = (): FactoryProvider => ({
   provide: APP_INITIALIZER,
-  useFactory: (authService: AuthService, consultantService: ConsultantService) => (): Promise<unknown> => {
+  useFactory: (authService: AuthService, employeeService: EmployeeService) => (): Promise<unknown> => {
     return firstValueFrom(
       authService.isKnownUser$.pipe(
         switchMap((isKnownUser) => {
           if (!isKnownUser) {
             return of(undefined);
           }
-          return consultantService.fetchData();
+          return employeeService.fetchData();
         }),
       ),
     );
   },
-  deps: [AuthService, ConsultantService],
+  deps: [AuthService, EmployeeService],
   multi: true,
 });

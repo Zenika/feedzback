@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { ConsultantService } from '../shared/consultant/consultant.service';
+import { EmployeeService } from '../shared/employee/employee.service';
 
-export const managerGuard: CanActivateFn = () => inject(ConsultantService).isManager();
+export const managerGuard: CanActivateFn = () => inject(EmployeeService).isManager();

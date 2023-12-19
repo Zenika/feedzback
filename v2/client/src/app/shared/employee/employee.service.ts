@@ -3,20 +3,20 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { UpdateManagerDto } from './consultant.dto';
-import { ConsultantData } from './consultant.types';
+import { UpdateManagerDto } from './employee.dto';
+import { EmployeeData } from './employee.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConsultantService {
+export class EmployeeService {
   private httpClient = inject(HttpClient);
 
   private authService = inject(AuthService);
 
   private apiBaseUrl = environment.apiBaseUrl;
 
-  private _data = signal<ConsultantData>({ managerEmail: '', managedEmails: [] });
+  private _data = signal<EmployeeData>({ managerEmail: '', managedEmails: [] });
 
   data = computed(() => this._data());
 
@@ -24,7 +24,7 @@ export class ConsultantService {
 
   fetchData() {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<ConsultantData>(`${this.apiBaseUrl}/consultant`, { headers }).pipe(
+      this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { headers }).pipe(
         tap((data) => this._data.set(data)),
         map(() => undefined),
       ),
@@ -33,7 +33,9 @@ export class ConsultantService {
 
   updateManager(managerEmail: string) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.post(`${this.apiBaseUrl}/consultant/manager`, { managerEmail } as UpdateManagerDto, { headers }),
+      this.httpClient
+        .post(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
+        .pipe(map(() => this._data.update((data) => ({ ...data, managerEmail })))),
     );
   }
 }

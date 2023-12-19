@@ -1,13 +1,13 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConsultantModule } from './consultant';
 import { AssetsModule } from './core/assets';
 import { AuthMiddleware, AuthModule } from './core/auth';
 import { AppConfigModule } from './core/config';
 import { ContextMiddleware, ContextModule } from './core/context';
+import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
 
 @Module({
-  imports: [AppConfigModule, AssetsModule, ContextModule, AuthModule, FeedbackModule, ConsultantModule],
+  imports: [AppConfigModule, AssetsModule, ContextModule, AuthModule, FeedbackModule, EmployeeModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

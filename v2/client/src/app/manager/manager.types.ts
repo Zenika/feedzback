@@ -1,1 +1,1 @@
-export type ManagerData = { consultant: string };
+export type ManagerData = { employee: string };

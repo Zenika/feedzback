@@ -4,10 +4,10 @@
 </h1>
 
 <mat-form-field appearance="outline" style="width: 100%">
-  <mat-label>Liste des consultants</mat-label>
-  <mat-select [value]="consultant" (valueChange)="consultantChange($event)">
-    @for (consultant of consultants; track consultant) {
-      <mat-option [value]="consultant">{{ consultant }}</mat-option>
+  <mat-label>Liste des collaborateurs</mat-label>
+  <mat-select [value]="employee" (valueChange)="employeeChange($event)">
+    @for (employee of employees; track employee) {
+      <mat-option [value]="employee">{{ employee }}</mat-option>
     }
   </mat-select>
 </mat-form-field>
