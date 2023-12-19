@@ -6,7 +6,12 @@
     [selectedIndex]="tabIndex"
     (selectedTabChange)="onTabIndexChange($event.index)"
   >
-    <mat-tab label="reçus">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon style="margin-right: 0.5rem">call_received</mat-icon>
+        reçus
+      </ng-template>
+
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (received.length) {
@@ -16,7 +21,12 @@
       }
     </mat-tab>
 
-    <mat-tab label="donnés">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon style="margin-right: 0.5rem">call_made</mat-icon>
+        donnés
+      </ng-template>
+
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (sent.length) {
@@ -27,7 +37,12 @@
     </mat-tab>
 
     @if (sentRequest.length) {
-      <mat-tab label="demandés">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon style="margin-right: 0.5rem">schedule</mat-icon>
+          demandés
+        </ng-template>
+
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
         <app-feedback-list
@@ -39,7 +54,12 @@
     }
 
     @if (receivedRequest.length) {
-      <mat-tab label="à donner">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon style="margin-right: 0.5rem">edit_note</mat-icon>
+          à donner
+        </ng-template>
+
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
         <app-feedback-list
