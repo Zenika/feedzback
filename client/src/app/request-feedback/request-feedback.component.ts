@@ -52,7 +52,8 @@ export class RequestFeedbackComponent {
   form = this.formBuilder.group({
     recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [true],
+    // shared: [true], // <!-- FEATURE TOGGLE::MANAGER -->
+    shared: [false],
   });
 
   multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;

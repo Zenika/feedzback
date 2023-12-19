@@ -63,7 +63,8 @@ export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
     positive: ['', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]],
     negative: ['', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]],
     comment: ['', [Validators.maxLength(this.commentMaxLength)]],
-    shared: [true],
+    // shared: [true], // <!-- FEATURE TOGGLE::MANAGER -->
+    shared: [false],
   });
 
   submitInProgress = false;
