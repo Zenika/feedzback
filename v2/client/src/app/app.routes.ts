@@ -59,7 +59,7 @@ export const routes: Routes = [
     path: 'feedbacks/:type',
     loadComponent: () => import('./my-feedbacks/my-feedbacks.component'),
     canActivate: [authGuard],
-    title: 'FeedZback - Mes feedZbacks',
+    title: 'FeedZback - feedZbacks',
     children: [
       {
         path: ':id',
@@ -78,7 +78,7 @@ export const routes: Routes = [
     path: 'consultant',
     canActivate: [authGuard],
     component: ConsultantComponent,
-    title: 'FeedZback - Mon profil consultant',
+    title: 'FeedZback - Paramètres',
   },
   {
     path: 'manager',

@@ -5,7 +5,7 @@
 
 @if (requestWithToken) {
   <app-message type="info">
-    Vous répondez à la demande de FeedZback qui vous a été envoyée par
+    Vous répondez à la demande de feedZback qui vous a été envoyée par
     <strong>{{ requestWithToken.receiverEmail }}</strong
     >.
 
@@ -98,7 +98,7 @@
     @if (!requestWithToken) {
       <div class="app-give-feedback__field">
         <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
-          Partager le FeedZback avec le manager de votre collègue
+          Partager le feedZback avec le manager de votre collègue
         </mat-slide-toggle>
       </div>
     }

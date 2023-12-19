@@ -3,9 +3,9 @@ import { GivenContent, Language, RequestedContent } from './feedback-email-build
 export const requestedContentMap: Record<Language, RequestedContent> = {
   fr: {
     lang: 'fr',
-    title: 'Demande de FeedZback',
-    message: 'Une demande de FeedZback vous a été envoyée par',
-    cta: 'Donner mon FeedZback',
+    title: 'Demande de feedZback',
+    message: 'Une demande de feedZback vous a été envoyée par',
+    cta: 'Donner mon feedZback',
   },
 };
 
@@ -13,7 +13,7 @@ export const givenContentMap: Record<Language, GivenContent> = {
   fr: {
     lang: 'fr',
     title: 'FeedZback reçu',
-    message: 'Vous avez reçu un FeedZback de la part de',
-    cta: 'Consulter mon FeedZback',
+    message: 'Vous avez reçu un feedZback de la part de',
+    cta: 'Consulter mon feedZback',
   },
 };
