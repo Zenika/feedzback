@@ -22,7 +22,6 @@ import { MessageComponent } from '../shared/ui/message/message.component';
     MessageComponent,
   ],
   templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class SettingsComponent {

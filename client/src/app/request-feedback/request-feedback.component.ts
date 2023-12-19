@@ -32,7 +32,6 @@ import { RequestFeedbackSuccess } from './request-feedback-success/request-feedb
     EmailsFieldComponent,
   ],
   templateUrl: './request-feedback.component.html',
-  styleUrl: './request-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class RequestFeedbackComponent {

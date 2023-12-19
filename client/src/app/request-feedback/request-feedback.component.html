@@ -21,9 +21,9 @@
 
 @if (!sentEmails.length || remainingUnsentEmails.length) {
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-emails-field class="app-request-feedback__field" [emails]="form.controls.recipients" />
+    <app-emails-field class="gbl-form-field" [emails]="form.controls.recipients" />
 
-    <mat-form-field appearance="outline" class="app-request-feedback__field">
+    <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label>Message</mat-label>
       <textarea
         #message
@@ -36,12 +36,23 @@
       <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
-    <div class="app-request-feedback__field">
+    <div class="gbl-form-field">
       <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
         Partager le feedZback avec votre manager
       </mat-slide-toggle>
     </div>
 
-    <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+    <div class="gbl-form-submit">
+      <button
+        class="gbl-form-submit__btn"
+        [disabled]="form.invalid || submitInProgress"
+        mat-raised-button
+        color="primary"
+      >
+        Envoyer
+      </button>
+
+      <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+    </div>
   </form>
 }

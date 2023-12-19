@@ -28,7 +28,6 @@ import { GiveFeedbackData, RequestWithToken } from './give-feedback.types';
     MessageComponent,
   ],
   templateUrl: './give-feedback.component.html',
-  styleUrl: './give-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
