@@ -1,5 +1,7 @@
 // Note: global styles starts with `.gbl-*`.
 
+@use 'sass:color';
+
 @use './variables' as v;
 @use './mixins' as m;
 
@@ -39,7 +41,7 @@
   &__title {
     margin: 0 !important;
     text-wrap: balance;
-    color: #df2147;
+    color: v.$primary-color;
 
     @if v.$use-background {
       padding: 1.5rem 3rem;
@@ -65,6 +67,10 @@
     }
 
     &__item {
+      $gradient-start: color.adjust(v.$primary-color, $lightness: 15%);
+      $gradient-middle: v.$primary-color;
+      $gradient-end: color.adjust(v.$primary-color, $blackness: 15%);
+
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -72,8 +78,8 @@
       padding: 1.5rem 4.5rem;
       box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.35);
       border-radius: 0.5rem;
-      border: 1px solid #df2147;
-      background: linear-gradient(88.41deg, #f1203a 0%, #d11f56 100%);
+      border: 1px solid v.$primary-color;
+      background: linear-gradient(135deg, $gradient-start 0%, $gradient-middle 50%, $gradient-end 100%);
       color: #fff;
       font-size: 1.25rem;
       transition: all 250ms ease;

@@ -30,37 +30,3 @@ body {
     background-color: #fafafa;
   }
 }
-
-ul,
-ol {
-  margin: 0 0 1rem 1rem;
-
-  ul,
-  ol {
-    margin: 0;
-    padding: 0 0 0 2rem;
-  }
-}
-
-li {
-  &::marker {
-    color: #df2147;
-  }
-}
-
-ul {
-  list-style: none;
-  padding-left: 0.5em;
-
-  > li {
-    padding-left: 0.5em;
-
-    &::marker {
-      content: '◦';
-    }
-
-    ul > li::marker {
-      content: '→';
-    }
-  }
-}
