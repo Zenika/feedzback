@@ -75,7 +75,7 @@ export const routes: Routes = [
     title: 'FeedZback - Détails',
   },
   {
-    path: 'consultant',
+    path: 'settings',
     canActivate: [authGuard],
     component: ConsultantComponent,
     title: 'FeedZback - Paramètres',

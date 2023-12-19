@@ -47,9 +47,9 @@
 
     <mat-menu #signOutMenu="matMenu" xPosition="before">
       @if (isKnownUser$ | async) {
-        <button mat-menu-item routerLink="/consultant">
-          <mat-icon color="primary">account_circle</mat-icon>
-          Mon profil
+        <button mat-menu-item routerLink="/settings">
+          <mat-icon color="primary">settings</mat-icon>
+          Paramètres
         </button>
       }
 
