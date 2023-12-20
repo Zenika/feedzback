@@ -20,7 +20,6 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../shared/breakpoint';
-import { FeedbackType } from '../../shared/feedback/feedback.types';
 import { DivisionComponent } from '../../shared/ui/division/division.component';
 import { NormalizedFeedback } from '../my-feedbacks.types';
 
@@ -45,8 +44,6 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
 })
 export class FeedbackListComponent implements OnChanges, AfterViewInit {
   @HostBinding('class.app-feedback-list') hasCss = true;
-
-  @Input({ required: true }) type!: FeedbackType;
 
   @Input({ transform: (value?: string) => value?.trim().toLowerCase() }) filter?: string;
 

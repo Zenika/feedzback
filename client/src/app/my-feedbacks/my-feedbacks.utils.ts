@@ -1,5 +1,8 @@
-import { Feedback, FeedbackRequest } from '../shared/feedback/feedback.types';
+import { Feedback, FeedbackRequest, FeedbackType } from '../shared/feedback/feedback.types';
 import { NormalizedFeedback } from './my-feedbacks.types';
+
+export const getFeedbackType = (value: string | null | undefined): FeedbackType | undefined =>
+  Object.values(FeedbackType).find((feedbackType) => value?.toLowerCase() === feedbackType.toLowerCase());
 
 export const normalizeReceivedFeedbacks = (data: Feedback[]): NormalizedFeedback[] =>
   data.map(({ id, senderEmail: email, updatedAt: date }) => ({

@@ -1,3 +1,22 @@
+<h1 class="gbl-page-title mat-h1">
+  <mat-icon>forum</mat-icon>
+  FeedZback
+  @switch (type) {
+    @case (feedbackType.given) {
+      donné
+    }
+    @case (feedbackType.received) {
+      reçu
+    }
+    @case (feedbackType.sentRequest) {
+      demandé
+    }
+    @case (feedbackType.receivedRequest) {
+      à donner
+    }
+  }
+</h1>
+
 <div class="app-given-feedback__addons">
   <div><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
 

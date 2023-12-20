@@ -1,26 +1,18 @@
-@if (type) {
-  <button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', type]">
-    <mat-icon>arrow_back</mat-icon> mes feedZbacks
-  </button>
+@if (feedbackDetails$ | async; as feedbackDetails) {
+  @if (feedbackDetails) {
+    <button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', feedbackDetails.type]">
+      <mat-icon>arrow_back</mat-icon> mes feedZbacks
+    </button>
 
-  <h1 class="gbl-page-title mat-h1">
-    <mat-icon>forum</mat-icon>
-    FeedZback
-    @switch (type) {
-      @case (feedbackType.given) {
-        donné
-      }
-      @case (feedbackType.received) {
-        reçu
-      }
-      @case (feedbackType.sentRequest) {
-        demandé
-      }
-      @case (feedbackType.receivedRequest) {
-        à donner
-      }
+    @if (feedbackDetails.feedback.status === 'done') {
+      <app-given-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+    } @else {
+      <app-requested-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
     }
-  </h1>
-
-  <app-feedback [type]="type" [id]="id" />
+  } @else {
+    <app-message type="danger">
+      <strong>Oops&nbsp;!</strong><br />
+      Ce feedZback est introuvable.
+    </app-message>
+  }
 }

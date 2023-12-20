@@ -15,7 +15,7 @@
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (received.length) {
-        <app-feedback-list [type]="feedbackType.received" [feedbacks]="received" [filter]="filter"></app-feedback-list>
+        <app-feedback-list [feedbacks]="received" [filter]="filter"></app-feedback-list>
       } @else {
         <div class="app-my-feedbacks-empty">
           <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
@@ -37,7 +37,7 @@
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (given.length) {
-        <app-feedback-list [type]="feedbackType.given" [feedbacks]="given" [filter]="filter"></app-feedback-list>
+        <app-feedback-list [feedbacks]="given" [filter]="filter"></app-feedback-list>
       } @else {
         <div class="app-my-feedbacks-empty">
           <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
@@ -59,11 +59,7 @@
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-        <app-feedback-list
-          [type]="feedbackType.sentRequest"
-          [feedbacks]="sentRequest"
-          [filter]="filter"
-        ></app-feedback-list>
+        <app-feedback-list [feedbacks]="sentRequest" [filter]="filter"></app-feedback-list>
       </mat-tab>
     }
 
@@ -76,11 +72,7 @@
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-        <app-feedback-list
-          [type]="feedbackType.receivedRequest"
-          [feedbacks]="receivedRequest"
-          [filter]="filter"
-        ></app-feedback-list>
+        <app-feedback-list [feedbacks]="receivedRequest" [filter]="filter"></app-feedback-list>
       </mat-tab>
     }
   </mat-tab-group>
@@ -95,5 +87,3 @@
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>
 </ng-template>
-
-<router-outlet />
