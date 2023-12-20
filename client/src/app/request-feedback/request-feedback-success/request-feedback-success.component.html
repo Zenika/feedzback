@@ -4,9 +4,9 @@
   <div>
     <h1 class="gbl-info__title mat-h1">FeedZback demandé à&nbsp;:</h1>
 
-    <ul class="app-request-feedback-success__list">
+    <ul class="gbl-list app-request-feedback-success__list">
       @for (email of state.recipients; track email) {
-        <li>{{ email }}</li>
+        <li class="gbl-list__item">{{ email }}</li>
       }
     </ul>
   </div>

@@ -54,7 +54,7 @@ export default class ManagerComponent implements ManagerData {
       if (this.employees.includes(employee)) {
         return this.feedbackService.getManagedFeedbacks(employee);
       } else {
-        return of([]);
+        return of(null);
       }
     }),
   );

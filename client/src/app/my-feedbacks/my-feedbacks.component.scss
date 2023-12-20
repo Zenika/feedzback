@@ -1,12 +1,16 @@
 .app-my-feedbacks {
-  &__empty {
-    margin-top: 2.5rem;
+  &-empty {
+    margin: 0rem 0 2rem 0;
     text-align: center;
-    font-style: italic;
-    opacity: 0.6;
 
-    mat-icon {
-      vertical-align: text-bottom;
+    &__info {
+      margin: 1rem 0 3rem 0;
+      font-style: italic;
+      opacity: 0.5;
+
+      mat-icon {
+        vertical-align: text-bottom;
+      }
     }
   }
 

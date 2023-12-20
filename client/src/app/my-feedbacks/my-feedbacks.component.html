@@ -17,7 +17,14 @@
       @if (received.length) {
         <app-feedback-list [type]="feedbackType.received" [feedbacks]="received" [filter]="filter"></app-feedback-list>
       } @else {
-        <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
+        <div class="app-my-feedbacks-empty">
+          <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
+
+          <button mat-stroked-button color="primary" routerLink="/request">
+            <mat-icon>live_help</mat-icon>
+            Demander mon premier feedZback
+          </button>
+        </div>
       }
     </mat-tab>
 
@@ -32,7 +39,14 @@
       @if (given.length) {
         <app-feedback-list [type]="feedbackType.given" [feedbacks]="given" [filter]="filter"></app-feedback-list>
       } @else {
-        <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
+        <div class="app-my-feedbacks-empty">
+          <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
+
+          <button mat-stroked-button color="primary" routerLink="/give">
+            <mat-icon>chat</mat-icon>
+            Donner mon premier feedZback
+          </button>
+        </div>
       }
     </mat-tab>
 
@@ -80,10 +94,6 @@
     }
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>
-</ng-template>
-
-<ng-template #noFeedbacksTmpl>
-  <div class="app-my-feedbacks__empty"><mat-icon>sentiment_dissatisfied</mat-icon> Aucun feedZback</div>
 </ng-template>
 
 <router-outlet />
