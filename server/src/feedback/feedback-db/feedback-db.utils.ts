@@ -5,7 +5,7 @@ type AnyFeedbackWithId = FeedbackWithId | FeedbackRequestWithId;
 export const isReceivedFeedback = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackWithId =>
   value.status === 'given' && value.receiverEmail === userEmail;
 
-export const isSentFeedback = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackWithId =>
+export const isGivenFeedback = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackWithId =>
   value.status === 'given' && value.senderEmail === userEmail;
 
 export const isSentFeedbackRequest = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackRequestWithId =>
@@ -20,15 +20,15 @@ export const mapToTypedFeedbacks = (feedbacks: AnyFeedbackWithId[], userEmail: s
   feedbacks.reduce(
     (list, feedback) => {
       if (isReceivedFeedback(feedback, userEmail)) list.received.push(feedback);
-      else if (isSentFeedback(feedback, userEmail)) list.sent.push(feedback);
+      else if (isGivenFeedback(feedback, userEmail)) list.given.push(feedback);
       else if (isSentFeedbackRequest(feedback, userEmail)) list.sentRequest.push(feedback);
       else if (isReceiveedFeedbackRequest(feedback, userEmail)) list.receivedRequest.push(feedback);
       return list;
     },
     {
       received: [],
-      sent: [],
+      given: [],
       sentRequest: [],
       receivedRequest: [],
-    } as TypedFeedbacks,
+    } satisfies TypedFeedbacks as TypedFeedbacks,
   );

@@ -8,7 +8,7 @@ export const normalizeReceivedFeedbacks = (data: Feedback[]): NormalizedFeedback
     date,
   }));
 
-export const normalizeSentFeedbacks = (data: Feedback[]): NormalizedFeedback[] =>
+export const normalizeGivenFeedbacks = (data: Feedback[]): NormalizedFeedback[] =>
   data.map(({ id, receiverEmail: email, updatedAt: date }) => ({
     id,
     email,

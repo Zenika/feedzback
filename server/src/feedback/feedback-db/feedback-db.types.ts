@@ -38,7 +38,7 @@ export type FeedbackRequestWithId = FeedbackRequest & IdObject;
 
 export type TypedFeedbacks = {
   received: Feedback[];
-  sent: Feedback[];
+  given: Feedback[];
   sentRequest: FeedbackRequest[];
   receivedRequest: FeedbackRequest[];
 };

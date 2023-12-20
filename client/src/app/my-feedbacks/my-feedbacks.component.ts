@@ -12,9 +12,9 @@ import { getFeedbackType } from '../shared/feedback/feedback.utils';
 import { FeedbackListComponent } from './feedback-list/feedback-list.component';
 import { NormalizedFeedback } from './my-feedbacks.types';
 import {
+  normalizeGivenFeedbacks,
   normalizeReceivedFeedbacks,
   normalizeReceivedRequests,
-  normalizeSentFeedbacks,
   normalizeSentRequests,
 } from './my-feedbacks.utils';
 
@@ -57,7 +57,7 @@ export default class MyFeedbacksComponent implements OnInit {
 
   protected received: NormalizedFeedback[] = [];
 
-  protected sent: NormalizedFeedback[] = [];
+  protected given: NormalizedFeedback[] = [];
 
   protected sentRequest: NormalizedFeedback[] = [];
 
@@ -68,9 +68,9 @@ export default class MyFeedbacksComponent implements OnInit {
   protected fetched = false;
 
   async ngOnInit() {
-    this.feedbackService.getList().subscribe(({ received, sent, sentRequest, receivedRequest }) => {
+    this.feedbackService.getList().subscribe(({ received, given, sentRequest, receivedRequest }) => {
       this.received = normalizeReceivedFeedbacks(received);
-      this.sent = normalizeSentFeedbacks(sent);
+      this.given = normalizeGivenFeedbacks(given);
       this.sentRequest = normalizeSentRequests(sentRequest);
       this.receivedRequest = normalizeReceivedRequests(receivedRequest);
 
@@ -86,7 +86,7 @@ export default class MyFeedbacksComponent implements OnInit {
   private tabIndexToFeedbackType(index: number) {
     const feedbackTypeMap: Record<number, FeedbackType> = {
       0: FeedbackType.received,
-      1: FeedbackType.sent,
+      1: FeedbackType.given,
       2: this.sentRequest.length ? FeedbackType.sentRequest : FeedbackType.receivedRequest,
       3: FeedbackType.receivedRequest,
     };
@@ -96,7 +96,7 @@ export default class MyFeedbacksComponent implements OnInit {
   private feedbackTypeToTabIndex(type: FeedbackType) {
     const tabIndexMap: Record<FeedbackType, number> = {
       [FeedbackType.received]: 0,
-      [FeedbackType.sent]: 1,
+      [FeedbackType.given]: 1,
       [FeedbackType.sentRequest]: 2,
       [FeedbackType.receivedRequest]: this.sentRequest.length ? 3 : 2,
     };

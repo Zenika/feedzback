@@ -32,7 +32,7 @@ export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type TypedFeedbacks = {
   received: Feedback[];
-  sent: Feedback[];
+  given: Feedback[];
   sentRequest: FeedbackRequest[];
   receivedRequest: FeedbackRequest[];
 };
@@ -45,7 +45,7 @@ export type TokenObject = { token: string };
 
 export const FeedbackType = {
   received: 'received',
-  sent: 'sent',
+  given: 'given',
   sentRequest: 'sentRequest',
   receivedRequest: 'receivedRequest',
 } as const;

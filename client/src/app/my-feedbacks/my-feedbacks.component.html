@@ -29,8 +29,8 @@
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-      @if (sent.length) {
-        <app-feedback-list [type]="feedbackType.sent" [feedbacks]="sent" [filter]="filter"></app-feedback-list>
+      @if (given.length) {
+        <app-feedback-list [type]="feedbackType.given" [feedbacks]="given" [filter]="filter"></app-feedback-list>
       } @else {
         <ng-container [ngTemplateOutlet]="noFeedbacksTmpl" />
       }
