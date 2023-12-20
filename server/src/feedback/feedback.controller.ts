@@ -68,11 +68,11 @@ export class FeedbackController {
     return partialIdObject;
   }
 
-  @Get('summaries')
+  @Get('list-map')
   @UseGuards(AuthGuard)
-  getSummaries() {
+  getListMap() {
     const viewerEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getSummaries(viewerEmail);
+    return this.feedbackDbService.getListMap(viewerEmail);
   }
 
   @Get('item/:id')

@@ -34,19 +34,23 @@ export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type FeedbackRequestWithId = FeedbackRequest & IdObject;
 
-// ----- Summaries -----
+// ----- FeedbackListMap -----
 
-export type FeedbackSummary = Pick<Feedback, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
-export type FeedbackSummaryWithId = FeedbackSummary & IdObject;
+// Naming convention:
+// A "feedback list" is made up of items where a "feedback item" has fewer properties than the full feedback.
+// So the term "item" refers to the fact that the feedback is part of a "list".
 
-export type FeedbackRequestSummary = Pick<FeedbackRequest, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
-export type FeedbackRequestSummaryWithId = FeedbackRequestSummary & IdObject;
+export type FeedbackItem = Pick<Feedback, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
+export type FeedbackItemWithId = FeedbackItem & IdObject;
 
-export type TypedFeedbackSummaries = {
-  received: FeedbackSummaryWithId[];
-  given: FeedbackSummaryWithId[];
-  sentRequest: FeedbackRequestSummaryWithId[];
-  receivedRequest: FeedbackRequestSummaryWithId[];
+export type FeedbackRequestItem = Pick<FeedbackRequest, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
+export type FeedbackRequestItemWithId = FeedbackRequestItem & IdObject;
+
+export type FeedbackListMap = {
+  received: FeedbackItemWithId[];
+  given: FeedbackItemWithId[];
+  sentRequest: FeedbackRequestItemWithId[];
+  receivedRequest: FeedbackRequestItemWithId[];
 };
 
 // ----- IdObject -----

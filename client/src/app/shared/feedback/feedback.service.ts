@@ -4,7 +4,7 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
-import { Feedback, FeedbackRequest, IdObject, TokenObject, TypedFeedbackSummaries } from './feedback.types';
+import { Feedback, FeedbackListMap, FeedbackRequest, IdObject, TokenObject } from './feedback.types';
 
 @Injectable({
   providedIn: 'root',
@@ -49,9 +49,9 @@ export class FeedbackService {
     );
   }
 
-  getSummaries() {
+  getListMap() {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<TypedFeedbackSummaries>(`${this.apiBaseUrl}/feedback/summaries`, { headers }),
+      this.httpClient.get<FeedbackListMap>(`${this.apiBaseUrl}/feedback/list-map`, { headers }),
     );
   }
 

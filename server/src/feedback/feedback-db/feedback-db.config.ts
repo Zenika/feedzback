@@ -1,4 +1,4 @@
-import { FeedbackRequestSummary, FeedbackSummary } from './feedback-db.types';
+import { FeedbackItem, FeedbackRequestItem } from './feedback-db.types';
 
 export const Collection = {
   feedback: 'feedback',
@@ -7,7 +7,7 @@ export const Collection = {
 
 export type Collection = (typeof Collection)[keyof typeof Collection];
 
-export const feedbackSummaryFields = ['senderEmail', 'receiverEmail', 'status', 'createdAt', 'updatedAt'] satisfies (
-  | keyof FeedbackSummary
-  | keyof FeedbackRequestSummary
+export const feedbackItemFields = ['senderEmail', 'receiverEmail', 'status', 'createdAt', 'updatedAt'] satisfies (
+  | keyof FeedbackItem
+  | keyof FeedbackRequestItem
 )[];

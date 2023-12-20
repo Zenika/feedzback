@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, Filter } from 'firebase-admin/firestore';
 import { FirebaseService } from '../../core/firebase';
-import { Collection, feedbackSummaryFields } from './feedback-db.config';
+import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
+  FeedbackItemWithId,
   FeedbackRequest,
+  FeedbackRequestItemWithId,
   FeedbackRequestStatus,
-  FeedbackRequestSummaryWithId,
   FeedbackRequestToken,
   FeedbackRequestWithId,
   FeedbackStatus,
-  FeedbackSummaryWithId,
   FeedbackWithId,
   IdObject,
 } from './feedback-db.types';
-import { mapToTypedFeedbackSummaries } from './feedback-db.utils';
+import { mapToFeedbackListMap } from './feedback-db.utils';
 
 @Injectable()
 export class FeedbackDbService {
@@ -133,19 +133,19 @@ export class FeedbackDbService {
     return { id } as IdObject;
   }
 
-  async getSummaries(viewerEmail: string) {
+  async getListMap(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
       .where(
         Filter.or(Filter.where('senderEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
       )
-      .select(...feedbackSummaryFields)
+      .select(...feedbackItemFields)
       .get();
 
-    const feedbackSummaries = feedbackQuery.docs.map(
-      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackSummaryWithId | FeedbackRequestSummaryWithId,
+    const feedbackList = feedbackQuery.docs.map(
+      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackItemWithId | FeedbackRequestItemWithId,
     );
 
-    return mapToTypedFeedbackSummaries(feedbackSummaries, viewerEmail);
+    return mapToFeedbackListMap(feedbackList, viewerEmail);
   }
 
   async getItem(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
