@@ -25,7 +25,7 @@ export class RequestedFeedbackComponent {
   protected feedbackType = FeedbackType;
 
   protected geColleagueEmail(feedback: FeedbackRequest): string | undefined {
-    return this.type === this.feedbackType.sentRequest ? feedback.senderEmail : feedback.receiverEmail;
+    return this.type === this.feedbackType.sentRequest ? feedback.giverEmail : feedback.receiverEmail;
   }
 
   private feedbackService = inject(FeedbackService);

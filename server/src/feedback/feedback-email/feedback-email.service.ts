@@ -15,19 +15,19 @@ export class FeedbackEmailService {
     private emailService: EmailService,
   ) {}
 
-  async requested(senderEmail: string, receiverEmail: string, message: string, tokenId: string) {
+  async requested(giverEmail: string, receiverEmail: string, message: string, tokenId: string) {
     const { subject, html } = await this.feedbackEmailBuilderService.requested(receiverEmail, message, tokenId);
 
     this.emailService.send({
       from: EMAIL_DEFAULT_FROM_FIELD,
-      to: this.getToField(senderEmail),
+      to: this.getToField(giverEmail),
       subject,
       html,
     });
   }
 
-  async given(senderEmail: string, receiverEmail: string, feedbackId: string) {
-    const { subject, html } = await this.feedbackEmailBuilderService.given(senderEmail, feedbackId);
+  async given(giverEmail: string, receiverEmail: string, feedbackId: string) {
+    const { subject, html } = await this.feedbackEmailBuilderService.given(giverEmail, feedbackId);
 
     this.emailService.send({
       from: EMAIL_DEFAULT_FROM_FIELD,

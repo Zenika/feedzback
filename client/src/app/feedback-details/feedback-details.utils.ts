@@ -1,12 +1,12 @@
 import { Feedback, FeedbackRequest, FeedbackType } from '../shared/feedback/feedback.types';
 
 export const inferFeedbackType = (
-  { senderEmail, receiverEmail, status }: Feedback | FeedbackRequest,
+  { giverEmail, receiverEmail, status }: Feedback | FeedbackRequest,
   viewerEmail: string,
 ): FeedbackType | null => {
   switch (status) {
     case 'done': {
-      if (viewerEmail === senderEmail) {
+      if (viewerEmail === giverEmail) {
         return FeedbackType.given;
       }
       if (viewerEmail === receiverEmail) {
@@ -15,7 +15,7 @@ export const inferFeedbackType = (
       break;
     }
     case 'pending': {
-      if (viewerEmail === senderEmail) {
+      if (viewerEmail === giverEmail) {
         return FeedbackType.receivedRequest;
       }
       if (viewerEmail === receiverEmail) {

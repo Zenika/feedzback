@@ -6,13 +6,13 @@ const isReceived = (item: Item, viewerEmail: string): item is FeedbackItemWithId
   item.status === 'done' && item.receiverEmail === viewerEmail;
 
 const isGiven = (item: Item, viewerEmail: string): item is FeedbackItemWithId =>
-  item.status === 'done' && item.senderEmail === viewerEmail;
+  item.status === 'done' && item.giverEmail === viewerEmail;
 
 const isSentRequest = (item: Item, viewerEmail: string): item is FeedbackRequestItemWithId =>
   item.status === 'pending' && item.receiverEmail === viewerEmail;
 
 const isReceivedRequest = (item: Item, viewerEmail: string): item is FeedbackRequestItemWithId =>
-  item.status === 'pending' && item.senderEmail === viewerEmail;
+  item.status === 'pending' && item.giverEmail === viewerEmail;
 
 export const mapToFeedbackListMap = (items: Item[], viewerEmail: string): FeedbackListMap =>
   items.reduce(

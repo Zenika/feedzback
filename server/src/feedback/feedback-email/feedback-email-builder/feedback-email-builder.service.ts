@@ -35,10 +35,10 @@ export class FeedbackEmailBuilderService {
     };
   }
 
-  async given(senderEmail: string, feedbackId: string) {
+  async given(giverEmail: string, feedbackId: string) {
     const content: GivenContent = givenContentMap[this.language];
     const data: GivenData = {
-      senderEmail: uglifyEmail(senderEmail),
+      giverEmail: uglifyEmail(giverEmail),
       cta: `${this.configService.get('clientUrl')}/feedback/received/${feedbackId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };

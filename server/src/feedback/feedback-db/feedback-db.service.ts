@@ -35,9 +35,9 @@ export class FeedbackDbService {
     return !!(await this.feedbackCollection.get());
   }
 
-  async request({ senderEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
+  async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
     const request: FeedbackRequest = {
-      senderEmail,
+      giverEmail,
       receiverEmail,
       message,
       shared,
@@ -75,11 +75,11 @@ export class FeedbackDbService {
     return { id: requestDoc.id, ...requestDoc.data() } as FeedbackRequestWithId;
   }
 
-  async revealRequestTokenId(feedbackId: string, senderEmail: string) {
+  async revealRequestTokenId(feedbackId: string, giverEmail: string) {
     const feedbackDoc = (
       await this.feedbackCollection
         .where(FieldPath.documentId(), '==', feedbackId)
-        .where('senderEmail', '==', senderEmail)
+        .where('giverEmail', '==', giverEmail)
         .where('status', '==', FeedbackRequestStatus)
         .get()
     ).docs.at(0);
@@ -111,13 +111,13 @@ export class FeedbackDbService {
     await this.feedbackCollection.doc(request.id).update(partialFeedback);
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
 
-    const { senderEmail, receiverEmail, id: feedbackId } = request;
-    return { senderEmail, receiverEmail, feedbackId };
+    const { giverEmail, receiverEmail, id: feedbackId } = request;
+    return { giverEmail, receiverEmail, feedbackId };
   }
 
-  async give({ senderEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+  async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
     const feedback: Feedback = {
-      senderEmail,
+      giverEmail,
       receiverEmail,
       positive,
       negative,
@@ -136,7 +136,7 @@ export class FeedbackDbService {
   async getListMap(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
       .where(
-        Filter.or(Filter.where('senderEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
+        Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
       )
       .select(...feedbackItemFields)
       .get();
@@ -152,7 +152,7 @@ export class FeedbackDbService {
     const feedbackQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', id)
       .where(
-        Filter.or(Filter.where('senderEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
+        Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
       )
       .get();
 

@@ -7,7 +7,7 @@ export const Collection = {
 
 export type Collection = (typeof Collection)[keyof typeof Collection];
 
-export const feedbackItemFields = ['senderEmail', 'receiverEmail', 'status', 'createdAt', 'updatedAt'] satisfies (
+export const feedbackItemFields = ['giverEmail', 'receiverEmail', 'status', 'createdAt', 'updatedAt'] satisfies (
   | keyof FeedbackItem
   | keyof FeedbackRequestItem
 )[];

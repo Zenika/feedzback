@@ -78,7 +78,7 @@ export class ManagerFeedbackListComponent implements AfterViewInit {
     if (!this.dataSource.paginator) {
       return;
     }
-    this.dataSource.filterPredicate = (data, filter) => data.senderEmail.toLowerCase().includes(filter);
+    this.dataSource.filterPredicate = (data, filter) => data.giverEmail.toLowerCase().includes(filter);
     this.dataSource.filter = this.filter ?? '';
     this.dataSource.paginator.firstPage();
   }

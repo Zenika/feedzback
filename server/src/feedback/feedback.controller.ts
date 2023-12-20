@@ -21,10 +21,10 @@ export class FeedbackController {
 
   @Post('request')
   @UseGuards(AuthGuard)
-  async request(@Body() { recipient: senderEmail, message, shared }: FeedbackRequestDto) {
+  async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
-    const tokenId = await this.feedbackDbService.request({ senderEmail, receiverEmail, message, shared });
-    await this.feedbackEmailService.requested(senderEmail, receiverEmail, message, tokenId);
+    const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
+    await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 
   @Get('check-request/:token')
@@ -39,8 +39,8 @@ export class FeedbackController {
   @Get('reveal-request-token/:id')
   @UseGuards(AuthGuard)
   async revealRequestTokenId(@Param('id') feedbackId: string) {
-    const senderEmail = this.authService.userEmail!;
-    const tokenId = await this.feedbackDbService.revealRequestTokenId(feedbackId, senderEmail);
+    const giverEmail = this.authService.userEmail!;
+    const tokenId = await this.feedbackDbService.revealRequestTokenId(feedbackId, giverEmail);
     if (!tokenId) {
       throw new BadRequestException();
     }
@@ -53,17 +53,17 @@ export class FeedbackController {
     if (!infos) {
       return false;
     }
-    await this.feedbackEmailService.given(infos.senderEmail, infos.receiverEmail, infos.feedbackId);
+    await this.feedbackEmailService.given(infos.giverEmail, infos.receiverEmail, infos.feedbackId);
     return true;
   }
 
   @Post('give')
   @UseGuards(AuthGuard)
   async give(@Body() dto: GiveFeedbackDto) {
-    const senderEmail = this.authService.userEmail!;
-    const partialIdObject = await this.feedbackDbService.give({ senderEmail, ...dto });
+    const giverEmail = this.authService.userEmail!;
+    const partialIdObject = await this.feedbackDbService.give({ giverEmail, ...dto });
     if (partialIdObject.id) {
-      await this.feedbackEmailService.given(senderEmail, dto.receiverEmail, partialIdObject.id);
+      await this.feedbackEmailService.given(giverEmail, dto.receiverEmail, partialIdObject.id);
     }
     return partialIdObject;
   }

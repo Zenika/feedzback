@@ -16,8 +16,8 @@ export class FeedbackEmailBuilderController {
 
   @Get('demo/given')
   async given() {
-    const senderEmail = 'john.doe@zenika.com';
+    const giverEmail = 'john.doe@zenika.com';
     const feedbackId = 'feedbackId_12345azerty';
-    return (await this.feedbackEmailBuilderService.given(senderEmail, feedbackId)).html;
+    return (await this.feedbackEmailBuilderService.given(giverEmail, feedbackId)).html;
   }
 }

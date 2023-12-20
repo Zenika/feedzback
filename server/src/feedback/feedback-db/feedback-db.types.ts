@@ -1,7 +1,7 @@
 // ----- Feedback -----
 
 export type Feedback = {
-  senderEmail: string;
+  giverEmail: string;
   receiverEmail: string;
   positive: string;
   negative: string;
@@ -21,7 +21,7 @@ export type FeedbackWithId = Feedback & IdObject;
 // ----- FeedbackRequest -----
 
 export type FeedbackRequest = {
-  senderEmail: string;
+  giverEmail: string;
   receiverEmail: string;
   message: string;
   shared: boolean;
@@ -40,10 +40,10 @@ export type FeedbackRequestWithId = FeedbackRequest & IdObject;
 // A "feedback list" is made up of items where a "feedback item" has fewer properties than the full feedback.
 // So the term "item" refers to the fact that the feedback is part of a "list".
 
-export type FeedbackItem = Pick<Feedback, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
+export type FeedbackItem = Pick<Feedback, 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
 export type FeedbackItemWithId = FeedbackItem & IdObject;
 
-export type FeedbackRequestItem = Pick<FeedbackRequest, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
+export type FeedbackRequestItem = Pick<FeedbackRequest, 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
 export type FeedbackRequestItemWithId = FeedbackRequestItem & IdObject;
 
 export type FeedbackListMap = {

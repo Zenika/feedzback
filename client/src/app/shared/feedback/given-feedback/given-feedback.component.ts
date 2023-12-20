@@ -36,6 +36,6 @@ export class GivenFeedbackComponent {
   protected feedbackType = FeedbackType;
 
   protected geColleagueEmail(feedback: Feedback): string | undefined {
-    return this.type === this.feedbackType.received ? feedback.senderEmail : feedback.receiverEmail;
+    return this.type === this.feedbackType.received ? feedback.giverEmail : feedback.receiverEmail;
   }
 }

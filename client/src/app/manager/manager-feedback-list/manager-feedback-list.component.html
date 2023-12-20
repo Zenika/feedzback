@@ -9,7 +9,7 @@
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Envoyé par</th>
-    <td mat-cell *matCellDef="let element">{{ f(element).senderEmail }}</td>
+    <td mat-cell *matCellDef="let element">{{ f(element).giverEmail }}</td>
   </ng-container>
 
   <ng-container matColumnDef="date">

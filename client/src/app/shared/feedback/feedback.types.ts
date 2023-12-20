@@ -5,7 +5,7 @@
 
 export type Feedback = {
   id: string;
-  senderEmail: string;
+  giverEmail: string;
   receiverEmail: string;
   positive: string;
   negative: string;
@@ -24,7 +24,7 @@ export type FeedbackStatus = typeof FeedbackStatus;
 
 export type FeedbackRequest = {
   id: string;
-  senderEmail: string;
+  giverEmail: string;
   receiverEmail: string;
   message: string;
   shared: boolean;
@@ -43,12 +43,12 @@ export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type FeedbackItem = Pick<
   Feedback,
-  'id' | 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'
+  'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'
 >;
 
 export type FeedbackRequestItem = Pick<
   FeedbackRequest,
-  'id' | 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt'
+  'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt'
 >;
 
 export type FeedbackListMap = {

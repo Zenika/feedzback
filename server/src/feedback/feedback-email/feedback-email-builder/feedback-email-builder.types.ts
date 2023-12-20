@@ -26,7 +26,7 @@ export type GivenContent = {
 };
 
 export type GivenData = {
-  senderEmail: string;
+  giverEmail: string;
   cta: string;
   serverBaseUrl: string;
 };
