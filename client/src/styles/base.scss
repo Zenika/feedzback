@@ -11,6 +11,7 @@ body {
 
 body {
   margin: 0;
+  background-color: #f5f5f5;
   font-family: 'Nunito', sans-serif;
 
   // Angular material components use the following font-smoothing properties (so, we want the other contents to have the same render)
@@ -18,20 +19,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @if v.$use-background {
-    &::before {
-      content: '';
-      position: fixed;
-      z-index: -1;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: radial-gradient(circle at 35% 15%, rgb(255 255 255 / 0.75), transparent 35%),
-        radial-gradient(rgb(255 255 255 / 0.5), transparent 75%, rgb(213 33 80 / 0.2)),
-        linear-gradient(-25deg, #ebf3f5, #ebf3f5 49%, rgb(235 243 245 / 0.65) 50%, #fee9e3 50%, #fee9e3);
-    }
-  } @else {
-    background-color: #fafafa;
-  }
 }

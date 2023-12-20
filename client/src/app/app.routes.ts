@@ -59,12 +59,12 @@ export const routes: Routes = [
     path: 'feedbacks/:type',
     loadComponent: () => import('./my-feedbacks/my-feedbacks.component'),
     canActivate: [authGuard],
-    title: 'FeedZback - feedZbacks',
+    title: 'FeedZback - FeedZbacks',
     children: [
       {
         path: ':id',
         component: FeedbackDialogComponent,
-        title: 'FeedZback - Détails',
+        title: 'FeedZback - Vue détaillée',
       },
     ],
   },
@@ -72,7 +72,7 @@ export const routes: Routes = [
     path: 'feedback/:type/:id',
     component: FeedbackDetailsComponent,
     canActivate: [authGuard],
-    title: 'FeedZback - Détails',
+    title: 'FeedZback - Vue détaillée',
   },
   {
     path: 'settings',
