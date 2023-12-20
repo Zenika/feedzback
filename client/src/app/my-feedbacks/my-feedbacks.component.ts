@@ -68,7 +68,7 @@ export default class MyFeedbacksComponent implements OnInit {
   protected fetched = false;
 
   async ngOnInit() {
-    this.feedbackService.getList().subscribe(({ received, given, sentRequest, receivedRequest }) => {
+    this.feedbackService.getSummaries().subscribe(({ received, given, sentRequest, receivedRequest }) => {
       this.received = normalizeReceivedFeedbacks(received);
       this.given = normalizeGivenFeedbacks(given);
       this.sentRequest = normalizeSentRequests(sentRequest);

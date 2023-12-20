@@ -1,28 +1,37 @@
-import { FeedbackRequestWithId, FeedbackWithId, TypedFeedbacks } from './feedback-db.types';
+import { FeedbackRequestSummaryWithId, FeedbackSummaryWithId, TypedFeedbackSummaries } from './feedback-db.types';
 
-type AnyFeedbackWithId = FeedbackWithId | FeedbackRequestWithId;
+type AnyFeedbackSummaryWithId = FeedbackSummaryWithId | FeedbackRequestSummaryWithId;
 
-export const isReceivedFeedback = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackWithId =>
-  value.status === 'done' && value.receiverEmail === userEmail;
+export const isReceivedFeedbackSummary = (
+  value: AnyFeedbackSummaryWithId,
+  viewerEmail: string,
+): value is FeedbackSummaryWithId => value.status === 'done' && value.receiverEmail === viewerEmail;
 
-export const isGivenFeedback = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackWithId =>
-  value.status === 'done' && value.senderEmail === userEmail;
+export const isGivenFeedbackSummary = (
+  value: AnyFeedbackSummaryWithId,
+  viewerEmail: string,
+): value is FeedbackSummaryWithId => value.status === 'done' && value.senderEmail === viewerEmail;
 
-export const isSentFeedbackRequest = (value: AnyFeedbackWithId, userEmail: string): value is FeedbackRequestWithId =>
-  value.status === 'pending' && value.receiverEmail === userEmail;
+export const isSentFeedbackRequestSummary = (
+  value: AnyFeedbackSummaryWithId,
+  viewerEmail: string,
+): value is FeedbackRequestSummaryWithId => value.status === 'pending' && value.receiverEmail === viewerEmail;
 
-export const isReceivedFeedbackRequest = (
-  value: AnyFeedbackWithId,
-  userEmail: string,
-): value is FeedbackRequestWithId => value.status === 'pending' && value.senderEmail === userEmail;
+export const isReceivedFeedbackRequestSummary = (
+  value: AnyFeedbackSummaryWithId,
+  viewerEmail: string,
+): value is FeedbackRequestSummaryWithId => value.status === 'pending' && value.senderEmail === viewerEmail;
 
-export const mapToTypedFeedbacks = (feedbacks: AnyFeedbackWithId[], userEmail: string): TypedFeedbacks =>
+export const mapToTypedFeedbackSummaries = (
+  feedbacks: AnyFeedbackSummaryWithId[],
+  viewerEmail: string,
+): TypedFeedbackSummaries =>
   feedbacks.reduce(
     (list, feedback) => {
-      if (isReceivedFeedback(feedback, userEmail)) list.received.push(feedback);
-      else if (isGivenFeedback(feedback, userEmail)) list.given.push(feedback);
-      else if (isSentFeedbackRequest(feedback, userEmail)) list.sentRequest.push(feedback);
-      else if (isReceivedFeedbackRequest(feedback, userEmail)) list.receivedRequest.push(feedback);
+      if (isReceivedFeedbackSummary(feedback, viewerEmail)) list.received.push(feedback);
+      else if (isGivenFeedbackSummary(feedback, viewerEmail)) list.given.push(feedback);
+      else if (isSentFeedbackRequestSummary(feedback, viewerEmail)) list.sentRequest.push(feedback);
+      else if (isReceivedFeedbackRequestSummary(feedback, viewerEmail)) list.receivedRequest.push(feedback);
       return list;
     },
     {
@@ -30,5 +39,5 @@ export const mapToTypedFeedbacks = (feedbacks: AnyFeedbackWithId[], userEmail: s
       given: [],
       sentRequest: [],
       receivedRequest: [],
-    } satisfies TypedFeedbacks as TypedFeedbacks,
+    } satisfies TypedFeedbackSummaries as TypedFeedbackSummaries,
   );

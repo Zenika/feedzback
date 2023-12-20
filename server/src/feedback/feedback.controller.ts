@@ -68,18 +68,18 @@ export class FeedbackController {
     return partialIdObject;
   }
 
-  @Get('list')
+  @Get('summaries')
   @UseGuards(AuthGuard)
-  getList() {
-    const userEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getList(userEmail);
+  getSummaries() {
+    const viewerEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getSummaries(viewerEmail);
   }
 
   @Get('item/:id')
   @UseGuards(AuthGuard)
   getItem(@Param('id') id: string) {
-    const userEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getItem(userEmail, id);
+    const viewerEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getItem(viewerEmail, id);
   }
 
   @Get('managed/:email')

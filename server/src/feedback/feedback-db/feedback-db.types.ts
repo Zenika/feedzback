@@ -34,13 +34,19 @@ export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type FeedbackRequestWithId = FeedbackRequest & IdObject;
 
-// ----- TypedFeedbacks -----
+// ----- Summaries -----
 
-export type TypedFeedbacks = {
-  received: Feedback[];
-  given: Feedback[];
-  sentRequest: FeedbackRequest[];
-  receivedRequest: FeedbackRequest[];
+export type FeedbackSummary = Pick<Feedback, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
+export type FeedbackSummaryWithId = FeedbackSummary & IdObject;
+
+export type FeedbackRequestSummary = Pick<FeedbackRequest, 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
+export type FeedbackRequestSummaryWithId = FeedbackRequestSummary & IdObject;
+
+export type TypedFeedbackSummaries = {
+  received: FeedbackSummaryWithId[];
+  given: FeedbackSummaryWithId[];
+  sentRequest: FeedbackRequestSummaryWithId[];
+  receivedRequest: FeedbackRequestSummaryWithId[];
 };
 
 // ----- IdObject -----

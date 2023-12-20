@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, Filter } from 'firebase-admin/firestore';
 import { FirebaseService } from '../../core/firebase';
-import { Collection } from './feedback-db.config';
+import { Collection, feedbackSummaryFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
   FeedbackRequest,
   FeedbackRequestStatus,
+  FeedbackRequestSummaryWithId,
   FeedbackRequestToken,
   FeedbackRequestWithId,
   FeedbackStatus,
+  FeedbackSummaryWithId,
   FeedbackWithId,
   IdObject,
 } from './feedback-db.types';
-import { mapToTypedFeedbacks } from './feedback-db.utils';
+import { mapToTypedFeedbackSummaries } from './feedback-db.utils';
 
 @Injectable()
 export class FeedbackDbService {
@@ -131,22 +133,27 @@ export class FeedbackDbService {
     return { id } as IdObject;
   }
 
-  async getList(userEmail: string) {
+  async getSummaries(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
-      .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
+      .where(
+        Filter.or(Filter.where('senderEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
+      )
+      .select(...feedbackSummaryFields)
       .get();
 
-    const feedbacks = feedbackQuery.docs.map(
-      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId | FeedbackRequestWithId,
+    const feedbackSummaries = feedbackQuery.docs.map(
+      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackSummaryWithId | FeedbackRequestSummaryWithId,
     );
 
-    return mapToTypedFeedbacks(feedbacks, userEmail);
+    return mapToTypedFeedbackSummaries(feedbackSummaries, viewerEmail);
   }
 
-  async getItem(userEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
+  async getItem(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
     const feedbackQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', id)
-      .where(Filter.or(Filter.where('senderEmail', '==', userEmail), Filter.where('receiverEmail', '==', userEmail)))
+      .where(
+        Filter.or(Filter.where('senderEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
+      )
       .get();
 
     const feedbackDoc = feedbackQuery.docs.at(0);

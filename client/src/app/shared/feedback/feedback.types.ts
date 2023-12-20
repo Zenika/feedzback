@@ -30,11 +30,21 @@ export type FeedbackRequest = {
 export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
-export type TypedFeedbacks = {
-  received: Feedback[];
-  given: Feedback[];
-  sentRequest: FeedbackRequest[];
-  receivedRequest: FeedbackRequest[];
+export type FeedbackSummary = Pick<
+  Feedback,
+  'id' | 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'
+>;
+
+export type FeedbackRequestSummary = Pick<
+  FeedbackRequest,
+  'id' | 'senderEmail' | 'receiverEmail' | 'status' | 'createdAt'
+>;
+
+export type TypedFeedbackSummaries = {
+  received: FeedbackSummary[];
+  given: FeedbackSummary[];
+  sentRequest: FeedbackRequestSummary[];
+  receivedRequest: FeedbackRequestSummary[];
 };
 
 export type IdObject = { id: string };
