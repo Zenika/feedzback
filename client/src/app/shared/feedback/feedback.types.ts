@@ -14,7 +14,7 @@ export type Feedback = {
   updatedAt: number;
 };
 
-export const FeedbackStatus = 'given';
+export const FeedbackStatus = 'done'; // Idea: in the future, it could be also 'draft'...
 export type FeedbackStatus = typeof FeedbackStatus;
 
 export type FeedbackRequest = {
@@ -27,7 +27,7 @@ export type FeedbackRequest = {
   createdAt: number;
 };
 
-export const FeedbackRequestStatus = 'requested';
+export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type TypedFeedbacks = {

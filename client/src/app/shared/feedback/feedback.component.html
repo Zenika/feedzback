@@ -1,8 +1,8 @@
 @if (feedback$ | async; as feedback) {
-  @if ((type === feedbackType.given || type === feedbackType.received) && feedback.status === 'given') {
+  @if ((type === feedbackType.given || type === feedbackType.received) && feedback.status === 'done') {
     <app-given-feedback [type]="type" [feedback]="feedback" />
   } @else if (
-    (type === feedbackType.sentRequest || type === feedbackType.receivedRequest) && feedback.status === 'requested'
+    (type === feedbackType.sentRequest || type === feedbackType.receivedRequest) && feedback.status === 'pending'
   ) {
     <app-requested-feedback [type]="type" [feedback]="feedback" />
   } @else {
