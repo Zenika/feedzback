@@ -17,21 +17,21 @@
   }
 </h1>
 
-<div class="app-requested-feedback__addons">
+<div class="app-pending-feedback__addons">
   <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
 
   <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
 </div>
 
 @if (feedback.message) {
-  <div class="app-requested-feedback-item">
-    <h2 class="app-requested-feedback-item__title"><mat-icon>notes</mat-icon> Message</h2>
+  <div class="app-pending-feedback-item">
+    <h2 class="app-pending-feedback-item__title"><mat-icon>notes</mat-icon> Message</h2>
     <p>{{ feedback.message }}</p>
   </div>
 }
 
 @if (feedback.shared) {
-  <div class="app-requested-feedback__addons">
+  <div class="app-pending-feedback__addons">
     <div>
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.sentRequest) {

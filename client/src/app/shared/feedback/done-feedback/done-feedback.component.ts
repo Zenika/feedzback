@@ -10,7 +10,7 @@ import { MessageComponent } from '../../ui/message/message.component';
 import { Feedback, FeedbackType } from '../feedback.types';
 
 @Component({
-  selector: 'app-given-feedback',
+  selector: 'app-done-feedback',
   standalone: true,
   imports: [
     DatePipe,
@@ -22,12 +22,12 @@ import { Feedback, FeedbackType } from '../feedback.types';
     MessageComponent,
     AllowedEmailDomainsPipe,
   ],
-  templateUrl: './given-feedback.component.html',
-  styleUrl: './given-feedback.component.scss',
+  templateUrl: './done-feedback.component.html',
+  styleUrl: './done-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GivenFeedbackComponent {
-  @HostBinding('class.app-given-feedback') hasCss = true;
+export class DoneFeedbackComponent {
+  @HostBinding('class.app-done-feedback') hasCss = true;
 
   @Input({ required: true }) feedback!: Feedback;
 

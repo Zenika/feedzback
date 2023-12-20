@@ -135,9 +135,7 @@ export class FeedbackDbService {
 
   async getListMap(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
-      .where(
-        Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
-      )
+      .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
       .select(...feedbackItemFields)
       .get();
 
@@ -151,9 +149,7 @@ export class FeedbackDbService {
   async getItem(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
     const feedbackQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', id)
-      .where(
-        Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)),
-      )
+      .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
       .get();
 
     const feedbackDoc = feedbackQuery.docs.at(0);

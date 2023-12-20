@@ -8,15 +8,15 @@ import { FeedbackService } from '../feedback.service';
 import { FeedbackRequest, FeedbackType } from '../feedback.types';
 
 @Component({
-  selector: 'app-requested-feedback',
+  selector: 'app-pending-feedback',
   standalone: true,
   imports: [DatePipe, MatButtonModule, MatIconModule, AllowedEmailDomainsPipe],
-  templateUrl: './requested-feedback.component.html',
-  styleUrl: './requested-feedback.component.scss',
+  templateUrl: './pending-feedback.component.html',
+  styleUrl: './pending-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class RequestedFeedbackComponent {
-  @HostBinding('class.app-requested-feedback') hasCss = true;
+export class PendingFeedbackComponent {
+  @HostBinding('class.app-pending-feedback') hasCss = true;
 
   @Input({ required: true }) feedback!: FeedbackRequest;
 

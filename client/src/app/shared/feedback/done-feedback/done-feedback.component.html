@@ -17,7 +17,7 @@
   }
 </h1>
 
-<div class="app-given-feedback__addons">
+<div class="app-done-feedback__addons">
   <div><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
 
   <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
@@ -33,9 +33,9 @@
   }
 </div>
 
-<mat-card appearance="outlined" class="app-given-feedback-item">
+<mat-card appearance="outlined" class="app-done-feedback-item">
   <mat-card-header>
-    <mat-card-title class="app-given-feedback-item__title">
+    <mat-card-title class="app-done-feedback-item__title">
       <mat-icon>new_releases</mat-icon> Points positifs
     </mat-card-title>
   </mat-card-header>
@@ -43,9 +43,9 @@
   <mat-card-content>{{ feedback.positive }}</mat-card-content>
 </mat-card>
 
-<mat-card appearance="outlined" class="app-given-feedback-item">
+<mat-card appearance="outlined" class="app-done-feedback-item">
   <mat-card-header>
-    <mat-card-title class="app-given-feedback-item__title">
+    <mat-card-title class="app-done-feedback-item__title">
       <mat-icon>moving</mat-icon> Axes d'améliorations
     </mat-card-title>
   </mat-card-header>
@@ -54,14 +54,14 @@
 </mat-card>
 
 @if (feedback.comment) {
-  <div class="app-given-feedback-item">
-    <h2 class="app-given-feedback-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
+  <div class="app-done-feedback-item">
+    <h2 class="app-done-feedback-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
     <p>{{ feedback.comment }}</p>
   </div>
 }
 
 @if (feedback.shared) {
-  <div class="app-given-feedback__addons">
+  <div class="app-done-feedback__addons">
     <div>
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.received) {

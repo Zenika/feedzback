@@ -5,9 +5,9 @@
     </button>
 
     @if (feedbackDetails.feedback.status === 'done') {
-      <app-given-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+      <app-done-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
     } @else {
-      <app-requested-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+      <app-pending-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
     }
   } @else {
     <app-message type="danger">

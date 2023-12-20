@@ -41,15 +41,9 @@ export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 // A "feedback list" is made up of items where a "feedback item" has fewer properties than the full feedback.
 // So the term "item" refers to the fact that the feedback is part of a "list".
 
-export type FeedbackItem = Pick<
-  Feedback,
-  'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'
->;
+export type FeedbackItem = Pick<Feedback, 'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
 
-export type FeedbackRequestItem = Pick<
-  FeedbackRequest,
-  'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt'
->;
+export type FeedbackRequestItem = Pick<FeedbackRequest, 'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
 
 export type FeedbackListMap = {
   received: FeedbackItem[];
