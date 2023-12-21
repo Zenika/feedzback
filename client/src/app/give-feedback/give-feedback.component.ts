@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth/auth.service';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
@@ -55,6 +56,8 @@ export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
+  protected hasManagerFeature = environment.featureFlipping.manager;
+
   form = this.formBuilder.group({
     receiverEmail: [
       this.getQueryParam('receiverEmail'),
@@ -63,8 +66,7 @@ export class GiveFeedbackComponent implements GiveFeedbackData, OnInit {
     positive: ['', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]],
     negative: ['', [Validators.required, Validators.maxLength(this.feedbackMaxLength)]],
     comment: ['', [Validators.maxLength(this.commentMaxLength)]],
-    // shared: [true], // <!-- FEATURE TOGGLE::MANAGER -->
-    shared: [false],
+    shared: [this.hasManagerFeature ? true : false],
   });
 
   submitInProgress = false;

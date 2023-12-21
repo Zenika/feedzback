@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth/auth.service';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { BurgerComponent } from './burger/burger.component';
@@ -42,6 +43,8 @@ export class HeaderComponent implements OnDestroy {
   protected isSignedIn$ = this.authService.isSignedIn$;
 
   protected isMenuOpen = false;
+
+  protected hasManagerFeature = environment.featureFlipping.manager;
 
   @HostListener('document:click', ['$event.target']) onClick(target: HTMLElement) {
     if (!target.closest('.app-header-menu-target')) {

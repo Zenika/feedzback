@@ -15,4 +15,7 @@ export const environment = {
   firebaseOptions,
   apiBaseUrl: '',
   allowedEmailDomains: ['zenika.com'],
+  featureFlipping: {
+    manager: true,
+  },
 };

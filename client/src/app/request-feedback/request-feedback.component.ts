@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import {
@@ -49,11 +50,12 @@ export class RequestFeedbackComponent {
 
   protected messageMaxLength = 500;
 
+  protected hasManagerFeature = environment.featureFlipping.manager;
+
   form = this.formBuilder.group({
     recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
-    // shared: [true], // <!-- FEATURE TOGGLE::MANAGER -->
-    shared: [false],
+    shared: [this.hasManagerFeature ? true : false],
   });
 
   multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;

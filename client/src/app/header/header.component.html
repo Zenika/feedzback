@@ -20,12 +20,11 @@
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
       FeedZbacks
     </a>
-    <!-- FEATURE TOGGLE::MANAGER -->
-    <!-- @if (isManager()) {
+    @if (hasManagerFeature && isManager()) {
       <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/manager">
         Manager
       </a>
-    } -->
+    }
   }
 </nav>
 
@@ -47,13 +46,12 @@
     }
 
     <mat-menu #signOutMenu="matMenu" xPosition="before">
-      <!-- FEATURE TOGGLE::MANAGER -->
-      <!-- @if (isKnownUser$ | async) {
+      @if (isKnownUser$ | async) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           Paramètres
         </button>
-      } -->
+      }
 
       <!-- TODO: Features NOT implemented
       <button mat-menu-item><mat-icon color="primary">translate</mat-icon> English</button>

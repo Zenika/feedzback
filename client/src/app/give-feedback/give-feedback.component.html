@@ -100,13 +100,12 @@
       <mat-hint align="start">{{ comment.value.length }} / {{ commentMaxLength }}</mat-hint>
     </mat-form-field>
 
-    @if (!requestWithToken) {
-      <!-- FEATURE TOGGLE::MANAGER -->
-      <!-- <div class="gbl-form-field" style="display: none">
+    @if (hasManagerFeature && !requestWithToken) {
+      <div class="gbl-form-field" style="display: none">
         <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
           Partager le feedZback avec le manager de votre collègue
         </mat-slide-toggle>
-      </div> -->
+      </div>
     }
 
     <div class="gbl-form-submit">
