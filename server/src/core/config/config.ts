@@ -4,6 +4,8 @@ import { getAppEnvironment } from './config.utils';
 export const appConfigLoader = (): AppConfig => ({
   appEnv: getAppEnvironment(process.env.NODE_ENV),
 
+  serverPort: Number(process.env.PORT!),
+
   clientUrl: process.env.CLIENT_URL!,
 
   firebaseServiceAccount: {
