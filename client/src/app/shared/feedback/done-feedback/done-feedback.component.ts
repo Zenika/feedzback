@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
 import { MessageComponent } from '../../ui/message/message.component';
@@ -16,10 +14,8 @@ import { Feedback, FeedbackType } from '../feedback.types';
   imports: [
     DatePipe,
     RouterLink,
-    MatButtonModule,
     MatDialogModule,
     MatIconModule,
-    MatMenuModule,
     AllowedEmailDomainsPipe,
     MessageComponent,
     FeedbackBodyComponent,
