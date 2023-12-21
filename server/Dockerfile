@@ -14,10 +14,10 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json .
 
-EXPOSE 8080
+EXPOSE 3000
 
 # Server Port
-ENV SERVER_PORT=8080
+ENV SERVER_PORT=3000
 
 # Firebase configuration
 ENV FIREBASE_PROJECT_ID=
