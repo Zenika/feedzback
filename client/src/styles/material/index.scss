@@ -42,14 +42,14 @@ $client-theme: mat.define-light-theme(
 
 // Option 2)
 @include mat.core-theme($client-theme);
-@include mat.card-theme($client-theme);
+//@include mat.card-theme($client-theme);
 //@include mat.progress-bar-theme($client-theme);
 @include mat.tooltip-theme($client-theme);
 @include mat.form-field-theme($client-theme);
 @include mat.input-theme($client-theme);
 @include mat.select-theme($client-theme);
 //@include mat.autocomplete-theme($client-theme);
-@include mat.dialog-theme($client-theme);
+//@include mat.dialog-theme($client-theme);
 //@include mat.chips-theme($client-theme);
 @include mat.slide-toggle-theme($client-theme);
 //@include mat.radio-theme($client-theme);

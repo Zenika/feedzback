@@ -2,12 +2,6 @@
   <mat-icon>forum</mat-icon>
   FeedZback
   @switch (type) {
-    @case (feedbackType.given) {
-      donné
-    }
-    @case (feedbackType.received) {
-      reçu
-    }
     @case (feedbackType.sentRequest) {
       demandé
     }
@@ -17,22 +11,27 @@
   }
 </h1>
 
-<div class="app-pending-feedback__addons">
-  <div><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+<div class="app-pending-feedback-addons">
+  <div class="app-pending-feedback-addons__item">
+    <mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}
+  </div>
 
-  <div><mat-icon>email</mat-icon>{{ geColleagueEmail(feedback) }}</div>
+  <div class="app-pending-feedback-addons__item">
+    <mat-icon>email</mat-icon>
+    {{ getColleagueEmail(feedback) }}
+  </div>
 </div>
 
 @if (feedback.message) {
   <div class="app-pending-feedback-item">
-    <h2 class="app-pending-feedback-item__title"><mat-icon>notes</mat-icon> Message</h2>
-    <p>{{ feedback.message }}</p>
+    <h2 class="app-pending-feedback-item__title"><mat-icon>send</mat-icon> Message</h2>
+    <p class="app-pending-feedback-item__content">{{ feedback.message }}</p>
   </div>
 }
 
 @if (feedback.shared) {
-  <div class="app-pending-feedback__addons">
-    <div>
+  <div class="app-pending-feedback-addons">
+    <div class="app-pending-feedback-addons__item">
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.sentRequest) {
         Ce feedZback sera partagé avec votre manager

@@ -1,8 +1,8 @@
 @use '../../../app.scss' as app;
 
 .app-pending-feedback {
-  &__addons {
-    margin-bottom: 1.5rem;
+  &-addons {
+    margin-bottom: 1.25rem;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -12,30 +12,38 @@
     @include app.media-breakpoint-up(md) {
       flex-direction: row;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
-    > * {
+    &__item {
       display: flex;
-    }
 
-    mat-icon {
-      flex-shrink: 0;
-      margin-right: 0.25rem;
-      vertical-align: bottom;
-      transform: scale(0.9);
+      mat-icon {
+        flex-shrink: 0;
+        margin-right: 0.25rem;
+        vertical-align: bottom;
+        transform: scale(0.9);
+      }
     }
   }
 
   &-item {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 
     &__title {
       margin: 0 0 0.25rem 0 !important;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.6;
 
       mat-icon {
-        transform: scale(1.2);
+        transform: scale(1.125);
       }
+    }
+
+    &__content {
+      margin: 0 0 1rem 0;
     }
   }
 }

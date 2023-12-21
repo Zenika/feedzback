@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
 import { MessageComponent } from '../../ui/message/message.component';
@@ -16,9 +16,9 @@ import { Feedback, FeedbackType } from '../feedback.types';
     DatePipe,
     RouterLink,
     MatButtonModule,
-    MatCardModule,
     MatDialogModule,
     MatIconModule,
+    MatMenuModule,
     MessageComponent,
     AllowedEmailDomainsPipe,
   ],
@@ -35,7 +35,7 @@ export class DoneFeedbackComponent {
 
   protected feedbackType = FeedbackType;
 
-  protected geColleagueEmail(feedback: Feedback): string | undefined {
+  protected getColleagueEmail(feedback: Feedback): string | undefined {
     return this.type === this.feedbackType.received ? feedback.giverEmail : feedback.receiverEmail;
   }
 }

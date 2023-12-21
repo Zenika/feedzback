@@ -24,7 +24,7 @@ export class PendingFeedbackComponent {
 
   protected feedbackType = FeedbackType;
 
-  protected geColleagueEmail(feedback: FeedbackRequest): string | undefined {
+  protected getColleagueEmail(feedback: FeedbackRequest): string | undefined {
     return this.type === this.feedbackType.sentRequest ? feedback.giverEmail : feedback.receiverEmail;
   }
 
