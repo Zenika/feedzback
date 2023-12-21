@@ -40,7 +40,9 @@ export class SettingsComponent {
   });
 
   protected get submitButtonDisabled() {
-    return this.form.value.managerEmail === this.currentManagerEmail || this.form.invalid || this.submitInProgress;
+    return (
+      this.form.controls.managerEmail.value === this.currentManagerEmail || this.form.invalid || this.submitInProgress
+    );
   }
 
   protected success: boolean | null = null;
@@ -48,7 +50,8 @@ export class SettingsComponent {
   protected onSubmit() {
     this.form.disable();
     this.submitInProgress = true;
-    this.employeeService.updateManager(this.form.value.managerEmail!).subscribe({
+    this.success = null;
+    this.employeeService.updateManager(this.form.controls.managerEmail.value).subscribe({
       error: () => {
         this.form.enable();
         this.submitInProgress = false;
@@ -58,6 +61,7 @@ export class SettingsComponent {
         this.form.enable();
         this.submitInProgress = false;
         this.success = true;
+        this.currentManagerEmail = this.form.controls.managerEmail.value;
       },
     });
   }
