@@ -16,6 +16,6 @@ export const environment = {
   apiBaseUrl: '',
   allowedEmailDomains: ['zenika.com'],
   featureFlipping: {
-    manager: true,
+    manager: false,
   },
 };
