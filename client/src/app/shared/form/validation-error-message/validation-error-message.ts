@@ -13,7 +13,7 @@ export const getValidationErrorMessage = (errors: ValidationErrors | null): stri
     return `Email(s) invalide(s): ${errors?.[MULTIPLE_EMAILS_ERROR_KEY].join(', ')}`;
   }
   if (errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY]) {
-    return `Domaine(s) autorisé(s): ${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', ')}`;
+    return `Domaine autorisé: ${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', ')}`;
   }
   if (errors?.['minlength']) {
     return `${errors?.['minlength'].requiredLength} charactères au minimum`;
