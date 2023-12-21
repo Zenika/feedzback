@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -26,9 +27,10 @@ import { RequestFeedbackSuccess } from './request-feedback-success/request-feedb
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatIconModule,
+    MatTooltipModule,
     MessageComponent,
     EmailsFieldComponent,
   ],

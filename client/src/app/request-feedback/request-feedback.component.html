@@ -21,7 +21,12 @@
 
 @if (!sentEmails.length || remainingUnsentEmails.length) {
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-emails-field class="gbl-form-field" [emails]="form.controls.recipients" />
+    <app-emails-field
+      class="gbl-form-field"
+      [emails]="form.controls.recipients"
+      matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
+      matTooltipPosition="above"
+    />
 
     <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label>Message</mat-label>
