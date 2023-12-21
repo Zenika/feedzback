@@ -1,7 +1,7 @@
 @use '../../../app.scss' as app;
 
 .app-pending-feedback {
-  &-addons {
+  &-list {
     margin-bottom: 1.25rem;
     display: flex;
     flex-wrap: wrap;
@@ -17,33 +17,13 @@
 
     &__item {
       display: flex;
+      align-items: flex-end;
 
       mat-icon {
         flex-shrink: 0;
         margin-right: 0.25rem;
-        vertical-align: bottom;
         transform: scale(0.9);
       }
-    }
-  }
-
-  &-item {
-    margin-bottom: 1.25rem;
-
-    &__title {
-      margin: 0 0 0.25rem 0 !important;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      opacity: 0.6;
-
-      mat-icon {
-        transform: scale(1.125);
-      }
-    }
-
-    &__content {
-      margin: 0 0 1rem 0;
     }
   }
 }

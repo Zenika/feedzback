@@ -146,7 +146,7 @@ export class FeedbackDbService {
     return mapToFeedbackListMap(feedbackList, viewerEmail);
   }
 
-  async getItem(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
+  async getDocument(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
     const feedbackQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', id)
       .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))

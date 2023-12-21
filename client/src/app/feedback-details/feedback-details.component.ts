@@ -30,7 +30,7 @@ export class FeedbackDetailsComponent {
   protected id$ = new ReplaySubject<string>(1);
 
   protected feedbackDetails$: Observable<FeedbackDetails | null> = this.id$.pipe(
-    switchMap((id) => this.feedbackService.getItem(id)),
+    switchMap((id) => this.feedbackService.getDocument(id)),
     withLatestFrom(this.authService.user$),
     map(([feedback, user]) => {
       if (feedback && user?.email) {

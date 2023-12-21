@@ -27,38 +27,16 @@
   }
 </h1>
 
-<div class="app-done-feedback-addons">
-  <div class="app-done-feedback-addons__item"><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
-  <div class="app-done-feedback-addons__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
+<div class="app-done-feedback-list">
+  <div class="app-done-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
+  <div class="app-done-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
 </div>
 
-@if (feedback.message) {
-  <div class="app-done-feedback-item">
-    <h2 class="app-done-feedback-item__title"><mat-icon>send</mat-icon> Message</h2>
-    <p class="app-done-feedback-item__content">{{ feedback.message }}</p>
-  </div>
-}
-
-<div class="app-done-feedback-item">
-  <h2 class="app-done-feedback-item__title"><mat-icon>new_releases</mat-icon> Points positifs</h2>
-  <p class="app-done-feedback-item__content">{{ feedback.positive }}</p>
-</div>
-
-<div class="app-done-feedback-item">
-  <h2 class="app-done-feedback-item__title"><mat-icon>moving</mat-icon> Axes d'améliorations</h2>
-  <p class="app-done-feedback-item__content">{{ feedback.negative }}</p>
-</div>
-
-@if (feedback.comment) {
-  <div class="app-done-feedback-item">
-    <h2 class="app-done-feedback-item__title"><mat-icon>notes</mat-icon> Commentaires</h2>
-    <p class="app-done-feedback-item__content">{{ feedback.comment }}</p>
-  </div>
-}
+<app-feedback-body [feedback]="feedback" />
 
 @if (feedback.shared) {
-  <div class="app-done-feedback-addons">
-    <div class="app-done-feedback-addons__item">
+  <div class="app-done-feedback-list">
+    <div class="app-done-feedback-list__item">
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.received) {
         Ce feedZback est partagé avec votre manager

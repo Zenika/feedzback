@@ -75,11 +75,15 @@ export class FeedbackController {
     return this.feedbackDbService.getListMap(viewerEmail);
   }
 
-  @Get('item/:id')
+  @Get('document/:id')
   @UseGuards(AuthGuard)
-  getItem(@Param('id') id: string) {
+  async getDocument(@Param('id') id: string) {
     const viewerEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getItem(viewerEmail, id);
+    const document = await this.feedbackDbService.getDocument(viewerEmail, id);
+    if (!document) {
+      throw new BadRequestException();
+    }
+    return document;
   }
 
   @Get('managed/:email')

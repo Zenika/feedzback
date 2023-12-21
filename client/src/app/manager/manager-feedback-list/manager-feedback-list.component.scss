@@ -27,12 +27,12 @@
     > td {
       transition:
         color 225ms ease,
-        border-bottom-width 0ms ease 225ms;
+        border-bottom-color 0ms ease 225ms;
     }
 
     &--expanded > td {
       transition: color 225ms ease;
-      border-bottom-width: 0;
+      border-bottom-color: transparent;
       color: #df2147;
       font-weight: bold;
     }
@@ -46,8 +46,8 @@
     }
 
     &--collapsed > td {
-      transition: border-bottom-width 0ms ease 225ms;
-      border-bottom-width: 0;
+      transition: border-bottom-color 0ms ease 225ms;
+      border-bottom-color: transparent;
     }
   }
 

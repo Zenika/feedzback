@@ -55,9 +55,9 @@ export class FeedbackService {
     );
   }
 
-  getItem(id: string) {
+  getDocument(id: string) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<Feedback | FeedbackRequest | null>(`${this.apiBaseUrl}/feedback/item/${id}`, { headers }),
+      this.httpClient.get<Feedback | FeedbackRequest | null>(`${this.apiBaseUrl}/feedback/document/${id}`, { headers }),
     );
   }
 

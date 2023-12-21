@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
 import { MessageComponent } from '../../ui/message/message.component';
+import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { Feedback, FeedbackType } from '../feedback.types';
 
 @Component({
@@ -19,8 +20,9 @@ import { Feedback, FeedbackType } from '../feedback.types';
     MatDialogModule,
     MatIconModule,
     MatMenuModule,
-    MessageComponent,
     AllowedEmailDomainsPipe,
+    MessageComponent,
+    FeedbackBodyComponent,
   ],
   templateUrl: './done-feedback.component.html',
   styleUrl: './done-feedback.component.scss',

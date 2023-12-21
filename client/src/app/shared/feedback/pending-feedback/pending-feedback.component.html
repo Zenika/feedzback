@@ -11,32 +11,21 @@
   }
 </h1>
 
-<div class="app-pending-feedback-addons">
-  <div class="app-pending-feedback-addons__item">
-    <mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}
-  </div>
-
-  <div class="app-pending-feedback-addons__item">
-    <mat-icon>email</mat-icon>
-    {{ getColleagueEmail(feedback) }}
-  </div>
+<div class="app-pending-feedback-list">
+  <div class="app-pending-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+  <div class="app-pending-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
 </div>
 
-@if (feedback.message) {
-  <div class="app-pending-feedback-item">
-    <h2 class="app-pending-feedback-item__title"><mat-icon>send</mat-icon> Message</h2>
-    <p class="app-pending-feedback-item__content">{{ feedback.message }}</p>
-  </div>
-}
+<app-feedback-body [feedback]="feedback" />
 
 @if (feedback.shared) {
-  <div class="app-pending-feedback-addons">
-    <div class="app-pending-feedback-addons__item">
+  <div class="app-pending-feedback-list">
+    <div class="app-pending-feedback-list__item">
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.sentRequest) {
-        Ce feedZback sera partagé avec votre manager
+        Ce feedZback est partagé avec votre manager
       } @else {
-        Ce feedZback sera partagé avec le manager de votre collègue
+        Ce feedZback est partagé avec le manager de votre collègue
       }
     </div>
   </div>

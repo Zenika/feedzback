@@ -33,23 +33,7 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
       <div [@detailExpand]="element === expandedFeedback ? 'expanded' : 'collapsed'">
-        <div class="app-manager-feedback-list__item">
-          @if (f(element).message) {
-            <h3><mat-icon>send</mat-icon> Demande initiale</h3>
-            <p>{{ f(element).message }}</p>
-          }
-
-          <h3><mat-icon>new_releases</mat-icon> Points positifs</h3>
-          <p>{{ f(element).positive }}</p>
-
-          <h3><mat-icon>moving</mat-icon> Axes d'améliorations</h3>
-          <p>{{ f(element).negative }}</p>
-
-          @if (f(element).comment) {
-            <h3><mat-icon>notes</mat-icon> Commentaires</h3>
-            <p>{{ f(element).comment }}</p>
-          }
-        </div>
+        <app-feedback-body [feedback]="f(element)" class="app-manager-feedback-list__item" />
       </div>
     </td>
   </ng-container>
