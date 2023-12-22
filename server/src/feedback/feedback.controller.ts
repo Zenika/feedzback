@@ -3,7 +3,7 @@ import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
-import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
+import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto, ManagedFeedbacksDto } from './feedback.dto';
 
 @Controller('feedback')
 export class FeedbackController {
@@ -86,9 +86,9 @@ export class FeedbackController {
     return document;
   }
 
-  @Get('managed/:email')
+  @Get('managed/:managedEmail')
   @UseGuards(AuthGuard)
-  async getManagedFeedbacks(@Param('email') managedEmail: string) {
+  async getManagedFeedbacks(@Param() { managedEmail }: ManagedFeedbacksDto) {
     const managerEmail = this.authService.userEmail!;
     const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;
     if (!managedEmails?.includes(managedEmail)) {

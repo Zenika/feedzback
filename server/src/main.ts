@@ -19,7 +19,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, { cors });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const configService: ConfigService<AppConfig> = app.get(ConfigService);
 
