@@ -1,20 +1,19 @@
 import { FirebaseOptions } from 'firebase/app';
 
-// TODO: provide values for the "staging" environement
 const firebaseOptions: FirebaseOptions = {
-  apiKey: '',
-  authDomain: '',
-  projectId: '',
-  storageBucket: '',
-  messagingSenderId: '',
-  appId: '',
-  measurementId: '',
+  apiKey: 'AIzaSyAZ_4GHJ6mMUBYxMVTYjIENvUla5uIY6C4',
+  authDomain: 'feedzback-v2-staging.firebaseapp.com',
+  projectId: 'feedzback-v2-staging',
+  storageBucket: 'feedzback-v2-staging.appspot.com',
+  messagingSenderId: '795807361218',
+  appId: '1:795807361218:web:51b2ccfa236de5cff3b35b',
+  measurementId: 'G-YVGZP6LZ26',
 };
 
 export const environment = {
   production: false,
   firebaseOptions,
-  apiBaseUrl: '', // TODO: provide value for the "staging" environement
+  apiBaseUrl: 'https://feedzback-v2-staging.web.app/',
   allowedEmailDomains: ['zenika.com'],
   featureFlipping: {
     manager: false,
