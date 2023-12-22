@@ -4,8 +4,15 @@ import { Data, renderFile } from 'ejs';
 import { join } from 'path';
 import { AppConfig } from '../../../core/config';
 import { ContextService } from '../../../core/context';
-import { givenContentMap, requestedContentMap } from './feedback-email-builder.config';
-import { GivenContent, GivenData, RequestedContent, RequestedData } from './feedback-email-builder.types';
+import { givenContentMap, requestedContentMap, sharedContentMap } from './feedback-email-builder.config';
+import {
+  GivenContent,
+  GivenData,
+  RequestedContent,
+  RequestedData,
+  SharedContent,
+  SharedData,
+} from './feedback-email-builder.types';
 import { matchLanguage, uglifyEmail } from './feedback-email-builder.utils';
 
 @Injectable()
@@ -45,6 +52,21 @@ export class FeedbackEmailBuilderService {
     return {
       subject: content.title,
       html: await this.renderFile('given.ejs', { content, data }),
+    };
+  }
+
+  // NOTE: for now, the `feedbackId` is NOT used to build the email content (but it might be useful in the future...)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async shared(managedEmail: string, feedbackId: string) {
+    const content: SharedContent = sharedContentMap[this.language];
+    const data: SharedData = {
+      managedEmail: uglifyEmail(managedEmail),
+      cta: `${this.configService.get('clientUrl')}/manager?employee=${managedEmail}`,
+      serverBaseUrl: this.contextService.serverBaseUrl,
+    };
+    return {
+      subject: content.title,
+      html: await this.renderFile('shared.ejs', { content, data }),
     };
   }
 

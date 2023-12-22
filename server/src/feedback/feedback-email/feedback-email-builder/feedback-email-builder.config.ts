@@ -13,7 +13,16 @@ export const givenContentMap: Record<Language, GivenContent> = {
   fr: {
     lang: 'fr',
     title: 'FeedZback reçu',
-    message: 'Vous avez reçu un feedZback de la part de',
+    message: 'Vous avez reçu un feedZback de',
     cta: 'Consulter mon feedZback',
+  },
+};
+
+export const sharedContentMap: Record<Language, GivenContent> = {
+  fr: {
+    lang: 'fr',
+    title: 'FeedZback partagé',
+    message: 'Un feedZback vous a été partagé par',
+    cta: 'Consulter le feedZback',
   },
 };

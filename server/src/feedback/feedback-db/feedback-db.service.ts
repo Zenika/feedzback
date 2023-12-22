@@ -111,8 +111,8 @@ export class FeedbackDbService {
     await this.feedbackCollection.doc(request.id).update(partialFeedback);
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
 
-    const { giverEmail, receiverEmail, id: feedbackId } = request;
-    return { giverEmail, receiverEmail, feedbackId };
+    const { giverEmail, receiverEmail, shared, id: feedbackId } = request;
+    return { giverEmail, receiverEmail, shared, feedbackId };
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {

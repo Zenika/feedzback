@@ -53,7 +53,7 @@ export class FeedbackController {
     if (!infos) {
       return false;
     }
-    await this.feedbackEmailService.given(infos.giverEmail, infos.receiverEmail, infos.feedbackId);
+    await this.sendEmailsOnGiven(infos.giverEmail, infos.receiverEmail, infos.feedbackId, infos.shared);
     return true;
   }
 
@@ -63,7 +63,7 @@ export class FeedbackController {
     const giverEmail = this.authService.userEmail!;
     const partialIdObject = await this.feedbackDbService.give({ giverEmail, ...dto });
     if (partialIdObject.id) {
-      await this.feedbackEmailService.given(giverEmail, dto.receiverEmail, partialIdObject.id);
+      await this.sendEmailsOnGiven(giverEmail, dto.receiverEmail, partialIdObject.id, dto.shared);
     }
     return partialIdObject;
   }
@@ -95,5 +95,17 @@ export class FeedbackController {
       throw new BadRequestException();
     }
     return await this.feedbackDbService.getManagedFeedbacks(managedEmail);
+  }
+
+  private async sendEmailsOnGiven(giverEmail: string, receiverEmail: string, feedbackId: string, shared: boolean) {
+    await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);
+    if (!shared) {
+      return;
+    }
+    const managerEmail = (await this.employeeDbService.get(receiverEmail))?.managerEmail;
+    if (!managerEmail) {
+      return;
+    }
+    await this.feedbackEmailService.shared(managerEmail, receiverEmail, feedbackId);
   }
 }

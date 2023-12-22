@@ -101,7 +101,7 @@
     </mat-form-field>
 
     @if (hasManagerFeature && !requestWithToken) {
-      <div class="gbl-form-field" style="display: none">
+      <div class="gbl-form-field">
         <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
           Partager le feedZback avec le manager de votre collègue
         </mat-slide-toggle>

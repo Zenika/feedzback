@@ -30,3 +30,18 @@ export type GivenData = {
   cta: string;
   serverBaseUrl: string;
 };
+
+/* ----- Shared feedback ----- */
+
+export type SharedContent = {
+  lang: Language;
+  title: string;
+  message: string;
+  cta: string;
+};
+
+export type SharedData = {
+  managedEmail: string;
+  cta: string;
+  serverBaseUrl: string;
+};
