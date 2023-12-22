@@ -46,7 +46,7 @@
     }
 
     <mat-menu #signOutMenu="matMenu" xPosition="before">
-      @if (isKnownUser$ | async) {
+      @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           Paramètres
