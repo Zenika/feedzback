@@ -30,6 +30,7 @@ $client-theme: mat.define-light-theme(
       warn: $client-warn,
     ),
     typography: client-typo.$client-typography,
+    density: 0,
   )
 );
 

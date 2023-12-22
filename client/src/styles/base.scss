@@ -11,7 +11,8 @@ body {
 
 body {
   margin: 0;
-  background-color: #f9f9f9;
+  background-color: v.$grey-color;
+  color: v.$dark-primary-text;
   font-family: 'Nunito', sans-serif;
 
   // Angular material components use the following font-smoothing properties (so, we want the other contents to have the same render)

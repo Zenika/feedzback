@@ -1,11 +1,11 @@
-@use './material-palette' as p;
+@use '../variables.scss' as v;
 
 /* ----- Dialog ----- */
 
 .mat-mdc-dialog-container {
   --mdc-dialog-container-color: #fafafa;
-  --mdc-dialog-supporting-text-color: p.$dark-primary-text;
-  --mdc-dialog-subhead-color: #df2147;
+  --mdc-dialog-supporting-text-color: v.$dark-primary-text;
+  --mdc-dialog-subhead-color: v.$primary-color;
 }
 
 .mdc-dialog__title {

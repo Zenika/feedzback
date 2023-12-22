@@ -1,3 +1,5 @@
+@use '../../app.scss' as app;
+
 .app-manager-feedback-list {
   display: block;
   width: 100%;
@@ -33,7 +35,7 @@
     &--expanded > td {
       transition: color 225ms ease;
       border-bottom-color: transparent;
-      color: #df2147;
+      color: app.$primary-color;
       font-weight: bold;
     }
   }

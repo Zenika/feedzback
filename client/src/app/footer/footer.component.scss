@@ -1,3 +1,5 @@
+@use '../app.scss' as app;
+
 .app-footer {
   padding: 1rem 0;
   display: flex;
@@ -19,7 +21,7 @@
     }
 
     &:hover {
-      color: #df2147;
+      color: app.$primary-color;
     }
   }
 

@@ -67,10 +67,6 @@
     }
 
     &__item {
-      $gradient-start: color.adjust(v.$primary-color, $lightness: 15%);
-      $gradient-middle: v.$primary-color;
-      $gradient-end: color.adjust(v.$primary-color, $blackness: 15%);
-
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -79,7 +75,7 @@
       box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.35);
       border-radius: 0.5rem;
       border: 1px solid v.$primary-color;
-      background: linear-gradient(135deg, $gradient-start 0%, $gradient-middle 50%, $gradient-end 100%);
+      background: linear-gradient(135deg, v.$primary-color 0%, v.$primary-color-darker 100%);
       color: #fff;
       font-size: 1.25rem;
       transition: all 250ms ease;
