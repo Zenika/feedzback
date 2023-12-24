@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, Filter } from 'firebase-admin/firestore';
-import { FirebaseService } from '../../core/firebase';
+import { FirebaseService, docWithId, docsWithId } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
@@ -36,13 +36,15 @@ export class FeedbackDbService {
   }
 
   async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
+    const now = Date.now();
     const request: FeedbackRequest = {
       giverEmail,
       receiverEmail,
       message,
       shared,
       status: FeedbackRequestStatus,
-      createdAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     };
     const feedbackId = (await this.feedbackCollection.add(request)).id;
 
@@ -72,7 +74,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    return { id: requestDoc.id, ...requestDoc.data() } as FeedbackRequestWithId;
+    return docWithId<FeedbackRequestWithId>(requestDoc);
   }
 
   async revealRequestTokenId(feedbackId: string, giverEmail: string) {
@@ -116,6 +118,7 @@ export class FeedbackDbService {
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+    const now = Date.now();
     const feedback: Feedback = {
       giverEmail,
       receiverEmail,
@@ -125,8 +128,8 @@ export class FeedbackDbService {
       message: '',
       shared,
       status: FeedbackStatus,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     };
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
@@ -137,11 +140,10 @@ export class FeedbackDbService {
     const feedbackQuery = await this.feedbackCollection
       .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
       .select(...feedbackItemFields)
+      .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    const feedbackList = feedbackQuery.docs.map(
-      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackItemWithId | FeedbackRequestItemWithId,
-    );
+    const feedbackList = docsWithId<FeedbackItemWithId | FeedbackRequestItemWithId>(feedbackQuery.docs);
 
     return mapToFeedbackListMap(feedbackList, viewerEmail);
   }
@@ -157,7 +159,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    return { id: feedbackDoc.id, ...feedbackDoc.data() } as FeedbackWithId | FeedbackRequestWithId;
+    return docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc);
   }
 
   async getManagedFeedbacks(managedEmail: string) {
@@ -165,7 +167,9 @@ export class FeedbackDbService {
       .where('receiverEmail', '==', managedEmail)
       .where('status', '==', FeedbackStatus)
       .where('shared', '==', true)
+      .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
-    return feedbackQuery.docs.map((feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId);
+
+    return docsWithId(feedbackQuery.docs) as FeedbackWithId[];
   }
 }

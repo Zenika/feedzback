@@ -27,6 +27,11 @@ export type FeedbackRequest = {
   shared: boolean;
   status: FeedbackRequestStatus;
   createdAt: number;
+
+  // Note: The `updatedAt` field is always equal to `createdAt` for pending comment requests.
+  // Despite this redundancy, it is required (as an implementation details on the server-side only - it is not listed on the client-side types).
+  // Its purpose is to facilitate the `orderBy` clause in database queries.
+  updatedAt: number;
 };
 
 export const FeedbackRequestStatus = 'pending';
