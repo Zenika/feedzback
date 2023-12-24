@@ -23,6 +23,9 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
+    if (receiverEmail === giverEmail) {
+      throw new BadRequestException();
+    }
     const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
@@ -61,6 +64,9 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   async give(@Body() dto: GiveFeedbackDto) {
     const giverEmail = this.authService.userEmail!;
+    if (giverEmail === dto.receiverEmail) {
+      throw new BadRequestException();
+    }
     const partialIdObject = await this.feedbackDbService.give({ giverEmail, ...dto });
     if (partialIdObject.id) {
       await this.sendEmailsOnGiven(giverEmail, dto.receiverEmail, partialIdObject.id, dto.shared);
