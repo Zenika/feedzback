@@ -1,0 +1,43 @@
+version: 2.1
+
+orbs:
+  # Pre-configured orb for GCP Cloud Run
+  cloudrun: circleci/gcp-cloud-run@1.0.2
+
+workflows:
+  build_and_deploy_staging:
+    jobs:
+      - build_and_deploy
+          name: building and deploying staging backend
+          context: feedzback-staging
+          service-name: feedzback-staging
+
+jobs:
+  build_and_deploy:
+    parameters:
+      service-name:
+        default: feedzback-${CIRCLE_SHA1}
+        type: string
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - cloudrun/init
+      - cloudrun/build:
+          tag: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
+      - cloudrun/deploy:
+          image: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
+          platform: managed
+          region: eu-west9
+          service-name: << parameters.service-name >>
+          unauthenticated: true
+          args: >-
+            --source .
+            --port=3000
+            --update-env-vars
+            CLIENT_URL="http://staging.feedzback.znk.io:4200",
+            SERVER_PORT="3000",
+            MAILGUN_USERNAME="${MAILGUN_USERNAME}",MAILGUN_KEY="${MAILGUN_KEY}",
+            FIREBASE_PROJECT_ID="${FIREBASE_PROJECT_ID}",
+            FIREBASE_CLIENT_EMAIL="${FIREBASE_CLIENT_EMAIL}",
+            FIREBASE_PRIVATE_KEY="${FIREBASE_PRIVATE_KEY}"
