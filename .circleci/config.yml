@@ -22,12 +22,9 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - run:
-          name: Changing directory to server
-          working_directory: .
-          command: cd ./server/
       - cloudrun/init
       - cloudrun/build:
+          source: ./server/
           tag: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
       - cloudrun/deploy:
           image: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
@@ -36,7 +33,7 @@ jobs:
           service-name: << parameters.service-name >>
           unauthenticated: true
           args: >-
-            --source .
+            --source ./server/
             --port=3000
             --update-env-vars
             CLIENT_URL="http://staging.feedzback.znk.io:4200",
