@@ -22,6 +22,8 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+      - command: |
+        cd ./server/
       - cloudrun/init
       - cloudrun/build:
           tag: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
