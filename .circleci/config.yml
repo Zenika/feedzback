@@ -5,15 +5,84 @@ orbs:
   gcp-cli: circleci/gcp-cli@3.1.1
 
 workflows:
-  build_and_deploy_staging:
+  tests:
     jobs:
-      - build_and_deploy:
+      - test:
+          matrix:
+            parameters:
+              working-directory: ["server"]
+  build-and-deploy_staging:
+    filters:
+      only:
+        - dev
+        - feat/ci-*
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              working-directory: ["server"]
+      - build-and-deploy:
+          requires:
+            - test
           name: building-and-deploying-staging-backend
           context: feedzback-staging
           service-name: feedzback-staging
 
 jobs:
-  build_and_deploy:
+  prepare-workspace:
+    docker:
+      - image: cimg/node:20.9
+    steps:
+      - run:
+          name: Creating workspace directory
+          run: mkdir -p workspace
+      - checkout:
+          path: workspace
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - client
+            - server
+
+  node-install:
+    parameters:
+      working-directory:
+        type: string
+    docker:
+      - image: cimg/node:20.9
+    steps:
+      - attach_workspace:
+          at: workspace
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+      - run:
+          name: Installing node modules
+          working_directory: workspace/<< parameters.working-directory >>
+          command: npm ci
+      - save_cache:
+          name: Storing NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+          paths:
+            - ./workspace/<< parameters.working-directory >>/node_modules
+
+  test:
+    parameters:
+      working-directory:
+        type: string
+    docker:
+      - image: cimg/node:20.9
+    steps:
+      - checkout
+      - run:
+          working_directory: workspace/<< parameters.working-directory >>
+          name: Running tests in << parameters.working-directory >>
+          # For the moment, passes with no tests
+          command: npm run test -- --passWithNoTests
+
+  build-and-deploy:
     parameters:
       service-name:
         default: feedzback-${CIRCLE_SHA1}
