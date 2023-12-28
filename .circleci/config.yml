@@ -93,6 +93,10 @@ jobs:
           command: npm run test
 
   build-server:
+    parameters:
+      service-name:
+        default: feedzback-${CIRCLE_SHA1}
+        type: string
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup
