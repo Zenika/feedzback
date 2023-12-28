@@ -30,7 +30,7 @@ workflows:
             - build-server
           name: building-staging-backend
           context: feedzback-staging
-          service-name: feedzback-staging      
+          service-name: feedzback-staging
 
 jobs:
   prepare-workspace:
@@ -98,7 +98,7 @@ jobs:
       - run:
           working_directory: server
           name: Submitting Docker image to build
-          command |
+          command: |
             gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/feedzback-staging:<< pipeline.git.revision >>
 
   deploy-server:
