@@ -28,7 +28,7 @@ workflows:
       - deploy-server:
           requires:
             - build-server
-          name: building-staging-backend
+          name: deploying-staging-backend
           context: feedzback-staging
           service-name: feedzback-staging
 
