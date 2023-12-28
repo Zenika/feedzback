@@ -101,7 +101,7 @@ jobs:
           working_directory: server
           name: Submitting Docker image to build
           command: |
-            gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/cloud-run-source-deploy/${GOOGLE_PROJECT_ID}:<< pipeline.git.revision >>
+            gcloud builds submit --tag europe-west1-docker.pkg.dev/feedzback-v2-staging/cloud-run-source-deploy/feedzback-staging:toto
 
   deploy-server:
     parameters:
