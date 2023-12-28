@@ -34,7 +34,7 @@ jobs:
           unauthenticated: true
           args: >-
             --source ./server/Dockerfile
-            --region ${GCLOUD_COMPUTE_ZONE}
+            --region ${GOOGLE_COMPUTE_ZONE}
             --port=3000
             --update-env-vars
             CLIENT_URL="http://staging.feedzback.znk.io:4200",
