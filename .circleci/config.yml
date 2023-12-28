@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  # Pre-configured orb for GCP Cloud Run
-  cloudrun: circleci/gcp-cloud-run@1.0.2
+  # Pre-configured orb for GCP "gcloud" CLI
+  gcp-cli: circleci/gcp-cli@3.1.1
 
 workflows:
   build_and_deploy_staging:
@@ -18,18 +18,17 @@ jobs:
       service-name:
         default: feedzback-${CIRCLE_SHA1}
         type: string
-    docker:
-      - image: cimg/base:stable
+    executor: gcp-cli/google
     steps:
+      - gcp-cli/setup
       - checkout
-      - cloudrun/init
-      - cloudrun/build:
-          source: ./server/
-          tag: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
-      - cloudrun/deploy:
-          image: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
-          platform: managed
-          region: ${GOOGLE_COMPUTE_ZONE}
-          service-name: << parameters.service-name >>
-          unauthenticated: true
-          args: --source=./server/Dockerfile --port=3000 --update-env-vars CLIENT_URL="http://staging.feedzback.znk.io:4200",SERVER_PORT="3000",MAILGUN_USERNAME="${MAILGUN_USERNAME}",MAILGUN_KEY="${MAILGUN_KEY}",FIREBASE_PROJECT_ID="${FIREBASE_PROJECT_ID}",FIREBASE_CLIENT_EMAIL="${FIREBASE_CLIENT_EMAIL}",FIREBASE_PRIVATE_KEY="${FIREBASE_PRIVATE_KEY}"
+      - run:
+          working_directory: server
+          name: Running gcloud run deploy
+          command: >-
+          gcloud run deploy << parameters.service-name >>
+          --allow-unauthenticated --source .
+          --platform=managed
+          --region=${GOOGLE_COMPUTE_ZONE} --port=3000
+          --tag=gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
+          --update-env-vars CLIENT_URL="https://staging.feedzback.znk.io",SERVER_PORT="3000",MAILGUN_USERNAME="${MAILGUN_USERNAME}",MAILGUN_KEY="${MAILGUN_KEY}",FIREBASE_PROJECT_ID="${FIREBASE_PROJECT_ID}",FIREBASE_CLIENT_EMAIL="${FIREBASE_CLIENT_EMAIL}",FIREBASE_PRIVATE_KEY="${FIREBASE_PRIVATE_KEY}"
