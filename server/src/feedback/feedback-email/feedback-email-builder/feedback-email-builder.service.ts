@@ -33,7 +33,7 @@ export class FeedbackEmailBuilderService {
     const data: RequestedData = {
       receiverEmail: uglifyEmail(receiverEmail),
       message,
-      cta: `${this.configService.get('clientUrl')}/give?token=${tokenId}`,
+      cta: `${this.configService.get('clientUrl')}/give/requested/${tokenId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {

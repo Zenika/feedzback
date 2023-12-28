@@ -14,7 +14,7 @@ const requestFeedbackRoutes: Routes = [
     path: 'success',
     component: RequestFeedbackSuccessComponent,
     canActivate: [authGuard],
-    title: 'FeedZback - Demande réussie',
+    title: 'FeedZback - Confirmation',
   },
 ];
 

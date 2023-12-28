@@ -1,0 +1,75 @@
+<h1 class="gbl-page-title">
+  <mat-icon>chat</mat-icon>
+  Donner du feedZback
+</h1>
+
+<app-message type="info">
+  Vous répondez à la demande de feedZback qui vous a été envoyée par
+  <strong>{{ requestWithToken.receiverEmail }}</strong
+  >.
+
+  @if (requestWithToken.shared) {
+    <br />
+    Notez que votre réponse sera partagée avec son manager.
+  }
+</app-message>
+
+@if (hasError) {
+  <app-message type="danger">
+    <strong>Oops&nbsp;!</strong><br />
+    Une erreur s'est produite lors de l'envoi.
+  </app-message>
+}
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  @if (isAnonymous) {
+    <h3><mat-icon>voice_selection</mat-icon> Vous</h3>
+
+    <mat-form-field appearance="outline" class="gbl-form-field">
+      <mat-label>Votre email</mat-label>
+      <input
+        [value]="requestWithToken.giverEmail"
+        required
+        readonly
+        type="email"
+        matInput
+        placeholder="marie.durand@gmail.com"
+      />
+      <mat-icon matSuffix class="opacity-50">edit_off</mat-icon>
+    </mat-form-field>
+
+    <h3><mat-icon>hearing</mat-icon> Votre collègue</h3>
+  }
+
+  <mat-form-field appearance="outline" class="gbl-form-field">
+    <mat-label>Email de votre collègue</mat-label>
+    <input
+      [value]="requestWithToken.receiverEmail"
+      required
+      readonly
+      type="email"
+      matInput
+      placeholder="jean.dupont@zenika.com"
+    />
+    <mat-icon matSuffix class="opacity-50">edit_off</mat-icon>
+  </mat-form-field>
+
+  <app-give-feedback-details
+    [positive]="form.controls.positive"
+    [negative]="form.controls.negative"
+    [comment]="form.controls.comment"
+  />
+
+  <div class="gbl-form-submit">
+    <button
+      class="gbl-form-submit__btn"
+      [disabled]="form.invalid || submitInProgress"
+      mat-raised-button
+      color="primary"
+    >
+      Envoyer
+    </button>
+
+    <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+  </div>
+</form>

@@ -1,0 +1,46 @@
+<h1 class="gbl-page-title">
+  <mat-icon>chat</mat-icon>
+  Donner du feedZback
+</h1>
+
+@if (hasError) {
+  <app-message type="danger">
+    <strong>Oops&nbsp;!</strong><br />
+    Une erreur s'est produite lors de l'envoi.
+  </app-message>
+}
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="gbl-form-field">
+    <mat-label>Email de votre collègue</mat-label>
+    <input [formControl]="form.controls.receiverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
+    <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
+  <app-give-feedback-details
+    [positive]="form.controls.positive"
+    [negative]="form.controls.negative"
+    [comment]="form.controls.comment"
+  />
+
+  @if (hasManagerFeature) {
+    <div class="gbl-form-field">
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        Partager le feedZback avec le manager de votre collègue
+      </mat-slide-toggle>
+    </div>
+  }
+
+  <div class="gbl-form-submit">
+    <button
+      class="gbl-form-submit__btn"
+      [disabled]="form.invalid || submitInProgress"
+      mat-raised-button
+      color="primary"
+    >
+      Envoyer
+    </button>
+
+    <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+  </div>
+</form>
