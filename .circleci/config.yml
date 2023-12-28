@@ -27,7 +27,7 @@ jobs:
           name: Running gcloud run deploy
           command: |
             # Building tag name for the container
-            TAG="gcr.io/${GOOGLE_PROJECT_ID}/feedzback-$(echo CIRCLE_SHA1 | cut -c1-5)"
+            TAG="gcr.io/${GOOGLE_PROJECT_ID}/feedzback-$(echo $CIRCLE_SHA1 | cut -c1-5)"
             # Building update-env-vars argument
             ZZ="CLIENT_URL=https://staging.feedzback.znk.io"
             ZZ="${ZZ},SERVER_PORT=3000"
@@ -35,5 +35,5 @@ jobs:
             ZZ="${ZZ},MAILGUN_KEY=${MAILGUN_KEY}"
             ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
             ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
-            ZZ="${ZZ},FIREBASE_PRIVATE_KEY="${FIREBASE_PRIVATE_KEY}"
+            ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
             gcloud run deploy << parameters.service-name >> --allow-unauthenticated  --source . --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --tag=${TAG} --update-env-vars $ZZ
