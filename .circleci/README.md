@@ -48,6 +48,10 @@ Self-reference to the Project (used by the CircleCI orb to properly handle resou
 
 ## Firebase Settings
 
+### FIREBASE_TOKEN
+
+Token used only by CI to connect to Firebase and deploy the client. Was generated following this [documentation](https://firebase.google.com/docs/cli?authuser=0#cli-ci-systems)
+
 ### FIREBASE_CLIENT_EMAIL / Firebase Client Email
 
 Identifier used to authenticate against the Firebase stack. Found in the firebase console.
