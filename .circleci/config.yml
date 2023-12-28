@@ -29,12 +29,11 @@ jobs:
       - cloudrun/deploy:
           image: gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${CIRCLE_SHA1}
           platform: managed
-          region: eu-west9
+          region: ${GOOGLE_COMPUTE_ZONE}
           service-name: << parameters.service-name >>
           unauthenticated: true
           args: >-
             --source ./server/Dockerfile
-            --region ${GOOGLE_COMPUTE_ZONE}
             --port=3000
             --update-env-vars
             CLIENT_URL="http://staging.feedzback.znk.io:4200",
