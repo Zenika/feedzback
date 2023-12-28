@@ -14,9 +14,12 @@ workflows:
   build-and-deploy_staging:
     jobs:
       - prepare-workspace
-      - node-install
+      - node-install:
           requires: 
             - prepare-workspace
+          matrix:
+            parameters:
+              working-directory: ["server"]
       - test:
           requires:
             - node-install
@@ -77,7 +80,7 @@ jobs:
       - image: cimg/node:20.9
     steps:
       - attach_workspace:
-        at: workspace
+          at: workspace
       - restore_cache:
           name: Restoring NPM cache
           keys:
