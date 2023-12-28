@@ -1,3 +1,5 @@
+@use '../../app.scss' as app;
+
 .app-burger {
   cursor: pointer;
   position: relative;
@@ -11,9 +13,10 @@
   &__line {
     height: 2px;
     border-radius: 3px;
-    background: #cb1e5a;
+    background-color: rgb(0 0 0 / 0.6);
     transition:
       transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+      background-color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
       opacity 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
     &:nth-child(1) {
@@ -29,6 +32,10 @@
       transform-origin: left;
       transform: translateY(-3px);
     }
+  }
+
+  &--active &__line {
+    background-color: app.$primary-color;
   }
 
   &--active &__line:nth-child(1) {

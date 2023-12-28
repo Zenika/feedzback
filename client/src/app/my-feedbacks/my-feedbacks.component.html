@@ -1,4 +1,4 @@
-<h1 class="gbl-page-title mat-h1"><mat-icon>forum</mat-icon> Mes feedZbacks</h1>
+<h1 class="gbl-page-title"><mat-icon>forum</mat-icon> Mes feedZbacks</h1>
 
 @if (fetched) {
   <mat-tab-group
@@ -8,7 +8,7 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon style="margin-right: 0.5rem">move_to_inbox</mat-icon>
+        <mat-icon class="app-my-feedbacks__label-icon">move_to_inbox</mat-icon>
         reçus
       </ng-template>
 
@@ -30,7 +30,7 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon style="margin-right: 0.5rem">outgoing_mail</mat-icon>
+        <mat-icon class="app-my-feedbacks__label-icon">outgoing_mail</mat-icon>
         donnés
       </ng-template>
 
@@ -53,7 +53,7 @@
     @if (sentRequest.length) {
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon style="margin-right: 0.5rem">schedule</mat-icon>
+          <mat-icon class="app-my-feedbacks__label-icon">schedule</mat-icon>
           demandés
         </ng-template>
 
@@ -66,7 +66,7 @@
     @if (receivedRequest.length) {
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon style="margin-right: 0.5rem">edit_note</mat-icon>
+          <mat-icon class="app-my-feedbacks__label-icon">edit_note</mat-icon>
           à donner
         </ng-template>
 

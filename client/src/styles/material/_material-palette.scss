@@ -2,6 +2,8 @@
 
 @use '../variables.scss' as v;
 
+// TODO: improve this "primary" palette and also create palettes for "accent" and "warn"...
+
 $client-palette: (
   50: #f7cad6,
   100: #f1a7bb,

@@ -1,11 +1,13 @@
+// ----- Base -----
+
 @import './styles/fonts';
+@import './styles/tailwind.css';
 @import './styles/material';
 @import './styles/base';
 @import './styles/common';
 
-// Special use-cases
+// ----- Special use-cases -----
+
 @import './styles/info';
 @import './styles/landing';
 @import './styles/forms';
-
-//@import './styles/tailwind.css';

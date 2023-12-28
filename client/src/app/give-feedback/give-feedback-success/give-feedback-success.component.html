@@ -2,7 +2,7 @@
   <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
 
   <div>
-    <h1 class="gbl-info__title mat-h1">FeedZback envoyé à&nbsp;:</h1>
+    <h1 class="gbl-info__title">FeedZback envoyé à&nbsp;:</h1>
     <p>{{ state.receiverEmail }}</p>
   </div>
 
@@ -19,7 +19,7 @@
       </button>
     } @else {
       <button mat-stroked-button color="primary" (click)="signOut()">
-        Vous pouvez vous déconnecter
+        Fermer la session
         <mat-icon iconPositionEnd>logout</mat-icon>
       </button>
     }

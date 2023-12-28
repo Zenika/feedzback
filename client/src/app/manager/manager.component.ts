@@ -26,7 +26,6 @@ import { ManagerData } from './manager.types';
     ManagerFeedbackListComponent,
   ],
   templateUrl: './manager.component.html',
-  styleUrl: './manager.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export default class ManagerComponent implements ManagerData {

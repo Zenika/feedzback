@@ -1,4 +1,4 @@
-<h1 class="gbl-page-title mat-h1">
+<h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
   Donner du feedZback
 </h1>
@@ -38,7 +38,7 @@
           matInput
           placeholder="marie.durand@gmail.com"
         />
-        <mat-icon matSuffix style="opacity: 0.5">edit_off</mat-icon>
+        <mat-icon matSuffix class="opacity-50">edit_off</mat-icon>
       </mat-form-field>
 
       <h3><mat-icon>hearing</mat-icon> Votre collègue</h3>
@@ -54,7 +54,7 @@
         placeholder="jean.dupont@zenika.com"
       />
       @if (!!requestWithToken) {
-        <mat-icon matSuffix style="opacity: 0.5">edit_off</mat-icon>
+        <mat-icon matSuffix class="opacity-50">edit_off</mat-icon>
       }
       <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
     </mat-form-field>

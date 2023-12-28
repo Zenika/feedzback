@@ -11,7 +11,7 @@ body {
 
 body {
   margin: 0;
-  background-color: v.$grey-color;
+  background-color: v.$background-grey-color;
   color: v.$dark-primary-text;
   font-family: 'Nunito', sans-serif;
 
@@ -19,4 +19,10 @@ body {
   // More infos: https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+hr {
+  margin: 1.5rem 0;
+  border: none;
+  border-top: 1px solid #cccccc;
 }

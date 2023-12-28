@@ -1,4 +1,4 @@
-<h1 class="gbl-page-title mat-h1">
+<h1 class="gbl-page-title">
   <mat-icon>forum</mat-icon>
   FeedZback
   @switch (type) {
@@ -12,8 +12,8 @@
 </h1>
 
 <div class="app-done-feedback-list">
-  <div class="app-done-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
   <div class="app-done-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
+  <div class="app-done-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
 </div>
 
 <app-feedback-body [feedback]="feedback" />

@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.875rem;
-  color: rgb(110, 107, 107);
+  color: app.$forground-grey-color;
 
   &__link {
     display: flex;
@@ -21,11 +21,7 @@
     }
 
     &:hover {
-      color: app.$primary-color;
+      color: app.$dark-primary-text;
     }
-  }
-
-  mat-icon {
-    flex-shrink: 0;
   }
 }

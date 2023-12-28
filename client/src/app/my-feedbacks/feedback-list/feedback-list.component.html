@@ -40,12 +40,8 @@
 
   <tr class="mat-row" *matNoDataRow>
     @if (filter) {
-      <td
-        class="mat-cell"
-        [attr.colspan]="columns.length"
-        style="padding: 1.5rem; text-align: center; font-style: italic; color: #777"
-      >
-        Pas de résultat pour "{{ filter }}".
+      <td class="mat-cell p-6 text-center italic text-gray-400" [attr.colspan]="columns.length">
+        Aucun résultat pour "{{ filter }}"
       </td>
     }
   </tr>

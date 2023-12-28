@@ -10,7 +10,6 @@ import { RequestFeedbackSuccess } from './request-feedback-success.types';
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './request-feedback-success.component.html',
-  styleUrl: './request-feedback-success.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class RequestFeedbackSuccessComponent {
