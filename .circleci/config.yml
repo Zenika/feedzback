@@ -13,7 +13,13 @@ workflows:
               working-directory: ["server"]
   build-and-deploy_staging:
     jobs:
+      - prepare-workspace
+      - node-install
+          requires: 
+            - prepare-workspace
       - test:
+          requires:
+            - node-install
           matrix:
             parameters:
               working-directory: ["server"]
@@ -70,7 +76,12 @@ jobs:
     docker:
       - image: cimg/node:20.9
     steps:
-      - checkout
+      - attach_workspace:
+        at: workspace
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
       - run:
           working_directory: workspace/<< parameters.working-directory >>
           name: Running tests in << parameters.working-directory >>
