@@ -17,6 +17,7 @@ A specific service account to build and deploy needs to exist on the project (us
 
 It requires a few privileges as well:
 
+- Artifact Registry Writer
 - Cloud Build Service Account
 - Cloud Run Admin
 - Project Editor (aka Basic > Editor)
