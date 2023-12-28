@@ -26,9 +26,10 @@ jobs:
           working_directory: server
           name: Running gcloud run deploy
           command: |
-          # Building update-env-vars argument
+          # Building tag name for the container
           TAG=`echo CIRCLE_SHA1 | cut -c1-5`
-          TAG="gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${TAG}`
+          TAG="gcr.io/${GOOGLE_PROJECT_ID}/feedzback-${TAG}"
+          # Building update-env-vars argument
           ZZ="CLIENT_URL=https://staging.feedzback.znk.io"
           ZZ="${ZZ},SERVER_PORT=3000"
           ZZ="${ZZ},MAILGUN_USERNAME=${MAILGUN_USERNAME}"
