@@ -2,14 +2,46 @@
 
 - The Firebase project must be created.
 - A Firestore database must be defined in the project.
+
+## GCP APIs to enable
+
 - The following APIs must be enabled on the GCP Project:
   - [Cloud Build API](https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com)
   - [Cloud Run API](https://console.cloud.google.com/apis/library/run.googleapis.com)
-- A specific service account to build and deploy needs to exist on the project (used [here](#gcloud_service_key)).
+
+## Service account setup
+
+A specific service account to build and deploy needs to exist on the project (used [here](#gcloud_service_key)).
+
+### IAM
+
+It requires a few privileges as well:
+
+- Cloud Build Service Account
+- Cloud Run Admin
+- Project Editor (aka Basic > Editor)
+
+Finallys
 
 # Environment Variables
 
 Environment variables are provided by a CircleCI Context (feedzback-staging for staging, feedzback-prod for production).
+
+## Google Cloud Platfom Settings
+
+These settings are used to build and deploy the server on the GCP Project as a Google Cloud Run managed service.
+
+### GCLOUD_SERVICE_KEY
+
+Full JSON service key linked to the Service Account allowed to build and run the server on the GCP Project.
+
+### GOOGLE_COMPUTE_ZONE
+
+Default compute zone to use (europe-west1 usually).
+
+### GOOGLE_PROJECT_ID
+
+Self-reference to the Project (used by the CircleCI orb to properly handle resources).
 
 ## Firebase Settings
 
@@ -28,20 +60,6 @@ echo "content_of_private_key_field_in_json_key" | base64
 ### FIREBASE_PROJECT_ID / Firebase Project ID
 
 Identifier of the Firebase project.
-
-## Google Cloud Platfom Settings
-
-### GCLOUD_SERVICE_KEY
-
-Full JSON service key linked to the Service Account allowed to build and run the server on the GCP Project.
-
-### GOOGLE_COMPUTE_ZONE
-
-Default compute zone to use (europe-west1 usually).
-
-### GOOGLE_PROJECT_ID
-
-Self-reference to the Project (used by the CircleCI orb to properly handle resources).
 
 ## Mailgun Settings
 
