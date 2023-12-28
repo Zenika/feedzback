@@ -1,14 +1,18 @@
+@use '../../../app.scss' as app;
+
 .app-message {
-  margin-bottom: 2rem;
-  overflow: auto;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  padding: 1.25rem;
+  margin-bottom: 2rem;
   box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   border: none;
   border-left: 0.5rem solid transparent;
+  text-align: justify;
+
+  &--hidden {
+    display: none;
+  }
 
   &--info {
     border-color: rgb(158, 197, 254);
@@ -35,6 +39,26 @@
   }
 
   &__icon {
+    margin-left: 1.25rem;
     transform: scale(1.125);
+  }
+
+  &__content {
+    margin: 1.25rem;
+    flex-grow: 1;
+  }
+
+  &__close {
+    align-self: flex-start;
+    box-sizing: content-box;
+    border-width: 0.5rem 0.5rem 0 0;
+    border-style: solid;
+    border-color: transparent;
+    transition: color 250ms ease;
+    cursor: pointer;
+
+    &:hover {
+      color: app.$primary-color;
+    }
   }
 }

@@ -63,7 +63,7 @@ export class GiveFeedbackComponent {
 
   submitInProgress = false;
 
-  hasError = false;
+  showError = false;
 
   feedbackId?: string;
 
@@ -71,13 +71,13 @@ export class GiveFeedbackComponent {
     if (this.form.invalid) {
       return;
     }
-    this.hasError = false;
+    this.showError = false;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
     this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
-      this.hasError = !id;
+      this.showError = !id;
       if (!id) {
         this.disableForm(false);
       } else {

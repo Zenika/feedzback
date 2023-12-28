@@ -50,7 +50,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   submitInProgress = false;
 
-  hasError = false;
+  showError = false;
 
   feedbackId?: string;
 
@@ -58,7 +58,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
     if (this.form.invalid) {
       return;
     }
-    this.hasError = false;
+    this.showError = false;
     this.disableForm(true);
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
@@ -67,7 +67,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
       .giveRequested({ token: this.requestWithToken.token, positive, negative, comment })
       .subscribe((success) => {
         if (!success) {
-          this.hasError = true;
+          this.showError = true;
           this.disableForm(false);
         } else {
           this.feedbackId = this.isAnonymous ? undefined : this.requestWithToken?.id;

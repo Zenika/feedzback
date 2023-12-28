@@ -3,12 +3,10 @@
   Donner du feedZback
 </h1>
 
-@if (hasError) {
-  <app-message type="danger">
-    <strong>Oops&nbsp;!</strong><br />
-    Une erreur s'est produite lors de l'envoi.
-  </app-message>
-}
+<app-message type="danger" [(visible)]="showError">
+  <strong>Oops&nbsp;!</strong><br />
+  Une erreur s'est produite lors de l'envoi.
+</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="gbl-form-field">

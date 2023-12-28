@@ -3,23 +3,21 @@
   Donner du feedZback
 </h1>
 
-<app-message type="info">
+<app-message type="info" [closable]="false">
   Vous répondez à la demande de feedZback qui vous a été envoyée par
   <strong>{{ requestWithToken.receiverEmail }}</strong
   >.
 
   @if (requestWithToken.shared) {
     <br />
-    Notez que votre réponse sera partagée avec son manager.
+    <strong>Notez que votre réponse sera partagée avec son manager.</strong>
   }
 </app-message>
 
-@if (hasError) {
-  <app-message type="danger">
-    <strong>Oops&nbsp;!</strong><br />
-    Une erreur s'est produite lors de l'envoi.
-  </app-message>
-}
+<app-message type="danger" [(visible)]="showError">
+  <strong>Oops&nbsp;!</strong><br />
+  Une erreur s'est produite lors de l'envoi.
+</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   @if (isAnonymous) {

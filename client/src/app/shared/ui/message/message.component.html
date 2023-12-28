@@ -5,3 +5,7 @@
 <div class="app-message__content">
   <ng-content />
 </div>
+
+@if (closable) {
+  <mat-icon class="app-message__close" (click)="close()">close</mat-icon>
+}
