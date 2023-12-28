@@ -13,7 +13,7 @@ const firebaseOptions: FirebaseOptions = {
 export const environment = {
   production: false,
   firebaseOptions,
-  apiBaseUrl: 'https://feedzback-v2-staging.web.app/',
+  apiBaseUrl: 'https://feedzback-staging-v54ioxu74a-ew.a.run.app',
   allowedEmailDomains: ['zenika.com'],
   featureFlipping: {
     manager: false,
