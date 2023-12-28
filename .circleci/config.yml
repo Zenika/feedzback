@@ -9,20 +9,22 @@ workflows:
     jobs:
       - prepare-workspace
       - node-install:
+          name: node-install-<< matrix.working-directory >>
           requires:
             - prepare-workspace
           matrix:
             parameters:
               working-directory: ["server", "client"]
       - node-test:
+          name: node-test-<< matrix.working-directory >>
           requires:
-            - node-install
+            - node-install-<< matrix.working-directory >>
           matrix:
             parameters:
               working-directory: ["server", "client"]
       - build-server:
           requires:
-            - node-test
+            - node-test-server
           name: building-staging-server
           context: feedzback-staging
       - deploy-server:
@@ -88,7 +90,7 @@ jobs:
           working_directory: workspace/<< parameters.working-directory >>
           name: Running tests in << parameters.working-directory >>
           # For the moment, passes with no tests
-          command: npm run test -- --passWithNoTests
+          command: npm run test
 
   build-server:
     executor: gcp-cli/google

@@ -74,6 +74,7 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
+    "passWithNoTests": true,
     "testEnvironment": "node"
   }
 }
