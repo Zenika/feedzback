@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "feedzback-v2-staging"
+    "default": "feedzback-v2-dev",
+    "staging": "feedzback-v2-staging",
+    "production": "feedzback-v2"
   }
 }
