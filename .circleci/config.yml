@@ -5,33 +5,32 @@ orbs:
   gcp-cli: circleci/gcp-cli@3.1.1
 
 workflows:
-  tests:
-    jobs:
-      - test:
-          matrix:
-            parameters:
-              working-directory: ["server"]
   build-and-deploy_staging:
     jobs:
       - prepare-workspace
       - node-install:
-          requires: 
+          requires:
             - prepare-workspace
           matrix:
             parameters:
-              working-directory: ["server"]
-      - test:
+              working-directory: ["server", "client"]
+      - node-test:
           requires:
             - node-install
           matrix:
             parameters:
-              working-directory: ["server"]
-      - build-and-deploy:
+              working-directory: ["server", "client"]
+      - build-server:
           requires:
-            - test
-          name: building-and-deploying-staging-backend
+            - node-test
+          name: building-staging-backend
           context: feedzback-staging
-          service-name: feedzback-staging
+      - deploy-server:
+          requires:
+            - build-server
+          name: building-staging-backend
+          context: feedzback-staging
+          service-name: feedzback-staging      
 
 jobs:
   prepare-workspace:
@@ -72,7 +71,7 @@ jobs:
           paths:
             - ./workspace/<< parameters.working-directory >>/node_modules
 
-  test:
+  node-test:
     parameters:
       working-directory:
         type: string
@@ -91,7 +90,18 @@ jobs:
           # For the moment, passes with no tests
           command: npm run test -- --passWithNoTests
 
-  build-and-deploy:
+  build-server:
+    executor: gcp-cli/google
+    steps:
+      - gcp-cli/setup
+      - checkout
+      - run:
+          working_directory: server
+          name: Submitting Docker image to build
+          command |
+            gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/feedzback-staging:<< pipeline.git.revision >>
+
+  deploy-server:
     parameters:
       service-name:
         default: feedzback-${CIRCLE_SHA1}
@@ -99,7 +109,6 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup
-      - checkout
       - run:
           working_directory: server
           name: Running gcloud run deploy
@@ -112,4 +121,4 @@ jobs:
             ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
             ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
             ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
-            gcloud run deploy << parameters.service-name >> --allow-unauthenticated  --source . --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
+            gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/feedzback-staging:<< pipeline.git.revision >> --allow-unauthenticated  --source . --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
