@@ -12,10 +12,6 @@ workflows:
             parameters:
               working-directory: ["server"]
   build-and-deploy_staging:
-    filters:
-      only:
-        - dev
-        - feat/ci-*
     jobs:
       - test:
           matrix:
@@ -35,7 +31,7 @@ jobs:
     steps:
       - run:
           name: Creating workspace directory
-          run: mkdir -p workspace
+          command: mkdir -p workspace
       - checkout:
           path: workspace
       - persist_to_workspace:
@@ -63,8 +59,7 @@ jobs:
           command: npm ci
       - save_cache:
           name: Storing NPM cache
-          keys:
-            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+          key: npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
           paths:
             - ./workspace/<< parameters.working-directory >>/node_modules
 
