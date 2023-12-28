@@ -23,12 +23,12 @@ workflows:
       - build-server:
           requires:
             - node-test
-          name: building-staging-backend
+          name: building-staging-server
           context: feedzback-staging
       - deploy-server:
           requires:
-            - build-server
-          name: deploying-staging-backend
+            - building-staging-server
+          name: deploying-staging-server
           context: feedzback-staging
           service-name: feedzback-staging
 
