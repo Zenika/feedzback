@@ -1,18 +1,9 @@
-@if (feedbackDetails$ | async; as feedbackDetails) {
-  @if (feedbackDetails) {
-    <button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', feedbackDetails.type]">
-      <mat-icon>arrow_back</mat-icon> mes feedZbacks
-    </button>
+<button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', feedbackDetails.type]">
+  <mat-icon>arrow_back</mat-icon> mes feedZbacks
+</button>
 
-    @if (feedbackDetails.feedback.status === 'done') {
-      <app-done-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
-    } @else {
-      <app-pending-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
-    }
-  } @else {
-    <app-message type="danger">
-      <strong>Oops&nbsp;!</strong><br />
-      Ce feedZback est introuvable.
-    </app-message>
-  }
+@if (feedbackDetails.feedback.status === 'done') {
+  <app-done-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+} @else {
+  <app-pending-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
 }

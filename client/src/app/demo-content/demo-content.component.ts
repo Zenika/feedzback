@@ -7,4 +7,4 @@ import { MessageComponent } from '../shared/ui/message/message.component';
   imports: [MessageComponent],
   templateUrl: './demo-content.component.html',
 })
-export class DemoContentComponent {}
+export default class DemoContentComponent {}

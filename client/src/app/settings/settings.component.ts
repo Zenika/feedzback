@@ -24,7 +24,7 @@ import { MessageComponent } from '../shared/ui/message/message.component';
   templateUrl: './settings.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SettingsComponent {
+export default class SettingsComponent {
   @HostBinding('class.app-settings') hasCss = true;
 
   private employeeService = inject(EmployeeService);
