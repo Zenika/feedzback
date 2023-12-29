@@ -45,8 +45,12 @@ workflows:
   build-and-deploy_staging:
     jobs:
       ### Preparing and testing
-      - prepare-workspace
+      - prepare-workspace:
+          filters: &filter-include-production
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
       - node-install:
+          filters: *filter-include-production
           name: node-install-<< matrix.module >>
           requires:
             - prepare-workspace
@@ -55,6 +59,7 @@ workflows:
               module: ["server", "client"]
       ### Testing and checking linting
       - node-test:
+          filters: *filter-include-production
           name: node-test-<< matrix.module >>
           requires:
             - node-install-<< matrix.module >>
@@ -62,6 +67,7 @@ workflows:
             parameters:
               module: ["server", "client"]
       - node-lint:
+          filters: *filter-include-production
           name: node-lint-<< matrix.module >>
           requires:
             - node-install-<< matrix.module >>
@@ -89,19 +95,6 @@ workflows:
           name: build-server-for-revision
           context: feedzback-staging
           tag: false
-      # Specific server build for Prod
-      - build-server:
-          filters: &filter-production
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
-          requires:
-            - node-test-server
-            - node-lint-server
-          name: build-server-for-production
-          context: feedzback-production
-          tag: true
       ### Building all possible clients (staging, production)
       - build-client:
           requires:
@@ -143,16 +136,29 @@ workflows:
           name: deploy-staging-client
           context: feedzback-staging
           environment: staging
+      ############################################################
       ### PRODUCTION DEPLOYMENT (only on tags matching 'vX.Y.Z')
+      # Specific server build for Prod
+      - build-server:
+          filters: &filter-only-production
+            << *filter-include-production
+            branches:
+              ignore: /.*/
+          requires:
+            - node-test-server
+            - node-lint-server
+          name: build-server-for-production
+          context: feedzback-production
+          tag: true      
       - deploy-server:
-          filters: *filter-production
+          filters: *filter-only-production
           requires:
             - build-server-for-production
           name: deploy-production-server
           context: feedzback-production
           service-name: feedzback
       - deploy-client:
-          filters: *filter-production
+          filters: *filter-only-production
           requires:
             - build-client-for-production
           name: deploy-production-client
