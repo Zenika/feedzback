@@ -7,7 +7,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: cimg/node:20
+      - image: cimg/node:20.9
     resource_class: small
 
 workflows:
