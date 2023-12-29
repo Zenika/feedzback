@@ -97,6 +97,7 @@ workflows:
           tag: false
       ### Building all possible clients (staging, production)
       - build-client:
+          filters: *filter-include-production
           requires:
             - node-test-client
             - node-lint-client
