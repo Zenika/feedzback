@@ -48,8 +48,8 @@ workflows:
           requires:
             - build-client-for-staging
           name: deploying-staging-client
-          parameters:
-            environment: staging
+          context: feedzback-staging
+          environment: staging
 
 jobs:
   prepare-workspace:
