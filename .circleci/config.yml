@@ -102,6 +102,10 @@ jobs:
     steps:
       - attach_workspace:
           at: workspace
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
       - run:
           working_directory: workspace/<< parameters.working-directory >>
           name: Running tests in << parameters.working-directory >>
