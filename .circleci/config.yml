@@ -195,11 +195,10 @@ jobs:
           name: Preparing credentials for Firebase client
           command: |
             echo ${GCLOUD_SERVICE_KEY} > ./workspace/firebase-service-account.json
-      # - run:
-      #     name: Selecting the correct firebase environment
-      #     command: ./firebase_bin use << parameters.environment >>
       - run:
           name: Deploying client
           enviromnent:
             GOOGLE_APPLICATION_CREDENTIALS: ./workspace/firebase-service-account.json
-          command: ./firebase_bin deploy --config ./workspace/client/firebase.json --only hosting:<< parameters.environment >>
+          command: |
+            ./firebase_bin use << parameters.environment >>
+            ./firebase_bin deploy --config ./workspace/client/firebase.json --only hosting:<< parameters.environment >>
