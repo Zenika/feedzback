@@ -36,12 +36,18 @@ workflows:
               working-directory: ["server", "client"]
       ### Building server container with Google Cloud build
       - build-server:
+          filters:
+            branches:
+              only: dev
           requires:
             - node-test-server
           name: build-server-for-revision
           context: feedzback-staging
       ### Deploying staging server (only on branch 'dev') on Google Cloud Run
       - deploy-server:
+          filters:
+            branches:
+              only: dev
           requires:
             - build-server-for-revision
           name: deploy-staging-server
@@ -56,6 +62,9 @@ workflows:
             parameters:
               environment: ["staging"]
       - deploy-client:
+          filters:
+            branches:
+              only: dev
           requires:
             - build-client-for-staging
           name: deploy-staging-client
