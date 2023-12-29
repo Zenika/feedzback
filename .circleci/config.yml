@@ -4,6 +4,12 @@ orbs:
   # Pre-configured orb for GCP "gcloud" CLI
   gcp-cli: circleci/gcp-cli@3.1.1
 
+executors:
+  node:
+    docker:
+      - image: cimg/node:20
+    resource_class: small
+
 workflows:
   build-and-deploy_staging:
     jobs:
@@ -27,13 +33,13 @@ workflows:
       - build-server:
           requires:
             - node-test-server
-          name: building-server-for-revision
+          name: build-server-for-revision
           context: feedzback-staging
       ### Deploying staging server (only on branch 'dev') on Google Cloud Run
       - deploy-server:
           requires:
-            - building-server-for-revision
-          name: deploying-staging-server
+            - build-server-for-revision
+          name: deploy-staging-server
           context: feedzback-staging
           service-name: feedzback-staging
       ### Building all possible clients (staging, production)
@@ -53,8 +59,7 @@ workflows:
 
 jobs:
   prepare-workspace:
-    docker:
-      - image: cimg/node:20.9
+    executor: node
     steps:
       - run:
           name: Creating workspace directory
@@ -71,8 +76,7 @@ jobs:
     parameters:
       working-directory:
         type: string
-    docker:
-      - image: cimg/node:20.9
+    executor: node
     steps:
       - attach_workspace:
           at: workspace
@@ -94,8 +98,7 @@ jobs:
     parameters:
       working-directory:
         type: string
-    docker:
-      - image: cimg/node:20.9
+    executor: node
     steps:
       - attach_workspace:
           at: workspace
@@ -151,8 +154,7 @@ jobs:
       environment:
         default: staging
         type: string
-    docker:
-      - image: cimg/node:20.9
+    executor: node
     steps:
       - attach_workspace:
           at: workspace
@@ -175,8 +177,7 @@ jobs:
       environment:
         default: staging
         type: string
-    docker:
-      - image: cimg/base:stable
+    executor: node
     steps:
       - attach_workspace:
           at: workspace
@@ -188,9 +189,8 @@ jobs:
       - run:
           name: Logging Firebase client to the correct environment
           command: |
-            ./firebase_bin --non-interactive login:ci 
-            ./firebase_bin --non-interactive use << parameters.environment >>
+            ./firebase_bin use << parameters.environment >>
       - run:
           name: Deploying client
           command: |
-            ./firebase_bin --non-interactive deploy --only hosting:staging
+            ./firebase_bin deploy --only hosting:staging
