@@ -40,13 +40,13 @@ workflows:
       - build-client:
           requires:
             - node-test-client
-          name: building-clients-for-revision
+          name: build-client-for-<< matrix.environment >>
           matrix:
             parameters:
               environment: ["staging"]
       - deploy-client:
           requires:
-            - build-client-staging
+            - build-client-for-staging
             name: deploying-staging-client
           parameters:
             environment: staging
