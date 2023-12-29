@@ -141,7 +141,8 @@ workflows:
       # Specific server build for Prod
       - build-server:
           filters: &filter-only-production
-            << *filter-include-production
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
             branches:
               ignore: /.*/
           requires:
@@ -149,7 +150,7 @@ workflows:
             - node-lint-server
           name: build-server-for-production
           context: feedzback-production
-          tag: true      
+          tag: true
       - deploy-server:
           filters: *filter-only-production
           requires:
