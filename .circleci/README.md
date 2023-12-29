@@ -20,6 +20,7 @@ It requires a few privileges as well:
 - Artifact Registry Writer
 - Cloud Build Service Account
 - Cloud Run Admin
+- Firebase Hosting Admin
 - Project Editor (aka Basic > Editor)
 
 Finallys
