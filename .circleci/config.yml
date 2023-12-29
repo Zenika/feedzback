@@ -34,6 +34,13 @@ workflows:
           matrix:
             parameters:
               working-directory: ["server", "client"]
+      - node-lint:
+          name: node-lint-<< matrix.working-directory >>
+          requires:
+            - node-install-<< matrix.working-directory >>
+          matrix:
+            parameters:
+              working-directory: ["server", "client"]
       ### Building server container with Google Cloud build
       - build-server:
           filters:
@@ -41,8 +48,20 @@ workflows:
               only: dev
           requires:
             - node-test-server
+            - node-lint-server
           name: build-server-for-revision
           context: feedzback-staging
+          tag: true
+      - build-server:
+          filters:
+            branches:
+              ignore: dev
+          requires:
+            - node-test-server
+            - node-lint-server
+          name: build-server-for-revision
+          context: feedzback-staging
+          tag: false
       ### Deploying staging server (only on branch 'dev') on Google Cloud Run
       - deploy-server:
           filters:
@@ -57,6 +76,7 @@ workflows:
       - build-client:
           requires:
             - node-test-client
+            - node-lint-client
           name: build-client-for-<< matrix.environment >>
           matrix:
             parameters:
@@ -126,20 +146,52 @@ jobs:
           # For the moment, passes with no tests
           command: npm run test
 
+  node-lint:
+    parameters:
+      working-directory:
+        type: string
+    executor: node
+    steps:
+      - attach_workspace:
+          at: workspace
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+      - run:
+          working_directory: workspace/<< parameters.working-directory >>
+          name: Running linter check in << parameters.working-directory >>
+          # For the moment, passes with no tests
+          command: npm run lint:ci
+
   build-server:
     parameters:
       service-name:
-        default: feedzback-${CIRCLE_SHA1}
         type: string
+        default: feedzback-${CIRCLE_SHA1}
+      tag:
+        type: boolean
+        default: false
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup
       - checkout
-      - run:
-          working_directory: server
-          name: Submitting Docker image to build
-          command: |
-            gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/cloud-run-source-deploy/feedzback:${CIRCLE_SHA1}
+      - when:
+          condition: << parameters.tag >>
+          steps:
+            - run:
+                working_directory: server
+                name: Submitting Docker image to build and tagging it
+                command: |
+                  gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/cloud-run-source-deploy/feedzback:${CIRCLE_SHA1}
+      - unless:
+          condition: << parameters.tag >>
+          steps:
+            - run:
+                working_directory: server
+                name: Submitting Docker image to build
+                command: |
+                  gcloud builds submit
 
   deploy-server:
     parameters:
