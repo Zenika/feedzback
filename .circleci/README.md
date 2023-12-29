@@ -1,17 +1,24 @@
 # Pre-requisites
 
+## Firebase & co
+
 - The Firebase project must be created.
 - A Firestore database must be defined in the project.
 
 ## GCP APIs to enable
 
-- The following APIs must be enabled on the linked GCP Project (which is automatically created when you create a firebase project):
-  - [Cloud Build API](https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com)
-  - [Cloud Run API](https://console.cloud.google.com/apis/library/run.googleapis.com)
+The following APIs must be enabled on the linked GCP Project (which is automatically created when you create a firebase project):
+
+- [Cloud Build API](https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com)
+- [Cloud Run API](https://console.cloud.google.com/apis/library/run.googleapis.com)
 
 ## Service account setup
 
 A specific service account to build and deploy needs to exist on the project (used [here](#gcloud_service_key)).
+
+## Google Artifact repository
+
+The GCP Project needs to have a Docker [Google Artifact Repository](https://console.cloud.google.com/artifacts) created named `builds` for the CI to work properly.
 
 ### IAM
 

@@ -242,7 +242,7 @@ jobs:
                 working_directory: server
                 name: Submitting Docker image to build and tagging it
                 command: |
-                  gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/cloud-run-source-deploy/feedzback:${CIRCLE_SHA1}
+                  gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1}
       - unless:
           condition: << parameters.tag >>
           steps:
@@ -269,7 +269,7 @@ jobs:
             ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
             ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
             ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
-            gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/cloud-run-source-deploy/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
+            gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
 
   build-client:
     parameters: &param-environment
