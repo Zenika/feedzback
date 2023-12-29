@@ -7,6 +7,7 @@ orbs:
 workflows:
   build-and-deploy_staging:
     jobs:
+      ### Preparing and testing
       - prepare-workspace
       - node-install:
           name: node-install-<< matrix.working-directory >>
@@ -22,17 +23,27 @@ workflows:
           matrix:
             parameters:
               working-directory: ["server", "client"]
+      ### Building server container with Google Cloud build
       - build-server:
           requires:
             - node-test-server
           name: building-server-for-revision
           context: feedzback-staging
+      ### Deploying staging server (only on branch 'dev') on Google Cloud Run
       - deploy-server:
           requires:
             - building-server-for-revision
           name: deploying-staging-server
           context: feedzback-staging
           service-name: feedzback-staging
+      ### Building all possible clients (staging, production)
+      - build-client:
+          requires:
+            - node-test-client
+          name: building-clients-for-revision
+          matrix:
+            parameters:
+              environment: ["staging"]
 
 jobs:
   prepare-workspace:
@@ -128,3 +139,23 @@ jobs:
             ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
             ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
             gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/cloud-run-source-deploy/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
+
+  build-client:
+    parameters:
+      environment:
+        default: staging
+        type: string
+    docker:
+      - image: cimg/node:20.9
+    steps:
+      - attach_workspace:
+          at: workspace
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/client/package-lock.json" }}
+      - run:
+          working_directory: workspace/client
+          name: Building << parameters.environment >> package
+          # For the moment, passes with no tests
+          command: npm run build:<< parameters.environment >>
