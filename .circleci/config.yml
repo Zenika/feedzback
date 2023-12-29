@@ -25,6 +25,18 @@ commands:
           name: Restoring NPM cache
           keys:
             - npm-deps-{{ checksum "./workspace/<< parameters.directory >>/package-lock.json" }}
+  restore_workspace:
+    steps:
+      - attach_workspace:
+          at: workspace
+  restore_workspace_and_npm_cache:
+    parameters:
+      directory:
+        type: string
+    steps:
+      - restore_workspace
+      - restore_npm_cache:
+          directory: << parameters.directory >>
 
 ###############################################################################
 # WORKFLOWS
@@ -35,27 +47,27 @@ workflows:
       ### Preparing and testing
       - prepare-workspace
       - node-install:
-          name: node-install-<< matrix.working-directory >>
+          name: node-install-<< matrix.module >>
           requires:
             - prepare-workspace
           matrix:
             parameters:
-              working-directory: ["server", "client"]
+              module: ["server", "client"]
       ### Testing and checking linting
       - node-test:
-          name: node-test-<< matrix.working-directory >>
+          name: node-test-<< matrix.module >>
           requires:
-            - node-install-<< matrix.working-directory >>
+            - node-install-<< matrix.module >>
           matrix:
             parameters:
-              working-directory: ["server", "client"]
+              module: ["server", "client"]
       - node-lint:
-          name: node-lint-<< matrix.working-directory >>
+          name: node-lint-<< matrix.module >>
           requires:
-            - node-install-<< matrix.working-directory >>
+            - node-install-<< matrix.module >>
           matrix:
             parameters:
-              working-directory: ["server", "client"]
+              module: ["server", "client"]
       ### Building server container with Google Cloud build
       - build-server:
           filters:
@@ -122,59 +134,48 @@ jobs:
             - server
 
   node-install:
-    parameters:
-      working-directory:
+    parameters: &param-module
+      module:
         type: string
     executor: node
     steps:
-      - attach_workspace:
-          at: workspace
-      - restore_npm_cache:
-          directory: << parameters.working-directory >>
+      - restore_workspace_and_npm_cache:
+          directory: << parameters.module >>
       - run:
           name: Installing node modules
-          working_directory: workspace/<< parameters.working-directory >>
+          working_directory: workspace/<< parameters.module >>
           command: npm ci
       - save_cache:
           name: Storing NPM cache
-          key: npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+          key: npm-deps-{{ checksum "./workspace/<< parameters.module >>/package-lock.json" }}
           paths:
-            - ./workspace/<< parameters.working-directory >>/node_modules
+            - ./workspace/<< parameters.module >>/node_modules
 
   node-test:
-    parameters:
-      working-directory:
-        type: string
+    parameters: *param-module
     executor: node
     steps:
-      - attach_workspace:
-          at: workspace
-      - restore_npm_cache:
-          directory: << parameters.working-directory >>
+      - restore_workspace_and_npm_cache:
+          directory: << parameters.module >>
       - run:
-          working_directory: workspace/<< parameters.working-directory >>
-          name: Running tests in << parameters.working-directory >>
+          working_directory: workspace/<< parameters.module >>
+          name: Running tests in << parameters.module >>
           # For the moment, passes with no tests
           command: npm run test
 
   node-lint:
-    parameters:
-      working-directory:
-        type: string
+    parameters: *param-module
     executor: node
     steps:
-      - attach_workspace:
-          at: workspace
-      - restore_npm_cache:
-          directory: << parameters.working-directory >>
+      - restore_workspace_and_npm_cache:
+          directory: << parameters.module >>
       - run:
-          working_directory: workspace/<< parameters.working-directory >>
-          name: Running linter check in << parameters.working-directory >>
-          # For the moment, passes with no tests
+          working_directory: workspace/<< parameters.module >>
+          name: Running linter check in << parameters.module >>
           command: npm run lint:ci
 
   build-server:
-    parameters:
+    parameters: &param-service
       service-name:
         type: string
         default: feedzback-${CIRCLE_SHA1}
@@ -203,10 +204,7 @@ jobs:
                   gcloud builds submit
 
   deploy-server:
-    parameters:
-      service-name:
-        default: feedzback-${CIRCLE_SHA1}
-        type: string
+    parameters: *param-service
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup
@@ -225,15 +223,13 @@ jobs:
             gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/cloud-run-source-deploy/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
 
   build-client:
-    parameters:
+    parameters: &param-environment
       environment:
         default: staging
         type: string
     executor: node
     steps:
-      - attach_workspace:
-          at: workspace
-      - restore_npm_cache:
+      - restore_workspace_and_npm_cache:
           directory: client
       - run:
           working_directory: workspace/client
@@ -246,14 +242,10 @@ jobs:
             - client/dist/<< parameters.environment >>
 
   deploy-client:
-    parameters:
-      environment:
-        default: staging
-        type: string
+    parameters: *param-environment
     executor: node
     steps:
-      - attach_workspace:
-          at: workspace
+      - restore_workspace
       - run:
           name: Installing Firebase client
           command: |
