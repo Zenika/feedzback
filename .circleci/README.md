@@ -5,7 +5,7 @@
 
 ## GCP APIs to enable
 
-- The following APIs must be enabled on the GCP Project:
+- The following APIs must be enabled on the linked GCP Project (which is automatically created when you create a firebase project):
   - [Cloud Build API](https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com)
   - [Cloud Run API](https://console.cloud.google.com/apis/library/run.googleapis.com)
 
