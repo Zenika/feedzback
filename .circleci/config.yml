@@ -47,7 +47,7 @@ workflows:
       - deploy-client:
           requires:
             - build-client-for-staging
-            name: deploying-staging-client
+          name: deploying-staging-client
           parameters:
             environment: staging
 
