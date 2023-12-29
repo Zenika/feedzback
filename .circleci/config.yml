@@ -13,6 +13,20 @@ executors:
     resource_class: small
 
 ###############################################################################
+# COMMANDS - reusable snippets
+###############################################################################
+commands:
+  restore_npm_cache:
+    parameters:
+      directory:
+        type: string
+    steps:
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.directory >>/package-lock.json" }}
+
+###############################################################################
 # WORKFLOWS
 ###############################################################################
 workflows:
@@ -27,6 +41,7 @@ workflows:
           matrix:
             parameters:
               working-directory: ["server", "client"]
+      ### Testing and checking linting
       - node-test:
           name: node-test-<< matrix.working-directory >>
           requires:
@@ -49,7 +64,7 @@ workflows:
           requires:
             - node-test-server
             - node-lint-server
-          name: build-server-for-revision
+          name: build-server-for-staging
           context: feedzback-staging
           tag: true
       - build-server:
@@ -68,7 +83,7 @@ workflows:
             branches:
               only: dev
           requires:
-            - build-server-for-revision
+            - build-server-for-staging
           name: deploy-staging-server
           context: feedzback-staging
           service-name: feedzback-staging
@@ -114,10 +129,8 @@ jobs:
     steps:
       - attach_workspace:
           at: workspace
-      - restore_cache:
-          name: Restoring NPM cache
-          keys:
-            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+      - restore_npm_cache:
+          directory: << parameters.working-directory >>
       - run:
           name: Installing node modules
           working_directory: workspace/<< parameters.working-directory >>
@@ -136,10 +149,8 @@ jobs:
     steps:
       - attach_workspace:
           at: workspace
-      - restore_cache:
-          name: Restoring NPM cache
-          keys:
-            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+      - restore_npm_cache:
+          directory: << parameters.working-directory >>
       - run:
           working_directory: workspace/<< parameters.working-directory >>
           name: Running tests in << parameters.working-directory >>
@@ -154,10 +165,8 @@ jobs:
     steps:
       - attach_workspace:
           at: workspace
-      - restore_cache:
-          name: Restoring NPM cache
-          keys:
-            - npm-deps-{{ checksum "./workspace/<< parameters.working-directory >>/package-lock.json" }}
+      - restore_npm_cache:
+          directory: << parameters.working-directory >>
       - run:
           working_directory: workspace/<< parameters.working-directory >>
           name: Running linter check in << parameters.working-directory >>
@@ -224,10 +233,8 @@ jobs:
     steps:
       - attach_workspace:
           at: workspace
-      - restore_cache:
-          name: Restoring NPM cache
-          keys:
-            - npm-deps-{{ checksum "./workspace/client/package-lock.json" }}
+      - restore_npm_cache:
+          directory: client
       - run:
           working_directory: workspace/client
           name: Building << parameters.environment >> package
