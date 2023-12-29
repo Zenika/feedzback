@@ -36,6 +36,7 @@ These settings are used to build and deploy the server on the GCP Project as a G
 ### GCLOUD_SERVICE_KEY
 
 Full JSON service key linked to the Service Account allowed to build and run the server on the GCP Project.
+It is also used as the main authentication method for the firebase CLI during client deployment as FIREBASE_TOKEN usage will be decomissioned in the next major version.
 
 ### GOOGLE_COMPUTE_ZONE
 
@@ -46,10 +47,6 @@ Default compute zone to use (europe-west1 usually).
 Self-reference to the Project (used by the CircleCI orb to properly handle resources).
 
 ## Firebase Settings
-
-### FIREBASE_TOKEN
-
-Token used only by CI to connect to Firebase and deploy the client. Was generated following this [documentation](https://firebase.google.com/docs/cli?authuser=0#cli-ci-systems)
 
 ### FIREBASE_CLIENT_EMAIL / Firebase Client Email
 
