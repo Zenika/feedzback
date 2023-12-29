@@ -1,5 +1,7 @@
+###############################################################################
+# SETUP
+###############################################################################
 version: 2.1
-
 orbs:
   # Pre-configured orb for GCP "gcloud" CLI
   gcp-cli: circleci/gcp-cli@3.1.1
@@ -10,6 +12,9 @@ executors:
       - image: cimg/node:20.9
     resource_class: small
 
+###############################################################################
+# WORKFLOWS
+###############################################################################
 workflows:
   build-and-deploy_staging:
     jobs:
@@ -53,7 +58,7 @@ workflows:
       - deploy-client:
           requires:
             - build-client-for-staging
-          name: deploying-staging-client
+          name: deploy-staging-client
           context: feedzback-staging
           environment: staging
 
