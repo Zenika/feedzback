@@ -3,5 +3,15 @@
     "default": "feedzback-v2-dev",
     "staging": "feedzback-v2-staging",
     "production": "feedzback-v2"
-  }
+  },
+  "targets": {
+    "feedzback-v2-staging": {
+      "hosting": {
+        "staging": [
+          "feedzback-v2-staging"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
