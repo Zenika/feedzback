@@ -30,14 +30,7 @@
   }
 
   <div class="gbl-form-submit">
-    <button
-      class="gbl-form-submit__btn"
-      [disabled]="form.invalid || submitInProgress"
-      mat-raised-button
-      color="primary"
-    >
-      Envoyer
-    </button>
+    <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
 
     <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
   </div>

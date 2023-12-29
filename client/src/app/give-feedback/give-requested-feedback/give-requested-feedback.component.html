@@ -5,10 +5,10 @@
 
 <app-message type="info" [closable]="false">
   Vous répondez à la demande de feedZback qui vous a été envoyée par
-  <strong>{{ requestWithToken.receiverEmail }}</strong
+  <strong>{{ request.receiverEmail }}</strong
   >.
 
-  @if (requestWithToken.shared) {
+  @if (request.shared) {
     <br />
     <strong>Notez que votre réponse sera partagée avec son manager.</strong>
   }
@@ -19,6 +19,8 @@
   Une erreur s'est produite lors de l'envoi.
 </app-message>
 
+<app-message type="success" [(visible)]="showDraft">Brouillon enregistré.</app-message>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   @if (isAnonymous) {
     <h3><mat-icon>voice_selection</mat-icon> Vous</h3>
@@ -26,7 +28,7 @@
     <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label>Votre email</mat-label>
       <input
-        [value]="requestWithToken.giverEmail"
+        [value]="request.giverEmail"
         required
         readonly
         type="email"
@@ -42,7 +44,7 @@
   <mat-form-field appearance="outline" class="gbl-form-field">
     <mat-label>Email de votre collègue</mat-label>
     <input
-      [value]="requestWithToken.receiverEmail"
+      [value]="request.receiverEmail"
       required
       readonly
       type="email"
@@ -59,14 +61,20 @@
   />
 
   <div class="gbl-form-submit">
-    <button
-      class="gbl-form-submit__btn"
-      [disabled]="form.invalid || submitInProgress"
-      mat-raised-button
-      color="primary"
-    >
-      Envoyer
-    </button>
+    <div>
+      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+
+      <button
+        type="button"
+        [disabled]="submitInProgress"
+        mat-stroked-button
+        color="primary"
+        class="ms-6"
+        (click)="onDraft()"
+      >
+        Enregistrer
+      </button>
+    </div>
 
     <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
   </div>

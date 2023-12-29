@@ -4,7 +4,14 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
-import { Feedback, FeedbackListMap, FeedbackRequest, IdObject, TokenObject } from './feedback.types';
+import {
+  Feedback,
+  FeedbackListMap,
+  FeedbackRequest,
+  FeedbackRequestDraft,
+  IdObject,
+  TokenObject,
+} from './feedback.types';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +33,9 @@ export class FeedbackService {
   }
 
   checkRequest(token: string) {
-    return this.httpClient.get<FeedbackRequest>(`${this.apiBaseUrl}/feedback/check-request/${token}`);
+    return this.httpClient.get<{ request: FeedbackRequest; draft?: FeedbackRequestDraft }>(
+      `${this.apiBaseUrl}/feedback/check-request/${token}`,
+    );
   }
 
   revealRequestTokenId(feedbackId: string) {
@@ -35,9 +44,9 @@ export class FeedbackService {
     );
   }
 
-  giveRequested(dto: GiveRequestedFeedbackDto) {
+  giveRequested(dto: GiveRequestedFeedbackDto, draft?: 'draft') {
     return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
+      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested${draft ? '/draft' : ''}`, dto)
       .pipe(catchError(() => of(false)));
   }
 

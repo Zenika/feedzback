@@ -1,7 +1,7 @@
-import { FeedbackRequest, TokenObject } from '../../shared/feedback/feedback.types';
+import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 
 export type GiveRequestedFeedbackData = {
-  requestWithToken?: RequestWithToken;
+  token: string;
+  request: FeedbackRequest;
+  draft?: FeedbackRequestDraft;
 };
-
-export type RequestWithToken = FeedbackRequest & TokenObject;

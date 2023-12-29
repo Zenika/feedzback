@@ -62,7 +62,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    const { feedbackId } = tokenDoc.data() as FeedbackRequestToken;
+    const { feedbackId, draft } = tokenDoc.data() as FeedbackRequestToken;
 
     const requestQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', feedbackId)
@@ -74,7 +74,10 @@ export class FeedbackDbService {
       return null;
     }
 
-    return docWithId<FeedbackRequestWithId>(requestDoc);
+    return {
+      request: docWithId<FeedbackRequestWithId>(requestDoc),
+      draft,
+    };
   }
 
   async revealRequestTokenId(feedbackId: string, giverEmail: string) {
@@ -97,11 +100,18 @@ export class FeedbackDbService {
     return tokenDoc.id;
   }
 
+  async giveRequestedDraft(tokenId: string, draft: GiveRequestedFeedbackParams) {
+    const partialFeedbackRequestToken: Partial<FeedbackRequestToken> = { draft };
+    await this.feedbackRequestTokenCollection.doc(tokenId).update(partialFeedbackRequestToken);
+  }
+
   async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
-    const request = await this.checkRequest(tokenId);
-    if (!request) {
+    const checked = await this.checkRequest(tokenId);
+    if (!checked) {
       return null;
     }
+
+    const feedbackId = checked.request.id;
 
     const partialFeedback: Partial<Feedback> = {
       positive,
@@ -110,10 +120,10 @@ export class FeedbackDbService {
       status: FeedbackStatus,
       updatedAt: Date.now(),
     };
-    await this.feedbackCollection.doc(request.id).update(partialFeedback);
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
 
-    const { giverEmail, receiverEmail, shared, id: feedbackId } = request;
+    const { giverEmail, receiverEmail, shared } = checked.request;
     return { giverEmail, receiverEmail, shared, feedbackId };
   }
 

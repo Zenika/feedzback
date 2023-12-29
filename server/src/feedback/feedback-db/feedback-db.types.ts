@@ -68,4 +68,13 @@ export type TokenObject = { token: string };
 
 // ----- FeedbackRequestToken -----
 
-export type FeedbackRequestToken = { feedbackId: string };
+export type FeedbackRequestToken = {
+  feedbackId: string;
+  draft?: FeedbackRequestDraft;
+};
+
+export type FeedbackRequestDraft = {
+  positive: string;
+  negative: string;
+  comment: string;
+};

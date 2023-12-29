@@ -32,11 +32,11 @@ export class FeedbackController {
 
   @Get('check-request/:token')
   async checkRequest(@Param('token') tokenId: string) {
-    const feedback = await this.feedbackDbService.checkRequest(tokenId);
-    if (!feedback) {
+    const checked = await this.feedbackDbService.checkRequest(tokenId);
+    if (!checked) {
       throw new BadRequestException();
     }
-    return feedback;
+    return checked;
   }
 
   @Get('reveal-request-token/:id')
@@ -48,6 +48,11 @@ export class FeedbackController {
       throw new BadRequestException();
     }
     return { token: tokenId } as TokenObject;
+  }
+
+  @Post('give-requested/draft')
+  giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+    return this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
   }
 
   @Post('give-requested')

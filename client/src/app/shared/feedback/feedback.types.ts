@@ -35,6 +35,12 @@ export type FeedbackRequest = {
 export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
+export type FeedbackRequestDraft = {
+  positive: string;
+  negative: string;
+  comment: string;
+};
+
 // ----- FeedbackListMap -----
 
 // Naming convention:
