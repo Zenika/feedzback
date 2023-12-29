@@ -190,13 +190,15 @@ jobs:
           name: Installing Firebase client
           command: |
             curl -Lo ./firebase_bin https://firebase.tools/bin/linux/latest
-            chmod a+x ./firebase_bin
+            chmod +x ./firebase_bin
       - run:
-          name: Logging Firebase client to the correct environment
+          name: Preparing credentials for Firebase client
           command: |
-            GOOGLE_APPLICATION_CREDENTIALS=${GCLOUD_SERVICE_KEY}
-            ./firebase_bin use << parameters.environment >>
+            echo ${GCLOUD_SERVICE_KEY} > $(pwd)/firebase-service-account.json
+            export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/firebase-service-account.json
+      - run:
+          name: Selecting the correct firebase environment
+          command: ./firebase_bin use << parameters.environment >>
       - run:
           name: Deploying client
-          command: |
-            ./firebase_bin deploy --only hosting:staging
+          command: ./firebase_bin deploy --config ./workspace/client/firebase.json --only hosting:<< parameters.environment >>
