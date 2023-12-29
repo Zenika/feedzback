@@ -44,6 +44,12 @@ workflows:
           matrix:
             parameters:
               environment: ["staging"]
+      - deploy-client:
+          requires:
+            - build-client-staging
+            name: deploying-staging-client
+          parameters:
+            environment: staging
 
 jobs:
   prepare-workspace:
