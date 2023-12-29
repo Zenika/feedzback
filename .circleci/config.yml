@@ -188,9 +188,9 @@ jobs:
       - run:
           name: Logging Firebase client to the correct environment
           command: |
-            ./firebase_bin login
-            ./firebase_bin use << parameters.environment >>
+            ./firebase_bin --non-interactive login 
+            ./firebase_bin --non-interactive use << parameters.environment >>
       - run:
           name: Deploying client
           command: |
-            ./firebase_bin deploy --only hosting:staging
+            ./firebase_bin --non-interactive deploy --only hosting:staging
