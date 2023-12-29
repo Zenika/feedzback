@@ -11,6 +11,13 @@
           "feedzback-v2-staging"
         ]
       }
+    },
+    "feedzback-v2": {
+      "hosting": {
+        "production": [
+          "feedzback-v2"
+        ]
+      }
     }
   },
   "etags": {}
