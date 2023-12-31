@@ -6,21 +6,3 @@ mat-icon {
   // Useful when the parent tag has a `display: flex` property
   flex-shrink: 0;
 }
-
-/* ----- Dialog ----- */
-
-.mat-mdc-dialog-container {
-  --mdc-dialog-container-color: v.$background-grey-color;
-  --mdc-dialog-supporting-text-color: v.$dark-primary-text;
-  --mdc-dialog-subhead-color: v.$primary-color;
-}
-
-.mdc-dialog__title {
-  border-bottom: 1px solid #ddd !important;
-  background-color: white;
-}
-
-.mdc-dialog__actions {
-  border-top: 1px solid #ddd !important;
-  background-color: white;
-}

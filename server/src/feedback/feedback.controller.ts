@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, TokenObject } from './feedback-db';
@@ -18,6 +18,8 @@ export class FeedbackController {
   async ping() {
     return { ok: await this.feedbackDbService.ping() };
   }
+
+  // ----- Request feedback and give requested feedback -----
 
   @Post('request')
   @UseGuards(AuthGuard)
@@ -65,12 +67,7 @@ export class FeedbackController {
     return true;
   }
 
-  @Get('give/draft')
-  @UseGuards(AuthGuard)
-  getDraftDataList() {
-    const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getDraftDataList(giverEmail);
-  }
+  // ----- Give spontaneous feedback -----
 
   @Post('give/draft')
   @UseGuards(AuthGuard)
@@ -86,12 +83,26 @@ export class FeedbackController {
     if (giverEmail === dto.receiverEmail) {
       throw new BadRequestException();
     }
-    const partialIdObject = await this.feedbackDbService.give({ giverEmail, ...dto });
-    if (partialIdObject.id) {
-      await this.sendEmailsOnGiven(giverEmail, dto.receiverEmail, partialIdObject.id, dto.shared);
-    }
-    return partialIdObject;
+    const idObject = await this.feedbackDbService.give({ giverEmail, ...dto });
+    await this.sendEmailsOnGiven(giverEmail, dto.receiverEmail, idObject.id, dto.shared);
+    return idObject;
   }
+
+  @Delete('give/draft/:receiverEmail')
+  @UseGuards(AuthGuard)
+  deleteDraft(@Param('receiverEmail') receiverEmail: string) {
+    const giverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.deleteDraft(giverEmail, receiverEmail);
+  }
+
+  @Get('give/draft')
+  @UseGuards(AuthGuard)
+  getDraftList() {
+    const giverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getDraftList(giverEmail);
+  }
+
+  // ----- View feedbacks (requested and given) -----
 
   @Get('list-map')
   @UseGuards(AuthGuard)
@@ -121,6 +132,8 @@ export class FeedbackController {
     }
     return await this.feedbackDbService.getManagedFeedbacks(managedEmail);
   }
+
+  // ----- Shared tasks -----
 
   private async sendEmailsOnGiven(giverEmail: string, receiverEmail: string, feedbackId: string, shared: boolean) {
     await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);

@@ -1,31 +1,32 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, HostBinding, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { FeedbackDraftData } from '../../shared/feedback/feedback.types';
+import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
-import { GiveFeedbackService } from './give-feedback.service';
+import { FeedbackDraftComponent } from './feedback-draft/feedback-draft.component';
+import { FeedbackDraftService } from './feedback-draft/feedback-draft.service';
 
 @Component({
   selector: 'app-give-feedback',
   standalone: true,
   imports: [
-    AsyncPipe,
     ReactiveFormsModule,
-    MatAutocompleteModule,
     MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -33,6 +34,7 @@ import { GiveFeedbackService } from './give-feedback.service';
     ValidationErrorMessagePipe,
     MessageComponent,
     GiveFeedbackDetailsComponent,
+    FeedbackDraftComponent,
   ],
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
@@ -40,13 +42,19 @@ import { GiveFeedbackService } from './give-feedback.service';
 export class GiveFeedbackComponent {
   @HostBinding('class.app-give-feedback') hasCss = true;
 
+  @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
+
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
 
+  private matDialog = inject(MatDialog);
+
   private formBuilder = inject(NonNullableFormBuilder);
 
-  private giveFeedbackService = inject(GiveFeedbackService);
+  private feedbackService = inject(FeedbackService);
+
+  private feedbackDraftService = inject(FeedbackDraftService);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
@@ -75,18 +83,24 @@ export class GiveFeedbackComponent {
 
   feedbackId?: string;
 
-  filteredDraftDataList$ = this.giveFeedbackService.filteredDraftDataList$;
+  hasDraftDialog = toSignal(
+    this.feedbackDraftService.draftList$.pipe(
+      map(({ length }) => length > 0),
+      tap((hasDraftDialog) => hasDraftDialog || this.closeDraftDialog()),
+    ),
+    {
+      initialValue: false,
+    },
+  );
+
+  private draftDialogRef?: MatDialogRef<unknown>;
 
   constructor() {
-    this.form.controls.receiverEmail.valueChanges.pipe(takeUntilDestroyed()).subscribe({
-      next: (receiverEmail) => this.giveFeedbackService.receiverEmail$.next(receiverEmail),
-      complete: () => this.giveFeedbackService.receiverEmail$.next(''),
+    this.feedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
+      this.form.setValue(draft);
+      this.form.updateValueAndValidity();
+      this.closeDraftDialog();
     });
-  }
-
-  protected applyDraft(draftData?: FeedbackDraftData) {
-    this.form.setValue(draftData ?? { receiverEmail: '', positive: '', negative: '', comment: '', shared: true });
-    this.form.updateValueAndValidity();
   }
 
   protected onSubmit() {
@@ -98,24 +112,25 @@ export class GiveFeedbackComponent {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.giveFeedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
+    this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
       this.showError = !id;
       if (!id) {
         this.disableForm(false);
       } else {
         this.feedbackId = id;
+        this.feedbackDraftService.delete(receiverEmail).subscribe();
         this.navigateToSuccess();
       }
     });
   }
 
   protected onDraft() {
-    this.showError = false;
+    this.showDraft = false;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.giveFeedbackService.giveDraft({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
+    this.feedbackDraftService.save({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
       this.showDraft = true;
       this.disableForm(false);
     });
@@ -132,5 +147,14 @@ export class GiveFeedbackComponent {
       feedbackId: this.feedbackId,
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
+  }
+
+  protected openDraftDialog() {
+    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
+    this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
+  }
+
+  protected closeDraftDialog() {
+    this.draftDialogRef?.close();
   }
 }

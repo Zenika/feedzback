@@ -17,7 +17,7 @@ export type Feedback = {
   updatedAt: number;
 };
 
-export const FeedbackStatus = 'done'; // Idea: in the future, it could be also 'draft'...
+export const FeedbackStatus = 'done';
 export type FeedbackStatus = typeof FeedbackStatus;
 
 // ----- FeedbackRequest -----
@@ -58,9 +58,9 @@ export type FeedbackListMap = {
   receivedRequest: FeedbackRequestItem[];
 };
 
-// ----- FeedbackDraftData -----
+// ----- FeedbackDraft -----
 
-export type FeedbackDraftData = {
+export type FeedbackDraft = {
   receiverEmail: string;
   positive: string;
   negative: string;

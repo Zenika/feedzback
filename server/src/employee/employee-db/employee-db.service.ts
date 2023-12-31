@@ -6,10 +6,8 @@ import { isEmptyEmployeeData } from './employee-db.utils';
 
 @Injectable()
 export class EmployeeDbService {
-  private db = this.firebaseService.db;
-
   private get employeeCollection() {
-    return this.db.collection(Collection.employee);
+    return this.firebaseService.db.collection(Collection.employee);
   }
 
   constructor(private firebaseService: FirebaseService) {}

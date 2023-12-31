@@ -6,7 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import {
   Feedback,
-  FeedbackDraftData,
+  FeedbackDraft,
   FeedbackListMap,
   FeedbackRequest,
   FeedbackRequestDraft,
@@ -23,6 +23,8 @@ export class FeedbackService {
   private authService = inject(AuthService);
 
   private apiBaseUrl = environment.apiBaseUrl;
+
+  // ----- Request feedback and give requested feedback -----
 
   request(dto: FeedbackRequestDto) {
     return this.authService.withBearerToken((headers) =>
@@ -55,12 +57,9 @@ export class FeedbackService {
       .pipe(catchError(() => of(false)));
   }
 
-  getDraftDataList() {
-    return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<FeedbackDraftData[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
-    );
-  }
+  // ----- Give spontaneous feedback -----
 
+  // Note: use the `FeedbackDraftService` wrapper to access this method
   giveDraft(dto: GiveFeedbackDto) {
     return this.authService.withBearerToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give/draft`, dto, { headers }),
@@ -74,6 +73,24 @@ export class FeedbackService {
         .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
     );
   }
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  deleteDraft(receiverEmail: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/give/draft/${receiverEmail}`, {
+        headers,
+      }),
+    );
+  }
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  getDraftList() {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<FeedbackDraft[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
+    );
+  }
+
+  // ----- View feedbacks (requested and given) -----
 
   getListMap() {
     return this.authService.withBearerToken((headers) =>

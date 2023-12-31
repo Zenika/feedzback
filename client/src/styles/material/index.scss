@@ -49,8 +49,8 @@ $client-theme: mat.define-light-theme(
 @include mat.form-field-theme($client-theme);
 @include mat.input-theme($client-theme);
 @include mat.select-theme($client-theme);
-@include mat.autocomplete-theme($client-theme);
-//@include mat.dialog-theme($client-theme);
+//@include mat.autocomplete-theme($client-theme);
+@include mat.dialog-theme($client-theme);
 //@include mat.chips-theme($client-theme);
 @include mat.slide-toggle-theme($client-theme);
 //@include mat.radio-theme($client-theme);

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, FieldValue, Filter } from 'firebase-admin/firestore';
-import { FirebaseService, docWithId, docsWithId } from '../../core/firebase';
+import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
   FeedbackDraft,
-  FeedbackDraftData,
+  FeedbackDraftMap,
   FeedbackItemWithId,
   FeedbackRequest,
   FeedbackRequestItemWithId,
@@ -21,18 +21,16 @@ import { mapToFeedbackListMap } from './feedback-db.utils';
 
 @Injectable()
 export class FeedbackDbService {
-  private db = this.firebaseService.db;
-
   private get feedbackCollection() {
-    return this.db.collection(Collection.feedback);
+    return this.firebaseService.db.collection(Collection.feedback);
   }
 
   private get feedbackRequestTokenCollection() {
-    return this.db.collection(Collection.feedbackRequestToken);
+    return this.firebaseService.db.collection(Collection.feedbackRequestToken);
   }
 
-  private get feedbackDraftCollection() {
-    return this.db.collection(Collection.feedbackDraft);
+  private get feedbackDraftMapCollection() {
+    return this.firebaseService.db.collection(Collection.feedbackDraftMap);
   }
 
   constructor(private firebaseService: FirebaseService) {}
@@ -40,6 +38,8 @@ export class FeedbackDbService {
   async ping() {
     return !!(await this.feedbackCollection.get());
   }
+
+  // ----- Request feedback and give requested feedback -----
 
   async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
     const now = Date.now();
@@ -135,11 +135,13 @@ export class FeedbackDbService {
     return { giverEmail, receiverEmail, shared, feedbackId };
   }
 
+  // ----- Give spontaneous feedback -----
+
   async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
-    const partialDraft: FeedbackDraft = {
+    const partialDraftMap: FeedbackDraftMap = {
       [receiverEmail]: { receiverEmail, positive, negative, comment, shared },
     };
-    await this.feedbackDraftCollection.doc(giverEmail).set(partialDraft, { merge: true });
+    await this.feedbackDraftMapCollection.doc(giverEmail).set(partialDraftMap, { merge: true });
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
@@ -159,29 +161,29 @@ export class FeedbackDbService {
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
 
-    await this.deleteGiveDraft(giverEmail, receiverEmail);
+    await this.deleteDraft(giverEmail, receiverEmail);
 
     return { id } as IdObject;
   }
 
-  private async deleteGiveDraft(giverEmail: string, receiverEmail: string) {
-    return await this.feedbackDraftCollection
+  async deleteDraft(giverEmail: string, receiverEmail: string) {
+    await this.feedbackDraftMapCollection
       .doc(giverEmail)
       .set({ [receiverEmail]: FieldValue.delete() }, { merge: true });
   }
 
-  async getDraftDataList(giverEmail: string) {
-    const draftDoc = await this.feedbackDraftCollection.doc(giverEmail).get();
-    if (!draftDoc.exists) {
+  async getDraftList(giverEmail: string) {
+    const draftMapDoc = await this.feedbackDraftMapCollection.doc(giverEmail).get();
+    if (!draftMapDoc.exists) {
       return [];
     }
-    const draft = draftDoc.data() as FeedbackDraft;
+    const draftMap = draftMapDoc.data() as FeedbackDraftMap;
 
-    const dataList: FeedbackDraftData[] = Object.values(draft);
-    dataList.sort((a, b) => (a.receiverEmail > b.receiverEmail ? 1 : a.receiverEmail < b.receiverEmail ? -1 : 0));
-
-    return dataList;
+    const draftList: FeedbackDraft[] = Object.values(draftMap);
+    return sortList(draftList, 'receiverEmail');
   }
+
+  // ----- View feedbacks (requested and given) -----
 
   async getListMap(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
