@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { FieldPath, Filter } from 'firebase-admin/firestore';
+import { FieldPath, FieldValue, Filter } from 'firebase-admin/firestore';
 import { FirebaseService, docWithId, docsWithId } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
+  FeedbackDraft,
+  FeedbackDraftData,
   FeedbackItemWithId,
   FeedbackRequest,
   FeedbackRequestItemWithId,
@@ -27,6 +29,10 @@ export class FeedbackDbService {
 
   private get feedbackRequestTokenCollection() {
     return this.db.collection(Collection.feedbackRequestToken);
+  }
+
+  private get feedbackDraftCollection() {
+    return this.db.collection(Collection.feedbackDraft);
   }
 
   constructor(private firebaseService: FirebaseService) {}
@@ -100,8 +106,10 @@ export class FeedbackDbService {
     return tokenDoc.id;
   }
 
-  async giveRequestedDraft(tokenId: string, draft: GiveRequestedFeedbackParams) {
-    const partialFeedbackRequestToken: Partial<FeedbackRequestToken> = { draft };
+  async giveRequestedDraft(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
+    const partialFeedbackRequestToken: Partial<FeedbackRequestToken> = {
+      draft: { positive, negative, comment },
+    };
     await this.feedbackRequestTokenCollection.doc(tokenId).update(partialFeedbackRequestToken);
   }
 
@@ -127,6 +135,13 @@ export class FeedbackDbService {
     return { giverEmail, receiverEmail, shared, feedbackId };
   }
 
+  async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+    const partialDraft: FeedbackDraft = {
+      [receiverEmail]: { receiverEmail, positive, negative, comment, shared },
+    };
+    await this.feedbackDraftCollection.doc(giverEmail).set(partialDraft, { merge: true });
+  }
+
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
     const now = Date.now();
     const feedback: Feedback = {
@@ -143,7 +158,29 @@ export class FeedbackDbService {
     };
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
+
+    await this.deleteGiveDraft(giverEmail, receiverEmail);
+
     return { id } as IdObject;
+  }
+
+  private async deleteGiveDraft(giverEmail: string, receiverEmail: string) {
+    return await this.feedbackDraftCollection
+      .doc(giverEmail)
+      .set({ [receiverEmail]: FieldValue.delete() }, { merge: true });
+  }
+
+  async getDraftDataList(giverEmail: string) {
+    const draftDoc = await this.feedbackDraftCollection.doc(giverEmail).get();
+    if (!draftDoc.exists) {
+      return [];
+    }
+    const draft = draftDoc.data() as FeedbackDraft;
+
+    const dataList: FeedbackDraftData[] = Object.values(draft);
+    dataList.sort((a, b) => (a.receiverEmail > b.receiverEmail ? 1 : a.receiverEmail < b.receiverEmail ? -1 : 0));
+
+    return dataList;
   }
 
   async getListMap(viewerEmail: string) {

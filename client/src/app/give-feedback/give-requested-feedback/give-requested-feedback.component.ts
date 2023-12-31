@@ -68,7 +68,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
     }
   }
 
-  async onSubmit() {
+  protected onSubmit() {
     if (this.form.invalid) {
       return;
     }
@@ -94,7 +94,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequested({ token: this.token, positive, negative, comment }, 'draft').subscribe(() => {
+    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe(() => {
       this.showDraft = true;
       this.disableForm(false);
     });

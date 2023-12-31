@@ -6,6 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import {
   Feedback,
+  FeedbackDraftData,
   FeedbackListMap,
   FeedbackRequest,
   FeedbackRequestDraft,
@@ -44,10 +45,26 @@ export class FeedbackService {
     );
   }
 
-  giveRequested(dto: GiveRequestedFeedbackDto, draft?: 'draft') {
+  giveRequestedDraft(dto: GiveRequestedFeedbackDto) {
+    return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
+  }
+
+  giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested${draft ? '/draft' : ''}`, dto)
+      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
       .pipe(catchError(() => of(false)));
+  }
+
+  getDraftDataList() {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<FeedbackDraftData[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
+    );
+  }
+
+  giveDraft(dto: GiveFeedbackDto) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give/draft`, dto, { headers }),
+    );
   }
 
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {

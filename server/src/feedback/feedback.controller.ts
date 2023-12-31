@@ -65,6 +65,20 @@ export class FeedbackController {
     return true;
   }
 
+  @Get('give/draft')
+  @UseGuards(AuthGuard)
+  getDraftDataList() {
+    const giverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getDraftDataList(giverEmail);
+  }
+
+  @Post('give/draft')
+  @UseGuards(AuthGuard)
+  giveDraft(@Body() dto: GiveFeedbackDto) {
+    const giverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.giveDraft({ giverEmail, ...dto });
+  }
+
   @Post('give')
   @UseGuards(AuthGuard)
   async give(@Body() dto: GiveFeedbackDto) {

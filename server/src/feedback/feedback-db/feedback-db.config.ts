@@ -3,6 +3,7 @@ import { FeedbackItem, FeedbackRequestItem } from './feedback-db.types';
 export const Collection = {
   feedback: 'feedback',
   feedbackRequestToken: 'feedbackRequestToken',
+  feedbackDraft: 'feedbackDraft',
 } as const;
 
 export type Collection = (typeof Collection)[keyof typeof Collection];

@@ -58,6 +58,16 @@ export type FeedbackListMap = {
   receivedRequest: FeedbackRequestItem[];
 };
 
+// ----- FeedbackDraftData -----
+
+export type FeedbackDraftData = {
+  receiverEmail: string;
+  positive: string;
+  negative: string;
+  comment: string;
+  shared: boolean;
+};
+
 // ----- IdObject -----
 
 export type IdObject = { id: string };

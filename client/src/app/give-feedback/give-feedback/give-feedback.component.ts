@@ -1,5 +1,8 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,18 +10,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackDraftData } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
+import { GiveFeedbackService } from './give-feedback.service';
 
 @Component({
   selector: 'app-give-feedback',
   standalone: true,
   imports: [
+    AsyncPipe,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
@@ -40,7 +46,7 @@ export class GiveFeedbackComponent {
 
   private formBuilder = inject(NonNullableFormBuilder);
 
-  private feedbackService = inject(FeedbackService);
+  private giveFeedbackService = inject(GiveFeedbackService);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
@@ -65,9 +71,25 @@ export class GiveFeedbackComponent {
 
   showError = false;
 
+  showDraft = false;
+
   feedbackId?: string;
 
-  async onSubmit() {
+  filteredDraftDataList$ = this.giveFeedbackService.filteredDraftDataList$;
+
+  constructor() {
+    this.form.controls.receiverEmail.valueChanges.pipe(takeUntilDestroyed()).subscribe({
+      next: (receiverEmail) => this.giveFeedbackService.receiverEmail$.next(receiverEmail),
+      complete: () => this.giveFeedbackService.receiverEmail$.next(''),
+    });
+  }
+
+  protected applyDraft(draftData?: FeedbackDraftData) {
+    this.form.setValue(draftData ?? { receiverEmail: '', positive: '', negative: '', comment: '', shared: true });
+    this.form.updateValueAndValidity();
+  }
+
+  protected onSubmit() {
     if (this.form.invalid) {
       return;
     }
@@ -76,7 +98,7 @@ export class GiveFeedbackComponent {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
+    this.giveFeedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
       this.showError = !id;
       if (!id) {
         this.disableForm(false);
@@ -84,6 +106,18 @@ export class GiveFeedbackComponent {
         this.feedbackId = id;
         this.navigateToSuccess();
       }
+    });
+  }
+
+  protected onDraft() {
+    this.showError = false;
+    this.disableForm(true);
+
+    const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
+
+    this.giveFeedbackService.giveDraft({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
+      this.showDraft = true;
+      this.disableForm(false);
     });
   }
 

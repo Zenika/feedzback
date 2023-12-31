@@ -78,3 +78,17 @@ export type FeedbackRequestDraft = {
   negative: string;
   comment: string;
 };
+
+// ----- FeedbackDraft -----
+
+export type FeedbackDraft = {
+  [receiverEmail: string]: FeedbackDraftData;
+};
+
+export type FeedbackDraftData = {
+  receiverEmail: string;
+  positive: string;
+  negative: string;
+  comment: string;
+  shared: boolean;
+};

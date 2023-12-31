@@ -8,10 +8,27 @@
   Une erreur s'est produite lors de l'envoi.
 </app-message>
 
+<app-message type="success" [(visible)]="showDraft">Brouillon enregistré.</app-message>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="gbl-form-field">
     <mat-label>Email de votre collègue</mat-label>
-    <input [formControl]="form.controls.receiverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
+    <input
+      [formControl]="form.controls.receiverEmail"
+      type="email"
+      matInput
+      placeholder="jean.dupont@zenika.com"
+      [matAutocomplete]="auto"
+    />
+
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (draftData of filteredDraftDataList$ | async; track draftData.receiverEmail) {
+        <mat-option [value]="draftData.receiverEmail" (onSelectionChange)="applyDraft(draftData)">
+          {{ draftData.receiverEmail }}
+        </mat-option>
+      }
+    </mat-autocomplete>
+
     <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 
@@ -30,7 +47,20 @@
   }
 
   <div class="gbl-form-submit">
-    <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+    <div>
+      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+
+      <button
+        type="button"
+        [disabled]="form.controls.receiverEmail.invalid || submitInProgress"
+        mat-stroked-button
+        color="primary"
+        class="ms-6"
+        (click)="onDraft()"
+      >
+        Enregistrer
+      </button>
+    </div>
 
     <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
   </div>
