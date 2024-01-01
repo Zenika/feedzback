@@ -35,6 +35,12 @@ export class FeedbackService {
     );
   }
 
+  requestAgain(feedbackId: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request-again`, { feedbackId }, { headers }),
+    );
+  }
+
   checkRequest(token: string) {
     return this.httpClient.get<{ request: FeedbackRequest; draft?: FeedbackRequestDraft }>(
       `${this.apiBaseUrl}/feedback/check-request/${token}`,

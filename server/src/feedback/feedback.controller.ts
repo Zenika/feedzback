@@ -32,6 +32,20 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 
+  @Post('request-again')
+  @UseGuards(AuthGuard)
+  async requestAgain(@Body() { feedbackId }: { feedbackId: string }) {
+    const receiverEmail = this.authService.userEmail!;
+
+    const requestWithToken = await this.feedbackDbService.requestAgain(feedbackId, receiverEmail);
+    if (!requestWithToken) {
+      throw new BadRequestException();
+    }
+
+    const { giverEmail, message, token } = requestWithToken;
+    await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
+  }
+
   @Get('check-request/:token')
   async checkRequest(@Param('token') tokenId: string) {
     const checked = await this.feedbackDbService.checkRequest(tokenId);

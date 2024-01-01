@@ -16,6 +16,7 @@ import {
   FeedbackStatus,
   FeedbackWithId,
   IdObject,
+  TokenObject,
 } from './feedback-db.types';
 import { mapToFeedbackListMap } from './feedback-db.utils';
 
@@ -60,6 +61,30 @@ export class FeedbackDbService {
     const tokenId = (await this.feedbackRequestTokenCollection.add(token)).id;
 
     return tokenId;
+  }
+
+  async requestAgain(feedbackId: string, receiverEmail: string) {
+    const requestDoc = await this.feedbackCollection.doc(feedbackId).get();
+    if (!requestDoc.exists) {
+      return null;
+    }
+    const request = requestDoc.data() as FeedbackRequest;
+
+    if (request.receiverEmail !== receiverEmail) {
+      return null;
+    }
+
+    const tokenId = await this.revealRequestTokenId(feedbackId, request.giverEmail);
+    if (!tokenId) {
+      return null;
+    }
+
+    const partialFeedbackRequest: Partial<FeedbackRequest> = {
+      updatedAt: Date.now(),
+    };
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedbackRequest);
+
+    return { ...request, token: tokenId } satisfies FeedbackRequest & TokenObject;
   }
 
   async checkRequest(tokenId: string) {

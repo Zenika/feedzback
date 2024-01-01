@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
+import { MessageComponent } from '../../ui/message/message.component';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackRequest, FeedbackType } from '../feedback.types';
@@ -11,7 +12,7 @@ import { FeedbackRequest, FeedbackType } from '../feedback.types';
 @Component({
   selector: 'app-pending-feedback',
   standalone: true,
-  imports: [DatePipe, MatButtonModule, MatIconModule, AllowedEmailDomainsPipe, FeedbackBodyComponent],
+  imports: [DatePipe, MatButtonModule, MatIconModule, AllowedEmailDomainsPipe, MessageComponent, FeedbackBodyComponent],
   templateUrl: './pending-feedback.component.html',
   styleUrl: './pending-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -33,9 +34,15 @@ export class PendingFeedbackComponent {
 
   private router = inject(Router);
 
+  protected showRequestAgainSuccess = false;
+
+  protected requestAgain() {
+    this.feedbackService.requestAgain(this.feedback.id).subscribe(() => (this.showRequestAgainSuccess = true));
+  }
+
   protected giveNow() {
     this.feedbackService
       .revealRequestTokenId(this.feedback.id)
-      .subscribe(({ token }) => this.router.navigate(['/give'], { queryParams: { token } }));
+      .subscribe(({ token }) => this.router.navigate(['/give/requested', token]));
   }
 }

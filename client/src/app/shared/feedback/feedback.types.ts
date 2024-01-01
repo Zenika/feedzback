@@ -30,6 +30,7 @@ export type FeedbackRequest = {
   shared: boolean;
   status: FeedbackRequestStatus;
   createdAt: number;
+  updatedAt: number;
 };
 
 export const FeedbackRequestStatus = 'pending';
