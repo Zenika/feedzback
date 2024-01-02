@@ -44,11 +44,17 @@ commands:
 workflows:
   usine_a_feedzback:
     jobs:
+      #############################################################################
+      # This first section runs every time, for every branch and tags following
+      # these patterns: "vX.Y.Z" and "staging-X.Y.Z"
+      #############################################################################
       ### Preparing and testing
       - prepare-workspace:
           filters: &filter-include-production
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only:
+                - /^v\d+\.\d+\.\d+$/
+                - /^staging-\d+\.\d+\.\d+$/
       - node-install:
           filters: *filter-include-production
           name: node-install-<< matrix.module >>
@@ -74,27 +80,6 @@ workflows:
           matrix:
             parameters:
               module: ["server", "client"]
-      ### Building server container with Google Cloud build
-      - build-server:
-          filters:
-            branches:
-              only: dev
-          requires:
-            - node-test-server
-            - node-lint-server
-          name: build-server-for-staging
-          context: feedzback-staging
-          tag: true
-      - build-server:
-          filters:
-            branches:
-              ignore: dev
-          requires:
-            - node-test-server
-            - node-lint-server
-          name: build-server-for-revision
-          context: feedzback-staging
-          tag: false
       ### Building all possible clients (staging, production)
       - build-client:
           filters: *filter-include-production
@@ -105,24 +90,38 @@ workflows:
           matrix:
             parameters:
               environment: ["staging", "production"]
-      ### STAGING DEPLOYMENT (only on branch 'dev')
-      - deploy-server:
+      #############################################################################
+      # This section only runs for any non-deployed branches and tags and checks
+      # that the server is actually buildable as a container
+      #############################################################################
+      - build-server:
+          filters:
+            branches:
+              ignore: dev
+          requires:
+            - node-test-server
+            - node-lint-server
+          name: testing-build-server-for-revision
+          comment:
+          context: feedzback-staging
+          tag: false
+      #############################################################################
+      # This section will only run for staging deployments: either "dev" branch or
+      # tags that match "staging-X.Y.Z"
+      #############################################################################
+      ### Building server container with Google Cloud build
+      - build-server:
           filters: &filter-staging
             branches:
               only: dev
+            tags:
+              only: /^staging-\d+\.\d+\.\d+$/
           requires:
-            - build-server-for-staging
-          name: deploy-staging-server
+            - node-test-server
+            - node-lint-server
+          name: build-server-for-staging
           context: feedzback-staging
-          service-name: feedzback-staging
-      - deploy-client:
-          filters: *filter-staging
-          requires:
-            - build-client-for-staging
-          name: deploy-staging-client
-          context: feedzback-staging
-          environment: staging
-      ### STAGING DEPLOYMENT (only on branch 'dev')
+          tag: true
       - deploy-server:
           filters: *filter-staging
           requires:
@@ -137,9 +136,11 @@ workflows:
           name: deploy-staging-client
           context: feedzback-staging
           environment: staging
-      ############################################################
-      ### PRODUCTION DEPLOYMENT (only on tags matching 'vX.Y.Z')
-      # Specific server build for Prod
+      #############################################################################
+      # This section will only run for PRODUCTION deployments: tags need to match
+      # the following pattern "vX.Y.Z"
+      #############################################################################
+      ### Building server container with Google Cloud build
       - build-server:
           filters: &filter-only-production
             tags:
