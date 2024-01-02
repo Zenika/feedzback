@@ -44,7 +44,7 @@ export default class ManagerComponent implements ManagerData {
 
   protected activatedRoute = inject(ActivatedRoute);
 
-  protected employees = inject(EmployeeService).data().managedEmails;
+  protected employees = inject(EmployeeService).dataSnapshot.managedEmails;
 
   protected feedbackService = inject(FeedbackService);
 

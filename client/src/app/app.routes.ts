@@ -4,6 +4,7 @@ import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
 import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { settingsGuard } from './settings/setings.guard';
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
@@ -47,8 +48,8 @@ export const routes: Routes = [
   },
   {
     path: 'settings',
-    canActivate: [authGuard],
     loadComponent: () => import('./settings/settings.component'),
+    canActivate: [authGuard, settingsGuard],
     title: 'FeedZback - Paramètres',
   },
   {

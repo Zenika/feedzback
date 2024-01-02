@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -34,7 +35,7 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
-  protected isManager = inject(EmployeeService).isManager;
+  protected isManager = toSignal(inject(EmployeeService).isManager$, { initialValue: false });
 
   protected photoUrl$ = this.authService.photoUrl$;
 
