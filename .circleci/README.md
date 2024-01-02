@@ -20,6 +20,10 @@ A specific service account to build and deploy needs to exist on the project (us
 
 The GCP Project needs to have a Docker [Google Artifact Repository](https://console.cloud.google.com/artifacts) created named `builds` for the CI to work properly.
 
+## Domain mapping
+
+This can be done after a first deployment: through Domain mappings in GCP (for the server), and Firebase console (for the client).
+
 ### IAM
 
 It requires a few privileges as well:
@@ -34,7 +38,13 @@ Finallys
 
 # Environment Variables
 
-Environment variables are provided by a CircleCI Context (feedzback-staging for staging, feedzback-prod for production).
+Environment variables are provided by a CircleCI Context (feedzback-staging for staging, feedzback-production for production).
+
+## App Settings
+
+### FEEDZBACK_CLIENT_URL
+
+This helps the server compose URLs to include in emails.
 
 ## Google Cloud Platfom Settings
 

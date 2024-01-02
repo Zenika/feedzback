@@ -42,7 +42,7 @@ commands:
 # WORKFLOWS
 ###############################################################################
 workflows:
-  build-and-deploy_staging:
+  usine_a_feedzback:
     jobs:
       ### Preparing and testing
       - prepare-workspace:
@@ -262,7 +262,7 @@ jobs:
           name: Running gcloud run deploy
           command: |
             # Building update-env-vars argument
-            ZZ="CLIENT_URL=https://staging.feedzback.znk.io"
+            ZZ="CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
             ZZ="${ZZ},SERVER_PORT=3000"
             ZZ="${ZZ},MAILGUN_USERNAME=${MAILGUN_USERNAME}"
             ZZ="${ZZ},MAILGUN_KEY=${MAILGUN_KEY}"
