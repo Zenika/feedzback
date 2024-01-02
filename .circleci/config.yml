@@ -102,7 +102,6 @@ workflows:
             - node-test-server
             - node-lint-server
           name: testing-build-server-for-revision
-          comment:
           context: feedzback-staging
           tag: false
       #############################################################################
