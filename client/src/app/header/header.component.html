@@ -54,9 +54,19 @@
         </button>
       }
 
-      <!-- TODO: Features NOT implemented
-      <button mat-menu-item><mat-icon color="primary">translate</mat-icon> English</button>
-      -->
+      @if (hasLocalizeFeature && baseHref !== '/') {
+        <button mat-menu-item (click)="switchLanguage()">
+          <mat-icon color="primary">translate</mat-icon>
+          @switch (baseHref) {
+            @case ('/fr/') {
+              English
+            }
+            @case ('/en/') {
+              Français
+            }
+          }
+        </button>
+      }
 
       <button mat-menu-item (click)="signOut()">
         <mat-icon color="primary">logout</mat-icon>

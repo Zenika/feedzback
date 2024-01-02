@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { APP_BASE_HREF, AsyncPipe } from '@angular/common';
 import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,6 +35,8 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
+  protected baseHref = inject(APP_BASE_HREF) as '/' | '/fr/' | '/en/';
+
   protected isManager = toSignal(inject(EmployeeService).isManager$, { initialValue: false });
 
   protected photoUrl$ = this.authService.photoUrl$;
@@ -46,6 +48,8 @@ export class HeaderComponent implements OnDestroy {
   protected isMenuOpen = false;
 
   protected hasManagerFeature = environment.featureFlipping.manager;
+
+  protected hasLocalizeFeature = environment.featureFlipping.localize;
 
   @HostListener('document:click', ['$event.target']) onClick(target: HTMLElement) {
     if (!target.closest('.app-header-menu-target')) {
@@ -62,6 +66,23 @@ export class HeaderComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  protected switchLanguage() {
+    switch (this.baseHref) {
+      case '/fr/': {
+        document.cookie = 'firebase-language-override=en';
+        document.cookie = 'firebase-country-override=US';
+        document.location.assign('/en');
+        break;
+      }
+      case '/en/': {
+        document.cookie = 'firebase-language-override=fr';
+        document.cookie = 'firebase-country-override=FR';
+        document.location.assign('/fr');
+        break;
+      }
+    }
   }
 
   protected signOut() {
