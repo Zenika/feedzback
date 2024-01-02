@@ -13,23 +13,23 @@
 
   &__feed,
   &__back {
-    animation: appLogoTextAnim 10s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+    animation: appLogoTextAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
   }
 
   &__z {
     width: 0em;
-    animation: appLogoImageAnim 10s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+    animation: appLogoImageAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
   }
 }
 
 @keyframes appLogoTextAnim {
-  45% {
+  46% {
     color: inherit;
   }
   50% {
     color: v.$dark-primary-text;
   }
-  95% {
+  96% {
     color: v.$dark-primary-text;
   }
   100% {
