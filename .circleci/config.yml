@@ -1,0 +1,313 @@
+###############################################################################
+# SETUP
+###############################################################################
+version: 2.1
+orbs:
+  # Pre-configured orb for GCP "gcloud" CLI
+  gcp-cli: circleci/gcp-cli@3.1.1
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:20.9
+    resource_class: small
+
+###############################################################################
+# COMMANDS - reusable snippets
+###############################################################################
+commands:
+  restore_npm_cache:
+    parameters:
+      directory:
+        type: string
+    steps:
+      - restore_cache:
+          name: Restoring NPM cache
+          keys:
+            - npm-deps-{{ checksum "./workspace/<< parameters.directory >>/package-lock.json" }}
+  restore_workspace:
+    steps:
+      - attach_workspace:
+          at: workspace
+  restore_workspace_and_npm_cache:
+    parameters:
+      directory:
+        type: string
+    steps:
+      - restore_workspace
+      - restore_npm_cache:
+          directory: << parameters.directory >>
+
+###############################################################################
+# WORKFLOWS
+###############################################################################
+workflows:
+  usine_a_feedzback:
+    jobs:
+      #############################################################################
+      # This first section runs every time, for every branch and tags following
+      # these patterns: "vX.Y.Z" and "staging-X.Y.Z"
+      #############################################################################
+      ### Preparing and testing
+      - prepare-workspace:
+          filters: &filter-include-production
+            tags:
+              only:
+                - /^v\d+\.\d+\.\d+$/
+                - /^staging-\d+\.\d+\.\d+$/
+      - node-install:
+          filters: *filter-include-production
+          name: node-install-<< matrix.module >>
+          requires:
+            - prepare-workspace
+          matrix:
+            parameters:
+              module: ["server", "client"]
+      ### Testing and checking linting
+      - node-test:
+          filters: *filter-include-production
+          name: node-test-<< matrix.module >>
+          requires:
+            - node-install-<< matrix.module >>
+          matrix:
+            parameters:
+              module: ["server", "client"]
+      - node-lint:
+          filters: *filter-include-production
+          name: node-lint-<< matrix.module >>
+          requires:
+            - node-install-<< matrix.module >>
+          matrix:
+            parameters:
+              module: ["server", "client"]
+      ### Building all possible clients (staging, production)
+      - build-client:
+          filters: *filter-include-production
+          requires:
+            - node-test-client
+            - node-lint-client
+          name: build-client-for-<< matrix.environment >>
+          matrix:
+            parameters:
+              environment: ["staging", "production"]
+      #############################################################################
+      # This section only runs for any non-deployed branches and tags and checks
+      # that the server is actually buildable as a container
+      #############################################################################
+      - build-server:
+          filters:
+            branches:
+              ignore: dev
+          requires:
+            - node-test-server
+            - node-lint-server
+          name: testing-build-server-for-revision
+          context: feedzback-staging
+          tag: false
+      #############################################################################
+      # This section will only run for staging deployments: either "dev" branch or
+      # tags that match "staging-X.Y.Z"
+      #############################################################################
+      ### Building server container with Google Cloud build
+      - build-server:
+          filters: &filter-staging
+            branches:
+              only: dev
+            tags:
+              only: /^staging-\d+\.\d+\.\d+$/
+          requires:
+            - node-test-server
+            - node-lint-server
+          name: build-server-for-staging
+          context: feedzback-staging
+          tag: true
+      - deploy-server:
+          filters: *filter-staging
+          requires:
+            - build-server-for-staging
+          name: deploy-staging-server
+          context: feedzback-staging
+          service-name: feedzback-staging
+      - deploy-client:
+          filters: *filter-staging
+          requires:
+            - build-client-for-staging
+          name: deploy-staging-client
+          context: feedzback-staging
+          environment: staging
+      #############################################################################
+      # This section will only run for PRODUCTION deployments: tags need to match
+      # the following pattern "vX.Y.Z"
+      #############################################################################
+      ### Building server container with Google Cloud build
+      - build-server:
+          filters: &filter-only-production
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+          requires:
+            - node-test-server
+            - node-lint-server
+          name: build-server-for-production
+          context: feedzback-production
+          tag: true
+      - deploy-server:
+          filters: *filter-only-production
+          requires:
+            - build-server-for-production
+          name: deploy-production-server
+          context: feedzback-production
+          service-name: feedzback
+      - deploy-client:
+          filters: *filter-only-production
+          requires:
+            - build-client-for-production
+          name: deploy-production-client
+          context: feedzback-production
+          environment: production
+
+jobs:
+  prepare-workspace:
+    executor: node
+    steps:
+      - run:
+          name: Creating workspace directory
+          command: mkdir -p workspace
+      - checkout:
+          path: workspace
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - client
+            - server
+
+  node-install:
+    parameters: &param-module
+      module:
+        type: string
+    executor: node
+    steps:
+      - restore_workspace_and_npm_cache:
+          directory: << parameters.module >>
+      - run:
+          name: Installing node modules
+          working_directory: workspace/<< parameters.module >>
+          command: npm ci
+      - save_cache:
+          name: Storing NPM cache
+          key: npm-deps-{{ checksum "./workspace/<< parameters.module >>/package-lock.json" }}
+          paths:
+            - ./workspace/<< parameters.module >>/node_modules
+
+  node-test:
+    parameters: *param-module
+    executor: node
+    steps:
+      - restore_workspace_and_npm_cache:
+          directory: << parameters.module >>
+      - run:
+          working_directory: workspace/<< parameters.module >>
+          name: Running tests in << parameters.module >>
+          # For the moment, passes with no tests
+          command: npm run test
+
+  node-lint:
+    parameters: *param-module
+    executor: node
+    steps:
+      - restore_workspace_and_npm_cache:
+          directory: << parameters.module >>
+      - run:
+          working_directory: workspace/<< parameters.module >>
+          name: Running linter check in << parameters.module >>
+          command: npm run lint:ci
+
+  build-server:
+    parameters: &param-service
+      service-name:
+        type: string
+        default: feedzback-${CIRCLE_SHA1}
+      tag:
+        type: boolean
+        default: false
+    executor: gcp-cli/google
+    steps:
+      - gcp-cli/setup
+      - checkout
+      - when:
+          condition: << parameters.tag >>
+          steps:
+            - run:
+                working_directory: server
+                name: Submitting Docker image to build and tagging it
+                command: |
+                  gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1}
+      - unless:
+          condition: << parameters.tag >>
+          steps:
+            - run:
+                working_directory: server
+                name: Submitting Docker image to build
+                command: |
+                  gcloud builds submit
+
+  deploy-server:
+    parameters: *param-service
+    executor: gcp-cli/google
+    steps:
+      - gcp-cli/setup
+      - run:
+          working_directory: server
+          name: Running gcloud run deploy
+          command: |
+            # Building update-env-vars argument
+            ZZ="CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
+            ZZ="${ZZ},SERVER_PORT=3000"
+            ZZ="${ZZ},NO_COLOR=true"
+            ZZ="${ZZ},MAILGUN_USERNAME=${MAILGUN_USERNAME}"
+            ZZ="${ZZ},MAILGUN_KEY=${MAILGUN_KEY}"
+            ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
+            ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
+            ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
+            gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
+
+  build-client:
+    parameters: &param-environment
+      environment:
+        default: staging
+        type: string
+    executor: node
+    steps:
+      - restore_workspace_and_npm_cache:
+          directory: client
+      - run:
+          working_directory: workspace/client
+          name: Building << parameters.environment >> package
+          # For the moment, passes with no tests
+          command: npm run build:<< parameters.environment >>
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - client/dist/<< parameters.environment >>
+
+  deploy-client:
+    parameters: *param-environment
+    executor: node
+    steps:
+      - restore_workspace
+      - run:
+          name: Installing Firebase client
+          command: |
+            curl -Lo ./firebase_bin https://firebase.tools/bin/linux/latest
+            chmod +x ./firebase_bin
+      - run:
+          name: Preparing credentials for Firebase client
+          command: |
+            echo ${GCLOUD_SERVICE_KEY} > ./workspace/firebase-service-account.json
+      - run:
+          name: Deploying client
+          command: |
+            export GOOGLE_APPLICATION_CREDENTIALS=./workspace/firebase-service-account.json
+            ./firebase_bin --config ./workspace/client/firebase.json use << parameters.environment >>
+            ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting:<< parameters.environment >>
