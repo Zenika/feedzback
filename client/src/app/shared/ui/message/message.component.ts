@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageType } from './message.types';
 
@@ -12,12 +12,22 @@ import { MessageType } from './message.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class MessageComponent {
-  @Input() type: MessageType = 'light';
+  @Input() closable = true;
 
   @Input() icon?: string;
 
+  @Input() type: MessageType = 'light';
+
+  @Input() visible = true;
+
+  @Output() visibleChange = new EventEmitter<boolean>();
+
   @HostBinding('class') get css() {
     return `app-message app-message--${this.type}`;
+  }
+
+  @HostBinding('class.app-message--hidden') get hidden() {
+    return !this.visible;
   }
 
   protected iconMap: Record<MessageType, string> = {
@@ -26,4 +36,9 @@ export class MessageComponent {
     danger: 'error',
     light: '',
   };
+
+  close() {
+    this.visible = false;
+    this.visibleChange.emit(false);
+  }
 }

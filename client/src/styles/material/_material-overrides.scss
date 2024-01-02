@@ -1,19 +1,8 @@
-@use './material-palette' as p;
+@use '../variables.scss' as v;
 
-/* ----- Dialog ----- */
+/* ----- Icon ----- */
 
-.mat-mdc-dialog-container {
-  --mdc-dialog-container-color: #fafafa;
-  --mdc-dialog-supporting-text-color: p.$dark-primary-text;
-  --mdc-dialog-subhead-color: #df2147;
-}
-
-.mdc-dialog__title {
-  border-bottom: 1px solid #ddd !important;
-  background-color: white;
-}
-
-.mdc-dialog__actions {
-  border-top: 1px solid #ddd !important;
-  background-color: white;
+mat-icon {
+  // Useful when the parent tag has a `display: flex` property
+  flex-shrink: 0;
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from './employee-db';
 import { UpdateManagerDto } from './employee.dto';
@@ -22,6 +22,9 @@ export class EmployeeController {
   @UseGuards(AuthGuard)
   updateManager(@Body() { managerEmail }: UpdateManagerDto) {
     const employeeEmail = this.authService.userEmail!;
+    if (employeeEmail === managerEmail) {
+      throw new BadRequestException();
+    }
     return this.employeeDbService.updateManager(employeeEmail, managerEmail);
   }
 }

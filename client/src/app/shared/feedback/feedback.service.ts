@@ -4,7 +4,15 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
-import { Feedback, FeedbackListMap, FeedbackRequest, IdObject, TokenObject } from './feedback.types';
+import {
+  Feedback,
+  FeedbackDraft,
+  FeedbackListMap,
+  FeedbackRequest,
+  FeedbackRequestDraft,
+  IdObject,
+  TokenObject,
+} from './feedback.types';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +24,8 @@ export class FeedbackService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
+  // ----- Request feedback and give requested feedback -----
+
   request(dto: FeedbackRequestDto) {
     return this.authService.withBearerToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
@@ -25,8 +35,16 @@ export class FeedbackService {
     );
   }
 
+  requestAgain(feedbackId: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request-again`, { feedbackId }, { headers }),
+    );
+  }
+
   checkRequest(token: string) {
-    return this.httpClient.get<FeedbackRequest>(`${this.apiBaseUrl}/feedback/check-request/${token}`);
+    return this.httpClient.get<{ request: FeedbackRequest; draft?: FeedbackRequestDraft }>(
+      `${this.apiBaseUrl}/feedback/check-request/${token}`,
+    );
   }
 
   revealRequestTokenId(feedbackId: string) {
@@ -35,10 +53,23 @@ export class FeedbackService {
     );
   }
 
+  giveRequestedDraft(dto: GiveRequestedFeedbackDto) {
+    return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
+  }
+
   giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
       .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
       .pipe(catchError(() => of(false)));
+  }
+
+  // ----- Give spontaneous feedback -----
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  giveDraft(dto: GiveFeedbackDto) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give/draft`, dto, { headers }),
+    );
   }
 
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
@@ -48,6 +79,24 @@ export class FeedbackService {
         .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
     );
   }
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  deleteDraft(receiverEmail: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/give/draft/${receiverEmail}`, {
+        headers,
+      }),
+    );
+  }
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  getDraftList() {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<FeedbackDraft[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
+    );
+  }
+
+  // ----- View feedbacks (requested and given) -----
 
   getListMap() {
     return this.authService.withBearerToken((headers) =>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EMPTY, ReplaySubject, map, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { UpdateManagerDto } from './employee.dto';
@@ -16,17 +17,35 @@ export class EmployeeService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
-  private _data = signal<EmployeeData>({ managerEmail: '', managedEmails: [] });
+  dataSnapshot: EmployeeData = { managerEmail: '', managedEmails: [] };
 
-  data = computed(() => this._data());
+  private _data$ = new ReplaySubject<EmployeeData>(1);
 
-  isManager = computed(() => this._data().managedEmails.length > 0);
+  data$ = this._data$.asObservable();
 
-  fetchData() {
+  isManager$ = this._data$.pipe(map(({ managedEmails }) => managedEmails.length > 0));
+
+  constructor() {
+    this.authService.isKnownUser$
+      .pipe(
+        takeUntilDestroyed(),
+        switchMap((isKnownUser) => {
+          if (!isKnownUser) {
+            return EMPTY;
+          }
+          return this.fetchData();
+        }),
+      )
+      .subscribe();
+  }
+
+  private fetchData() {
     return this.authService.withBearerToken((headers) =>
       this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { headers }).pipe(
-        tap((data) => this._data.set(data)),
-        map(() => undefined),
+        tap((data) => {
+          this.dataSnapshot = data;
+          this._data$.next(data);
+        }),
       ),
     );
   }
@@ -34,8 +53,13 @@ export class EmployeeService {
   updateManager(managerEmail: string) {
     return this.authService.withBearerToken((headers) =>
       this.httpClient
-        .post(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
-        .pipe(map(() => this._data.update((data) => ({ ...data, managerEmail })))),
+        .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
+        .pipe(
+          tap(() => {
+            this.dataSnapshot = { ...this.dataSnapshot, managerEmail };
+            this._data$.next(this.dataSnapshot);
+          }),
+        ),
     );
   }
 }

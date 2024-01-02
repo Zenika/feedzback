@@ -1,0 +1,68 @@
+@if (hasDraftDialog()) {
+  <button mat-raised-button color="primary" class="float-right" (click)="openDraftDialog()">
+    <mat-icon>draft</mat-icon> Brouillons
+  </button>
+}
+
+<ng-template #draftDialogTmpl>
+  <h1 mat-dialog-title>Brouillons</h1>
+  <div mat-dialog-content>
+    <app-feedback-draft />
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button mat-button mat-dialog-close cdkFocusInitial>Fermer</button>
+  </div>
+</ng-template>
+
+<h1 class="gbl-page-title">
+  <mat-icon>chat</mat-icon>
+  Donner du feedZback
+</h1>
+
+<app-message type="danger" [(visible)]="showError">
+  <strong>Oops&nbsp;!</strong><br />
+  Une erreur s'est produite lors de l'envoi.
+</app-message>
+
+<app-message type="success" [(visible)]="showDraft">Brouillon enregistré.</app-message>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="gbl-form-field">
+    <mat-label>Email de votre collègue</mat-label>
+    <input [formControl]="form.controls.receiverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
+    <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
+  <app-give-feedback-details
+    [positive]="form.controls.positive"
+    [negative]="form.controls.negative"
+    [comment]="form.controls.comment"
+  />
+
+  @if (hasManagerFeature) {
+    <div class="gbl-form-field">
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        Partager le feedZback avec le manager de votre collègue
+      </mat-slide-toggle>
+    </div>
+  }
+
+  <div class="gbl-form-submit">
+    <div>
+      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+
+      <button
+        type="button"
+        [disabled]="form.controls.receiverEmail.invalid || submitInProgress"
+        mat-stroked-button
+        color="primary"
+        class="ms-6"
+        (click)="onDraft()"
+      >
+        Enregistrer
+      </button>
+    </div>
+
+    <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+  </div>
+</form>

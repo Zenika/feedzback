@@ -3,11 +3,11 @@
   text-align: center;
 
   &__image {
+    padding: 2rem;
     max-width: 100%;
     box-shadow: 7px 7px 1px rgba(0 0 0 / 0.1);
     border-radius: 0.5rem;
-    border: 1px solid #ccc;
-    padding: 2rem;
-    background-color: #fff;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
   }
 }

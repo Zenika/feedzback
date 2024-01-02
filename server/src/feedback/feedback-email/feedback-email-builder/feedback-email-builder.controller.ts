@@ -20,4 +20,11 @@ export class FeedbackEmailBuilderController {
     const feedbackId = 'feedbackId_12345azerty';
     return (await this.feedbackEmailBuilderService.given(giverEmail, feedbackId)).html;
   }
+
+  @Get('demo/shared')
+  async shared() {
+    const managedEmail = 'managed@zenika.com';
+    const feedbackId = 'feedbackId_12345azerty';
+    return (await this.feedbackEmailBuilderService.shared(managedEmail, feedbackId)).html;
+  }
 }

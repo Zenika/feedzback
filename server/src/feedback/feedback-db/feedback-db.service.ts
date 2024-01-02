@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { FieldPath, Filter } from 'firebase-admin/firestore';
-import { FirebaseService } from '../../core/firebase';
+import { FieldPath, FieldValue, Filter } from 'firebase-admin/firestore';
+import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
+  FeedbackDraft,
+  FeedbackDraftMap,
   FeedbackItemWithId,
   FeedbackRequest,
   FeedbackRequestItemWithId,
@@ -14,19 +16,22 @@ import {
   FeedbackStatus,
   FeedbackWithId,
   IdObject,
+  TokenObject,
 } from './feedback-db.types';
 import { mapToFeedbackListMap } from './feedback-db.utils';
 
 @Injectable()
 export class FeedbackDbService {
-  private db = this.firebaseService.db;
-
   private get feedbackCollection() {
-    return this.db.collection(Collection.feedback);
+    return this.firebaseService.db.collection(Collection.feedback);
   }
 
   private get feedbackRequestTokenCollection() {
-    return this.db.collection(Collection.feedbackRequestToken);
+    return this.firebaseService.db.collection(Collection.feedbackRequestToken);
+  }
+
+  private get feedbackDraftMapCollection() {
+    return this.firebaseService.db.collection(Collection.feedbackDraftMap);
   }
 
   constructor(private firebaseService: FirebaseService) {}
@@ -35,14 +40,18 @@ export class FeedbackDbService {
     return !!(await this.feedbackCollection.get());
   }
 
+  // ----- Request feedback and give requested feedback -----
+
   async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
+    const now = Date.now();
     const request: FeedbackRequest = {
       giverEmail,
       receiverEmail,
       message,
       shared,
       status: FeedbackRequestStatus,
-      createdAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     };
     const feedbackId = (await this.feedbackCollection.add(request)).id;
 
@@ -54,13 +63,37 @@ export class FeedbackDbService {
     return tokenId;
   }
 
+  async requestAgain(feedbackId: string, receiverEmail: string) {
+    const requestDoc = await this.feedbackCollection.doc(feedbackId).get();
+    if (!requestDoc.exists) {
+      return null;
+    }
+    const request = requestDoc.data() as FeedbackRequest;
+
+    if (request.receiverEmail !== receiverEmail) {
+      return null;
+    }
+
+    const tokenId = await this.revealRequestTokenId(feedbackId, request.giverEmail);
+    if (!tokenId) {
+      return null;
+    }
+
+    const partialFeedbackRequest: Partial<FeedbackRequest> = {
+      updatedAt: Date.now(),
+    };
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedbackRequest);
+
+    return { ...request, token: tokenId } satisfies FeedbackRequest & TokenObject;
+  }
+
   async checkRequest(tokenId: string) {
     const tokenDoc = await this.feedbackRequestTokenCollection.doc(tokenId).get();
     if (!tokenDoc.exists) {
       return null;
     }
 
-    const { feedbackId } = tokenDoc.data() as FeedbackRequestToken;
+    const { feedbackId, draft } = tokenDoc.data() as FeedbackRequestToken;
 
     const requestQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', feedbackId)
@@ -72,7 +105,10 @@ export class FeedbackDbService {
       return null;
     }
 
-    return { id: requestDoc.id, ...requestDoc.data() } as FeedbackRequestWithId;
+    return {
+      request: docWithId<FeedbackRequestWithId>(requestDoc),
+      draft,
+    };
   }
 
   async revealRequestTokenId(feedbackId: string, giverEmail: string) {
@@ -95,11 +131,20 @@ export class FeedbackDbService {
     return tokenDoc.id;
   }
 
+  async giveRequestedDraft(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
+    const partialFeedbackRequestToken: Partial<FeedbackRequestToken> = {
+      draft: { positive, negative, comment },
+    };
+    await this.feedbackRequestTokenCollection.doc(tokenId).update(partialFeedbackRequestToken);
+  }
+
   async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
-    const request = await this.checkRequest(tokenId);
-    if (!request) {
+    const checked = await this.checkRequest(tokenId);
+    if (!checked) {
       return null;
     }
+
+    const feedbackId = checked.request.id;
 
     const partialFeedback: Partial<Feedback> = {
       positive,
@@ -108,14 +153,24 @@ export class FeedbackDbService {
       status: FeedbackStatus,
       updatedAt: Date.now(),
     };
-    await this.feedbackCollection.doc(request.id).update(partialFeedback);
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
 
-    const { giverEmail, receiverEmail, id: feedbackId } = request;
-    return { giverEmail, receiverEmail, feedbackId };
+    const { giverEmail, receiverEmail, shared } = checked.request;
+    return { giverEmail, receiverEmail, shared, feedbackId };
+  }
+
+  // ----- Give spontaneous feedback -----
+
+  async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+    const partialDraftMap: FeedbackDraftMap = {
+      [receiverEmail]: { receiverEmail, positive, negative, comment, shared },
+    };
+    await this.feedbackDraftMapCollection.doc(giverEmail).set(partialDraftMap, { merge: true });
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+    const now = Date.now();
     const feedback: Feedback = {
       giverEmail,
       receiverEmail,
@@ -125,23 +180,44 @@ export class FeedbackDbService {
       message: '',
       shared,
       status: FeedbackStatus,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     };
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
+
+    await this.deleteDraft(giverEmail, receiverEmail);
+
     return { id } as IdObject;
   }
+
+  async deleteDraft(giverEmail: string, receiverEmail: string) {
+    await this.feedbackDraftMapCollection
+      .doc(giverEmail)
+      .set({ [receiverEmail]: FieldValue.delete() }, { merge: true });
+  }
+
+  async getDraftList(giverEmail: string) {
+    const draftMapDoc = await this.feedbackDraftMapCollection.doc(giverEmail).get();
+    if (!draftMapDoc.exists) {
+      return [];
+    }
+    const draftMap = draftMapDoc.data() as FeedbackDraftMap;
+
+    const draftList: FeedbackDraft[] = Object.values(draftMap);
+    return sortList(draftList, 'receiverEmail');
+  }
+
+  // ----- View feedbacks (requested and given) -----
 
   async getListMap(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
       .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
       .select(...feedbackItemFields)
+      .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    const feedbackList = feedbackQuery.docs.map(
-      (feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackItemWithId | FeedbackRequestItemWithId,
-    );
+    const feedbackList = docsWithId<FeedbackItemWithId | FeedbackRequestItemWithId>(feedbackQuery.docs);
 
     return mapToFeedbackListMap(feedbackList, viewerEmail);
   }
@@ -157,7 +233,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    return { id: feedbackDoc.id, ...feedbackDoc.data() } as FeedbackWithId | FeedbackRequestWithId;
+    return docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc);
   }
 
   async getManagedFeedbacks(managedEmail: string) {
@@ -165,7 +241,9 @@ export class FeedbackDbService {
       .where('receiverEmail', '==', managedEmail)
       .where('status', '==', FeedbackStatus)
       .where('shared', '==', true)
+      .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
-    return feedbackQuery.docs.map((feedback) => ({ id: feedback.id, ...feedback.data() }) as FeedbackWithId);
+
+    return docsWithId(feedbackQuery.docs) as FeedbackWithId[];
   }
 }

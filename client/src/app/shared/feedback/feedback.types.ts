@@ -17,7 +17,7 @@ export type Feedback = {
   updatedAt: number;
 };
 
-export const FeedbackStatus = 'done'; // Idea: in the future, it could be also 'draft'...
+export const FeedbackStatus = 'done';
 export type FeedbackStatus = typeof FeedbackStatus;
 
 // ----- FeedbackRequest -----
@@ -30,10 +30,17 @@ export type FeedbackRequest = {
   shared: boolean;
   status: FeedbackRequestStatus;
   createdAt: number;
+  updatedAt: number;
 };
 
 export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
+
+export type FeedbackRequestDraft = {
+  positive: string;
+  negative: string;
+  comment: string;
+};
 
 // ----- FeedbackListMap -----
 
@@ -50,6 +57,16 @@ export type FeedbackListMap = {
   given: FeedbackItem[];
   sentRequest: FeedbackRequestItem[];
   receivedRequest: FeedbackRequestItem[];
+};
+
+// ----- FeedbackDraft -----
+
+export type FeedbackDraft = {
+  receiverEmail: string;
+  positive: string;
+  negative: string;
+  comment: string;
+  shared: boolean;
 };
 
 // ----- IdObject -----

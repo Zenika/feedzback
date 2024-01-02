@@ -1,0 +1,57 @@
+@use '../../../app.scss' as v;
+
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: inherit;
+  line-height: 1em;
+
+  &--lowercase {
+    text-transform: lowercase;
+  }
+
+  &__feed,
+  &__back {
+    animation: appLogoTextAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+  }
+
+  &__z {
+    width: 0em;
+    animation: appLogoImageAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+  }
+}
+
+@keyframes appLogoTextAnim {
+  46% {
+    color: inherit;
+  }
+  50% {
+    color: v.$dark-primary-text;
+  }
+  96% {
+    color: v.$dark-primary-text;
+  }
+  100% {
+    columns: inherit;
+  }
+}
+
+@keyframes appLogoImageAnim {
+  45% {
+    width: 0em;
+    opacity: 0;
+  }
+  50% {
+    width: 1em;
+    opacity: 1;
+  }
+  95% {
+    width: 1em;
+    opacity: 1;
+  }
+  100% {
+    width: 0em;
+    opacity: 0;
+  }
+}

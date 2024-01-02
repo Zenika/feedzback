@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
@@ -26,6 +27,8 @@ export class AuthService {
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
+
+  private document = inject(DOCUMENT);
 
   userSnapshot?: User | null;
 
@@ -81,7 +84,12 @@ export class AuthService {
     return from(this.firebaseAuth.signOut()).pipe(
       concatMap(() => this.isSignedIn$),
       first((isSignedIn) => !isSignedIn),
-      tap(() => this.router.navigate(['/sign-in'])),
+      tap(async () => {
+        await this.router.navigate(['/sign-in']);
+
+        // Make sure all service state has been reset!
+        this.document.defaultView?.location.reload();
+      }),
       catchError(() => of(false)),
     );
   }

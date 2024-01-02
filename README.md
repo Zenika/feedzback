@@ -11,6 +11,7 @@ Demandez ou donnez du feedback à vos collègues !
 - Create a file `.env` with the following environment variables:
 
 ```txt
+PORT="3000"
 CLIENT_URL="http://localhost:4200"
 FIREBASE_PROJECT_ID="<SECRET_VALUE>"
 FIREBASE_PRIVATE_KEY="<SECRET_VALUE>"

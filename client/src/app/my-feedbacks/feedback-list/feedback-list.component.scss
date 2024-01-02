@@ -3,12 +3,12 @@
   width: 100%;
   overflow: auto;
 
-  &__actions {
-    width: 1%;
-  }
-
   &__mobile {
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
+  }
+
+  &__actions {
+    width: 1%;
   }
 }

@@ -20,6 +20,7 @@
     <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
       Mes feedZbacks
     </a>
+
     @if (hasManagerFeature && isManager()) {
       <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/manager">
         Manager
@@ -28,25 +29,25 @@
   }
 </nav>
 
-<div class="app-header-sign-out">
+<div class="app-header-account">
   @if (isSignedIn$ | async) {
     @if (photoUrl$ | async; as photoUrl) {
       <img
         [src]="photoUrl"
-        [matMenuTriggerFor]="signOutMenu"
-        class="app-header-sign-out__photo"
+        [matMenuTriggerFor]="accountMenu"
+        class="app-header-account__photo"
         height="48"
         width="48"
         alt="Profile photo"
       />
     } @else {
-      <button mat-icon-button [matMenuTriggerFor]="signOutMenu">
+      <button mat-icon-button [matMenuTriggerFor]="accountMenu">
         <mat-icon color="primary">more_vert</mat-icon>
       </button>
     }
 
-    <mat-menu #signOutMenu="matMenu" xPosition="before">
-      @if (isKnownUser$ | async) {
+    <mat-menu #accountMenu="matMenu" xPosition="before">
+      @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           Paramètres
@@ -57,7 +58,14 @@
       <button mat-menu-item><mat-icon color="primary">translate</mat-icon> English</button>
       -->
 
-      <button mat-menu-item (click)="signOut()"><mat-icon color="primary">logout</mat-icon> Se déconnecter</button>
+      <button mat-menu-item (click)="signOut()">
+        <mat-icon color="primary">logout</mat-icon>
+        @if (isKnownUser$ | async) {
+          Se déconnecter
+        } @else {
+          Fermer la session
+        }
+      </button>
     </mat-menu>
   }
 </div>

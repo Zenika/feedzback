@@ -1,10 +1,11 @@
+@use '../../app.scss' as app;
+
 .app-manager-feedback-list {
   display: block;
   width: 100%;
   overflow: auto;
 
   &__filter {
-    margin-top: 1rem;
     width: 100%;
 
     mat-icon {
@@ -14,6 +15,10 @@
 
   &__expand {
     width: 1%;
+  }
+
+  &__item {
+    padding: 1rem 0;
   }
 
   &__row {
@@ -33,7 +38,7 @@
     &--expanded > td {
       transition: color 225ms ease;
       border-bottom-color: transparent;
-      color: #df2147;
+      color: app.$primary-color;
       font-weight: bold;
     }
   }
@@ -49,9 +54,5 @@
       transition: border-bottom-color 0ms ease 225ms;
       border-bottom-color: transparent;
     }
-  }
-
-  &__item {
-    padding: 1rem 0;
   }
 }

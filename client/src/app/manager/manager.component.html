@@ -1,10 +1,10 @@
-<h1 class="gbl-page-title mat-h1">
+<h1 class="gbl-page-title">
   <mat-icon>hub</mat-icon>
   FeedZbacks partagés
 </h1>
 
-<mat-form-field appearance="outline" style="width: 100%">
-  <mat-label>Liste des collaborateurs</mat-label>
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>Collaborateur</mat-label>
   <mat-select [value]="employee" (valueChange)="employeeChange($event)">
     @for (employee of employees; track employee) {
       <mat-option [value]="employee">{{ employee }}</mat-option>
@@ -16,6 +16,8 @@
   @if (feedbacks?.length) {
     <app-manager-feedback-list [feedbacks]="feedbacks" />
   } @else if (feedbacks !== null && employee) {
-    <div class="app-manager__empty"><mat-icon>share_off</mat-icon> Pas de feedZback partagé...</div>
+    <div class="mt-4 flex items-center justify-center gap-2 italic opacity-50">
+      <mat-icon>share_off</mat-icon> Aucun feedZback partagé...
+    </div>
   }
 }

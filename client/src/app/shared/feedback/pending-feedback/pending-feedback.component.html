@@ -1,4 +1,4 @@
-<h1 class="gbl-page-title mat-h1">
+<h1 class="gbl-page-title">
   <mat-icon>forum</mat-icon>
   FeedZback
   @switch (type) {
@@ -12,8 +12,8 @@
 </h1>
 
 <div class="app-pending-feedback-list">
-  <div class="app-pending-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
   <div class="app-pending-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
+  <div class="app-pending-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
 </div>
 
 <app-feedback-body [feedback]="feedback" />
@@ -31,12 +31,26 @@
   </div>
 }
 
-<!-- TODO: Feature NOT implemented
-@if (type === feedbackType.sentRequest) {
-  <button mat-raised-button color="primary">Relancer</button>
-}
--->
+@switch (type) {
+  @case (feedbackType.sentRequest) {
+    @if (feedback.updatedAt > feedback.createdAt) {
+      <div class="app-pending-feedback-list">
+        <div class="app-pending-feedback-list__item">
+          <mat-icon>history</mat-icon>
+          Vous avez déjà relancé votre collègue le {{ feedback.updatedAt | date }}
+        </div>
+      </div>
+    }
 
-@if (type === feedbackType.receivedRequest) {
-  <button mat-raised-button color="primary" (click)="giveNow()">Donner</button>
+    @if (showRequestAgainSuccess) {
+      <app-message type="success" [visible]="showRequestAgainSuccess">
+        Un rappel a été envoyé à votre collègue.
+      </app-message>
+    } @else {
+      <button mat-raised-button color="primary" (click)="requestAgain()">Relancer</button>
+    }
+  }
+  @case (feedbackType.receivedRequest) {
+    <button mat-raised-button color="primary" (click)="giveNow()">Donner</button>
+  }
 }

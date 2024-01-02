@@ -1,5 +1,6 @@
 import { ValidationErrors } from '@angular/forms';
 import { ALLOWED_EMAIL_DOMAINS_ERROR_KEY } from '../allowed-email-domains/allowed-email-domains.validator';
+import { FORBIDDEN_VALUES_KEY } from '../forbidden-values';
 import { MULTIPLE_EMAILS_ERROR_KEY } from '../multiple-emails';
 
 export const getValidationErrorMessage = (errors: ValidationErrors | null): string | null => {
@@ -14,6 +15,9 @@ export const getValidationErrorMessage = (errors: ValidationErrors | null): stri
   }
   if (errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY]) {
     return `Domaine autorisé: ${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', ')}`;
+  }
+  if (errors?.[FORBIDDEN_VALUES_KEY]) {
+    return `Valeur non autorisée: ${errors?.[FORBIDDEN_VALUES_KEY].join(', ')}`;
   }
   if (errors?.['minlength']) {
     return `${errors?.['minlength'].requiredLength} charactères au minimum`;

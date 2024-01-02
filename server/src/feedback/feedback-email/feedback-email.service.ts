@@ -37,6 +37,17 @@ export class FeedbackEmailService {
     });
   }
 
+  async shared(managerEmail: string, managedEmail: string, feedbackId: string) {
+    const { subject, html } = await this.feedbackEmailBuilderService.shared(managedEmail, feedbackId);
+
+    this.emailService.send({
+      from: EMAIL_DEFAULT_FROM_FIELD,
+      to: this.getToField(managerEmail),
+      subject,
+      html,
+    });
+  }
+
   private getToField(toField: string | string[]): string | string[] {
     return this.appEnv === 'production' ? toField : EMAIL_DEV_TO_FIELD;
   }

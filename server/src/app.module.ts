@@ -5,9 +5,10 @@ import { AppConfigModule } from './core/config';
 import { ContextMiddleware, ContextModule } from './core/context';
 import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
+import { HealthModule } from './health';
 
 @Module({
-  imports: [AppConfigModule, AssetsModule, ContextModule, AuthModule, FeedbackModule, EmployeeModule],
+  imports: [HealthModule, AppConfigModule, AssetsModule, ContextModule, AuthModule, FeedbackModule, EmployeeModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

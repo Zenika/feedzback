@@ -8,7 +8,9 @@ export class ContextService {
   languages!: string[];
 
   setFrom(req: Request) {
-    this.serverBaseUrl = `${req.protocol}://${req.get('Host')}`;
+    const protocol = req.get('x-forwarded-proto') ?? 'http';
+    const host = req.get('Host');
+    this.serverBaseUrl = `${protocol}://${host}`;
 
     this.languages = req.acceptsLanguages();
   }

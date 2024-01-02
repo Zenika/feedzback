@@ -24,14 +24,14 @@ import { MessageComponent } from '../shared/ui/message/message.component';
   templateUrl: './settings.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SettingsComponent {
+export default class SettingsComponent {
   @HostBinding('class.app-settings') hasCss = true;
 
   private employeeService = inject(EmployeeService);
 
   protected submitInProgress = false;
 
-  private currentManagerEmail = this.employeeService.data().managerEmail;
+  private currentManagerEmail = this.employeeService.dataSnapshot.managerEmail;
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 

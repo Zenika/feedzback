@@ -1,16 +1,10 @@
 import { Routes } from '@angular/router';
-import { DemoContentComponent } from './demo-content/demo-content.component';
-import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component';
-import { GiveFeedbackSuccessComponent } from './give-feedback/give-feedback-success/give-feedback-success.component';
-import { GiveFeedbackComponent } from './give-feedback/give-feedback.component';
-import { giveFeedbackGuard } from './give-feedback/give-feedback.guard';
+import { feedbackDetailsResolver } from './feedback-details/feedback-details.resolver';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
 import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { RequestFeedbackSuccessComponent } from './request-feedback/request-feedback-success/request-feedback-success.component';
-import { RequestFeedbackComponent } from './request-feedback/request-feedback.component';
-import { SettingsComponent } from './settings/settings.component';
+import { settingsGuard } from './settings/setings.guard';
 import { authGuard } from './shared/auth/auth.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
@@ -28,26 +22,11 @@ export const routes: Routes = [
   },
   {
     path: 'request',
-    component: RequestFeedbackComponent,
-    canActivate: [authGuard],
-    title: 'FeedZback - Demander',
-  },
-  {
-    path: 'request/success',
-    component: RequestFeedbackSuccessComponent,
-    canActivate: [authGuard],
-    title: 'FeedZback - Demande réussie',
+    loadChildren: () => import('./request-feedback/request-feedback.routes'),
   },
   {
     path: 'give',
-    component: GiveFeedbackComponent,
-    canActivate: [giveFeedbackGuard],
-    title: 'FeedZback - Donner',
-  },
-  {
-    path: 'give/success',
-    component: GiveFeedbackSuccessComponent,
-    title: 'FeedZback - Envoi réussi',
+    loadChildren: () => import('./give-feedback/give-feedback.routes'),
   },
   {
     path: 'feedbacks',
@@ -62,14 +41,15 @@ export const routes: Routes = [
   },
   {
     path: 'feedback/:id',
-    component: FeedbackDetailsComponent,
+    loadComponent: () => import('./feedback-details/feedback-details.component'),
     canActivate: [authGuard],
+    resolve: { feedbackDetails: feedbackDetailsResolver },
     title: 'FeedZback - Vue détaillée',
   },
   {
     path: 'settings',
-    canActivate: [authGuard],
-    component: SettingsComponent,
+    loadComponent: () => import('./settings/settings.component'),
+    canActivate: [authGuard, settingsGuard],
     title: 'FeedZback - Paramètres',
   },
   {
@@ -91,7 +71,7 @@ export const routes: Routes = [
   },
   {
     path: 'demo',
-    component: DemoContentComponent,
+    loadComponent: () => import('./demo-content/demo-content.component'),
     title: 'FeedZback - Demo content',
   },
   {

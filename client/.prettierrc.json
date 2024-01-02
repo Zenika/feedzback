@@ -1,5 +1,13 @@
 {
   "printWidth": 120,
   "singleQuote": true,
-  "plugins": ["prettier-plugin-organize-imports"]
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
 }

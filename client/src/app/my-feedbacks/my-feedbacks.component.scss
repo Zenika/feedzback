@@ -1,4 +1,8 @@
 .app-my-feedbacks {
+  &__label-icon {
+    margin-right: 0.5rem;
+  }
+
   &-empty {
     margin: 0rem 0 2rem 0;
     text-align: center;
