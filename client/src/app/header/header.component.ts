@@ -71,15 +71,15 @@ export class HeaderComponent implements OnDestroy {
   protected switchLanguage() {
     switch (this.baseHref) {
       case '/fr/': {
-        document.cookie = 'firebase-language-override=en';
-        document.cookie = 'firebase-country-override=US';
-        document.location.assign('/en');
+        document.cookie = 'firebase-language-override=en; path=/';
+        document.cookie = 'firebase-country-override=US; path=/';
+        document.location.assign('/en/');
         break;
       }
       case '/en/': {
-        document.cookie = 'firebase-language-override=fr';
-        document.cookie = 'firebase-country-override=FR';
-        document.location.assign('/fr');
+        document.cookie = 'firebase-language-override=fr; path=/';
+        document.cookie = 'firebase-country-override=FR; path=/';
+        document.location.assign('/fr/');
         break;
       }
     }
