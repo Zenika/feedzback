@@ -9,8 +9,8 @@
     "build:production": "ng build --configuration production --output-path dist/production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "lint": "ng lint --fix",
     "lint:ci": "ng lint",
-    "lint": "npm run lint:ci -- --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "bundle-visualizer": "ng build --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -"

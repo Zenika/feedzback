@@ -16,15 +16,18 @@ COPY --from=builder /app/package.json .
 
 EXPOSE 3000
 
-# Server Port
+# Server port config
 ENV SERVER_PORT=3000
 
-# Firebase configuration
+# Client url config
+ENV CLIENT_URL=
+
+# Firebase config
 ENV FIREBASE_PROJECT_ID=
 ENV FIREBASE_PRIVATE_KEY=
 ENV FIREBASE_CLIENT_EMAIL=
 
-# Mailgun configuration
+# Mailgun config
 ENV MAILGUN_USERNAME=
 ENV MAILGUN_KEY=
 

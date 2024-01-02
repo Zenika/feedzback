@@ -8,7 +8,7 @@ import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
 
 @Module({
-  imports: [AppConfigModule, AssetsModule, ContextModule, HealthModule, AuthModule, FeedbackModule, EmployeeModule],
+  imports: [HealthModule, AppConfigModule, AssetsModule, ContextModule, AuthModule, FeedbackModule, EmployeeModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
