@@ -21,10 +21,19 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "fr",
+        "locales": {
+          "en": {
+            "translation": "src/locales/messages.en.json"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": true,
             "outputPath": "dist/client",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -73,6 +82,7 @@
               ]
             },
             "development": {
+              "localize": ["fr"],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,

@@ -4,23 +4,17 @@
       "target": "staging",
       "public": "dist/staging/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      "i18n": {
+        "root": "/"
+      }
     },
     {
       "target": "production",
       "public": "dist/production/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      "i18n": {
+        "root": "/"
+      }
     }
   ]
 }

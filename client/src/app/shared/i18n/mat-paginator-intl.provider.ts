@@ -10,7 +10,4 @@ export const provideMatPaginatorIntl = (): FactoryProvider => ({
     intl.nextPageLabel = 'Page suivante';
     return intl;
   },
-  deps: [
-    /* Injection translation module when this feature will be available */
-  ],
 });
