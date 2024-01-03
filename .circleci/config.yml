@@ -84,11 +84,19 @@ workflows:
       # This section only runs for any non-deployed branches and tags and checks
       # that the server is actually buildable as a container
       #############################################################################
-      - build-server:
-          name: testing-build-server-for-revision
-          filters:
+      - build-client:
+          name: testing-build-client-for-revision
+          filters: &filter-non-deployed-builds
             branches:
               ignore: dev
+          requires:
+            - node-test-client
+            - node-lint-client
+          context: feedzback-staging
+
+      - build-server:
+          name: testing-build-server-for-revision
+          filters: *filter-non-deployed-builds
           requires:
             - node-test-server
             - node-lint-server
@@ -299,7 +307,7 @@ jobs:
       - persist_to_workspace:
           root: workspace
           paths:
-            - client/dist/<< parameters.environment >>
+            - client/dist/client/browser
 
   deploy-client:
     parameters: *param-environment
@@ -320,4 +328,4 @@ jobs:
           command: |
             export GOOGLE_APPLICATION_CREDENTIALS=./workspace/firebase-service-account.json
             ./firebase_bin --config ./workspace/client/firebase.json use << parameters.environment >>
-            ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting:<< parameters.environment >>
+            ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting
