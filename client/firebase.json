@@ -4,18 +4,14 @@
       "target": "staging",
       "public": "dist/client/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "i18n": {
-        "root": "/"
-      },
-      "headers": [
+      "rewrites": [
         {
-          "source": "/(index.html|404.html)",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-store"
-            }
-          ]
+          "source": "/fr/**",
+          "destination": "/fr/index.html"
+        },
+        {
+          "source": "/en/**",
+          "destination": "/en/index.html"
         }
       ]
     },
@@ -23,18 +19,14 @@
       "target": "production",
       "public": "dist/client/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "i18n": {
-        "root": "/"
-      },
-      "headers": [
+      "rewrites": [
         {
-          "source": "/(index.html|404.html)",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "no-store"
-            }
-          ]
+          "source": "/fr/**",
+          "destination": "/fr/index.html"
+        },
+        {
+          "source": "/en/**",
+          "destination": "/en/index.html"
         }
       ]
     }
