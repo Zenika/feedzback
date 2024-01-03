@@ -1,4 +1,4 @@
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { AppBaseHref, AppLanguage } from './switch-language.types';
 import { mapBaseHrefToLanguage } from './switch-language.utils';
@@ -7,6 +7,8 @@ import { mapBaseHrefToLanguage } from './switch-language.utils';
   providedIn: 'root',
 })
 export class SwitchLanguageService {
+  private document = inject(DOCUMENT);
+
   readonly currentLanguage: AppLanguage = mapBaseHrefToLanguage(inject(APP_BASE_HREF) as AppBaseHref);
 
   switchLanguage() {
@@ -25,11 +27,11 @@ export class SwitchLanguageService {
   }
 
   private setCookie(language: string, country: string) {
-    document.cookie = `firebase-language-override=${language}; path=/`;
-    document.cookie = `firebase-country-override=${country}; path=/`;
+    this.document.cookie = `firebase-language-override=${language}; path=/`;
+    this.document.cookie = `firebase-country-override=${country}; path=/`;
   }
 
   private assignLocation(appBaseHref: AppBaseHref) {
-    document.location.assign(appBaseHref);
+    this.document.location.assign(appBaseHref);
   }
 }

@@ -1,7 +1,7 @@
 @use '../../../app.scss' as app;
 
 .app-layout {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
 
   // see: https://stackoverflow.com/questions/52861086/why-does-minmax0-1fr-work-for-long-elements-while-1fr-doesnt
