@@ -1,26 +1,25 @@
-import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import { Injectable, inject } from '@angular/core';
-import { AppBaseHref, AppLanguage } from './switch-language.types';
-import { mapBaseHrefToLanguage } from './switch-language.utils';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, LOCALE_ID, inject } from '@angular/core';
+import { LocaleId } from './switch-language.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SwitchLanguageService {
+  readonly localeId = inject<LocaleId>(LOCALE_ID);
+
   private document = inject(DOCUMENT);
 
-  readonly currentLanguage: AppLanguage = mapBaseHrefToLanguage(inject(APP_BASE_HREF) as AppBaseHref);
-
   switchLanguage() {
-    switch (this.currentLanguage) {
+    switch (this.localeId) {
       case 'fr': {
         this.setCookie('en', 'US');
-        this.assignLocation('/en/');
+        this.document.location.reload();
         break;
       }
       case 'en': {
         this.setCookie('fr', 'FR');
-        this.assignLocation('/fr/');
+        this.document.location.reload();
         break;
       }
     }
@@ -29,9 +28,5 @@ export class SwitchLanguageService {
   private setCookie(language: string, country: string) {
     this.document.cookie = `firebase-language-override=${language}; path=/`;
     this.document.cookie = `firebase-country-override=${country}; path=/`;
-  }
-
-  private assignLocation(appBaseHref: AppBaseHref) {
-    this.document.location.assign(appBaseHref);
   }
 }

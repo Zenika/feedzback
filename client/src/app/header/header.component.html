@@ -47,10 +47,10 @@
     }
 
     <mat-menu #accountMenu="matMenu" xPosition="before">
-      @if (hasLocalizeFeature && switchLanguageService.currentLanguage) {
+      @if (hasLocalizeFeature) {
         <button mat-menu-item (click)="switchLanguageService.switchLanguage()">
           <mat-icon color="primary">translate</mat-icon>
-          @switch (switchLanguageService.currentLanguage) {
+          @switch (switchLanguageService.localeId) {
             @case ('fr') {
               English
             }

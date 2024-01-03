@@ -1,3 +1,1 @@
-export type AppBaseHref = '/' | '/fr/' | '/en/';
-
-export type AppLanguage = null | 'fr' | 'en';
+export type LocaleId = 'fr' | 'en';
