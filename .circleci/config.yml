@@ -86,7 +86,9 @@ workflows:
       #############################################################################
       - build-server:
           name: testing-build-server-for-revision
-          filters: *filter-non-deployed-branches
+          filters:
+            branches:
+              ignore: dev
           requires:
             - node-test-server
             - node-lint-server
