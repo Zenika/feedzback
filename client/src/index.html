@@ -8,19 +8,32 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
     <script>
-      const isPathname = (pathname) => window.location.pathname.startsWith(pathname);
-      const isLanguage = (language) => document.cookie.includes(`firebase-language-override=${language}`);
+      const pathnameStartsWith = (prefix) => window.location.pathname.startsWith(prefix);
+
+      const getLanguageFromBrowser = () => {
+        const supportedLanguages = ['fr', 'en'];
+        const defaultLanguage = supportedLanguages[0];
+        const userLanguage = window.navigator.languages.find((language) => supportedLanguages.includes(language));
+        return userLanguage ?? defaultLanguage;
+      };
+      const languageFromBrowser = getLanguageFromBrowser();
+
+      const hasLanguageFromCookie = document.cookie.includes('firebase-language-override');
+      const isLanguageFromCookie = (language) => document.cookie.includes(`firebase-language-override=${language}`);
+
+      const isLanguage = (language) =>
+        hasLanguageFromCookie ? isLanguageFromCookie(language) : languageFromBrowser === language;
 
       const setCookie = (language, country) => {
         document.cookie = `firebase-language-override=${language}; path=/`;
         document.cookie = `firebase-country-override=${country}; path=/`;
       };
 
-      if (isPathname('/fr') && isLanguage('en')) {
+      if (pathnameStartsWith('/fr') && isLanguage('en')) {
         setCookie('fr', 'FR');
         console.log('Overwrite cookie to fr-FR');
         window.location.reload();
-      } else if (isPathname('/en') && isLanguage('fr')) {
+      } else if (pathnameStartsWith('/en') && isLanguage('fr')) {
         setCookie('en', 'US');
         console.log('Overwrite cookie to en-US');
         window.location.reload();
