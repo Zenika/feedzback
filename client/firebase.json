@@ -2,18 +2,18 @@
   "hosting": [
     {
       "target": "staging",
-      "public": "dist/staging/browser",
+      "public": "dist/staging",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "i18n": {
-        "root": "/"
+        "root": "/browser"
       }
     },
     {
       "target": "production",
-      "public": "dist/production/browser",
+      "public": "dist/production",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "i18n": {
-        "root": "/"
+        "root": "/browser"
       }
     }
   ]
