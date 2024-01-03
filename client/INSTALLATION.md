@@ -29,3 +29,5 @@
       - Set up automatic builds and deploys with GitHub? `No`
       - File dist/client/browser/index.html already exists. Overwrite? `No`
   - Mettre à jour le fichier `src/environments/environment.development.ts` avec les configuration firebase
+
+...
