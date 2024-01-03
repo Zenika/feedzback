@@ -6,6 +6,26 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <script>
+      const isPathname = (pathname) => window.location.pathname.startsWith(pathname);
+      const isLanguage = (language) => document.cookie.includes(`firebase-language-override=${language}`);
+
+      const setCookie = (language, country) => {
+        this.document.cookie = `firebase-language-override=${language}; path=/`;
+        this.document.cookie = `firebase-country-override=${country}; path=/`;
+      };
+
+      if (isPathname('/fr') && isLanguage('en')) {
+        this.setCookie('fr', 'FR');
+        console.log('Overwrite cookie to fr-FR');
+        window.location.reload();
+      } else if (isPathname('/en') && isLanguage('fr')) {
+        this.setCookie('en', 'US');
+        console.log('Overwrite cookie to en-US');
+        window.location.reload();
+      }
+    </script>
   </head>
   <body class="mat-typography">
     <app-root></app-root>
