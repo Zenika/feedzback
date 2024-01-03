@@ -5,17 +5,16 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:staging": "ng build --configuration staging --output-path dist/staging",
-    "postbuild:staging": "cp dist/staging/browser/fr/index.html dist/staging/browser/fr/404.html && cp dist/staging/browser/en/index.html dist/staging/browser/en/404.html",
-    "build:production": "ng build --configuration production --output-path dist/production",
-    "postbuild:production": "cp dist/production/browser/fr/index.html dist/production/browser/fr/404.html && cp dist/production/browser/en/index.html dist/production/browser/en/404.html",
+    "build:staging": "ng build --configuration staging && npm run post-build",
+    "build:production": "ng build --configuration production && npm run post-build",
+    "post-build": "cp dist/client/browser/fr/index.html dist/client/browser/fr/404.html && cp dist/client/browser/en/index.html dist/client/browser/en/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint --fix",
     "lint:ci": "ng lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "bundle-visualizer": "ng build --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -"
+    "bundle-visualizer": "ng build --localize false --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -"
   },
   "private": true,
   "dependencies": {
