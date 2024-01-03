@@ -107,7 +107,7 @@ workflows:
       # This section will only run for staging deployments: either "dev" branch or
       # tags that match "staging-X.Y.Z"
       #############################################################################
-      ### Building server container with Google Cloud build
+      ### Building Server container with Google Cloud Build...
       - build-server:
           name: build-server-for-staging
           filters: &filter-staging
@@ -120,13 +120,7 @@ workflows:
             - node-lint-server
           context: feedzback-staging
           tag-and-store-container: true
-      - build-client:
-          name: build-client-for-staging
-          filters: *filter-staging
-          requires:
-            - node-test-client
-            - node-lint-client
-          environment: staging
+      ### ...and deploying it to Google Cloud Run.
       - deploy-server:
           name: deploy-staging-server
           filters: *filter-staging
@@ -134,6 +128,15 @@ workflows:
             - build-server-for-staging
           service-name: feedzback-staging
           context: feedzback-staging
+      ### Building Client with CircleCI...
+      - build-client:
+          name: build-client-for-staging
+          filters: *filter-staging
+          requires:
+            - node-test-client
+            - node-lint-client
+          environment: staging
+      ### ...and deploying it using Firebase CLI.
       - deploy-client:
           name: deploy-staging-client
           filters: *filter-staging
@@ -145,7 +148,7 @@ workflows:
       # This section will only run for PRODUCTION deployments: tags need to match
       # the following pattern "vX.Y.Z"
       #############################################################################
-      ### Building server container with Google Cloud build
+      ### Building Server container with Google Cloud Build...
       - build-server:
           name: build-server-for-production
           filters: &filter-only-production
@@ -158,6 +161,7 @@ workflows:
             - node-lint-server
           tag-and-store-container: true
           context: feedzback-production
+      ### ...and deploying it to Google Cloud Run.
       - deploy-server:
           name: deploy-production-server
           filters: *filter-only-production
@@ -165,6 +169,15 @@ workflows:
             - build-server-for-production
           service-name: feedzback
           context: feedzback-production
+      ### Building Client with CircleCI...
+      - build-client:
+          name: build-client-for-production
+          filters: *filter-only-production
+          requires:
+            - node-test-client
+            - node-lint-client
+          environment: production
+      ### ...and deploying it using Firebase CLI.
       - deploy-client:
           name: deploy-production-client
           filters: *filter-only-production
