@@ -84,17 +84,6 @@ workflows:
       # This section only runs for any non-deployed branches and tags and checks
       # that the server is actually buildable as a container
       #############################################################################
-      - build-client:
-          name: testing-build-<< matrix.environment >>-client-for-revision
-          filters: &filter-non-deployed-branches
-            branches:
-              ignore: dev
-          requires:
-            - node-test-client
-            - node-lint-client
-          matrix:
-            parameters:
-              environment: ["staging", "production"]
       - build-server:
           name: testing-build-server-for-revision
           filters: *filter-non-deployed-branches
