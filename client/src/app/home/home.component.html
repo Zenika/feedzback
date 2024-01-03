@@ -1,17 +1,20 @@
-<h1 class="gbl-landing__title mat-headline-3">Demandez ou donnez du <app-logo lowercase /> à vos collègues&nbsp;!</h1>
+<h1 class="gbl-landing__title mat-headline-3" i18n="@@homePage.title">
+  Demandez ou donnez du feedback à vos collègues !
+</h1>
 
 <div class="gbl-landing-links">
   <button class="gbl-landing-links__item mat-body-strong" routerLink="/request">
     <mat-icon class="gbl-landing-links__icon">live_help</mat-icon>
-    Demander
+    <ng-container i18n="@@request">Demander</ng-container>
   </button>
 
   <button class="gbl-landing-links__item mat-body-strong" routerLink="/give">
     <mat-icon class="gbl-landing-links__icon">chat</mat-icon>
-    Donner
+    <ng-container i18n="@@give">Donner</ng-container>
   </button>
 </div>
 
 <a routerLink="/guide" class="gbl-link font-bold">
-  <mat-icon class="me-1 align-bottom">help</mat-icon>Comment faire un feedZback&nbsp;?
+  <mat-icon class="me-1 align-bottom">help</mat-icon>
+  <ng-container i18n="@@homePage.linkToGuide">Comment écrire un </ng-container> <app-logo lowercase /> ?
 </a>

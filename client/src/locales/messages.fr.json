@@ -1,4 +1,11 @@
 {
   "locale": "fr",
-  "translations": {}
+  "translations": {
+    "homePage.title": " Demandez ou donnez du feedback à vos collègues !\n",
+    "request": "Demander",
+    "give": "Donner",
+    "homePage.linkToGuide": "Comment écrire un ",
+    "previousPage": "Page précédente",
+    "nextPage": "Page suivante"
+  }
 }

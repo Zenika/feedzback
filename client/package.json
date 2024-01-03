@@ -9,6 +9,7 @@
     "build:production": "ng build --configuration production && npm run post-build",
     "post-build": "cp dist/client/browser/fr/index.html dist/client/browser/fr/404.html && cp dist/client/browser/en/index.html dist/client/browser/en/404.html",
     "watch": "ng build --watch --configuration development",
+    "extract-i18n": "ng extract-i18n --format json --output-path src/locales/ --out-file messages.fr.json",
     "test": "ng test",
     "lint": "ng lint --fix",
     "lint:ci": "ng lint",
