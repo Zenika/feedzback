@@ -1,28 +1,30 @@
-# Pre-requisites
+# Continuous Integration and Deployment - with CircleCI
 
-## Firebase & co
+## Pre-requisites
+
+### Firebase & co
 
 - The Firebase project must be created.
 - A Firestore database must be defined in the project.
 
-## GCP APIs to enable
+### GCP APIs to enable
 
 The following APIs must be enabled on the linked GCP Project (which is automatically created when you create a firebase project):
 
 - [Cloud Build API](https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com)
 - [Cloud Run API](https://console.cloud.google.com/apis/library/run.googleapis.com)
 
-## Service account setup
+### Service account setup
 
 A specific service account to build and deploy needs to exist on the project (used [here](#gcloud_service_key)).
 
-## Google Artifact repository
+### Google Artifact repository
 
 The GCP Project needs to have a Docker [Google Artifact Repository](https://console.cloud.google.com/artifacts) created named `builds` for the CI to work properly.
 
-## Domain mapping
+### Domain mapping
 
-This can be done after a first deployment: through Domain mappings in GCP (for the server), and Firebase console (for the client).
+This can be done after a first deployment: through [Domain mappings in GCP](https://console.cloud.google.com/run/domains) (for the server), and Firebase console (for the client).
 
 ### IAM
 
@@ -34,46 +36,44 @@ It requires a few privileges as well:
 - Firebase Hosting Admin
 - Project Editor (aka Basic > Editor)
 
-Finallys
-
-# Environment Variables
+## Environment Variables
 
 Environment variables are provided by a CircleCI Context (feedzback-staging for staging, feedzback-production for production).
 
-## App Settings
+### App Settings
 
-### FEEDZBACK_CLIENT_URL
+#### FEEDZBACK_CLIENT_URL
 
 This helps the server compose URLs to include in emails.
 
-## Google Cloud Platfom Settings
+### Google Cloud Platfom Settings
 
 These settings are used to build and deploy the server on the GCP Project as a Google Cloud Run managed service.
 
-### GCLOUD_SERVICE_KEY
+#### GCLOUD_SERVICE_KEY
 
 Full JSON service key linked to the Service Account allowed to build and run the server on the GCP Project.
 It is also used as the main authentication method for the firebase CLI during client deployment as FIREBASE_TOKEN usage will be decomissioned in the next major version.
 
-### GOOGLE_COMPUTE_ZONE
+#### GOOGLE_COMPUTE_ZONE
 
 Default compute zone to use (europe-west1 usually).
 
-### GOOGLE_PROJECT_ID
+#### GOOGLE_PROJECT_ID
 
 Self-reference to the Project (used by the CircleCI orb to properly handle resources).
 
-## Firebase Settings
+### Firebase Settings
 
-### FIREBASE_TOKEN
+#### FIREBASE_TOKEN
 
 Token used only by CI to connect to Firebase and deploy the client. Was generated following this [documentation](https://firebase.google.com/docs/cli?authuser=0#cli-ci-systems)
 
-### FIREBASE_CLIENT_EMAIL / Firebase Client Email
+#### FIREBASE_CLIENT_EMAIL / Firebase Client Email
 
 Identifier used to authenticate against the Firebase stack. Found in the firebase console.
 
-### FIREBASE_PRIVATE_KEY / Firebase Private Key
+#### FIREBASE_PRIVATE_KEY / Firebase Private Key
 
 A Service Account must be defined with the proper key. The private key used in the FIREBASE_PRIVATE_KEY environment variable needs to be base64 encoded:
 
@@ -81,24 +81,24 @@ A Service Account must be defined with the proper key. The private key used in t
 echo "content_of_private_key_field_in_json_key" | base64
 ```
 
-### FIREBASE_PROJECT_ID / Firebase Project ID
+#### FIREBASE_PROJECT_ID / Firebase Project ID
 
 Identifier of the Firebase project.
 
-## Mailgun Settings
+### Mailgun Settings
 
 These are injected in the Cloud Run container in order to properly use Mailgun to send emails and notifications.
 On staging, a sandbox account is used that redirects any sent email to [feedzback@zenika.com](mailto:feedzback@zenika.com).
 
-### MAILGUN_USERNAME
+#### MAILGUN_USERNAME
 
 The Mailgun API username (needs to match the domain of the key).
 
-### MAILGUN_KEY
+#### MAILGUN_KEY
 
 An API secret defined on the mailgun platform that allows to send email.
 
-# LINKS
+## LINKS
 
 | ENVIRONMENT   | FIREBASE PROJECT                                                                     | GCP PROJECT                                                                                   | CIRCLECI CONTEXT                                                                                                                    |
 | ------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
