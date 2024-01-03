@@ -16,6 +16,10 @@ executors:
 # COMMANDS - reusable snippets
 ###############################################################################
 commands:
+  restore_workspace:
+    steps:
+      - attach_workspace:
+          at: workspace
   restore_npm_cache:
     parameters:
       directory:
@@ -25,10 +29,6 @@ commands:
           name: Restoring NPM cache
           keys:
             - npm-deps-{{ checksum "./workspace/<< parameters.directory >>/package-lock.json" }}
-  restore_workspace:
-    steps:
-      - attach_workspace:
-          at: workspace
   restore_workspace_and_npm_cache:
     parameters:
       directory:
@@ -42,22 +42,22 @@ commands:
 # WORKFLOWS
 ###############################################################################
 workflows:
-  usine_a_feedzback:
+  feedzback_factory:
     jobs:
       #############################################################################
-      # This first section runs every time, for every branch and tags following
-      # these patterns: "vX.Y.Z" and "staging-X.Y.Z"
+      # This first section runs every time, for every branch as well as tags
+      # following these patterns: "vX.Y.Z" and "staging-X.Y.Z"
       #############################################################################
-      ### Preparing and testing
+      ### Preparing and installing build environment
       - prepare-workspace:
-          filters: &filter-include-production
+          filters: &filter-every-build
             tags:
               only:
                 - /^v\d+\.\d+\.\d+$/
                 - /^staging-\d+\.\d+\.\d+$/
       - node-install:
-          filters: *filter-include-production
           name: node-install-<< matrix.module >>
+          filters: *filter-every-build
           requires:
             - prepare-workspace
           matrix:
@@ -65,51 +65,40 @@ workflows:
               module: ["server", "client"]
       ### Testing and checking linting
       - node-test:
-          filters: *filter-include-production
           name: node-test-<< matrix.module >>
+          filters: *filter-every-build
           requires:
             - node-install-<< matrix.module >>
           matrix:
             parameters:
               module: ["server", "client"]
       - node-lint:
-          filters: *filter-include-production
           name: node-lint-<< matrix.module >>
+          filters: *filter-every-build
           requires:
             - node-install-<< matrix.module >>
           matrix:
             parameters:
               module: ["server", "client"]
-      ### Building all possible clients (staging, production)
-      - build-client:
-          filters: *filter-include-production
-          requires:
-            - node-test-client
-            - node-lint-client
-          name: build-client-for-<< matrix.environment >>
-          matrix:
-            parameters:
-              environment: ["staging", "production"]
       #############################################################################
       # This section only runs for any non-deployed branches and tags and checks
       # that the server is actually buildable as a container
       #############################################################################
       - build-server:
-          filters:
-            branches:
-              ignore: dev
+          name: testing-build-server-for-revision
+          filters: *filter-non-deployed-branches
           requires:
             - node-test-server
             - node-lint-server
-          name: testing-build-server-for-revision
           context: feedzback-staging
-          tag: false
+          tag-and-store-container: false
       #############################################################################
       # This section will only run for staging deployments: either "dev" branch or
       # tags that match "staging-X.Y.Z"
       #############################################################################
-      ### Building server container with Google Cloud build
+      ### Building Server container with Google Cloud Build...
       - build-server:
+          name: build-server-for-staging
           filters: &filter-staging
             branches:
               only: dev
@@ -118,29 +107,39 @@ workflows:
           requires:
             - node-test-server
             - node-lint-server
-          name: build-server-for-staging
           context: feedzback-staging
-          tag: true
+          tag-and-store-container: true
+      ### ...and deploying it to Google Cloud Run.
       - deploy-server:
+          name: deploy-staging-server
           filters: *filter-staging
           requires:
             - build-server-for-staging
-          name: deploy-staging-server
-          context: feedzback-staging
           service-name: feedzback-staging
+          context: feedzback-staging
+      ### Building Client with CircleCI...
+      - build-client:
+          name: build-client-for-staging
+          filters: *filter-staging
+          requires:
+            - node-test-client
+            - node-lint-client
+          environment: staging
+      ### ...and deploying it using Firebase CLI.
       - deploy-client:
+          name: deploy-staging-client
           filters: *filter-staging
           requires:
             - build-client-for-staging
-          name: deploy-staging-client
-          context: feedzback-staging
           environment: staging
+          context: feedzback-staging
       #############################################################################
       # This section will only run for PRODUCTION deployments: tags need to match
       # the following pattern "vX.Y.Z"
       #############################################################################
-      ### Building server container with Google Cloud build
+      ### Building Server container with Google Cloud Build...
       - build-server:
+          name: build-server-for-production
           filters: &filter-only-production
             tags:
               only: /^v\d+\.\d+\.\d+$/
@@ -149,23 +148,32 @@ workflows:
           requires:
             - node-test-server
             - node-lint-server
-          name: build-server-for-production
+          tag-and-store-container: true
           context: feedzback-production
-          tag: true
+      ### ...and deploying it to Google Cloud Run.
       - deploy-server:
+          name: deploy-production-server
           filters: *filter-only-production
           requires:
             - build-server-for-production
-          name: deploy-production-server
-          context: feedzback-production
           service-name: feedzback
+          context: feedzback-production
+      ### Building Client with CircleCI...
+      - build-client:
+          name: build-client-for-production
+          filters: *filter-only-production
+          requires:
+            - node-test-client
+            - node-lint-client
+          environment: production
+      ### ...and deploying it using Firebase CLI.
       - deploy-client:
+          name: deploy-production-client
           filters: *filter-only-production
           requires:
             - build-client-for-production
-          name: deploy-production-client
-          context: feedzback-production
           environment: production
+          context: feedzback-production
 
 jobs:
   prepare-workspace:
@@ -207,8 +215,8 @@ jobs:
       - restore_workspace_and_npm_cache:
           directory: << parameters.module >>
       - run:
-          working_directory: workspace/<< parameters.module >>
           name: Running tests in << parameters.module >>
+          working_directory: workspace/<< parameters.module >>
           # For the moment, passes with no tests
           command: npm run test
 
@@ -228,7 +236,7 @@ jobs:
       service-name:
         type: string
         default: feedzback-${CIRCLE_SHA1}
-      tag:
+      tag-and-store-container:
         type: boolean
         default: false
     executor: gcp-cli/google
@@ -236,19 +244,19 @@ jobs:
       - gcp-cli/setup
       - checkout
       - when:
-          condition: << parameters.tag >>
+          condition: << parameters.tag-and-store-container >>
           steps:
             - run:
-                working_directory: server
                 name: Submitting Docker image to build and tagging it
+                working_directory: server
                 command: |
                   gcloud builds submit --tag ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1}
       - unless:
-          condition: << parameters.tag >>
+          condition: << parameters.tag-and-store-container >>
           steps:
             - run:
-                working_directory: server
                 name: Submitting Docker image to build
+                working_directory: server
                 command: |
                   gcloud builds submit
 
