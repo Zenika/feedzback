@@ -1,6 +1,7 @@
 {
   "locale": "fr",
   "translations": {
+    "reportIssue": "Signaler un problème",
     "homePage.title": " Demandez ou donnez du feedback à vos collègues !\n",
     "request": "Demander",
     "give": "Donner",

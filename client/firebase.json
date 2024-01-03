@@ -9,7 +9,7 @@
       },
       "headers": [
         {
-          "source": "/",
+          "source": "/(index.html|404.html)",
           "headers": [
             {
               "key": "Cache-Control",
@@ -28,7 +28,7 @@
       },
       "headers": [
         {
-          "source": "/",
+          "source": "/(index.html|404.html)",
           "headers": [
             {
               "key": "Cache-Control",

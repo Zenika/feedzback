@@ -1,6 +1,7 @@
 {
   "locale": "en",
   "translations": {
+    "reportIssue": "Report an issue",
     "homePage.title": "Request or give feedback to your colleagues!",
     "request": "Request",
     "give": "Give",
