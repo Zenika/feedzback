@@ -8,6 +8,7 @@ import { provideAuth } from './shared/auth/auth.provider';
 import { provideBaseHref } from './shared/base-href/base-href.provider';
 import { provideAllowedEmailDomains } from './shared/form/allowed-email-domains';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
+import { provideSwitchLanguage } from './shared/i18n/switch-language';
 import { provideSvgIcons } from './shared/icons/icons.provider';
 
 export const appConfig: ApplicationConfig = {
@@ -20,5 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
     provideAuth(),
+    provideSwitchLanguage(),
   ],
 };
