@@ -85,7 +85,7 @@ workflows:
       # that the server is actually buildable as a container
       #############################################################################
       - build-client:
-          name: build-client-for-<< matrix.environment >>
+          name: build-client-for-revision
           filters: &filter-non-deployed-branches
             branches:
               ignore: dev
