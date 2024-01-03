@@ -22,10 +22,14 @@
       "sourceRoot": "src",
       "prefix": "app",
       "i18n": {
-        "sourceLocale": "fr",
+        "sourceLocale": {
+          "code": "fr",
+          "baseHref": "/"
+        },
         "locales": {
           "en": {
-            "translation": "src/locales/messages.en.json"
+            "translation": "src/locales/messages.en.json",
+            "baseHref": "/"
           }
         }
       },
