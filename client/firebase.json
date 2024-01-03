@@ -1,7 +1,26 @@
 {
   "hosting": [
     {
-      "target": "default",
+      "target": "staging",
+      "public": "dist/client/browser",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "i18n": {
+        "root": "/"
+      },
+      "headers": [
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "production",
       "public": "dist/client/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "i18n": {

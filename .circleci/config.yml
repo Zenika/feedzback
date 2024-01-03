@@ -328,4 +328,4 @@ jobs:
           command: |
             export GOOGLE_APPLICATION_CREDENTIALS=./workspace/firebase-service-account.json
             ./firebase_bin --config ./workspace/client/firebase.json use << parameters.environment >>
-            ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting
+            ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting:<< parameters.environment >>
