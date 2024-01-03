@@ -6,7 +6,7 @@
 
 <div class="app-header__logo">
   <a routerLink="/home">
-    <img src="assets/images/logo-feedzback.svg" width="106" height="56" alt="" />
+    <img src="/assets/images/logo-feedzback.svg" width="106" height="56" alt="" />
   </a>
 </div>
 
@@ -47,24 +47,24 @@
     }
 
     <mat-menu #accountMenu="matMenu" xPosition="before">
+      @if (hasLocalizeFeature && switchLanguageService.currentLanguage) {
+        <button mat-menu-item (click)="switchLanguageService.switchLanguage()">
+          <mat-icon color="primary">translate</mat-icon>
+          @switch (switchLanguageService.currentLanguage) {
+            @case ('fr') {
+              English
+            }
+            @case ('en') {
+              Français
+            }
+          }
+        </button>
+      }
+
       @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           Paramètres
-        </button>
-      }
-
-      @if (hasLocalizeFeature && baseHref !== '/') {
-        <button mat-menu-item (click)="switchLanguage()">
-          <mat-icon color="primary">translate</mat-icon>
-          @switch (baseHref) {
-            @case ('/fr/') {
-              English
-            }
-            @case ('/en/') {
-              Français
-            }
-          }
         </button>
       }
 
