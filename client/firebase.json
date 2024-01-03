@@ -6,7 +6,18 @@
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "i18n": {
         "root": "/browser"
-      }
+      },
+      "headers": [
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      ]
     },
     {
       "target": "production",
@@ -14,7 +25,18 @@
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "i18n": {
         "root": "/browser"
-      }
+      },
+      "headers": [
+        {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
