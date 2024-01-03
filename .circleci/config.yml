@@ -119,7 +119,7 @@ workflows:
             - node-test-server
             - node-lint-server
           context: feedzback-staging
-          tag: true
+          tag-and-store-container: true
       - build-client:
           name: build-client-for-staging
           filters: *filter-staging
