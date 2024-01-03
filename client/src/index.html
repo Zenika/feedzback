@@ -12,16 +12,16 @@
       const isLanguage = (language) => document.cookie.includes(`firebase-language-override=${language}`);
 
       const setCookie = (language, country) => {
-        this.document.cookie = `firebase-language-override=${language}; path=/`;
-        this.document.cookie = `firebase-country-override=${country}; path=/`;
+        document.cookie = `firebase-language-override=${language}; path=/`;
+        document.cookie = `firebase-country-override=${country}; path=/`;
       };
 
       if (isPathname('/fr') && isLanguage('en')) {
-        this.setCookie('fr', 'FR');
+        setCookie('fr', 'FR');
         console.log('Overwrite cookie to fr-FR');
         window.location.reload();
       } else if (isPathname('/en') && isLanguage('fr')) {
-        this.setCookie('en', 'US');
+        setCookie('en', 'US');
         console.log('Overwrite cookie to en-US');
         window.location.reload();
       }
