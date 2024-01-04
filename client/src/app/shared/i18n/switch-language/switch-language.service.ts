@@ -8,32 +8,41 @@ import { AppBaseHref, LocaleId } from './switch-language.types';
   providedIn: 'root',
 })
 export class SwitchLanguageService {
-  readonly appBaseHref = inject<AppBaseHref>(APP_BASE_HREF);
-
   readonly localeId = inject<LocaleId>(LOCALE_ID);
 
+  readonly appBaseHref = inject<AppBaseHref>(APP_BASE_HREF);
+
   private document = inject(DOCUMENT);
+
+  async init(): Promise<void> {
+    this.setCookie(this.localeId);
+  }
 
   switchLanguage() {
     switch (this.localeId) {
       case 'fr': {
-        Cookies.set(LOCALE_ID_COOKIE_KEY, 'en' satisfies LocaleId, { expires: 365 });
-        this.navigateTo('/en/');
+        this.setCookie('en');
+        this.switchApp('/en/');
         break;
       }
       case 'en': {
-        Cookies.set(LOCALE_ID_COOKIE_KEY, 'fr' satisfies LocaleId, { expires: 365 });
-        this.navigateTo('/fr/');
+        this.setCookie('fr');
+        this.switchApp('/fr/');
         break;
       }
     }
   }
 
-  private navigateTo(newAppBaseHref: AppBaseHref) {
+  private setCookie(localeId: LocaleId) {
+    Cookies.set(LOCALE_ID_COOKIE_KEY, localeId, { expires: 365 });
+  }
+
+  private switchApp(newAppBaseHref: AppBaseHref) {
     if (this.appBaseHref === '/') {
-      console.warn('Localization is not supported in this environment');
+      console.warn('Localization is not supported in this environment.');
       return;
     }
-    this.document.location.assign(newAppBaseHref);
+    const newPathname = this.document.location.pathname.replace(new RegExp(`^${this.appBaseHref}`), newAppBaseHref);
+    this.document.location.assign(newPathname);
   }
 }
