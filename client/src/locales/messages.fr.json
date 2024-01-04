@@ -1,12 +1,12 @@
 {
   "locale": "fr",
   "translations": {
-    "reportIssue": "Signaler un problème",
-    "homePage.title": " Demandez ou donnez du feedback à vos collègues !\n",
-    "request": "Demander",
     "give": "Donner",
     "homePage.linkToGuide": "Comment écrire un ",
+    "homePage.title": " Demandez ou donnez du feedback à vos collègues !\n",
+    "nextPage": "Page suivante",
     "previousPage": "Page précédente",
-    "nextPage": "Page suivante"
+    "reportIssue": "Signaler un problème",
+    "request": "Demander"
   }
 }
