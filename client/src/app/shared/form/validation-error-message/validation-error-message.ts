@@ -11,13 +11,13 @@ export const getValidationErrorMessage = (errors: ValidationErrors | null): stri
     return 'Email invalide';
   }
   if (errors?.[MULTIPLE_EMAILS_ERROR_KEY]?.length > 0) {
-    return `Email(s) invalide(s): ${errors?.[MULTIPLE_EMAILS_ERROR_KEY].join(', ')}`;
+    return `Email(s) invalide(s) : ${errors?.[MULTIPLE_EMAILS_ERROR_KEY].join(', ')}`;
   }
   if (errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY]) {
-    return `Domaine autorisé: ${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', ')}`;
+    return `L'email doit se terminer par : @${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', @')}`;
   }
   if (errors?.[FORBIDDEN_VALUES_KEY]) {
-    return `Valeur non autorisée: ${errors?.[FORBIDDEN_VALUES_KEY].join(', ')}`;
+    return `Valeur non autorisée : ${errors?.[FORBIDDEN_VALUES_KEY].join(', ')}`;
   }
   if (errors?.['minlength']) {
     return `${errors?.['minlength'].requiredLength} charactères au minimum`;
