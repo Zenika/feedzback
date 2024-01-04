@@ -6,12 +6,8 @@
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
-          "source": "/fr/**",
-          "destination": "/fr/index.html"
-        },
-        {
-          "source": "/en/**",
-          "destination": "/en/index.html"
+          "source": "**",
+          "destination": "/index.html"
         }
       ]
     },
@@ -21,12 +17,8 @@
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
-          "source": "/fr/**",
-          "destination": "/fr/index.html"
-        },
-        {
-          "source": "/en/**",
-          "destination": "/en/index.html"
+          "source": "**",
+          "destination": "/index.html"
         }
       ]
     }
