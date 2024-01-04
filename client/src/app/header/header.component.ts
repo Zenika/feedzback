@@ -9,6 +9,7 @@ import { delay, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth/auth.service';
 import { EmployeeService } from '../shared/employee/employee.service';
+import { SwitchLanguageService } from '../shared/i18n/switch-language';
 import { BurgerComponent } from './burger/burger.component';
 
 @Component({
@@ -35,6 +36,8 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
+  protected switchLanguageService = inject(SwitchLanguageService);
+
   protected isManager = toSignal(inject(EmployeeService).isManager$, { initialValue: false });
 
   protected photoUrl$ = this.authService.photoUrl$;
@@ -44,6 +47,8 @@ export class HeaderComponent implements OnDestroy {
   protected isSignedIn$ = this.authService.isSignedIn$;
 
   protected isMenuOpen = false;
+
+  protected hasLocalizeFeature = environment.featureFlipping.localize;
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 

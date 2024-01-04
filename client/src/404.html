@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>FeedZback | Redirection</title>
+    <script>
+      (function () {
+        if (document.cookie.includes('app-locale-id=fr')) {
+          document.location.assign('/fr/');
+          return;
+        }
+
+        if (document.cookie.includes('app-locale-id=en')) {
+          document.location.assign('/en/');
+          return;
+        }
+
+        const supportedLanguages = ['fr', 'en'];
+        const defaultLanguage = supportedLanguages[0];
+        const navigatorLanguage = window.navigator.languages.find((language) => supportedLanguages.includes(language));
+        document.location.assign(`/${navigatorLanguage ?? defaultLanguage}/`);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

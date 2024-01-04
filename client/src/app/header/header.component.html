@@ -47,16 +47,26 @@
     }
 
     <mat-menu #accountMenu="matMenu" xPosition="before">
+      @if (hasLocalizeFeature) {
+        <button mat-menu-item (click)="switchLanguageService.switchLanguage()">
+          <mat-icon color="primary">translate</mat-icon>
+          @switch (switchLanguageService.localeId) {
+            @case ('fr') {
+              English
+            }
+            @case ('en') {
+              Français
+            }
+          }
+        </button>
+      }
+
       @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           Paramètres
         </button>
       }
-
-      <!-- TODO: Features NOT implemented
-      <button mat-menu-item><mat-icon color="primary">translate</mat-icon> English</button>
-      -->
 
       <button mat-menu-item (click)="signOut()">
         <mat-icon color="primary">logout</mat-icon>

@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "staging",
-      "public": "dist/staging/browser",
+      "public": "dist/client/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -13,7 +13,7 @@
     },
     {
       "target": "production",
-      "public": "dist/production/browser",
+      "public": "dist/client/browser",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {

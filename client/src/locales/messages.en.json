@@ -1,0 +1,12 @@
+{
+  "locale": "en",
+  "translations": {
+    "reportIssue": "Report an issue",
+    "homePage.title": "Request or give feedback to your colleagues!",
+    "request": "Request",
+    "give": "Give",
+    "homePage.linkToGuide": "How to write a ",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
+  }
+}

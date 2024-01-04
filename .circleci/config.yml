@@ -1,6 +1,6 @@
-###############################################################################
+# ---------------------------------------------------------------------------------
 # SETUP
-###############################################################################
+# ---------------------------------------------------------------------------------
 version: 2.1
 orbs:
   # Pre-configured orb for GCP "gcloud" CLI
@@ -12,9 +12,9 @@ executors:
       - image: cimg/node:20.9
     resource_class: small
 
-###############################################################################
+# ---------------------------------------------------------------------------------
 # COMMANDS - reusable snippets
-###############################################################################
+# ---------------------------------------------------------------------------------
 commands:
   restore_workspace:
     steps:
@@ -38,16 +38,16 @@ commands:
       - restore_npm_cache:
           directory: << parameters.directory >>
 
-###############################################################################
+# ---------------------------------------------------------------------------------
 # WORKFLOWS
-###############################################################################
+# ---------------------------------------------------------------------------------
 workflows:
   feedzback_factory:
     jobs:
-      #############################################################################
+      # ---------------------------------------------------------------------------
       # This first section runs every time, for every branch as well as tags
       # following these patterns: "vX.Y.Z" and "staging-X.Y.Z"
-      #############################################################################
+      # ---------------------------------------------------------------------------
       ### Preparing and installing build environment
       - prepare-workspace:
           filters: &filter-every-build
@@ -80,22 +80,32 @@ workflows:
           matrix:
             parameters:
               module: ["server", "client"]
-      #############################################################################
+      # ---------------------------------------------------------------------------
       # This section only runs for any non-deployed branches and tags and checks
       # that the server is actually buildable as a container
-      #############################################################################
+      # ---------------------------------------------------------------------------
+      - build-client:
+          name: testing-build-client-for-revision
+          filters: &filter-non-deployed-builds
+            branches:
+              ignore: dev
+          requires:
+            - node-test-client
+            - node-lint-client
+          context: feedzback-staging
+
       - build-server:
           name: testing-build-server-for-revision
-          filters: *filter-non-deployed-branches
+          filters: *filter-non-deployed-builds
           requires:
             - node-test-server
             - node-lint-server
           context: feedzback-staging
           tag-and-store-container: false
-      #############################################################################
+      # ---------------------------------------------------------------------------
       # This section will only run for staging deployments: either "dev" branch or
       # tags that match "staging-X.Y.Z"
-      #############################################################################
+      # ---------------------------------------------------------------------------
       ### Building Server container with Google Cloud Build...
       - build-server:
           name: build-server-for-staging
@@ -133,10 +143,10 @@ workflows:
             - build-client-for-staging
           environment: staging
           context: feedzback-staging
-      #############################################################################
+      # ---------------------------------------------------------------------------
       # This section will only run for PRODUCTION deployments: tags need to match
       # the following pattern "vX.Y.Z"
-      #############################################################################
+      # ---------------------------------------------------------------------------
       ### Building Server container with Google Cloud Build...
       - build-server:
           name: build-server-for-production
@@ -297,7 +307,7 @@ jobs:
       - persist_to_workspace:
           root: workspace
           paths:
-            - client/dist/<< parameters.environment >>
+            - client/dist/client/browser
 
   deploy-client:
     parameters: *param-environment

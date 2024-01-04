@@ -212,14 +212,26 @@ export class FeedbackDbService {
 
   async getListMap(viewerEmail: string) {
     const feedbackQuery = await this.feedbackCollection
+      .where('status', '==', FeedbackStatus)
       .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
       .select(...feedbackItemFields)
       .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    const feedbackList = docsWithId<FeedbackItemWithId | FeedbackRequestItemWithId>(feedbackQuery.docs);
+    const feedbackRequestQuery = await this.feedbackCollection
+      .where('status', '==', FeedbackRequestStatus)
+      .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
+      .select(...feedbackItemFields)
+      .orderBy('createdAt' satisfies keyof Feedback, 'desc')
+      .get();
 
-    return mapToFeedbackListMap(feedbackList, viewerEmail);
+    return mapToFeedbackListMap(
+      [
+        ...docsWithId<FeedbackItemWithId>(feedbackQuery.docs),
+        ...docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs),
+      ],
+      viewerEmail,
+    );
   }
 
   async getDocument(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {

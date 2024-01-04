@@ -6,11 +6,8 @@ export const provideMatPaginatorIntl = (): FactoryProvider => ({
   useFactory: () => {
     const intl = new MatPaginatorIntl();
     intl.itemsPerPageLabel = '';
-    intl.previousPageLabel = 'Page précédente';
-    intl.nextPageLabel = 'Page suivante';
+    intl.previousPageLabel = $localize`:@@previousPage:Page précédente`;
+    intl.nextPageLabel = $localize`:@@nextPage:Page suivante`;
     return intl;
   },
-  deps: [
-    /* Injection translation module when this feature will be available */
-  ],
 });

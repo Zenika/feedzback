@@ -17,5 +17,6 @@ export const environment = {
   allowedEmailDomains: ['zenika.com'],
   featureFlipping: {
     manager: true,
+    localize: true,
   },
 };

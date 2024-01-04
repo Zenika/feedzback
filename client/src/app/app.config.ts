@@ -7,8 +7,8 @@ import { routes } from './app.routes';
 import { provideAuth } from './shared/auth/auth.provider';
 import { provideBaseHref } from './shared/base-href/base-href.provider';
 import { provideAllowedEmailDomains } from './shared/form/allowed-email-domains';
-import { provideI18n } from './shared/i18n/i18n.providers';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
+import { provideSwitchLanguage } from './shared/i18n/switch-language';
 import { provideSvgIcons } from './shared/icons/icons.provider';
 
 export const appConfig: ApplicationConfig = {
@@ -16,11 +16,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withFetch()),
     provideAnimations(),
-    provideI18n(),
     provideMatPaginatorIntl(),
     provideBaseHref(),
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
     provideAuth(),
+    provideSwitchLanguage(),
   ],
 };

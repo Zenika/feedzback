@@ -46,7 +46,7 @@ export class FeedbackEmailBuilderService {
     const content: GivenContent = givenContentMap[this.language];
     const data: GivenData = {
       giverEmail: uglifyEmail(giverEmail),
-      cta: `${this.configService.get('clientUrl')}/feedback/received/${feedbackId}`,
+      cta: `${this.configService.get('clientUrl')}/feedback/${feedbackId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {

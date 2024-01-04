@@ -1,0 +1,10 @@
+@for (paragraph of textMatrix; track $index) {
+  <p>
+    @for (line of paragraph; track $index; let isLast = $last) {
+      {{ line }}
+      @if (!isLast) {
+        <br />
+      }
+    }
+  </p>
+}
