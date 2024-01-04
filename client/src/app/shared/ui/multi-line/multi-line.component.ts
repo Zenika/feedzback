@@ -10,7 +10,10 @@ export class MultiLineComponent {
   @HostBinding('class.app-multi-line') hasCss = true;
 
   @Input() set text(value: string | null | undefined) {
-    this.textMatrix = (value ?? '').split('\n\n').map((paragraph) => paragraph.split('\n'));
+    this.textMatrix = (value ?? '')
+      .replaceAll(/\n{3,}/g, '\n\n')
+      .split('\n\n')
+      .map((paragraph) => paragraph.split('\n'));
   }
 
   protected textMatrix: string[][] = [];
