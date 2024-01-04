@@ -1,13 +1,13 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import Cookies from 'js-cookie';
-import { LOCALE_ID_COOKIE_KEY } from './switch-language.config';
-import { AppBaseHref, LocaleId } from './switch-language.types';
+import { LOCALE_ID_COOKIE_KEY } from './language.config';
+import { AppBaseHref, LocaleId } from './language.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SwitchLanguageService {
+export class LanguageService {
   readonly localeId = inject<LocaleId>(LOCALE_ID);
 
   readonly appBaseHref = inject<AppBaseHref>(APP_BASE_HREF);

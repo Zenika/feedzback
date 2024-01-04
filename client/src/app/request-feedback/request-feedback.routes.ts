@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from '../shared/auth/auth.guard';
+import { authGuard } from '../shared/auth';
 import { RequestFeedbackSuccessComponent } from './request-feedback-success/request-feedback-success.component';
 import { RequestFeedbackComponent } from './request-feedback.component';
 
