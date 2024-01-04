@@ -33,7 +33,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": false,
+            "localize": true,
             "outputPath": "dist/client",
             "index": "src/index.html",
             "browser": "src/main.ts",

@@ -42,7 +42,8 @@ export class SwitchLanguageService {
       console.warn('Localization is not supported in this environment.');
       return;
     }
-    const newPathname = this.document.location.pathname.replace(new RegExp(`^${this.appBaseHref}`), newAppBaseHref);
-    this.document.location.assign(newPathname);
+    const url = new URL(this.document.location.href);
+    url.pathname = url.pathname.replace(new RegExp(`^${this.appBaseHref}`), newAppBaseHref);
+    this.document.location.assign(url);
   }
 }
