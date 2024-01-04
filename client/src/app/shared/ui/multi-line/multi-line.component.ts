@@ -13,7 +13,14 @@ export class MultiLineComponent {
     this.textMatrix = (value ?? '')
       .replaceAll(/\n{3,}/g, '\n\n')
       .split('\n\n')
-      .map((paragraph) => paragraph.split('\n'));
+      .map((paragraph) => {
+        const content = paragraph.trim();
+        if (!content) {
+          return [];
+        }
+        return content.split('\n');
+      })
+      .filter((multiLineParagraph) => multiLineParagraph.length > 0);
   }
 
   protected textMatrix: string[][] = [];
