@@ -104,6 +104,12 @@ The Mailgun API username (needs to match the domain of the key).
 
 An API secret defined on the mailgun platform that allows to send email.
 
+#### MAILGUN_DOMAIN
+
+The domain associated with the account.
+Use the sandbox username as the domain (`sandbox8d21179029774bb29c92557ea6ab0d88.mailgun.org`).
+In production should be `feedzback.znk.io`.
+
 ## LINKS
 
 | ENVIRONMENT   | FIREBASE PROJECT                                                                     | GCP PROJECT                                                                                   | CIRCLECI CONTEXT                                                                                                                    |

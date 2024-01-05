@@ -13,4 +13,6 @@ export type AppConfig = {
   firebaseServiceAccount: Required<ServiceAccount>;
 
   mailgunClientOptions: MailgunClientOptions;
+
+  mailgunDomain: string;
 };
