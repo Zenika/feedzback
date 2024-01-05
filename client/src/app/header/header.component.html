@@ -12,17 +12,46 @@
 
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
   @if (isKnownUser$ | async) {
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/home"> Accueil </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/request">
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/home"
+      i18n="@@Header.Home"
+    >
+      Accueil
+    </a>
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/request"
+      i18n="@@Common.Feedback.Request"
+    >
       Demander
     </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/give"> Donner </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/give"
+      i18n="@@Common.Feedback.Give"
+    >
+      Donner
+    </a>
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/feedbacks"
+      i18n="@@Header.MyFeedZbacks"
+    >
       Mes feedZbacks
     </a>
 
     @if (hasManagerFeature && isManager()) {
-      <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/manager">
+      <a
+        class="app-header-menu__item"
+        routerLinkActive="app-header-menu__item--active"
+        routerLink="/manager"
+        i18n="@@Header.Manager"
+      >
         Manager
       </a>
     }
@@ -64,16 +93,16 @@
       @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
-          Paramètres
+          <ng-container i18n="@@Header.Settings">Paramètres</ng-container>
         </button>
       }
 
       <button mat-menu-item (click)="signOut()">
         <mat-icon color="primary">logout</mat-icon>
         @if (isKnownUser$ | async) {
-          Se déconnecter
+          <ng-container i18n="@@Header.SignOut">Se déconnecter</ng-container>
         } @else {
-          Fermer la session
+          <ng-container i18n="@@Header.CloseSession">Fermer la session</ng-container>
         }
       </button>
     </mat-menu>

@@ -1,12 +1,19 @@
 {
   "locale": "fr",
   "translations": {
-    "give": "Donner",
-    "homePage.linkToGuide": "Comment écrire un ",
-    "homePage.title": " Demandez ou donnez du feedback à vos collègues !\n",
-    "nextPage": "Page suivante",
-    "previousPage": "Page précédente",
-    "reportIssue": "Signaler un problème",
-    "request": "Demander"
+    "Common.Feedback.Give": " Donner ",
+    "Common.Feedback.Request": " Demander ",
+    "Common.Page.Next": "Page suivante",
+    "Common.Page.Previous": "Page précédente",
+    "Footer.ReportIssue": "Signaler un problème",
+    "Guide.Title": "Guide du feedZback",
+    "Header.CloseSession": "Fermer la session",
+    "Header.Home": " Accueil ",
+    "Header.Manager": " Manager ",
+    "Header.MyFeedZbacks": " Mes feedZbacks ",
+    "Header.Settings": "Paramètres",
+    "Header.SignOut": "Se déconnecter",
+    "Home.LinkToGuide": "Comment écrire un ",
+    "Home.Title": "Demandez ou donnez du feedback à vos collègues"
   }
 }

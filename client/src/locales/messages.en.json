@@ -1,12 +1,19 @@
 {
   "locale": "en",
   "translations": {
-    "give": "Give",
-    "homePage.linkToGuide": "How to write a ",
-    "homePage.title": "Request or give feedback to your colleagues!",
-    "nextPage": "Next page",
-    "previousPage": "Previous page",
-    "reportIssue": "Report an issue",
-    "request": "Request"
+    "Common.Feedback.Give": "Give",
+    "Common.Feedback.Request": "Request",
+    "Common.Page.Next": "Next page",
+    "Common.Page.Previous": "Previous page",
+    "Footer.ReportIssue": "Report an issue",
+    "Guide.Title": "FeedZback guide",
+    "Header.CloseSession": "Close session",
+    "Header.Home": "Home",
+    "Header.Manager": "Manager",
+    "Header.MyFeedZbacks": "My feedZbacks",
+    "Header.Settings": "Settings",
+    "Header.SignOut": "Sign out",
+    "Home.LinkToGuide": "How to write a ",
+    "Home.Title": "Request or give feedback to your colleagues"
   }
 }
