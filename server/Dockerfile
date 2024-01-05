@@ -31,4 +31,7 @@ ENV FIREBASE_CLIENT_EMAIL=
 ENV MAILGUN_USERNAME=
 ENV MAILGUN_KEY=
 
+# Node config
+ENV NODE_ENV=staging
+
 ENTRYPOINT [ "node", "/app/dist/main.js"]

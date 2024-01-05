@@ -110,6 +110,11 @@ The domain associated with the account.
 Use the sandbox username as the domain (`sandbox8d21179029774bb29c92557ea6ab0d88.mailgun.org`).
 In production should be `feedzback.znk.io`.
 
+### Node Settings
+
+#### NODE_ENV
+Should be `production` for production environment, otherwise all mails will be sent to feedzback@zenika.com.
+
 ## LINKS
 
 | ENVIRONMENT   | FIREBASE PROJECT                                                                     | GCP PROJECT                                                                                   | CIRCLECI CONTEXT                                                                                                                    |
