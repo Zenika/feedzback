@@ -283,6 +283,7 @@ jobs:
             ZZ="CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
             ZZ="${ZZ},SERVER_PORT=3000"
             ZZ="${ZZ},NO_COLOR=true"
+            ZZ="${ZZ},MAILGUN_API_URL=${MAILGUN_API_URL}"
             ZZ="${ZZ},MAILGUN_USERNAME=${MAILGUN_USERNAME}"
             ZZ="${ZZ},MAILGUN_KEY=${MAILGUN_KEY}"
             ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"

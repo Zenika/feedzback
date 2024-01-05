@@ -90,6 +90,12 @@ Identifier of the Firebase project.
 These are injected in the Cloud Run container in order to properly use Mailgun to send emails and notifications.
 On staging, a sandbox account is used that redirects any sent email to [feedzback@zenika.com](mailto:feedzback@zenika.com).
 
+### MAILGUN_API_URL
+
+The mailgun endpoint to use to connect to mailgun sending server.
+* for sandbox mailgun account: `https://api.mailgun.net`
+* for production account (which is in EU): `https://api.eu.mailgun.net`
+
 #### MAILGUN_USERNAME
 
 The Mailgun API username (needs to match the domain of the key).
