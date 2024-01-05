@@ -1,10 +1,10 @@
 <mat-icon class="gbl-info__icon" color="primary">indeterminate_question_box</mat-icon>
 
-<h1 class="gbl-info__title">Oops&nbsp;! Cette page est introuvable.</h1>
+<h1 class="gbl-info__title" i18n="@@NotFound.Title">Oops ! Cette page est introuvable.</h1>
 
 <div class="gbl-info__buttons">
   <button mat-stroked-button color="primary" routerLink="/">
     <mat-icon>home</mat-icon>
-    Retourner à l'accueil
+    <ng-container i18n="@@NotFound.BackToHome">Retourner à l'accueil</ng-container>
   </button>
 </div>

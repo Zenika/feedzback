@@ -2,7 +2,7 @@
   <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
 
   <div>
-    <h1 class="gbl-info__title">FeedZback envoyé à&nbsp;:</h1>
+    <h1 class="gbl-info__title" i18n="@@GiveFeedbackSuccess.Title">FeedZback envoyé à :</h1>
     <p>{{ state.receiverEmail }}</p>
   </div>
 
@@ -10,16 +10,16 @@
     @if (state.feedbackId) {
       <button mat-stroked-button color="primary" [routerLink]="['/feedback', state.feedbackId]">
         <mat-icon>visibility</mat-icon>
-        Consulter le feedZback
+        <ng-container i18n="@@GiveFeedbackSuccess.ViewFeedback">Consulter le feedZback</ng-container>
       </button>
 
       <button mat-stroked-button color="primary" routerLink="../">
         <mat-icon>chat</mat-icon>
-        Donner un autre feedZback
+        <ng-container i18n="@@GiveFeedbackSuccess.GiveAnotherFeedback">Donner un autre feedZback</ng-container>
       </button>
     } @else {
       <button mat-stroked-button color="primary" (click)="signOut()">
-        Fermer la session
+        <ng-container i18n="@@Common.CloseSession">Fermer la session</ng-container>
         <mat-icon iconPositionEnd>logout</mat-icon>
       </button>
     }

@@ -1,5 +1,6 @@
 <button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', feedbackDetails.type]">
-  <mat-icon>arrow_back</mat-icon> Mes feedZbacks
+  <mat-icon>arrow_back</mat-icon>
+  <ng-container i18n="@@FeedbackDetails.Title">Mes feedZbacks</ng-container>
 </button>
 
 @if (feedbackDetails.feedback.status === 'done') {

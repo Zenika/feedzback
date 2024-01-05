@@ -1,20 +1,18 @@
 <h1 class="gbl-page-title">
   <mat-icon>live_help</mat-icon>
-  Demander du feedZback
+  <ng-container i18n="@@RequestFeedback.Title">Demander du feedZback</ng-container>
 </h1>
 
 @if (sentEmails.length) {
   <app-message type="success">
-    <strong>Félicitations&nbsp;!</strong><br />
-    Votre demande a bien été envoyée à&nbsp;:<br />
+    <ng-container i18n="@@RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container><br />
     {{ sentEmails.join(', ') }}
   </app-message>
 }
 
 @if (remainingUnsentEmails.length) {
   <app-message type="danger">
-    <strong>Oops&nbsp;!</strong><br />
-    Une erreur s'est produite lors de l'envoi à&nbsp;:<br />
+    <ng-container i18n="@@RequestFeedback.Error">Une erreur s'est produite lors de l'envoi à :</ng-container><br />
     {{ remainingUnsentEmails.join(', ') }}
   </app-message>
 }
@@ -24,12 +22,13 @@
     <app-emails-field
       class="gbl-form-field"
       [emails]="form.controls.recipients"
-      matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
       matTooltipPosition="above"
+      matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
+      i18n-matTooltip="@@RequestFeedback.UsePersonalEmails"
     />
 
     <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label>Message</mat-label>
+      <mat-label i18n="@@Common.Message">Message</mat-label>
       <textarea
         #message
         [formControl]="form.controls.message"
@@ -37,22 +36,28 @@
         matInput
         rows="4"
         placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
+        i18n-placeholder="@@RequestFeedback.MessagePlaceholder"
       ></textarea>
       <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
     @if (hasManagerFeature) {
       <div class="gbl-form-field">
-        <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@RequestFeedback.Share">
           Partager le feedZback avec votre manager
         </mat-slide-toggle>
       </div>
     }
 
     <div class="gbl-form-submit">
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" i18n="@@Common.Send">
+        Envoyer
+      </button>
 
-      <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+      <div class="gbl-form-submit__info">
+        <mat-icon>info</mat-icon>
+        <ng-container i18n="@@Common.RequiredFieldsMessage">Les champs marqués d'une * sont obligatoires</ng-container>
+      </div>
     </div>
   </form>
 }

@@ -2,7 +2,7 @@
   <mat-icon class="gbl-info__icon" color="primary">task_alt</mat-icon>
 
   <div>
-    <h1 class="gbl-info__title">FeedZback demandé à&nbsp;:</h1>
+    <h1 class="gbl-info__title" i18n="@@RequestFeedbackSuccess.Title">FeedZback demandé à :</h1>
 
     <ul class="gbl-list inline-block">
       @for (email of state.recipients; track email) {
@@ -14,12 +14,14 @@
   <div class="gbl-info__buttons">
     <button mat-stroked-button color="primary" routerLink="/feedbacks/sentRequest">
       <mat-icon>visibility</mat-icon>
-      Consulter la demande
+      <ng-container i18n="@@RequestFeedbackSuccess.ViewRequest">Consulter la demande</ng-container>
     </button>
 
     <button mat-stroked-button color="primary" routerLink="../">
       <mat-icon>live_help</mat-icon>
-      Faire une autre demande de feedZback
+      <ng-container i18n="@@RequestFeedbackSuccess.RequestAnotherFeedback">
+        Faire une autre demande de feedZback
+      </ng-container>
     </button>
   </div>
 }

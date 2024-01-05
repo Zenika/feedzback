@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline" class="app-emails-field__field">
-  <mat-label>Emails de vos collègues</mat-label>
+  <mat-label i18n="@@EmailsField.EmailsOfYourColleagues">Emails de vos collègues</mat-label>
 
-  <mat-chip-grid #chipGrid [formControl]="emails" aria-label="Saisissez les emails de vos collègues">
+  <mat-chip-grid #chipGrid [formControl]="emails">
     @for (email of emails.value; track email) {
       <mat-chip-row
         [class.app-emails-field__error]="isInvalidEmail(email)"
@@ -25,7 +25,7 @@
     />
   </mat-chip-grid>
 
-  <mat-hint align="start">Séparez les emails par des virgules</mat-hint>
+  <mat-hint align="start" i18n="@@EmailsField.Hint">Séparez les emails par des virgules</mat-hint>
 
   <mat-error>{{ emails.errors | validationErrorMessage }}</mat-error>
 </mat-form-field>

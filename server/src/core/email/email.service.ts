@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as FormData from 'form-data';
+import FormData from 'form-data';
 import Mailgun, { MailgunMessageData } from 'mailgun.js';
 import { AppConfig } from '../config';
 

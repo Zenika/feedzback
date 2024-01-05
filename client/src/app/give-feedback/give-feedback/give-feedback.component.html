@@ -1,34 +1,34 @@
 @if (hasDraftDialog()) {
   <button mat-raised-button color="primary" class="float-right" (click)="openDraftDialog()">
-    <mat-icon>draft</mat-icon> Brouillons
+    <mat-icon>draft</mat-icon>
+    <ng-container i18n="@@GiveFeedback.Drafts">Brouillons</ng-container>
   </button>
 }
 
 <ng-template #draftDialogTmpl>
-  <h1 mat-dialog-title>Brouillons</h1>
+  <h1 mat-dialog-title i18n="@@GiveFeedback.Drafts">Brouillons</h1>
   <div mat-dialog-content>
     <app-feedback-draft />
   </div>
   <div mat-dialog-actions>
-    <button mat-button mat-button mat-dialog-close cdkFocusInitial>Fermer</button>
+    <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@GiveFeedback.Close">Fermer</button>
   </div>
 </ng-template>
 
 <h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
-  Donner du feedZback
+  <ng-container i18n="@@GiveFeedback.GiveFeedback">Donner du feedZback</ng-container>
 </h1>
 
-<app-message type="danger" [(visible)]="showError">
-  <strong>Oops&nbsp;!</strong><br />
-  Une erreur s'est produite lors de l'envoi.
+<app-message type="danger" [(visible)]="showError" i18n="@@Common.ErrorOccured">
+  Une erreur s'est produite.
 </app-message>
 
-<app-message type="success" [(visible)]="showDraft">Brouillon enregistré.</app-message>
+<app-message type="success" [(visible)]="showDraft" i18n="@@GiveFeedback.DraftSaved">Brouillon enregistré.</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="gbl-form-field">
-    <mat-label>Email de votre collègue</mat-label>
+    <mat-label i18n="@@GiveFeedback.EmailOfYourColleague">Email de votre collègue</mat-label>
     <input [formControl]="form.controls.receiverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
     <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
@@ -41,7 +41,7 @@
 
   @if (hasManagerFeature) {
     <div class="gbl-form-field">
-      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@GiveFeedback.Share">
         Partager le feedZback avec le manager de votre collègue
       </mat-slide-toggle>
     </div>
@@ -49,7 +49,9 @@
 
   <div class="gbl-form-submit">
     <div>
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" i18n="@@Common.Send">
+        Envoyer
+      </button>
 
       <button
         type="button"
@@ -58,11 +60,15 @@
         color="primary"
         class="ms-6"
         (click)="onDraft()"
+        i18n="@@Common.Save"
       >
         Enregistrer
       </button>
     </div>
 
-    <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+    <div class="gbl-form-submit__info">
+      <mat-icon>info</mat-icon>
+      <ng-container i18n="@@Common.RequiredFieldsMessage">Les champs marqués d'une * sont obligatoires</ng-container>
+    </div>
   </div>
 </form>

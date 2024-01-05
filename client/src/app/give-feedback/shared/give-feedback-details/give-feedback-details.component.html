@@ -1,37 +1,40 @@
 <mat-form-field appearance="outline" class="gbl-form-field">
-  <mat-label>Points positifs</mat-label>
+  <mat-label i18n="@@Common.PositiveFeedback">Points positifs</mat-label>
   <textarea
     [formControl]="positive"
     [maxlength]="feedbackMaxLength"
     matInput
     rows="4"
     placeholder="Dans le cadre de la mission, tes collègues viennent souvent te voir pour te demander de l’aide. Tu prends le temps de bien leur expliquer si quelque chose n’est pas compris. Je trouve que tu es très à l’écoute de tes collègues et tu leur permets de monter en compétences : bravo et merci pour ça."
+    i18n-placeholder="@@Common.PositiveFeedbackPlaceholder"
   ></textarea>
   <mat-hint align="start">{{ positive.value.length }} / {{ feedbackMaxLength }}</mat-hint>
   <mat-error>{{ positive.errors | validationErrorMessage }}</mat-error>
 </mat-form-field>
 
 <mat-form-field appearance="outline" class="gbl-form-field">
-  <mat-label>Axes d’améliorations</mat-label>
+  <mat-label i18n="@@Common.NegativeFeedback">Axes d'améliorations</mat-label>
   <textarea
     [formControl]="negative"
     [maxlength]="feedbackMaxLength"
     matInput
     rows="4"
     placeholder="La semaine dernière, tu as travaillé sur le même sujet pendant 5 jours sans pour autant demander de l’aide. Il s’est avéré que tu avais un blocage. Cela m’a déçu et agacé que tu ne nous demandes pas d’aide. J’aimerais que tu viennes nous voir la prochaine fois, afin que tu ne restes pas bloqué(e) aussi longtemps."
+    i18n-placeholder="@@Common.NegativeFeedbackPlaceholder"
   ></textarea>
   <mat-hint align="start">{{ negative.value.length }} / {{ feedbackMaxLength }}</mat-hint>
   <mat-error>{{ negative.errors | validationErrorMessage }}</mat-error>
 </mat-form-field>
 
 <mat-form-field appearance="outline" class="gbl-form-field">
-  <mat-label>Commentaire</mat-label>
+  <mat-label i18n="@@Common.Comment">Commentaire</mat-label>
   <textarea
     [formControl]="comment"
     [maxlength]="commentMaxLength"
     matInput
     rows="3"
     placeholder="Merci pour ta demande de feedZback !"
+    i18n-placeholder="@@Common.CommentPlaceholder"
   ></textarea>
   <mat-hint align="start">{{ comment.value.length }} / {{ commentMaxLength }}</mat-hint>
 </mat-form-field>
