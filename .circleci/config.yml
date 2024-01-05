@@ -280,7 +280,8 @@ jobs:
           name: Running gcloud run deploy
           command: |
             # Building update-env-vars argument
-            ZZ="CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
+            ZZ="NODE_ENV=${NODE_ENV}"
+            ZZ="${ZZ},CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
             ZZ="${ZZ},SERVER_PORT=3000"
             ZZ="${ZZ},NO_COLOR=true"
             ZZ="${ZZ},MAILGUN_API_URL=${MAILGUN_API_URL}"
