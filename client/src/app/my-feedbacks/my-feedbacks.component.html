@@ -21,11 +21,11 @@
         <app-feedback-list [feedbacks]="received" [filter]="filter"></app-feedback-list>
       } @else {
         <div class="app-my-feedbacks-empty">
-          <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
+          <div class="app-my-feedbacks-empty__info" i18n="@@MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/request">
             <mat-icon>live_help</mat-icon>
-            <ng-container i18n="@@MyFeedbacks.RequestFirst">Demander mon premier feedZback</ng-container>
+            <ng-container i18n="@@RequestFeedback.Title">Demander du feedZback</ng-container>
           </button>
         </div>
       }
@@ -43,11 +43,11 @@
         <app-feedback-list [feedbacks]="given" [filter]="filter"></app-feedback-list>
       } @else {
         <div class="app-my-feedbacks-empty">
-          <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
+          <div class="app-my-feedbacks-empty__info" i18n="@@MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/give">
             <mat-icon>chat</mat-icon>
-            <ng-container i18n="@@MyFeedbacks.GiveFirst">Donner mon premier feedZback</ng-container>
+            <ng-container i18n="@@GiveFeedback.Title">Donner du feedZback</ng-container>
           </button>
         </div>
       }
@@ -87,7 +87,7 @@
       #input
       matInput
       placeholder="Rechercher par email"
-      i18n-placeholder="@@Common.SearchByEmail"
+      i18n-placeholder="@@Shared.Field.SearchByEmail"
       [value]="filter"
       (keyup)="filter = input.value"
     />

@@ -5,10 +5,10 @@
 
 @switch (success) {
   @case (false) {
-    <app-message type="danger" i18n="@@Settings.Error">Désolé, une erreur s'est produite.</app-message>
+    <app-message type="danger" i18n="@@Shared.Message.ErrorOccured">Une erreur s'est produite.</app-message>
   }
   @case (true) {
-    <app-message type="success" i18n="@@Settings.Success">Votre profil a bien été mis à jour.</app-message>
+    <app-message type="success" i18n="@@Settings.UpdateSuccess">Votre paramètres ont bien été mis à jour.</app-message>
   }
 }
 
@@ -19,7 +19,7 @@
     <mat-error>{{ form.controls.managerEmail.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 
-  <button [disabled]="submitButtonDisabled" mat-raised-button color="primary" i18n="@@Common.Update">
+  <button [disabled]="submitButtonDisabled" mat-raised-button color="primary" i18n="@@Shared.Action.Update">
     Mettre à jour
   </button>
 </form>

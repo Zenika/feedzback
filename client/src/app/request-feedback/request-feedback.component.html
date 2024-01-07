@@ -24,11 +24,11 @@
       [emails]="form.controls.recipients"
       matTooltipPosition="above"
       matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
-      i18n-matTooltip="@@RequestFeedback.UsePersonalEmails"
+      i18n-matTooltip="@@RequestFeedback.EmailsRequirements"
     />
 
     <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label i18n="@@Common.Message">Message</mat-label>
+      <mat-label i18n="@@Shared.Feedback.Message">Message</mat-label>
       <textarea
         #message
         [formControl]="form.controls.message"
@@ -50,13 +50,18 @@
     }
 
     <div class="gbl-form-submit">
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" i18n="@@Common.Send">
+      <button
+        [disabled]="form.invalid || submitInProgress"
+        mat-raised-button
+        color="primary"
+        i18n="@@Shared.Action.Send"
+      >
         Envoyer
       </button>
 
       <div class="gbl-form-submit__info">
         <mat-icon>info</mat-icon>
-        <ng-container i18n="@@Common.RequiredFieldsMessage">Les champs marqués d'une * sont obligatoires</ng-container>
+        <ng-container i18n="@@Shared.Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
       </div>
     </div>
   </form>

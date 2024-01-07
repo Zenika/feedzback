@@ -24,7 +24,7 @@
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
       routerLink="/request"
-      i18n="@@Common.Feedback.Request"
+      i18n="@@Shared.Feedback.Request"
     >
       Demander
     </a>
@@ -32,7 +32,7 @@
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
       routerLink="/give"
-      i18n="@@Common.Feedback.Give"
+      i18n="@@Shared.Feedback.Give"
     >
       Donner
     </a>
@@ -40,7 +40,7 @@
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
       routerLink="/feedbacks"
-      i18n="@@Header.MyFeedZbacks"
+      i18n="@@MyFeedbacks.Title"
     >
       Mes feedZbacks
     </a>
@@ -67,7 +67,7 @@
         class="app-header-account__photo"
         height="48"
         width="48"
-        alt="Profile photo"
+        alt="Photo"
       />
     } @else {
       <button mat-icon-button [matMenuTriggerFor]="accountMenu">
@@ -93,7 +93,7 @@
       @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
-          <ng-container i18n="@@Header.Settings">Paramètres</ng-container>
+          <ng-container i18n="@@Settings.Title">Paramètres</ng-container>
         </button>
       }
 
@@ -102,7 +102,7 @@
         @if (isKnownUser$ | async) {
           <ng-container i18n="@@Header.SignOut">Se déconnecter</ng-container>
         } @else {
-          <ng-container i18n="@@Common.CloseSession">Fermer la session</ng-container>
+          <ng-container i18n="@@Shared.Action.CloseSession">Fermer la session</ng-container>
         }
       </button>
     </mat-menu>

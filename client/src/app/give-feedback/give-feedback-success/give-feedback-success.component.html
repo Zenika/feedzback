@@ -15,11 +15,11 @@
 
       <button mat-stroked-button color="primary" routerLink="../">
         <mat-icon>chat</mat-icon>
-        <ng-container i18n="@@GiveFeedbackSuccess.GiveAnotherFeedback">Donner un autre feedZback</ng-container>
+        <ng-container i18n="@@GiveFeedbackSuccess.GiveAnother">Donner un autre feedZback</ng-container>
       </button>
     } @else {
       <button mat-stroked-button color="primary" (click)="signOut()">
-        <ng-container i18n="@@Common.CloseSession">Fermer la session</ng-container>
+        <ng-container i18n="@@Shared.Action.CloseSession">Fermer la session</ng-container>
         <mat-icon iconPositionEnd>logout</mat-icon>
       </button>
     }

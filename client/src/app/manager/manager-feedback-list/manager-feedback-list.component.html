@@ -3,7 +3,7 @@
     #input
     matInput
     placeholder="Rechercher par email"
-    i18n-placeholder="@@Common.SearchByEmail"
+    i18n-placeholder="@@Shared.Field.SearchByEmail"
     [value]="filter"
     (keyup)="onFilter(input.value)"
   />
@@ -20,7 +20,7 @@
   </ng-container>
 
   <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@ManagerFeedbackList.Date">Date</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Shared.Field.Date">Date</th>
     <td mat-cell *matCellDef="let element">{{ f(element).updatedAt | date: 'shortDate' }}</td>
   </ng-container>
 
@@ -63,8 +63,12 @@
 
   <tr class="mat-row" *matNoDataRow>
     @if (filter) {
-      <td class="mat-cell p-6 text-center italic text-gray-400" [attr.colspan]="columns.length">
-        <ng-container i18n="@@Common.NoResultFor">Aucun résultat pour</ng-container> "{{ filter }}"
+      <td
+        class="mat-cell p-6 text-center italic text-gray-400"
+        [attr.colspan]="columns.length"
+        i18n="@@Shared.Message.NoResultFor"
+      >
+        Aucun résultat pour "{{ filter }}"
       </td>
     }
   </tr>

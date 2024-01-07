@@ -1,18 +1,17 @@
 <mat-form-field appearance="outline" class="app-emails-field__field">
-  <mat-label i18n="@@EmailsField.EmailsOfYourColleagues">Emails de vos collègues</mat-label>
+  <mat-label i18n="@@Shared.Field.EmailsOfYourColleagues">Emails de vos collègues</mat-label>
 
   <mat-chip-grid #chipGrid [formControl]="emails">
     @for (email of emails.value; track email) {
       <mat-chip-row
         [class.app-emails-field__error]="isInvalidEmail(email)"
-        [aria-description]="'Editer ' + email"
         [editable]="true"
         (edited)="edit(email, $event)"
         (removed)="remove(email)"
       >
         {{ email }}
 
-        <button matChipRemove [attr.aria-label]="'Effacer ' + email"><mat-icon>cancel</mat-icon></button>
+        <button matChipRemove><mat-icon>cancel</mat-icon></button>
       </mat-chip-row>
     }
 

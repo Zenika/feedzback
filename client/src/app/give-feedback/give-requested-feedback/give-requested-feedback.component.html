@@ -1,6 +1,6 @@
 <h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
-  <ng-container i18n="@@GiveRequestedFeedback.GiveFeedback">Donner du feedZback</ng-container>
+  <ng-container i18n="@@GiveFeedback.Title">Donner du feedZback</ng-container>
 </h1>
 
 <app-message type="info" [closable]="false">
@@ -16,11 +16,11 @@
   }
 </app-message>
 
-<app-message type="danger" [(visible)]="showError" i18n="@@Common.ErrorOccured">
+<app-message type="danger" [(visible)]="showError" i18n="@@Shared.Message.ErrorOccured">
   Une erreur s'est produite.
 </app-message>
 
-<app-message type="success" [(visible)]="showDraft" i18n="@@GiveRequestedFeedback.DraftSaved">
+<app-message type="success" [(visible)]="showDraft" i18n="@@Shared.Message.DraftSaved">
   Brouillon enregistré.
 </app-message>
 
@@ -32,7 +32,7 @@
     </h3>
 
     <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label i18n="@@GiveRequestedFeedback.YourEmail">Votre email</mat-label>
+      <mat-label i18n="@@Shared.Field.YourEmail">Votre email</mat-label>
       <input
         [value]="request.giverEmail"
         required
@@ -51,7 +51,7 @@
   }
 
   <mat-form-field appearance="outline" class="gbl-form-field">
-    <mat-label i18n="@@GiveRequestedFeedback.EmailOfYourColleague">Email de votre collègue</mat-label>
+    <mat-label i18n="@@Shared.Field.EmailOfYourColleague">Email de votre collègue</mat-label>
     <input
       [value]="request.receiverEmail"
       required
@@ -71,7 +71,12 @@
 
   <div class="gbl-form-submit">
     <div>
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" i18n="@@Common.Send">
+      <button
+        [disabled]="form.invalid || submitInProgress"
+        mat-raised-button
+        color="primary"
+        i18n="@@Shared.Action.Send"
+      >
         Envoyer
       </button>
 
@@ -82,7 +87,7 @@
         color="primary"
         class="ms-6"
         (click)="onDraft()"
-        i18n="@@Common.Save"
+        i18n="@@Shared.Action.Save"
       >
         Enregistrer
       </button>
@@ -90,7 +95,7 @@
 
     <div class="gbl-form-submit__info">
       <mat-icon>info</mat-icon>
-      <ng-container i18n="@@Common.RequiredFieldsMessage">Les champs marqués d'une * sont obligatoires</ng-container>
+      <ng-container i18n="@@Shared.Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
 </form>

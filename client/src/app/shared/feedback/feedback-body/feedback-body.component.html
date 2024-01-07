@@ -1,7 +1,7 @@
 @if (feedback.message) {
   <h3 class="app-feedback-body__title">
     <mat-icon>send</mat-icon>
-    <ng-container i18n="@@Common.Message">Message</ng-container>
+    <ng-container i18n="@@Shared.Feedback.Message">Message</ng-container>
   </h3>
   <app-multi-line class="app-feedback-body__content" [text]="feedback.message" />
 }
@@ -9,20 +9,20 @@
 @if (feedback.status === 'done') {
   <h3 class="app-feedback-body__title">
     <mat-icon>new_releases</mat-icon>
-    <ng-container i18n="@@Common.PositiveFeedback">Points positifs</ng-container>
+    <ng-container i18n="@@Shared.Feedback.Positive">Points positifs</ng-container>
   </h3>
   <app-multi-line class="app-feedback-body__content" [text]="feedback.positive" />
 
   <h3 class="app-feedback-body__title">
     <mat-icon>moving</mat-icon>
-    <ng-container i18n="@@Common.NegativeFeedback">Axes d'améliorations</ng-container>
+    <ng-container i18n="@@Shared.Feedback.Negative">Axes d'améliorations</ng-container>
   </h3>
   <app-multi-line class="app-feedback-body__content" [text]="feedback.negative" />
 
   @if (feedback.comment) {
     <h3 class="app-feedback-body__title">
       <mat-icon>notes</mat-icon>
-      <ng-container i18n="@@Common.Comment">Commentaire</ng-container>
+      <ng-container i18n="@@Shared.Feedback.Comment">Commentaire</ng-container>
     </h3>
     <app-multi-line class="app-feedback-body__content" [text]="feedback.comment" />
   }
