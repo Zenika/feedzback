@@ -13,7 +13,7 @@ import {
   SharedContent,
   SharedData,
 } from './feedback-email-builder.types';
-import { matchLanguage, uglifyEmail } from './feedback-email-builder.utils';
+import { mapTextToHtml, matchLanguage, uglifyEmail } from './feedback-email-builder.utils';
 
 @Injectable()
 export class FeedbackEmailBuilderService {
@@ -32,7 +32,7 @@ export class FeedbackEmailBuilderService {
     const content: RequestedContent = requestedContentMap[this.language];
     const data: RequestedData = {
       receiverEmail: uglifyEmail(receiverEmail),
-      message,
+      message: mapTextToHtml(message),
       cta: `${this.configService.get('clientUrl')}/give/requested/${tokenId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
