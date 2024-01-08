@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { google } from 'googleapis';
 import { AuthGuard, AuthService } from '../core/auth';
@@ -33,16 +33,7 @@ export class EmployeeController {
 
   @Get('search')
   @UseGuards(AuthGuard)
-  async search() {
-    const people = google.people('v1');
-
-    const a = people.people.searchDirectoryPeople({
-      mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
-      query: 'norbert',
-      readMask: 'names,emailAddresses',
-      sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
-     });
-   
-    return a;
+  async search(@Query('input') searchInput: string) {
+    return this.employeeDbService.searchEmployee(searchInput);
   }
 }

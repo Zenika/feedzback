@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FirebaseService } from '../../core/firebase';
 import { Collection } from './employee-db.config';
-import { EmployeeData } from './employee-db.types';
+import { EmployeeData, EmployeeSearchResult, EmployeeSearchResultList } from './employee-db.types';
 import { isEmptyEmployeeData } from './employee-db.utils';
 
 @Injectable()
@@ -60,5 +60,113 @@ export class EmployeeDbService {
     } else {
       await employeeDoc.set(newEmployeeData);
     }
+  }
+
+  async searchEmployee(searchInput: string): Promise<EmployeeSearchResultList> {
+
+     // const people = google.people('v1');
+
+    // const a = people.people.searchDirectoryPeople({
+    //   mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
+    //   query: 'norbert',
+    //   readMask: 'names,emailAddresses',
+    //   sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
+    //  });
+   
+    // return a;
+    const mockData = {
+      people: [
+        {
+          resourceName: 'people/114580241791076969822',
+          etag: '%EggBAgMJLjc9PhoDAQIHIgw3R2lBNElaTFFjST0=',
+          names: [
+            {
+              metadata: {
+                primary: true,
+                source: {
+                  type: 'DOMAIN_PROFILE',
+                  id: '114580241791076969822',
+                },
+              },
+              displayName: 'Norbert POINTU',
+              familyName: 'POINTU',
+              givenName: 'Norbert',
+              displayNameLastFirst: 'Norbert POINTU',
+              unstructuredName: 'Norbert POINTU',
+            },
+          ],
+          emailAddresses: [
+            {
+              metadata: {
+                primary: true,
+                verified: true,
+                source: {
+                  type: 'DOMAIN_PROFILE',
+                  id: '114580241791076969822',
+                },
+                sourcePrimary: true,
+              },
+              value: 'norbert.pointu@zenika.com',
+            },
+          ],
+        },
+        {
+          resourceName: 'people/101834802401175303872',
+          etag: '%EggBAgMJLjc9PhoDAQIH',
+          names: [
+            {
+              metadata: {
+                primary: true,
+                source: {
+                  type: 'PROFILE',
+                  id: '101834802401175303872',
+                },
+                sourcePrimary: true,
+              },
+              displayName: 'Norbert Jeff Nadir',
+              familyName: 'Nadir',
+              givenName: 'Norbert Jeff',
+              displayNameLastFirst: 'Nadir, Norbert Jeff',
+              unstructuredName: 'Norbert Jeff Nadir',
+            },
+          ],
+          photos: [
+            {
+              metadata: {
+                primary: true,
+                source: {
+                  type: 'PROFILE',
+                  id: '101834802401175303872',
+                },
+              },
+              url: 'https://lh3.googleusercontent.com/a-/ALV-UjXQWYXlCeSwcj7XCIn8f8rCy6HzkSGlwXRA6d1RcIgUMw=s100',
+            },
+          ],
+          emailAddresses: [
+            {
+              metadata: {
+                primary: true,
+                verified: true,
+                source: {
+                  type: 'DOMAIN_PROFILE',
+                  id: '101834802401175303872',
+                },
+                sourcePrimary: true,
+              },
+              value: 'norbertjeff.nadir@zenika.com',
+            },
+          ],
+        },
+      ],
+      totalSize: 2,
+    };
+
+    const resultRawData = mockData;
+
+    return resultRawData.people.map<EmployeeSearchResult>(({ names, photos, emailAddresses }) => ({
+      displayName: names[0].displayName,
+      email: emailAddresses[0].value,
+      photoUrl: photos?.[0].url,
+    }));
   }
 }

@@ -1,5 +1,5 @@
-<mat-form-field appearance="outline" class="app-emails-field__field">
-  <mat-label>Emails de vos collègues</mat-label>
+<mat-form-field appearance="outline" class="app-emails-field-autocomplete__field">
+  <mat-label>Emails de vos collègues AUTOCOMPLETE</mat-label>
 
   <mat-chip-grid #chipGrid [formControl]="emails" aria-label="Saisissez les emails de vos collègues">
     @for (email of emails.value; track email) {
@@ -15,15 +15,30 @@
         <button matChipRemove [attr.aria-label]="'Effacer ' + email"><mat-icon>cancel</mat-icon></button>
       </mat-chip-row>
     }
-
+    <div style="display: hidden" [matMenuTriggerFor]="menu"></div>
     <input
+      #searchInput
+      [formControl]="inputEmail"
       [placeholder]="multipleEmailsPlaceholder"
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [matChipInputAddOnBlur]="true"
       (matChipInputTokenEnd)="add($event)"
     />
-    
+
+    <mat-menu #menu="matMenu" class="app-emails-field-autocomplete__autocomplete-menu">
+      @for (result of autocompleteResult; track result) {
+        <button mat-menu-item (click)="selectEmail(result)">
+          <div class="app-emails-field-autocomplete__menu-item">
+            <avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></avatar-photo>
+
+            <div class="app-emails-field-autocomplete__person-detail">
+              <div>{{ result.displayName }}</div>
+              <div class="app-emails-field-autocomplete__email">{{ result.email }}</div>
+            </div>
+          </div>
+        </button>
+      }
+    </mat-menu>
   </mat-chip-grid>
 
   <mat-hint align="start">Séparez les emails par des virgules</mat-hint>

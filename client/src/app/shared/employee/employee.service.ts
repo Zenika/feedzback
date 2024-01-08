@@ -5,7 +5,7 @@ import { EMPTY, ReplaySubject, map, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { UpdateManagerDto } from './employee.dto';
-import { EmployeeData } from './employee.types';
+import { EmployeeData, EmployeeSearchResultList } from './employee.types';
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +60,13 @@ export class EmployeeService {
             this._data$.next(this.dataSnapshot);
           }),
         ),
+    );
+  }
+  searchEmployee(inputSearch: string) {
+    return this.authService.withBearerToken((headers) =>
+      this.httpClient.get<EmployeeSearchResultList>(`${this.apiBaseUrl}/employee/search/?input=${inputSearch}`, {
+        headers,
+      }),
     );
   }
 }
