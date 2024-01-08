@@ -16,12 +16,12 @@ import {
 } from '../../shared/form/multiple-emails';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message/validation-error-message.pipe';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { EmployeeService } from '../../shared/employee/employee.service';
 import { AvatarPhotoComponent } from '../avatar-photo.component/avatar-photo.component';
-
 @Component({
   selector: 'app-emails-field-autocomplete',
   standalone: true,
@@ -39,6 +39,7 @@ import { AvatarPhotoComponent } from '../avatar-photo.component/avatar-photo.com
     MatMenuModule,
     MatListModule,
     AvatarPhotoComponent,
+    MatAutocompleteModule,
   ],
 })
 export class EmailsFieldAutocompleteComponent {
@@ -73,26 +74,20 @@ export class EmailsFieldAutocompleteComponent {
       )
       .subscribe((term) => this.search(term));
   }
-  getFocus() {
-    console.log('get Focus');
-  }
 
   private search(term: string) {
     this.employeeService.searchEmployee(term).subscribe((result) => {
       this.autocompleteResult = result;
-      this.trigger.openMenu();
-
-      // this.searchInputField.nativeElement.focus()
     });
   }
 
   protected selectEmail(result: EmployeeSearchResult) {
-    this.inputEmail.setValue('');
+    this.autocompleteResult = [];
     const emails = getMultipleEmails(result.email);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
-    this.searchInputField.nativeElement.focus();
+    // this.searchInputField.nativeElement.focus();
   }
 
   protected isInvalidEmail(email: string) {

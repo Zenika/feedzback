@@ -15,19 +15,20 @@
         <button matChipRemove [attr.aria-label]="'Effacer ' + email"><mat-icon>cancel</mat-icon></button>
       </mat-chip-row>
     }
-    <div style="display: hidden" [matMenuTriggerFor]="menu"></div>
+
+    <!-- <div style="display: hidden" [matMenuTriggerFor]="menu"></div> -->
     <input
-      #searchInput
       [formControl]="inputEmail"
       [placeholder]="multipleEmailsPlaceholder"
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="add($event)"
+      [matAutocomplete]="auto"
     />
 
-    <mat-menu #menu="matMenu" class="app-emails-field-autocomplete__autocomplete-menu">
+    <mat-autocomplete #auto="matAutocomplete">
       @for (result of autocompleteResult; track result) {
-        <button mat-menu-item (click)="selectEmail(result)">
+        <mat-option [value]="result.email" (click)="selectEmail(result)">
           <div class="app-emails-field-autocomplete__menu-item">
             <avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></avatar-photo>
 
@@ -36,9 +37,9 @@
               <div class="app-emails-field-autocomplete__email">{{ result.email }}</div>
             </div>
           </div>
-        </button>
+        </mat-option>
       }
-    </mat-menu>
+    </mat-autocomplete>
   </mat-chip-grid>
 
   <mat-hint align="start">Séparez les emails par des virgules</mat-hint>
