@@ -17,9 +17,9 @@ import {
   multipleEmailsValidatorFactory,
 } from '../shared/form/multiple-emails';
 import { MessageComponent } from '../shared/ui/message/message.component';
+import { EmailsFieldAutocompleteComponent } from './emails-field-autocomplete/emails-field-autocomplete.component';
 import { EmailsFieldComponent } from './emails-field/emails-field.component';
 import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
-import { EmailsFieldAutocompleteComponent } from './emails-field-autocomplete/emails-field-autocomplete.component';
 
 @Component({
   selector: 'app-request-feedback',
@@ -34,8 +34,7 @@ import { EmailsFieldAutocompleteComponent } from './emails-field-autocomplete/em
     MatTooltipModule,
     MessageComponent,
     EmailsFieldComponent,
-    EmailsFieldAutocompleteComponent
-    
+    EmailsFieldAutocompleteComponent,
   ],
   templateUrl: './request-feedback.component.html',
   encapsulation: ViewEncapsulation.None,

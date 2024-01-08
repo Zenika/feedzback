@@ -82,19 +82,20 @@ export class EmailsFieldAutocompleteComponent {
   }
 
   protected selectEmail(result: EmployeeSearchResult) {
+    console.log('selectEmail')
     this.autocompleteResult = [];
     const emails = getMultipleEmails(result.email);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
-    // this.searchInputField.nativeElement.focus();
-  }
+}
 
   protected isInvalidEmail(email: string) {
     return !EMAIL_REGEXP.test(email);
   }
 
   protected add(event: MatChipInputEvent): void {
+    console.log('addd')
     const emails = getMultipleEmails(event.value);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);

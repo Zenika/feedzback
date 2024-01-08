@@ -24,11 +24,12 @@
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="add($event)"
       [matAutocomplete]="auto"
+      #chipInput="matChipInput"
     />
 
     <mat-autocomplete #auto="matAutocomplete">
       @for (result of autocompleteResult; track result) {
-        <mat-option [value]="result.email" (click)="selectEmail(result)">
+        <mat-option [value]="result.email" (click)="selectEmail(result); chipInput.clear();">
           <div class="app-emails-field-autocomplete__menu-item">
             <avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></avatar-photo>
 
