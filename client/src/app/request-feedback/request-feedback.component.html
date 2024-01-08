@@ -28,6 +28,16 @@
     />
 
     <mat-form-field appearance="outline" class="gbl-form-field">
+      <mat-label i18n="@@RequestFeedback.UseTemplate">S'inspirer d'un modèle</mat-label>
+      <mat-select (valueChange)="message.value = $event ?? ''">
+        <mat-option class="italic opacity-50" i18n="@@RequestFeedback.NoTemplate">Aucun modèle</mat-option>
+        @for (tmpl of requestTemplates; track tmpl; let index = $index) {
+          <mat-option [value]="tmpl.content">{{ tmpl.title }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label i18n="@@Shared.Feedback.Message">Message</mat-label>
       <textarea
         #message
@@ -35,8 +45,6 @@
         [maxlength]="messageMaxLength"
         matInput
         rows="4"
-        placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
-        i18n-placeholder="@@RequestFeedback.MessagePlaceholder"
       ></textarea>
       <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>

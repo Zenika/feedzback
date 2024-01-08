@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,6 +20,7 @@ import {
 import { MessageComponent } from '../shared/ui/message/message.component';
 import { EmailsFieldComponent } from './emails-field/emails-field.component';
 import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
+import { REQUEST_TEMPLATES } from './request-feedback.config';
 
 @Component({
   selector: 'app-request-feedback',
@@ -29,6 +31,7 @@ import { RequestFeedbackSuccess } from './request-feedback-success/request-feedb
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatSlideToggleModule,
     MatTooltipModule,
     MessageComponent,
@@ -53,6 +56,8 @@ export class RequestFeedbackComponent {
   protected messageMaxLength = 500;
 
   protected hasManagerFeature = environment.featureFlipping.manager;
+
+  protected requestTemplates = REQUEST_TEMPLATES;
 
   form = this.formBuilder.group({
     recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
