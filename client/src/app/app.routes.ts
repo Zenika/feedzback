@@ -57,7 +57,7 @@ export const routes: Routes = [
     path: 'manager',
     loadComponent: () => import('./manager/manager.component'),
     canActivate: [authGuard, managerGuard],
-    title: 'FeedZback - ' + $localize`:@@Action.Manager:Manager`,
+    title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
   },
   {
     path: 'sign-in',
