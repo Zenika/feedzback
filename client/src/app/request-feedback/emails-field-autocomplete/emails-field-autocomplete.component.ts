@@ -1,12 +1,21 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
-import { Component, ElementRef, HostBinding, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatChipEditedEvent, MatChipGrid, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+import { Subscription, debounceTime, distinctUntilChanged, filter } from 'rxjs';
 import { EmployeeSearchResult, EmployeeSearchResultList } from 'src/app/shared/employee/employee.types';
 import {
   EMAIL_REGEXP,
@@ -17,9 +26,7 @@ import {
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message/validation-error-message.pipe';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { EmployeeService } from '../../shared/employee/employee.service';
 import { AvatarPhotoComponent } from '../avatar-photo.component/avatar-photo.component';
 @Component({
@@ -35,17 +42,16 @@ import { AvatarPhotoComponent } from '../avatar-photo.component/avatar-photo.com
     MatIconModule,
     MatInputModule,
     ValidationErrorMessagePipe,
-    MatButtonModule,
-    MatMenuModule,
-    MatListModule,
     AvatarPhotoComponent,
     MatAutocompleteModule,
   ],
 })
-export class EmailsFieldAutocompleteComponent {
-  @HostBinding('class.app-emails-field-autocomplete') hasCss = true;
+export class EmailsFieldAutocompleteComponent implements OnDestroy {
+  @HostBinding('class.app-emails-field-autocomplete')
+  hasCss = true;
 
-  @Input() emails = new FormControl<string[]>([], {
+  @Input()
+  emails = new FormControl<string[]>([], {
     nonNullable: true,
     validators: [Validators.required, multipleEmailsValidatorFactory()],
   });
@@ -58,6 +64,8 @@ export class EmailsFieldAutocompleteComponent {
 
   autocompleteResult: EmployeeSearchResultList = [];
 
+  subscriptions: Subscription[] = [];
+
   protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
   protected readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -66,18 +74,30 @@ export class EmailsFieldAutocompleteComponent {
 
   constructor() {
     this.inputEmail = new FormControl();
-    this.inputEmail.valueChanges
-      .pipe(
-        debounceTime(400),
-        distinctUntilChanged(),
-        filter((term) => term.length >= 3),
-        filter((term) => !this.autocompleteResult.find(({ email }) => email === term)),
-      )
-      .subscribe((term) => this.search(term));
 
-    this.inputEmail.valueChanges.pipe(filter((term) => term.length === 0)).subscribe(() => {
-      this.autocompleteResult = [];
-    });
+    this.subscriptions.push(
+      this.inputEmail.valueChanges
+        .pipe(
+          debounceTime(400),
+          distinctUntilChanged(),
+          // Fetch begin when at least 3 chars
+          filter((term) => term.length >= 3),
+          // Do not fetch again if email selected from the autocomplete
+          filter((term) => !this.autocompleteResult.find(({ email }) => email === term)),
+        )
+        .subscribe((term) => this.search(term)),
+    );
+
+    // Clear the autocompleteResult when inputEmail is empty
+    this.subscriptions.push(
+      this.inputEmail.valueChanges.pipe(filter((term) => term.length === 0)).subscribe(() => {
+        this.autocompleteResult = [];
+      }),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   private search(term: string) {
@@ -100,12 +120,10 @@ export class EmailsFieldAutocompleteComponent {
   }
 
   protected add(event: MatChipInputEvent): void {
-    console.log('addd');
     const emails = getMultipleEmails(event.value);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
-    event.chipInput?.clear();
   }
 
   protected remove(email: string): void {

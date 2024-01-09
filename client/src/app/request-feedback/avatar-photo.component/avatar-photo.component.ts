@@ -22,13 +22,6 @@ export class AvatarPhotoComponent implements OnInit {
   public initials!: string;
   public circleColor!: string;
 
-  private colors = [
-    '#EB7181', // red
-    '#468547', // green
-    '#FFD558', // yellow
-    '#3670B2', // blue
-  ];
-
   generateHSL = (name: string) => {
     const hRange = [0, 360];
     const sRange = [0, 100];

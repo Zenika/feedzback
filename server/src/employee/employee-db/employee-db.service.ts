@@ -64,104 +64,104 @@ export class EmployeeDbService {
   }
 
   async searchEmployee(searchInput: string): Promise<EmployeeSearchResultList> {
-    const auth = await google.auth.fromAPIKey('AIzaSyA3wUYWtxb_5ebghHlNCBXmJRsvpcH4qj0');
-    const people = google.people('v1');
-    const a = await people.people.searchDirectoryPeople({
-      mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
-      query: searchInput,
-      readMask: 'names,emailAddresses',
-      sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
-      auth,
-    });
+    // const people = google.people('v1');
+    // const a = await people.people.searchDirectoryPeople({
+    //   mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
+    //   query: searchInput,
+    //   readMask: 'names,emailAddresses',
+    //   sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
+    // });
 
     const mockData = {
-      people: [
-        {
-          resourceName: 'people/114580241791076969822',
-          etag: '%EggBAgMJLjc9PhoDAQIHIgw3R2lBNElaTFFjST0=',
-          names: [
-            {
-              metadata: {
-                primary: true,
-                source: {
-                  type: 'DOMAIN_PROFILE',
-                  id: '114580241791076969822',
+      data: {
+        people: [
+          {
+            resourceName: 'people/114580241791076969822',
+            etag: '%EggBAgMJLjc9PhoDAQIHIgw3R2lBNElaTFFjST0=',
+            names: [
+              {
+                metadata: {
+                  primary: true,
+                  source: {
+                    type: 'DOMAIN_PROFILE',
+                    id: '114580241791076969822',
+                  },
                 },
+                displayName: 'Norbert POINTU',
+                familyName: 'POINTU',
+                givenName: 'Norbert',
+                displayNameLastFirst: 'Norbert POINTU',
+                unstructuredName: 'Norbert POINTU',
               },
-              displayName: 'Norbert POINTU',
-              familyName: 'POINTU',
-              givenName: 'Norbert',
-              displayNameLastFirst: 'Norbert POINTU',
-              unstructuredName: 'Norbert POINTU',
-            },
-          ],
-          emailAddresses: [
-            {
-              metadata: {
-                primary: true,
-                verified: true,
-                source: {
-                  type: 'DOMAIN_PROFILE',
-                  id: '114580241791076969822',
+            ],
+            emailAddresses: [
+              {
+                metadata: {
+                  primary: true,
+                  verified: true,
+                  source: {
+                    type: 'DOMAIN_PROFILE',
+                    id: '114580241791076969822',
+                  },
+                  sourcePrimary: true,
                 },
-                sourcePrimary: true,
+                value: 'norbert.pointu@zenika.com',
               },
-              value: 'norbert.pointu@zenika.com',
-            },
-          ],
-        },
-        {
-          resourceName: 'people/101834802401175303872',
-          etag: '%EggBAgMJLjc9PhoDAQIH',
-          names: [
-            {
-              metadata: {
-                primary: true,
-                source: {
-                  type: 'PROFILE',
-                  id: '101834802401175303872',
+            ],
+          },
+          {
+            resourceName: 'people/101834802401175303872',
+            etag: '%EggBAgMJLjc9PhoDAQIH',
+            names: [
+              {
+                metadata: {
+                  primary: true,
+                  source: {
+                    type: 'PROFILE',
+                    id: '101834802401175303872',
+                  },
+                  sourcePrimary: true,
                 },
-                sourcePrimary: true,
+                displayName: 'Norbert Jeff Nadir',
+                familyName: 'Nadir',
+                givenName: 'Norbert Jeff',
+                displayNameLastFirst: 'Nadir, Norbert Jeff',
+                unstructuredName: 'Norbert Jeff Nadir',
               },
-              displayName: 'Norbert Jeff Nadir',
-              familyName: 'Nadir',
-              givenName: 'Norbert Jeff',
-              displayNameLastFirst: 'Nadir, Norbert Jeff',
-              unstructuredName: 'Norbert Jeff Nadir',
-            },
-          ],
-          photos: [
-            {
-              metadata: {
-                primary: true,
-                source: {
-                  type: 'PROFILE',
-                  id: '101834802401175303872',
+            ],
+            photos: [
+              {
+                metadata: {
+                  primary: true,
+                  source: {
+                    type: 'PROFILE',
+                    id: '101834802401175303872',
+                  },
                 },
+                url: 'https://lh3.googleusercontent.com/a-/ALV-UjXQWYXlCeSwcj7XCIn8f8rCy6HzkSGlwXRA6d1RcIgUMw=s100',
               },
-              url: 'https://lh3.googleusercontent.com/a-/ALV-UjXQWYXlCeSwcj7XCIn8f8rCy6HzkSGlwXRA6d1RcIgUMw=s100',
-            },
-          ],
-          emailAddresses: [
-            {
-              metadata: {
-                primary: true,
-                verified: true,
-                source: {
-                  type: 'DOMAIN_PROFILE',
-                  id: '101834802401175303872',
+            ],
+            emailAddresses: [
+              {
+                metadata: {
+                  primary: true,
+                  verified: true,
+                  source: {
+                    type: 'DOMAIN_PROFILE',
+                    id: '101834802401175303872',
+                  },
+                  sourcePrimary: true,
                 },
-                sourcePrimary: true,
+                value: 'norbertjeff.nadir@zenika.com',
               },
-              value: 'norbertjeff.nadir@zenika.com',
-            },
-          ],
-        },
-      ],
-      totalSize: 2,
+            ],
+          },
+        ],
+        totalSize: 2,
+      },
     };
 
-    const resultRawData = a;
+    const resultRawData = mockData;
 
     return resultRawData.data.people!.map<EmployeeSearchResult>(({ names, photos, emailAddresses }) => ({
       displayName: names?.[0].displayName ?? 'Not defined',

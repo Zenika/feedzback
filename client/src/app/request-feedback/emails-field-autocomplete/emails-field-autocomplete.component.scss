@@ -1,11 +1,6 @@
 .app-emails-field-autocomplete {
   display: block;
 
-  &__autocomplete-menu {
-    width: 400px;
-    max-width: 400px;
-  }
-
   &__menu-item {
     display: flex;
     margin-block: 0.5rem;

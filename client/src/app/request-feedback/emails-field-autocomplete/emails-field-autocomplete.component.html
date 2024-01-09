@@ -16,20 +16,19 @@
       </mat-chip-row>
     }
 
-    <!-- <div style="display: hidden" [matMenuTriggerFor]="menu"></div> -->
     <input
       [formControl]="inputEmail"
       [placeholder]="multipleEmailsPlaceholder"
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="add($event)"
+      (matChipInputTokenEnd)="add($event); chipInput.clear()"
       [matAutocomplete]="auto"
       #chipInput="matChipInput"
     />
 
     <mat-autocomplete #auto="matAutocomplete">
       @for (result of autocompleteResult; track result) {
-        <mat-option [value]="result.email" (click)="selectEmail(result); chipInput.clear();">
+        <mat-option [value]="result.email" (click)="selectEmail(result); chipInput.clear()">
           <div class="app-emails-field-autocomplete__menu-item">
             <app-avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></app-avatar-photo>
 
