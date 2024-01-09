@@ -58,6 +58,17 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Swagger
+
+Swagger has been added to the API endpoint. You have to set the Bearer in swagger UI to be able to use call the Apis.
+
+On the top right of the screen, click on the Authorize button. A dialog will be displayed. click on Logout and paste in the input the Bearer token
+
+> The Bearer token can be copied from a API call done by the front.
+
+
+
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).

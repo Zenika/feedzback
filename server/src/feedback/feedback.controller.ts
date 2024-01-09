@@ -1,10 +1,12 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto, ManagedFeedbacksDto } from './feedback.dto';
 
+@ApiBearerAuth('defaultBearerAuth')
 @Controller('feedback')
 export class FeedbackController {
   constructor(
