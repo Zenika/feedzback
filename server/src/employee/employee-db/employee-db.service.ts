@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { google } from 'googleapis';
+// import { google } from 'googleapis';
 import { FirebaseService } from '../../core/firebase';
 import { Collection } from './employee-db.config';
 import { EmployeeData, EmployeeSearchResult, EmployeeSearchResultList } from './employee-db.types';
@@ -63,6 +63,7 @@ export class EmployeeDbService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async searchEmployee(searchInput: string): Promise<EmployeeSearchResultList> {
     // const people = google.people('v1');
     // const a = await people.people.searchDirectoryPeople({

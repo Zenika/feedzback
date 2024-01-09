@@ -8,9 +8,9 @@ export type EmployeeData = {
 };
 
 export interface EmployeeSearchResult {
-  email : string
-  displayName : string;
-  photoUrl?:string
+  email: string;
+  displayName: string;
+  photoUrl?: string;
 }
 
-export type EmployeeSearchResultList = EmployeeSearchResult[]
+export type EmployeeSearchResultList = EmployeeSearchResult[];
