@@ -1,13 +1,11 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { CorsOptionsDelegate } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Request } from 'express';
 import { AppModule } from './app.module';
 import { AppConfig } from './core/config';
-import { SwaggerService } from './swagger/swagger.service';
-
-export const GLOBAL_API_PREFIX = 'api';
+import { setupSwagger } from './swagger/swagger.config';
 
 async function bootstrap() {
   // Note:
@@ -22,16 +20,14 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, { cors });
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  setupSwagger(app);
 
-  SwaggerService.addSwaggerToApplication(app);
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const configService: ConfigService<AppConfig> = app.get(ConfigService);
 
   const port = configService.get('serverPort');
 
   await app.listen(port);
-
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GLOBAL_API_PREFIX}`);
 }
 bootstrap();
