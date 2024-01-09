@@ -32,7 +32,7 @@ export class EmployeeController {
 
   @Get('search')
   @UseGuards(AuthGuard)
-  async search(@Query('input') searchInput: string) {
+  search(@Query('input') searchInput: string) {
     return this.employeeDbService.searchEmployee(searchInput);
   }
 }
