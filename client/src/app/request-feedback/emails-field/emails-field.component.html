@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline" class="app-emails-field__field">
-  <mat-label i18n="@@Shared.Field.EmailsOfYourColleagues">Emails de vos collègues</mat-label>
+  <mat-label i18n="@@Field.EmailsOfYourColleagues">Emails de vos collègues</mat-label>
 
   <mat-chip-grid #chipGrid [formControl]="emails">
     @for (email of emails.value; track email) {
@@ -24,7 +24,7 @@
     />
   </mat-chip-grid>
 
-  <mat-hint align="start" i18n="@@EmailsField.Hint">Séparez les emails par des virgules</mat-hint>
+  <mat-hint align="start" i18n="@@Component.EmailsField.Hint">Séparez les emails par des virgules</mat-hint>
 
   <mat-error>{{ emails.errors | validationErrorMessage }}</mat-error>
 </mat-form-field>

@@ -1,12 +1,11 @@
 <h1 class="gbl-page-title">
   <mat-icon>forum</mat-icon>
-  FeedZback
   @switch (type) {
     @case (feedbackType.given) {
-      donné
+      <ng-container i18n="@@Title.FeedbackGiven">FeedZback donné</ng-container>
     }
     @case (feedbackType.received) {
-      reçu
+      <ng-container i18n="@@Title.ReceivedFeedback">FeedZback reçu</ng-container>
     }
   }
 </h1>
@@ -23,9 +22,13 @@
     <div class="app-done-feedback-list__item">
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.received) {
-        Ce feedZback est partagé avec votre manager
+        <ng-container i18n="@@Message.FeedbackIsSharedWithYourManager">
+          Ce feedZback est partagé avec votre manager
+        </ng-container>
       } @else {
-        Ce feedZback est partagé avec le manager de votre collègue
+        <ng-container i18n="@@Message.FeedbackIsSharedWithTheManagerOfYourColleague">
+          Ce feedZback est partagé avec le manager de votre collègue
+        </ng-container>
       }
     </div>
   </div>

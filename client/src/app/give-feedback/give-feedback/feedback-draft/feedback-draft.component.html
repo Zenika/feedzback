@@ -1,6 +1,6 @@
 <table mat-table [dataSource]="draftList()" class="w-full">
   <ng-container matColumnDef="receiverEmail">
-    <th mat-header-cell *matHeaderCellDef i18n="@@Shared.Field.EmailOfYourColleague">Email de votre collègue</th>
+    <th mat-header-cell *matHeaderCellDef i18n="@@Field.EmailOfYourColleague">Email de votre collègue</th>
     <td mat-cell *matCellDef="let element">{{ d(element).receiverEmail }}</td>
   </ng-container>
 
@@ -11,7 +11,7 @@
         mat-icon-button
         color="primary"
         matTooltip="Editer"
-        i18n-matTooltip="@@Shared.Action.Edit"
+        i18n-matTooltip="@@Action.Edit"
         (click)="apply(element)"
       >
         <mat-icon>edit</mat-icon>
@@ -21,7 +21,7 @@
         mat-icon-button
         color="primary"
         matTooltip="Supprimer"
-        i18n-matTooltip="@@Shared.Action.Delete"
+        i18n-matTooltip="@@Action.Delete"
         (click)="delete(element)"
       >
         <mat-icon>delete</mat-icon>

@@ -1,10 +1,10 @@
 <h1 class="gbl-page-title">
   <mat-icon>hub</mat-icon>
-  <ng-container i18n="@@Manager.Title">FeedZbacks partagés</ng-container>
+  <ng-container i18n="@@Title.Manager">FeedZbacks partagés</ng-container>
 </h1>
 
 <mat-form-field appearance="outline" class="w-full">
-  <mat-label i18n="@@Manager.Collaborator">Collaborateur</mat-label>
+  <mat-label i18n="@@Component.Manager.Collaborator">Collaborateur</mat-label>
   <mat-select [value]="employee" (valueChange)="employeeChange($event)">
     @for (employee of employees; track employee) {
       <mat-option [value]="employee">{{ employee }}</mat-option>
@@ -18,7 +18,7 @@
   } @else if (feedbacks !== null && employee) {
     <div class="mt-4 flex items-center justify-center gap-2 italic opacity-50">
       <mat-icon>share_off</mat-icon>
-      <ng-container i18n="@@Manager.NoData">Aucun feedZback partagé...</ng-container>
+      <ng-container i18n="@@Component.Manager.NoData">Aucun feedZback partagé...</ng-container>
     </div>
   }
 }

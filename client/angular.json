@@ -82,7 +82,7 @@
               ]
             },
             "development": {
-              "localize": ["fr"],
+              "localize": ["en"],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,

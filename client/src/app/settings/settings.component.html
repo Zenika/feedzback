@@ -1,25 +1,27 @@
 <h1 class="gbl-page-title">
   <mat-icon>settings</mat-icon>
-  <ng-container i18n="@@Settings.Title">Paramètres</ng-container>
+  <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
 </h1>
 
 @switch (success) {
   @case (false) {
-    <app-message type="danger" i18n="@@Shared.Message.ErrorOccured">Une erreur s'est produite.</app-message>
+    <app-message type="danger" i18n="@@Message.ErrorOccured">Une erreur s'est produite.</app-message>
   }
   @case (true) {
-    <app-message type="success" i18n="@@Settings.UpdateSuccess">Votre paramètres ont bien été mis à jour.</app-message>
+    <app-message type="success" i18n="@@Component.Settings.UpdateSuccess">
+      Votre paramètres ont bien été mis à jour.
+    </app-message>
   }
 }
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="gbl-form-field">
-    <mat-label i18n="@@Settings.EmailOfYourManager">Email de votre manager</mat-label>
+    <mat-label i18n="@@Field.EmailOfYourManager">Email de votre manager</mat-label>
     <input [formControl]="form.controls.managerEmail" matInput placeholder="jean.dupont@zenika.com" />
     <mat-error>{{ form.controls.managerEmail.errors | validationErrorMessage }}</mat-error>
   </mat-form-field>
 
-  <button [disabled]="submitButtonDisabled" mat-raised-button color="primary" i18n="@@Shared.Action.Update">
+  <button [disabled]="submitButtonDisabled" mat-raised-button color="primary" i18n="@@Action.Update">
     Mettre à jour
   </button>
 </form>

@@ -10,18 +10,18 @@ const giveFeedbackRoutes: Routes = [
     path: '',
     component: GiveFeedbackComponent,
     canActivate: [authGuard],
-    title: 'FeedZback - Donner',
+    title: 'FeedZback - ' + $localize`:@@Feedback.Give: Donner `,
   },
   {
     path: 'requested/:token',
     component: GiveRequestedFeedbackComponent,
     canActivate: [giveRequestedFeedbackGuard],
-    title: 'FeedZback - Donner',
+    title: 'FeedZback - ' + $localize`:@@Feedback.Give: Donner `,
   },
   {
     path: 'success',
     component: GiveFeedbackSuccessComponent,
-    title: 'FeedZback - Confirmation',
+    title: 'FeedZback - ' + $localize`:@@Title.Confirmation:Confirmation`,
   },
 ];
 

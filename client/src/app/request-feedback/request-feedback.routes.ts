@@ -8,13 +8,13 @@ const requestFeedbackRoutes: Routes = [
     path: '',
     component: RequestFeedbackComponent,
     canActivate: [authGuard],
-    title: 'FeedZback - Demander',
+    title: 'FeedZback - ' + $localize`:@@Feedback.Request:Demander`,
   },
   {
     path: 'success',
     component: RequestFeedbackSuccessComponent,
     canActivate: [authGuard],
-    title: 'FeedZback - Confirmation',
+    title: 'FeedZback - ' + $localize`:@@Title.Confirmation:Confirmation`,
   },
 ];
 

@@ -1,17 +1,17 @@
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Shared.Field.Email">Email</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Field.Email">Email</th>
     <td mat-cell *matCellDef="let element">{{ nf(element).email }}</td>
   </ng-container>
 
   <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Shared.Field.Date">Date</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Field.Date">Date</th>
     <td mat-cell *matCellDef="let element">{{ nf(element).date | date: 'shortDate' }}</td>
   </ng-container>
 
   <ng-container matColumnDef="mixed">
     <th mat-header-cell *matHeaderCellDef>
-      <app-division a="Email" b="Date" i18n-a="@@Shared.Field.Email" i18n-b="@@Shared.Field.Date"></app-division>
+      <app-division a="Email" b="Date" i18n-a="@@Field.Email" i18n-b="@@Field.Date"></app-division>
     </th>
     <td mat-cell *matCellDef="let element" class="app-feedback-list__mobile">
       <strong>{{ nf(element).email }}</strong>
@@ -27,8 +27,8 @@
         mat-icon-button
         color="primary"
         matTooltipPosition="left"
-        matTooltip="Voir les détails du feedZback"
-        i18n-matTooltip="@@FeedbackList.ViewDetails"
+        matTooltip="Consulter le feedZback"
+        i18n-matTooltip="@@Action.ViewFeedback"
         [routerLink]="['/feedback', nf(element).id]"
       >
         <mat-icon>visibility</mat-icon>
@@ -44,7 +44,7 @@
       <td
         class="mat-cell p-6 text-center italic text-gray-400"
         [attr.colspan]="columns.length"
-        i18n="@@Shared.Message.NoResultFor"
+        i18n="@@Message.NoResultsFor"
       >
         Aucun résultat pour "{{ filter }}"
       </td>
