@@ -57,23 +57,28 @@ export class RequestFeedbackComponent {
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 
-  protected requestTemplates = REQUEST_TEMPLATES;
-
-  form = this.formBuilder.group({
+  protected form = this.formBuilder.group({
     recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
     shared: [this.hasManagerFeature ? true : false],
   });
 
-  multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
+  protected requestTemplates = REQUEST_TEMPLATES;
 
-  submitInProgress = false;
+  protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
-  sentEmails: string[] = [];
+  protected submitInProgress = false;
 
-  remainingUnsentEmails: string[] = [];
+  protected sentEmails: string[] = [];
 
-  async onSubmit() {
+  protected remainingUnsentEmails: string[] = [];
+
+  protected applyTemplate(message: string | undefined) {
+    this.form.controls.message.setValue(message ?? '');
+    this.form.controls.message.updateValueAndValidity();
+  }
+
+  protected async onSubmit() {
     if (this.form.invalid) {
       return;
     }
