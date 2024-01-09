@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline" class="app-emails-field-autocomplete__field">
-  <mat-label>Emails de vos collègues AUTOCOMPLETE</mat-label>
+  <mat-label>Emails de vos collègues</mat-label>
 
   <mat-chip-grid #chipGrid [formControl]="emails" aria-label="Saisissez les emails de vos collègues">
     @for (email of emails.value; track email) {
@@ -17,18 +17,17 @@
     }
 
     <input
-      [formControl]="inputEmail"
+      [formControl]="searchInput"
       [placeholder]="multipleEmailsPlaceholder"
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="add($event); chipInput.clear()"
+      (matChipInputTokenEnd)="addEmail($event.value)"
       [matAutocomplete]="auto"
-      #chipInput="matChipInput"
     />
 
     <mat-autocomplete #auto="matAutocomplete">
-      @for (result of autocompleteResult; track result) {
-        <mat-option [value]="result.email" (click)="selectEmail(result); chipInput.clear()">
+      @for (result of searchResults$ | async; track result.email) {
+        <mat-option [value]="result.email" (click)="addEmail(result.email)">
           <div class="app-emails-field-autocomplete__menu-item">
             <app-avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></app-avatar-photo>
 
