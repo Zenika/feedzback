@@ -6,7 +6,7 @@ import { FeedbackDbService, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto, ManagedFeedbacksDto } from './feedback.dto';
 
-@ApiBearerAuth('defaultBearerAuth')
+@ApiBearerAuth()
 @Controller('feedback')
 export class FeedbackController {
   constructor(

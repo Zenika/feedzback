@@ -1,12 +1,11 @@
 import { BadRequestException, Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { google } from 'googleapis';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from './employee-db';
 import { UpdateManagerDto } from './employee.dto';
 import { buildRequiredEmployeeData } from './employee.utils';
 
-@ApiBearerAuth('defaultBearerAuth')
+@ApiBearerAuth()
 @Controller('employee')
 export class EmployeeController {
   constructor(
