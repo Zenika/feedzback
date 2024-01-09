@@ -31,7 +31,7 @@
       @for (result of autocompleteResult; track result) {
         <mat-option [value]="result.email" (click)="selectEmail(result); chipInput.clear();">
           <div class="app-emails-field-autocomplete__menu-item">
-            <avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></avatar-photo>
+            <app-avatar-photo [photoUrl]="result.photoUrl" [name]="result.displayName"></app-avatar-photo>
 
             <div class="app-emails-field-autocomplete__person-detail">
               <div>{{ result.displayName }}</div>

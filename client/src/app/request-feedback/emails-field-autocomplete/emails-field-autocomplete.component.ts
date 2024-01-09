@@ -71,8 +71,13 @@ export class EmailsFieldAutocompleteComponent {
         debounceTime(400),
         distinctUntilChanged(),
         filter((term) => term.length >= 3),
+        filter((term) => !this.autocompleteResult.find(({ email }) => email === term)),
       )
       .subscribe((term) => this.search(term));
+
+    this.inputEmail.valueChanges.pipe(filter((term) => term.length === 0)).subscribe(() => {
+      this.autocompleteResult = [];
+    });
   }
 
   private search(term: string) {
@@ -82,20 +87,20 @@ export class EmailsFieldAutocompleteComponent {
   }
 
   protected selectEmail(result: EmployeeSearchResult) {
-    console.log('selectEmail')
-    this.autocompleteResult = [];
     const emails = getMultipleEmails(result.email);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
-}
+
+    this.inputEmail.setValue('');
+  }
 
   protected isInvalidEmail(email: string) {
     return !EMAIL_REGEXP.test(email);
   }
 
   protected add(event: MatChipInputEvent): void {
-    console.log('addd')
+    console.log('addd');
     const emails = getMultipleEmails(event.value);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);

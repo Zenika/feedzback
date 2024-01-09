@@ -1,12 +1,12 @@
-import { NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'avatar-photo',
+  selector: 'app-avatar-photo',
   templateUrl: './avatar-photo.component.html',
   styleUrls: ['./avatar-photo.component.scss'],
   standalone: true,
-  imports: [NgStyle, NgIf],
+  imports: [NgStyle, NgIf, NgClass],
 })
 export class AvatarPhotoComponent implements OnInit {
   @Input()
@@ -14,6 +14,9 @@ export class AvatarPhotoComponent implements OnInit {
 
   @Input()
   public name!: string;
+
+  @Input()
+  public size?: 'small' | 'normal' = 'normal'
 
   public showInitials = false;
   public initials!: string;

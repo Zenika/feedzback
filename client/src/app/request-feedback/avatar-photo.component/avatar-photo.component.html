@@ -1,5 +1,8 @@
-<div class="avatar-photo__circle" [ngStyle]="{ 'background-color': circleColor }">
-  <img *ngIf="!showInitials" src="{{ photoUrl }}" alt=""/>
+<div
+  [ngClass]="{ 'app-avatar-photo__circle': size !== 'small', 'app-avatar-photo__circle-small': size === 'small' }"
+  [ngStyle]="{ 'background-color': circleColor }"
+>
+  <img *ngIf="!showInitials" src="{{ photoUrl }}" alt="" />
 
   <div *ngIf="showInitials" class="initials">
     {{ initials }}

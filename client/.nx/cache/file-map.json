@@ -69,6 +69,22 @@
         "hash": "6767824639489613428"
       },
       {
+        "file": ".nx/cache/file-map.json",
+        "hash": "10665250946354308604"
+      },
+      {
+        "file": ".nx/cache/lockfile.hash",
+        "hash": "15976694580217327588"
+      },
+      {
+        "file": ".nx/cache/parsed-lock-file.json",
+        "hash": "1691151909287870129"
+      },
+      {
+        "file": ".nx/cache/project-graph.json",
+        "hash": "2203346738662373833"
+      },
+      {
         "file": ".prettierignore",
         "hash": "16872033910297253603"
       },
@@ -83,6 +99,10 @@
       {
         "file": ".vscode/launch.json",
         "hash": "17038929134016848735"
+      },
+      {
+        "file": ".vscode/settings.json",
+        "hash": "17072122453326406118"
       },
       {
         "file": ".vscode/tasks.json",
@@ -357,16 +377,16 @@
         "hash": "16159123659892716061"
       },
       {
-        "file": "src/app/request-feedback/avatar-photo.component/avatar-photo.component._html",
-        "hash": "3256168771088388476"
-      },
-      {
-        "file": "src/app/request-feedback/avatar-photo.component/avatar-photo.component._ts",
-        "hash": "8786307548251878955"
+        "file": "src/app/request-feedback/avatar-photo.component/avatar-photo.component.html",
+        "hash": "12831894884075510322"
       },
       {
         "file": "src/app/request-feedback/avatar-photo.component/avatar-photo.component.scss",
-        "hash": "8213879072437734333"
+        "hash": "7596744837667289126"
+      },
+      {
+        "file": "src/app/request-feedback/avatar-photo.component/avatar-photo.component.ts",
+        "hash": "1175508028708198927"
       },
       {
         "file": "src/app/request-feedback/emails-field/emails-field.component.html",
@@ -382,15 +402,15 @@
       },
       {
         "file": "src/app/request-feedback/emails-field-autocomplete/emails-field-autocomplete.component.html",
-        "hash": "7609466227027003480"
+        "hash": "17078808734909599060"
       },
       {
         "file": "src/app/request-feedback/emails-field-autocomplete/emails-field-autocomplete.component.scss",
-        "hash": "6050048714283277355"
+        "hash": "11281800061712985267"
       },
       {
         "file": "src/app/request-feedback/emails-field-autocomplete/emails-field-autocomplete.component.ts",
-        "hash": "689935073370415054"
+        "hash": "1956562193807028839"
       },
       {
         "file": "src/app/request-feedback/request-feedback-success/request-feedback-success.component.html",
@@ -410,7 +430,7 @@
       },
       {
         "file": "src/app/request-feedback/request-feedback.component.ts",
-        "hash": "6228845947972467199"
+        "hash": "8381997967565888412"
       },
       {
         "file": "src/app/request-feedback/request-feedback.routes.ts",
@@ -474,7 +494,7 @@
       },
       {
         "file": "src/app/shared/employee/employee.service.ts",
-        "hash": "10852426234529367897"
+        "hash": "1566907073444953269"
       },
       {
         "file": "src/app/shared/employee/employee.types.ts",
@@ -806,7 +826,7 @@
       },
       {
         "file": "src/styles/material/index.scss",
-        "hash": "14273435866502738537"
+        "hash": "2659006784699484937"
       },
       {
         "file": "src/styles/mixins.scss",

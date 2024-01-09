@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { google } from 'googleapis';
 import { FirebaseService } from '../../core/firebase';
 import { Collection } from './employee-db.config';
 import { EmployeeData, EmployeeSearchResult, EmployeeSearchResultList } from './employee-db.types';
@@ -63,17 +64,16 @@ export class EmployeeDbService {
   }
 
   async searchEmployee(searchInput: string): Promise<EmployeeSearchResultList> {
+    const auth = await google.auth.fromAPIKey('AIzaSyA3wUYWtxb_5ebghHlNCBXmJRsvpcH4qj0');
+    const people = google.people('v1');
+    const a = await people.people.searchDirectoryPeople({
+      mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
+      query: searchInput,
+      readMask: 'names,emailAddresses',
+      sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
+      auth,
+    });
 
-     // const people = google.people('v1');
-
-    // const a = people.people.searchDirectoryPeople({
-    //   mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
-    //   query: 'norbert',
-    //   readMask: 'names,emailAddresses',
-    //   sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
-    //  });
-   
-    // return a;
     const mockData = {
       people: [
         {
@@ -161,12 +161,12 @@ export class EmployeeDbService {
       totalSize: 2,
     };
 
-    const resultRawData = mockData;
+    const resultRawData = a;
 
-    return resultRawData.people.map<EmployeeSearchResult>(({ names, photos, emailAddresses }) => ({
-      displayName: names[0].displayName,
-      email: emailAddresses[0].value,
-      photoUrl: photos?.[0].url,
+    return resultRawData.data.people!.map<EmployeeSearchResult>(({ names, photos, emailAddresses }) => ({
+      displayName: names?.[0].displayName ?? 'Not defined',
+      email: emailAddresses?.[0].value ?? 'Not defined',
+      photoUrl: photos?.[0].url ?? undefined,
     }));
   }
 }
