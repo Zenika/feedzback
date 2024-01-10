@@ -15,4 +15,9 @@ export type AppConfig = {
   mailgunClientOptions: MailgunClientOptions;
 
   mailgunDomain: string;
+
+  cryptoSecrets: {
+    key: string;
+    iv: string;
+  };
 };
