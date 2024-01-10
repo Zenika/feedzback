@@ -90,7 +90,7 @@ Identifier of the Firebase project.
 These are injected in the Cloud Run container in order to properly use Mailgun to send emails and notifications.
 On staging, a sandbox account is used that redirects any sent email to [feedzback@zenika.com](mailto:feedzback@zenika.com).
 
-### MAILGUN_API_URL
+### MAILGUN_URL
 
 The mailgun endpoint to use to connect to mailgun sending server.
 * for sandbox mailgun account: `https://api.mailgun.net`
@@ -109,6 +109,14 @@ An API secret defined on the mailgun platform that allows to send email.
 The domain associated with the account.
 Use the sandbox username as the domain (`sandbox8d21179029774bb29c92557ea6ab0d88.mailgun.org`).
 In production should be `feedzback.znk.io`.
+
+### Crypto settings
+
+#### CRYPTO_SECRET_KEY & CRYPTO_SECRET_IV
+
+Used to encrypt/decrypt feedback sensitives data in the Firestore database.
+
+In staging set their values to: `feedzback`.
 
 ### Node Settings
 

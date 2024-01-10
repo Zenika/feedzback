@@ -15,7 +15,7 @@ export const appConfigLoader = (): AppConfig => ({
   },
 
   mailgunClientOptions: {
-    url: process.env.MAILGUN_API_URL!,
+    url: process.env.MAILGUN_URL!,
     username: process.env.MAILGUN_USERNAME!,
     key: process.env.MAILGUN_KEY!,
   },
