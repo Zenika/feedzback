@@ -21,4 +21,9 @@ export const appConfigLoader = (): AppConfig => ({
   },
 
   mailgunDomain: process.env.MAILGUN_DOMAIN!,
+
+  cryptoSecrets: {
+    key: process.env.CRYPTO_SECRET_KEY!,
+    iv: process.env.CRYPTO_SECRET_IV!,
+  },
 });
