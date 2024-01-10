@@ -57,6 +57,8 @@ export class RequestFeedbackComponent {
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 
+  protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
+
   protected form = this.formBuilder.group({
     recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],

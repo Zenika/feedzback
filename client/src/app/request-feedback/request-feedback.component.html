@@ -29,15 +29,17 @@
       i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
     />
 
-    <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</mat-label>
-      <mat-select (valueChange)="applyTemplate($event)">
-        <mat-option class="italic opacity-50" i18n="@@Component.RequestFeedback.NoTemplate">Aucun modèle</mat-option>
-        @for (tmpl of requestTemplates; track tmpl; let index = $index) {
-          <mat-option [value]="tmpl.content">{{ tmpl.title }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    @if (hasRequestTemplateFeature) {
+      <mat-form-field appearance="outline" class="gbl-form-field">
+        <mat-label i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</mat-label>
+        <mat-select (valueChange)="applyTemplate($event)">
+          <mat-option class="italic opacity-50" i18n="@@Component.RequestFeedback.NoTemplate">Aucun modèle</mat-option>
+          @for (tmpl of requestTemplates; track tmpl; let index = $index) {
+            <mat-option [value]="tmpl.content">{{ tmpl.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
 
     <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label i18n="@@Feedback.Message">Message</mat-label>

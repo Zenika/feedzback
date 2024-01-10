@@ -16,7 +16,8 @@ export const environment = {
   apiBaseUrl: 'http://localhost:3000',
   allowedEmailDomains: ['zenika.com'],
   featureFlipping: {
-    manager: true,
-    localize: true,
+    manager: false,
+    localize: false,
+    requestTemplate: false,
   },
 };
