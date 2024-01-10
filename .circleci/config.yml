@@ -251,7 +251,8 @@ jobs:
         default: false
     executor: gcp-cli/google
     steps:
-      - gcp-cli/setup
+      - gcp-cli/setup:
+          version: 458.0.1
       - checkout
       - when:
           condition: << parameters.tag-and-store-container >>
