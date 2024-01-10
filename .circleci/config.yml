@@ -275,7 +275,8 @@ jobs:
     parameters: *param-service
     executor: gcp-cli/google
     steps:
-      - gcp-cli/setup
+      - gcp-cli/setup:
+          version: 458.0.1
       - run:
           working_directory: server
           name: Running gcloud run deploy
