@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, ReplaySubject, map, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData } from './employee.types';
 

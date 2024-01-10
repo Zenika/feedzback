@@ -1,7 +1,7 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../shared/auth/auth.service';
+import { AuthService } from '../shared/auth';
 
 @Component({
   selector: 'app-sign-in',

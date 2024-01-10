@@ -12,17 +12,45 @@
 
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
   @if (isKnownUser$ | async) {
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/home"> Accueil </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/request">
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/home"
+      i18n="@@Action.Home"
+    >
+      Accueil
+    </a>
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/request"
+      i18n="@@Feedback.Request"
+    >
       Demander
     </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/give"> Donner </a>
-    <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/feedbacks">
-      Mes feedZbacks
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/give"
+      i18n="@@Feedback.Give"
+    >
+      Donner
     </a>
+    <a
+      class="app-header-menu__item"
+      routerLinkActive="app-header-menu__item--active"
+      routerLink="/feedbacks"
+      i18n="@@Title.MyFeedbacks"
+      >Mes feedZbacks</a
+    >
 
     @if (hasManagerFeature && isManager()) {
-      <a class="app-header-menu__item" routerLinkActive="app-header-menu__item--active" routerLink="/manager">
+      <a
+        class="app-header-menu__item"
+        routerLinkActive="app-header-menu__item--active"
+        routerLink="/manager"
+        i18n="@@Action.Manager"
+      >
         Manager
       </a>
     }
@@ -38,7 +66,7 @@
         class="app-header-account__photo"
         height="48"
         width="48"
-        alt="Profile photo"
+        alt="Photo"
       />
     } @else {
       <button mat-icon-button [matMenuTriggerFor]="accountMenu">
@@ -48,9 +76,9 @@
 
     <mat-menu #accountMenu="matMenu" xPosition="before">
       @if (hasLocalizeFeature) {
-        <button mat-menu-item (click)="switchLanguageService.switchLanguage()">
+        <button mat-menu-item (click)="languageService.switchLanguage()">
           <mat-icon color="primary">translate</mat-icon>
-          @switch (switchLanguageService.localeId) {
+          @switch (languageService.localeId) {
             @case ('fr') {
               English
             }
@@ -64,16 +92,16 @@
       @if (hasManagerFeature && (isKnownUser$ | async)) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
-          Paramètres
+          <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
         </button>
       }
 
       <button mat-menu-item (click)="signOut()">
         <mat-icon color="primary">logout</mat-icon>
         @if (isKnownUser$ | async) {
-          Se déconnecter
+          <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
         } @else {
-          Fermer la session
+          <ng-container i18n="@@Action.CloseSession">Fermer la session</ng-container>
         }
       </button>
     </mat-menu>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import {
   Feedback,
@@ -28,7 +28,7 @@ export class FeedbackService {
 
   request(dto: FeedbackRequestDto) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers, withCredentials: true }).pipe(
         map(() => true),
         catchError(() => of(false)),
       ),
@@ -37,7 +37,11 @@ export class FeedbackService {
 
   requestAgain(feedbackId: string) {
     return this.authService.withBearerToken((headers) =>
-      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request-again`, { feedbackId }, { headers }),
+      this.httpClient.post<void>(
+        `${this.apiBaseUrl}/feedback/request-again`,
+        { feedbackId },
+        { headers, withCredentials: true },
+      ),
     );
   }
 
@@ -59,7 +63,7 @@ export class FeedbackService {
 
   giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
+      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto, { withCredentials: true })
       .pipe(catchError(() => of(false)));
   }
 
@@ -75,7 +79,7 @@ export class FeedbackService {
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
     return this.authService.withBearerToken((headers) =>
       this.httpClient
-        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers })
+        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true })
         .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
     );
   }

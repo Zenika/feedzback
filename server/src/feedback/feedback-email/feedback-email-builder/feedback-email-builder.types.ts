@@ -1,9 +1,9 @@
-export type Language = 'fr' /* | 'en' */;
+import { LocaleId } from '../../../core/context';
 
 /* ----- Requested feedback ----- */
 
 export type RequestedContent = {
-  lang: Language;
+  lang: LocaleId;
   title: string;
   message: string;
   cta: string;
@@ -19,7 +19,7 @@ export type RequestedData = {
 /* ----- Given feedback ----- */
 
 export type GivenContent = {
-  lang: Language;
+  lang: LocaleId;
   title: string;
   message: string;
   cta: string;
@@ -34,7 +34,7 @@ export type GivenData = {
 /* ----- Shared feedback ----- */
 
 export type SharedContent = {
-  lang: Language;
+  lang: LocaleId;
   title: string;
   message: string;
   cta: string;

@@ -7,9 +7,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AuthService } from '../shared/auth/auth.service';
+import { AuthService } from '../shared/auth';
 import { EmployeeService } from '../shared/employee/employee.service';
-import { SwitchLanguageService } from '../shared/i18n/switch-language';
+import { LanguageService } from '../shared/i18n/language';
 import { BurgerComponent } from './burger/burger.component';
 
 @Component({
@@ -36,7 +36,7 @@ export class HeaderComponent implements OnDestroy {
 
   private router = inject(Router);
 
-  protected switchLanguageService = inject(SwitchLanguageService);
+  protected languageService = inject(LanguageService);
 
   protected isManager = toSignal(inject(EmployeeService).isManager$, { initialValue: false });
 

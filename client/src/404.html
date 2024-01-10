@@ -5,20 +5,22 @@
     <title>FeedZback | Redirection</title>
     <script>
       (function () {
+        let localeId;
+
         if (document.cookie.includes('app-locale-id=fr')) {
-          document.location.assign('/fr/');
-          return;
+          localeId = 'fr';
+        } else if (document.cookie.includes('app-locale-id=en')) {
+          localeId = 'en';
+        } else {
+          const supportedLocaleIds = ['fr', 'en'];
+          const defaultLocaleId = supportedLocaleIds[0];
+          const navigatorLocaleId = navigator.languages.find((language) => supportedLocaleIds.includes(language));
+          localeId = navigatorLocaleId ?? defaultLocaleId;
         }
 
-        if (document.cookie.includes('app-locale-id=en')) {
-          document.location.assign('/en/');
-          return;
-        }
-
-        const supportedLanguages = ['fr', 'en'];
-        const defaultLanguage = supportedLanguages[0];
-        const navigatorLanguage = window.navigator.languages.find((language) => supportedLanguages.includes(language));
-        document.location.assign(`/${navigatorLanguage ?? defaultLanguage}/`);
+        const localizedUrl = new URL(this.document.location.href);
+        localizedUrl.pathname = `/${localeId}${localizedUrl.pathname}`;
+        document.location.assign(localizedUrl);
       })();
     </script>
   </head>

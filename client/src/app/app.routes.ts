@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { settingsGuard } from './settings/setings.guard';
-import { authGuard } from './shared/auth/auth.guard';
+import { authGuard } from './shared/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
 
@@ -19,6 +19,7 @@ export const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [authGuard],
+    title: 'FeedZback',
   },
   {
     path: 'request',
@@ -37,37 +38,37 @@ export const routes: Routes = [
     path: 'feedbacks/:type',
     loadComponent: () => import('./my-feedbacks/my-feedbacks.component'),
     canActivate: [authGuard],
-    title: 'FeedZback - FeedZbacks',
+    title: 'FeedZback - ' + $localize`:@@Title.MyFeedbacks:Mes feedZbacks`,
   },
   {
     path: 'feedback/:id',
     loadComponent: () => import('./feedback-details/feedback-details.component'),
     canActivate: [authGuard],
     resolve: { feedbackDetails: feedbackDetailsResolver },
-    title: 'FeedZback - Vue détaillée',
+    title: 'FeedZback - FeedZback',
   },
   {
     path: 'settings',
     loadComponent: () => import('./settings/settings.component'),
     canActivate: [authGuard, settingsGuard],
-    title: 'FeedZback - Paramètres',
+    title: 'FeedZback - ' + $localize`:@@Title.Settings:Paramètres`,
   },
   {
     path: 'manager',
     loadComponent: () => import('./manager/manager.component'),
     canActivate: [authGuard, managerGuard],
-    title: 'FeedZback - Manager',
+    title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
   },
   {
     path: 'sign-in',
     component: SignInComponent,
     canActivate: [signInGuard],
-    title: 'FeedZback - Se connecter',
+    title: 'FeedZback - ' + $localize`:@@Title.SignIn:Connexion`,
   },
   {
     path: 'guide',
     component: GuideComponent,
-    title: 'FeedZback - Guide',
+    title: 'FeedZback - ' + $localize`:@@Title.Guide:Guide du feedZback`,
   },
   {
     path: 'demo',
@@ -77,7 +78,7 @@ export const routes: Routes = [
   {
     path: 'not-found',
     component: NotFoundComponent,
-    title: 'FeeddZback - Page introuvable',
+    title: 'FeedZback - ' + $localize`:@@PageNotFound.Title:Page introuvable`,
   },
   {
     path: '**',

@@ -1,4 +1,7 @@
-<h1 class="gbl-page-title"><mat-icon>forum</mat-icon> Mes feedZbacks</h1>
+<h1 class="gbl-page-title">
+  <mat-icon>forum</mat-icon>
+  <ng-container i18n="@@Title.MyFeedbacks">Mes feedZbacks</ng-container>
+</h1>
 
 @if (fetched) {
   <mat-tab-group
@@ -9,7 +12,7 @@
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="app-my-feedbacks__label-icon">move_to_inbox</mat-icon>
-        reçus
+        <ng-container i18n="@@Component.MyFeedbacks.Received">reçus</ng-container>
       </ng-template>
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -18,11 +21,11 @@
         <app-feedback-list [feedbacks]="received" [filter]="filter"></app-feedback-list>
       } @else {
         <div class="app-my-feedbacks-empty">
-          <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
+          <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/request">
             <mat-icon>live_help</mat-icon>
-            Demander mon premier feedZback
+            <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
           </button>
         </div>
       }
@@ -31,7 +34,7 @@
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="app-my-feedbacks__label-icon">outgoing_mail</mat-icon>
-        donnés
+        <ng-container i18n="@@Component.MyFeedbacks.Given">donnés</ng-container>
       </ng-template>
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -40,11 +43,11 @@
         <app-feedback-list [feedbacks]="given" [filter]="filter"></app-feedback-list>
       } @else {
         <div class="app-my-feedbacks-empty">
-          <div class="app-my-feedbacks-empty__info">Pas de feedZback...</div>
+          <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/give">
             <mat-icon>chat</mat-icon>
-            Donner mon premier feedZback
+            <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback</ng-container>
           </button>
         </div>
       }
@@ -54,7 +57,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="app-my-feedbacks__label-icon">schedule</mat-icon>
-          demandés
+          <ng-container i18n="@@Component.MyFeedbacks.Requested">demandés</ng-container>
         </ng-template>
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -67,7 +70,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="app-my-feedbacks__label-icon">edit_note</mat-icon>
-          à donner
+          <ng-container i18n="@@Component.MyFeedbacks.ToGive">à donner</ng-container>
         </ng-template>
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -80,7 +83,14 @@
 
 <ng-template #filterTmpl>
   <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
-    <input #input matInput placeholder="Rechercher par email" [value]="filter" (keyup)="filter = input.value" />
+    <input
+      #input
+      matInput
+      placeholder="Rechercher par email"
+      i18n-placeholder="@@Field.SearchByEmail"
+      [value]="filter"
+      (keyup)="filter = input.value"
+    />
     @if (filter) {
       <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">close</mat-icon>
     }
