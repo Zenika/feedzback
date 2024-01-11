@@ -16,7 +16,7 @@ export class AvatarPhotoComponent implements OnInit {
   public name!: string;
 
   @Input()
-  public size?: 'small' | 'normal' = 'normal'
+  public size?: 'small' | 'normal' = 'normal';
 
   public showInitials = false;
   public initials!: string;
@@ -46,13 +46,12 @@ export class AvatarPhotoComponent implements OnInit {
     return `hsl(${h}, ${s}%, ${l}%)`;
   };
 
-
   ngOnInit() {
     if (!this.photoUrl) {
       this.showInitials = true;
       this.createInititals();
 
-      this.circleColor = this.generateHSL(this.name)
+      this.circleColor = this.generateHSL(this.name);
     }
   }
 

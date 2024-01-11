@@ -4,5 +4,5 @@ import { IsEmail } from 'class-validator';
 export class UpdateManagerDto {
   @ApiProperty()
   @IsEmail()
-   managerEmail: string;
+  managerEmail: string;
 }

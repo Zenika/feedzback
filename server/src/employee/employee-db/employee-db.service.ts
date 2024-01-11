@@ -70,6 +70,7 @@ export class EmployeeDbService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async searchEmployee(searchInput: string): Promise<EmployeeSearchResultList> {
     // const sa = this.serviceAccount;
 

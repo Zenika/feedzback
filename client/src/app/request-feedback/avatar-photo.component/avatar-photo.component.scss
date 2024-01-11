@@ -1,46 +1,45 @@
 .app-avatar-photo {
-    &__circle {
-        border-radius   : 50%;
-        width           : 48px;
-        height          : 48px;
-        display         : flex;
-        justify-content : center;
-        align-items     : center;
-    
-        img{
-            border-radius: 50%;
-            width        : 100%;
-            height       : 100%;
-        }
-    
-        .initials {
-            color         : #FFFFFF;
-            font-size     : 20px;
-            line-height   : 19px;
-            letter-spacing: 0.2625px;
-        }
+  &__circle {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
     }
 
-    &__circle-small {
-        border-radius   : 50%;
-        width           : 24px;
-        height          : 24px;
-        display         : flex;
-        justify-content : center;
-        align-items     : center;
-    
-        img{
-            border-radius: 50%;
-            width        : 100%;
-            height       : 100%;
-        }
-    
-        .initials {
-            color         : #FFFFFF;
-            font-size     : 10px;
-            line-height   : 19px;
-            letter-spacing: 0.2625px;
-        }
+    .initials {
+      color: #ffffff;
+      font-size: 20px;
+      line-height: 19px;
+      letter-spacing: 0.2625px;
     }
   }
-  
+
+  &__circle-small {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+
+    .initials {
+      color: #ffffff;
+      font-size: 10px;
+      line-height: 19px;
+      letter-spacing: 0.2625px;
+    }
+  }
+}

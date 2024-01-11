@@ -4,9 +4,7 @@ export type EmployeeData = {
 };
 
 export type EmployeeSearchResult = {
-  email : string
-  displayName : string;
-  photoUrl?:string
-} 
-
-export type EmployeeSearchResultList = EmployeeSearchResult []
+  email: string;
+  displayName: string;
+  photoUrl?: string;
+};
