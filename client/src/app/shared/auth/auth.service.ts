@@ -75,8 +75,6 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         this.accessToken = credential?.accessToken;
 
-        console.log('accessToken', this.accessToken);
-
         return this.isKnownUser$;
       }),
       first((isKnownUser) => isKnownUser),
