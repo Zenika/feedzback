@@ -5,7 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { Request } from 'express';
 import { AppModule } from './app.module';
 import { AppConfig } from './core/config';
-import { setupSwagger } from './swagger/swagger.config';
+import { setupSwagger } from './core/swagger/swagger.config';
 
 async function bootstrap() {
   // Note:
