@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from './employee-db';
@@ -28,11 +28,5 @@ export class EmployeeController {
       throw new BadRequestException();
     }
     return this.employeeDbService.updateManager(employeeEmail, managerEmail);
-  }
-
-  @Get('search')
-  @UseGuards(AuthGuard)
-  search(@Query('input') searchInput: string) {
-    return this.employeeDbService.searchEmployee(searchInput);
   }
 }

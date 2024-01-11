@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
-import { EmployeeService } from '../../shared/employee/employee.service';
+import { PeopleService } from 'src/app/shared/people/people.service';
 import {
   EMAIL_REGEXP,
   MULTIPLE_EMAILS_PLACEHOLDER,
@@ -51,6 +51,12 @@ export class EmailsFieldAutocompleteComponent {
 
   readonly searchMinLength = 3;
 
+  protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
+
+  protected readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
+  private peopleService = inject(PeopleService);
+
   searchResults$ = this.searchInput.valueChanges.pipe(
     takeUntilDestroyed(),
     debounceTime(400),
@@ -59,15 +65,9 @@ export class EmailsFieldAutocompleteComponent {
       if (searchInput.length < this.searchMinLength) {
         return of([]);
       }
-      return this.employeeService.searchEmployee(searchInput);
+      return this.peopleService.search(searchInput);
     }),
   );
-
-  protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
-
-  protected readonly separatorKeysCodes = [ENTER, COMMA] as const;
-
-  private employeeService = inject(EmployeeService);
 
   protected isInvalidEmail(email: string) {
     return !EMAIL_REGEXP.test(email);

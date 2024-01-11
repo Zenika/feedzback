@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+// import { people } from '@googleapis/people';
 import { EMPTY, ReplaySubject, map, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { UpdateManagerDto } from './employee.dto';
-import { EmployeeData, EmployeeSearchResult } from './employee.types';
+import { EmployeeData } from './employee.types';
 
 @Injectable({
   providedIn: 'root',
@@ -60,14 +61,6 @@ export class EmployeeService {
             this._data$.next(this.dataSnapshot);
           }),
         ),
-    );
-  }
-
-  searchEmployee(searchInput: string) {
-    return this.authService.withBearerToken((headers) =>
-      this.httpClient.get<EmployeeSearchResult[]>(`${this.apiBaseUrl}/employee/search/?input=${searchInput}`, {
-        headers,
-      }),
     );
   }
 }

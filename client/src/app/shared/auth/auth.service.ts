@@ -34,6 +34,8 @@ export class AuthService {
 
   private _user$ = new ReplaySubject<User | null>(1);
 
+  accessToken?: string;
+
   user$ = this._user$.asObservable();
 
   photoUrl$ = this._user$.pipe(map((user) => user?.photoURL));
@@ -57,15 +59,26 @@ export class AuthService {
   );
 
   constructor() {
-    this.firebaseAuth.onAuthStateChanged((user) => {
+    this.firebaseAuth.onAuthStateChanged(async (user) => {
       this.userSnapshot = user;
       this._user$.next(user);
     });
   }
 
   signInWithGoogle(): Observable<boolean> {
-    return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
-      concatMap(() => this.isKnownUser$),
+    const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/directory.readonly');
+
+    provider.setCustomParameters({});
+    return from(signInWithPopup(this.firebaseAuth, provider)).pipe(
+      concatMap((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        this.accessToken = credential?.accessToken;
+
+        console.log('accessToken', this.accessToken);
+
+        return this.isKnownUser$;
+      }),
       first((isKnownUser) => isKnownUser),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
       catchError(() => of(false)),
@@ -100,6 +113,13 @@ export class AuthService {
 
   withBearerToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
     return this.getIdToken().pipe(
+      map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
+      switchMap(request),
+    );
+  }
+
+  withGoogleBearerToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+    return of(this.accessToken).pipe(
       map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
       switchMap(request),
     );

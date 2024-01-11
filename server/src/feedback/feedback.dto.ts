@@ -9,13 +9,13 @@ export class FeedbackRequestDto {
   @Transform((params) => (params.value as string).toLowerCase())
   recipient: string;
 
+  @ApiProperty({ description: 'message' })
   @IsString()
   @MaxLength(MEDIUM_MAX_LENGTH)
-  @ApiProperty({ description: 'message' })
   message: string;
 
-  @IsBoolean()
   @ApiProperty({ description: 'Shared with manager' })
+  @IsBoolean()
   shared: boolean;
 }
 
@@ -24,49 +24,51 @@ export class GiveRequestedFeedbackDto {
   @IsString()
   token: string;
 
+  @ApiProperty()
   @IsString()
   @MaxLength(LARGE_MAX_LENGTH)
-  @ApiProperty()
   positive: string;
 
+  @ApiProperty()
   @IsString()
   @MaxLength(LARGE_MAX_LENGTH)
-  @ApiProperty()
   negative: string;
 
+  @ApiProperty()
   @IsString()
   @MaxLength(MEDIUM_MAX_LENGTH)
-  @ApiProperty()
   comment: string;
 }
 
 export class GiveFeedbackDto {
+  @ApiProperty()
   @IsEmail()
   @Transform((params) => (params.value as string).toLowerCase())
-  @ApiProperty()
   receiverEmail: string;
 
+  @ApiProperty()
   @IsString()
   @MaxLength(LARGE_MAX_LENGTH)
-  @ApiProperty()
   positive: string;
 
+  @ApiProperty()
   @IsString()
   @MaxLength(LARGE_MAX_LENGTH)
-  @ApiProperty()
   negative: string;
 
+  @ApiProperty()
   @IsString()
   @MaxLength(MEDIUM_MAX_LENGTH)
-  @ApiProperty()
   comment: string;
 
-  @IsBoolean() shared: boolean;
+  @ApiProperty()
+  @IsBoolean()
+  shared: boolean;
 }
 
 export class ManagedFeedbacksDto {
+  @ApiProperty()
   @IsEmail()
   @Transform((params) => (params.value as string).toLowerCase())
-  @ApiProperty()
   managedEmail: string;
 }
