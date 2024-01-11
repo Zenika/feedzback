@@ -1,10 +1,8 @@
 // import { auth, people } from '@googleapis/people';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { cert, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
-import { AppConfig } from '../config';
 
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,11 +17,6 @@ export class FirebaseService {
 
   db = getFirestore(this.app);
 
-  constructor(private configService: ConfigService<AppConfig>) {
-    //this.TEST_PEOPLE_API();
-  }
-
-  // ---------------------------------------------------------------
   // --------------- TEMPORARY CODE JUST FOR TESTING ---------------
   // async TEST_PEOPLE_API() {
   //   const _auth = new auth.GoogleAuth({
