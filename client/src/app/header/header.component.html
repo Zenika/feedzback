@@ -59,14 +59,12 @@
 
 <div class="app-header-account">
   @if (isSignedIn$ | async) {
-    @if (photoUrl$ | async; as photoUrl) {
-      <img
-        [src]="photoUrl"
-        [matMenuTriggerFor]="accountMenu"
+    @if (userInfo$ | async; as userInfo) {
+      <app-avatar
         class="app-header-account__photo"
-        height="48"
-        width="48"
-        alt="Photo"
+        [photoUrl]="userInfo.photoURL"
+        [name]="userInfo.displayName"
+        [matMenuTriggerFor]="accountMenu"
       />
     } @else {
       <button mat-icon-button [matMenuTriggerFor]="accountMenu">

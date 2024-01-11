@@ -16,7 +16,7 @@ import {
   tap,
 } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AUTH_REDIRECT_PARAM } from './auth.config';
+import { AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +36,17 @@ export class AuthService {
 
   user$ = this._user$.asObservable();
 
-  photoUrl$ = this._user$.pipe(map((user) => user?.photoURL));
+  userInfo$ = this._user$.pipe(
+    map((user) => {
+      if (!user?.photoURL && !user?.displayName) {
+        return undefined;
+      }
+      return {
+        photoURL: user?.photoURL ?? undefined,
+        displayName: user?.displayName ?? undefined,
+      };
+    }),
+  );
 
   /**
    * Logged user can be a known user or an anonymous user
@@ -56,19 +66,43 @@ export class AuthService {
     distinctUntilChanged(),
   );
 
+  private googleAuthProvider: GoogleAuthProvider;
+
+  accessToken: string | null = null;
+
   constructor() {
+    this.googleAuthProvider = new GoogleAuthProvider();
+    this.googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+    //this.provider.setCustomParameters({});
+
     this.firebaseAuth.onAuthStateChanged((user) => {
       this.userSnapshot = user;
       this._user$.next(user);
+
+      this.accessToken = this.document.defaultView?.localStorage.getItem('at') ?? null;
     });
   }
 
   signInWithGoogle(): Observable<boolean> {
-    return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
+    return from(signInWithPopup(this.firebaseAuth, this.googleAuthProvider)).pipe(
+      tap((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (credential?.accessToken) {
+          this.accessToken = credential.accessToken;
+          this.document.defaultView?.localStorage.setItem('at', this.accessToken);
+        } else {
+          this.accessToken = null;
+          this.document.defaultView?.localStorage.removeItem('at');
+        }
+      }),
       concatMap(() => this.isKnownUser$),
       first((isKnownUser) => isKnownUser),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
-      catchError(() => of(false)),
+      catchError(() => {
+        this.accessToken = null;
+        this.document.defaultView?.localStorage.removeItem('at');
+        return of(false);
+      }),
     );
   }
 

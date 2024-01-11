@@ -1,0 +1,34 @@
+.app-avatar {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  user-select: none;
+  overflow: hidden;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  color: #ffffff;
+  font-weight: 500;
+
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+
+  &--small {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  &__icon {
+    position: absolute;
+
+    &--bigger {
+      transform: scale(1.5);
+    }
+  }
+}
