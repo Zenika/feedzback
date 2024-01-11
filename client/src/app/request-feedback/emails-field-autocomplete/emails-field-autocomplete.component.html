@@ -20,7 +20,7 @@
       [matAutocomplete]="auto"
     />
 
-    <mat-autocomplete #auto="matAutocomplete">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       @for (result of queryResults$ | async; track result.email) {
         <mat-option [value]="result.email" (onSelectionChange)="add(result.email)">
           <div class="my-2 flex gap-3">

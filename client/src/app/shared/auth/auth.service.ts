@@ -68,6 +68,8 @@ export class AuthService {
 
   private googleAuthProvider: GoogleAuthProvider;
 
+  // !FIXME: Access token will become invalid at a certain point of time...
+  // !FIXME: https://stackoverflow.com/questions/38233687/how-to-use-the-firebase-refreshtoken-to-reauthenticate
   accessToken: string | null = null;
 
   constructor() {
