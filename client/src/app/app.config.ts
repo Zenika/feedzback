@@ -4,11 +4,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
-import { provideAuth } from './shared/auth/auth.provider';
+import { provideAuth } from './shared/auth';
 import { provideBaseHref } from './shared/base-href/base-href.provider';
 import { provideAllowedEmailDomains } from './shared/form/allowed-email-domains';
+import { provideLanguage } from './shared/i18n/language';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
-import { provideSwitchLanguage } from './shared/i18n/switch-language';
 import { provideSvgIcons } from './shared/icons/icons.provider';
 
 export const appConfig: ApplicationConfig = {
@@ -21,6 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideSvgIcons(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
     provideAuth(),
-    provideSwitchLanguage(),
+    provideLanguage(),
   ],
 };

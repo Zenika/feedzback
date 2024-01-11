@@ -3,13 +3,6 @@
 .app-feedback-body {
   &__title {
     margin: 0 0 0.25rem 0 !important;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    mat-icon {
-      transform: scale(1.125);
-    }
   }
 
   &__content {

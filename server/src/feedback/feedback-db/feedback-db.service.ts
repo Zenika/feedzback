@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FieldPath, FieldValue, Filter } from 'firebase-admin/firestore';
+import { CryptoService } from 'src/core/crypto/crypto.service';
 import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
@@ -7,6 +8,7 @@ import {
   Feedback,
   FeedbackDraft,
   FeedbackDraftMap,
+  FeedbackEncryptedFields,
   FeedbackItemWithId,
   FeedbackRequest,
   FeedbackRequestItemWithId,
@@ -17,6 +19,7 @@ import {
   FeedbackWithId,
   IdObject,
   TokenObject,
+  feedbackEncryptedFields,
 } from './feedback-db.types';
 import { mapToFeedbackListMap } from './feedback-db.utils';
 
@@ -34,7 +37,10 @@ export class FeedbackDbService {
     return this.firebaseService.db.collection(Collection.feedbackDraftMap);
   }
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(
+    private firebaseService: FirebaseService,
+    private cryptoService: CryptoService,
+  ) {}
 
   async ping() {
     return !!(await this.feedbackCollection.get());
@@ -44,7 +50,7 @@ export class FeedbackDbService {
 
   async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
     const now = Date.now();
-    const request: FeedbackRequest = {
+    const request: FeedbackRequest = this.encryptFeedback({
       giverEmail,
       receiverEmail,
       message,
@@ -52,7 +58,7 @@ export class FeedbackDbService {
       status: FeedbackRequestStatus,
       createdAt: now,
       updatedAt: now,
-    };
+    });
     const feedbackId = (await this.feedbackCollection.add(request)).id;
 
     const token: FeedbackRequestToken = {
@@ -84,7 +90,7 @@ export class FeedbackDbService {
     };
     await this.feedbackCollection.doc(feedbackId).update(partialFeedbackRequest);
 
-    return { ...request, token: tokenId } satisfies FeedbackRequest & TokenObject;
+    return { ...this.decryptFeedback(request), token: tokenId } satisfies FeedbackRequest & TokenObject;
   }
 
   async checkRequest(tokenId: string) {
@@ -107,7 +113,7 @@ export class FeedbackDbService {
 
     return {
       request: docWithId<FeedbackRequestWithId>(requestDoc),
-      draft,
+      draft: draft ? this.decryptFeedback(draft) : undefined,
     };
   }
 
@@ -133,7 +139,7 @@ export class FeedbackDbService {
 
   async giveRequestedDraft(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
     const partialFeedbackRequestToken: Partial<FeedbackRequestToken> = {
-      draft: { positive, negative, comment },
+      draft: this.encryptFeedback({ positive, negative, comment }),
     };
     await this.feedbackRequestTokenCollection.doc(tokenId).update(partialFeedbackRequestToken);
   }
@@ -146,13 +152,13 @@ export class FeedbackDbService {
 
     const feedbackId = checked.request.id;
 
-    const partialFeedback: Partial<Feedback> = {
+    const partialFeedback: Partial<Feedback> = this.encryptFeedback({
       positive,
       negative,
       comment,
       status: FeedbackStatus,
       updatedAt: Date.now(),
-    };
+    });
     await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
 
@@ -164,14 +170,14 @@ export class FeedbackDbService {
 
   async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
     const partialDraftMap: FeedbackDraftMap = {
-      [receiverEmail]: { receiverEmail, positive, negative, comment, shared },
+      [receiverEmail]: this.encryptFeedback<FeedbackDraft>({ receiverEmail, positive, negative, comment, shared }),
     };
     await this.feedbackDraftMapCollection.doc(giverEmail).set(partialDraftMap, { merge: true });
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
     const now = Date.now();
-    const feedback: Feedback = {
+    const feedback: Feedback = this.encryptFeedback({
       giverEmail,
       receiverEmail,
       positive,
@@ -182,7 +188,7 @@ export class FeedbackDbService {
       status: FeedbackStatus,
       createdAt: now,
       updatedAt: now,
-    };
+    });
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
 
@@ -204,7 +210,7 @@ export class FeedbackDbService {
     }
     const draftMap = draftMapDoc.data() as FeedbackDraftMap;
 
-    const draftList: FeedbackDraft[] = Object.values(draftMap);
+    const draftList: FeedbackDraft[] = Object.values(draftMap).map(this.decryptFeedback.bind(this));
     return sortList(draftList, 'receiverEmail');
   }
 
@@ -245,7 +251,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    return docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc);
+    return this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
   }
 
   async getManagedFeedbacks(managedEmail: string) {
@@ -256,6 +262,27 @@ export class FeedbackDbService {
       .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return docsWithId(feedbackQuery.docs) as FeedbackWithId[];
+    return (docsWithId(feedbackQuery.docs) as FeedbackWithId[]).map(this.decryptFeedback.bind(this));
+  }
+
+  // ----- Encrypt and decrypt feedback -----
+
+  private encryptFeedback<T extends Partial<Feedback> | Partial<FeedbackRequest>>(data: T): T {
+    return this.runEncryption('encrypt', data);
+  }
+
+  private decryptFeedback<T extends Partial<Feedback> | Partial<FeedbackRequest>>(data: T): T {
+    return this.runEncryption('decrypt', data);
+  }
+
+  private runEncryption<T extends Partial<FeedbackEncryptedFields>>(operation: 'encrypt' | 'decrypt', input: T): T {
+    const output: T = { ...input };
+    feedbackEncryptedFields.forEach((field) => {
+      if (!output[field]) {
+        return;
+      }
+      output[field] = this.cryptoService[operation](output[field]!);
+    });
+    return output;
   }
 }

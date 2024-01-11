@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn, Router } from '@angular/router';
 import { EMPTY, catchError, map, withLatestFrom } from 'rxjs';
-import { AuthService } from '../shared/auth/auth.service';
+import { AuthService } from '../shared/auth';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { FeedbackDetails } from './feedback-details.types';
 import { inferFeedbackType } from './feedback-details.utils';

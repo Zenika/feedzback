@@ -88,3 +88,14 @@ export type FeedbackDraft = {
   comment: string;
   shared: boolean;
 };
+
+// ----- FeedbackEncryptedFields -----
+
+export type FeedbackEncryptedFields = Pick<Feedback, 'message' | 'positive' | 'negative' | 'comment'>;
+
+export const feedbackEncryptedFields: (keyof FeedbackEncryptedFields)[] = [
+  'message',
+  'positive',
+  'negative',
+  'comment',
+] as const;

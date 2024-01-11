@@ -88,7 +88,7 @@ workflows:
           name: testing-build-client-for-revision
           filters: &filter-non-deployed-builds
             branches:
-              ignore: dev
+              ignore: main
           requires:
             - node-test-client
             - node-lint-client
@@ -103,7 +103,7 @@ workflows:
           context: feedzback-staging
           tag-and-store-container: false
       # ---------------------------------------------------------------------------
-      # This section will only run for staging deployments: either "dev" branch or
+      # This section will only run for staging deployments: either "main" branch or
       # tags that match "staging-X.Y.Z"
       # ---------------------------------------------------------------------------
       ### Building Server container with Google Cloud Build...
@@ -111,7 +111,7 @@ workflows:
           name: build-server-for-staging
           filters: &filter-staging
             branches:
-              only: dev
+              only: main
             tags:
               only: /^staging-\d+\.\d+\.\d+$/
           requires:
@@ -251,7 +251,8 @@ jobs:
         default: false
     executor: gcp-cli/google
     steps:
-      - gcp-cli/setup
+      - gcp-cli/setup:
+          version: 459.0.0
       - checkout
       - when:
           condition: << parameters.tag-and-store-container >>
@@ -274,20 +275,26 @@ jobs:
     parameters: *param-service
     executor: gcp-cli/google
     steps:
-      - gcp-cli/setup
+      - gcp-cli/setup:
+          version: 459.0.0
       - run:
           working_directory: server
           name: Running gcloud run deploy
           command: |
             # Building update-env-vars argument
-            ZZ="CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
-            ZZ="${ZZ},SERVER_PORT=3000"
+            ZZ="NODE_ENV=${NODE_ENV}"
             ZZ="${ZZ},NO_COLOR=true"
+            ZZ="${ZZ},CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
+            ZZ="${ZZ},SERVER_PORT=3000"
+            ZZ="${ZZ},MAILGUN_URL=${MAILGUN_URL}"
             ZZ="${ZZ},MAILGUN_USERNAME=${MAILGUN_USERNAME}"
             ZZ="${ZZ},MAILGUN_KEY=${MAILGUN_KEY}"
+            ZZ="${ZZ},MAILGUN_DOMAIN=${MAILGUN_DOMAIN}"
             ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
             ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
             ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
+            ZZ="${ZZ},CRYPTO_SECRET_KEY=${CRYPTO_SECRET_KEY}"
+            ZZ="${ZZ},CRYPTO_SECRET_IV=${CRYPTO_SECRET_IV}"
             gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
 
   build-client:

@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import confetti from 'canvas-confetti';
-import { AuthService } from '../../shared/auth/auth.service';
+import { AuthService } from '../../shared/auth';
 import { GiveFeedbackSuccess } from './give-feedback-success.types';
 
 @Component({

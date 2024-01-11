@@ -18,5 +18,6 @@ export const environment = {
   featureFlipping: {
     manager: false,
     localize: false,
+    requestTemplate: false,
   },
 };

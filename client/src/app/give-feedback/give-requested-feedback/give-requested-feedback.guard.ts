@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EMPTY, Observable, catchError, first, of, switchMap, tap } from 'rxjs';
-import { AuthService } from '../../shared/auth/auth.service';
+import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 

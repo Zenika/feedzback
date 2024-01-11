@@ -1,5 +1,7 @@
 <%- include('partials/header', { content: content, data: data }); %>
 
-<span style="color: #333333;"><%= content.message %> <strong><%- data.giverEmail %></strong></span>.
+<div style="margin-bottom: 16px; color: #333333">
+  <%= content.message %> <strong><%- data.giverEmail %></strong>.
+</div>
 
 <%- include('partials/footer', { content: content, data: data }); %>

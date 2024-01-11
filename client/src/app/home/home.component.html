@@ -1,20 +1,20 @@
-<h1 class="gbl-landing__title mat-headline-3" i18n="@@homePage.title">
-  Demandez ou donnez du feedback à vos collègues !
+<h1 class="gbl-landing__title mat-headline-3" i18n="@@Title.AppTagline">
+  Demandez ou donnez du feedback à vos collègues
 </h1>
 
 <div class="gbl-landing-links">
   <button class="gbl-landing-links__item mat-body-strong" routerLink="/request">
     <mat-icon class="gbl-landing-links__icon">live_help</mat-icon>
-    <ng-container i18n="@@request">Demander</ng-container>
+    <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
   </button>
 
   <button class="gbl-landing-links__item mat-body-strong" routerLink="/give">
     <mat-icon class="gbl-landing-links__icon">chat</mat-icon>
-    <ng-container i18n="@@give">Donner</ng-container>
+    <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
   </button>
 </div>
 
 <a routerLink="/guide" class="gbl-link gbl-link--no-underline font-bold">
   <mat-icon class="me-1 align-bottom">help</mat-icon>
-  <ng-container i18n="@@homePage.linkToGuide">Comment écrire un </ng-container> <app-logo lowercase /> ?
+  <ng-container i18n="@@Component.Home.LinkToGuide">Comment écrire un </ng-container> <app-logo lowercase /> ?
 </a>

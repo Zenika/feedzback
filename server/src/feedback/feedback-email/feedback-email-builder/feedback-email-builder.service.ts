@@ -13,15 +13,11 @@ import {
   SharedContent,
   SharedData,
 } from './feedback-email-builder.types';
-import { matchLanguage, uglifyEmail } from './feedback-email-builder.utils';
+import { mapTextToHtml, uglifyEmail } from './feedback-email-builder.utils';
 
 @Injectable()
 export class FeedbackEmailBuilderService {
   private templatesPath = join(__dirname, 'templates');
-
-  private get language() {
-    return matchLanguage(this.contextService.languages);
-  }
 
   constructor(
     private configService: ConfigService<AppConfig>,
@@ -29,10 +25,10 @@ export class FeedbackEmailBuilderService {
   ) {}
 
   async requested(receiverEmail: string, message: string, tokenId: string) {
-    const content: RequestedContent = requestedContentMap[this.language];
+    const content: RequestedContent = requestedContentMap[this.contextService.clientLocalId];
     const data: RequestedData = {
       receiverEmail: uglifyEmail(receiverEmail),
-      message,
+      message: mapTextToHtml(message),
       cta: `${this.configService.get('clientUrl')}/give/requested/${tokenId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
@@ -43,7 +39,7 @@ export class FeedbackEmailBuilderService {
   }
 
   async given(giverEmail: string, feedbackId: string) {
-    const content: GivenContent = givenContentMap[this.language];
+    const content: GivenContent = givenContentMap[this.contextService.clientLocalId];
     const data: GivenData = {
       giverEmail: uglifyEmail(giverEmail),
       cta: `${this.configService.get('clientUrl')}/feedback/${feedbackId}`,
@@ -58,7 +54,7 @@ export class FeedbackEmailBuilderService {
   // NOTE: for now, the `feedbackId` is NOT used to build the email content (but it might be useful in the future...)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async shared(managedEmail: string, feedbackId: string) {
-    const content: SharedContent = sharedContentMap[this.language];
+    const content: SharedContent = sharedContentMap[this.contextService.clientLocalId];
     const data: SharedData = {
       managedEmail: uglifyEmail(managedEmail),
       cta: `${this.configService.get('clientUrl')}/manager?employee=${managedEmail}`,

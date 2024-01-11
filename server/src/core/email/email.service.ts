@@ -6,13 +6,15 @@ import { AppConfig } from '../config';
 
 @Injectable()
 export class EmailService {
-  private options = this.configService.get('mailgunClientOptions', { infer: true })!;
+  private clientOptions = this.configService.get('mailgunClientOptions', { infer: true })!;
 
-  private mailgunClient = new Mailgun(FormData).client(this.options);
+  private client = new Mailgun(FormData).client(this.clientOptions);
+
+  private domain = this.configService.get('mailgunDomain', { infer: true })!;
 
   constructor(private configService: ConfigService<AppConfig>) {}
 
   async send({ from, to, subject, html }: Required<Pick<MailgunMessageData, 'from' | 'to' | 'subject' | 'html'>>) {
-    await this.mailgunClient.messages.create(this.options.username, { from, to, subject, html });
+    await this.client.messages.create(this.domain, { from, to, subject, html });
   }
 }

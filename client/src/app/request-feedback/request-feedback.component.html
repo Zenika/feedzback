@@ -1,20 +1,20 @@
 <h1 class="gbl-page-title">
   <mat-icon>live_help</mat-icon>
-  Demander du feedZback
+  <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
 </h1>
 
 @if (sentEmails.length) {
   <app-message type="success">
-    <strong>Félicitations&nbsp;!</strong><br />
-    Votre demande a bien été envoyée à&nbsp;:<br />
+    <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
+    <br />
     {{ sentEmails.join(', ') }}
   </app-message>
 }
 
 @if (remainingUnsentEmails.length) {
   <app-message type="danger">
-    <strong>Oops&nbsp;!</strong><br />
-    Une erreur s'est produite lors de l'envoi à&nbsp;:<br />
+    <ng-container i18n="@@Component.RequestFeedback.Error">Une erreur s'est produite lors de l'envoi à :</ng-container>
+    <br />
     {{ remainingUnsentEmails.join(', ') }}
   </app-message>
 }
@@ -24,35 +24,52 @@
     <app-emails-field-autocomplete
       class="gbl-form-field"
       [emails]="form.controls.recipients"
-      matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
       matTooltipPosition="above"
+      matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
+      i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
     />
 
+    @if (hasRequestTemplateFeature) {
+      <mat-form-field appearance="outline" class="gbl-form-field">
+        <mat-label i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</mat-label>
+        <mat-select (valueChange)="applyTemplate($event)">
+          <mat-option class="italic opacity-50" i18n="@@Component.RequestFeedback.NoTemplate">Aucun modèle</mat-option>
+          @for (tmpl of requestTemplates; track tmpl; let index = $index) {
+            <mat-option [value]="tmpl.content">{{ tmpl.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
     <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label>Message</mat-label>
+      <mat-label i18n="@@Feedback.Message">Message</mat-label>
       <textarea
         #message
         [formControl]="form.controls.message"
         [maxlength]="messageMaxLength"
         matInput
         rows="4"
-        placeholder="Bonjour ! J’ai bientôt mon entretien annuel et afin de le préparer j’aimerais te demander ton avis sur ce que je fais bien et ce que je pourrais améliorer. Merci par avance."
       ></textarea>
       <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
     @if (hasManagerFeature) {
       <div class="gbl-form-field">
-        <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@Component.RequestFeedback.Share">
           Partager le feedZback avec votre manager
         </mat-slide-toggle>
       </div>
     }
 
     <div class="gbl-form-submit">
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary">Envoyer</button>
+      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" i18n="@@Action.Send">
+        Envoyer
+      </button>
 
-      <div class="gbl-form-submit__info"><mat-icon>info</mat-icon> Les champs marqués d'une * sont obligatoires</div>
+      <div class="gbl-form-submit__info">
+        <mat-icon>info</mat-icon>
+        <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
+      </div>
     </div>
   </form>
 }
