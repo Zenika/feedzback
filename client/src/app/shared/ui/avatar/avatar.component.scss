@@ -1,5 +1,5 @@
 .app-avatar {
-  position: relative;
+  vertical-align: middle;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -16,17 +16,15 @@
 
   width: 48px;
   height: 48px;
-  font-size: 20px;
+  font-size: 24px;
 
   &--small {
     width: 36px;
     height: 36px;
-    font-size: 15px;
+    font-size: 18px;
   }
 
   &__icon {
-    position: absolute;
-
     &--bigger {
       transform: scale(1.5);
     }

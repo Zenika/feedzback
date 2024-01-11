@@ -19,12 +19,12 @@ export class AvatarComponent {
     return this.small;
   }
 
-  @HostBinding('style.background-color') get bgColor() {
-    return this.name?.color ?? DEFAULT_COLOR;
-  }
-
   @HostBinding('style.background-image') get bgImage() {
     return this.photoUrl ? `url(${this.photoUrl})` : undefined;
+  }
+
+  @HostBinding('style.background-color') get bgColor() {
+    return this.photoUrl ? undefined : this.name?.color ?? DEFAULT_COLOR;
   }
 
   @Input({ transform: booleanAttribute }) small = false;
