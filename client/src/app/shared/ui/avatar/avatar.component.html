@@ -1,0 +1,10 @@
+@if (!photoUrl) {
+  @if (name?.initials) {
+    {{ name?.initials }}
+  } @else {
+    &nbsp;
+    <mat-icon class="app-avatar__icon" [class.app-avatar__icon--bigger]="!small">person</mat-icon>
+  }
+} @else {
+  &nbsp;
+}

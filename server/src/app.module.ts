@@ -7,6 +7,7 @@ import { CryptoModule } from './core/crypto/crypto.module';
 import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
+import { PeopleModule } from './people/people.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { HealthModule } from './health';
     CryptoModule,
     FeedbackModule,
     EmployeeModule,
+    PeopleModule,
   ],
 })
 export class AppModule implements NestModule {
