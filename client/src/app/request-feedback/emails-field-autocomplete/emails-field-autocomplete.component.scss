@@ -1,22 +1,6 @@
 .app-emails-field-autocomplete {
   display: block;
 
-  &__menu-item {
-    display: flex;
-    margin-block: 0.5rem;
-  }
-
-  &__person-detail {
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-  }
-
-  &__email {
-    font-weight: 200;
-    font-size: smaller;
-  }
-
   &__field {
     width: inherit;
   }
