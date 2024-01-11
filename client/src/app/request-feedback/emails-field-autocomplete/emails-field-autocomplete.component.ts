@@ -1,14 +1,13 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import {
   EMAIL_REGEXP,
   MULTIPLE_EMAILS_PLACEHOLDER,
@@ -47,39 +46,38 @@ export class EmailsFieldAutocompleteComponent {
 
   @ViewChild(MatChipInput) matChipInput!: MatChipInput;
 
-  searchInput = new FormControl('', { nonNullable: true });
+  private peopleService = inject(PeopleService);
 
-  readonly searchMinLength = 3;
+  private query$ = new Subject<string>();
+
+  protected queryResults$ = this.query$.pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
+    switchMap((query) => {
+      if (query.length < this.queryMinLength) {
+        return of([]);
+      }
+      return this.peopleService.search(query);
+    }),
+  );
+
+  readonly queryMinLength = 3;
 
   protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
   protected readonly separatorKeysCodes = [COMMA] as const;
 
-  private peopleService = inject(PeopleService);
-
-  searchResults$ = this.searchInput.valueChanges.pipe(
-    takeUntilDestroyed(),
-    debounceTime(400),
-    distinctUntilChanged(),
-    switchMap((searchInput) => {
-      if (searchInput.length < this.searchMinLength) {
-        return of([]);
-      }
-      return this.peopleService.search(searchInput);
-    }),
-  );
-
   protected isInvalidEmail(email: string) {
     return !EMAIL_REGEXP.test(email);
   }
 
-  protected addEmail(email: string): void {
+  protected add(email: string): void {
     const emails = getMultipleEmails(email);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
     this.matChipInput.clear();
-    this.searchInput.setValue('');
+    this.query$.next('');
   }
 
   protected remove(email: string): void {
@@ -108,5 +106,9 @@ export class EmailsFieldAutocompleteComponent {
   private updateEmailsValue(emails: string[]) {
     this.emails.setValue(emails);
     this.emails.updateValueAndValidity();
+  }
+
+  protected updateQuery(query: string) {
+    this.query$.next(query);
   }
 }

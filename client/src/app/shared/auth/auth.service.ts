@@ -16,7 +16,7 @@ import {
   tap,
 } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
+import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
 
 @Injectable({
   providedIn: 'root',
@@ -73,13 +73,12 @@ export class AuthService {
   constructor() {
     this.googleAuthProvider = new GoogleAuthProvider();
     this.googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
-    //this.provider.setCustomParameters({});
 
     this.firebaseAuth.onAuthStateChanged((user) => {
       this.userSnapshot = user;
       this._user$.next(user);
 
-      this.accessToken = this.document.defaultView?.localStorage.getItem('at') ?? null;
+      this.restoreAccessToken();
     });
   }
 
@@ -87,20 +86,13 @@ export class AuthService {
     return from(signInWithPopup(this.firebaseAuth, this.googleAuthProvider)).pipe(
       tap((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential?.accessToken) {
-          this.accessToken = credential.accessToken;
-          this.document.defaultView?.localStorage.setItem('at', this.accessToken);
-        } else {
-          this.accessToken = null;
-          this.document.defaultView?.localStorage.removeItem('at');
-        }
+        this.setAccessToken(credential?.accessToken);
       }),
       concatMap(() => this.isKnownUser$),
       first((isKnownUser) => isKnownUser),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
       catchError(() => {
-        this.accessToken = null;
-        this.document.defaultView?.localStorage.removeItem('at');
+        this.setAccessToken(null);
         return of(false);
       }),
     );
@@ -132,10 +124,23 @@ export class AuthService {
     return from(this.userSnapshot?.getIdToken() ?? Promise.resolve(null));
   }
 
-  withBearerToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+  withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
     return this.getIdToken().pipe(
       map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
       switchMap(request),
     );
+  }
+
+  setAccessToken(accessToken: string | null | undefined) {
+    this.accessToken = accessToken ?? null;
+    if (accessToken) {
+      this.document.defaultView?.localStorage.setItem(AUTH_ACCESS_TOKEN_KEY, accessToken);
+    } else {
+      this.document.defaultView?.localStorage.removeItem(AUTH_ACCESS_TOKEN_KEY);
+    }
+  }
+
+  private restoreAccessToken() {
+    this.accessToken = this.document.defaultView?.localStorage.getItem(AUTH_ACCESS_TOKEN_KEY) ?? null;
   }
 }
