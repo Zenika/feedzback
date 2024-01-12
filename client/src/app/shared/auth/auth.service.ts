@@ -1,7 +1,8 @@
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, User, signInAnonymously, signInWithCustomToken, signInWithPopup } from 'firebase/auth';
 import {
   Observable,
   ReplaySubject,
@@ -15,8 +16,10 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
+import { AuthCustomToken } from './auth.types';
 
 @Injectable({
   providedIn: 'root',
@@ -24,11 +27,15 @@ import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeople
 export class AuthService {
   private firebaseAuth = inject(FirebaseService).auth;
 
+  private httpClient = inject(HttpClient);
+
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
 
   private document = inject(DOCUMENT);
+
+  private apiBaseUrl = environment.apiBaseUrl;
 
   userSnapshot?: User | null;
 
@@ -70,17 +77,19 @@ export class AuthService {
 
   // !FIXME: Access token will become invalid at a certain point of time...
   // !FIXME: https://stackoverflow.com/questions/38233687/how-to-use-the-firebase-refreshtoken-to-reauthenticate
+  // !FIXME: https://stackoverflow.com/questions/58154504/firebase-google-auth-offline-access-type-to-get-a-refresh-token
   accessToken: string | null = null;
 
   constructor() {
     this.googleAuthProvider = new GoogleAuthProvider();
     this.googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+    this.googleAuthProvider.setCustomParameters({ access_type: 'offline' });
 
     this.firebaseAuth.onAuthStateChanged((user) => {
       this.userSnapshot = user;
       this._user$.next(user);
 
-      this.restoreAccessToken();
+      this.restoreAccessTokenFromLocalStorage();
     });
   }
 
@@ -133,7 +142,36 @@ export class AuthService {
     );
   }
 
-  setAccessToken(accessToken: string | null | undefined) {
+  /* ################################ */
+  /* ########## DEPRECATED ########## */
+  private getCustomToken() {
+    return this.withBearerIdToken((headers) =>
+      this.httpClient
+        .get<AuthCustomToken>(`${this.apiBaseUrl}/auth/custom-token`, { headers })
+        .pipe(map(({ customToken }) => customToken)),
+    );
+  }
+
+  private refreshAccessToken(): Observable<void> {
+    return this.getCustomToken().pipe(
+      switchMap((customToken) => from(signInWithCustomToken(this.firebaseAuth, customToken))),
+      tap((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // !FIXME: THIS CODE DOES NOT WORK BECAUSE HERE `credential` is simply `null`...
+        this.setAccessToken(credential?.accessToken);
+      }),
+      map(() => undefined),
+    );
+  }
+
+  withAccessToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+    const requestWithAccessToken = () => request({ Authorization: `Bearer ${this.accessToken}` });
+    return requestWithAccessToken().pipe(
+      catchError(() => this.refreshAccessToken().pipe(switchMap(requestWithAccessToken))),
+    );
+  }
+
+  private setAccessToken(accessToken: string | null | undefined) {
     this.accessToken = accessToken ?? null;
     if (accessToken) {
       this.document.defaultView?.localStorage.setItem(AUTH_ACCESS_TOKEN_KEY, accessToken);
@@ -142,7 +180,9 @@ export class AuthService {
     }
   }
 
-  private restoreAccessToken() {
+  private restoreAccessTokenFromLocalStorage() {
     this.accessToken = this.document.defaultView?.localStorage.getItem(AUTH_ACCESS_TOKEN_KEY) ?? null;
   }
+  /* ########## DEPRECATED ########## */
+  /* ################################ */
 }
