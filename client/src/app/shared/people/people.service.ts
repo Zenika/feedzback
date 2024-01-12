@@ -16,18 +16,10 @@ export class PeopleService {
   private apiBaseUrl = environment.apiBaseUrl;
 
   search(query: string): Observable<Person[]> {
-    if (!this.authService.accessToken) {
-      return of([]);
-    }
-    return this.httpClient
-      .get<Person[]>(`${this.apiBaseUrl}/people/search/${query}`, {
-        headers: { Authorization: `Bearer ${this.authService.accessToken}` },
-      })
-      .pipe(
-        catchError(() => {
-          this.authService.setAccessToken(null);
-          return of([]);
-        }),
-      );
+    return this.authService
+      .withAccessToken((headers) =>
+        this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search/${query}`, { headers }),
+      )
+      .pipe(catchError(() => of([])));
   }
 }

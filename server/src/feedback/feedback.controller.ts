@@ -21,8 +21,8 @@ export class FeedbackController {
 
   // ----- Request feedback and give requested feedback -----
 
-  @Post('request')
   @UseGuards(AuthGuard)
+  @Post('request')
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
     const receiverEmail = this.authService.userEmail!;
     if (receiverEmail === giverEmail) {
@@ -32,8 +32,8 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 
-  @Post('request-again')
   @UseGuards(AuthGuard)
+  @Post('request-again')
   async requestAgain(@Body() { feedbackId }: { feedbackId: string }) {
     const receiverEmail = this.authService.userEmail!;
 
@@ -55,8 +55,8 @@ export class FeedbackController {
     return checked;
   }
 
-  @Get('reveal-request-token/:id')
   @UseGuards(AuthGuard)
+  @Get('reveal-request-token/:id')
   async revealRequestTokenId(@Param('id') feedbackId: string) {
     const giverEmail = this.authService.userEmail!;
     const tokenId = await this.feedbackDbService.revealRequestTokenId(feedbackId, giverEmail);
@@ -83,15 +83,15 @@ export class FeedbackController {
 
   // ----- Give spontaneous feedback -----
 
-  @Post('give/draft')
   @UseGuards(AuthGuard)
+  @Post('give/draft')
   giveDraft(@Body() dto: GiveFeedbackDto) {
     const giverEmail = this.authService.userEmail!;
     return this.feedbackDbService.giveDraft({ giverEmail, ...dto });
   }
 
-  @Post('give')
   @UseGuards(AuthGuard)
+  @Post('give')
   async give(@Body() dto: GiveFeedbackDto) {
     const giverEmail = this.authService.userEmail!;
     if (giverEmail === dto.receiverEmail) {
@@ -102,15 +102,15 @@ export class FeedbackController {
     return idObject;
   }
 
-  @Delete('give/draft/:receiverEmail')
   @UseGuards(AuthGuard)
+  @Delete('give/draft/:receiverEmail')
   deleteDraft(@Param('receiverEmail') receiverEmail: string) {
     const giverEmail = this.authService.userEmail!;
     return this.feedbackDbService.deleteDraft(giverEmail, receiverEmail);
   }
 
-  @Get('give/draft')
   @UseGuards(AuthGuard)
+  @Get('give/draft')
   getDraftList() {
     const giverEmail = this.authService.userEmail!;
     return this.feedbackDbService.getDraftList(giverEmail);
@@ -118,15 +118,15 @@ export class FeedbackController {
 
   // ----- View feedbacks (requested and given) -----
 
-  @Get('list-map')
   @UseGuards(AuthGuard)
+  @Get('list-map')
   getListMap() {
     const viewerEmail = this.authService.userEmail!;
     return this.feedbackDbService.getListMap(viewerEmail);
   }
 
-  @Get('document/:id')
   @UseGuards(AuthGuard)
+  @Get('document/:id')
   async getDocument(@Param('id') id: string) {
     const viewerEmail = this.authService.userEmail!;
     const document = await this.feedbackDbService.getDocument(viewerEmail, id);
@@ -136,8 +136,8 @@ export class FeedbackController {
     return document;
   }
 
-  @Get('managed/:managedEmail')
   @UseGuards(AuthGuard)
+  @Get('managed/:managedEmail')
   async getManagedFeedbacks(@Param() { managedEmail }: ManagedFeedbacksDto) {
     const managerEmail = this.authService.userEmail!;
     const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;

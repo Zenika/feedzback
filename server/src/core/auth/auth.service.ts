@@ -23,4 +23,11 @@ export class AuthService {
       this.user = null;
     }
   }
+
+  async getCustomToken() {
+    if (!this.user) {
+      return null;
+    }
+    return await this.firebaseService.auth.createCustomToken(this.user.uid);
+  }
 }
