@@ -1,0 +1,35 @@
+<mat-form-field appearance="outline" class="app-email-field__field">
+  @if (forManager) {
+    <mat-label i18n="@@Field.EmailOfYourManager">Email de votre manager</mat-label>
+  } @else {
+    <mat-label i18n="@@Field.EmailOfYourColleague">Email de votre collègue</mat-label>
+  }
+
+  <input
+    #input
+    [formControl]="email"
+    type="email"
+    matInput
+    placeholder="jean.dupont@zenika.com"
+    [matAutocomplete]="auto"
+    (input)="updateQuery(input.value)"
+  />
+
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    @for (result of queryResults$ | async; track result.email) {
+      <mat-option [value]="result.email" (onSelectionChange)="selectEmail(result.email)">
+        <div class="my-2 flex gap-3">
+          <app-avatar [photoUrl]="result.photoUrl" [name]="result.displayName" />
+
+          <div>
+            {{ result.displayName }}
+
+            <div class="text-sm opacity-70">{{ result.email }}</div>
+          </div>
+        </div>
+      </mat-option>
+    }
+  </mat-autocomplete>
+
+  <mat-error>{{ email.errors | validationErrorMessage }}</mat-error>
+</mat-form-field>
