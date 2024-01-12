@@ -27,11 +27,7 @@
 <app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon enregistré.</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline" class="gbl-form-field">
-    <mat-label i18n="@@Field.EmailOfYourColleague">Email de votre collègue</mat-label>
-    <input [formControl]="form.controls.receiverEmail" type="email" matInput placeholder="jean.dupont@zenika.com" />
-    <mat-error>{{ form.controls.receiverEmail.errors | validationErrorMessage }}</mat-error>
-  </mat-form-field>
+  <app-email-field [email]="form.controls.receiverEmail" class="gbl-form-field" />
 
   <app-give-feedback-details
     [positive]="form.controls.positive"

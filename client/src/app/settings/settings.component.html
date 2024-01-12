@@ -15,11 +15,7 @@
 }
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline" class="gbl-form-field">
-    <mat-label i18n="@@Field.EmailOfYourManager">Email de votre manager</mat-label>
-    <input [formControl]="form.controls.managerEmail" matInput placeholder="jean.dupont@zenika.com" />
-    <mat-error>{{ form.controls.managerEmail.errors | validationErrorMessage }}</mat-error>
-  </mat-form-field>
+  <app-email-field forManager [email]="form.controls.managerEmail" class="gbl-form-field" />
 
   <button [disabled]="submitButtonDisabled" mat-raised-button color="primary" i18n="@@Action.Update">
     Mettre à jour

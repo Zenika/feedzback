@@ -21,7 +21,7 @@
 
 @if (!sentEmails.length || remainingUnsentEmails.length) {
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-emails-field-autocomplete
+    <app-multi-email-field
       class="gbl-form-field"
       [emails]="form.controls.recipients"
       matTooltipPosition="above"

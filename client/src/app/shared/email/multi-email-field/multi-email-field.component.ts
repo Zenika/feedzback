@@ -13,13 +13,13 @@ import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../../shared/form/multiple-emails';
-import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message/validation-error-message.pipe';
-import { PeopleService } from '../../shared/people/people.service';
-import { AvatarComponent } from '../../shared/ui/avatar/avatar.component';
+} from '../../form/multiple-emails';
+import { ValidationErrorMessagePipe } from '../../form/validation-error-message/validation-error-message.pipe';
+import { PeopleService } from '../../people/people.service';
+import { AvatarComponent } from '../../ui/avatar/avatar.component';
 
 @Component({
-  selector: 'app-emails-field-autocomplete',
+  selector: 'app-multi-email-field',
   standalone: true,
   imports: [
     AsyncPipe,
@@ -32,12 +32,12 @@ import { AvatarComponent } from '../../shared/ui/avatar/avatar.component';
     ValidationErrorMessagePipe,
     AvatarComponent,
   ],
-  templateUrl: './emails-field-autocomplete.component.html',
-  styleUrl: './emails-field-autocomplete.component.scss',
+  templateUrl: './multi-email-field.component.html',
+  styleUrl: './multi-email-field.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class EmailsFieldAutocompleteComponent {
-  @HostBinding('class.app-emails-field-autocomplete') hasCss = true;
+export class MultiEmailFieldComponent {
+  @HostBinding('class.app-multi-email-field') hasCss = true;
 
   @Input() emails = new FormControl<string[]>([], {
     nonNullable: true,
