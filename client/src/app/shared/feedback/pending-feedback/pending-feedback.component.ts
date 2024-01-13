@@ -43,6 +43,6 @@ export class PendingFeedbackComponent {
   protected giveNow() {
     this.feedbackService
       .revealRequestTokenId(this.feedback.id)
-      .subscribe(({ token }) => this.router.navigate(['/give/requested', token]));
+      .subscribe(({ token }) => this.router.navigate(['/give-requested/token', token]));
   }
 }

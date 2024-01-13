@@ -30,6 +30,10 @@ export const routes: Routes = [
     loadChildren: () => import('./give-feedback/give-feedback.routes'),
   },
   {
+    path: 'give-requested',
+    loadChildren: () => import('./give-feedback/give-requested-feedback.routes'),
+  },
+  {
     path: 'feedbacks',
     pathMatch: 'full',
     redirectTo: '/feedbacks/received',
