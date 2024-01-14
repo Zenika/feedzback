@@ -59,7 +59,7 @@
     }
   }
   @case (feedbackType.receivedRequest) {
-    <button mat-raised-button color="primary" (click)="giveNow()">
+    <button mat-raised-button color="primary" [appGiveRequestedFeedback]="this.feedback.id">
       <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
     </button>
   }
