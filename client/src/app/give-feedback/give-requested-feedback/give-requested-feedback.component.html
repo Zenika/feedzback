@@ -23,15 +23,19 @@
 >
 
 <app-message type="success" [(visible)]="showDraft">
-  <ng-container i18n="@@Component.GiveRequestedFeedback.DraftSaved1">
-    Votre brouillon est enregistré et accessible à partir de
-  </ng-container>
-  <a
-    routerLink="/feedbacks/receivedRequest"
-    class="gbl-link font-bold"
-    i18n="@@Component.GiveRequestedFeedback.DraftSaved2"
-    >Mes feedZbacks à donner</a
-  >.
+  @if (isAnonymous) {
+    <ng-container i18n="@@Message.DraftSaved">Brouillon enregistré.</ng-container>
+  } @else {
+    <ng-container i18n="@@Component.GiveRequestedFeedback.DraftSaved1">
+      Votre brouillon est enregistré et accessible à partir de
+    </ng-container>
+    <a
+      routerLink="/feedbacks/receivedRequest"
+      class="gbl-link font-bold"
+      i18n="@@Component.GiveRequestedFeedback.DraftSaved2"
+      >Mes feedZbacks à donner</a
+    >.
+  }
 </app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
