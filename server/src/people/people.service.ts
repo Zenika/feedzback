@@ -11,7 +11,8 @@ export class PeopleService {
   async searchDirectoryPeople(query: string) {
     const response = await people('v1').people.searchDirectoryPeople({
       access_token: this.accessToken,
-      sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
+      sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE', 'DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT'],
+      mergeSources: ['DIRECTORY_MERGE_SOURCE_TYPE_CONTACT'],
       readMask: 'emailAddresses,names,photos',
       query,
     });
