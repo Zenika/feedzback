@@ -1,4 +1,4 @@
-import { Injectable, Query } from '@nestjs/common';
+import { Injectable, Logger, Query } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { DecodedIdToken } from 'firebase-admin/auth';
@@ -14,6 +14,8 @@ import { googleSearchDirectoryPeopleScopes } from './auth.config';
 export class AuthService {
   private user?: DecodedIdToken | null;
   private oauth2ClientConfig = this.configService.get('oauth2Client', { infer: true })!;
+  private logger = new Logger('PeopleService');
+
   get isUserAuthenticated() {
     return this.user !== null;
   }
@@ -64,9 +66,8 @@ export class AuthService {
     const oauth2Client = new OAuth2Client(this.oauth2ClientConfig);
     const { tokens } = await oauth2Client.getToken(authCode);
 
-    console.log('tokens', tokens);
-
     const accessToken = tokens.access_token;
+
     const refreshToken = tokens.refresh_token;
     const expiryDate = tokens.expiry_date;
     if (!accessToken || !refreshToken || !expiryDate) {
@@ -87,41 +88,38 @@ export class AuthService {
       throw new Error('Auth provider (google) return an empty user email!');
     }
 
-    /**
-     * Create or update user in database with his access and refresh tokens
-     */
+    // Create or update user in database with his access and refresh tokens
 
-    let userId = await this.userService.getUserIdByEmail(userInfo.data.email);
+    const userRecord = await this.userService.getUserRecordByEmail(userInfo.data.email);
+    let userId = userRecord?.uid;
+    let userName = userRecord?.displayName;
 
     if (userId) {
       await this.userService.updateTokens(userId, refreshToken, accessToken, expiryDate);
     } else {
-      const newUserUid = await this.userService.createNewUser(userInfo.data, refreshToken, accessToken, expiryDate);
-      if (!newUserUid) {
+      const newUser = await this.userService.createNewUser(userInfo.data, refreshToken, accessToken, expiryDate);
+      userId = newUser.uid;
+      if (!userId) {
         throw new Error('Error creating user');
       }
-      userId = newUserUid;
+      userName = newUser.displayName;
     }
 
     const customToken = await this.firebaseService.auth.createCustomToken(userId);
 
-    return { customToken, accessToken, userId };
+    return { customToken, accessToken, userId, userName };
   }
 
   async refreshToken(uid: string) {
-    /**
-     * User has to be exist to get its saved refreshToken
-     */
     const userRecord = await this.userService.getUserRecord(uid);
     if (!userRecord?.exists) {
       new Error(`Unknow user id : ${uid}`);
     }
     const refreshToken = userRecord!.get('refreshToken');
-    const { clientId: client_id, clientSecret: client_secret } = this.configService.get('oauth2Client');
 
     const responseForFreshToken = await axios.post('https://oauth2.googleapis.com/token', {
-      client_id,
-      client_secret,
+      client_id: this.configService.get('oauth2Client').clientId,
+      client_secret: this.configService.get('oauth2Client').clientSecret,
       refresh_token: refreshToken,
       grant_type: 'refresh_token',
     });
@@ -136,6 +134,7 @@ export class AuthService {
      * Update the firebase table with the accessToken
      */
     await this.userService.updateTokens(uid, refreshToken, newAccessToken, expiryDate, false);
+    this.logger.log(`Refresh tokens for user '${userRecord!.get('name')}'`);
     return newAccessToken;
   }
 }

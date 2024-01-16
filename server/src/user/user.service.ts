@@ -5,10 +5,10 @@ import { FirebaseService } from 'src/core/firebase';
 export class UserService {
   constructor(private firebaseService: FirebaseService) {}
 
-  async getUserIdByEmail(email: string) {
+  async getUserRecordByEmail(email: string) {
     try {
       const userAuthRecord = await this.firebaseService.auth.getUserByEmail(email);
-      return userAuthRecord.uid;
+      return userAuthRecord;
     } catch (err) {
       return undefined;
     }
@@ -24,15 +24,19 @@ export class UserService {
       },
     });
 
-    await this.firebaseService.db.collection('users').doc(userRecord.uid).set({
-      email: userInfo.email,
-      name: userInfo.name,
-      picture: userInfo.picture,
-      refreshToken,
-      accessToken,
-      expiryDate,
-    });
-    return userRecord.uid;
+    await this.firebaseService.db
+      .collection('users')
+      .doc(userRecord.uid)
+      .set({
+        email: userInfo.email,
+        name: userInfo.name,
+        picture: userInfo.picture,
+        refreshToken,
+        accessToken,
+        expiryDate,
+        expiryDateString: new Date(expiryDate),
+      });
+    return userRecord;
   }
 
   async getUserRecord(
@@ -52,11 +56,13 @@ export class UserService {
   ) {
     const userRef = this.firebaseService.db.collection('users').doc(userId);
     const user = await userRef.get();
+    const expiryDateString = new Date(expiryDate);
     if (!user.exists) {
       await userRef.set({
         refreshToken,
         accessToken,
         expiryDate,
+        expiryDateString,
       });
     } else {
       if (updateRefresh) {
@@ -64,14 +70,15 @@ export class UserService {
           refreshToken,
           accessToken,
           expiryDate,
+          expiryDateString,
         });
       } else {
         await userRef.update({
           accessToken,
           expiryDate,
+          expiryDateString,
         });
       }
     }
-    console.log('Successfully updated tokens for user ', userId);
   }
 }

@@ -36,6 +36,12 @@ export class AuthService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
+  accessToken: string | null = null;
+
+  get uid() {
+    return this.userSnapshot?.uid;
+  }
+
   userSnapshot?: User | null;
 
   private _user$ = new ReplaySubject<User | null>(1);
@@ -72,22 +78,42 @@ export class AuthService {
     distinctUntilChanged(),
   );
 
-  // !FIXME: Access token will become invalid at a certain point of time...
-  // !FIXME: https://stackoverflow.com/questions/38233687/how-to-use-the-firebase-refreshtoken-to-reauthenticate
-  // !FIXME: https://stackoverflow.com/questions/58154504/firebase-google-auth-offline-access-type-to-get-a-refresh-token
-  accessToken: string | null = null;
-
   constructor() {
     this.firebaseAuth.onAuthStateChanged(async (user) => {
       this.userSnapshot = user;
       this._user$.next(user);
-
-      if (user) {
-        this.refreshAccessToken(user.uid).subscribe();
-      }
     });
   }
 
+  /**
+   * Login from sign-in, provider is google
+   */
+  async loginViaProvider(customToken: string, accessToken: string) {
+    await signInWithCustomToken(this.firebaseAuth, customToken);
+
+    this.setAccessToken(accessToken);
+  }
+
+  private getGoogleAuthLink = () => {
+    return this.httpClient.get<AuthLink>(`${this.apiBaseUrl}/auth/authlink`).pipe(map(({ authLink }) => authLink));
+  };
+
+  private refreshAccessToken(uid: string) {
+    return this.withBearerIdToken((headers) =>
+      this.httpClient.post<AuthRefreshToken>(`${this.apiBaseUrl}/auth/refresh_token`, { uid }, { headers }),
+    ).pipe(
+      tap(({ accessToken }) => {
+        this.setAccessToken(accessToken);
+      }),
+    );
+  }
+
+  private setAccessToken(accessToken: string | null | undefined) {
+    this.accessToken = accessToken ?? null;
+  }
+  /**
+   * Redirect to google link for the authentification
+   */
   signInWithGoogle() {
     return this.getGoogleAuthLink().pipe(
       tap((authLink) => {
@@ -96,42 +122,19 @@ export class AuthService {
     );
   }
 
-  async loginViaProvider(customToken: string, accessToken: string) {
-    await signInWithCustomToken(this.firebaseAuth, customToken);
-
-    this.setAccessToken(accessToken);
-  }
-
   getIdToken() {
     return from(this.userSnapshot?.getIdToken() ?? Promise.resolve(null));
   }
 
-  private getGoogleAuthLink = () => {
-    return this.httpClient.get<AuthLink>(`${this.apiBaseUrl}/auth/authlink`).pipe(map(({ authLink }) => authLink));
-  };
-
-  private getRefreshToken(uid: string) {
-    return this.withBearerIdToken((headers) =>
-      this.httpClient
-        .post<AuthRefreshToken>(`${this.apiBaseUrl}/auth/refresh_token`, { uid }, { headers })
-        .pipe(map(({ accessToken }) => accessToken)),
-    );
-  }
-
-  private refreshAccessToken(uid: string) {
-    return this.getRefreshToken(uid).pipe(
-      tap((result) => {
-        this.setAccessToken(result);
-      }),
-    );
-  }
-
-  private setAccessToken(accessToken: string | null | undefined) {
-    this.accessToken = accessToken ?? null;
-  }
   withAccessToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
-    return request({ Authorization: `Bearer ${this.accessToken}` });
+    const requestWithAccessToken = () => {
+      return request({ Authorization: `Bearer ${this.accessToken}` });
+    };
+    return requestWithAccessToken().pipe(
+      catchError(() => this.refreshAccessToken(this.uid!).pipe(switchMap(requestWithAccessToken))),
+    );
   }
+
   withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
     return this.getIdToken().pipe(
       map((idToken) => ({ Authorization: `Bearer ${idToken}` })),

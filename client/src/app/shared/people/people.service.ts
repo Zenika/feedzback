@@ -18,7 +18,9 @@ export class PeopleService {
   search(query: string): Observable<Person[]> {
     return this.authService
       .withAccessToken((headers) =>
-        this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search/${query}`, { headers }),
+        this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search?query=${query}`, {
+          headers,
+        }),
       )
       .pipe(catchError(() => of([])));
   }
