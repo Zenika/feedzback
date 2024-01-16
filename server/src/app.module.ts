@@ -9,6 +9,7 @@ import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
 import { PeopleMiddleware } from './people/people.middleware';
 import { PeopleModule } from './people/people.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PeopleModule } from './people/people.module';
     FeedbackModule,
     EmployeeModule,
     PeopleModule,
+    UserModule,
   ],
 })
 export class AppModule implements NestModule {

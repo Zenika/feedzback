@@ -14,6 +14,12 @@ export const appConfigLoader = (): AppConfig => ({
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
   },
 
+  oauth2Client: {
+    clientId: process.env.CLIENT_ID!,
+    clientSecret: process.env.CLIENT_SECRET!,
+    redirectUri: process.env.OAUTH_REDIRECT_URL!,
+  },
+
   mailgunClientOptions: {
     username: process.env.MAILGUN_USERNAME!,
     key: process.env.MAILGUN_KEY!,

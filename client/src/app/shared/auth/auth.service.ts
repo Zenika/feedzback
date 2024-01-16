@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GoogleAuthProvider, User, signInAnonymously, signInWithCustomToken, signInWithPopup } from 'firebase/auth';
+import { User, signInAnonymously, signInWithCustomToken } from 'firebase/auth';
 import {
   Observable,
   ReplaySubject,
@@ -18,8 +18,7 @@ import {
 } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
-import { AuthCustomToken } from './auth.types';
+import { AuthLink, AuthRefreshToken } from './auth.types';
 
 @Injectable({
   providedIn: 'root',
@@ -73,39 +72,70 @@ export class AuthService {
     distinctUntilChanged(),
   );
 
-  private googleAuthProvider: GoogleAuthProvider;
-
   // !FIXME: Access token will become invalid at a certain point of time...
   // !FIXME: https://stackoverflow.com/questions/38233687/how-to-use-the-firebase-refreshtoken-to-reauthenticate
   // !FIXME: https://stackoverflow.com/questions/58154504/firebase-google-auth-offline-access-type-to-get-a-refresh-token
   accessToken: string | null = null;
 
   constructor() {
-    this.googleAuthProvider = new GoogleAuthProvider();
-    this.googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
-    this.googleAuthProvider.setCustomParameters({ access_type: 'offline' });
-
-    this.firebaseAuth.onAuthStateChanged((user) => {
+    this.firebaseAuth.onAuthStateChanged(async (user) => {
       this.userSnapshot = user;
       this._user$.next(user);
 
-      this.restoreAccessTokenFromLocalStorage();
+      if (user) {
+        this.refreshAccessToken(user.uid).subscribe();
+      }
     });
   }
 
-  signInWithGoogle(): Observable<boolean> {
-    return from(signInWithPopup(this.firebaseAuth, this.googleAuthProvider)).pipe(
+  signInWithGoogle() {
+    return this.getGoogleAuthLink().pipe(
+      tap((authLink) => {
+        this.document.location.assign(authLink);
+      }),
+    );
+  }
+
+  async loginViaProvider(customToken: string, accessToken: string) {
+    await signInWithCustomToken(this.firebaseAuth, customToken);
+
+    this.setAccessToken(accessToken);
+  }
+
+  getIdToken() {
+    return from(this.userSnapshot?.getIdToken() ?? Promise.resolve(null));
+  }
+
+  private getGoogleAuthLink = () => {
+    return this.httpClient.get<AuthLink>(`${this.apiBaseUrl}/auth/authlink`).pipe(map(({ authLink }) => authLink));
+  };
+
+  private getRefreshToken(uid: string) {
+    return this.withBearerIdToken((headers) =>
+      this.httpClient
+        .post<AuthRefreshToken>(`${this.apiBaseUrl}/auth/refresh_token`, { uid }, { headers })
+        .pipe(map(({ accessToken }) => accessToken)),
+    );
+  }
+
+  private refreshAccessToken(uid: string) {
+    return this.getRefreshToken(uid).pipe(
       tap((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        this.setAccessToken(credential?.accessToken);
+        this.setAccessToken(result);
       }),
-      concatMap(() => this.isKnownUser$),
-      first((isKnownUser) => isKnownUser),
-      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
-      catchError(() => {
-        this.setAccessToken(null);
-        return of(false);
-      }),
+    );
+  }
+
+  private setAccessToken(accessToken: string | null | undefined) {
+    this.accessToken = accessToken ?? null;
+  }
+  withAccessToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+    return request({ Authorization: `Bearer ${this.accessToken}` });
+  }
+  withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+    return this.getIdToken().pipe(
+      map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
+      switchMap(request),
     );
   }
 
@@ -130,59 +160,4 @@ export class AuthService {
       catchError(() => of(false)),
     );
   }
-
-  getIdToken(): Observable<string | null> {
-    return from(this.userSnapshot?.getIdToken() ?? Promise.resolve(null));
-  }
-
-  withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
-    return this.getIdToken().pipe(
-      map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
-      switchMap(request),
-    );
-  }
-
-  /* ################################ */
-  /* ########## DEPRECATED ########## */
-  private getCustomToken() {
-    return this.withBearerIdToken((headers) =>
-      this.httpClient
-        .get<AuthCustomToken>(`${this.apiBaseUrl}/auth/custom-token`, { headers })
-        .pipe(map(({ customToken }) => customToken)),
-    );
-  }
-
-  private refreshAccessToken(): Observable<void> {
-    return this.getCustomToken().pipe(
-      switchMap((customToken) => from(signInWithCustomToken(this.firebaseAuth, customToken))),
-      tap((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // !FIXME: THIS CODE DOES NOT WORK BECAUSE HERE `credential` is simply `null`...
-        this.setAccessToken(credential?.accessToken);
-      }),
-      map(() => undefined),
-    );
-  }
-
-  withAccessToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
-    const requestWithAccessToken = () => request({ Authorization: `Bearer ${this.accessToken}` });
-    return requestWithAccessToken().pipe(
-      catchError(() => this.refreshAccessToken().pipe(switchMap(requestWithAccessToken))),
-    );
-  }
-
-  private setAccessToken(accessToken: string | null | undefined) {
-    this.accessToken = accessToken ?? null;
-    if (accessToken) {
-      this.document.defaultView?.localStorage.setItem(AUTH_ACCESS_TOKEN_KEY, accessToken);
-    } else {
-      this.document.defaultView?.localStorage.removeItem(AUTH_ACCESS_TOKEN_KEY);
-    }
-  }
-
-  private restoreAccessTokenFromLocalStorage() {
-    this.accessToken = this.document.defaultView?.localStorage.getItem(AUTH_ACCESS_TOKEN_KEY) ?? null;
-  }
-  /* ########## DEPRECATED ########## */
-  /* ################################ */
 }

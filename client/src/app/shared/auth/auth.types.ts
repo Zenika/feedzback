@@ -1,3 +1,7 @@
-export type AuthCustomToken = {
-  customToken: string;
+export type AuthRefreshToken = {
+  accessToken: string;
+};
+
+export type AuthLink = {
+  authLink: string;
 };

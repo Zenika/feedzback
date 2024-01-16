@@ -10,6 +10,12 @@ export type AppConfig = {
 
   clientUrl: string;
 
+  oauth2Client: {
+    clientId: string;
+    clientSecret: string;
+    redirectUri: string;
+  };
+
   firebaseServiceAccount: Required<ServiceAccount>;
 
   mailgunClientOptions: MailgunClientOptions;
