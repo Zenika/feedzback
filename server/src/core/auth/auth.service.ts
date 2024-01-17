@@ -3,8 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import { OAuth2Client } from 'google-auth-library';
-// TODO : remove this package
-import { google } from 'googleapis';
 import { UserService } from 'src/user/user.service';
 import { AppConfig } from '../config';
 import { FirebaseService } from '../firebase';
@@ -46,12 +44,12 @@ export class AuthService {
    */
   getAuthLink(): string {
     const oauth2Client = new OAuth2Client(this.oauth2ClientConfig);
-    const url = oauth2Client.generateAuthUrl({
+    return oauth2Client.generateAuthUrl({
+      // access_type = 'offline' and prompt='consent' are use to receive a refresh_token
       access_type: 'offline',
       scope: ['profile', 'email', ...googleSearchDirectoryPeopleScopes],
       prompt: 'consent',
     });
-    return url;
   }
 
   /**
@@ -76,28 +74,29 @@ export class AuthService {
 
     oauth2Client.setCredentials(tokens);
 
-    // TODO : change this call by using 'google-auth-library'
-    const oauth2 = google.oauth2({
-      auth: oauth2Client,
-      version: 'v2',
+    const ticket = await oauth2Client.verifyIdToken({
+      idToken: tokens.id_token!,
     });
+    const userInfo = ticket.getPayload();
 
-    const userInfo = await oauth2.userinfo.get();
+    if (!userInfo) {
+      throw new Error('missing userInfo');
+    }
 
-    if (!userInfo.data.email) {
+    if (!userInfo.email) {
       throw new Error('Auth provider (google) return an empty user email!');
     }
 
     // Create or update user in database with his access and refresh tokens
 
-    const userRecord = await this.userService.getUserRecordByEmail(userInfo.data.email);
+    const userRecord = await this.userService.getUserRecordByEmail(userInfo.email);
     let userId = userRecord?.uid;
     let userName = userRecord?.displayName;
 
     if (userId) {
       await this.userService.updateTokens(userId, refreshToken, accessToken, expiryDate);
     } else {
-      const newUser = await this.userService.createNewUser(userInfo.data, refreshToken, accessToken, expiryDate);
+      const newUser = await this.userService.createNewUser(userInfo, refreshToken, accessToken, expiryDate);
       userId = newUser.uid;
       if (!userId) {
         throw new Error('Error creating user');
