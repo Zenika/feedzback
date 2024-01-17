@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Logger, Post, Query, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
@@ -9,8 +9,6 @@ import { AppConfig } from '../config';
 @UseGuards(AuthGuard)
 @Controller('auth')
 export class AuthController {
-  private logger = new Logger('PeopleService');
-
   constructor(
     private authService: AuthService,
     private configService: ConfigService<AppConfig>,
@@ -39,8 +37,6 @@ export class AuthController {
     }
     try {
       const { userId, accessToken, refreshToken, customToken } = await this.authService.getRedirectData(authCode);
-
-      this.logger.log(`User '${userId}' is connected`);
 
       res.redirect(
         `${clientUrl}/sign-in?custom_token=${customToken}&access_token=${accessToken}&refresh_token=${refreshToken}&user_id=${userId}`,
