@@ -37,7 +37,13 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(async ({ custom_token, access_token, refresh_token, err }) => {
       if (custom_token && access_token && refresh_token) {
-        await this.authService.loginViaProvider(custom_token, access_token, refresh_token);
+        try {
+          await this.authService.loginViaProvider(custom_token, access_token, refresh_token);
+        } catch (err) {
+          this.signInErrorMessage = typeof err === 'string' ? err : (err as Error).message;
+          this.router.navigate(['/sign-in']);
+          return;
+        }
         this.router.navigate(['/']);
       }
 
