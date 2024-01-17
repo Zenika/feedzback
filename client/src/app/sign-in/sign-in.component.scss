@@ -1,0 +1,15 @@
+.app-sign-in {
+  &__field {
+    display: block;
+    width: inherit;
+  }
+
+  &__error {
+    // Note: this color comes from Material palette `$red-palette`
+    // See more: node_modules/@angular/material/core/theming/_palette.scss
+    font-size: 1.2rem;
+    font-weight: 800;
+
+    color: #f44336;
+  }
+}

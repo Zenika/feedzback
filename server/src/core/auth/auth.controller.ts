@@ -31,16 +31,21 @@ export class AuthController {
    * @param res
    */
   @Get('login_redirect')
-  async getLoginRedirect(@Query('code') authCode: string, @Res() res: Response) {
+  async getLoginRedirect(@Query('code') authCode: string, @Query('error') errorMessage: string, @Res() res: Response) {
     const clientUrl = this.configService.get('clientUrl');
+    if (errorMessage) {
+      res.redirect(`${clientUrl}/sign-in?err=${errorMessage}`);
+      return;
+    }
     try {
-      const { userId, accessToken, customToken, userName } = await this.authService.getRedirectData(authCode);
+      const { userId, accessToken, refreshToken, customToken } = await this.authService.getRedirectData(authCode);
 
-      this.logger.log(`User '${userName}' is connected`);
+      this.logger.log(`User '${userId}' is connected`);
 
-      res.redirect(`${clientUrl}/sign-in?custom_token=${customToken}&access_token=${accessToken}&user_id=${userId}`);
+      res.redirect(
+        `${clientUrl}/sign-in?custom_token=${customToken}&access_token=${accessToken}&refresh_token=${refreshToken}&user_id=${userId}`,
+      );
     } catch (err) {
-      //throw new BadRequestException(err.message, err);
       res.redirect(`${clientUrl}/sign-in?err=${encodeURI(err.message)}`);
     }
   }
@@ -51,10 +56,10 @@ export class AuthController {
    * @returns
    */
   @Post('refresh_token')
-  async refreshToken(@Body() payload: { uid: string }) {
+  async refreshToken(@Body() payload: { refresh_token: string }) {
     try {
       return {
-        accessToken: await this.authService.refreshToken(payload.uid),
+        accessToken: await this.authService.refreshToken(payload.refresh_token),
       };
     } catch (err) {
       throw new BadRequestException(err.message, err);

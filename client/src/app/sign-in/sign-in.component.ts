@@ -7,6 +7,7 @@ import { AuthService } from '../shared/auth';
   selector: 'app-sign-in',
   standalone: true,
   imports: [RouterLink, MatIconModule],
+  styleUrl: './sign-in.component.scss',
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,
 })
@@ -20,6 +21,8 @@ export class SignInComponent implements OnInit {
 
   protected disabled = false;
 
+  signInErrorMessage = '';
+
   constructor(private route: ActivatedRoute) {}
 
   signInWithGoogle() {
@@ -32,10 +35,14 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(async ({ custom_token, access_token }) => {
-      if (custom_token && access_token) {
-        await this.authService.loginViaProvider(custom_token, access_token);
+    this.route.queryParams.subscribe(async ({ custom_token, access_token, refresh_token, err }) => {
+      if (custom_token && access_token && refresh_token) {
+        await this.authService.loginViaProvider(custom_token, access_token, refresh_token);
         this.router.navigate(['/']);
+      }
+
+      if (err) {
+        this.signInErrorMessage = err;
       }
     });
   }

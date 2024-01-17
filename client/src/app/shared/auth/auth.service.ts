@@ -18,6 +18,7 @@ import {
 } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { FirebaseService } from '../firebase/firebase.service';
+import { AUTH_ACCESS_TOKEN_KEY, AUTH_REFRESH_TOKEN_KEY } from './auth.config';
 import { AuthLink, AuthRefreshToken } from './auth.types';
 
 @Injectable({
@@ -37,6 +38,7 @@ export class AuthService {
   private apiBaseUrl = environment.apiBaseUrl;
 
   accessToken: string | null = null;
+  refreshToken: string | null = null;
 
   get uid() {
     return this.userSnapshot?.uid;
@@ -82,35 +84,62 @@ export class AuthService {
     this.firebaseAuth.onAuthStateChanged(async (user) => {
       this.userSnapshot = user;
       this._user$.next(user);
+
+      this.restoreTokenFromLocalStorage();
     });
   }
 
   /**
    * Login from sign-in, provider is google
    */
-  async loginViaProvider(customToken: string, accessToken: string) {
+  async loginViaProvider(customToken: string, accessToken: string, refreshToken: string) {
     await signInWithCustomToken(this.firebaseAuth, customToken);
 
-    this.setAccessToken(accessToken);
+    this.setToken(accessToken, refreshToken);
   }
 
   private getGoogleAuthLink = () => {
     return this.httpClient.get<AuthLink>(`${this.apiBaseUrl}/auth/authlink`).pipe(map(({ authLink }) => authLink));
   };
 
-  private refreshAccessToken(uid: string) {
+  private refreshAccessToken() {
     return this.withBearerIdToken((headers) =>
-      this.httpClient.post<AuthRefreshToken>(`${this.apiBaseUrl}/auth/refresh_token`, { uid }, { headers }),
+      this.httpClient.post<AuthRefreshToken>(
+        `${this.apiBaseUrl}/auth/refresh_token`,
+        { refresh_token: this.refreshToken },
+        { headers },
+      ),
     ).pipe(
       tap(({ accessToken }) => {
-        this.setAccessToken(accessToken);
+        this.setToken(accessToken);
       }),
     );
   }
 
-  private setAccessToken(accessToken: string | null | undefined) {
-    this.accessToken = accessToken ?? null;
+  private setToken(accessToken: string, refreshToken?: string | null) {
+    this.accessToken = accessToken;
+    if (refreshToken !== undefined) {
+      this.refreshToken = refreshToken;
+    }
+
+    if (accessToken) {
+      this.document.defaultView?.localStorage.setItem(AUTH_ACCESS_TOKEN_KEY, accessToken);
+    } else {
+      this.document.defaultView?.localStorage.removeItem(AUTH_ACCESS_TOKEN_KEY);
+    }
+
+    if (refreshToken === null) {
+      this.document.defaultView?.localStorage.removeItem(AUTH_REFRESH_TOKEN_KEY);
+    } else if (refreshToken !== undefined) {
+      this.document.defaultView?.localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, refreshToken);
+    }
   }
+
+  private restoreTokenFromLocalStorage() {
+    this.accessToken = this.document.defaultView?.localStorage.getItem(AUTH_ACCESS_TOKEN_KEY) ?? null;
+    this.refreshToken = this.document.defaultView?.localStorage.getItem(AUTH_REFRESH_TOKEN_KEY) ?? null;
+  }
+
   /**
    * Redirect to google link for the authentification
    */
@@ -131,7 +160,8 @@ export class AuthService {
       return request({ Authorization: `Bearer ${this.accessToken}` });
     };
     return requestWithAccessToken().pipe(
-      catchError(() => this.refreshAccessToken(this.uid!).pipe(switchMap(requestWithAccessToken))),
+      //TODO : limit nb retry
+      catchError(() => this.refreshAccessToken().pipe(switchMap(requestWithAccessToken))),
     );
   }
 
