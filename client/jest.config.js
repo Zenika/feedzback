@@ -2,4 +2,5 @@
 
 module.exports = {
   passWithNoTests: true,
+  setupFiles: ['./jest-setup.js']
 };
