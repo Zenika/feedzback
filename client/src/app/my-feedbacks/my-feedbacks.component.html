@@ -18,7 +18,7 @@
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (received.length) {
-        <app-feedback-list [feedbacks]="received" [filter]="filter"></app-feedback-list>
+        <app-feedback-list [feedbacks]="received" [filter]="filter" />
       } @else {
         <div class="app-my-feedbacks-empty">
           <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
@@ -40,7 +40,7 @@
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (given.length) {
-        <app-feedback-list [feedbacks]="given" [filter]="filter"></app-feedback-list>
+        <app-feedback-list [feedbacks]="given" [filter]="filter" />
       } @else {
         <div class="app-my-feedbacks-empty">
           <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
@@ -62,7 +62,7 @@
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-        <app-feedback-list [feedbacks]="sentRequest" [filter]="filter"></app-feedback-list>
+        <app-feedback-list [feedbacks]="sentRequest" [filter]="filter" />
       </mat-tab>
     }
 
@@ -75,7 +75,7 @@
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-        <app-feedback-list [feedbacks]="receivedRequest" [filter]="filter"></app-feedback-list>
+        <app-feedback-list withGiveRequestedFeedbackButton [feedbacks]="receivedRequest" [filter]="filter" />
       </mat-tab>
     }
   </mat-tab-group>

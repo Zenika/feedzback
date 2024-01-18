@@ -33,6 +33,19 @@
       >
         <mat-icon>visibility</mat-icon>
       </button>
+
+      @if (withGiveRequestedFeedbackButton) {
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltipPosition="left"
+          matTooltip=" Donner "
+          i18n-matTooltip="@@Feedback.Give"
+          [appGiveRequestedFeedback]="nf(element).id"
+        >
+          <mat-icon>chat</mat-icon>
+        </button>
+      }
     </td>
   </ng-container>
 

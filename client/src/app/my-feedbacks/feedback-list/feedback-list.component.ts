@@ -8,6 +8,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
+  booleanAttribute,
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -19,6 +20,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { GiveRequestedFeedbackDirective } from '../../give-feedback/give-requested-feedback/give-requested-feedback.directive';
 import { BreakpointService } from '../../shared/breakpoint';
 import { DivisionComponent } from '../../shared/ui/division/division.component';
 import { NormalizedFeedback } from '../my-feedbacks.types';
@@ -37,6 +39,7 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
     MatTableModule,
     MatTooltipModule,
     DivisionComponent,
+    GiveRequestedFeedbackDirective,
   ],
   templateUrl: './feedback-list.component.html',
   styleUrl: './feedback-list.component.scss',
@@ -52,6 +55,8 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
     this.linkDataSource();
     this.applyFilter();
   }
+
+  @Input({ transform: booleanAttribute }) withGiveRequestedFeedbackButton = false;
 
   protected dataSource!: MatTableDataSource<NormalizedFeedback>;
 
