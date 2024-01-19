@@ -14,9 +14,10 @@ import {
   of,
   switchMap,
   tap,
+  throwError,
 } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
-import { AUTH_REDIRECT_PARAM } from './auth.config';
+import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
 
 @Injectable({
   providedIn: 'root',
@@ -66,19 +67,34 @@ export class AuthService {
     distinctUntilChanged(),
   );
 
+  private accessToken: string | null = null;
+
   constructor() {
     this.firebaseAuth.onAuthStateChanged((user) => {
       this.userSnapshot = user;
       this._user$.next(user);
+      this.restoreAccessTokenFromLocalStorage();
     });
   }
 
   signInWithGoogle(): Observable<boolean> {
-    return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
+    const googleAuthProvider = new GoogleAuthProvider();
+    googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+    // !FIXME: is this needed?
+    // googleAuthProvider.setCustomParameters({ access_type: 'offline' });
+
+    return from(signInWithPopup(this.firebaseAuth, googleAuthProvider)).pipe(
+      tap((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        this.setAccessToken(credential?.accessToken);
+      }),
       concatMap(() => this.isKnownUser$),
       first((isKnownUser) => isKnownUser),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
-      catchError(() => of(false)),
+      catchError(() => {
+        this.setAccessToken(null);
+        return of(false);
+      }),
     );
   }
 
@@ -113,5 +129,35 @@ export class AuthService {
       map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
       switchMap(request),
     );
+  }
+
+  withBearerAccessToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+    const requestWithAccessToken = () => request({ Authorization: `Bearer ${this.accessToken}` });
+    return requestWithAccessToken().pipe(
+      catchError(() => this.refreshAccessToken().pipe(switchMap(requestWithAccessToken))),
+    );
+  }
+
+  // TODO: ...
+  private refreshAccessToken(): Observable<void> {
+    // Here is the refresh token to use to get new access_token using refresh token rotation technique
+    // -> main resource: https://auth0.com/docs/secure/tokens/refresh-tokens/configure-refresh-token-rotation
+    // -> general resource: https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them
+    console.log(this.userSnapshot?.refreshToken);
+
+    return throwError(() => new Error('AuthService.refreshAccessToken() NOT implemented'));
+  }
+
+  private setAccessToken(accessToken: string | null | undefined) {
+    this.accessToken = accessToken ?? null;
+    if (accessToken) {
+      this.document.defaultView?.localStorage.setItem(AUTH_ACCESS_TOKEN_KEY, accessToken);
+    } else {
+      this.document.defaultView?.localStorage.removeItem(AUTH_ACCESS_TOKEN_KEY);
+    }
+  }
+
+  private restoreAccessTokenFromLocalStorage() {
+    this.accessToken = this.document.defaultView?.localStorage.getItem(AUTH_ACCESS_TOKEN_KEY) ?? null;
   }
 }
