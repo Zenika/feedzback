@@ -6,13 +6,13 @@
   }
 
   <input
-    #input
+    #inputRef
     [formControl]="email"
     type="email"
     matInput
     placeholder="jean.dupont@zenika.com"
     [matAutocomplete]="auto"
-    (input)="updateQuery(input.value)"
+    (input)="updateQuery(inputRef.value)"
   />
 
   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">

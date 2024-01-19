@@ -4,7 +4,7 @@
 </h1>
 
 @if (sentEmails.length) {
-  <app-message type="success">
+  <app-message type="success" closable="false">
     <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
     <br />
     {{ sentEmails.join(', ') }}
@@ -12,7 +12,7 @@
 }
 
 @if (remainingUnsentEmails.length) {
-  <app-message type="danger">
+  <app-message type="danger" closable="false">
     <ng-container i18n="@@Component.RequestFeedback.Error">Une erreur s'est produite lors de l'envoi à :</ng-container>
     <br />
     {{ remainingUnsentEmails.join(', ') }}

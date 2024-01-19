@@ -1,5 +1,13 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+  ViewEncapsulation,
+  booleanAttribute,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageType } from './message.types';
 
@@ -12,7 +20,7 @@ import { MessageType } from './message.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class MessageComponent {
-  @Input() closable = true;
+  @Input({ transform: booleanAttribute }) closable = true;
 
   @Input() icon?: string;
 
