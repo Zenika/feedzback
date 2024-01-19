@@ -1,13 +1,32 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import { Component, HostBinding, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  of,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs';
 import {
   EMAIL_REGEXP,
   MULTIPLE_EMAILS_PLACEHOLDER,
@@ -36,7 +55,7 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
   styleUrl: './multi-autocomplete-email.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class MultiAutocompleteEmailComponent {
+export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class.app-multi-autocomplete-email') hasCss = true;
 
   @Input() emails = new FormControl<string[]>([], {
@@ -45,6 +64,8 @@ export class MultiAutocompleteEmailComponent {
   });
 
   @ViewChild(MatChipInput) matChipInput!: MatChipInput;
+
+  @ViewChild(MatAutocomplete) matAutocomplete!: MatAutocomplete;
 
   private peopleService = inject(PeopleService);
 
@@ -66,6 +87,38 @@ export class MultiAutocompleteEmailComponent {
   protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
   protected readonly separatorKeysCodes = [COMMA] as const;
+
+  protected queryInputFocused$ = new BehaviorSubject(false);
+
+  protected onQueryInputFocus() {
+    this.queryInputFocused$.next(true);
+  }
+
+  protected onQueryInputBlur() {
+    this.queryInputFocused$.next(false);
+
+    if (!this.matAutocomplete.isOpen && this.matChipInput.inputElement.value) {
+      this.add(this.matChipInput.inputElement.value);
+    }
+  }
+
+  private subscription?: Subscription;
+
+  ngAfterViewInit(): void {
+    this.subscription = this.matAutocomplete.closed
+      .pipe(
+        withLatestFrom(this.queryInputFocused$),
+        filter(([, queryInputFocused]) => !queryInputFocused),
+      )
+      .subscribe(() => {
+        this.matChipInput.clear();
+        this.query$.next('');
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
   protected isInvalidEmail(email: string) {
     return !EMAIL_REGEXP.test(email);

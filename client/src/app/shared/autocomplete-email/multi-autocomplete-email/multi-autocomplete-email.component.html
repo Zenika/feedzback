@@ -11,13 +11,14 @@
     }
 
     <input
-      #input
-      (input)="updateQuery(input.value)"
+      #inputRef
+      (input)="updateQuery(inputRef.value)"
+      (focus)="onQueryInputFocus()"
+      (blur)="onQueryInputBlur()"
       [placeholder]="emails.value.length ? '' : multipleEmailsPlaceholder"
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="add($event.value)"
-      (blur)="add(input.value)"
       [matAutocomplete]="auto"
     />
 
