@@ -11,7 +11,7 @@ import { PeopleService } from '../../people/people.service';
 import { AvatarComponent } from '../../ui/avatar/avatar.component';
 
 @Component({
-  selector: 'app-email-field',
+  selector: 'app-autocomplete-email',
   standalone: true,
   imports: [
     AsyncPipe,
@@ -22,12 +22,12 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
     ValidationErrorMessagePipe,
     AvatarComponent,
   ],
-  templateUrl: './email-field.component.html',
-  styleUrl: './email-field.component.scss',
+  templateUrl: './autocomplete-email.component.html',
+  styleUrl: './autocomplete-email.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class EmailFieldComponent {
-  @HostBinding('class.app-email-field') hasCss = true;
+export class AutocompleteEmailComponent {
+  @HostBinding('class.app-autocomplete-email') hasCss = true;
 
   @Input({ transform: booleanAttribute }) forManager = false;
 

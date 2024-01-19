@@ -8,7 +8,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { EmailFieldComponent } from '../../shared/email/email-field/email-field.component';
+import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
@@ -28,7 +28,7 @@ import { FeedbackDraftService } from './feedback-draft/feedback-draft.service';
     MatDialogModule,
     MatIconModule,
     MatSlideToggleModule,
-    EmailFieldComponent,
+    AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
     MessageComponent,
     GiveFeedbackDetailsComponent,

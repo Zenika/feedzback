@@ -27,7 +27,7 @@
 <app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon enregistré.</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-email-field [email]="form.controls.receiverEmail" class="gbl-form-field" />
+  <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
 
   <app-give-feedback-details
     [positive]="form.controls.positive"

@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { MultiEmailFieldComponent } from '../shared/email/multi-email-field/multi-email-field.component';
+import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import {
@@ -34,7 +34,7 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
     MatSelectModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MultiEmailFieldComponent,
+    MultiAutocompleteEmailComponent,
     MessageComponent,
   ],
   templateUrl: './request-feedback.component.html',

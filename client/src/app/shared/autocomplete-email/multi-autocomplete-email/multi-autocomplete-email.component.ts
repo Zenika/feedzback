@@ -19,7 +19,7 @@ import { PeopleService } from '../../people/people.service';
 import { AvatarComponent } from '../../ui/avatar/avatar.component';
 
 @Component({
-  selector: 'app-multi-email-field',
+  selector: 'app-multi-autocomplete-email',
   standalone: true,
   imports: [
     AsyncPipe,
@@ -32,12 +32,12 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
     ValidationErrorMessagePipe,
     AvatarComponent,
   ],
-  templateUrl: './multi-email-field.component.html',
-  styleUrl: './multi-email-field.component.scss',
+  templateUrl: './multi-autocomplete-email.component.html',
+  styleUrl: './multi-autocomplete-email.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class MultiEmailFieldComponent {
-  @HostBinding('class.app-multi-email-field') hasCss = true;
+export class MultiAutocompleteEmailComponent {
+  @HostBinding('class.app-multi-autocomplete-email') hasCss = true;
 
   @Input() emails = new FormControl<string[]>([], {
     nonNullable: true,
