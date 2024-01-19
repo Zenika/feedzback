@@ -1,9 +1,8 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { AutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
@@ -15,9 +14,8 @@ import { MessageComponent } from '../shared/ui/message/message.component';
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
+    AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
     MessageComponent,
   ],

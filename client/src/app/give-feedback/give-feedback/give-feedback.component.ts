@@ -3,13 +3,12 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
@@ -27,10 +26,9 @@ import { FeedbackDraftService } from './feedback-draft/feedback-draft.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
     MatSlideToggleModule,
+    AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
     MessageComponent,
     GiveFeedbackDetailsComponent,
