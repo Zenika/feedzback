@@ -1,0 +1,44 @@
+<mat-form-field appearance="outline" class="app-multi-autocomplete-email__field">
+  <mat-label i18n="@@Field.EmailsOfYourColleagues">Emails de vos collègues</mat-label>
+
+  <mat-chip-grid #chipGrid [formControl]="emails">
+    @for (email of emails.value; track email) {
+      <mat-chip-row [editable]="true" (edited)="edit(email, $event)" (removed)="remove(email)">
+        <span [class.app-multi-autocomplete-email__error]="isInvalidEmail(email)">{{ email }}</span>
+
+        <button matChipRemove><mat-icon>cancel</mat-icon></button>
+      </mat-chip-row>
+    }
+
+    <input
+      #input
+      (input)="updateQuery(input.value)"
+      [placeholder]="emails.value.length ? '' : multipleEmailsPlaceholder"
+      [matChipInputFor]="chipGrid"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event.value)"
+      (blur)="add(input.value)"
+      [matAutocomplete]="auto"
+    />
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      @for (result of queryResults$ | async; track result.email) {
+        <mat-option [value]="result.email" (onSelectionChange)="add(result.email)">
+          <div class="my-2 flex gap-3">
+            <app-avatar [photoUrl]="result.photoUrl" [name]="result.displayName" />
+
+            <div>
+              {{ result.displayName }}
+
+              <div class="text-sm opacity-70">{{ result.email }}</div>
+            </div>
+          </div>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-chip-grid>
+
+  <mat-hint align="start" i18n="@@Component.EmailsField.Hint">Séparez les emails par des virgules</mat-hint>
+
+  <mat-error>{{ emails.errors | validationErrorMessage }}</mat-error>
+</mat-form-field>

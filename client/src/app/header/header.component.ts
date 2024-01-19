@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { LanguageService } from '../shared/i18n/language';
+import { AvatarComponent } from '../shared/ui/avatar/avatar.component';
 import { BurgerComponent } from './burger/burger.component';
 
 @Component({
@@ -23,6 +24,7 @@ import { BurgerComponent } from './burger/burger.component';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    AvatarComponent,
     BurgerComponent,
   ],
   templateUrl: './header.component.html',
@@ -40,7 +42,7 @@ export class HeaderComponent implements OnDestroy {
 
   protected isManager = toSignal(inject(EmployeeService).isManager$, { initialValue: false });
 
-  protected photoUrl$ = this.authService.photoUrl$;
+  protected userInfo$ = this.authService.userInfo$;
 
   protected isKnownUser$ = this.authService.isKnownUser$;
 

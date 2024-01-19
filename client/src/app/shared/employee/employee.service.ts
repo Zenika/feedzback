@@ -40,7 +40,7 @@ export class EmployeeService {
   }
 
   private fetchData() {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { headers }).pipe(
         tap((data) => {
           this.dataSnapshot = data;
@@ -51,7 +51,7 @@ export class EmployeeService {
   }
 
   updateManager(managerEmail: string) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient
         .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
         .pipe(

@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { FeedbackRequest, FeedbackRequestDraft } from 'src/app/shared/feedback/feedback.types';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
@@ -17,6 +17,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   selector: 'app-give-requested-feedback',
   standalone: true,
   imports: [
+    RouterLinkWithHref,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,

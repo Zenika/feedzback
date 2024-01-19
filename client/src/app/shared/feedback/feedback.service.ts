@@ -27,7 +27,7 @@ export class FeedbackService {
   // ----- Request feedback and give requested feedback -----
 
   request(dto: FeedbackRequestDto) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers, withCredentials: true }).pipe(
         map(() => true),
         catchError(() => of(false)),
@@ -36,7 +36,7 @@ export class FeedbackService {
   }
 
   requestAgain(feedbackId: string) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(
         `${this.apiBaseUrl}/feedback/request-again`,
         { feedbackId },
@@ -52,7 +52,7 @@ export class FeedbackService {
   }
 
   revealRequestTokenId(feedbackId: string) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<TokenObject>(`${this.apiBaseUrl}/feedback/reveal-request-token/${feedbackId}`, { headers }),
     );
   }
@@ -71,13 +71,13 @@ export class FeedbackService {
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
   giveDraft(dto: GiveFeedbackDto) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give/draft`, dto, { headers }),
     );
   }
 
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient
         .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true })
         .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
@@ -86,7 +86,7 @@ export class FeedbackService {
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
   deleteDraft(receiverEmail: string) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/give/draft/${receiverEmail}`, {
         headers,
       }),
@@ -95,7 +95,7 @@ export class FeedbackService {
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
   getDraftList() {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<FeedbackDraft[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
     );
   }
@@ -103,19 +103,19 @@ export class FeedbackService {
   // ----- View feedbacks (requested and given) -----
 
   getListMap() {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<FeedbackListMap>(`${this.apiBaseUrl}/feedback/list-map`, { headers }),
     );
   }
 
   getDocument(id: string) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<Feedback | FeedbackRequest | null>(`${this.apiBaseUrl}/feedback/document/${id}`, { headers }),
     );
   }
 
   getManagedFeedbacks(managedEmail: string) {
-    return this.authService.withBearerToken((headers) =>
+    return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<Feedback[]>(`${this.apiBaseUrl}/feedback/managed/${managedEmail}`, {
         headers,
       }),

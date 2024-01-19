@@ -29,7 +29,7 @@ export class FeedbackEmailBuilderService {
     const data: RequestedData = {
       receiverEmail: uglifyEmail(receiverEmail),
       message: mapTextToHtml(message),
-      cta: `${this.configService.get('clientUrl')}/give/requested/${tokenId}`,
+      cta: `${this.configService.get('clientUrl')}/give-requested/token/${tokenId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {

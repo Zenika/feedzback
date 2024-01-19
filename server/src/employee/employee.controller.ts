@@ -11,15 +11,15 @@ export class EmployeeController {
     private employeeDbService: EmployeeDbService,
   ) {}
 
-  @Get('')
   @UseGuards(AuthGuard)
+  @Get('')
   async get() {
     const employeeEmail = this.authService.userEmail!;
     return buildRequiredEmployeeData(await this.employeeDbService.get(employeeEmail));
   }
 
-  @Post('manager')
   @UseGuards(AuthGuard)
+  @Post('manager')
   updateManager(@Body() { managerEmail }: UpdateManagerDto) {
     const employeeEmail = this.authService.userEmail!;
     if (employeeEmail === managerEmail) {

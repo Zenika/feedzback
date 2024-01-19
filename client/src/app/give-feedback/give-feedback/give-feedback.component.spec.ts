@@ -86,4 +86,19 @@ fdescribe('GiveFeedbackComponent', () => {
 
     expect(component.form.controls['receiverEmail'].errors?.['required']).toBeTruthy();
   });
+
+  it('should not display button "Brouillons" when draftList$ is empty', () => {
+    // Given
+    const draftStubService = TestBed.inject(FeedbackDraftService) as unknown as FeedbackDraftStubService;
+    const buttonDraftPresent = fixture.nativeElement.querySelector('[data-test-id="draft-btn"]');
+    expect(buttonDraftPresent).not.toBeNull();
+
+    // When
+    draftStubService.draftList$.next([]);
+    fixture.detectChanges();
+
+    // Then
+    const buttonDraftNotPresent = fixture.nativeElement.querySelector('[data-test-id="draft-btn"]');
+    expect(buttonDraftNotPresent).toBeNull();
+  });
 });

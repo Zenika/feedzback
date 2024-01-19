@@ -1,58 +1,83 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-
-import { Component, HostBinding, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { COMMA } from '@angular/cdk/keycodes';
+import { AsyncPipe } from '@angular/common';
+import { Component, HostBinding, Input, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatChipEditedEvent, MatChipGrid, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import {
   EMAIL_REGEXP,
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../../shared/form/multiple-emails';
-import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message/validation-error-message.pipe';
+} from '../../form/multiple-emails';
+import { ValidationErrorMessagePipe } from '../../form/validation-error-message/validation-error-message.pipe';
+import { PeopleService } from '../../people/people.service';
+import { AvatarComponent } from '../../ui/avatar/avatar.component';
 
 @Component({
-  selector: 'app-emails-field',
+  selector: 'app-multi-autocomplete-email',
   standalone: true,
   imports: [
+    AsyncPipe,
     ReactiveFormsModule,
+    MatAutocompleteModule,
     MatChipsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     ValidationErrorMessagePipe,
+    AvatarComponent,
   ],
-  templateUrl: './emails-field.component.html',
-  styleUrl: './emails-field.component.scss',
+  templateUrl: './multi-autocomplete-email.component.html',
+  styleUrl: './multi-autocomplete-email.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class EmailsFieldComponent {
-  @HostBinding('class.app-emails-field') hasCss = true;
+export class MultiAutocompleteEmailComponent {
+  @HostBinding('class.app-multi-autocomplete-email') hasCss = true;
 
   @Input() emails = new FormControl<string[]>([], {
     nonNullable: true,
     validators: [Validators.required, multipleEmailsValidatorFactory()],
   });
 
-  @ViewChild(MatChipGrid) matChipGrid!: MatChipGrid;
+  @ViewChild(MatChipInput) matChipInput!: MatChipInput;
+
+  private peopleService = inject(PeopleService);
+
+  private query$ = new Subject<string>();
+
+  protected queryResults$ = this.query$.pipe(
+    debounceTime(400),
+    distinctUntilChanged(),
+    switchMap((query) => {
+      if (query.length < this.queryMinLength) {
+        return of([]);
+      }
+      return this.peopleService.search(query);
+    }),
+  );
+
+  readonly queryMinLength = 3;
 
   protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
-  protected readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  protected readonly separatorKeysCodes = [COMMA] as const;
 
   protected isInvalidEmail(email: string) {
     return !EMAIL_REGEXP.test(email);
   }
 
-  protected add(event: MatChipInputEvent): void {
-    const emails = getMultipleEmails(event.value);
+  protected add(email: string): void {
+    const emails = getMultipleEmails(email);
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
-    event.chipInput?.clear();
+    this.matChipInput.clear();
+    this.query$.next('');
   }
 
   protected remove(email: string): void {
@@ -81,5 +106,9 @@ export class EmailsFieldComponent {
   private updateEmailsValue(emails: string[]) {
     this.emails.setValue(emails);
     this.emails.updateValueAndValidity();
+  }
+
+  protected updateQuery(query: string) {
+    this.query$.next(query);
   }
 }

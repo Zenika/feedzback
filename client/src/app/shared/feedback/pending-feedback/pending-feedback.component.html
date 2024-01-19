@@ -40,20 +40,27 @@
       <div class="app-pending-feedback-list">
         <div class="app-pending-feedback-list__item">
           <mat-icon>history</mat-icon>
-          Vous avez déjà relancé votre collègue le {{ feedback.updatedAt | date }}
+          <ng-container i18n="@@Component.PendingFeedback.ReminderAlreadySentOn">
+            Vous avez déjà relancé votre collègue le
+          </ng-container>
+          {{ feedback.updatedAt | date }}
         </div>
       </div>
     }
 
     @if (showRequestAgainSuccess) {
-      <app-message type="success" [visible]="showRequestAgainSuccess">
+      <app-message type="success" [visible]="showRequestAgainSuccess" i18n="@@Component.PendingFeedback.ReminderSent">
         Un rappel a été envoyé à votre collègue.
       </app-message>
     } @else {
-      <button mat-raised-button color="primary" (click)="requestAgain()">Relancer</button>
+      <button mat-raised-button color="primary" (click)="requestAgain()" i18n="@@Component.PendingFeedback.Remind">
+        Relancer
+      </button>
     }
   }
   @case (feedbackType.receivedRequest) {
-    <button mat-raised-button color="primary" (click)="giveNow()">Donner</button>
+    <button mat-raised-button color="primary" [appGiveRequestedFeedback]="this.feedback.id">
+      <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
+    </button>
   }
 }
