@@ -17,6 +17,7 @@
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       (matChipInputTokenEnd)="add($event.value)"
+      (blur)="add(input.value)"
       [matAutocomplete]="auto"
     />
 

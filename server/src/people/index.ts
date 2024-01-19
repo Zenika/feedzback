@@ -1,3 +1,2 @@
-export * from './people.controller';
+export * from './people.middleware';
 export * from './people.module';
-export * from './people.service';

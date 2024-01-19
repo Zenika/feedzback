@@ -7,8 +7,7 @@ import { CryptoModule } from './core/crypto/crypto.module';
 import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
-import { PeopleMiddleware } from './people/people.middleware';
-import { PeopleModule } from './people/people.module';
+import { PeopleMiddleware, PeopleModule } from './people';
 
 @Module({
   imports: [
