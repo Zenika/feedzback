@@ -15,7 +15,12 @@ export class PeopleService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
+  private autocompleteEmail = environment.featureFlipping.autocompleteEmail;
+
   search(query: string): Observable<Person[]> {
+    if (!this.autocompleteEmail) {
+      return of([]);
+    }
     return this.authService
       .withBearerAccessToken((headers) =>
         this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search/${query}`, { headers }),

@@ -19,5 +19,6 @@ export const environment = {
     manager: false,
     localize: false,
     requestTemplate: false,
+    autocompleteEmail: false,
   },
 };
