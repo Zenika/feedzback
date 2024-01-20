@@ -16,6 +16,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
 
@@ -79,7 +80,11 @@ export class AuthService {
 
   signInWithGoogle(): Observable<boolean> {
     const googleAuthProvider = new GoogleAuthProvider();
-    googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+
+    if (environment.featureFlipping.autocompleteEmail) {
+      googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+    }
+
     // !FIXME: is this needed?
     // googleAuthProvider.setCustomParameters({ access_type: 'offline' });
 
