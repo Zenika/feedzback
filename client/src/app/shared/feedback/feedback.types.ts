@@ -36,12 +36,6 @@ export type FeedbackRequest = {
 export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
-export type FeedbackRequestDraft = {
-  positive: string;
-  negative: string;
-  comment: string;
-};
-
 // ----- FeedbackListMap -----
 
 // Naming convention:
@@ -59,7 +53,12 @@ export type FeedbackListMap = {
   receivedRequest: FeedbackRequestItem[];
 };
 
-// ----- FeedbackDraft -----
+// ----- FeedbackDraftListMap -----
+
+export type FeedbackDraftListMap = {
+  spontaneous: FeedbackDraft[];
+  requested: FeedbackRequestedDraft[];
+};
 
 export type FeedbackDraft = {
   receiverEmail: string;
@@ -67,6 +66,14 @@ export type FeedbackDraft = {
   negative: string;
   comment: string;
   shared: boolean;
+};
+
+export type FeedbackRequestedDraft = {
+  token: string;
+  receiverEmail: string;
+  positive: string;
+  negative: string;
+  comment: string;
 };
 
 // ----- IdObject -----

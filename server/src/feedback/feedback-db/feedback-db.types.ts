@@ -1,3 +1,5 @@
+import { FieldValue } from 'firebase-admin/firestore';
+
 // ----- Feedback -----
 
 export type Feedback = {
@@ -66,16 +68,14 @@ export type TokenObject = { token: string };
 
 export type FeedbackRequestToken = {
   feedbackId: string;
-  draft?: FeedbackRequestDraft;
 };
 
-export type FeedbackRequestDraft = {
-  positive: string;
-  negative: string;
-  comment: string;
-};
+// ----- FeedbackDraftMaps -----
 
-// ----- FeedbackDraftMap -----
+export type FeedbackDraftMaps = {
+  spontaneous?: FeedbackDraftMap;
+  requested?: FeedbackRequestedDraftMap;
+};
 
 export type FeedbackDraftMap = {
   [receiverEmail: string]: FeedbackDraft;
@@ -87,6 +87,23 @@ export type FeedbackDraft = {
   negative: string;
   comment: string;
   shared: boolean;
+};
+
+export type FeedbackRequestedDraftMap = {
+  [token: string]: FeedbackRequestedDraft;
+};
+
+export type FeedbackRequestedDraft = {
+  token: string;
+  receiverEmail: string;
+  positive: string;
+  negative: string;
+  comment: string;
+};
+
+export type FeedbackDraftMapsRemoval = {
+  spontaneous?: { [receiverEmail: string]: FieldValue };
+  requested?: { [token: string]: FieldValue };
 };
 
 // ----- FeedbackEncryptedFields -----

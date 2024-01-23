@@ -4,13 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FeedbackDraft } from '../../../shared/feedback/feedback.types';
+import { RouterLink } from '@angular/router';
+import { FeedbackDraft, FeedbackRequestedDraft } from '../../../shared/feedback/feedback.types';
 import { FeedbackDraftService } from './feedback-draft.service';
 
 @Component({
   selector: 'app-feedback-draft',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatTableModule, MatTooltipModule],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatTableModule, MatTooltipModule],
   templateUrl: './feedback-draft.component.html',
   encapsulation: ViewEncapsulation.None,
 })
@@ -19,7 +20,9 @@ export class FeedbackDraftComponent {
 
   private feedbackDraftService = inject(FeedbackDraftService);
 
-  protected draftList = toSignal(this.feedbackDraftService.draftList$, { initialValue: [] });
+  protected draftList = toSignal(this.feedbackDraftService.draftListMap$, {
+    initialValue: { spontaneous: [], requested: [] },
+  });
 
   protected columns = ['receiverEmail', 'actions'];
 
@@ -28,11 +31,20 @@ export class FeedbackDraftComponent {
     return element as FeedbackDraft;
   }
 
+  // "rd" means "requested draft"
+  protected rd(element: unknown) {
+    return element as FeedbackRequestedDraft;
+  }
+
   protected apply(draft: FeedbackDraft) {
     this.feedbackDraftService.apply(draft);
   }
 
-  protected delete(draft: FeedbackDraft) {
-    this.feedbackDraftService.delete(draft.receiverEmail).subscribe();
+  protected delete({ receiverEmail }: FeedbackDraft) {
+    this.feedbackDraftService.delete(receiverEmail).subscribe();
+  }
+
+  protected deleteRequested({ token }: FeedbackRequestedDraft) {
+    this.feedbackDraftService.deleteRequested(token).subscribe();
   }
 }

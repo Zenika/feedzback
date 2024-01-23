@@ -18,7 +18,6 @@ export class AuthService {
 
   async authenticateUser(idToken?: string): Promise<void> {
     try {
-      // !FIXME: i think this is NOT enough ?
       this.user = idToken ? await this.firebaseService.auth.verifyIdToken(idToken) : null;
     } catch {
       this.user = null;

@@ -1,4 +1,4 @@
-import { Component, HostBinding, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { Component, HostBinding, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,7 @@ import { FeedbackDraftService } from './feedback-draft/feedback-draft.service';
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent {
+export class GiveFeedbackComponent implements OnDestroy {
   @HostBinding('class.app-give-feedback') hasCss = true;
 
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
@@ -82,8 +82,8 @@ export class GiveFeedbackComponent {
   feedbackId?: string;
 
   hasDraftDialog = toSignal(
-    this.feedbackDraftService.draftList$.pipe(
-      map(({ length }) => length > 0),
+    this.feedbackDraftService.draftListMap$.pipe(
+      map(({ spontaneous, requested }) => spontaneous.length > 0 || requested.length > 0),
       tap((hasDraftDialog) => hasDraftDialog || this.closeDraftDialog()),
     ),
     {
@@ -99,6 +99,10 @@ export class GiveFeedbackComponent {
       this.form.updateValueAndValidity();
       this.closeDraftDialog();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.closeDraftDialog();
   }
 
   protected onSubmit() {
