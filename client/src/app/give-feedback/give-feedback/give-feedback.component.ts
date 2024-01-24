@@ -10,7 +10,7 @@ import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { FeedbackDraft } from '../../shared/feedback/feedback.types';
+import { FeedbackSpontaneousDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { MessageComponent } from '../../shared/ui/message/message.component';
@@ -94,7 +94,7 @@ export class GiveFeedbackComponent implements OnDestroy {
   private draftDialogRef?: MatDialogRef<unknown>;
 
   constructor() {
-    this.feedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
+    this.feedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackSpontaneousDraft) => {
       this.form.setValue(draft);
       this.form.updateValueAndValidity();
       this.closeDraftDialog();

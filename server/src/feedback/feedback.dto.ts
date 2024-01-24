@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsEmail, IsIn, IsString, MaxLength } from 'class-validator';
-import { FeedbackDraftMaps } from './feedback-db';
+import { FeedbackDraftType, FeedbackRequestedDraftType, FeedbackSpontaneousDraftType } from './feedback-db';
 import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from './feedback.config';
 
 export class FeedbackRequestDto {
@@ -34,7 +34,7 @@ export class GiveFeedbackDto {
 }
 
 export class DeleteFeedbackDraftDto {
-  @IsIn(['spontaneous', 'requested'] satisfies (keyof FeedbackDraftMaps)[]) type: keyof FeedbackDraftMaps;
+  @IsIn([FeedbackSpontaneousDraftType, FeedbackRequestedDraftType]) type: FeedbackDraftType;
 
   @IsString() receiverEmailOrToken: string;
 }

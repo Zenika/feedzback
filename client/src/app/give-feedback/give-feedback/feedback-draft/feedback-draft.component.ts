@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { FeedbackDraft, FeedbackRequestedDraft } from '../../../shared/feedback/feedback.types';
+import { FeedbackSpontaneousDraft, FeedbackRequestedDraft } from '../../../shared/feedback/feedback.types';
 import { FeedbackDraftService } from './feedback-draft.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class FeedbackDraftComponent {
 
   // "d" means "draft"
   protected d(element: unknown) {
-    return element as FeedbackDraft;
+    return element as FeedbackSpontaneousDraft;
   }
 
   // "rd" means "requested draft"
@@ -36,11 +36,11 @@ export class FeedbackDraftComponent {
     return element as FeedbackRequestedDraft;
   }
 
-  protected apply(draft: FeedbackDraft) {
+  protected apply(draft: FeedbackSpontaneousDraft) {
     this.feedbackDraftService.apply(draft);
   }
 
-  protected delete({ receiverEmail }: FeedbackDraft) {
+  protected delete({ receiverEmail }: FeedbackSpontaneousDraft) {
     this.feedbackDraftService.delete(receiverEmail).subscribe();
   }
 

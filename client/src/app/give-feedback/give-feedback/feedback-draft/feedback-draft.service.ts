@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Subject, tap } from 'rxjs';
 import { FeedbackService } from '../../../shared/feedback/feedback.service';
-import { FeedbackDraft, FeedbackDraftListMap } from '../../../shared/feedback/feedback.types';
+import { FeedbackSpontaneousDraft, FeedbackDraftListMap } from '../../../shared/feedback/feedback.types';
 import { sortList } from '../../../shared/utils';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class FeedbackDraftService {
 
   draftListMap$ = this._draftListMap$.asObservable();
 
-  private _applyDraft$ = new Subject<FeedbackDraft>();
+  private _applyDraft$ = new Subject<FeedbackSpontaneousDraft>();
 
   applyDraft$ = this._applyDraft$.asObservable();
 
@@ -25,7 +25,7 @@ export class FeedbackDraftService {
     this.feedbackService.getDraftListMap().subscribe((draftListMap) => this._draftListMap$.next(draftListMap));
   }
 
-  save(draft: FeedbackDraft) {
+  save(draft: FeedbackSpontaneousDraft) {
     return this.feedbackService.giveDraft(draft).pipe(
       tap(() => {
         const draftList = [...this._draftListMap$.value.spontaneous];
@@ -48,12 +48,12 @@ export class FeedbackDraftService {
     );
   }
 
-  apply(draft: FeedbackDraft) {
+  apply(draft: FeedbackSpontaneousDraft) {
     this._applyDraft$.next(draft);
   }
 
   delete(receiverEmail: string) {
-    return this.feedbackService.deleteDraftByType('spontaneous', receiverEmail).pipe(
+    return this.feedbackService.deleteDraft('spontaneous', receiverEmail).pipe(
       tap(() => {
         const draftList = [...this._draftListMap$.value.spontaneous];
         const draftListIndex = draftList.findIndex((draft) => draft.receiverEmail === receiverEmail);
@@ -70,7 +70,7 @@ export class FeedbackDraftService {
   }
 
   deleteRequested(token: string) {
-    return this.feedbackService.deleteDraftByType('requested', token).pipe(
+    return this.feedbackService.deleteDraft('requested', token).pipe(
       tap(() => {
         const draftList = [...this._draftListMap$.value.requested];
         const draftListIndex = draftList.findIndex((draft) => draft.token === token);

@@ -114,9 +114,9 @@ export class FeedbackController {
 
   @UseGuards(AuthGuard)
   @Delete('draft/:type/:receiverEmailOrToken')
-  deleteDraftByType(@Param() { type, receiverEmailOrToken }: DeleteFeedbackDraftDto) {
+  deleteDraft(@Param() { type, receiverEmailOrToken }: DeleteFeedbackDraftDto) {
     const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.deleteDraftByType(type, giverEmail, receiverEmailOrToken);
+    return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
   @UseGuards(AuthGuard)

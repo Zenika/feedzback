@@ -56,11 +56,11 @@ export type FeedbackListMap = {
 // ----- FeedbackDraftListMap -----
 
 export type FeedbackDraftListMap = {
-  spontaneous: FeedbackDraft[];
+  spontaneous: FeedbackSpontaneousDraft[];
   requested: FeedbackRequestedDraft[];
 };
 
-export type FeedbackDraft = {
+export type FeedbackSpontaneousDraft = {
   receiverEmail: string;
   positive: string;
   negative: string;

@@ -87,7 +87,7 @@ export class FeedbackService {
   // ----- Manage feedback draft -----
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
-  deleteDraftByType(type: keyof FeedbackDraftListMap, receiverEmailOrToken: string) {
+  deleteDraft(type: keyof FeedbackDraftListMap, receiverEmailOrToken: string) {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/draft/${type}/${receiverEmailOrToken}`, {
         headers,
