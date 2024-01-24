@@ -75,7 +75,7 @@ export type FeedbackDraftType = FeedbackSpontaneousDraftType | FeedbackRequested
 export const FeedbackSpontaneousDraftType = 'spontaneous';
 export type FeedbackSpontaneousDraftType = typeof FeedbackSpontaneousDraftType;
 
-export const FeedbackRequestedDraftType = 'request'; // TODO: rename for "requested"
+export const FeedbackRequestedDraftType = 'requested';
 export type FeedbackRequestedDraftType = typeof FeedbackRequestedDraftType;
 
 export type FeedbackDraft = FeedbackSpontaneousDraft | FeedbackRequestedDraft;
