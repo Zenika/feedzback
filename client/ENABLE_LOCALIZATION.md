@@ -61,7 +61,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": true
+            "localize": true,
           }
         }
       }
