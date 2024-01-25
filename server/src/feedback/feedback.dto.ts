@@ -1,5 +1,6 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsEmail, IsString, MaxLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsIn, IsString, MaxLength } from 'class-validator';
+import { FeedbackRequestDraftType, FeedbackDraftType } from './feedback-db';
 import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from './feedback.config';
 
 export class FeedbackRequestDto {
@@ -30,6 +31,12 @@ export class GiveFeedbackDto {
   @IsString() @MaxLength(MEDIUM_MAX_LENGTH) comment: string;
 
   @IsBoolean() shared: boolean;
+}
+
+export class DeleteFeedbackDraftDto {
+  @IsIn([FeedbackDraftType, FeedbackRequestDraftType]) type: FeedbackDraftType | FeedbackRequestDraftType;
+
+  @IsString() receiverEmailOrToken: string;
 }
 
 export class ManagedFeedbacksDto {

@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { FieldPath, FieldValue, Filter } from 'firebase-admin/firestore';
-import { CryptoService } from 'src/core/crypto/crypto.service';
+import { FieldPath, Filter } from 'firebase-admin/firestore';
+import { CryptoService } from '../../core/crypto/crypto.service';
 import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
   FeedbackDraft,
-  FeedbackDraftMap,
+  FeedbackDraftListMap,
+  FeedbackDraftType,
   FeedbackEncryptedFields,
   FeedbackItemWithId,
   FeedbackRequest,
+  FeedbackRequestDraft,
+  FeedbackRequestDraftType,
   FeedbackRequestItemWithId,
   FeedbackRequestStatus,
   FeedbackRequestToken,
@@ -33,8 +36,8 @@ export class FeedbackDbService {
     return this.firebaseService.db.collection(Collection.feedbackRequestToken);
   }
 
-  private get feedbackDraftMapCollection() {
-    return this.firebaseService.db.collection(Collection.feedbackDraftMap);
+  private get feedbackDraftCollection() {
+    return this.firebaseService.db.collection(Collection.feedbackDraft);
   }
 
   constructor(
@@ -99,7 +102,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    const { feedbackId, draft } = tokenDoc.data() as FeedbackRequestToken;
+    const { feedbackId } = tokenDoc.data() as FeedbackRequestToken;
 
     const requestQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', feedbackId)
@@ -111,10 +114,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    return {
-      request: docWithId<FeedbackRequestWithId>(requestDoc),
-      draft: draft ? this.decryptFeedback(draft) : undefined,
-    };
+    return docWithId<FeedbackRequestWithId>(requestDoc);
   }
 
   async revealRequestTokenId(feedbackId: string, giverEmail: string) {
@@ -138,20 +138,32 @@ export class FeedbackDbService {
   }
 
   async giveRequestedDraft(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
-    const partialFeedbackRequestToken: Partial<FeedbackRequestToken> = {
-      draft: this.encryptFeedback({ positive, negative, comment }),
-    };
-    await this.feedbackRequestTokenCollection.doc(tokenId).update(partialFeedbackRequestToken);
-  }
-
-  async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
-    const checked = await this.checkRequest(tokenId);
-    if (!checked) {
+    const request = await this.checkRequest(tokenId);
+    if (!request) {
       return null;
     }
 
-    const feedbackId = checked.request.id;
+    const feedbackRequestDraft = this.encryptFeedback<FeedbackRequestDraft>({
+      token: tokenId,
+      receiverEmail: request.receiverEmail,
+      positive,
+      negative,
+      comment,
+    });
+    await this.feedbackDraftCollection
+      .doc(request.giverEmail)
+      .collection(FeedbackRequestDraftType)
+      .doc(tokenId)
+      .set(feedbackRequestDraft, { merge: true });
+  }
 
+  async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
+    const request = await this.checkRequest(tokenId);
+    if (!request) {
+      return null;
+    }
+
+    const feedbackId = request.id;
     const partialFeedback: Partial<Feedback> = this.encryptFeedback({
       positive,
       negative,
@@ -160,19 +172,29 @@ export class FeedbackDbService {
       updatedAt: Date.now(),
     });
     await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
-    await this.feedbackRequestTokenCollection.doc(tokenId).delete();
 
-    const { giverEmail, receiverEmail, shared } = checked.request;
+    await this.feedbackRequestTokenCollection.doc(tokenId).delete();
+    await this.deleteDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
+
+    const { giverEmail, receiverEmail, shared } = request;
     return { giverEmail, receiverEmail, shared, feedbackId };
   }
 
   // ----- Give spontaneous feedback -----
 
   async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
-    const partialDraftMap: FeedbackDraftMap = {
-      [receiverEmail]: this.encryptFeedback<FeedbackDraft>({ receiverEmail, positive, negative, comment, shared }),
-    };
-    await this.feedbackDraftMapCollection.doc(giverEmail).set(partialDraftMap, { merge: true });
+    const feedbackDraft = this.encryptFeedback<FeedbackDraft>({
+      receiverEmail,
+      positive,
+      negative,
+      comment,
+      shared,
+    });
+    await this.feedbackDraftCollection
+      .doc(giverEmail)
+      .collection(FeedbackDraftType)
+      .doc(receiverEmail)
+      .set(feedbackDraft, { merge: true });
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
@@ -192,26 +214,55 @@ export class FeedbackDbService {
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
 
-    await this.deleteDraft(giverEmail, receiverEmail);
+    await this.deleteDraft(giverEmail, FeedbackDraftType, receiverEmail);
 
     return { id } as IdObject;
   }
 
-  async deleteDraft(giverEmail: string, receiverEmail: string) {
-    await this.feedbackDraftMapCollection
-      .doc(giverEmail)
-      .set({ [receiverEmail]: FieldValue.delete() }, { merge: true });
+  // ----- Manage feedback draft -----
+
+  async deleteDraft(
+    giverEmail: string,
+    type: FeedbackDraftType | FeedbackRequestDraftType,
+    receiverEmailOrToken: string,
+  ) {
+    await this.feedbackDraftCollection.doc(giverEmail).collection(type).doc(receiverEmailOrToken).delete();
   }
 
-  async getDraftList(giverEmail: string) {
-    const draftMapDoc = await this.feedbackDraftMapCollection.doc(giverEmail).get();
-    if (!draftMapDoc.exists) {
-      return [];
-    }
-    const draftMap = draftMapDoc.data() as FeedbackDraftMap;
+  getDraft(giverEmail: string, type: FeedbackDraftType, receiverEmail: string): Promise<FeedbackDraft>;
 
-    const draftList: FeedbackDraft[] = Object.values(draftMap).map(this.decryptFeedback.bind(this));
-    return sortList(draftList, 'receiverEmail');
+  getDraft(giverEmail: string, type: FeedbackRequestDraftType, token: string): Promise<FeedbackRequestDraft>;
+
+  async getDraft(giverEmail: string, type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
+    const draftDoc = await this.feedbackDraftCollection
+      .doc(giverEmail)
+      .collection(type)
+      .doc(receiverEmailOrToken)
+      .get();
+    if (!draftDoc.exists) {
+      return undefined;
+    }
+    return this.decryptFeedback(draftDoc.data() as FeedbackDraft | FeedbackRequestDraft);
+  }
+
+  async getDraftListMap(giverEmail: string): Promise<FeedbackDraftListMap> {
+    const feedbackDraftQuery = await this.feedbackDraftCollection.doc(giverEmail).collection(FeedbackDraftType).get();
+
+    const feedbackRequestDraftQuery = await this.feedbackDraftCollection
+      .doc(giverEmail)
+      .collection(FeedbackRequestDraftType)
+      .get();
+
+    return {
+      [FeedbackDraftType]: sortList(
+        feedbackDraftQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackDraft)),
+        'receiverEmail',
+      ),
+      [FeedbackRequestDraftType]: sortList(
+        feedbackRequestDraftQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackRequestDraft)),
+        'receiverEmail',
+      ),
+    };
   }
 
   // ----- View feedbacks (requested and given) -----

@@ -6,10 +6,12 @@ import { AuthService } from '../auth';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import {
   Feedback,
-  FeedbackDraft,
+  FeedbackDraftListMap,
+  FeedbackDraftType,
   FeedbackListMap,
   FeedbackRequest,
   FeedbackRequestDraft,
+  FeedbackRequestDraftType,
   IdObject,
   TokenObject,
 } from './feedback.types';
@@ -84,19 +86,19 @@ export class FeedbackService {
     );
   }
 
+  // ----- Manage feedback draft -----
+
   // Note: use the `FeedbackDraftService` wrapper to access this method
-  deleteDraft(receiverEmail: string) {
+  deleteDraft(type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/give/draft/${receiverEmail}`, {
-        headers,
-      }),
+      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/draft/${type}/${receiverEmailOrToken}`, { headers }),
     );
   }
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
-  getDraftList() {
+  getDraftListMap() {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<FeedbackDraft[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
+      this.httpClient.get<FeedbackDraftListMap>(`${this.apiBaseUrl}/feedback/draft/list-map`, { headers }),
     );
   }
 

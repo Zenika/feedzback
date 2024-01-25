@@ -1,9 +1,15 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from '../employee/employee-db';
-import { FeedbackDbService, TokenObject } from './feedback-db';
+import { FeedbackDbService, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
-import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto, ManagedFeedbacksDto } from './feedback.dto';
+import {
+  DeleteFeedbackDraftDto,
+  FeedbackRequestDto,
+  GiveFeedbackDto,
+  GiveRequestedFeedbackDto,
+  ManagedFeedbacksDto,
+} from './feedback.dto';
 
 @Controller('feedback')
 export class FeedbackController {
@@ -48,11 +54,13 @@ export class FeedbackController {
 
   @Get('check-request/:token')
   async checkRequest(@Param('token') tokenId: string) {
-    const checked = await this.feedbackDbService.checkRequest(tokenId);
-    if (!checked) {
+    const request = await this.feedbackDbService.checkRequest(tokenId);
+    if (!request) {
       throw new BadRequestException();
     }
-    return checked;
+    const draft = await this.feedbackDbService.getDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
+
+    return { request, draft };
   }
 
   @UseGuards(AuthGuard)
@@ -102,18 +110,20 @@ export class FeedbackController {
     return idObject;
   }
 
+  // ----- Manage feedback draft -----
+
   @UseGuards(AuthGuard)
-  @Delete('give/draft/:receiverEmail')
-  deleteDraft(@Param('receiverEmail') receiverEmail: string) {
+  @Delete('draft/:type/:receiverEmailOrToken')
+  deleteDraft(@Param() { type, receiverEmailOrToken }: DeleteFeedbackDraftDto) {
     const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.deleteDraft(giverEmail, receiverEmail);
+    return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
   @UseGuards(AuthGuard)
-  @Get('give/draft')
-  getDraftList() {
+  @Get('draft/list-map')
+  getDraftListMap() {
     const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getDraftList(giverEmail);
+    return this.feedbackDbService.getDraftListMap(giverEmail);
   }
 
   // ----- View feedbacks (requested and given) -----

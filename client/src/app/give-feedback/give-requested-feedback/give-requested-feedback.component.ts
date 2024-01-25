@@ -36,7 +36,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   @Input({ required: true }) request!: FeedbackRequest;
 
-  @Input({ required: true }) draft?: FeedbackRequestDraft;
+  @Input({ required: true }) draft?: Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>;
 
   private router = inject(Router);
 

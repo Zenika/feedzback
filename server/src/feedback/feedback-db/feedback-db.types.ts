@@ -66,19 +66,19 @@ export type TokenObject = { token: string };
 
 export type FeedbackRequestToken = {
   feedbackId: string;
-  draft?: FeedbackRequestDraft;
 };
 
-export type FeedbackRequestDraft = {
-  positive: string;
-  negative: string;
-  comment: string;
-};
+// ----- FeedbackDraftListMap -----
 
-// ----- FeedbackDraftMap -----
+export const FeedbackDraftType = 'feedback';
+export type FeedbackDraftType = typeof FeedbackDraftType;
 
-export type FeedbackDraftMap = {
-  [receiverEmail: string]: FeedbackDraft;
+export const FeedbackRequestDraftType = 'feedbackRequest';
+export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
+
+export type FeedbackDraftListMap = {
+  [FeedbackDraftType]: FeedbackDraft[];
+  [FeedbackRequestDraftType]: FeedbackRequestDraft[];
 };
 
 export type FeedbackDraft = {
@@ -87,6 +87,14 @@ export type FeedbackDraft = {
   negative: string;
   comment: string;
   shared: boolean;
+};
+
+export type FeedbackRequestDraft = {
+  token: string;
+  receiverEmail: string;
+  positive: string;
+  negative: string;
+  comment: string;
 };
 
 // ----- FeedbackEncryptedFields -----

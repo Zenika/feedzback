@@ -1,0 +1,7 @@
+.app-feedback-draft-view {
+  display: block;
+
+  & + & {
+    margin-top: 1rem;
+  }
+}
