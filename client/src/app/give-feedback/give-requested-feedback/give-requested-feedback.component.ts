@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
-import { FeedbackRequest, FeedbackRequestedDraft } from 'src/app/shared/feedback/feedback.types';
+import { FeedbackRequest, FeedbackRequestDraft } from 'src/app/shared/feedback/feedback.types';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { MessageComponent } from '../../shared/ui/message/message.component';
@@ -36,7 +36,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   @Input({ required: true }) request!: FeedbackRequest;
 
-  @Input({ required: true }) draft?: Pick<FeedbackRequestedDraft, 'positive' | 'negative' | 'comment'>;
+  @Input({ required: true }) draft?: Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>;
 
   private router = inject(Router);
 

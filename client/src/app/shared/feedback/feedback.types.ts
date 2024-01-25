@@ -55,12 +55,18 @@ export type FeedbackListMap = {
 
 // ----- FeedbackDraftListMap -----
 
+export const FeedbackDraftType = 'feedback';
+export type FeedbackDraftType = typeof FeedbackDraftType;
+
+export const FeedbackRequestDraftType = 'feedbackRequest';
+export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
+
 export type FeedbackDraftListMap = {
-  spontaneous: FeedbackSpontaneousDraft[];
-  requested: FeedbackRequestedDraft[];
+  [FeedbackDraftType]: FeedbackDraft[];
+  [FeedbackRequestDraftType]: FeedbackRequestDraft[];
 };
 
-export type FeedbackSpontaneousDraft = {
+export type FeedbackDraft = {
   receiverEmail: string;
   positive: string;
   negative: string;
@@ -68,7 +74,7 @@ export type FeedbackSpontaneousDraft = {
   shared: boolean;
 };
 
-export type FeedbackRequestedDraft = {
+export type FeedbackRequestDraft = {
   token: string;
   receiverEmail: string;
   positive: string;

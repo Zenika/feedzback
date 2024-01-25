@@ -1,0 +1,41 @@
+<h3 class="!mb-0">
+  <mat-icon class="align-middle">keyboard_double_arrow_right</mat-icon>
+  <ng-content />
+</h3>
+
+<table mat-table [dataSource]="draftList" class="w-full">
+  <ng-container matColumnDef="receiverEmail">
+    <th mat-header-cell *matHeaderCellDef i18n="@@Field.EmailOfYourColleague">Email de votre collègue</th>
+    <td mat-cell *matCellDef="let element">{{ d(element).receiverEmail }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+    <td mat-cell *matCellDef="let element" class="w-0 whitespace-nowrap">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltipPosition="left"
+        matTooltip="Editer"
+        i18n-matTooltip="@@Action.Edit"
+        (click)="edit.emit(d(element))"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltipPosition="right"
+        matTooltip="Supprimer"
+        i18n-matTooltip="@@Action.Delete"
+        (click)="delete.emit(d(element))"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!--<tr mat-header-row *matHeaderRowDef="columns"></tr>-->
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
+</table>

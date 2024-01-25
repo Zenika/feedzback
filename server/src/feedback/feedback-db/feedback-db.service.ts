@@ -6,18 +6,18 @@ import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
+  FeedbackDraft,
+  FeedbackDraftListMap,
   FeedbackDraftType,
   FeedbackEncryptedFields,
   FeedbackItemWithId,
   FeedbackRequest,
+  FeedbackRequestDraft,
+  FeedbackRequestDraftType,
   FeedbackRequestItemWithId,
   FeedbackRequestStatus,
   FeedbackRequestToken,
   FeedbackRequestWithId,
-  FeedbackRequestedDraft,
-  FeedbackRequestedDraftType,
-  FeedbackSpontaneousDraft,
-  FeedbackSpontaneousDraftType,
   FeedbackStatus,
   FeedbackWithId,
   IdObject,
@@ -36,7 +36,7 @@ export class FeedbackDbService {
     return this.firebaseService.db.collection(Collection.feedbackRequestToken);
   }
 
-  private get feedbackDraftMapsCollection() {
+  private get feedbackDraftCollection() {
     return this.firebaseService.db.collection(Collection.feedbackDraft);
   }
 
@@ -143,18 +143,18 @@ export class FeedbackDbService {
       return null;
     }
 
-    const feedbackRequestedDraft = this.encryptFeedback<FeedbackRequestedDraft>({
+    const feedbackRequestDraft = this.encryptFeedback<FeedbackRequestDraft>({
       token: tokenId,
       receiverEmail: request.receiverEmail,
       positive,
       negative,
       comment,
     });
-    await this.feedbackDraftMapsCollection
+    await this.feedbackDraftCollection
       .doc(request.giverEmail)
-      .collection(FeedbackRequestedDraftType)
+      .collection(FeedbackRequestDraftType)
       .doc(tokenId)
-      .set(feedbackRequestedDraft, { merge: true });
+      .set(feedbackRequestDraft, { merge: true });
   }
 
   async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
@@ -174,7 +174,7 @@ export class FeedbackDbService {
     await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
 
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
-    await this.deleteDraft(request.giverEmail, FeedbackRequestedDraftType, tokenId);
+    await this.deleteDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
 
     const { giverEmail, receiverEmail, shared } = request;
     return { giverEmail, receiverEmail, shared, feedbackId };
@@ -183,18 +183,18 @@ export class FeedbackDbService {
   // ----- Give spontaneous feedback -----
 
   async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
-    const feedbackSpontaneousDraft = this.encryptFeedback<FeedbackSpontaneousDraft>({
+    const feedbackDraft = this.encryptFeedback<FeedbackDraft>({
       receiverEmail,
       positive,
       negative,
       comment,
       shared,
     });
-    await this.feedbackDraftMapsCollection
+    await this.feedbackDraftCollection
       .doc(giverEmail)
-      .collection(FeedbackSpontaneousDraftType)
+      .collection(FeedbackDraftType)
       .doc(receiverEmail)
-      .set(feedbackSpontaneousDraft, { merge: true });
+      .set(feedbackDraft, { merge: true });
   }
 
   async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
@@ -214,59 +214,52 @@ export class FeedbackDbService {
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
 
-    await this.deleteDraft(giverEmail, FeedbackSpontaneousDraftType, receiverEmail);
+    await this.deleteDraft(giverEmail, FeedbackDraftType, receiverEmail);
 
     return { id } as IdObject;
   }
 
   // ----- Manage feedback draft -----
 
-  async deleteDraft(giverEmail: string, type: FeedbackDraftType, receiverEmailOrToken: string) {
-    await this.feedbackDraftMapsCollection.doc(giverEmail).collection(type).doc(receiverEmailOrToken).delete();
+  async deleteDraft(
+    giverEmail: string,
+    type: FeedbackDraftType | FeedbackRequestDraftType,
+    receiverEmailOrToken: string,
+  ) {
+    await this.feedbackDraftCollection.doc(giverEmail).collection(type).doc(receiverEmailOrToken).delete();
   }
 
-  async getSpontaneousDraft(giverEmail: string, receiverEmail: string) {
-    const draftDoc = await this.feedbackDraftMapsCollection
+  getDraft(giverEmail: string, type: FeedbackDraftType, receiverEmail: string): Promise<FeedbackDraft>;
+
+  getDraft(giverEmail: string, type: FeedbackRequestDraftType, token: string): Promise<FeedbackRequestDraft>;
+
+  async getDraft(giverEmail: string, type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
+    const draftDoc = await this.feedbackDraftCollection
       .doc(giverEmail)
-      .collection(FeedbackSpontaneousDraftType)
-      .doc(receiverEmail)
+      .collection(type)
+      .doc(receiverEmailOrToken)
       .get();
     if (!draftDoc.exists) {
       return undefined;
     }
-    return this.decryptFeedback(draftDoc.data() as FeedbackSpontaneousDraft);
+    return this.decryptFeedback(draftDoc.data() as FeedbackDraft | FeedbackRequestDraft);
   }
 
-  async getRequestedDraft(giverEmail: string, token: string) {
-    const draftDoc = await this.feedbackDraftMapsCollection
-      .doc(giverEmail)
-      .collection(FeedbackRequestedDraftType)
-      .doc(token)
-      .get();
-    if (!draftDoc.exists) {
-      return undefined;
-    }
-    return this.decryptFeedback(draftDoc.data() as FeedbackRequestedDraft);
-  }
+  async getDraftListMap(giverEmail: string): Promise<FeedbackDraftListMap> {
+    const feedbackDraftQuery = await this.feedbackDraftCollection.doc(giverEmail).collection(FeedbackDraftType).get();
 
-  async getDraftListMap(giverEmail: string) {
-    const spontaneousQuery = await this.feedbackDraftMapsCollection
+    const feedbackRequestDraftQuery = await this.feedbackDraftCollection
       .doc(giverEmail)
-      .collection(FeedbackSpontaneousDraftType)
-      .get();
-
-    const requestedQuery = await this.feedbackDraftMapsCollection
-      .doc(giverEmail)
-      .collection(FeedbackRequestedDraftType)
+      .collection(FeedbackRequestDraftType)
       .get();
 
     return {
-      spontaneous: sortList(
-        spontaneousQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackSpontaneousDraft)),
+      [FeedbackDraftType]: sortList(
+        feedbackDraftQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackDraft)),
         'receiverEmail',
       ),
-      requested: sortList(
-        requestedQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackRequestedDraft)),
+      [FeedbackRequestDraftType]: sortList(
+        feedbackRequestDraftQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackRequestDraft)),
         'receiverEmail',
       ),
     };

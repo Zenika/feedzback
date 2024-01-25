@@ -1,16 +1,24 @@
-import { Component, HostBinding, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import {
+  Component,
+  HostBinding,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+  effect,
+  inject,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { FeedbackSpontaneousDraft } from '../../shared/feedback/feedback.types';
+import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { MessageComponent } from '../../shared/ui/message/message.component';
@@ -81,23 +89,21 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   feedbackId?: string;
 
-  hasDraftDialog = toSignal(
-    this.feedbackDraftService.draftListMap$.pipe(
-      map(({ spontaneous, requested }) => spontaneous.length > 0 || requested.length > 0),
-      tap((hasDraftDialog) => hasDraftDialog || this.closeDraftDialog()),
-    ),
-    {
-      initialValue: false,
-    },
-  );
+  hasAnyDraft = this.feedbackDraftService.hasAnyDraft;
 
   private draftDialogRef?: MatDialogRef<unknown>;
 
   constructor() {
-    this.feedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackSpontaneousDraft) => {
+    this.feedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
       this.form.setValue(draft);
       this.form.updateValueAndValidity();
       this.closeDraftDialog();
+    });
+
+    effect(() => {
+      if (!this.feedbackDraftService.hasAnyDraft()) {
+        this.closeDraftDialog();
+      }
     });
   }
 

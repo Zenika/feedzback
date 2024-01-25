@@ -68,19 +68,20 @@ export type FeedbackRequestToken = {
   feedbackId: string;
 };
 
-// ----- FeedbackDraftMaps -----
+// ----- FeedbackDraftListMap -----
 
-export type FeedbackDraftType = FeedbackSpontaneousDraftType | FeedbackRequestedDraftType;
+export const FeedbackDraftType = 'feedback';
+export type FeedbackDraftType = typeof FeedbackDraftType;
 
-export const FeedbackSpontaneousDraftType = 'spontaneous';
-export type FeedbackSpontaneousDraftType = typeof FeedbackSpontaneousDraftType;
+export const FeedbackRequestDraftType = 'feedbackRequest';
+export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
 
-export const FeedbackRequestedDraftType = 'requested';
-export type FeedbackRequestedDraftType = typeof FeedbackRequestedDraftType;
+export type FeedbackDraftListMap = {
+  [FeedbackDraftType]: FeedbackDraft[];
+  [FeedbackRequestDraftType]: FeedbackRequestDraft[];
+};
 
-export type FeedbackDraft = FeedbackSpontaneousDraft | FeedbackRequestedDraft;
-
-export type FeedbackSpontaneousDraft = {
+export type FeedbackDraft = {
   receiverEmail: string;
   positive: string;
   negative: string;
@@ -88,7 +89,7 @@ export type FeedbackSpontaneousDraft = {
   shared: boolean;
 };
 
-export type FeedbackRequestedDraft = {
+export type FeedbackRequestDraft = {
   token: string;
   receiverEmail: string;
   positive: string;

@@ -1,8 +1,12 @@
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { Subject, tap } from 'rxjs';
 import { FeedbackService } from '../../../shared/feedback/feedback.service';
-import { FeedbackSpontaneousDraft, FeedbackDraftListMap } from '../../../shared/feedback/feedback.types';
-import { sortList } from '../../../shared/utils';
+import {
+  FeedbackDraft,
+  FeedbackDraftType,
+  FeedbackRequestDraft,
+  FeedbackRequestDraftType,
+} from '../../../shared/feedback/feedback.types';
 
 @Injectable({
   providedIn: 'root',
@@ -10,77 +14,74 @@ import { sortList } from '../../../shared/utils';
 export class FeedbackDraftService {
   private feedbackService = inject(FeedbackService);
 
-  private _draftListMap$ = new BehaviorSubject<FeedbackDraftListMap>({
-    spontaneous: [],
-    requested: [],
-  });
+  private _draftList = signal<FeedbackDraft[]>([]);
 
-  draftListMap$ = this._draftListMap$.asObservable();
+  draftList = this._draftList.asReadonly();
 
-  private _applyDraft$ = new Subject<FeedbackSpontaneousDraft>();
+  private _requestDraftList = signal<FeedbackRequestDraft[]>([]);
+
+  requestDraftList = this._requestDraftList.asReadonly();
+
+  hasAnyDraft = computed(() => this._draftList().length > 0 || this._requestDraftList().length > 0);
+
+  private _applyDraft$ = new Subject<FeedbackDraft>();
 
   applyDraft$ = this._applyDraft$.asObservable();
 
   constructor() {
-    this.feedbackService.getDraftListMap().subscribe((draftListMap) => this._draftListMap$.next(draftListMap));
+    this.feedbackService.getDraftListMap().subscribe(({ feedback, feedbackRequest }) => {
+      this._draftList.set(feedback);
+      this._requestDraftList.set(feedbackRequest);
+    });
   }
 
-  save(draft: FeedbackSpontaneousDraft) {
+  save(draft: FeedbackDraft) {
     return this.feedbackService.giveDraft(draft).pipe(
       tap(() => {
-        const draftList = [...this._draftListMap$.value.spontaneous];
-        const draftListIndex = draftList.findIndex(({ receiverEmail }) => receiverEmail === draft.receiverEmail);
-
-        if (draftListIndex !== -1) {
-          draftList[draftListIndex] = draft;
-          this._draftListMap$.next({
-            spontaneous: draftList,
-            requested: this._draftListMap$.value.requested,
-          });
-        } else {
-          draftList.push(draft);
-          this._draftListMap$.next({
-            spontaneous: sortList(draftList, 'receiverEmail'),
-            requested: this._draftListMap$.value.requested,
-          });
-        }
-      }),
-    );
-  }
-
-  apply(draft: FeedbackSpontaneousDraft) {
-    this._applyDraft$.next(draft);
-  }
-
-  delete(receiverEmail: string) {
-    return this.feedbackService.deleteDraft('spontaneous', receiverEmail).pipe(
-      tap(() => {
-        const draftList = [...this._draftListMap$.value.spontaneous];
-        const draftListIndex = draftList.findIndex((draft) => draft.receiverEmail === receiverEmail);
-        if (draftListIndex === -1) {
-          return;
-        }
-        draftList.splice(draftListIndex, 1);
-        this._draftListMap$.next({
-          spontaneous: draftList,
-          requested: this._draftListMap$.value.requested,
+        this._draftList.update((draftList) => {
+          const draftListIndex = draftList.findIndex(({ receiverEmail }) => receiverEmail === draft.receiverEmail);
+          if (draftListIndex !== -1) {
+            draftList[draftListIndex] = draft;
+          } else {
+            draftList.push(draft);
+          }
+          return [...draftList];
         });
       }),
     );
   }
 
-  deleteRequested(token: string) {
-    return this.feedbackService.deleteDraft('requested', token).pipe(
+  delete(receiverEmail: string) {
+    return this.feedbackService.deleteDraft(FeedbackDraftType, receiverEmail).pipe(
       tap(() => {
-        const draftList = [...this._draftListMap$.value.requested];
-        const draftListIndex = draftList.findIndex((draft) => draft.token === token);
+        const draftListIndex = this._draftList().findIndex((draft) => draft.receiverEmail === receiverEmail);
         if (draftListIndex === -1) {
           return;
         }
-        draftList.splice(draftListIndex, 1);
-        this._draftListMap$.next({
-          spontaneous: this._draftListMap$.value.spontaneous,
-          requested: draftList,
+        this._draftList.update((draftList) => {
+          draftList.splice(draftListIndex, 1);
+          return [...draftList];
+        });
+      }),
+    );
+  }
+
+  apply(draft: FeedbackDraft) {
+    this._applyDraft$.next(draft);
+  }
+
+  deleteRequested(token: string) {
+    return this.feedbackService.deleteDraft(FeedbackRequestDraftType, token).pipe(
+      tap(() => {
+        const requestDraftListIndex = this._requestDraftList().findIndex(
+          (requestDraft) => requestDraft.token === token,
+        );
+        if (requestDraftListIndex === -1) {
+          return;
+        }
+        this._requestDraftList.update((requestDraftList) => {
+          requestDraftList.splice(requestDraftListIndex, 1);
+          return [...requestDraftList];
         });
       }),
     );

@@ -7,9 +7,11 @@ import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from '.
 import {
   Feedback,
   FeedbackDraftListMap,
+  FeedbackDraftType,
   FeedbackListMap,
   FeedbackRequest,
-  FeedbackRequestedDraft,
+  FeedbackRequestDraft,
+  FeedbackRequestDraftType,
   IdObject,
   TokenObject,
 } from './feedback.types';
@@ -46,7 +48,7 @@ export class FeedbackService {
   }
 
   checkRequest(token: string) {
-    return this.httpClient.get<{ request: FeedbackRequest; draft?: FeedbackRequestedDraft }>(
+    return this.httpClient.get<{ request: FeedbackRequest; draft?: FeedbackRequestDraft }>(
       `${this.apiBaseUrl}/feedback/check-request/${token}`,
     );
   }
@@ -87,11 +89,9 @@ export class FeedbackService {
   // ----- Manage feedback draft -----
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
-  deleteDraft(type: keyof FeedbackDraftListMap, receiverEmailOrToken: string) {
+  deleteDraft(type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/draft/${type}/${receiverEmailOrToken}`, {
-        headers,
-      }),
+      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/draft/${type}/${receiverEmailOrToken}`, { headers }),
     );
   }
 

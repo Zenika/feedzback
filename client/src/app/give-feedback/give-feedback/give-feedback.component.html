@@ -1,4 +1,4 @@
-@if (hasDraftDialog()) {
+@if (hasAnyDraft()) {
   <button mat-raised-button color="primary" class="float-right" (click)="openDraftDialog()">
     <mat-icon>draft</mat-icon>
     <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>

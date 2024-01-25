@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmployeeDbService } from '../employee/employee-db';
-import { FeedbackDbService, TokenObject } from './feedback-db';
+import { FeedbackDbService, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   DeleteFeedbackDraftDto,
@@ -58,7 +58,7 @@ export class FeedbackController {
     if (!request) {
       throw new BadRequestException();
     }
-    const draft = await this.feedbackDbService.getRequestedDraft(request.giverEmail, tokenId);
+    const draft = await this.feedbackDbService.getDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
 
     return { request, draft };
   }

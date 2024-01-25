@@ -1,7 +1,7 @@
-import { FeedbackRequest, FeedbackRequestedDraft } from '../../shared/feedback/feedback.types';
+import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 
 export type GiveRequestedFeedbackData = {
   token: string;
   request: FeedbackRequest;
-  draft?: Pick<FeedbackRequestedDraft, 'positive' | 'negative' | 'comment'>;
+  draft?: Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>;
 };
