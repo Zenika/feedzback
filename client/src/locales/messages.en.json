@@ -18,6 +18,8 @@
     "Action.Update": "Update",
     "Action.ViewFeedback": "View feedZback",
     "Component.EmailsField.Hint": "Separate emails with commas",
+    "Component.FeedbackDraft.Requested": "Requested feedZback",
+    "Component.FeedbackDraft.Spontaneous": "Spontaneous feedZback",
     "Component.GiveFeedback.Share": "Share feedback with your colleague's manager",
     "Component.GiveFeedbackDetails.FeedbackCommentPlaceholder": "Thanks for your feedback request!",
     "Component.GiveFeedbackDetails.NegativeFeedbackPlaceholder": "Last week, you worked on the same subject for 5 days without asking for help. It turned out you had a block. I was disappointed and annoyed that you didn't ask us for help. I'd like you to come and see us next time, so you don't get stuck for so long.",

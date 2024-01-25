@@ -1,6 +1,6 @@
 @if (draftList().length) {
   <app-feedback-draft-view [draftList]="draftList()" (edit)="apply($event)" (delete)="delete($event)">
-    <ng-container i18n>Feedback spontané</ng-container>
+    <ng-container i18n="@@Component.FeedbackDraft.Spontaneous">FeedZback spontané</ng-container>
   </app-feedback-draft-view>
 }
 
@@ -10,6 +10,6 @@
     (edit)="applyRequested($event)"
     (delete)="deleteRequested($event)"
   >
-    <ng-container i18n>Feedback demandé</ng-container>
+    <ng-container i18n="@@Component.FeedbackDraft.Requested">FeedZback demandé</ng-container>
   </app-feedback-draft-view>
 }

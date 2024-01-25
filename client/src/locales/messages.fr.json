@@ -18,6 +18,8 @@
     "Action.Update": " Mettre à jour ",
     "Action.ViewFeedback": "Consulter le feedZback",
     "Component.EmailsField.Hint": "Séparez les emails par des virgules",
+    "Component.FeedbackDraft.Requested": "FeedZback demandé",
+    "Component.FeedbackDraft.Spontaneous": "FeedZback spontané",
     "Component.GiveFeedback.Share": " Partager le feedZback avec le manager de votre collègue ",
     "Component.GiveFeedbackDetails.FeedbackCommentPlaceholder": "Merci pour ta demande de feedZback !",
     "Component.GiveFeedbackDetails.NegativeFeedbackPlaceholder": "La semaine dernière, tu as travaillé sur le même sujet pendant 5 jours sans pour autant demander de l’aide. Il s’est avéré que tu avais un blocage. Cela m’a déçu et agacé que tu ne nous demandes pas d’aide. J’aimerais que tu viennes nous voir la prochaine fois, afin que tu ne restes pas bloqué(e) aussi longtemps.",

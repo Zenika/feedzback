@@ -1,9 +1,5 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FeedbackDraft, FeedbackRequestDraft } from '../../../shared/feedback/feedback.types';
 import { FeedbackDraftViewComponent } from './feedback-draft-view/feedback-draft-view.component';
 import { FeedbackDraftService } from './feedback-draft.service';
@@ -11,7 +7,7 @@ import { FeedbackDraftService } from './feedback-draft.service';
 @Component({
   selector: 'app-feedback-draft',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatTableModule, MatTooltipModule, FeedbackDraftViewComponent],
+  imports: [FeedbackDraftViewComponent],
   templateUrl: './feedback-draft.component.html',
   encapsulation: ViewEncapsulation.None,
 })
