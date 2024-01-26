@@ -8,7 +8,6 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
-  booleanAttribute,
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,7 +47,7 @@ import { NormalizedFeedback } from '../my-feedbacks.types';
 export class FeedbackListComponent implements OnChanges, AfterViewInit {
   @HostBinding('class.app-feedback-list') hasCss = true;
 
-  @Input({ transform: (value?: string) => value?.trim().toLowerCase() }) filter?: string;
+  @Input({ required: true }) type!: 'received' | 'given' | 'sentRequest' | 'receivedRequest';
 
   @Input({ required: true }) set feedbacks(value: NormalizedFeedback[]) {
     this.dataSource = new MatTableDataSource(value);
@@ -56,23 +55,27 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
     this.applyFilter();
   }
 
-  @Input({ transform: booleanAttribute }) withGiveRequestedFeedbackButton = false;
+  @Input({ transform: (value?: string) => value?.trim().toLowerCase() }) filter?: string;
 
   protected dataSource!: MatTableDataSource<NormalizedFeedback>;
 
-  protected isMobile = false;
-
   protected columns: (keyof NormalizedFeedback | 'actions' | 'mixed')[] = ['email', 'date', 'actions'];
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  protected readonly pageSizeOptions = [10, 25, 100];
 
   @ViewChild(MatSort) sort?: MatSort;
 
-  protected readonly pageSizeOptions = [10, 25, 100];
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   protected get hasPaginator() {
     return this.dataSource.data.length > this.pageSizeOptions[0];
   }
+
+  readonly viewFeedbackTooltip = $localize`:@@Action.ViewFeedback:Consulter le feedZback`;
+
+  readonly viewFeedbackRequestTooltip = $localize`:@@Action.ViewFeedbackRequest:Consulter la demande`;
+
+  private isMobile = false;
 
   constructor() {
     inject(BreakpointService)
