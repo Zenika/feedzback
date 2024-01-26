@@ -26,19 +26,18 @@
     }
 
     &::before {
-      background-color: #fff;
+      background-color: v.$background-grey-color;
     }
 
     &::after {
-      background:
-        radial-gradient(rgb(255 255 255 / 0.6), transparent 65%, rgb(0 0 0 / 0.6)),
-        url('/assets/images/landing-bg.jpg') center no-repeat;
-      background-size: cover;
-      opacity: 0.5;
+      background: url('/assets/images/landing-bg.svg') center repeat;
+      background-size: 480px;
+      opacity: 0.2;
     }
   }
 
   &__title {
+    align-self: center;
     margin: 0 !important;
     text-wrap: balance;
     color: v.$primary-color;
