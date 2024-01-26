@@ -27,14 +27,13 @@
         mat-icon-button
         color="primary"
         matTooltipPosition="left"
-        matTooltip="Consulter le feedZback"
-        i18n-matTooltip="@@Action.ViewFeedback"
+        [matTooltip]="type === 'received' || type === 'given' ? viewFeedbackTooltip : viewFeedbackRequestTooltip"
         [routerLink]="['/feedback', nf(element).id]"
       >
         <mat-icon>visibility</mat-icon>
       </button>
 
-      @if (withGiveRequestedFeedbackButton) {
+      @if (type === 'receivedRequest') {
         <button
           mat-icon-button
           color="primary"
