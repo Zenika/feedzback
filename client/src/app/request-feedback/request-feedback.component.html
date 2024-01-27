@@ -3,7 +3,7 @@
   <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
 </h1>
 
-@if (sentEmails.length) {
+@if (form.enabled && sentEmails.length) {
   <app-message type="success" closable="false">
     <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
     <br />
@@ -11,7 +11,7 @@
   </app-message>
 }
 
-@if (remainingUnsentEmails.length) {
+@if (form.enabled && remainingUnsentEmails.length) {
   <app-message type="danger" closable="false">
     <ng-container i18n="@@Component.RequestFeedback.Error">Une erreur s'est produite lors de l'envoi à :</ng-container>
     <br />
@@ -62,7 +62,7 @@
     }
 
     <div class="gbl-form-submit">
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" i18n="@@Action.Send">
+      <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary" i18n="@@Action.Send">
         Envoyer
       </button>
 

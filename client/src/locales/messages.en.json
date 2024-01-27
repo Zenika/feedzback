@@ -89,7 +89,7 @@
     "Message.NoResultsFor": "No results for \"{$INTERPOLATION}\"",
     "PageNotFound.Message": "Oops !{$LINE_BREAK}This page cannot be found",
     "PageNotFound.Title": "Page not found",
-    "Title.AppTagline": "Request or give feedback to your colleagues",
+    "Title.AppTagline": "Request and give feedback to your colleagues",
     "Title.Confirmation": "Confirmation",
     "Title.Drafts": "Draft",
     "Title.FeedbackGiven": "FeedZback given",

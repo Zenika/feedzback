@@ -69,8 +69,6 @@ export class RequestFeedbackComponent {
 
   protected multipleEmailsPlaceholder = MULTIPLE_EMAILS_PLACEHOLDER;
 
-  protected submitInProgress = false;
-
   protected sentEmails: string[] = [];
 
   protected remainingUnsentEmails: string[] = [];
@@ -84,7 +82,7 @@ export class RequestFeedbackComponent {
     if (this.form.invalid) {
       return;
     }
-    this.disableForm(true);
+    this.form.disable();
 
     const recipients = getMultipleEmails(this.form.controls.recipients.value);
     from(recipients)
@@ -99,16 +97,11 @@ export class RequestFeedbackComponent {
         this.setRecipients(this.remainingUnsentEmails);
 
         if (this.remainingUnsentEmails.length) {
-          this.disableForm(false);
+          this.form.enable();
         } else {
           this.navigateToSuccess();
         }
       });
-  }
-
-  private disableForm(submitInProgress: boolean) {
-    this.form[submitInProgress ? 'disable' : 'enable']();
-    this.submitInProgress = submitInProgress;
   }
 
   private buildDto(recipient: string): FeedbackRequestDto {
