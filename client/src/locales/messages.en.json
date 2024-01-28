@@ -58,6 +58,7 @@
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",
     "Component.RequestFeedbackSuccess.Title": "FeedZback requested from:",
     "Component.Settings.UpdateSuccess": "Your settings have been updated.",
+    "Demo.LoremIpsum": "{$INTERPOLATION}",
     "Feedback.Comment": "Comment",
     "Feedback.Give": "Give",
     "Feedback.Message": "Message",
