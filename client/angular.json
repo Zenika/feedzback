@@ -8,14 +8,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "standalone": true,
           "viewEncapsulation": "None"
-        },
-        "@schematics/angular:directive": {
-          "standalone": true
-        },
-        "@schematics/angular:pipe": {
-          "standalone": true
         }
       },
       "root": "",
@@ -120,7 +113,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "configPath": "jest.config.js"
+            "configPath": "jest.config.ts"
           }
         },
         "lint": {
