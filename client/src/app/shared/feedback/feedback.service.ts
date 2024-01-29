@@ -55,14 +55,16 @@ export class FeedbackService {
     );
   }
 
+  // Note: use the `FeedbackDraftService` wrapper to access this method
   giveRequestedDraft(dto: GiveRequestedFeedbackDto) {
     return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
   }
 
   giveRequested(dto: GiveRequestedFeedbackDto) {
-    return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
-      .pipe(catchError(() => of(false)));
+    return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested`, dto).pipe(
+      map(() => true),
+      catchError(() => of(false)),
+    );
   }
 
   // ----- Give spontaneous feedback -----

@@ -140,7 +140,7 @@ export class FeedbackDbService {
   async giveRequestedDraft(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
     const request = await this.checkRequest(tokenId);
     if (!request) {
-      return null;
+      return false;
     }
 
     const feedbackRequestDraft = this.encryptFeedback<FeedbackRequestDraft>({
@@ -155,12 +155,13 @@ export class FeedbackDbService {
       .collection(FeedbackRequestDraftType)
       .doc(tokenId)
       .set(feedbackRequestDraft, { merge: true });
+    return true;
   }
 
   async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
     const request = await this.checkRequest(tokenId);
     if (!request) {
-      return null;
+      return false;
     }
 
     const feedbackId = request.id;

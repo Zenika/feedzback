@@ -1,6 +1,6 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { FeedbackDraft, FeedbackRequestDraft } from '../../../shared/feedback/feedback.types';
+import { FeedbackDraft, FeedbackRequestDraft } from '../feedback/feedback.types';
 import { FeedbackDraftViewComponent } from './feedback-draft-view/feedback-draft-view.component';
 import { FeedbackDraftService } from './feedback-draft.service';
 

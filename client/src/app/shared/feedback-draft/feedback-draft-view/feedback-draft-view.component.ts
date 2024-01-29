@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FeedbackDraft, FeedbackRequestDraft } from 'src/app/shared/feedback/feedback.types';
+import { FeedbackDraft, FeedbackRequestDraft } from '../../feedback/feedback.types';
 
 @Component({
   selector: 'app-feedback-draft-view',
