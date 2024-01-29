@@ -19,7 +19,7 @@
     "Action.ViewFeedback": "Consulter le feedZback",
     "Action.ViewFeedbackRequest": "Consulter la demande",
     "Component.EmailsField.Hint": "Séparez les emails par des virgules",
-    "Component.FeedbackDraft.Requested": "FeedZback demandé",
+    "Component.FeedbackDraft.Requested": "FeedZback à donner",
     "Component.FeedbackDraft.Spontaneous": "FeedZback spontané",
     "Component.GiveFeedback.Share": " Partager le feedZback avec le manager de votre collègue ",
     "Component.GiveFeedbackDetails.FeedbackCommentPlaceholder": "Merci pour ta demande de feedZback !",

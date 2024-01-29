@@ -30,7 +30,7 @@ export class FeedbackService {
 
   request(dto: FeedbackRequestDto) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers, withCredentials: true }).pipe(
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
         map(() => true),
         catchError(() => of(false)),
       ),
@@ -39,11 +39,7 @@ export class FeedbackService {
 
   requestAgain(feedbackId: string) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.post<void>(
-        `${this.apiBaseUrl}/feedback/request-again`,
-        { feedbackId },
-        { headers, withCredentials: true },
-      ),
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request-again`, { feedbackId }, { headers }),
     );
   }
 
@@ -65,7 +61,7 @@ export class FeedbackService {
 
   giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto, { withCredentials: true })
+      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto)
       .pipe(catchError(() => of(false)));
   }
 
@@ -81,7 +77,7 @@ export class FeedbackService {
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient
-        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true })
+        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers })
         .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
     );
   }

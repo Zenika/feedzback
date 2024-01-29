@@ -93,9 +93,12 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         this.setAccessToken(credential?.accessToken);
       }),
+
+      // Once the user has signed-in, wait until the `AuthService` state (`this._user$`) has been fully propagated.
       concatMap(() => this.isKnownUser$),
-      first((isKnownUser) => isKnownUser),
+      first(), // Force unsubscribing from `this.isKnownUser$` observable
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
+
       catchError(() => {
         this.setAccessToken(null);
         return of(false);
