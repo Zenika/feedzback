@@ -1,4 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, tap } from 'rxjs';
 import { FeedbackService } from '../feedback/feedback.service';
 import {
@@ -13,6 +14,8 @@ import {
 })
 export class FeedbackDraftService {
   private feedbackService = inject(FeedbackService);
+
+  private router = inject(Router);
 
   private _draftList = signal<FeedbackDraft[]>([]);
 
@@ -108,5 +111,9 @@ export class FeedbackDraftService {
         });
       }),
     );
+  }
+
+  applyRequested(token: string) {
+    this.router.navigate(['/give-requested/token', token]);
   }
 }
