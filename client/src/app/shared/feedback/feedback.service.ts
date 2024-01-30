@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -32,7 +32,11 @@ export class FeedbackService {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
         map(() => true),
-        catchError(() => of(false)),
+        catchError(({ error }: HttpErrorResponse) => {
+          // TODO...
+          console.log('>>>', error.message === 'invalid_email');
+          return of(false);
+        }),
       ),
     );
   }
@@ -78,9 +82,13 @@ export class FeedbackService {
 
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient
-        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers })
-        .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
+      this.httpClient.post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers }).pipe(
+        catchError(({ error }: HttpErrorResponse) => {
+          // TODO...
+          console.log('>>>', error.message === 'invalid_email');
+          return of({ id: undefined } as Partial<IdObject>);
+        }),
+      ),
     );
   }
 
