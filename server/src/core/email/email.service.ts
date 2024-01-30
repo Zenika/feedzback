@@ -37,7 +37,8 @@ export class EmailService {
     } catch (err) {
       this.logger.error(err);
 
-      return false;
+      // If something went wrong validate anyway (to avoid denial of service).
+      return true;
     }
   }
 
