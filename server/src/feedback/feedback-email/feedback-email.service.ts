@@ -18,7 +18,7 @@ export class FeedbackEmailService {
   async requested(giverEmail: string, receiverEmail: string, message: string, tokenId: string) {
     const { subject, html } = await this.feedbackEmailBuilderService.requested(receiverEmail, message, tokenId);
 
-    this.emailService.send({
+    return this.emailService.send({
       from: EMAIL_DEFAULT_FROM_FIELD,
       to: this.getToField(giverEmail),
       subject,
@@ -29,7 +29,7 @@ export class FeedbackEmailService {
   async given(giverEmail: string, receiverEmail: string, feedbackId: string) {
     const { subject, html } = await this.feedbackEmailBuilderService.given(giverEmail, feedbackId);
 
-    this.emailService.send({
+    return this.emailService.send({
       from: EMAIL_DEFAULT_FROM_FIELD,
       to: this.getToField(receiverEmail),
       subject,
@@ -40,7 +40,7 @@ export class FeedbackEmailService {
   async shared(managerEmail: string, managedEmail: string, feedbackId: string) {
     const { subject, html } = await this.feedbackEmailBuilderService.shared(managedEmail, feedbackId);
 
-    this.emailService.send({
+    return this.emailService.send({
       from: EMAIL_DEFAULT_FROM_FIELD,
       to: this.getToField(managerEmail),
       subject,
@@ -48,7 +48,7 @@ export class FeedbackEmailService {
     });
   }
 
-  private getToField(toField: string | string[]): string | string[] {
+  private getToField(toField: string): string {
     return this.appEnv === 'production' ? toField : EMAIL_DEV_TO_FIELD;
   }
 }

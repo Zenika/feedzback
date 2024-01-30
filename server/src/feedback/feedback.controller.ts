@@ -1,5 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
+import { EmailService } from '../core/email';
 import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
@@ -15,6 +16,7 @@ import {
 export class FeedbackController {
   constructor(
     private authService: AuthService,
+    private emailService: EmailService,
     private feedbackDbService: FeedbackDbService,
     private feedbackEmailService: FeedbackEmailService,
     private employeeDbService: EmployeeDbService,
@@ -30,6 +32,10 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('request')
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
+    const isGiverEmailValid = await this.emailService.validate(giverEmail);
+    if (!isGiverEmailValid) {
+      throw new BadRequestException('invalid_email');
+    }
     const receiverEmail = this.authService.userEmail!;
     if (receiverEmail === giverEmail) {
       throw new BadRequestException();
@@ -103,6 +109,10 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('give')
   async give(@Body() dto: GiveFeedbackDto) {
+    const isReceiverEmailValid = await this.emailService.validate(dto.receiverEmail);
+    if (!isReceiverEmailValid) {
+      throw new BadRequestException('invalid_email');
+    }
     const giverEmail = this.authService.userEmail!;
     if (giverEmail === dto.receiverEmail) {
       throw new BadRequestException();
@@ -162,14 +172,16 @@ export class FeedbackController {
   // ----- Shared tasks -----
 
   private async sendEmailsOnGiven(giverEmail: string, receiverEmail: string, feedbackId: string, shared: boolean) {
-    await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);
-    if (!shared) {
-      return;
+    const success = await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);
+
+    if (shared) {
+      const managerEmail = (await this.employeeDbService.get(receiverEmail))?.managerEmail;
+      if (managerEmail) {
+        // Note: even if the email to the manager fails, the process is considered successful.
+        await this.feedbackEmailService.shared(managerEmail, receiverEmail, feedbackId);
+      }
     }
-    const managerEmail = (await this.employeeDbService.get(receiverEmail))?.managerEmail;
-    if (!managerEmail) {
-      return;
-    }
-    await this.feedbackEmailService.shared(managerEmail, receiverEmail, feedbackId);
+
+    return success;
   }
 }

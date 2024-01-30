@@ -87,6 +87,8 @@
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": "This feedZback is shared with the manager of your colleague",
     "Message.FeedbackIsSharedWithYourManager": "This feedZback is shared with your manager",
     "Message.FieldsRequired": "Fields marked with * are required",
+    "Message.InvalidEmail": "The email address is invalid.",
+    "Message.InvalidEmailPlural": "{VAR_PLURAL, plural, =one {The following email address is invalid:} =other {The following email addresses are invalid:}}",
     "Message.NoResultsFor": "No results for \"{$INTERPOLATION}\"",
     "PageNotFound.Message": "Oops !{$LINE_BREAK}This page cannot be found",
     "PageNotFound.Title": "Page not found",
