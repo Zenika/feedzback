@@ -39,6 +39,7 @@
     <app-multi-autocomplete-email
       class="gbl-form-field"
       [emails]="form.controls.recipients"
+      [isInvalidEmail]="isInvalidRecipient"
       matTooltipPosition="above"
       matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
       i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"

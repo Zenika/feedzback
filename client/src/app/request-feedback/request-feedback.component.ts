@@ -10,11 +10,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
+import { forbiddenValuesValidatorFactory, FORBIDDEN_VALUES_KEY } from '../shared/form/forbidden-values';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
+  MULTIPLE_EMAILS_ERROR_KEY,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/form/multiple-emails';
@@ -59,8 +62,13 @@ export class RequestFeedbackComponent {
 
   protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
+  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
+
   protected form = this.formBuilder.group({
-    recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
+    recipients: [
+      this.recipient ? [this.recipient] : [],
+      [Validators.required, multipleEmailsValidatorFactory(), this.forbiddenValuesValidator],
+    ],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
     shared: [this.hasManagerFeature ? true : false],
   });
@@ -74,6 +82,17 @@ export class RequestFeedbackComponent {
   protected remainingUnsentEmails: string[] = [];
 
   protected remainingInvalidEmails: string[] = [];
+
+  protected isInvalidRecipient = (recipient: string) => {
+    const { errors } = this.form.controls.recipients;
+
+    const emailErrorsAggregate = [
+      ...(errors?.[MULTIPLE_EMAILS_ERROR_KEY] ?? []),
+      ...(errors?.[FORBIDDEN_VALUES_KEY] ?? []),
+    ] as string[];
+
+    return emailErrorsAggregate.includes(recipient);
+  };
 
   protected applyTemplate(message: string | undefined) {
     this.form.controls.message.setValue(message ?? '');

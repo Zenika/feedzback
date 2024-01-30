@@ -28,7 +28,6 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import {
-  EMAIL_REGEXP,
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
@@ -62,6 +61,8 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
     nonNullable: true,
     validators: [Validators.required, multipleEmailsValidatorFactory()],
   });
+
+  @Input() isInvalidEmail?: (email: string) => boolean;
 
   @ViewChild(MatChipInput) matChipInput!: MatChipInput;
 
@@ -118,10 +119,6 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
-  }
-
-  protected isInvalidEmail(email: string) {
-    return !EMAIL_REGEXP.test(email);
   }
 
   protected add(email: string): void {
