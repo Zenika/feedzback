@@ -10,9 +10,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
+import { forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
@@ -51,6 +53,8 @@ export class RequestFeedbackComponent {
 
   private feedbackService = inject(FeedbackService);
 
+  private authService = inject(AuthService);
+
   private recipient: string = this.activatedRoute.snapshot.queryParams['recipient'] ?? '';
 
   protected messageMaxLength = 500;
@@ -60,7 +64,14 @@ export class RequestFeedbackComponent {
   protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
   protected form = this.formBuilder.group({
-    recipients: [this.recipient ? [this.recipient] : [], [Validators.required, multipleEmailsValidatorFactory()]],
+    recipients: [
+      this.recipient ? [this.recipient] : [],
+      [
+        Validators.required,
+        multipleEmailsValidatorFactory(),
+        forbiddenValuesValidatorFactory([this.authService.userEmail!]),
+      ],
+    ],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
     shared: [this.hasManagerFeature ? true : false],
   });

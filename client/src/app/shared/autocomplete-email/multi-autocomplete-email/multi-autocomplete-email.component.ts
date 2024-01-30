@@ -27,8 +27,9 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
+import { AuthService } from '../../auth';
+import { forbiddenValuesValidatorFactory } from '../../form/forbidden-values';
 import {
-  EMAIL_REGEXP,
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
@@ -58,9 +59,15 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
 export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class.app-multi-autocomplete-email') hasCss = true;
 
+  private authService = inject(AuthService);
+
   @Input() emails = new FormControl<string[]>([], {
     nonNullable: true,
-    validators: [Validators.required, multipleEmailsValidatorFactory()],
+    validators: [
+      Validators.required,
+      multipleEmailsValidatorFactory(),
+      forbiddenValuesValidatorFactory([this.authService.userEmail!]),
+    ],
   });
 
   @ViewChild(MatChipInput) matChipInput!: MatChipInput;
@@ -121,7 +128,7 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
   }
 
   protected isInvalidEmail(email: string) {
-    return !EMAIL_REGEXP.test(email);
+    return this.emails.errors && Object.values(this.emails.errors).flat().includes(email);
   }
 
   protected add(email: string): void {

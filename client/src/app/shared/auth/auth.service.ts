@@ -38,6 +38,10 @@ export class AuthService {
 
   user$ = this._user$.asObservable();
 
+  get userEmail() {
+    return this.userSnapshot?.email;
+  }
+
   userInfo$ = this._user$.pipe(
     map((user) => {
       if (!user?.photoURL && !user?.displayName) {
