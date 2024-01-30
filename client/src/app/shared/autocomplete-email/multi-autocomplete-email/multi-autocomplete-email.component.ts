@@ -27,8 +27,6 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
-import { AuthService } from '../../auth';
-import { forbiddenValuesValidatorFactory } from '../../form/forbidden-values';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
@@ -59,16 +57,12 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
 export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class.app-multi-autocomplete-email') hasCss = true;
 
-  private authService = inject(AuthService);
-
   @Input() emails = new FormControl<string[]>([], {
     nonNullable: true,
-    validators: [
-      Validators.required,
-      multipleEmailsValidatorFactory(),
-      forbiddenValuesValidatorFactory([this.authService.userEmail!]),
-    ],
+    validators: [Validators.required, multipleEmailsValidatorFactory()],
   });
+
+  @Input() isInvalidEmail?: (email: string) => boolean;
 
   @ViewChild(MatChipInput) matChipInput!: MatChipInput;
 
@@ -125,10 +119,6 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
-  }
-
-  protected isInvalidEmail(email: string) {
-    return this.emails.errors && Object.values(this.emails.errors).flat().includes(email);
   }
 
   protected add(email: string): void {

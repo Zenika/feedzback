@@ -34,13 +34,13 @@ export class AuthService {
 
   userSnapshot?: User | null;
 
+  get userSnapshotEmail() {
+    return this.userSnapshot?.email ?? null;
+  }
+
   private _user$ = new ReplaySubject<User | null>(1);
 
   user$ = this._user$.asObservable();
-
-  get userEmail() {
-    return this.userSnapshot?.email;
-  }
 
   userInfo$ = this._user$.pipe(
     map((user) => {

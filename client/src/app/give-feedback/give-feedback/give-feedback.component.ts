@@ -16,12 +16,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackDraftComponent } from '../../shared/feedback-draft/feedback-draft.component';
 import { FeedbackDraftService } from '../../shared/feedback-draft/feedback-draft.service';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
+import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
@@ -68,12 +70,14 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
+  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
+
   protected hasManagerFeature = environment.featureFlipping.manager;
 
   form = this.formBuilder.group({
     receiverEmail: [
       this.getQueryParam('receiverEmail'),
-      [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
+      [Validators.required, Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
     ],
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     negative: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`

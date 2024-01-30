@@ -4,7 +4,7 @@
   <mat-chip-grid #chipGrid [formControl]="emails">
     @for (email of emails.value; track email) {
       <mat-chip-row [editable]="true" (edited)="edit(email, $event)" (removed)="remove(email)">
-        <span [class.app-multi-autocomplete-email__error]="isInvalidEmail(email)">{{ email }}</span>
+        <span [class.app-multi-autocomplete-email__error]="isInvalidEmail?.(email)">{{ email }}</span>
 
         <button matChipRemove><mat-icon>cancel</mat-icon></button>
       </mat-chip-row>

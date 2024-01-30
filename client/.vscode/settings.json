@@ -1,6 +1,7 @@
-{"editor.rulers": [
+{
+  "editor.rulers": [
     {
       "column": 120
     }
-  ],
+  ]
 }
