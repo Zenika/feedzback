@@ -85,6 +85,8 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   showError = false;
 
+  errorType: null | 'error' | 'invalid_email' = null;
+
   showDraft = false;
 
   feedbackId?: string;
@@ -116,16 +118,18 @@ export class GiveFeedbackComponent implements OnDestroy {
       return;
     }
     this.showError = false;
+    this.errorType = null;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(({ id }) => {
-      this.showError = !id;
-      if (!id) {
+    this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe((result) => {
+      if (result.id === undefined) {
+        this.showError = true;
+        this.errorType = result.message === 'invalid_email' ? 'invalid_email' : 'error';
         this.disableForm(false);
       } else {
-        this.feedbackId = id;
+        this.feedbackId = result.id;
         this.feedbackDraftService.delete(receiverEmail).subscribe();
         this.navigateToSuccess();
       }

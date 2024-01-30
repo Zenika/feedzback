@@ -3,20 +3,35 @@
   <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
 </h1>
 
-@if (form.enabled && sentEmails.length) {
-  <app-message type="success" closable="false">
-    <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
-    <br />
-    {{ sentEmails.join(', ') }}
-  </app-message>
-}
+@if (form.enabled) {
+  @if (sentEmails.length) {
+    <app-message type="success" closable="false">
+      <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
+      <br />
+      {{ sentEmails.join(', ') }}
+    </app-message>
+  }
 
-@if (form.enabled && remainingUnsentEmails.length) {
-  <app-message type="danger" closable="false">
-    <ng-container i18n="@@Component.RequestFeedback.Error">Une erreur s'est produite lors de l'envoi à :</ng-container>
-    <br />
-    {{ remainingUnsentEmails.join(', ') }}
-  </app-message>
+  @if (remainingUnsentEmails.length) {
+    <app-message type="danger" closable="false">
+      <ng-container i18n="@@Component.RequestFeedback.Error"
+        >Une erreur s'est produite lors de l'envoi à :</ng-container
+      >
+      <br />
+      {{ remainingUnsentEmails.join(', ') }}
+    </app-message>
+  }
+
+  @if (remainingInvalidEmails.length) {
+    <app-message type="danger" closable="false">
+      <ng-container i18n="@@Message.InvalidEmailPlural">{remainingInvalidEmails.length, plural,
+        =one {L'adresse email suivante est invalide :}
+        =other {Les adresses emails suivantes sont invalides :}
+      }</ng-container>
+      <br />
+      {{ remainingInvalidEmails.join(', ') }}
+    </app-message>
+  }
 }
 
 @if (!sentEmails.length || remainingUnsentEmails.length) {

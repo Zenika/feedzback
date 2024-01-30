@@ -28,15 +28,11 @@ export class FeedbackService {
 
   // ----- Request feedback and give requested feedback -----
 
-  request(dto: FeedbackRequestDto) {
+  request(dto: FeedbackRequestDto): Observable<{ error: boolean; message?: 'invalid_email' }> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
-        map(() => true),
-        catchError(({ error }: HttpErrorResponse) => {
-          // TODO...
-          console.log('>>>', error.message === 'invalid_email');
-          return of(false);
-        }),
+        map(() => ({ error: false })),
+        catchError(({ error }: HttpErrorResponse) => of({ error: true, message: error?.message })),
       ),
     );
   }
@@ -80,14 +76,16 @@ export class FeedbackService {
     );
   }
 
-  give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
+  give(dto: GiveFeedbackDto): Observable<IdObject | { id: undefined; error: true; message?: 'invalid_email' }> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers }).pipe(
-        catchError(({ error }: HttpErrorResponse) => {
-          // TODO...
-          console.log('>>>', error.message === 'invalid_email');
-          return of({ id: undefined } as Partial<IdObject>);
-        }),
+        catchError(({ error }: HttpErrorResponse) =>
+          of({
+            id: undefined,
+            error: true as const,
+            message: error.message,
+          }),
+        ),
       ),
     );
   }

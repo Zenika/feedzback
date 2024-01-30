@@ -73,6 +73,8 @@ export class RequestFeedbackComponent {
 
   protected remainingUnsentEmails: string[] = [];
 
+  protected remainingInvalidEmails: string[] = [];
+
   protected applyTemplate(message: string | undefined) {
     this.form.controls.message.setValue(message ?? '');
     this.form.controls.message.updateValueAndValidity();
@@ -91,12 +93,15 @@ export class RequestFeedbackComponent {
         toArray(),
       )
       .subscribe((results) => {
-        this.sentEmails = [...this.sentEmails, ...recipients.filter((_, index) => results[index])];
-        this.remainingUnsentEmails = recipients.filter((_, index) => !results[index]);
+        this.sentEmails = [...this.sentEmails, ...recipients.filter((_, index) => !results[index].error)];
+        this.remainingUnsentEmails = recipients.filter((_, index) => results[index].error && !results[index].message);
+        this.remainingInvalidEmails = recipients.filter(
+          (_, index) => results[index].error && results[index].message === 'invalid_email',
+        );
 
-        this.setRecipients(this.remainingUnsentEmails);
+        this.setRecipients([...this.remainingUnsentEmails, ...this.remainingInvalidEmails]);
 
-        if (this.remainingUnsentEmails.length) {
+        if (this.remainingUnsentEmails.length || this.remainingInvalidEmails.length) {
           this.form.enable();
         } else {
           this.navigateToSuccess();

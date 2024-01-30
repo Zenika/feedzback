@@ -20,9 +20,16 @@
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback</ng-container>
 </h1>
 
-<app-message type="danger" [(visible)]="showError" i18n="@@Message.ErrorOccured"
-  >Une erreur s'est produite.</app-message
->
+<app-message type="danger" [(visible)]="showError">
+  @switch (errorType) {
+    @case ('error') {
+      <ng-container i18n="@@Message.ErrorOccured">Une erreur s'est produite.</ng-container>
+    }
+    @case ('invalid_email') {
+      <ng-container i18n="@@Message.InvalidEmail">L'adresse email est invalide.</ng-container>
+    }
+  }
+</app-message>
 
 <app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon enregistré.</app-message>
 
