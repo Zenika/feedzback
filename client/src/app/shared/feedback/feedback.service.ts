@@ -30,7 +30,7 @@ export class FeedbackService {
 
   request(dto: FeedbackRequestDto) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers, withCredentials: true }).pipe(
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers }).pipe(
         map(() => true),
         catchError(() => of(false)),
       ),
@@ -39,11 +39,7 @@ export class FeedbackService {
 
   requestAgain(feedbackId: string) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.post<void>(
-        `${this.apiBaseUrl}/feedback/request-again`,
-        { feedbackId },
-        { headers, withCredentials: true },
-      ),
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request-again`, { feedbackId }, { headers }),
     );
   }
 
@@ -59,14 +55,16 @@ export class FeedbackService {
     );
   }
 
+  // Note: use the `FeedbackDraftService` wrapper to access this method
   giveRequestedDraft(dto: GiveRequestedFeedbackDto) {
     return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
   }
 
   giveRequested(dto: GiveRequestedFeedbackDto) {
-    return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto, { withCredentials: true })
-      .pipe(catchError(() => of(false)));
+    return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested`, dto).pipe(
+      map(() => true),
+      catchError(() => of(false)),
+    );
   }
 
   // ----- Give spontaneous feedback -----
@@ -81,7 +79,7 @@ export class FeedbackService {
   give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient
-        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true })
+        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers })
         .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
     );
   }

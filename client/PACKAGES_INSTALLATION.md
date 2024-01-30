@@ -2,7 +2,7 @@
 
 ## Install packages from scratch
 
-### Create Angular App
+### Create Angular app
 
 ```shell
 npm install -g @angular/cli
@@ -27,7 +27,16 @@ Move generated content (related to Material) from `src/styles.scss` to `src/styl
 Update `src/styles.scss`
 
 ```scss
-@import './styles/material.scss'
+@import './styles/material.scss';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 ```
 
 ### Add Tailwind
@@ -128,7 +137,6 @@ Add `package.json` scripts
 
 ```json
 {
-  "name": "client",
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check ."

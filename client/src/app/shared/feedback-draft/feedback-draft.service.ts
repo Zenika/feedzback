@@ -1,18 +1,21 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, tap } from 'rxjs';
-import { FeedbackService } from '../../../shared/feedback/feedback.service';
+import { FeedbackService } from '../feedback/feedback.service';
 import {
   FeedbackDraft,
   FeedbackDraftType,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
-} from '../../../shared/feedback/feedback.types';
+} from '../feedback/feedback.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeedbackDraftService {
   private feedbackService = inject(FeedbackService);
+
+  private router = inject(Router);
 
   private _draftList = signal<FeedbackDraft[]>([]);
 
@@ -35,7 +38,9 @@ export class FeedbackDraftService {
     });
   }
 
-  save(draft: FeedbackDraft) {
+  // ----- Feedback draft -----
+
+  give(draft: FeedbackDraft) {
     return this.feedbackService.giveDraft(draft).pipe(
       tap(() => {
         this._draftList.update((draftList) => {
@@ -43,7 +48,7 @@ export class FeedbackDraftService {
           if (draftListIndex !== -1) {
             draftList[draftListIndex] = draft;
           } else {
-            draftList.push(draft);
+            draftList.unshift(draft);
           }
           return [...draftList];
         });
@@ -70,6 +75,27 @@ export class FeedbackDraftService {
     this._applyDraft$.next(draft);
   }
 
+  // ----- Requested feedback draft -----
+
+  giveRequested(requestDraft: FeedbackRequestDraft) {
+    const { token, positive, negative, comment } = requestDraft;
+    return this.feedbackService.giveRequestedDraft({ token, positive, negative, comment }).pipe(
+      tap(() => {
+        this._requestDraftList.update((requestDraftList) => {
+          const requestDraftListIndex = requestDraftList.findIndex(
+            ({ receiverEmail }) => receiverEmail === requestDraft.receiverEmail,
+          );
+          if (requestDraftListIndex !== -1) {
+            requestDraftList[requestDraftListIndex] = requestDraft;
+          } else {
+            requestDraftList.unshift(requestDraft);
+          }
+          return [...requestDraftList];
+        });
+      }),
+    );
+  }
+
   deleteRequested(token: string) {
     return this.feedbackService.deleteDraft(FeedbackRequestDraftType, token).pipe(
       tap(() => {
@@ -85,5 +111,9 @@ export class FeedbackDraftService {
         });
       }),
     );
+  }
+
+  applyRequested(token: string) {
+    this.router.navigate(['/give-requested/token', token]);
   }
 }

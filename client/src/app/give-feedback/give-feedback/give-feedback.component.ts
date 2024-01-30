@@ -17,6 +17,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
+import { FeedbackDraftComponent } from '../../shared/feedback-draft/feedback-draft.component';
+import { FeedbackDraftService } from '../../shared/feedback-draft/feedback-draft.service';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
@@ -24,8 +26,6 @@ import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-m
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
-import { FeedbackDraftComponent } from './feedback-draft/feedback-draft.component';
-import { FeedbackDraftService } from './feedback-draft/feedback-draft.service';
 
 @Component({
   selector: 'app-give-feedback',
@@ -138,7 +138,7 @@ export class GiveFeedbackComponent implements OnDestroy {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackDraftService.save({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
+    this.feedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
       this.showDraft = true;
       this.disableForm(false);
     });

@@ -1,5 +1,6 @@
+import { Transform } from 'class-transformer';
 import { IsEmail } from 'class-validator';
 
 export class UpdateManagerDto {
-  @IsEmail() managerEmail: string;
+  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) managerEmail: string;
 }

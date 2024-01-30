@@ -75,18 +75,20 @@ export class FeedbackController {
   }
 
   @Post('give-requested/draft')
-  giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
-    return this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
+  async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+    const success = await this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
+    if (!success) {
+      throw new BadRequestException();
+    }
   }
 
   @Post('give-requested')
   async giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
     const infos = await this.feedbackDbService.giveRequested(token, { positive, negative, comment });
     if (!infos) {
-      return false;
+      throw new BadRequestException();
     }
     await this.sendEmailsOnGiven(infos.giverEmail, infos.receiverEmail, infos.feedbackId, infos.shared);
-    return true;
   }
 
   // ----- Give spontaneous feedback -----

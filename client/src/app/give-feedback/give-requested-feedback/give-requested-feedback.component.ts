@@ -5,9 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
-import { FeedbackRequest, FeedbackRequestDraft } from 'src/app/shared/feedback/feedback.types';
 import { AuthService } from '../../shared/auth';
+import { FeedbackDraftService } from '../../shared/feedback-draft/feedback-draft.service';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
@@ -47,6 +48,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
 
   private feedbackService = inject(FeedbackService);
+
+  private feedbackDraftService = inject(FeedbackDraftService);
 
   form = this.formBuilder.group({
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -95,10 +98,12 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe(() => {
-      this.showDraft = true;
-      this.disableForm(false);
-    });
+    this.feedbackDraftService
+      .giveRequested({ receiverEmail: this.request.receiverEmail, token: this.token, positive, negative, comment })
+      .subscribe(() => {
+        this.showDraft = true;
+        this.disableForm(false);
+      });
   }
 
   private disableForm(submitInProgress: boolean) {

@@ -21,6 +21,7 @@ export const giveRequestedFeedbackGuard = (route: ActivatedRouteSnapshot): Obser
             const { positive, negative, comment } = draft;
             _draft = { positive, negative, comment };
           }
+          // Note: this guard has more than one responsibility (it also provides data to the routed component)
           route.data = { token, request, draft: _draft } satisfies GiveRequestedFeedbackData;
         }),
         switchMap(() => {

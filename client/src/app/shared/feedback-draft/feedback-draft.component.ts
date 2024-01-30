@@ -1,6 +1,5 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { FeedbackDraft, FeedbackRequestDraft } from '../../../shared/feedback/feedback.types';
+import { FeedbackDraft, FeedbackRequestDraft } from '../feedback/feedback.types';
 import { FeedbackDraftViewComponent } from './feedback-draft-view/feedback-draft-view.component';
 import { FeedbackDraftService } from './feedback-draft.service';
 
@@ -15,8 +14,6 @@ export class FeedbackDraftComponent {
   @HostBinding('class.app-feedback-draft') hasCss = true;
 
   protected columns = ['receiverEmail', 'actions'];
-
-  private router = inject(Router);
 
   private feedbackDraftService = inject(FeedbackDraftService);
 
@@ -43,7 +40,7 @@ export class FeedbackDraftComponent {
   }
 
   protected applyRequested({ token }: FeedbackRequestDraft) {
-    this.router.navigate(['/give-requested/token', token]);
+    this.feedbackDraftService.applyRequested(token);
   }
 
   protected deleteRequested({ token }: FeedbackRequestDraft) {

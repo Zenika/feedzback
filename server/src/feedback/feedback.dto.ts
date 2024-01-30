@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsEmail, IsIn, IsString, MaxLength } from 'class-validator';
-import { FeedbackRequestDraftType, FeedbackDraftType } from './feedback-db';
+import { FeedbackDraftType, FeedbackRequestDraftType } from './feedback-db';
 import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from './feedback.config';
 
 export class FeedbackRequestDto {
