@@ -27,7 +27,7 @@
     "Component.GiveFeedbackDetails.PositiveFeedbackPlaceholder": "Régulièrement, tes collègues viennent souvent te voir pour te demander de l'aide. Tu prends le temps de bien leur expliquer jusqu'à qu'ils aient bien compris. Je trouve que tu es très à l'écoute de tes collègues et que tu leur permets de monter en compétence. Bravo et merci pour ça.",
     "Component.GiveFeedbackSuccess.GiveAnother": "Donner un autre feedZback",
     "Component.GiveFeedbackSuccess.Title": "FeedZback envoyé à :",
-    "Component.GiveRequestedFeedback.DraftSaved1": " Votre brouillon est enregistré et accessible à partir de ",
+    "Component.GiveRequestedFeedback.DraftSaved1": " Revenez à cette page à tout moment, depuis la page ",
     "Component.GiveRequestedFeedback.DraftSaved2": "Mes feedZbacks à donner",
     "Component.GiveRequestedFeedback.Message1": " Vous répondez à la demande de feedZback qui vous a été envoyée par ",
     "Component.GiveRequestedFeedback.Message2": " Notez que votre réponse sera partagée avec son manager. ",
