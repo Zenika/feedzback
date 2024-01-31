@@ -28,6 +28,6 @@ export const appConfigLoader = (): AppConfig => ({
   },
 
   featureFlipping: {
-    emailValidation: Boolean(process.env.FEATURE_FLIPPING_EMAIL_VALIDATION!),
+    emailValidation: process.env.FEATURE_FLIPPING_EMAIL_VALIDATION === 'true',
   },
 });
