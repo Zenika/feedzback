@@ -23,16 +23,16 @@
 >
 
 <app-message type="success" [(visible)]="showDraft">
-  <ng-container i18n="@@Message.DraftSaved">Brouillon enregistré.</ng-container>
+  <ng-container i18n="@@Component.GiveRequestedFeedback.DraftSaved">Réponse sauvegardée.</ng-container>
   @if (!isAnonymous) {
     <br />
-    <strong i18n="@@Component.GiveRequestedFeedback.DraftSaved1">
+    <strong i18n="@@Component.GiveRequestedFeedback.DraftSavedInfo1">
       Revenez à cette page à tout moment, depuis la page
     </strong>
     <a
       routerLink="/feedbacks/receivedRequest"
       class="gbl-link font-bold"
-      i18n="@@Component.GiveRequestedFeedback.DraftSaved2"
+      i18n="@@Component.GiveRequestedFeedback.DraftSavedInfo2"
       >Mes feedZbacks à donner</a
     >.
   }
@@ -98,7 +98,7 @@
         (click)="onDraft()"
         i18n="@@Action.Save"
       >
-        Enregistrer
+        Sauvegarder
       </button>
     </div>
 

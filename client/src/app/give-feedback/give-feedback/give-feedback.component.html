@@ -31,7 +31,7 @@
   }
 </app-message>
 
-<app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon enregistré.</app-message>
+<app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon sauvegardé.</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
@@ -65,7 +65,7 @@
         (click)="onDraft()"
         i18n="@@Action.Save"
       >
-        Enregistrer
+        Sauvegarder
       </button>
     </div>
 
