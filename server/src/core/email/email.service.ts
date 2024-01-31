@@ -15,13 +15,15 @@ export class EmailService {
 
   private domain = this.configService.get('mailgunDomain', { infer: true })!;
 
-  private appEnv = this.configService.get('appEnv', { infer: true })!;
+  private hasEmailValidation = this.configService.get('featureFlipping.emailValidation', { infer: true })!;
 
   constructor(private configService: ConfigService<AppConfig>) {}
 
+  // NOTE:
+  // Mailgun email validation is an expensive option that we don't have on this project.
+  // We'll probably have to turn to other providers...
   async validate(email: string, allowRoleAdress = false) {
-    // Email validation is only available in the Mailgun production environment.
-    if (this.appEnv === 'developement') {
+    if (!this.hasEmailValidation) {
       return true;
     }
     try {
