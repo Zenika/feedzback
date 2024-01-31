@@ -14,10 +14,10 @@ import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { forbiddenValuesValidatorFactory, FORBIDDEN_VALUES_KEY } from '../shared/form/forbidden-values';
+import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
 import {
-  MULTIPLE_EMAILS_PLACEHOLDER,
   MULTIPLE_EMAILS_ERROR_KEY,
+  MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/form/multiple-emails';

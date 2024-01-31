@@ -6,6 +6,7 @@ import { AuthService } from '../auth';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import {
   Feedback,
+  FeedbackDraft,
   FeedbackDraftListMap,
   FeedbackDraftType,
   FeedbackListMap,
@@ -63,7 +64,6 @@ export class FeedbackService {
     );
   }
 
-  // Note: use the `FeedbackDraftService` wrapper to access this method
   giveRequestedDraft(dto: GiveRequestedFeedbackDto) {
     return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
   }
@@ -80,6 +80,13 @@ export class FeedbackService {
   }
 
   // ----- Give spontaneous feedback -----
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  getDraftList() {
+    return this.authService.withBearerIdToken((headers) =>
+      this.httpClient.get<FeedbackDraft[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
+    );
+  }
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
   giveDraft(dto: GiveFeedbackDto) {
@@ -104,7 +111,7 @@ export class FeedbackService {
     );
   }
 
-  // ----- Manage feedback draft -----
+  // ----- Manage feedback draft (common tasks) -----
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
   deleteDraft(type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
@@ -113,7 +120,7 @@ export class FeedbackService {
     );
   }
 
-  // Note: use the `FeedbackDraftService` wrapper to access this method
+  // !FIXME: not used. Remove it or not?
   getDraftListMap() {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<FeedbackDraftListMap>(`${this.apiBaseUrl}/feedback/draft/list-map`, { headers }),

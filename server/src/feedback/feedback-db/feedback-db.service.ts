@@ -247,23 +247,26 @@ export class FeedbackDbService {
   }
 
   async getDraftListMap(giverEmail: string): Promise<FeedbackDraftListMap> {
-    const feedbackDraftQuery = await this.feedbackDraftCollection.doc(giverEmail).collection(FeedbackDraftType).get();
-
-    const feedbackRequestDraftQuery = await this.feedbackDraftCollection
-      .doc(giverEmail)
-      .collection(FeedbackRequestDraftType)
-      .get();
-
     return {
-      [FeedbackDraftType]: sortList(
-        feedbackDraftQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackDraft)),
-        'receiverEmail',
-      ),
-      [FeedbackRequestDraftType]: sortList(
-        feedbackRequestDraftQuery.docs.map((doc) => this.decryptFeedback(doc.data() as FeedbackRequestDraft)),
-        'receiverEmail',
-      ),
+      [FeedbackDraftType]: await this.getDraftList(giverEmail, FeedbackDraftType),
+      [FeedbackRequestDraftType]: await this.getDraftList(giverEmail, FeedbackRequestDraftType),
     };
+  }
+
+  getDraftList(giverEmail: string, type: FeedbackDraftType): Promise<FeedbackDraft[]>;
+
+  getDraftList(giverEmail: string, type: FeedbackRequestDraftType): Promise<FeedbackRequestDraft[]>;
+
+  async getDraftList(
+    giverEmail: string,
+    type: FeedbackDraftType | FeedbackRequestDraftType,
+  ): Promise<FeedbackDraft[] | FeedbackRequestDraft[]> {
+    const draftQuery = await this.feedbackDraftCollection.doc(giverEmail).collection(type).get();
+
+    return sortList(
+      draftQuery.docs.map((doc) => this.decryptFeedback(doc.data())),
+      'receiverEmail',
+    ) as FeedbackDraft[] | FeedbackRequestDraft[];
   }
 
   // ----- View feedbacks (requested and given) -----

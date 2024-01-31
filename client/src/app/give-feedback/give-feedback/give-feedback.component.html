@@ -1,4 +1,4 @@
-@if (hasAnyDraft()) {
+@if (hasDraft()) {
   <button mat-raised-button color="primary" class="float-right" (click)="openDraftDialog()">
     <mat-icon>draft</mat-icon>
     <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
@@ -8,7 +8,7 @@
 <ng-template #draftDialogTmpl>
   <h1 mat-dialog-title i18n="@@Title.Drafts">Brouillons</h1>
   <div mat-dialog-content>
-    <app-feedback-draft />
+    <app-give-feedback-draft />
   </div>
   <div mat-dialog-actions>
     <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
