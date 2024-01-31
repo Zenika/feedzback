@@ -19,6 +19,9 @@ export class EmailService {
 
   constructor(private configService: ConfigService<AppConfig>) {}
 
+  // NOTE:
+  // Mailgun email validation is an expensive option that we don't have on this project.
+  // We'll probably have to turn to other providers...
   async validate(email: string, allowRoleAdress = false) {
     if (!this.hasEmailValidation) {
       return true;
