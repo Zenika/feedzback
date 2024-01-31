@@ -20,4 +20,8 @@ export type AppConfig = {
     key: string;
     iv: string;
   };
+
+  featureFlipping: {
+    emailValidation: boolean;
+  };
 };
