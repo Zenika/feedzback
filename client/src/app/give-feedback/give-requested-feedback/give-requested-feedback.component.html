@@ -23,12 +23,12 @@
 >
 
 <app-message type="success" [(visible)]="showDraft">
-  @if (isAnonymous) {
-    <ng-container i18n="@@Message.DraftSaved">Brouillon enregistré.</ng-container>
-  } @else {
-    <ng-container i18n="@@Component.GiveRequestedFeedback.DraftSaved1">
-      Votre brouillon est enregistré et accessible à partir de
-    </ng-container>
+  <ng-container i18n="@@Message.DraftSaved">Brouillon enregistré.</ng-container>
+  @if (!isAnonymous) {
+    <br />
+    <strong i18n="@@Component.GiveRequestedFeedback.DraftSaved1">
+      Revenez à cette page à tout moment, depuis la page
+    </strong>
     <a
       routerLink="/feedbacks/receivedRequest"
       class="gbl-link font-bold"
