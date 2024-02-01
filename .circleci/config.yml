@@ -252,7 +252,7 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
-          version: 462.0.0
+          version: 462.0.1
       - checkout
       - when:
           condition: << parameters.tag-and-store-container >>
@@ -276,7 +276,7 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
-          version: 462.0.0
+          version: 462.0.1
       - run:
           working_directory: server
           name: Running gcloud run deploy
