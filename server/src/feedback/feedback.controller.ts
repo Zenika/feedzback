@@ -146,14 +146,6 @@ export class FeedbackController {
     return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
-  // !FIXME: not used. Remove it or not?
-  @UseGuards(AuthGuard)
-  @Get('draft/list-map')
-  getDraftListMap() {
-    const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getDraftListMap(giverEmail);
-  }
-
   // ----- View feedbacks (requested and given) -----
 
   @UseGuards(AuthGuard)

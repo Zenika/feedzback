@@ -7,7 +7,6 @@ import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams 
 import {
   Feedback,
   FeedbackDraft,
-  FeedbackDraftListMap,
   FeedbackDraftType,
   FeedbackEncryptedFields,
   FeedbackItemWithId,
@@ -246,13 +245,6 @@ export class FeedbackDbService {
       return undefined;
     }
     return this.decryptFeedback(draftDoc.data() as FeedbackDraft | FeedbackRequestDraft);
-  }
-
-  async getDraftListMap(giverEmail: string): Promise<FeedbackDraftListMap> {
-    return {
-      [FeedbackDraftType]: await this.getDraftList(giverEmail, FeedbackDraftType),
-      [FeedbackRequestDraftType]: await this.getDraftList(giverEmail, FeedbackRequestDraftType),
-    };
   }
 
   getDraftList(giverEmail: string, type: FeedbackDraftType): Promise<FeedbackDraft[]>;

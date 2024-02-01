@@ -7,7 +7,6 @@ import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from '.
 import {
   Feedback,
   FeedbackDraft,
-  FeedbackDraftListMap,
   FeedbackDraftType,
   FeedbackListMap,
   FeedbackListType,
@@ -118,13 +117,6 @@ export class FeedbackService {
   deleteDraft(type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/draft/${type}/${receiverEmailOrToken}`, { headers }),
-    );
-  }
-
-  // !FIXME: not used. Remove it or not?
-  getDraftListMap() {
-    return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<FeedbackDraftListMap>(`${this.apiBaseUrl}/feedback/draft/list-map`, { headers }),
     );
   }
 

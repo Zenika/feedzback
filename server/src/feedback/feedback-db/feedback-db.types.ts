@@ -70,18 +70,13 @@ export type FeedbackRequestToken = {
   feedbackId: string;
 };
 
-// ----- FeedbackDraftListMap -----
+// ----- FeedbackDraft & FeedbackRequestDraft -----
 
 export const FeedbackDraftType = 'feedback';
 export type FeedbackDraftType = typeof FeedbackDraftType;
 
 export const FeedbackRequestDraftType = 'feedbackRequest';
 export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
-
-export type FeedbackDraftListMap = {
-  [FeedbackDraftType]: FeedbackDraft[];
-  [FeedbackRequestDraftType]: FeedbackRequestDraft[];
-};
 
 export type FeedbackDraft = {
   receiverEmail: string;
