@@ -22,21 +22,7 @@
   >Une erreur s'est produite.</app-message
 >
 
-<app-message type="success" [(visible)]="showDraft">
-  <ng-container i18n="@@Component.GiveRequestedFeedback.DraftSaved">Réponse sauvegardée.</ng-container>
-  @if (!isAnonymous) {
-    <br />
-    <strong i18n="@@Component.GiveRequestedFeedback.DraftSavedInfo1">
-      Revenez à cette page à tout moment, depuis la page
-    </strong>
-    <a
-      routerLink="/feedbacks/receivedRequest"
-      class="gbl-link font-bold"
-      i18n="@@Component.GiveRequestedFeedback.DraftSavedInfo2"
-      >Mes feedZbacks à donner</a
-    >.
-  }
-</app-message>
+<app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon sauvegardé.</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   @if (isAnonymous) {
