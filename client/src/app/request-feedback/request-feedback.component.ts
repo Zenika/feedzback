@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,7 +34,7 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatSelectModule,
+    MatMenuModule,
     MatSlideToggleModule,
     MatTooltipModule,
     MultiAutocompleteEmailComponent,

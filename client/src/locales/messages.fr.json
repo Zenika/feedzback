@@ -43,7 +43,7 @@
     "Component.PendingFeedback.ReminderSent": " Un rappel a été envoyé à votre collègue. ",
     "Component.RequestFeedback.EmailsRequirements": "Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)",
     "Component.RequestFeedback.Error": "Une erreur s'est produite lors de l'envoi à :",
-    "Component.RequestFeedback.NoTemplate": "Aucun modèle",
+    "Component.RequestFeedback.NoTemplate": " Aucun modèle ",
     "Component.RequestFeedback.Share": " Partager le feedZback avec votre manager ",
     "Component.RequestFeedback.Success": "Votre demande a bien été envoyée à :",
     "Component.RequestFeedback.TemplateAssignmentContent": "Bonjour,\nComme tu sais, ma mission se termine bientôt et j'aimerai avoir ton feedback sur ma prestation.\nMerci par avance.",

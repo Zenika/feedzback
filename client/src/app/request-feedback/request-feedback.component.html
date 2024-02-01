@@ -45,18 +45,6 @@
       i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
     />
 
-    @if (hasRequestTemplateFeature) {
-      <mat-form-field appearance="outline" class="gbl-form-field">
-        <mat-label i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</mat-label>
-        <mat-select (valueChange)="applyTemplate($event)">
-          <mat-option class="italic opacity-50" i18n="@@Component.RequestFeedback.NoTemplate">Aucun modèle</mat-option>
-          @for (tmpl of requestTemplates; track tmpl; let index = $index) {
-            <mat-option [value]="tmpl.content">{{ tmpl.title }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    }
-
     <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label i18n="@@Feedback.Message">Message</mat-label>
       <textarea
@@ -66,7 +54,29 @@
         matInput
         rows="4"
       ></textarea>
-      <mat-hint align="start">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
+      @if (hasRequestTemplateFeature) {
+        <mat-hint align="start">
+          <a [matMenuTriggerFor]="useTemplate" class="gbl-link gbl-link--no-underline">
+            <mat-icon class="align-text-bottom" style="font-size: 1.125rem">edit_note</mat-icon>
+            <ng-container i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</ng-container>
+          </a>
+
+          <mat-menu #useTemplate="matMenu" xPosition="before" yPosition="above">
+            <button
+              mat-menu-item
+              class="italic opacity-50"
+              i18n="@@Component.RequestFeedback.NoTemplate"
+              (click)="applyTemplate('')"
+            >
+              Aucun modèle
+            </button>
+            @for (tmpl of requestTemplates; track tmpl; let index = $index) {
+              <button mat-menu-item (click)="applyTemplate(tmpl.content)">{{ tmpl.title }}</button>
+            }
+          </mat-menu>
+        </mat-hint>
+      }
+      <mat-hint align="end">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
     </mat-form-field>
 
     @if (hasManagerFeature) {
