@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmailService } from '../core/email';
 import { EmployeeDbService } from '../employee/employee-db';
@@ -6,6 +6,7 @@ import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenOb
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   DeleteFeedbackDraftDto,
+  FeedbackListMapDto,
   FeedbackRequestDto,
   GiveFeedbackDto,
   GiveRequestedFeedbackDto,
@@ -145,6 +146,7 @@ export class FeedbackController {
     return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
+  // !FIXME: not used. Remove it or not?
   @UseGuards(AuthGuard)
   @Get('draft/list-map')
   getDraftListMap() {
@@ -156,9 +158,9 @@ export class FeedbackController {
 
   @UseGuards(AuthGuard)
   @Get('list-map')
-  getListMap() {
+  getListMap(@Query() { types }: FeedbackListMapDto) {
     const viewerEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getListMap(viewerEmail);
+    return this.feedbackDbService.getListMap(viewerEmail, types);
   }
 
   @UseGuards(AuthGuard)

@@ -19,10 +19,10 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { GiveRequestedFeedbackDirective } from '../../give-feedback/give-requested-feedback/give-requested-feedback.directive';
-import { BreakpointService } from '../../shared/breakpoint';
-import { DivisionComponent } from '../../shared/ui/division/division.component';
-import { NormalizedFeedback } from '../my-feedbacks.types';
+import { NormalizedFeedback } from '../../../my-feedbacks/my-feedbacks.types';
+import { BreakpointService } from '../../breakpoint';
+import { DivisionComponent } from '../../ui/division/division.component';
+import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({
   selector: 'app-feedback-list',

@@ -24,7 +24,7 @@
           <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/request">
-            <mat-icon>live_help</mat-icon>
+            <mat-icon>contact_support</mat-icon>
             <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
           </button>
         </div>
@@ -63,19 +63,6 @@
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
         <app-feedback-list type="sentRequest" [feedbacks]="sentRequest" [filter]="filter" />
-      </mat-tab>
-    }
-
-    @if (receivedRequest.length) {
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="app-my-feedbacks__label-icon">edit_note</mat-icon>
-          <ng-container i18n="@@Component.MyFeedbacks.ToGive">à donner</ng-container>
-        </ng-template>
-
-        <ng-container [ngTemplateOutlet]="filterTmpl" />
-
-        <app-feedback-list type="receivedRequest" [feedbacks]="receivedRequest" [filter]="filter" />
       </mat-tab>
     }
   </mat-tab-group>

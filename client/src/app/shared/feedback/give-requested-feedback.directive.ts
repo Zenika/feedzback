@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackService } from './feedback.service';
 
 @Directive({
   selector: '[appGiveRequestedFeedback]',

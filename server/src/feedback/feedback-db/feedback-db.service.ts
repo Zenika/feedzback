@@ -11,6 +11,8 @@ import {
   FeedbackDraftType,
   FeedbackEncryptedFields,
   FeedbackItemWithId,
+  FeedbackListMap,
+  FeedbackListType,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
@@ -271,28 +273,63 @@ export class FeedbackDbService {
 
   // ----- View feedbacks (requested and given) -----
 
-  async getListMap(viewerEmail: string) {
+  async getListMap(viewerEmail: string, types: FeedbackListType[]): Promise<FeedbackListMap> {
+    const { received, given } = await this.getFeedbackListMap(viewerEmail, types);
+    const { sentRequest, receivedRequest } = await this.getRequestedFeedbackListMap(viewerEmail, types);
+    return {
+      received,
+      given,
+      sentRequest,
+      receivedRequest,
+    };
+  }
+
+  private async getFeedbackListMap(viewerEmail: string, types: FeedbackListType[]) {
+    const feedbackWhere: Filter[] = [];
+    if (types.includes('received')) {
+      feedbackWhere.push(Filter.where('receiverEmail', '==', viewerEmail));
+    }
+    if (types.includes('given')) {
+      feedbackWhere.push(Filter.where('giverEmail', '==', viewerEmail));
+    }
+
+    // Query must have a "where" clause
+    if (!feedbackWhere.length) {
+      return { received: [], given: [], sentRequest: [], receivedRequest: [] } satisfies FeedbackListMap;
+    }
+
     const feedbackQuery = await this.feedbackCollection
       .where('status', '==', FeedbackStatus)
-      .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
+      .where(Filter.or(...feedbackWhere))
       .select(...feedbackItemFields)
       .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
+    return mapToFeedbackListMap(docsWithId<FeedbackItemWithId>(feedbackQuery.docs), viewerEmail);
+  }
+
+  private async getRequestedFeedbackListMap(viewerEmail: string, types: FeedbackListType[]) {
+    const feedbackRequestWhere: Filter[] = [];
+    if (types.includes('sentRequest')) {
+      feedbackRequestWhere.push(Filter.where('receiverEmail', '==', viewerEmail));
+    }
+    if (types.includes('receivedRequest')) {
+      feedbackRequestWhere.push(Filter.where('giverEmail', '==', viewerEmail));
+    }
+
+    // Query must have a "where" clause
+    if (!feedbackRequestWhere.length) {
+      return { received: [], given: [], sentRequest: [], receivedRequest: [] } satisfies FeedbackListMap;
+    }
+
     const feedbackRequestQuery = await this.feedbackCollection
       .where('status', '==', FeedbackRequestStatus)
-      .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
+      .where(Filter.or(...feedbackRequestWhere))
       .select(...feedbackItemFields)
       .orderBy('createdAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return mapToFeedbackListMap(
-      [
-        ...docsWithId<FeedbackItemWithId>(feedbackQuery.docs),
-        ...docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs),
-      ],
-      viewerEmail,
-    );
+    return mapToFeedbackListMap(docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs), viewerEmail);
   }
 
   async getDocument(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {

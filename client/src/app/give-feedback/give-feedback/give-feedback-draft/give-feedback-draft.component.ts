@@ -1,12 +1,12 @@
 import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
-import { FeedbackDraftViewComponent } from '../../../shared/feedback/feedback-draft-view/feedback-draft-view.component';
+import { FeedbackDraftListComponent } from '../../../shared/feedback/feedback-draft-list/feedback-draft-list.component';
 import { FeedbackDraft } from '../../../shared/feedback/feedback.types';
 import { GiveFeedbackDraftService } from './give-feedback-draft.service';
 
 @Component({
   selector: 'app-give-feedback-draft',
   standalone: true,
-  imports: [FeedbackDraftViewComponent],
+  imports: [FeedbackDraftListComponent],
   templateUrl: './give-feedback-draft.component.html',
   encapsulation: ViewEncapsulation.None,
 })

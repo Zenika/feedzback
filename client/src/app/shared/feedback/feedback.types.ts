@@ -53,6 +53,8 @@ export type FeedbackListMap = {
   receivedRequest: FeedbackRequestItem[];
 };
 
+export type FeedbackListType = keyof FeedbackListMap;
+
 // ----- FeedbackDraftListMap -----
 
 export const FeedbackDraftType = 'feedback';

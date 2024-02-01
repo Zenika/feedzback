@@ -54,6 +54,8 @@ export type FeedbackListMap = {
   receivedRequest: FeedbackRequestItemWithId[];
 };
 
+export type FeedbackListType = keyof FeedbackListMap;
+
 // ----- IdObject -----
 
 export type IdObject = { id: string };

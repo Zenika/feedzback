@@ -6,15 +6,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeedbackDraft, FeedbackRequestDraft } from '../feedback.types';
 
 @Component({
-  selector: 'app-feedback-draft-view',
+  selector: 'app-feedback-draft-list',
   standalone: true,
   imports: [MatButtonModule, MatIconModule, MatTableModule, MatTooltipModule],
-  templateUrl: './feedback-draft-view.component.html',
-  styleUrl: './feedback-draft-view.component.scss',
+  templateUrl: './feedback-draft-list.component.html',
+  styleUrl: './feedback-draft-list.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class FeedbackDraftViewComponent<T extends FeedbackDraft | FeedbackRequestDraft> {
-  @HostBinding('class.app-feedback-draft-view') hasCss = true;
+export class FeedbackDraftListComponent<T extends FeedbackDraft | FeedbackRequestDraft> {
+  @HostBinding('class.app-feedback-draft-list') hasCss = true;
 
   @Input({ required: true }) draftList!: T[];
 

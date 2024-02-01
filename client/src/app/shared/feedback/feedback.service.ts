@@ -10,6 +10,7 @@ import {
   FeedbackDraftListMap,
   FeedbackDraftType,
   FeedbackListMap,
+  FeedbackListType,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
@@ -129,9 +130,12 @@ export class FeedbackService {
 
   // ----- View feedbacks (requested and given) -----
 
-  getListMap() {
+  getListMap(types: FeedbackListType[]) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<FeedbackListMap>(`${this.apiBaseUrl}/feedback/list-map`, { headers }),
+      this.httpClient.get<FeedbackListMap>(`${this.apiBaseUrl}/feedback/list-map`, {
+        headers,
+        params: { types: types.join() },
+      }),
     );
   }
 
