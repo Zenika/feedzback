@@ -1,7 +1,6 @@
 {
   "locale": "fr",
   "translations": {
-    "7577783021306835423": "Vous n'avez pas reçu de demande de feedZback...",
     "Action.BackToHome": "Retourner à l'accueil",
     "Action.Close": "Fermer",
     "Action.CloseSession": "Fermer la session",
@@ -32,6 +31,8 @@
     "Component.GiveRequestedFeedback.Message2": " Notez que votre réponse sera partagée avec son manager. ",
     "Component.GiveRequestedFeedback.You": "Vous",
     "Component.GiveRequestedFeedback.YourColleague": "Votre collègue",
+    "Component.GiveRequestedFeedbackListEmpty1": " Vous n'avez pas de demande de feedZback à traiter... ",
+    "Component.GiveRequestedFeedbackListEmpty2": " Profitez-en pour demander ou donner du feedZback à vos collègues ! ",
     "Component.Home.LinkToGuide": "Comment écrire un ",
     "Component.Manager.Collaborator": "Collaborateur",
     "Component.Manager.NoData": "Aucun feedZback partagé...",

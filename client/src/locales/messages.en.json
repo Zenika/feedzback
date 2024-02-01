@@ -31,6 +31,8 @@
     "Component.GiveRequestedFeedback.Message2": "Note that your feedback will be shared with his manager.",
     "Component.GiveRequestedFeedback.You": "You",
     "Component.GiveRequestedFeedback.YourColleague": "Your colleague",
+    "Component.GiveRequestedFeedbackListEmpty1": "You have no feedZback requests to process...",
+    "Component.GiveRequestedFeedbackListEmpty2": "Take this opportunity to request or give feedZback to your colleagues!",
     "Component.Home.LinkToGuide": "How to write a ",
     "Component.Manager.Collaborator": "Collaborator",
     "Component.Manager.NoData": "No shared feedZback...",
