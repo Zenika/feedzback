@@ -3,5 +3,5 @@ import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/fee
 export type GiveRequestedFeedbackData = {
   token: string;
   request: FeedbackRequest;
-  draft?: FeedbackRequestDraft;
+  draft?: Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>;
 };

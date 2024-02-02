@@ -3,10 +3,15 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 export const FORBIDDEN_VALUES_KEY = 'forbiddenValues';
 
 export const forbiddenValuesValidatorFactory =
-  (forbiddenValues: string[], caseInsensitive = true) =>
+  (forbiddenValues: string[], caseSensitive = false) =>
   (control: AbstractControl): ValidationErrors | null => {
-    const value = (control.value as string | null | undefined)?.trim();
-    return value && forbiddenValues.includes(caseInsensitive ? value.toLowerCase() : value)
-      ? { forbiddenValues }
-      : null;
+    const controlValue: string[] | string | null | undefined = control.value;
+
+    const values = controlValue ? (Array.isArray(controlValue) ? controlValue : [controlValue]) : [];
+
+    const emailErrors = values.filter((value) =>
+      forbiddenValues.includes((caseSensitive ? value : value.toLowerCase()).trim()),
+    );
+
+    return emailErrors.length === 0 ? null : { [FORBIDDEN_VALUES_KEY]: emailErrors };
   };

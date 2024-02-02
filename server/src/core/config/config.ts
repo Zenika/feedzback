@@ -26,4 +26,8 @@ export const appConfigLoader = (): AppConfig => ({
     key: process.env.CRYPTO_SECRET_KEY!,
     iv: process.env.CRYPTO_SECRET_IV!,
   },
+
+  featureFlipping: {
+    emailValidation: process.env.FEATURE_FLIPPING_EMAIL_VALIDATION === 'true',
+  },
 });

@@ -8,4 +8,6 @@ import { MessageComponent } from '../shared/ui/message/message.component';
   imports: [MessageComponent, AvatarComponent],
   templateUrl: './demo-content.component.html',
 })
-export default class DemoContentComponent {}
+export default class DemoContentComponent {
+  loremIpsum = 'Lorem ipsum';
+}

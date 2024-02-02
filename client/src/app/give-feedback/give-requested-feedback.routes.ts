@@ -8,7 +8,7 @@ const giveRequestedFeedbackRoutes: Routes = [
     path: 'token/:token',
     component: GiveRequestedFeedbackComponent,
     canActivate: [giveRequestedFeedbackGuard],
-    title: 'FeedZback - ' + $localize`:@@Title.GiveRequestedFeedback: Répondre à la demande de feeZback `,
+    title: 'FeedZback - ' + $localize`:@@Title.GiveRequestedFeedback: Répondre à la demande de feedZback `,
   },
   {
     path: 'success',

@@ -9,8 +9,11 @@ import { LogoComponent } from '../shared/ui/logo/logo.component';
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule, LogoComponent],
   templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
+  @HostBinding('class.app-home') hasCss = true;
+
   @HostBinding('class.gbl-landing') hasGlobalCss = true;
 }

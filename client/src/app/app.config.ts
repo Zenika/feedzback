@@ -1,7 +1,7 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { provideAuth } from './shared/auth';
@@ -13,7 +13,7 @@ import { provideSvgIcons } from './shared/icons/icons.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideMatPaginatorIntl(),

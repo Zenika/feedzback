@@ -16,6 +16,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_ACCESS_TOKEN_KEY, AUTH_REDIRECT_PARAM, googleSearchDirectoryPeopleScope } from './auth.config';
 
@@ -32,6 +33,10 @@ export class AuthService {
   private document = inject(DOCUMENT);
 
   userSnapshot?: User | null;
+
+  get userSnapshotEmail() {
+    return this.userSnapshot?.email ?? null;
+  }
 
   private _user$ = new ReplaySubject<User | null>(1);
 
@@ -79,7 +84,11 @@ export class AuthService {
 
   signInWithGoogle(): Observable<boolean> {
     const googleAuthProvider = new GoogleAuthProvider();
-    googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+
+    if (environment.featureFlipping.autocompleteEmail) {
+      googleAuthProvider.addScope(googleSearchDirectoryPeopleScope);
+    }
+
     // !FIXME: is this needed?
     // googleAuthProvider.setCustomParameters({ access_type: 'offline' });
 
@@ -88,9 +97,12 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         this.setAccessToken(credential?.accessToken);
       }),
+
+      // Once the user has signed-in, wait until the `AuthService` state (`this._user$`) has been fully propagated.
       concatMap(() => this.isKnownUser$),
-      first((isKnownUser) => isKnownUser),
+      first(), // Force unsubscribing from `this.isKnownUser$` observable
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
+
       catchError(() => {
         this.setAccessToken(null);
         return of(false);

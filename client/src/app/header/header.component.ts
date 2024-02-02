@@ -63,7 +63,7 @@ export class HeaderComponent implements OnDestroy {
   private subscription = this.router.events
     .pipe(
       filter((event) => event instanceof NavigationEnd),
-      delay(350),
+      delay(250),
     )
     .subscribe(() => (this.isMenuOpen = false));
 

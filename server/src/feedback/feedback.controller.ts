@@ -1,14 +1,22 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
+import { EmailService } from '../core/email';
 import { EmployeeDbService } from '../employee/employee-db';
-import { FeedbackDbService, TokenObject } from './feedback-db';
+import { FeedbackDbService, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
-import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto, ManagedFeedbacksDto } from './feedback.dto';
+import {
+  DeleteFeedbackDraftDto,
+  FeedbackRequestDto,
+  GiveFeedbackDto,
+  GiveRequestedFeedbackDto,
+  ManagedFeedbacksDto,
+} from './feedback.dto';
 
 @Controller('feedback')
 export class FeedbackController {
   constructor(
     private authService: AuthService,
+    private emailService: EmailService,
     private feedbackDbService: FeedbackDbService,
     private feedbackEmailService: FeedbackEmailService,
     private employeeDbService: EmployeeDbService,
@@ -24,6 +32,10 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('request')
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
+    const isGiverEmailValid = await this.emailService.validate(giverEmail);
+    if (!isGiverEmailValid) {
+      throw new BadRequestException('invalid_email');
+    }
     const receiverEmail = this.authService.userEmail!;
     if (receiverEmail === giverEmail) {
       throw new BadRequestException();
@@ -48,11 +60,13 @@ export class FeedbackController {
 
   @Get('check-request/:token')
   async checkRequest(@Param('token') tokenId: string) {
-    const checked = await this.feedbackDbService.checkRequest(tokenId);
-    if (!checked) {
+    const request = await this.feedbackDbService.checkRequest(tokenId);
+    if (!request) {
       throw new BadRequestException();
     }
-    return checked;
+    const draft = await this.feedbackDbService.getDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
+
+    return { request, draft };
   }
 
   @UseGuards(AuthGuard)
@@ -67,18 +81,20 @@ export class FeedbackController {
   }
 
   @Post('give-requested/draft')
-  giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
-    return this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
+  async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+    const success = await this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
+    if (!success) {
+      throw new BadRequestException();
+    }
   }
 
   @Post('give-requested')
   async giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
     const infos = await this.feedbackDbService.giveRequested(token, { positive, negative, comment });
     if (!infos) {
-      return false;
+      throw new BadRequestException();
     }
     await this.sendEmailsOnGiven(infos.giverEmail, infos.receiverEmail, infos.feedbackId, infos.shared);
-    return true;
   }
 
   // ----- Give spontaneous feedback -----
@@ -93,6 +109,10 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('give')
   async give(@Body() dto: GiveFeedbackDto) {
+    const isReceiverEmailValid = await this.emailService.validate(dto.receiverEmail);
+    if (!isReceiverEmailValid) {
+      throw new BadRequestException('invalid_email');
+    }
     const giverEmail = this.authService.userEmail!;
     if (giverEmail === dto.receiverEmail) {
       throw new BadRequestException();
@@ -102,18 +122,20 @@ export class FeedbackController {
     return idObject;
   }
 
+  // ----- Manage feedback draft -----
+
   @UseGuards(AuthGuard)
-  @Delete('give/draft/:receiverEmail')
-  deleteDraft(@Param('receiverEmail') receiverEmail: string) {
+  @Delete('draft/:type/:receiverEmailOrToken')
+  deleteDraft(@Param() { type, receiverEmailOrToken }: DeleteFeedbackDraftDto) {
     const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.deleteDraft(giverEmail, receiverEmail);
+    return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
   @UseGuards(AuthGuard)
-  @Get('give/draft')
-  getDraftList() {
+  @Get('draft/list-map')
+  getDraftListMap() {
     const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getDraftList(giverEmail);
+    return this.feedbackDbService.getDraftListMap(giverEmail);
   }
 
   // ----- View feedbacks (requested and given) -----
@@ -150,14 +172,16 @@ export class FeedbackController {
   // ----- Shared tasks -----
 
   private async sendEmailsOnGiven(giverEmail: string, receiverEmail: string, feedbackId: string, shared: boolean) {
-    await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);
-    if (!shared) {
-      return;
+    const success = await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);
+
+    if (shared) {
+      const managerEmail = (await this.employeeDbService.get(receiverEmail))?.managerEmail;
+      if (managerEmail) {
+        // Note: even if the email to the manager fails, the process is considered successful.
+        await this.feedbackEmailService.shared(managerEmail, receiverEmail, feedbackId);
+      }
     }
-    const managerEmail = (await this.employeeDbService.get(receiverEmail))?.managerEmail;
-    if (!managerEmail) {
-      return;
-    }
-    await this.feedbackEmailService.shared(managerEmail, receiverEmail, feedbackId);
+
+    return success;
   }
 }

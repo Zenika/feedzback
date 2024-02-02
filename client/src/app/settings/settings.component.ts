@@ -2,9 +2,11 @@ import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../shared/auth';
 import { AutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
+import { forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
 import { MessageComponent } from '../shared/ui/message/message.component';
 
@@ -33,8 +35,13 @@ export default class SettingsComponent {
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
+  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
+
   protected form = inject(NonNullableFormBuilder).group({
-    managerEmail: [this.currentManagerEmail, [Validators.email, this.allowedEmailDomainsValidator]],
+    managerEmail: [
+      this.currentManagerEmail,
+      [Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
+    ],
   });
 
   protected get submitButtonDisabled() {

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -6,10 +6,12 @@ import { AuthService } from '../auth';
 import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
 import {
   Feedback,
-  FeedbackDraft,
+  FeedbackDraftListMap,
+  FeedbackDraftType,
   FeedbackListMap,
   FeedbackRequest,
   FeedbackRequestDraft,
+  FeedbackRequestDraftType,
   IdObject,
   TokenObject,
 } from './feedback.types';
@@ -26,15 +28,19 @@ export class FeedbackService {
 
   // ----- Request feedback and give requested feedback -----
 
-  request(dto: FeedbackRequestDto) {
+  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
+  // This is achieved by adding the configuration `withCredentials: true`.
+  request(dto: FeedbackRequestDto): Observable<{ error: boolean; message?: 'invalid_email' }> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers, withCredentials: true }).pipe(
-        map(() => true),
-        catchError(() => of(false)),
+        map(() => ({ error: false })),
+        catchError(({ error }: HttpErrorResponse) => of({ error: true, message: error?.message })),
       ),
     );
   }
 
+  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
+  // This is achieved by adding the configuration `withCredentials: true`.
   requestAgain(feedbackId: string) {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(
@@ -57,14 +63,20 @@ export class FeedbackService {
     );
   }
 
+  // Note: use the `FeedbackDraftService` wrapper to access this method
   giveRequestedDraft(dto: GiveRequestedFeedbackDto) {
     return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
   }
 
+  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
+  // This is achieved by adding the configuration `withCredentials: true`.
   giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
-      .post<boolean>(`${this.apiBaseUrl}/feedback/give-requested`, dto, { withCredentials: true })
-      .pipe(catchError(() => of(false)));
+      .post<void>(`${this.apiBaseUrl}/feedback/give-requested`, dto, { withCredentials: true })
+      .pipe(
+        map(() => true),
+        catchError(() => of(false)),
+      );
   }
 
   // ----- Give spontaneous feedback -----
@@ -76,27 +88,35 @@ export class FeedbackService {
     );
   }
 
-  give(dto: GiveFeedbackDto): Observable<Partial<IdObject>> {
+  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
+  // This is achieved by adding the configuration `withCredentials: true`.
+  give(dto: GiveFeedbackDto): Observable<IdObject | { id: undefined; error: true; message?: 'invalid_email' }> {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient
-        .post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true })
-        .pipe(catchError(() => of({ id: undefined } as Partial<IdObject>))),
+      this.httpClient.post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true }).pipe(
+        catchError(({ error }: HttpErrorResponse) =>
+          of({
+            id: undefined,
+            error: true as const,
+            message: error.message,
+          }),
+        ),
+      ),
+    );
+  }
+
+  // ----- Manage feedback draft -----
+
+  // Note: use the `FeedbackDraftService` wrapper to access this method
+  deleteDraft(type: FeedbackDraftType | FeedbackRequestDraftType, receiverEmailOrToken: string) {
+    return this.authService.withBearerIdToken((headers) =>
+      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/draft/${type}/${receiverEmailOrToken}`, { headers }),
     );
   }
 
   // Note: use the `FeedbackDraftService` wrapper to access this method
-  deleteDraft(receiverEmail: string) {
+  getDraftListMap() {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.delete<void>(`${this.apiBaseUrl}/feedback/give/draft/${receiverEmail}`, {
-        headers,
-      }),
-    );
-  }
-
-  // Note: use the `FeedbackDraftService` wrapper to access this method
-  getDraftList() {
-    return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<FeedbackDraft[]>(`${this.apiBaseUrl}/feedback/give/draft`, { headers }),
+      this.httpClient.get<FeedbackDraftListMap>(`${this.apiBaseUrl}/feedback/draft/list-map`, { headers }),
     );
   }
 
