@@ -9,4 +9,10 @@ export class PeopleController {
   searchDirectoryPeople(@Param('query') query: string) {
     return this.peopleService.searchDirectoryPeople(query);
   }
+
+  @Get('jwt')
+  testjwt() {
+    return this.peopleService.testWithJWT();
+  }
+
 }
