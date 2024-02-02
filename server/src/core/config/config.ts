@@ -14,6 +14,10 @@ export const appConfigLoader = (): AppConfig => ({
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
   },
 
+  cache: {
+    userListExpiryHour: Number(process.env.CACHE_USER_LIST_EXPIRY_HOUR),
+  },
+
   mailgunClientOptions: {
     username: process.env.MAILGUN_USERNAME!,
     key: process.env.MAILGUN_KEY!,
