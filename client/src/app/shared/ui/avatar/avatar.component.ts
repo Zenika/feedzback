@@ -1,8 +1,7 @@
-import { Component, HostBinding, Input, ViewEncapsulation, booleanAttribute } from '@angular/core';
+import { Component, HostBinding, ViewEncapsulation, booleanAttribute, computed, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DEFAULT_COLOR } from './avatar.config';
-import { AvatarFromName } from './avatar.types';
-import { buildAvatarFromName } from './avatar.utils';
+import { buildInitial } from './avatar.utils';
 
 @Component({
   selector: 'app-avatar',
@@ -16,21 +15,22 @@ export class AvatarComponent {
   @HostBinding('class.app-avatar') hasCss = true;
 
   @HostBinding('class.app-avatar--small') get cssSmall() {
-    return this.small;
+    return this.small();
   }
 
   @HostBinding('style.background-image') get bgImage() {
-    return this.photoUrl ? `url(${this.photoUrl})` : undefined;
+    return this.photoUrl() ? `url(${this.photoUrl()})` : undefined;
   }
 
   @HostBinding('style.background-color') get bgColor() {
-    return this.photoUrl ? undefined : this.name?.color ?? DEFAULT_COLOR;
+    return this.photoUrl() ? undefined : this.initial()?.color ?? DEFAULT_COLOR;
   }
 
-  @Input({ transform: booleanAttribute }) small = false;
+  small = input(false, { transform: booleanAttribute });
 
-  @Input() photoUrl?: string;
+  photoUrl = input<string>();
 
-  @Input({ transform: (name: string | undefined) => (name ? buildAvatarFromName(name) : undefined) })
-  name?: AvatarFromName;
+  name = input<string>();
+
+  protected initial = computed(() => (this.name() ? buildInitial(this.name()!) : undefined));
 }

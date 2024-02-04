@@ -1,4 +1,5 @@
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, ViewEncapsulation, computed, input } from '@angular/core';
+import { buildTextMatrix } from './multi-line.utils';
 
 @Component({
   selector: 'app-multi-line',
@@ -9,19 +10,7 @@ import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core'
 export class MultiLineComponent {
   @HostBinding('class.app-multi-line') hasCss = true;
 
-  @Input() set text(value: string | null | undefined) {
-    this.textMatrix = (value ?? '')
-      .replaceAll(/\n{3,}/g, '\n\n')
-      .split('\n\n')
-      .map((paragraph) => {
-        const content = paragraph.trim();
-        if (!content) {
-          return [];
-        }
-        return content.split('\n');
-      })
-      .filter((multiLineParagraph) => multiLineParagraph.length > 0);
-  }
+  text = input<string>();
 
-  protected textMatrix: string[][] = [];
+  protected textMatrix = computed(() => buildTextMatrix(this.text()));
 }
