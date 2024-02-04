@@ -8,7 +8,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { FeedbackBodyComponent } from 'src/app/shared/feedback/feedback-body/feedback-body.component';
+import { FeedbackBodyComponent } from '../../shared/feedback/feedback-body/feedback-body.component';
 import { Feedback, FeedbackType } from '../../shared/feedback/feedback.types';
 import { managerFeedbackListAnimations } from './manager-feedback-list.animations';
 

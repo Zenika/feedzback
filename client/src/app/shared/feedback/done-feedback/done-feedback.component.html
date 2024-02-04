@@ -12,7 +12,9 @@
 
 <div class="app-done-feedback-list">
   <div class="app-done-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
-  <div class="app-done-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
+  <div class="app-done-feedback-list__item">
+    <mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date: 'longDate' }}
+  </div>
 </div>
 
 <app-feedback-body [feedback]="feedback" />

@@ -13,7 +13,9 @@
 
 <div class="app-pending-feedback-list">
   <div class="app-pending-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
-  <div class="app-pending-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+  <div class="app-pending-feedback-list__item">
+    <mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date: 'longDate' }}
+  </div>
 </div>
 
 <app-feedback-body [feedback]="feedback" />
@@ -44,7 +46,7 @@
           <ng-container i18n="@@Component.PendingFeedback.ReminderAlreadySentOn">
             Vous avez déjà relancé votre collègue le
           </ng-container>
-          {{ feedback.updatedAt | date }}
+          {{ feedback.updatedAt | date: 'longDate' }}
         </div>
       </div>
     }

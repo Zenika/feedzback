@@ -34,68 +34,66 @@
   }
 }
 
-@if (!sentEmails.length || remainingUnsentEmails.length) {
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-multi-autocomplete-email
-      class="gbl-form-field"
-      [emails]="form.controls.recipients"
-      [isInvalidEmail]="isInvalidRecipient"
-      matTooltipPosition="above"
-      matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
-      i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
-    />
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-multi-autocomplete-email
+    class="gbl-form-field"
+    [emails]="form.controls.recipients"
+    [isInvalidEmail]="isInvalidRecipient"
+    matTooltipPosition="above"
+    matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
+    i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
+  />
 
-    <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label i18n="@@Feedback.Message">Message</mat-label>
-      <textarea
-        #message
-        [formControl]="form.controls.message"
-        [maxlength]="messageMaxLength"
-        matInput
-        rows="4"
-      ></textarea>
-      @if (hasRequestTemplateFeature) {
-        <mat-hint align="start">
-          <a [matMenuTriggerFor]="useTemplate" class="gbl-link gbl-link--no-underline">
-            <mat-icon class="align-text-bottom" style="font-size: 1.125rem">edit_note</mat-icon>
-            <ng-container i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</ng-container>
-          </a>
+  <mat-form-field appearance="outline" class="gbl-form-field">
+    <mat-label i18n="@@Feedback.Message">Message</mat-label>
+    <textarea
+      #message
+      [formControl]="form.controls.message"
+      [maxlength]="messageMaxLength"
+      matInput
+      rows="4"
+    ></textarea>
+    @if (hasRequestTemplateFeature) {
+      <mat-hint align="start">
+        <a [matMenuTriggerFor]="useTemplate" class="gbl-link gbl-link--no-underline">
+          <mat-icon class="align-text-bottom" style="font-size: 1.125rem">edit_note</mat-icon>
+          <ng-container i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</ng-container>
+        </a>
 
-          <mat-menu #useTemplate="matMenu" xPosition="before" yPosition="above">
-            <button
-              mat-menu-item
-              class="italic opacity-50"
-              i18n="@@Component.RequestFeedback.NoTemplate"
-              (click)="applyTemplate('')"
-            >
-              Aucun modèle
-            </button>
-            @for (tmpl of requestTemplates; track tmpl; let index = $index) {
-              <button mat-menu-item (click)="applyTemplate(tmpl.content)">{{ tmpl.title }}</button>
-            }
-          </mat-menu>
-        </mat-hint>
-      }
-      <mat-hint align="end">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
-    </mat-form-field>
-
-    @if (hasManagerFeature) {
-      <div class="gbl-form-field">
-        <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@Component.RequestFeedback.Share">
-          Partager le feedZback avec votre manager
-        </mat-slide-toggle>
-      </div>
+        <mat-menu #useTemplate="matMenu" xPosition="before" yPosition="above">
+          <button
+            mat-menu-item
+            class="italic opacity-50"
+            i18n="@@Component.RequestFeedback.NoTemplate"
+            (click)="applyTemplate('')"
+          >
+            Aucun modèle
+          </button>
+          @for (tmpl of requestTemplates; track tmpl; let index = $index) {
+            <button mat-menu-item (click)="applyTemplate(tmpl.content)">{{ tmpl.title }}</button>
+          }
+        </mat-menu>
+      </mat-hint>
     }
+    <mat-hint align="end">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
+  </mat-form-field>
 
-    <div class="gbl-form-submit">
-      <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary" i18n="@@Action.Send">
-        Envoyer
-      </button>
-
-      <div class="gbl-form-submit__info">
-        <mat-icon>info</mat-icon>
-        <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
-      </div>
+  @if (hasManagerFeature) {
+    <div class="gbl-form-field">
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@Component.RequestFeedback.Share">
+        Partager le feedZback avec votre manager
+      </mat-slide-toggle>
     </div>
-  </form>
-}
+  }
+
+  <div class="gbl-form-submit">
+    <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary" i18n="@@Action.Send">
+      Envoyer
+    </button>
+
+    <div class="gbl-form-submit__info">
+      <mat-icon>info</mat-icon>
+      <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
+    </div>
+  </div>
+</form>

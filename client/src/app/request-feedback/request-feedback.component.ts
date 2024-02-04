@@ -62,7 +62,7 @@ export class RequestFeedbackComponent {
 
   protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
-  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
+  private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
 
   protected form = this.formBuilder.group({
     recipients: [
