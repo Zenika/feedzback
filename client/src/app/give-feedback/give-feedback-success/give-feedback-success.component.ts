@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
@@ -9,14 +9,13 @@ import { GiveFeedbackSuccess } from './give-feedback-success.types';
 
 @Component({
   selector: 'app-give-feedback-success',
+  host: { class: 'gbl-info' },
   standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './give-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackSuccessComponent implements AfterViewInit {
-  @HostBinding('class.gbl-info') hasGlobalCss = true;
-
   protected state: GiveFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
 
   private authService = inject(AuthService);

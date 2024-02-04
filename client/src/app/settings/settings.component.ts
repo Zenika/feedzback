@@ -1,4 +1,4 @@
-import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,8 +25,6 @@ import { MessageComponent } from '../shared/ui/message/message.component';
   encapsulation: ViewEncapsulation.None,
 })
 export default class SettingsComponent {
-  @HostBinding('class.app-settings') hasCss = true;
-
   private employeeService = inject(EmployeeService);
 
   protected submitInProgress = false;

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, HostBinding, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,7 @@ import { managerFeedbackListAnimations } from './manager-feedback-list.animation
 
 @Component({
   selector: 'app-manager-feedback-list',
+  host: { class: 'app-manager-feedback-list' },
   standalone: true,
   imports: [
     DatePipe,
@@ -35,8 +36,6 @@ import { managerFeedbackListAnimations } from './manager-feedback-list.animation
   encapsulation: ViewEncapsulation.None,
 })
 export class ManagerFeedbackListComponent implements AfterViewInit {
-  @HostBinding('class.app-manager-feedback-list') hasCss = true;
-
   @Input({ required: true }) set feedbacks(value: Feedback[]) {
     this.dataSource = new MatTableDataSource(value);
     this.linkDataSource();

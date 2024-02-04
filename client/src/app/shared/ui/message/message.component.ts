@@ -1,18 +1,11 @@
 import { NgClass } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-  ViewEncapsulation,
-  booleanAttribute,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, booleanAttribute, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageType } from './message.types';
 
 @Component({
   selector: 'app-message',
+  host: { '[class]': 'getClass()' },
   standalone: true,
   imports: [NgClass, MatIconModule],
   templateUrl: './message.component.html',
@@ -20,22 +13,22 @@ import { MessageType } from './message.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class MessageComponent {
-  @Input({ transform: booleanAttribute }) closable = true;
+  nonclosable = input(false, { transform: booleanAttribute });
 
-  @Input() icon?: string;
+  icon = input<string>();
 
-  @Input() type: MessageType = 'light';
+  type = input<MessageType>('light');
 
   @Input() visible = true;
 
   @Output() visibleChange = new EventEmitter<boolean>();
 
-  @HostBinding('class') get css() {
-    return `app-message app-message--${this.type}`;
-  }
-
-  @HostBinding('class.app-message--hidden') get hidden() {
-    return !this.visible;
+  getClass() {
+    const css = ['app-message', `app-message--${this.type()}`];
+    if (!this.visible) {
+      css.push('app-message--hidden');
+    }
+    return css.join(' ');
   }
 
   protected iconMap: Record<MessageType, string> = {

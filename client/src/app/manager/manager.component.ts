@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, HostBinding, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,8 +29,6 @@ import { ManagerData } from './manager.types';
   encapsulation: ViewEncapsulation.None,
 })
 export default class ManagerComponent implements ManagerData {
-  @HostBinding('class.app-manager') hasCss = true;
-
   protected employee$ = new BehaviorSubject<string>('');
 
   @Input() set employee(value: string) {

@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
-  HostBinding,
   Input,
   OnChanges,
   SimpleChanges,
@@ -26,6 +25,7 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
 
 @Component({
   selector: 'app-feedback-list',
+  host: { class: 'app-feedback-list' },
   standalone: true,
   imports: [
     DatePipe,
@@ -45,8 +45,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackListComponent implements OnChanges, AfterViewInit {
-  @HostBinding('class.app-feedback-list') hasCss = true;
-
   @Input({ required: true }) type!: 'received' | 'given' | 'sentRequest' | 'receivedRequest';
 
   @Input({ required: true }) set feedbacks(value: NormalizedFeedback[]) {

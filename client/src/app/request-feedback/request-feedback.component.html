@@ -5,7 +5,7 @@
 
 @if (form.enabled) {
   @if (sentEmails.length) {
-    <app-message type="success" closable="false">
+    <app-message type="success" nonclosable>
       <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
       <br />
       {{ sentEmails.join(', ') }}
@@ -13,7 +13,7 @@
   }
 
   @if (remainingUnsentEmails.length) {
-    <app-message type="danger" closable="false">
+    <app-message type="danger" nonclosable>
       <ng-container i18n="@@Component.RequestFeedback.Error"
         >Une erreur s'est produite lors de l'envoi à :</ng-container
       >
@@ -23,7 +23,7 @@
   }
 
   @if (remainingInvalidEmails.length) {
-    <app-message type="danger" closable="false">
+    <app-message type="danger" nonclosable>
       <ng-container i18n="@@Message.InvalidEmailPlural">{remainingInvalidEmails.length, plural,
         =one {L'adresse email suivante est invalide :}
         =other {Les adresses emails suivantes sont invalides :}

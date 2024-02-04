@@ -1,4 +1,4 @@
-@if (icon ?? iconMap[type]; as iconValue) {
+@if (icon() ?? iconMap[type()]; as iconValue) {
   <mat-icon class="app-message__icon">{{ iconValue }}</mat-icon>
 }
 
@@ -6,6 +6,6 @@
   <ng-content />
 </div>
 
-@if (closable) {
+@if (!nonclosable()) {
   <mat-icon class="app-message__close" (click)="close()">close</mat-icon>
 }

@@ -1,13 +1,4 @@
-import {
-  Component,
-  HostBinding,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-  effect,
-  inject,
-} from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, effect, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,8 +39,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackComponent implements OnDestroy {
-  @HostBinding('class.app-give-feedback') hasCss = true;
-
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
 
   private router = inject(Router);

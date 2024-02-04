@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,8 +30,6 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, OnInit {
-  @HostBinding('class.app-give-requested-feedback') hasCss = true;
-
   @Input({ required: true }) token!: string;
 
   @Input({ required: true }) request!: FeedbackRequest;

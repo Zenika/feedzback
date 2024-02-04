@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,7 @@ import {
 
 @Component({
   selector: 'app-my-feedbacks',
+  host: { class: 'app-my-feedbacks' },
   standalone: true,
   imports: [
     NgTemplateOutlet,
@@ -35,8 +36,6 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export default class MyFeedbacksComponent implements OnInit {
-  @HostBinding('class.app-my-feedbacks') hasCss = true;
-
   @Input({
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
   })

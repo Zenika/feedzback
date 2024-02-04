@@ -1,4 +1,4 @@
-import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,8 +44,6 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
   encapsulation: ViewEncapsulation.None,
 })
 export class RequestFeedbackComponent {
-  @HostBinding('class.app-request-feedback') hasCss = true;
-
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);

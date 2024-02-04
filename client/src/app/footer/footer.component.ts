@@ -1,8 +1,9 @@
-import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-footer',
+  host: { class: 'app-footer' },
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './footer.component.html',
@@ -10,7 +11,5 @@ import { MatIconModule } from '@angular/material/icon';
   encapsulation: ViewEncapsulation.None,
 })
 export class FooterComponent {
-  @HostBinding('class.app-footer') hasCss = true;
-
   protected currentYear = new Date().getFullYear();
 }

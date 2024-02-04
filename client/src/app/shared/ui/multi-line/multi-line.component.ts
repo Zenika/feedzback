@@ -1,4 +1,4 @@
-import { Component, HostBinding, ViewEncapsulation, computed, input } from '@angular/core';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { buildTextMatrix } from './multi-line.utils';
 
 @Component({
@@ -8,9 +8,5 @@ import { buildTextMatrix } from './multi-line.utils';
   encapsulation: ViewEncapsulation.None,
 })
 export class MultiLineComponent {
-  @HostBinding('class.app-multi-line') hasCss = true;
-
-  text = input<string>();
-
-  protected textMatrix = computed(() => buildTextMatrix(this.text()));
+  textMatrix = input([], { alias: 'text', transform: (text?: string) => buildTextMatrix(text) });
 }
