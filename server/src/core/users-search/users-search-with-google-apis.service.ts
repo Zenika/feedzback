@@ -64,7 +64,7 @@ export class SearchUsersWithGoogleApis implements UserSearch {
   };
 
   private async getAccessToken() {
-    if (Date.now() / 1000 >= this.accessTokenExpiryTime) {
+    if (Date.now() >= this.accessTokenExpiryTime) {
       const jwtClient = new google.auth.JWT(
         this.googleApisConfig.serviceAccount,
         undefined,
