@@ -24,7 +24,7 @@ export class PeopleService {
         projection: 'custom',
         viewType: 'domain_public',
         domain: 'zenika.com',
-        query: 'norber',
+        query: query,
       });
       console.log('response', response.data);
 
