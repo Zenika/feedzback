@@ -1,4 +1,3 @@
-import { people } from '@googleapis/people';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { google } from 'googleapis';
@@ -11,30 +10,33 @@ export class PeopleService {
   private logger = new Logger('PeopleService');
   private serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
-  accessToken = '';
+  public accessToken: string = '';
 
   constructor(private configService: ConfigService<AppConfig>) {}
 
   async searchDirectoryPeople(query: string): Promise<Person[]> {
     try {
-      const response = await people('v1').people.searchDirectoryPeople({
-        access_token: this.accessToken,
-        sources: ['DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE'],
-        readMask: 'emailAddresses,names,photos',
-        query,
-      });
+      console.log('ICI');
 
-      if (!response.data.people) {
+      const response = await google.admin('directory_v1').users.list({
+        access_token: this.accessToken,
+        customFieldMask: query,
+        viewType:'domain_public',
+        domain: 'zenika.com',
+      });
+      console.log('response');
+
+      if (!response.data.users) {
         return [];
       }
 
-      return response.data.people.reduce((personList, person) => {
-        const email = person.emailAddresses?.[0].value;
+      return response.data.users.reduce((personList, person) => {
+        const email = person.emails?.[0].value;
         if (email) {
           personList.push({
             email,
-            displayName: person.names?.[0].displayName ?? undefined,
-            photoUrl: person.photos?.[0].url ?? undefined,
+            displayName: person.name?.displayName ?? undefined,
+            photoUrl: person.thumbnailPhotoUrl ?? undefined,
           });
         }
         return personList;
@@ -61,7 +63,7 @@ export class PeopleService {
     console.log('JWT', jwtClient);
 
     // Use the JWT client to generate an access token.
-    jwtClient.authorize(function (error, tokens) {
+    jwtClient.authorize((error, tokens) => {
       if (error) {
         console.log('Error making request to generate access token:', error);
       } else if (tokens?.access_token === null) {
@@ -72,7 +74,9 @@ export class PeopleService {
         // See the "Using the access token" section below for information
         // on how to use the access token to send authenticated requests to
         // the Realtime Database REST API.
-        console.log(tokens);
+        console.log(accessToken);
+
+        this.accessToken = tokens?.access_token ?? '';
         return accessToken;
       }
     });
