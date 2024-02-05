@@ -1,87 +1,117 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { google } from 'googleapis';
-import { join, resolve } from 'node:path';
+import { admin_directory_v1, google } from 'googleapis';
 import { AppConfig } from 'src/core/config';
-import { Person } from './people.types';
+import { User } from './people.types';
 
 @Injectable()
 export class PeopleService {
   private logger = new Logger('PeopleService');
-  private serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
+  private googleApisConfig = this.configService.get('googleApis', { infer: true })!;
 
-  public accessToken: string = '';
+  private accessToken: string = '';
+  private accessTokenExpiryTime: number = 0;
+  private allUsers: User[] = [];
 
   constructor(private configService: ConfigService<AppConfig>) {}
 
-  async searchDirectoryPeople(query: string): Promise<Person[]> {
-    try {
-      console.log('ICI');
-
-      const response = await google.admin('directory_v1').users.list({
-        access_token: this.accessToken,
-        fields: 'users(id, name, primaryEmail, thumbnailPhotoUrl)',
-        projection: 'custom',
-        viewType: 'domain_public',
-        domain: 'zenika.com',
-        query: query,
-      });
-      console.log('response', response.data);
-
-      if (!response.data.users) {
-        return [];
+  private tranformApiResultToUserList = (apiUsers: admin_directory_v1.Schema$User[]) => {
+    return apiUsers.reduce((acc, user) => {
+      const email = user.primaryEmail;
+      if (email) {
+        acc.push({
+          email,
+          displayName: user.name?.fullName ?? undefined,
+          photoUrl: user.thumbnailPhotoUrl ?? undefined,
+        });
       }
+      return acc;
+    }, [] as User[]);
+  };
 
-      return response.data.users.reduce((personList, user) => {
-        const email = user.primaryEmail
-        if (email) {
-          personList.push({
-            email,
-            displayName: user.name?.fullName ?? undefined,
-            photoUrl: user.thumbnailPhotoUrl ?? undefined,
-          });
+  async searchDomainUsers(query: string, searchOnCache = true): Promise<User[]> {
+    if (searchOnCache) {
+      if (this.allUsers.length === 0) {
+        await this.fillDomainUsersCache();
+      }
+      return Promise.resolve(this.allUsers.filter(({ email }) => email.includes(query)));
+    } else {
+      try {
+        const response = await google.admin('directory_v1').users.list({
+          access_token: await this.getAccessToken(),
+          fields: 'users(id, name, primaryEmail, thumbnailPhotoUrl), nextPageToken',
+          viewType: 'domain_public',
+          domain: 'zenika.com',
+          query,
+        });
+        // console.log('response', response.data);
+
+        if (!response.data.users) {
+          return [];
         }
-        return personList;
-      }, [] as Person[]);
-    } catch (err) {
-      this.logger.error(err);
-      throw new BadRequestException();
+
+        return this.tranformApiResultToUserList(response.data.users);
+      } catch (err) {
+        this.logger.error(err);
+        throw new BadRequestException();
+      }
     }
   }
 
-  async testWithJWT() {
-    const secretPath = join(resolve('./'), 'SECRET.json');
+  private async getAccessToken() {
+    if (Date.now() / 1000 >= this.accessTokenExpiryTime) {
+      const jwtClient = new google.auth.JWT(
+        this.googleApisConfig.serviceAccount,
+        undefined,
+        this.googleApisConfig.privateKey,
+        this.googleApisConfig.scopes,
+        this.googleApisConfig.impersonate,
+      );
 
-    // Define the required scopes.
-    const scopes = ['https://www.googleapis.com/auth/admin.directory.user.readonly'];
+      // Use the JWT client to generate an access token.
+      return new Promise<string>((resolve, reject) =>
+        jwtClient.authorize((error, tokens) => {
+          if (error) {
+            reject(new Error('Error making request to generate access token:'));
+          } else if (tokens?.access_token === null || tokens?.access_token === undefined) {
+            reject(new Error('Provided service account does not have permission to generate access tokens'));
+          } else {
+            this.accessToken = tokens.access_token;
+            this.accessTokenExpiryTime = tokens.expiry_date ?? 0;
+            this.logger.log('Get new Token 🔑 for googleApis');
+            resolve(tokens.access_token);
+          }
+        }),
+      );
+    } else {
+      return this.accessToken;
+    }
+  }
 
-    // Authenticate a JWT client with the service account.
-    const jwtClient = new google.auth.JWT(
-      'firebase-adminsdk-kisrh@feedzback-v2-staging.iam.gserviceaccount.com',
-      secretPath,
-      undefined,
-      scopes,
-      'pierre.nicoli@zenika.com',
-    );
-    console.log('JWT', jwtClient);
+  public async fillDomainUsersCache() {
+    const tmpResult: User[][] = [];
 
-    // Use the JWT client to generate an access token.
-    jwtClient.authorize((error, tokens) => {
-      if (error) {
-        console.log('Error making request to generate access token:', error);
-      } else if (tokens?.access_token === null) {
-        console.log('Provided service account does not have permission to generate access tokens');
-      } else {
-        const accessToken = tokens?.access_token;
+    const getResultForPakeToken = async (pageToken?: string) => {
+      const response = await google.admin('directory_v1').users.list({
+        access_token: await this.getAccessToken(),
+        fields: 'users(id, name, primaryEmail, thumbnailPhotoUrl), nextPageToken',
+        viewType: 'domain_public',
+        domain: 'zenika.com',
+        pageToken,
+        query: '',
+      });
 
-        // See the "Using the access token" section below for information
-        // on how to use the access token to send authenticated requests to
-        // the Realtime Database REST API.
-        console.log(accessToken);
+      if (response?.data.users) {
+        Logger.log('Fill User cache : ', response?.data.users?.length);
 
-        this.accessToken = tokens?.access_token ?? '';
-        return accessToken;
+        tmpResult.push(this.tranformApiResultToUserList(response.data.users));
+        if (response.data.nextPageToken) {
+          await getResultForPakeToken(response.data.nextPageToken);
+        }
       }
-    });
+    };
+    await getResultForPakeToken();
+    this.allUsers = tmpResult.flat();
+    return this.allUsers;
   }
 }

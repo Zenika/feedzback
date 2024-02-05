@@ -11,7 +11,7 @@ export class PeopleMiddleware implements NestMiddleware {
     if (!accessToken) {
       throw new BadRequestException();
     }
-    this.peopleService.accessToken = accessToken;
+    //this.peopleService.accessToken = accessToken;
     next();
   }
 }

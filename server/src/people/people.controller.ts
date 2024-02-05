@@ -7,11 +7,11 @@ export class PeopleController {
 
   @Get('search/:query')
   searchDirectoryPeople(@Param('query') query: string) {
-    return this.peopleService.searchDirectoryPeople(query);
+    return this.peopleService.searchDomainUsers(query);
   }
 
-  @Get('jwt')
+  @Get('fillAllUsers')
   testjwt() {
-    return this.peopleService.testWithJWT();
+    return this.peopleService.fillDomainUsersCache();
   }
 }

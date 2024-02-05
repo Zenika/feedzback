@@ -24,4 +24,11 @@ export type AppConfig = {
   featureFlipping: {
     emailValidation: boolean;
   };
+
+  googleApis?: {
+    serviceAccount: string;
+    privateKey : string;
+    scopes: string[];
+    impersonate: string;
+  };
 };
