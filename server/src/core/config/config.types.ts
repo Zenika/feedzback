@@ -27,8 +27,7 @@ export type AppConfig = {
 
   googleApis?: {
     serviceAccount: string;
-    privateKey : string;
+    privateKey: string;
     scopes: string[];
-    impersonate: string;
   };
 };

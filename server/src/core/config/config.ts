@@ -19,9 +19,8 @@ export const appConfigLoader = (): AppConfig => {
 
     googleApis: {
       serviceAccount: firebaseServiceAccount.clientEmail,
-      privateKey : firebaseServiceAccount.privateKey,
+      privateKey: firebaseServiceAccount.privateKey,
       scopes: ['https://www.googleapis.com/auth/admin.directory.user.readonly'],
-      impersonate: process.env.IMPERSONATE!,
     },
 
     mailgunClientOptions: {
