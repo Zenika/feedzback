@@ -18,7 +18,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { NormalizedFeedback } from '../../../my-feedbacks/my-feedbacks.types';
+import { NormalizedFeedback } from '../../../history/history.types';
 import { BreakpointService } from '../../breakpoint';
 import { DivisionComponent } from '../../ui/division/division.component';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';

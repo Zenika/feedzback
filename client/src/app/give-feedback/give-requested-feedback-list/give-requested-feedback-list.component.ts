@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
-import { normalizeReceivedRequestList } from '../../my-feedbacks/my-feedbacks.utils';
+import { normalizeReceivedRequestList } from '../../history/history.utils';
 import { FeedbackListComponent } from '../../shared/feedback/feedback-list/feedback-list.component';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { MessageComponent } from '../../shared/ui/message/message.component';

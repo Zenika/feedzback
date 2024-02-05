@@ -9,17 +9,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FeedbackListComponent } from '../shared/feedback/feedback-list/feedback-list.component';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { FeedbackType } from '../shared/feedback/feedback.types';
-import { NormalizedFeedback } from './my-feedbacks.types';
-import {
-  getFeedbackType,
-  normalizeGivenList,
-  normalizeReceivedList,
-  normalizeSentRequestList,
-} from './my-feedbacks.utils';
+import { NormalizedFeedback } from './history.types';
+import { getFeedbackType, normalizeGivenList, normalizeReceivedList, normalizeSentRequestList } from './history.utils';
 
 @Component({
-  selector: 'app-my-feedbacks',
-  host: { class: 'app-my-feedbacks' },
+  selector: 'app-history',
+  host: { class: 'app-history' },
   standalone: true,
   imports: [
     NgTemplateOutlet,
@@ -31,11 +26,11 @@ import {
     MatInputModule,
     FeedbackListComponent,
   ],
-  templateUrl: './my-feedbacks.component.html',
-  styleUrl: './my-feedbacks.component.scss',
+  templateUrl: './history.component.html',
+  styleUrl: './history.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export default class MyFeedbacksComponent implements OnInit {
+export default class HistoryComponent implements OnInit {
   @Input({
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
   })
