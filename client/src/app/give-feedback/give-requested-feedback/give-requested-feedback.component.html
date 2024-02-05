@@ -22,8 +22,6 @@
   >Une erreur s'est produite.</app-message
 >
 
-<app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon sauvegardé.</app-message>
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   @if (isAnonymous) {
     <h3>
@@ -93,4 +91,8 @@
       <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
+
+  <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
+    Brouillon sauvegardé.
+  </app-message>
 </form>

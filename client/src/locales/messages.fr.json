@@ -79,7 +79,7 @@
     "FieldError.MultipleEmails": "Email(s) invalide(s) : ",
     "FieldError.Pattern": "Format invalide",
     "FieldError.Required": "Champ requis",
-    "Message.DraftSaved": "Brouillon sauvegardé.",
+    "Message.DraftSaved": " Brouillon sauvegardé. ",
     "Message.ErrorOccured": "Une erreur s'est produite.",
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": " Ce feedZback est partagé avec le manager de votre collègue ",
     "Message.FeedbackIsSharedWithYourManager": " Ce feedZback est partagé avec votre manager ",
