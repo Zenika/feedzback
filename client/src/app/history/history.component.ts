@@ -1,25 +1,20 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FeedbackListComponent } from '../shared/feedback/feedback-list/feedback-list.component';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { FeedbackType } from '../shared/feedback/feedback.types';
-import { FeedbackListComponent } from './feedback-list/feedback-list.component';
-import { NormalizedFeedback } from './my-feedbacks.types';
-import {
-  getFeedbackType,
-  normalizeGivenList,
-  normalizeReceivedList,
-  normalizeReceivedRequestList,
-  normalizeSentRequestList,
-} from './my-feedbacks.utils';
+import { NormalizedFeedback } from './history.types';
+import { getFeedbackType, normalizeGivenList, normalizeReceivedList, normalizeSentRequestList } from './history.utils';
 
 @Component({
-  selector: 'app-my-feedbacks',
+  selector: 'app-history',
+  host: { class: 'app-history' },
   standalone: true,
   imports: [
     NgTemplateOutlet,
@@ -31,13 +26,11 @@ import {
     MatInputModule,
     FeedbackListComponent,
   ],
-  templateUrl: './my-feedbacks.component.html',
-  styleUrl: './my-feedbacks.component.scss',
+  templateUrl: './history.component.html',
+  styleUrl: './history.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export default class MyFeedbacksComponent implements OnInit {
-  @HostBinding('class.app-my-feedbacks') hasCss = true;
-
+export default class HistoryComponent implements OnInit {
   @Input({
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
   })
@@ -61,21 +54,20 @@ export default class MyFeedbacksComponent implements OnInit {
 
   protected sentRequest: NormalizedFeedback[] = [];
 
-  protected receivedRequest: NormalizedFeedback[] = [];
-
   protected feedbackType = FeedbackType;
 
   protected fetched = false;
 
-  async ngOnInit() {
-    this.feedbackService.getListMap().subscribe(({ received, given, sentRequest, receivedRequest }) => {
-      this.received = normalizeReceivedList(received);
-      this.given = normalizeGivenList(given);
-      this.sentRequest = normalizeSentRequestList(sentRequest);
-      this.receivedRequest = normalizeReceivedRequestList(receivedRequest);
+  ngOnInit() {
+    this.feedbackService
+      .getListMap(['received', 'given', 'sentRequest'])
+      .subscribe(({ received, given, sentRequest }) => {
+        this.received = normalizeReceivedList(received);
+        this.given = normalizeGivenList(given);
+        this.sentRequest = normalizeSentRequestList(sentRequest);
 
-      this.fetched = true;
-    });
+        this.fetched = true;
+      });
   }
 
   protected onTabIndexChange(index: number) {
@@ -87,8 +79,7 @@ export default class MyFeedbacksComponent implements OnInit {
     const feedbackTypeMap: Record<number, FeedbackType> = {
       0: FeedbackType.received,
       1: FeedbackType.given,
-      2: this.sentRequest.length ? FeedbackType.sentRequest : FeedbackType.receivedRequest,
-      3: FeedbackType.receivedRequest,
+      2: FeedbackType.sentRequest,
     };
     return feedbackTypeMap[index];
   }
@@ -98,7 +89,10 @@ export default class MyFeedbacksComponent implements OnInit {
       [FeedbackType.received]: 0,
       [FeedbackType.given]: 1,
       [FeedbackType.sentRequest]: 2,
-      [FeedbackType.receivedRequest]: this.sentRequest.length ? 3 : 2,
+
+      // Note: The `receivedRequest` are not displayed in this page.
+      // In this case, we display the first tab, as if the `@Input() type, coming from the URL, had any random value.
+      [FeedbackType.receivedRequest]: 0,
     };
     return tabIndexMap[type];
   }

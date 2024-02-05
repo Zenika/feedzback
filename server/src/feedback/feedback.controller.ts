@@ -1,11 +1,12 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmailService } from '../core/email';
 import { EmployeeDbService } from '../employee/employee-db';
-import { FeedbackDbService, FeedbackRequestDraftType, TokenObject } from './feedback-db';
+import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   DeleteFeedbackDraftDto,
+  FeedbackListMapDto,
   FeedbackRequestDto,
   GiveFeedbackDto,
   GiveRequestedFeedbackDto,
@@ -80,6 +81,13 @@ export class FeedbackController {
     return { token: tokenId } as TokenObject;
   }
 
+  @UseGuards(AuthGuard)
+  @Get('give-requested/draft')
+  getRequestedDraftList() {
+    const giverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getDraftList(giverEmail, FeedbackRequestDraftType);
+  }
+
   @Post('give-requested/draft')
   async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
     const success = await this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
@@ -98,6 +106,13 @@ export class FeedbackController {
   }
 
   // ----- Give spontaneous feedback -----
+
+  @UseGuards(AuthGuard)
+  @Get('give/draft')
+  getDraftList() {
+    const giverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getDraftList(giverEmail, FeedbackDraftType);
+  }
 
   @UseGuards(AuthGuard)
   @Post('give/draft')
@@ -122,7 +137,7 @@ export class FeedbackController {
     return idObject;
   }
 
-  // ----- Manage feedback draft -----
+  // ----- feedback draft (common tasks) -----
 
   @UseGuards(AuthGuard)
   @Delete('draft/:type/:receiverEmailOrToken')
@@ -131,20 +146,13 @@ export class FeedbackController {
     return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('draft/list-map')
-  getDraftListMap() {
-    const giverEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getDraftListMap(giverEmail);
-  }
-
   // ----- View feedbacks (requested and given) -----
 
   @UseGuards(AuthGuard)
   @Get('list-map')
-  getListMap() {
+  getListMap(@Query() { types }: FeedbackListMapDto) {
     const viewerEmail = this.authService.userEmail!;
-    return this.feedbackDbService.getListMap(viewerEmail);
+    return this.feedbackDbService.getListMap(viewerEmail, types);
   }
 
   @UseGuards(AuthGuard)

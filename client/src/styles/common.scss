@@ -10,7 +10,6 @@ h1.gbl-page-title {
   display: flex;
   align-items: center;
   gap: min(1rem + 1vw, 2rem);
-  text-wrap: balance;
   color: v.$primary-color;
 
   &--center {

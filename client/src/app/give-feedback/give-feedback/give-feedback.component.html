@@ -1,4 +1,4 @@
-@if (hasAnyDraft()) {
+@if (hasDraft()) {
   <button mat-raised-button color="primary" class="float-right" (click)="openDraftDialog()">
     <mat-icon>draft</mat-icon>
     <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
@@ -8,7 +8,7 @@
 <ng-template #draftDialogTmpl>
   <h1 mat-dialog-title i18n="@@Title.Drafts">Brouillons</h1>
   <div mat-dialog-content>
-    <app-feedback-draft />
+    <app-give-feedback-draft />
   </div>
   <div mat-dialog-actions>
     <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
@@ -17,7 +17,7 @@
 
 <h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
-  <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback</ng-container>
+  <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
 </h1>
 
 <app-message type="danger" [(visible)]="showError">
@@ -30,8 +30,6 @@
     }
   }
 </app-message>
-
-<app-message type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">Brouillon enregistré.</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
@@ -65,7 +63,7 @@
         (click)="onDraft()"
         i18n="@@Action.Save"
       >
-        Enregistrer
+        Sauvegarder
       </button>
     </div>
 
@@ -74,4 +72,8 @@
       <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
+
+  <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
+    Brouillon sauvegardé.
+  </app-message>
 </form>

@@ -1,0 +1,3 @@
+@if (draftList().length) {
+  <app-feedback-draft-list [draftList]="draftList()" (edit)="apply($event)" (delete)="delete($event)" />
+}

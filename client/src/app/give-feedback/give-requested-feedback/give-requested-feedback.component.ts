@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from '../../shared/auth';
-import { FeedbackDraftService } from '../../shared/feedback-draft/feedback-draft.service';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { MessageComponent } from '../../shared/ui/message/message.component';
@@ -31,8 +30,6 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, OnInit {
-  @HostBinding('class.app-give-requested-feedback') hasCss = true;
-
   @Input({ required: true }) token!: string;
 
   @Input({ required: true }) request!: FeedbackRequest;
@@ -48,8 +45,6 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
 
   private feedbackService = inject(FeedbackService);
-
-  private feedbackDraftService = inject(FeedbackDraftService);
 
   form = this.formBuilder.group({
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -98,12 +93,10 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackDraftService
-      .giveRequested({ receiverEmail: this.request.receiverEmail, token: this.token, positive, negative, comment })
-      .subscribe(() => {
-        this.showDraft = true;
-        this.disableForm(false);
-      });
+    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe(() => {
+      this.showDraft = true;
+      this.disableForm(false);
+    });
   }
 
   private disableForm(submitInProgress: boolean) {

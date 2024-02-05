@@ -1,7 +1,17 @@
-<button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', feedbackDetails.type]">
-  <mat-icon>arrow_back</mat-icon>
-  <ng-container i18n="@@Title.MyFeedbacks">Mes feedZbacks</ng-container>
-</button>
+@switch (feedbackDetails.type) {
+  @case ('receivedRequest') {
+    <button class="gbl-link gbl-link--back" [routerLink]="['/give-requested']">
+      <mat-icon>arrow_back</mat-icon>
+      <ng-container i18n="@@Title.RequestedFeedbackList"> Répondre aux demandes de feedZback </ng-container>
+    </button>
+  }
+  @default {
+    <button class="gbl-link gbl-link--back" [routerLink]="['/feedbacks', feedbackDetails.type]">
+      <mat-icon>arrow_back</mat-icon>
+      <ng-container i18n="@@Title.History">Historique</ng-container>
+    </button>
+  }
+}
 
 @if (feedbackDetails.feedback.status === 'done') {
   <app-done-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />

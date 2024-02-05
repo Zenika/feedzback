@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsEmail, IsIn, IsString, MaxLength } from 'class-validator';
-import { FeedbackDraftType, FeedbackRequestDraftType } from './feedback-db';
+import { FeedbackDraftType, FeedbackListType, FeedbackRequestDraftType } from './feedback-db';
 import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from './feedback.config';
 
 export class FeedbackRequestDto {
@@ -37,6 +37,12 @@ export class DeleteFeedbackDraftDto {
   @IsIn([FeedbackDraftType, FeedbackRequestDraftType]) type: FeedbackDraftType | FeedbackRequestDraftType;
 
   @IsString() receiverEmailOrToken: string;
+}
+
+export class FeedbackListMapDto {
+  @Transform((params) => (params.value as string).split(','))
+  @IsIn(['received', 'given', 'sentRequest', 'receivedRequest'] satisfies FeedbackListType[], { each: true })
+  types: FeedbackListType[];
 }
 
 export class ManagedFeedbacksDto {

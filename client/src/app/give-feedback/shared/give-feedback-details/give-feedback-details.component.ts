@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,8 +12,6 @@ import { ValidationErrorMessagePipe } from '../../../shared/form/validation-erro
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackDetailsComponent implements OnInit {
-  @HostBinding('class.app-give-feedback-details') hasCss = true;
-
   protected feedbackMaxLength = 2000;
 
   protected commentMaxLength = 500;
