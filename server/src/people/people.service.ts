@@ -20,23 +20,25 @@ export class PeopleService {
 
       const response = await google.admin('directory_v1').users.list({
         access_token: this.accessToken,
-        customFieldMask: query,
-        viewType:'domain_public',
+        fields: 'users(id, name, primaryEmail, thumbnailPhotoUrl)',
+        projection: 'custom',
+        viewType: 'domain_public',
         domain: 'zenika.com',
+        query: 'norber',
       });
-      console.log('response');
+      console.log('response', response.data);
 
       if (!response.data.users) {
         return [];
       }
 
-      return response.data.users.reduce((personList, person) => {
-        const email = person.emails?.[0].value;
+      return response.data.users.reduce((personList, user) => {
+        const email = user.primaryEmail
         if (email) {
           personList.push({
             email,
-            displayName: person.name?.displayName ?? undefined,
-            photoUrl: person.thumbnailPhotoUrl ?? undefined,
+            displayName: user.name?.displayName ?? undefined,
+            photoUrl: user.thumbnailPhotoUrl ?? undefined,
           });
         }
         return personList;
@@ -59,6 +61,7 @@ export class PeopleService {
       secretPath,
       undefined,
       scopes,
+      'pierre.nicoli@zenika.com',
     );
     console.log('JWT', jwtClient);
 
