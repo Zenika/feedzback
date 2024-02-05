@@ -2,6 +2,7 @@ import { people } from '@googleapis/people';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { google } from 'googleapis';
+import { join, resolve } from 'node:path';
 import { AppConfig } from 'src/core/config';
 import { Person } from './people.types';
 
@@ -10,7 +11,7 @@ export class PeopleService {
   private logger = new Logger('PeopleService');
   private serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
-  accessToken!: string;
+  accessToken = '';
 
   constructor(private configService: ConfigService<AppConfig>) {}
 
@@ -45,21 +46,19 @@ export class PeopleService {
   }
 
   async testWithJWT() {
+    const secretPath = join(resolve('./'), 'SECRET.json');
+
     // Define the required scopes.
     const scopes = ['https://www.googleapis.com/auth/admin.directory.user.readonly'];
 
     // Authenticate a JWT client with the service account.
     const jwtClient = new google.auth.JWT(
       'firebase-adminsdk-kisrh@feedzback-v2-staging.iam.gserviceaccount.com',
+      secretPath,
       undefined,
-      this.serviceAccount.privateKey,
       scopes,
-      undefined,
-      this.serviceAccount.projectId,
-
     );
-    console.log('JWT', jwtClient)
-
+    console.log('JWT', jwtClient);
 
     // Use the JWT client to generate an access token.
     jwtClient.authorize(function (error, tokens) {

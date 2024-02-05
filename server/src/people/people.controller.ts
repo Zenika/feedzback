@@ -14,5 +14,4 @@ export class PeopleController {
   testjwt() {
     return this.peopleService.testWithJWT();
   }
-
 }

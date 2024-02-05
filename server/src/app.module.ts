@@ -7,7 +7,7 @@ import { CryptoModule } from './core/crypto/crypto.module';
 import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
-import { PeopleMiddleware, PeopleModule } from './people';
+import { PeopleModule } from './people';
 
 @Module({
   imports: [
@@ -30,6 +30,6 @@ export class AppModule implements NestModule {
     // They both use the `Authorization` header of the request to check the Bearer token,
     // but `AuthMiddleware` expects an `idToken` while `PeopleMiddleware` expects an `accessToken`.
     consumer.apply(AuthMiddleware).forRoutes('feedback', 'employee');
-    consumer.apply(PeopleMiddleware).forRoutes('people');
+    //consumer.apply(PeopleMiddleware).forRoutes('people');
   }
 }
