@@ -37,7 +37,7 @@ export class PeopleService {
         if (email) {
           personList.push({
             email,
-            displayName: user.name?.displayName ?? undefined,
+            displayName: user.name?.fullName ?? undefined,
             photoUrl: user.thumbnailPhotoUrl ?? undefined,
           });
         }
