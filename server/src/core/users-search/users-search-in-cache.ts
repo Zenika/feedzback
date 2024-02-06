@@ -41,13 +41,20 @@ export class SearchUsersInMemory implements UserSearch {
   }
 
   public async search(query: string) {
+    const queryLowerCase = query.toLocaleLowerCase();
     if (!this.isFresh()) {
       if (!this.isCaching) {
         this.fillDomainUsersCache();
       }
-      return await this.googleApi.search(query);
+      return await this.googleApi.search(queryLowerCase);
     }
 
-    return { items: this.allUsers.filter(({ email }) => email.includes(query)) };
+    return {
+      items: this.allUsers.filter(
+        ({ email }) =>
+          email.startsWith(queryLowerCase) ||
+          email.split('.').some((namePart) => namePart.toLocaleLowerCase().startsWith(queryLowerCase)),
+      ),
+    };
   }
 }
