@@ -25,11 +25,6 @@ export type AppConfig = {
     emailValidation: boolean;
   };
 
-  googleApis?: {
-    serviceAccount: string;
-    privateKey: string;
-    scopes: string[];
-  };
   cache: {
     userListExpiryHour: number;
   };
