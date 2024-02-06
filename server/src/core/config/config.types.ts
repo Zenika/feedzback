@@ -30,4 +30,7 @@ export type AppConfig = {
     privateKey: string;
     scopes: string[];
   };
+  cache: {
+    userListExpiryHour: number;
+  };
 };

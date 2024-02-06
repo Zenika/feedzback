@@ -22,6 +22,9 @@ export const appConfigLoader = (): AppConfig => {
       privateKey: firebaseServiceAccount.privateKey,
       scopes: ['https://www.googleapis.com/auth/admin.directory.user.readonly'],
     },
+    cache: {
+      userListExpiryHour: Number(process.env.CACHE_USER_LIST_EXPIRY_HOUR),
+    },
 
     mailgunClientOptions: {
       username: process.env.MAILGUN_USERNAME!,

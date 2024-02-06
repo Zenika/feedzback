@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { User } from 'src/people/people.types';
+import { AppConfig } from '../config';
 import { SearchUsersWithGoogleApis } from './users-search-with-google-apis.service';
 import { UserSearch } from './users-search.types';
-
-const CACHE_EXPIRY_HOUR_DELAY = 1;
 
 @Injectable()
 export class SearchUsersInMemory implements UserSearch {
@@ -12,8 +12,12 @@ export class SearchUsersInMemory implements UserSearch {
   private expiryTime: number = 0;
   private isFresh = (): boolean => this.expiryTime > Date.now();
   private isCaching = false;
+  private cacheConfig = this.configService.get('cache', { infer: true })!;
 
-  constructor(private googleApi: SearchUsersWithGoogleApis) {}
+  constructor(
+    private configService: ConfigService<AppConfig>,
+    private googleApi: SearchUsersWithGoogleApis,
+  ) {}
 
   private async fillDomainUsersCache() {
     const tmpResult: User[][] = [];
@@ -29,7 +33,7 @@ export class SearchUsersInMemory implements UserSearch {
       } while (pageToken);
 
       this.allUsers = tmpResult.flat();
-      this.expiryTime = Date.now() + CACHE_EXPIRY_HOUR_DELAY * 3600 * 1000;
+      this.expiryTime = Date.now() + this.cacheConfig.userListExpiryHour * 3600 * 1000;
     } catch (err) {
       this.logger.error('Error on loading users cache');
     }
