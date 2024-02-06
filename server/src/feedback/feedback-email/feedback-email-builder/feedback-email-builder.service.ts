@@ -42,7 +42,7 @@ export class FeedbackEmailBuilderService {
     const content: GivenContent = givenContentMap[this.contextService.clientLocalId];
     const data: GivenData = {
       giverEmail: uglifyEmail(giverEmail),
-      cta: `${this.configService.get('clientUrl')}/feedback/${feedbackId}`,
+      cta: `${this.configService.get('clientUrl')}/history/id/${feedbackId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {
