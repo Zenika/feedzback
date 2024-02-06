@@ -40,7 +40,7 @@
     [emails]="form.controls.recipients"
     [isInvalidEmail]="isInvalidRecipient"
     matTooltipPosition="above"
-    matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)"
+    matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)."
     i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
   />
 
@@ -80,7 +80,13 @@
 
   @if (hasManagerFeature) {
     <div class="gbl-form-field">
-      <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@Component.RequestFeedback.Share">
+      <mat-slide-toggle
+        [formControl]="form.controls.shared"
+        color="primary"
+        matTooltip="Cela vous permettra d'échanger avec votre manager, sur les feedbacks de vos clients et collaborateurs, en toute transparence."
+        i18n-matTooltip
+        i18n="@@Component.RequestFeedback.Share"
+      >
         Partager le feedZback avec votre manager
       </mat-slide-toggle>
     </div>

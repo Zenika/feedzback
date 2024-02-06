@@ -42,7 +42,7 @@
     "Component.PendingFeedback.Remind": " Relancer ",
     "Component.PendingFeedback.ReminderAlreadySentOn": " Vous avez déjà relancé votre collègue le ",
     "Component.PendingFeedback.ReminderSent": " Un rappel a été envoyé à votre collègue. ",
-    "Component.RequestFeedback.EmailsRequirements": "Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)",
+    "Component.RequestFeedback.EmailsRequirements": "Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion).",
     "Component.RequestFeedback.Error": "Une erreur s'est produite lors de l'envoi à :",
     "Component.RequestFeedback.NoTemplate": " Aucun modèle ",
     "Component.RequestFeedback.Share": " Partager le feedZback avec votre manager ",

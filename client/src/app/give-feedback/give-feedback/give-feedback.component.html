@@ -42,7 +42,13 @@
 
   @if (hasManagerFeature) {
     <div class="gbl-form-field">
-      <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@Component.GiveFeedback.Share">
+      <mat-slide-toggle
+        [formControl]="form.controls.shared"
+        color="primary"
+        matTooltip="Cela permettra à votre collègue, d'échanger sur votre feedback avec son manager, en toute transparence."
+        i18n-matTooltip
+        i18n="@@Component.GiveFeedback.Share"
+      >
         Partager le feedZback avec le manager de votre collègue
       </mat-slide-toggle>
     </div>

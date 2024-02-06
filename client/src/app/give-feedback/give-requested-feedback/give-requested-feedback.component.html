@@ -10,13 +10,19 @@
   <strong>{{ request.receiverEmail }}</strong
   >.
 
-  @if (request.shared) {
+  <!--@if (request.shared) {
     <br />
     <strong i18n="@@Component.GiveRequestedFeedback.Message2">
       Notez que votre réponse sera partagée avec son manager.
     </strong>
-  }
+  }-->
 </app-message>
+
+@if (request.shared) {
+  <app-message type="info">
+    <strong>Notez que votre réponse sera partagée avec son manager.</strong>
+  </app-message>
+}
 
 <app-message type="danger" [(visible)]="showError" i18n="@@Message.ErrorOccured"
   >Une erreur s'est produite.</app-message
