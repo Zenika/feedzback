@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +22,7 @@ import { BurgerComponent } from './burger/burger.component';
   standalone: true,
   imports: [
     AsyncPipe,
+    NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
     RouterLinkWithHref,
