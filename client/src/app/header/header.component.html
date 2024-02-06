@@ -74,17 +74,7 @@
 
     <mat-menu #accountMenu="matMenu" xPosition="before">
       @if (hasLocalizeFeature) {
-        <button mat-menu-item (click)="languageService.switchLanguage()">
-          <mat-icon color="primary">translate</mat-icon>
-          @switch (languageService.localeId) {
-            @case ('fr') {
-              English
-            }
-            @case ('en') {
-              Français
-            }
-          }
-        </button>
+        <ng-container [ngTemplateOutlet]="languageMenuItem" />
       }
 
       @if (hasManagerFeature && (isKnownUser$ | async)) {
@@ -103,5 +93,27 @@
         }
       </button>
     </mat-menu>
+  } @else if (hasLocalizeFeature) {
+    <button mat-icon-button [matMenuTriggerFor]="accountMenu">
+      <mat-icon color="primary">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #accountMenu="matMenu" xPosition="before">
+      <ng-container [ngTemplateOutlet]="languageMenuItem" />
+    </mat-menu>
   }
 </div>
+
+<ng-template #languageMenuItem>
+  <button mat-menu-item (click)="languageService.switchLanguage()">
+    <mat-icon color="primary">translate</mat-icon>
+    @switch (languageService.localeId) {
+      @case ('fr') {
+        English
+      }
+      @case ('en') {
+        Français
+      }
+    }
+  </button>
+</ng-template>
