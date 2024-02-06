@@ -54,10 +54,15 @@ export class SearchUsersInMemory implements UserSearch {
     }
 
     return {
+      /**
+       * Match with the beginig of email OR each part of the email.
+       * parts are splitted by - or . or _
+       */
+      
       items: this.allUsers.filter(
         ({ email }) =>
           email.startsWith(queryLowerCase) ||
-          email.split('.').some((namePart) => namePart.toLocaleLowerCase().startsWith(queryLowerCase)),
+          email.split(/\.|-|_/gm).some((namePart) => namePart.toLocaleLowerCase().startsWith(queryLowerCase)),
       ),
     };
   }
