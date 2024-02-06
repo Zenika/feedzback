@@ -1,13 +1,4 @@
-import {
-  Component,
-  HostBinding,
-  OnDestroy,
-  TemplateRef,
-  ViewChild,
-  ViewEncapsulation,
-  effect,
-  inject,
-} from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, effect, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,8 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
-import { FeedbackDraftComponent } from '../../shared/feedback-draft/feedback-draft.component';
-import { FeedbackDraftService } from '../../shared/feedback-draft/feedback-draft.service';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
@@ -28,6 +17,8 @@ import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-m
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
+import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
+import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-draft.service';
 
 @Component({
   selector: 'app-give-feedback',
@@ -42,14 +33,12 @@ import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/gi
     ValidationErrorMessagePipe,
     MessageComponent,
     GiveFeedbackDetailsComponent,
-    FeedbackDraftComponent,
+    GiveFeedbackDraftComponent,
   ],
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackComponent implements OnDestroy {
-  @HostBinding('class.app-give-feedback') hasCss = true;
-
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
 
   private router = inject(Router);
@@ -62,7 +51,7 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   private feedbackService = inject(FeedbackService);
 
-  private feedbackDraftService = inject(FeedbackDraftService);
+  private giveFeedbackDraftService = inject(GiveFeedbackDraftService);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
@@ -95,19 +84,19 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   feedbackId?: string;
 
-  hasAnyDraft = this.feedbackDraftService.hasAnyDraft;
+  hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   private draftDialogRef?: MatDialogRef<unknown>;
 
   constructor() {
-    this.feedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
+    this.giveFeedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
       this.form.setValue(draft);
       this.form.updateValueAndValidity();
       this.closeDraftDialog();
     });
 
     effect(() => {
-      if (!this.feedbackDraftService.hasAnyDraft()) {
+      if (!this.giveFeedbackDraftService.hasDraft()) {
         this.closeDraftDialog();
       }
     });
@@ -134,7 +123,7 @@ export class GiveFeedbackComponent implements OnDestroy {
         this.disableForm(false);
       } else {
         this.feedbackId = result.id;
-        this.feedbackDraftService.delete(receiverEmail).subscribe();
+        this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
         this.navigateToSuccess();
       }
     });
@@ -146,7 +135,7 @@ export class GiveFeedbackComponent implements OnDestroy {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
+    this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
       this.showDraft = true;
       this.disableForm(false);
     });

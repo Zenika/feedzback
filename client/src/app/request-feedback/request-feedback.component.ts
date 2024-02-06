@@ -1,10 +1,10 @@
-import { Component, HostBinding, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,10 +14,10 @@ import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { forbiddenValuesValidatorFactory, FORBIDDEN_VALUES_KEY } from '../shared/form/forbidden-values';
+import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
 import {
-  MULTIPLE_EMAILS_PLACEHOLDER,
   MULTIPLE_EMAILS_ERROR_KEY,
+  MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/form/multiple-emails';
@@ -34,7 +34,7 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatSelectModule,
+    MatMenuModule,
     MatSlideToggleModule,
     MatTooltipModule,
     MultiAutocompleteEmailComponent,
@@ -44,8 +44,6 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
   encapsulation: ViewEncapsulation.None,
 })
 export class RequestFeedbackComponent {
-  @HostBinding('class.app-request-feedback') hasCss = true;
-
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
@@ -62,7 +60,7 @@ export class RequestFeedbackComponent {
 
   protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
-  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
+  private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
 
   protected form = this.formBuilder.group({
     recipients: [

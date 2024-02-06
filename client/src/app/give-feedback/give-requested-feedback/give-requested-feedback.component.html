@@ -1,9 +1,9 @@
 <h1 class="gbl-page-title">
-  <mat-icon>chat</mat-icon>
-  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à la demande de feedZback </ng-container>
+  <mat-icon>comment</mat-icon>
+  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à une demande de feedZback </ng-container>
 </h1>
 
-<app-message type="info" [closable]="false">
+<app-message type="info" nonclosable>
   <ng-container i18n="@@Component.GiveRequestedFeedback.Message1">
     Vous répondez à la demande de feedZback qui vous a été envoyée par
   </ng-container>
@@ -21,22 +21,6 @@
 <app-message type="danger" [(visible)]="showError" i18n="@@Message.ErrorOccured"
   >Une erreur s'est produite.</app-message
 >
-
-<app-message type="success" [(visible)]="showDraft">
-  <ng-container i18n="@@Message.DraftSaved">Brouillon enregistré.</ng-container>
-  @if (!isAnonymous) {
-    <br />
-    <strong i18n="@@Component.GiveRequestedFeedback.DraftSaved1">
-      Revenez à cette page à tout moment, depuis la page
-    </strong>
-    <a
-      routerLink="/feedbacks/receivedRequest"
-      class="gbl-link font-bold"
-      i18n="@@Component.GiveRequestedFeedback.DraftSaved2"
-      >Mes feedZbacks à donner</a
-    >.
-  }
-</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   @if (isAnonymous) {
@@ -98,7 +82,7 @@
         (click)="onDraft()"
         i18n="@@Action.Save"
       >
-        Enregistrer
+        Sauvegarder
       </button>
     </div>
 
@@ -107,4 +91,8 @@
       <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
+
+  <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
+    Brouillon sauvegardé.
+  </app-message>
 </form>

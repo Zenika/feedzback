@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -10,6 +10,7 @@ import { Feedback, FeedbackType } from '../feedback.types';
 
 @Component({
   selector: 'app-done-feedback',
+  host: { class: 'app-done-feedback' },
   standalone: true,
   imports: [
     DatePipe,
@@ -25,8 +26,6 @@ import { Feedback, FeedbackType } from '../feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class DoneFeedbackComponent {
-  @HostBinding('class.app-done-feedback') hasCss = true;
-
   @Input({ required: true }) feedback!: Feedback;
 
   @Input({ required: true }) type!: FeedbackType;

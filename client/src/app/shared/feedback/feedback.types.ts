@@ -12,6 +12,7 @@ export type Feedback = {
   comment: string;
   message: string;
   shared: boolean;
+  requested: boolean;
   status: FeedbackStatus;
   createdAt: number;
   updatedAt: number;
@@ -28,6 +29,7 @@ export type FeedbackRequest = {
   receiverEmail: string;
   message: string;
   shared: boolean;
+  requested: true;
   status: FeedbackRequestStatus;
   createdAt: number;
   updatedAt: number;
@@ -53,18 +55,15 @@ export type FeedbackListMap = {
   receivedRequest: FeedbackRequestItem[];
 };
 
-// ----- FeedbackDraftListMap -----
+export type FeedbackListType = keyof FeedbackListMap;
+
+// ----- FeedbackDraft & FeedbackRequestDraft -----
 
 export const FeedbackDraftType = 'feedback';
 export type FeedbackDraftType = typeof FeedbackDraftType;
 
 export const FeedbackRequestDraftType = 'feedbackRequest';
 export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
-
-export type FeedbackDraftListMap = {
-  [FeedbackDraftType]: FeedbackDraft[];
-  [FeedbackRequestDraftType]: FeedbackRequestDraft[];
-};
 
 export type FeedbackDraft = {
   receiverEmail: string;

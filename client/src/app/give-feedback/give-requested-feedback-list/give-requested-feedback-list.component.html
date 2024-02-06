@@ -1,0 +1,22 @@
+<h1 class="gbl-page-title">
+  <mat-icon>comment</mat-icon>
+  <ng-container i18n="@@Title.RequestedFeedbackList"> Répondre aux demandes de feedZback </ng-container>
+</h1>
+
+@if (receivedRequest(); as list) {
+  @if (list.length) {
+    <app-feedback-list [feedbacks]="list" type="receivedRequest" />
+  } @else {
+    <app-message type="info" icon="beach_access" nonclosable>
+      <ng-container i18n="@@Component.GiveRequestedFeedbackListEmpty1">
+        Vous n'avez pas de demande de feedZback à traiter...
+      </ng-container>
+
+      <br />
+
+      <a class="gbl-link" routerLink="/" i18n="@@Component.GiveRequestedFeedbackListEmpty2">
+        Profitez-en pour demander ou donner du feedZback à vos collègues !
+      </a>
+    </app-message>
+  }
+}

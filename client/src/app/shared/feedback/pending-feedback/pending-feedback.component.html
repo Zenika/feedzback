@@ -1,10 +1,11 @@
 <h1 class="gbl-page-title">
-  <mat-icon>forum</mat-icon>
   @switch (type) {
     @case (feedbackType.sentRequest) {
+      <mat-icon>schedule</mat-icon>
       <ng-container i18n="@@Title.RequestedFeedback">FeedZback demandé</ng-container>
     }
     @case (feedbackType.receivedRequest) {
+      <mat-icon>comment</mat-icon>
       <ng-container i18n="@@Title.FeedbackToGive">FeedZback à donner</ng-container>
     }
   }
@@ -12,7 +13,9 @@
 
 <div class="app-pending-feedback-list">
   <div class="app-pending-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
-  <div class="app-pending-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date }}</div>
+  <div class="app-pending-feedback-list__item">
+    <mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date: 'longDate' }}
+  </div>
 </div>
 
 <app-feedback-body [feedback]="feedback" />
@@ -43,7 +46,7 @@
           <ng-container i18n="@@Component.PendingFeedback.ReminderAlreadySentOn">
             Vous avez déjà relancé votre collègue le
           </ng-container>
-          {{ feedback.updatedAt | date }}
+          {{ feedback.updatedAt | date: 'longDate' }}
         </div>
       </div>
     }
@@ -60,7 +63,7 @@
   }
   @case (feedbackType.receivedRequest) {
     <button mat-raised-button color="primary" [appGiveRequestedFeedback]="this.feedback.id">
-      <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
+      <ng-container i18n="@@Feedback.Reply"> Répondre </ng-container>
     </button>
   }
 }

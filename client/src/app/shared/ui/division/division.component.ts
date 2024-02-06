@@ -1,8 +1,9 @@
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-division',
+  host: { class: 'app-division' },
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './division.component.html',
@@ -10,9 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
   encapsulation: ViewEncapsulation.None,
 })
 export class DivisionComponent {
-  @HostBinding('class.app-division') hasCss = true;
+  a = input.required<string | number>();
 
-  @Input({ required: true }) a!: string | number;
-
-  @Input({ required: true }) b!: string | number;
+  b = input.required<string | number>();
 }

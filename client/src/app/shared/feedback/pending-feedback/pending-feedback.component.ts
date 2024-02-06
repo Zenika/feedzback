@@ -1,16 +1,17 @@
 import { DatePipe } from '@angular/common';
-import { Component, HostBinding, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { GiveRequestedFeedbackDirective } from '../../../give-feedback/give-requested-feedback/give-requested-feedback.directive';
 import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
 import { MessageComponent } from '../../ui/message/message.component';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackRequest, FeedbackType } from '../feedback.types';
+import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({
   selector: 'app-pending-feedback',
+  host: { class: 'app-pending-feedback' },
   standalone: true,
   imports: [
     DatePipe,
@@ -26,8 +27,6 @@ import { FeedbackRequest, FeedbackType } from '../feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class PendingFeedbackComponent {
-  @HostBinding('class.app-pending-feedback') hasCss = true;
-
   @Input({ required: true }) feedback!: FeedbackRequest;
 
   @Input({ required: true }) type!: FeedbackType;

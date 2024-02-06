@@ -1,5 +1,5 @@
 import { FeedbackItem, FeedbackRequestItem, FeedbackType } from '../shared/feedback/feedback.types';
-import { NormalizedFeedback } from './my-feedbacks.types';
+import { NormalizedFeedback } from './history.types';
 
 export const getFeedbackType = (value: string | null | undefined): FeedbackType | undefined =>
   Object.values(FeedbackType).find((feedbackType) => value?.toLowerCase() === feedbackType.toLowerCase());

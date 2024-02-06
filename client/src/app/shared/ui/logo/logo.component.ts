@@ -1,16 +1,16 @@
-import { Component, HostBinding, Input, ViewEncapsulation, booleanAttribute } from '@angular/core';
+import { Component, ViewEncapsulation, booleanAttribute, input } from '@angular/core';
 
 @Component({
   selector: 'app-logo',
+  host: {
+    class: 'app-logo',
+    '[class.app-logo--lowercase]': 'lowercase()',
+  },
   standalone: true,
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class LogoComponent {
-  @Input({ transform: booleanAttribute }) lowercase = false;
-
-  @HostBinding('class') get css() {
-    return `app-logo${this.lowercase ? ' app-logo--lowercase' : ''}`;
-  }
+  lowercase = input(false, { transform: booleanAttribute });
 }

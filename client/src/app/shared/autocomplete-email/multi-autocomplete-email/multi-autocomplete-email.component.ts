@@ -1,15 +1,6 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  HostBinding,
-  Input,
-  OnDestroy,
-  ViewChild,
-  ViewEncapsulation,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
@@ -38,6 +29,7 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
 
 @Component({
   selector: 'app-multi-autocomplete-email',
+  host: { class: 'app-multi-autocomplete-email' },
   standalone: true,
   imports: [
     AsyncPipe,
@@ -55,8 +47,6 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy {
-  @HostBinding('class.app-multi-autocomplete-email') hasCss = true;
-
   @Input() emails = new FormControl<string[]>([], {
     nonNullable: true,
     validators: [Validators.required, multipleEmailsValidatorFactory()],

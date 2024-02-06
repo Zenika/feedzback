@@ -40,9 +40,9 @@ export const routes: Routes = [
   },
   {
     path: 'feedbacks/:type',
-    loadComponent: () => import('./my-feedbacks/my-feedbacks.component'),
+    loadComponent: () => import('./history/history.component'),
     canActivate: [authGuard],
-    title: 'FeedZback - ' + $localize`:@@Title.MyFeedbacks:Mes feedZbacks`,
+    title: 'FeedZback - ' + $localize`:@@Title.History:Historique des feedZbacks`,
   },
   {
     path: 'feedback/:id',

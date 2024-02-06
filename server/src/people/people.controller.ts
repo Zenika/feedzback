@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/core/auth';
+import { AuthGuard } from '../core/auth';
 import { PeopleService } from './people.service';
 
 @Controller('people')

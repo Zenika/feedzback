@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, HostBinding, Input, ViewEncapsulation, booleanAttribute, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, booleanAttribute, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,7 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
 
 @Component({
   selector: 'app-autocomplete-email',
+  host: { class: 'app-autocomplete-email' },
   standalone: true,
   imports: [
     AsyncPipe,
@@ -27,8 +28,6 @@ import { AvatarComponent } from '../../ui/avatar/avatar.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class AutocompleteEmailComponent {
-  @HostBinding('class.app-autocomplete-email') hasCss = true;
-
   @Input({ transform: booleanAttribute }) forManager = false;
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));

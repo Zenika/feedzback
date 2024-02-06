@@ -1,10 +1,11 @@
 <h1 class="gbl-page-title">
-  <mat-icon>forum</mat-icon>
   @switch (type) {
     @case (feedbackType.given) {
+      <mat-icon>outgoing_mail</mat-icon>
       <ng-container i18n="@@Title.FeedbackGiven">FeedZback donné</ng-container>
     }
     @case (feedbackType.received) {
+      <mat-icon>move_to_inbox</mat-icon>
       <ng-container i18n="@@Title.ReceivedFeedback">FeedZback reçu</ng-container>
     }
   }
@@ -12,7 +13,9 @@
 
 <div class="app-done-feedback-list">
   <div class="app-done-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
-  <div class="app-done-feedback-list__item"><mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date }}</div>
+  <div class="app-done-feedback-list__item">
+    <mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date: 'longDate' }}
+  </div>
 </div>
 
 <app-feedback-body [feedback]="feedback" />

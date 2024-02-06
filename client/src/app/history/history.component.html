@@ -1,6 +1,6 @@
 <h1 class="gbl-page-title">
   <mat-icon>forum</mat-icon>
-  <ng-container i18n="@@Title.MyFeedbacks">Mes feedZbacks</ng-container>
+  <ng-container i18n="@@Title.History">Historique des feedZbacks</ng-container>
 </h1>
 
 @if (fetched) {
@@ -11,7 +11,7 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="app-my-feedbacks__label-icon">move_to_inbox</mat-icon>
+        <mat-icon class="app-history__label-icon">move_to_inbox</mat-icon>
         <ng-container i18n="@@Component.MyFeedbacks.Received">reçus</ng-container>
       </ng-template>
 
@@ -20,11 +20,11 @@
       @if (received.length) {
         <app-feedback-list type="received" [feedbacks]="received" [filter]="filter" />
       } @else {
-        <div class="app-my-feedbacks-empty">
-          <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
+        <div class="app-history-empty">
+          <div class="app-history-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/request">
-            <mat-icon>live_help</mat-icon>
+            <mat-icon>contact_support</mat-icon>
             <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
           </button>
         </div>
@@ -33,7 +33,7 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="app-my-feedbacks__label-icon">outgoing_mail</mat-icon>
+        <mat-icon class="app-history__label-icon">outgoing_mail</mat-icon>
         <ng-container i18n="@@Component.MyFeedbacks.Given">donnés</ng-container>
       </ng-template>
 
@@ -42,12 +42,12 @@
       @if (given.length) {
         <app-feedback-list type="given" [feedbacks]="given" [filter]="filter" />
       } @else {
-        <div class="app-my-feedbacks-empty">
-          <div class="app-my-feedbacks-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
+        <div class="app-history-empty">
+          <div class="app-history-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/give">
             <mat-icon>chat</mat-icon>
-            <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback</ng-container>
+            <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
           </button>
         </div>
       }
@@ -56,7 +56,7 @@
     @if (sentRequest.length) {
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="app-my-feedbacks__label-icon">schedule</mat-icon>
+          <mat-icon class="app-history__label-icon">schedule</mat-icon>
           <ng-container i18n="@@Component.MyFeedbacks.Requested">demandés</ng-container>
         </ng-template>
 
@@ -65,24 +65,11 @@
         <app-feedback-list type="sentRequest" [feedbacks]="sentRequest" [filter]="filter" />
       </mat-tab>
     }
-
-    @if (receivedRequest.length) {
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="app-my-feedbacks__label-icon">edit_note</mat-icon>
-          <ng-container i18n="@@Component.MyFeedbacks.ToGive">à donner</ng-container>
-        </ng-template>
-
-        <ng-container [ngTemplateOutlet]="filterTmpl" />
-
-        <app-feedback-list type="receivedRequest" [feedbacks]="receivedRequest" [filter]="filter" />
-      </mat-tab>
-    }
   </mat-tab-group>
 }
 
 <ng-template #filterTmpl>
-  <mat-form-field appearance="fill" class="app-my-feedbacks__filter">
+  <mat-form-field appearance="fill" class="app-history__filter">
     <input
       #input
       matInput

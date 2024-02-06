@@ -1,6 +1,6 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, HostBinding, HostListener, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -15,9 +15,14 @@ import { BurgerComponent } from './burger/burger.component';
 
 @Component({
   selector: 'app-header',
+  host: {
+    class: 'app-header',
+    '(document:click)': 'onDocumentClick($event.target)',
+  },
   standalone: true,
   imports: [
     AsyncPipe,
+    NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
     RouterLinkWithHref,
@@ -31,12 +36,10 @@ import { BurgerComponent } from './burger/burger.component';
   styleUrl: './header.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent implements OnDestroy {
-  @HostBinding('class.app-header') hasCss = true;
+export class HeaderComponent {
+  private router = inject(Router);
 
   private authService = inject(AuthService);
-
-  private router = inject(Router);
 
   protected languageService = inject(LanguageService);
 
@@ -54,21 +57,20 @@ export class HeaderComponent implements OnDestroy {
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 
-  @HostListener('document:click', ['$event.target']) onClick(target: HTMLElement) {
+  constructor() {
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(),
+        filter((event) => event instanceof NavigationEnd),
+        delay(250),
+      )
+      .subscribe(() => (this.isMenuOpen = false));
+  }
+
+  onDocumentClick(target: HTMLElement) {
     if (!target.closest('.app-header-menu-target')) {
       this.isMenuOpen = false;
     }
-  }
-
-  private subscription = this.router.events
-    .pipe(
-      filter((event) => event instanceof NavigationEnd),
-      delay(250),
-    )
-    .subscribe(() => (this.isMenuOpen = false));
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   protected signOut() {
