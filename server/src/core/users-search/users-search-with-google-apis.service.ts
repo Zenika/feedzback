@@ -37,8 +37,6 @@ export class SearchUsersWithGoogleApis implements UserSearch {
         return { items: [] };
       }
 
-      this.logger.log('Search returns ' + response.data.users.length + ' elements');
-
       return {
         items: this.tranformApiResultToUserList(response.data.users),
         nextPageToken: response.data?.nextPageToken ?? undefined,
@@ -70,7 +68,7 @@ export class SearchUsersWithGoogleApis implements UserSearch {
         undefined,
         this.googleApisConfig.privateKey,
         this.googleApisConfig.scopes,
-        'norbert.pointu@zenika.com',
+        this.authService.userEmail,
       );
 
       // Use the JWT client to generate an access token.

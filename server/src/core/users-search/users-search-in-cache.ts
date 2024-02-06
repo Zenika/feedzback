@@ -11,16 +11,16 @@ export class SearchUsersInMemory implements UserSearch {
   private allUsers: User[] = [];
   private expiryTime: number = 0;
   private isFresh = (): boolean => this.expiryTime > Date.now();
-  private isCaching = false
+  private isCaching = false;
 
   constructor(private googleApi: SearchUsersWithGoogleApis) {}
 
   private async fillDomainUsersCache() {
     const tmpResult: User[][] = [];
-    this.isCaching = true
+    this.isCaching = true;
 
     let pageToken: string | undefined = '';
-
+    this.logger.log('Refreshing user list cache');
     try {
       do {
         const { items, nextPageToken } = await this.googleApi.search('', pageToken);
@@ -31,15 +31,20 @@ export class SearchUsersInMemory implements UserSearch {
       this.allUsers = tmpResult.flat();
       this.expiryTime = Date.now() + CACHE_EXPIRY_HOUR_DELAY * 3600 * 1000;
     } catch (err) {
-      this.logger.log('Error on loading users cache');
+      this.logger.error('Error on loading users cache');
     }
-    this.isCaching = false
-    return tmpResult.length + ' filled';
+    this.isCaching = false;
+    const message = `User list cache refreshed with ${this.allUsers.length} items`;
+    this.logger.log(message);
+
+    return message;
   }
 
   public async search(query: string) {
-    if (!this.isFresh() && !this.isCaching) {
-      this.fillDomainUsersCache();
+    if (!this.isFresh()) {
+      if (!this.isCaching) {
+        this.fillDomainUsersCache();
+      }
       return await this.googleApi.search(query);
     }
 

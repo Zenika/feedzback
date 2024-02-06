@@ -29,7 +29,7 @@ export class AppModule implements NestModule {
     // Warning: `AuthMiddleware` and `PeopleMiddleware` are incompatible and cannot be used on the same routes.
     // They both use the `Authorization` header of the request to check the Bearer token,
     // but `AuthMiddleware` expects an `idToken` while `PeopleMiddleware` expects an `accessToken`.
-    consumer.apply(AuthMiddleware).forRoutes('feedback', 'employee');
+    consumer.apply(AuthMiddleware).forRoutes('feedback', 'employee', 'people');
     //consumer.apply(PeopleMiddleware).forRoutes('people');
   }
 }
