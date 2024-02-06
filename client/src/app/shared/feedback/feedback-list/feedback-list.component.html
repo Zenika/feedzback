@@ -28,7 +28,7 @@
         color="primary"
         matTooltipPosition="left"
         [matTooltip]="type === 'received' || type === 'given' ? viewFeedbackTooltip : viewFeedbackRequestTooltip"
-        [routerLink]="['/feedback', nf(element).id]"
+        [routerLink]="['/history/id', nf(element).id]"
       >
         <mat-icon>visibility</mat-icon>
       </button>

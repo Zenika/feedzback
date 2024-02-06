@@ -34,18 +34,18 @@ export const routes: Routes = [
     loadChildren: () => import('./give-feedback/give-requested-feedback.routes'),
   },
   {
-    path: 'feedbacks',
+    path: 'history',
     pathMatch: 'full',
-    redirectTo: '/feedbacks/received',
+    redirectTo: '/history/type/received',
   },
   {
-    path: 'feedbacks/:type',
+    path: 'history/type/:type',
     loadComponent: () => import('./history/history.component'),
     canActivate: [authGuard],
     title: 'FeedZback - ' + $localize`:@@Title.History:Historique des feedZbacks`,
   },
   {
-    path: 'feedback/:id',
+    path: 'history/id/:id',
     loadComponent: () => import('./feedback-details/feedback-details.component'),
     canActivate: [authGuard],
     resolve: { feedbackDetails: feedbackDetailsResolver },
