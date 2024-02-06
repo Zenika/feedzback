@@ -12,6 +12,7 @@ export type Feedback = {
   comment: string;
   message: string;
   shared: boolean;
+  requested: boolean;
   status: FeedbackStatus;
   createdAt: number;
   updatedAt: number;
@@ -28,6 +29,7 @@ export type FeedbackRequest = {
   receiverEmail: string;
   message: string;
   shared: boolean;
+  requested: true;
   status: FeedbackRequestStatus;
   createdAt: number;
   updatedAt: number;
