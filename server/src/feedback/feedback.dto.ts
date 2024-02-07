@@ -21,6 +21,7 @@ export class FeedbackRequestDto {
 
 export class FeedbackRequestAgainDto {
   @ApiProperty({ description: 'Feedback document id' })
+  @IsString()
   feedbackId: string;
 }
 

@@ -23,7 +23,7 @@ export class EmployeeController {
   }
 
   @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Update manager of current user' })
+  @ApiOperation({ summary: 'Update manager of current user'})
   @Post('manager')
   updateManager(@Body() { managerEmail }: UpdateManagerDto) {
     const employeeEmail = this.authService.userEmail!;
