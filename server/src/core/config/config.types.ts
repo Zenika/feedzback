@@ -24,8 +24,4 @@ export type AppConfig = {
   featureFlipping: {
     emailValidation: boolean;
   };
-
-  cache: {
-    userListExpiryHour: number;
-  };
 };

@@ -4,6 +4,7 @@ import { AuthMiddleware, AuthModule } from './core/auth';
 import { AppConfigModule } from './core/config';
 import { ContextMiddleware, ContextModule } from './core/context';
 import { CryptoModule } from './core/crypto/crypto.module';
+import { GoogleApisModule } from './core/google-apis';
 import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
@@ -17,19 +18,15 @@ import { PeopleModule } from './people';
     ContextModule,
     AuthModule,
     CryptoModule,
-    FeedbackModule,
+    GoogleApisModule,
     EmployeeModule,
+    FeedbackModule,
     PeopleModule,
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(ContextMiddleware).forRoutes('');
-
-    // Warning: `AuthMiddleware` and `PeopleMiddleware` are incompatible and cannot be used on the same routes.
-    // They both use the `Authorization` header of the request to check the Bearer token,
-    // but `AuthMiddleware` expects an `idToken` while `PeopleMiddleware` expects an `accessToken`.
-    consumer.apply(AuthMiddleware).forRoutes('feedback', 'employee', 'people');
-    //consumer.apply(PeopleMiddleware).forRoutes('people');
+    consumer.apply(AuthMiddleware).forRoutes('employee', 'feedback', 'people');
   }
 }

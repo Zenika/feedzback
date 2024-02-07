@@ -1,21 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { first, map } from 'rxjs';
-import { PeopleCacheService } from './people.cache.service';
+import { Observable, first, map } from 'rxjs';
+import { Person } from '../core/google-apis';
+import { PeopleCacheService } from './people-cache.service';
+import { findPersons } from './people-cache.utils';
 
 @Injectable()
 export class PeopleService {
   constructor(private peopleCacheService: PeopleCacheService) {}
 
-  public searchUsers(query: string) {
-    this.peopleCacheService.checkExpiryTime();
-    const queryLowerCase = query.toLowerCase();
-    return this.peopleCacheService.personList$.pipe(
+  public searchPersons(query: string): Observable<Person[]> {
+    return this.peopleCacheService.searchablePersons$.pipe(
       first(),
-      map((persons) =>
-        persons.filter(({ searchTokens }) =>
-          searchTokens.some((searchToken) => searchToken.startsWith(queryLowerCase)),
-        ),
-      ),
+      map((searchablePersons) => findPersons(query, searchablePersons)),
     );
   }
 }

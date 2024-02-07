@@ -6,9 +6,9 @@ import { PeopleService } from './people.service';
 export class PeopleController {
   constructor(private peopleService: PeopleService) {}
 
-  @Get('search/:query')
   @UseGuards(AuthGuard)
-  searchDirectoryPeople(@Param('query') query: string) {
-    return this.peopleService.searchUsers(query);
+  @Get('search/:query')
+  searchPersons(@Param('query') query: string) {
+    return this.peopleService.searchPersons(query);
   }
 }
