@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, ServiceUnavailableException, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../core/auth';
 import { PeopleService } from './people.service';
 
@@ -9,6 +9,10 @@ export class PeopleController {
   @UseGuards(AuthGuard)
   @Get('search/:query')
   searchPersons(@Param('query') query: string) {
-    return this.peopleService.searchPersons(query);
+    try {
+      return this.peopleService.searchPersons(query);
+    } catch (err) {
+      throw new ServiceUnavailableException();
+    }
   }
 }

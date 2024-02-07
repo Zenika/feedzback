@@ -78,20 +78,12 @@ export class AuthService {
   }
 
   signInWithGoogle(): Observable<boolean> {
-    const googleAuthProvider = new GoogleAuthProvider();
-
-    // !FIXME: is this needed?
-    // googleAuthProvider.setCustomParameters({ access_type: 'offline' });
-
-    return from(signInWithPopup(this.firebaseAuth, googleAuthProvider)).pipe(
+    return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
       // Once the user has signed-in, wait until the `AuthService` state (`this._user$`) has been fully propagated.
       concatMap(() => this.isKnownUser$),
       first(), // Force unsubscribing from `this.isKnownUser$` observable
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
-
-      catchError(() => {
-        return of(false);
-      }),
+      catchError(() => of(false)),
     );
   }
 

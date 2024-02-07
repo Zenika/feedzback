@@ -31,7 +31,7 @@ export const mapToSearchablePerson = (person: Person): SearchablePerson => {
   return { ...person, searchTokens };
 };
 
-export const findPersons = (query: string, searchablePersons: SearchablePerson[]): Person[] => {
+export const searchPersons = (query: string, searchablePersons: SearchablePerson[]): Person[] => {
   const querySearchTokens = buildSearchTokens(query);
 
   return searchablePersons

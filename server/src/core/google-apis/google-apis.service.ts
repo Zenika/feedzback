@@ -39,9 +39,7 @@ export class GoogleApisService {
       });
 
       if (!data.users) {
-        return {
-          persons: [],
-        };
+        throw new Error('No users found');
       }
 
       const persons = data.users.reduce((_persons, user) => {
@@ -63,10 +61,7 @@ export class GoogleApisService {
       };
     } catch (err) {
       this.logger.error(err);
-
-      return {
-        persons: [],
-      };
+      throw err;
     }
   }
 

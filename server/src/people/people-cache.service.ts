@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ReplaySubject, tap } from 'rxjs';
 import { GoogleApisService, Person } from '../core/google-apis';
+import { PEOPLE_CACHE_RETRY_DURATION, PEOPLE_CACHE_VALIDITY_DURATION } from './people-cache.config';
 import { SearchablePerson } from './people-cache.types';
 import { mapToSearchablePerson } from './people-cache.utils';
 
@@ -8,43 +8,61 @@ import { mapToSearchablePerson } from './people-cache.utils';
 export class PeopleCacheService {
   private logger = new Logger('PeopleCacheService');
 
-  private _searchablePersons$ = new ReplaySubject<SearchablePerson[]>(1);
-
-  searchablePersons$ = this._searchablePersons$.pipe(tap(() => this.checkExpiryTime()));
-
-  private searchablePersonsExpiryDate = 0;
+  private state: 'notAvailable' | 'ready' = 'notAvailable';
 
   private cachingInProgress = false;
 
+  private _searchablePersons: SearchablePerson[] = [];
+
+  private searchablePersonsExpiryDate = 0;
+
   constructor(private googleApis: GoogleApisService) {
-    this.fetchPeople();
+    this.refreshPeople();
   }
 
-  private async fetchPeople() {
-    const allPersons: Person[] = [];
+  getSearchablePersons() {
+    this.checkExpiryTime();
+    if (this.state === 'notAvailable') {
+      throw new Error();
+    }
+    return this._searchablePersons;
+  }
 
-    const startNow = Date.now();
+  private async refreshPeople() {
+    if (this.cachingInProgress) {
+      return;
+    }
     this.cachingInProgress = true;
-    let pageToken: string | undefined = undefined;
-    do {
-      const { persons, nextPageToken } = await this.googleApis.searchPersons('', pageToken);
-      allPersons.push(...persons);
-      pageToken = nextPageToken;
-    } while (pageToken);
+
+    try {
+      const allPersons: Person[] = [];
+      const cachingStartDate = Date.now();
+      let pageToken: string | undefined = undefined;
+      do {
+        const { persons, nextPageToken } = await this.googleApis.searchPersons('', pageToken);
+        allPersons.push(...persons);
+        pageToken = nextPageToken;
+      } while (pageToken);
+
+      this._searchablePersons = allPersons.map(mapToSearchablePerson);
+      this.searchablePersonsExpiryDate = Date.now() + PEOPLE_CACHE_VALIDITY_DURATION;
+      this.state = 'ready';
+
+      const cachingDuration = Math.round((Date.now() - cachingStartDate) / 100) / 10;
+      this.logger.log(`Cache refreshed with ${allPersons.length} persons in ${cachingDuration}s`);
+    } catch (err) {
+      this.searchablePersonsExpiryDate = Date.now() + PEOPLE_CACHE_RETRY_DURATION;
+
+      this.logger.error(`Unable to cache people. Retry in ${Math.round(PEOPLE_CACHE_RETRY_DURATION / 60_000)}mn...`);
+    }
+
     this.cachingInProgress = false;
-    const duration = Math.round((Date.now() - startNow) / 100) / 10;
-
-    this._searchablePersons$.next(allPersons.map(mapToSearchablePerson));
-
-    // TODO: improve timings...
-    this.searchablePersonsExpiryDate = allPersons.length ? Date.now() + 3600 * 1000 * 2 : Date.now() + 3600 * 1000;
-
-    this.logger.log(`Cache refreshed with ${allPersons.length} persons in ${duration}s`);
   }
 
   private checkExpiryTime() {
-    if (!this.cachingInProgress && Date.now() > this.searchablePersonsExpiryDate) {
-      this.fetchPeople();
+    if (Date.now() <= this.searchablePersonsExpiryDate) {
+      return;
     }
+    this.refreshPeople();
   }
 }
