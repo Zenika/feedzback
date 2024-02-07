@@ -40,11 +40,12 @@ export class PeopleCacheService {
 
       const message = `User list cache refreshed with ${finalResult.length} items`;
       this.logger.log(message);
+      this.cachingInProgress = false;
       return message;
     } catch (err) {
       this.logger.error('Error on loading users cache');
+      this.cachingInProgress = false;
     }
-    this.cachingInProgress = false;
   }
 
   public checkExpiryTime() {
