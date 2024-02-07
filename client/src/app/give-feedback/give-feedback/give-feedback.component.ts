@@ -6,9 +6,11 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
+import { CanDeactivateForm } from '../../shared/can-deactivate/can-deactivate.type';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
@@ -40,8 +42,9 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements OnDestroy {
+export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
+  @ViewChild('confirmSaveTmpl') confirmSaveTmpl!: TemplateRef<unknown>;
 
   private router = inject(Router);
 
@@ -67,7 +70,7 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   form = this.formBuilder.group({
     receiverEmail: [
-      this.getQueryParam('receiverEmail'),
+      'jjjjj.dddd@zenika.com' ?? this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
     ],
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -76,6 +79,8 @@ export class GiveFeedbackComponent implements OnDestroy {
     shared: [this.hasManagerFeature ? true : false],
   });
 
+  private previousValues = this.form.value;
+
   submitInProgress = false;
 
   showError = false;
@@ -83,16 +88,19 @@ export class GiveFeedbackComponent implements OnDestroy {
   errorType: null | 'error' | 'invalid_email' = null;
 
   showDraft = false;
+  showDraftError = false
 
   feedbackId?: string;
 
   hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   private draftDialogRef?: MatDialogRef<unknown>;
+  private savingDialogRef?: MatDialogRef<unknown>;
 
   constructor() {
     this.giveFeedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
       this.form.setValue(draft);
+      this.previousValues = { ...draft };
       this.form.updateValueAndValidity();
       this.closeDraftDialog();
     });
@@ -102,6 +110,25 @@ export class GiveFeedbackComponent implements OnDestroy {
         this.closeDraftDialog();
       }
     });
+  }
+
+  canDeactivate() {
+    const { positive, negative, comment, shared } = this.form.value;
+
+    const changedWithoutSaving =
+      this.previousValues.positive !== positive ||
+      this.previousValues.negative !== negative ||
+      this.previousValues.comment !== comment ||
+      this.previousValues.shared !== shared;
+
+    if (changedWithoutSaving) {
+      this.savingDialogRef = this.matDialog.open(this.confirmSaveTmpl, { width: '560px' });
+      return this.savingDialogRef.afterClosed().pipe(
+        tap(console.log)
+      );
+    } else {
+      return true;
+    }
   }
 
   ngOnDestroy(): void {
@@ -137,10 +164,21 @@ export class GiveFeedbackComponent implements OnDestroy {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
-      this.showDraft = true;
-      this.disableForm(false);
-    });
+    const resultPromise = new Promise<void>((resolve, reject) =>
+      this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
+        complete: () => {
+          this.showDraft = true;
+          this.disableForm(false);
+          resolve();
+        },
+        error: (err) => {
+          this.showDraftError = true;
+          this.disableForm(false);
+          reject(err)},
+      }),
+    );
+
+    return resultPromise;
   }
 
   private disableForm(submitInProgress: boolean) {
@@ -163,5 +201,16 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   protected closeDraftDialog() {
     this.draftDialogRef?.close();
+  }
+
+  protected closeSavingDialog(savingResult: boolean) {
+    console.log('savingResult', savingResult);
+    this.savingDialogRef?.close(savingResult);
+  }
+
+  protected saveBeforeNavigate() {
+    this.onDraft()
+      .then(() => this.closeSavingDialog(true))
+      .catch(() => this.closeSavingDialog(false));
   }
 }

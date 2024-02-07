@@ -15,6 +15,18 @@
   </div>
 </ng-template>
 
+<ng-template #confirmSaveTmpl>
+  <h1 mat-dialog-title i18n="@@Title.ConfirmSavingBeforeNavigate">Sauvegarder</h1>
+
+  <div mat-dialog-content>Attention, vous n'avez pas sauvegardé votre feedback.</div>
+  <div mat-dialog-actions align="end">
+    <button mat-button i18n="@@Action.Cancel" (click)="closeSavingDialog(true)">Poursuivre sans enregistrer</button>
+    <button mat-button cdkFocusInitial i18n="@@Action.Save" color="accent" (click)="saveBeforeNavigate()">
+      Enregistrer
+    </button>
+  </div>
+</ng-template>
+
 <h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
@@ -88,5 +100,8 @@
 
   <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
     Brouillon sauvegardé.
+  </app-message>
+  <app-message class="!mb-0 mt-8" type="danger" [(visible)]="showDraftError" i18n="@@Message.DraftNotSaved">
+    Brouillon non enregistré.
   </app-message>
 </form>
