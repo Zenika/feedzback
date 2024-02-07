@@ -22,8 +22,8 @@ export class PeopleService {
       return of([]);
     }
     return this.authService
-      .withBearerAccessToken((headers) =>
-        this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search/${query}`, { headers }),
+      .withBearerIdToken((headers) =>
+        this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search`, { headers, params: { query } }),
       )
       .pipe(catchError(() => of([])));
   }

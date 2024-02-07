@@ -46,7 +46,7 @@
   "scripts": {
     "build:staging": "ng build --configuration staging && npm run post-build",
     "build:production": "ng build --configuration production && npm run post-build",
-    "post-build": "cp src/404.html dist/client/browser/404.html",
+    "post-build": "cp src/404.html dist/client/browser/404.html"
   }
 }
 ```

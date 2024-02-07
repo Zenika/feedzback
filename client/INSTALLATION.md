@@ -7,6 +7,7 @@
 - Une fois dans le nouveau projet, cliquer sur "Authentification"
 
   - Activer le fournisseur "Google"
+
     - Customiser si besoin le nom public du projet
     - Sélectionner l'adresse e-mail d'assistance
 
@@ -24,10 +25,10 @@
     - Firestore
     - Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
   - Puis répondre comme suit aux questions:
-      - What do you want to use as your public directory? `dist/client/browser`
-      - Configure as a single-page app (rewrite all urls to /index.html)? `Yes`
-      - Set up automatic builds and deploys with GitHub? `No`
-      - File dist/client/browser/index.html already exists. Overwrite? `No`
+    - What do you want to use as your public directory? `dist/client/browser`
+    - Configure as a single-page app (rewrite all urls to /index.html)? `Yes`
+    - Set up automatic builds and deploys with GitHub? `No`
+    - File dist/client/browser/index.html already exists. Overwrite? `No`
   - Mettre à jour le fichier `src/environments/environment.development.ts` avec les configuration firebase
 
 ...

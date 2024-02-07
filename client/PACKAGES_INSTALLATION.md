@@ -45,7 +45,7 @@ body {
 npm install -D tailwindcss postcss autoprefixer
 ```
 
-Add `tailwind.config.ts` file 
+Add `tailwind.config.ts` file
 
 ```ts
 import type { Config } from 'tailwindcss';
@@ -82,7 +82,7 @@ Add `src/styles/tailwind.css` file
 Update `src/styles.scss`
 
 ```scss
-@import './styles/tailwind.css'
+@import './styles/tailwind.css';
 ```
 
 ### Add ESLint and Prettier
