@@ -11,6 +11,10 @@ export class FeedbackRequestDto {
   @IsBoolean() shared!: boolean;
 }
 
+export class FeedbackRequestAgainDto {
+  @IsString() feedbackId!: string;
+}
+
 export class GiveRequestedFeedbackDto {
   @IsString() token!: string;
 
