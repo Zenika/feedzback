@@ -4,6 +4,7 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "assets": ["assets/**", "feedback/feedback-email/feedback-email-builder/templates/**"]
+    "assets": ["assets/**", "feedback/feedback-email/feedback-email-builder/templates/**"],
+    "plugins": ["@nestjs/swagger"]
   }
 }
