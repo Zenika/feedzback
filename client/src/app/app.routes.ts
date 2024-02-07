@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { FeedbackDetailsTemporaryRedirectComponent } from './feedback-details-temporary-redirect/feedback-details-temporary-redirect.component';
 import { feedbackDetailsResolver } from './feedback-details/feedback-details.resolver';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
@@ -34,18 +35,26 @@ export const routes: Routes = [
     loadChildren: () => import('./give-feedback/give-requested-feedback.routes'),
   },
   {
-    path: 'feedbacks',
+    path: 'history',
     pathMatch: 'full',
-    redirectTo: '/feedbacks/received',
+    redirectTo: '/history/type/received',
   },
   {
-    path: 'feedbacks/:type',
+    path: 'history/type/:type',
     loadComponent: () => import('./history/history.component'),
     canActivate: [authGuard],
     title: 'FeedZback - ' + $localize`:@@Title.History:Historique des feedZbacks`,
   },
   {
-    path: 'feedback/:id',
+    // ---------------------
+    // ----- TEMPORARY -----
+    path: 'feedback/:id', // This is an OLD path (which is now replaced by `history/id/:id`)...
+    component: FeedbackDetailsTemporaryRedirectComponent,
+    // ----- TEMPORARY -----
+    // ---------------------
+  },
+  {
+    path: 'history/id/:id',
     loadComponent: () => import('./feedback-details/feedback-details.component'),
     canActivate: [authGuard],
     resolve: { feedbackDetails: feedbackDetailsResolver },
