@@ -16,9 +16,9 @@ export const environment = {
   apiBaseUrl: 'https://server.staging.feedzback.znk.io',
   allowedEmailDomains: ['zenika.com'],
   featureFlipping: {
-    manager: false,
+    manager: true,
     localize: false,
-    requestTemplate: false,
-    autocompleteEmail: false,
+    requestTemplate: true,
+    autocompleteEmail: true,
   },
 };
