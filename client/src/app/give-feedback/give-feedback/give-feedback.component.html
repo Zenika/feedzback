@@ -15,18 +15,6 @@
   </div>
 </ng-template>
 
-<ng-template #confirmSaveTmpl>
-  <h1 mat-dialog-title i18n="@@Title.ConfirmSavingBeforeNavigate">Enregistrer</h1>
-
-  <div mat-dialog-content>Enregistrez vos modifications dans un brouillon afin de les récupérer ultérieurement ?</div>
-  <div mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false" i18n="@@Action.Cancel">Non</button>
-    <button mat-button [mat-dialog-close]="'saveDraft'" cdkFocusInitial i18n="@@Action.Save" color="accent">
-      Enregistrer en brouillon
-    </button>
-  </div>
-</ng-template>
-
 <h1 class="gbl-page-title">
   <mat-icon>chat</mat-icon>
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>

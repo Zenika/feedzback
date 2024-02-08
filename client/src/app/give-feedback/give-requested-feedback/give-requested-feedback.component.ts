@@ -8,6 +8,8 @@ import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
+import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
+import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
@@ -28,10 +30,11 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     MessageComponent,
     GiveFeedbackDetailsComponent,
   ],
+  providers: [LeaveFormService],
   templateUrl: './give-requested-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, OnInit {
+export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, OnInit, LeaveForm {
   @Input({ required: true }) token!: string;
 
   @Input({ required: true }) request!: FeedbackRequest;
@@ -54,6 +57,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
   });
 
+  leaveFormService = inject(LeaveFormService);
+
   submitInProgress = false;
 
   showError = false;
@@ -62,9 +67,14 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   feedbackId?: string;
 
+  constructor() {
+    this.leaveFormService.registerForm(this.form);
+  }
+
   ngOnInit(): void {
     if (this.draft) {
       this.form.setValue(this.draft);
+      this.leaveFormService.takeSnapshot();
       this.form.updateValueAndValidity();
     }
   }
@@ -83,6 +93,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
         this.showError = true;
         this.disableForm(false);
       } else {
+        this.leaveFormService.takeSnapshot();
         this.feedbackId = this.isAnonymous ? undefined : this.request?.id;
         this.navigateToSuccess();
       }
@@ -97,6 +108,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe(() => {
       this.showDraft = true;
+      this.leaveFormService.takeSnapshot();
       this.disableForm(false);
     });
   }

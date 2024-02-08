@@ -6,16 +6,16 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
-import { CanDeactivateForm } from '../../shared/can-deactivate/can-deactivate.type';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
+import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
+import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
@@ -39,10 +39,11 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
   ],
+  providers: [LeaveFormService],
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
+export class GiveFeedbackComponent implements OnDestroy, LeaveForm {
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
   @ViewChild('confirmSaveTmpl') confirmSaveTmpl!: TemplateRef<unknown>;
 
@@ -68,6 +69,8 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 
+  private draftDialogRef?: MatDialogRef<unknown>;
+
   form = this.formBuilder.group({
     receiverEmail: [
       this.getQueryParam('receiverEmail'),
@@ -79,7 +82,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
     shared: [this.hasManagerFeature ? true : false],
   });
 
-  private previousValues = this.form.value;
+  leaveFormService = inject(LeaveFormService);
 
   submitInProgress = false;
 
@@ -94,14 +97,13 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
   hasDraft = this.giveFeedbackDraftService.hasDraft;
 
-  private draftDialogRef?: MatDialogRef<unknown>;
-  private savingDialogRef?: MatDialogRef<unknown>;
-
   constructor() {
+    this.leaveFormService.registerForm(this.form);
+
     this.giveFeedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
       this.form.setValue(draft);
-      this.previousValues = { ...draft };
       this.form.updateValueAndValidity();
+      this.leaveFormService.takeSnapshot();
       this.closeDraftDialog();
     });
 
@@ -111,33 +113,6 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
       }
     });
   }
-
-  canDeactivate() {
-    const { positive, negative, comment, shared } = this.form.value;
-
-    const someDataHasChanged =
-      this.form.controls.receiverEmail.valid &&
-      (this.previousValues.positive !== positive ||
-        this.previousValues.negative !== negative ||
-        this.previousValues.comment !== comment ||
-        this.previousValues.shared !== shared);
-
-    if (someDataHasChanged) {
-      return this.matDialog
-        .open(this.confirmSaveTmpl, { width: '560px' })
-        .afterClosed()
-        .pipe(
-          switchMap(async (actionResult) => {
-            if (actionResult === 'saveDraft') {
-              return await this.onDraft();
-            }
-            return true;
-          }),
-        );
-    }
-    return true;
-  }
-
   ngOnDestroy(): void {
     this.closeDraftDialog();
   }
@@ -160,8 +135,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
-        this.previousValues = this.form.value;
-
+        this.leaveFormService.takeSnapshot();
         this.navigateToSuccess();
       }
     });
@@ -173,23 +147,17 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    const resultPromise = new Promise<boolean>((resolve) =>
-      this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
-        complete: () => {
-          this.showDraft = true;
-          this.disableForm(false);
-          this.previousValues = this.form.value;
-          resolve(true);
-        },
-        error: () => {
-          this.showDraftError = true;
-          this.disableForm(false);
-          resolve(false);
-        },
-      }),
-    );
-
-    return resultPromise;
+    this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
+      complete: () => {
+        this.showDraft = true;
+        this.disableForm(false);
+        this.leaveFormService.takeSnapshot();
+      },
+      error: () => {
+        this.showDraftError = true;
+        this.disableForm(false);
+      },
+    });
   }
 
   private disableForm(submitInProgress: boolean) {
