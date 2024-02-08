@@ -1,10 +1,12 @@
-<h2 mat-dialog-title i18n="@@Title.LeaveForm">Quitter la page ?</h2>
+<h2 mat-dialog-title i18n="@@Component.LeaveForm.Title">Modifications non sauvegardées</h2>
 
-<mat-dialog-content i18n="@@Component.LeaveForm.Message">
-  Les modifications apportées au formulaire n'ont pas été sauvegardées.
+<mat-dialog-content i18n="@@Component.LeaveForm.Content">
+  Les modifications apportées seront perdues si vous décidez de continuer.
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="false" i18n="@@Question.Cancel">Annuler</button>
-  <button mat-button [mat-dialog-close]="true" i18n="@@Question.Leave" cdkFocusInitial color="accent">Quitter</button>
+  <button mat-button [mat-dialog-close]="false" i18n="@@Action.Cancel">Annuler</button>
+  <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial i18n="@@Action.Continue">
+    Continuer
+  </button>
 </mat-dialog-actions>

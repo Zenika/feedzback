@@ -5,8 +5,7 @@ import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } fr
 @Component({
   selector: 'app-leave-form',
   standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButtonModule, MatDialogClose],
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle],
   templateUrl: './leave-form.component.html',
-  styleUrl: './leave-form.component.scss',
 })
 export class LeaveFormComponent {}

@@ -2,8 +2,10 @@
   "locale": "fr",
   "translations": {
     "Action.BackToHome": "Retourner à l'accueil",
+    "Action.Cancel": "Annuler",
     "Action.Close": "Fermer",
     "Action.CloseSession": "Fermer la session",
+    "Action.Continue": " Continuer ",
     "Action.Delete": "Supprimer",
     "Action.Edit": "Editer",
     "Action.History": "Historique",
@@ -33,7 +35,8 @@
     "Component.GiveRequestedFeedbackListEmpty1": " Vous n'avez pas de demande de feedZback à traiter... ",
     "Component.GiveRequestedFeedbackListEmpty2": " Profitez-en pour demander ou donner du feedZback à vos collègues ! ",
     "Component.Home.LinkToGuide": "Comment écrire un ",
-    "Component.LeaveForm.Message": "Les modifications apportées au formulaire n'ont pas été sauvegardées.",
+    "Component.LeaveForm.Content": " Les modifications apportées seront perdues si vous décidez de continuer.\n",
+    "Component.LeaveForm.Title": "Modifications non sauvegardées",
     "Component.Manager.Collaborator": "Collaborateur",
     "Component.Manager.NoData": "Aucun feedZback partagé...",
     "Component.ManagerFeedbackList.GivenBy": "Donné par",
@@ -82,6 +85,7 @@
     "FieldError.MultipleEmails": "Email(s) invalide(s) : ",
     "FieldError.Pattern": "Format invalide",
     "FieldError.Required": "Champ requis",
+    "Message.DraftNotSaved": " Brouillon non enregistré. ",
     "Message.DraftSaved": " Brouillon sauvegardé. ",
     "Message.ErrorOccured": "Une erreur s'est produite.",
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": " Ce feedZback est partagé avec le manager de votre collègue ",
@@ -103,15 +107,12 @@
     "Title.GiveRequestedFeedback": " Répondre à une demande de feedZback ",
     "Title.Guide": "Guide du feedZback",
     "Title.History": "Historique des feedZbacks",
-    "Title.LeaveForm": "Quitter la page sans sauvegarder ?",
     "Title.Manager": "FeedZbacks partagés",
     "Title.ReceivedFeedback": "FeedZback reçu",
     "Title.RequestFeedback": "Demander du feedZback",
     "Title.RequestedFeedback": "FeedZback demandé",
     "Title.RequestedFeedbackList": " Répondre aux demandes de feedZback ",
     "Title.Settings": "Paramètres",
-    "Title.SignIn": "Connexion",
-    "Question.Cancel": "Annuler",
-    "Question.Leave": "Quitter"
+    "Title.SignIn": "Connexion"
   }
 }

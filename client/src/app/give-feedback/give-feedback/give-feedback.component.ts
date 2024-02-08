@@ -7,11 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
@@ -45,8 +45,9 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements OnDestroy, LeaveForm {
+export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
+
   @ViewChild('confirmSaveTmpl') confirmSaveTmpl!: TemplateRef<unknown>;
 
   private router = inject(Router);
@@ -93,6 +94,7 @@ export class GiveFeedbackComponent implements OnDestroy, LeaveForm {
   errorType: null | 'error' | 'invalid_email' = null;
 
   showDraft = false;
+
   showDraftError = false;
 
   feedbackId?: string;
@@ -102,12 +104,22 @@ export class GiveFeedbackComponent implements OnDestroy, LeaveForm {
   constructor() {
     this.leaveFormService.registerForm(this.form);
 
-    this.giveFeedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
-      this.form.setValue(draft);
-      this.form.updateValueAndValidity();
-      this.leaveFormService.takeSnapshot();
-      this.closeDraftDialog();
-    });
+    this.giveFeedbackDraftService.applyDraft$
+      .pipe(
+        takeUntilDestroyed(),
+        switchMap((draft) => {
+          this.closeDraftDialog();
+          return this.leaveFormService.canLeave().pipe(
+            filter((canLeave) => canLeave),
+            map(() => draft),
+          );
+        }),
+      )
+      .subscribe((draft) => {
+        this.form.setValue(draft);
+        this.form.updateValueAndValidity();
+        this.leaveFormService.takeSnapshot();
+      });
 
     effect(() => {
       if (!this.giveFeedbackDraftService.hasDraft()) {
@@ -137,7 +149,7 @@ export class GiveFeedbackComponent implements OnDestroy, LeaveForm {
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
-        this.leaveFormService.takeSnapshot();
+        this.leaveFormService.unregisterForm();
         this.navigateToSuccess();
       }
     });

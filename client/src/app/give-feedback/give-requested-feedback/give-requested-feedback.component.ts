@@ -76,8 +76,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   ngOnInit(): void {
     if (this.draft) {
       this.form.setValue(this.draft);
-      this.leaveFormService.takeSnapshot();
       this.form.updateValueAndValidity();
+      this.leaveFormService.takeSnapshot();
     }
   }
 
@@ -95,7 +95,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
         this.showError = true;
         this.disableForm(false);
       } else {
-        this.leaveFormService.takeSnapshot();
+        this.leaveFormService.unregisterForm();
         this.feedbackId = this.isAnonymous ? undefined : this.request?.id;
         this.navigateToSuccess();
       }
@@ -110,8 +110,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe(() => {
       this.showDraft = true;
-      this.leaveFormService.takeSnapshot();
       this.disableForm(false);
+      this.leaveFormService.takeSnapshot();
     });
   }
 

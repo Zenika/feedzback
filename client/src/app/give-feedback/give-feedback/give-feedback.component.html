@@ -73,10 +73,10 @@
         mat-stroked-button
         color="primary"
         class="ms-6"
-        (click)="onDraft()"
-        i18n="@@Action.Save"
         matTooltip="Enregistrer en tant que brouillon"
         i18n-matTooltip="@@Action.SaveAsDraft"
+        i18n="@@Action.Save"
+        (click)="onDraft()"
       >
         Sauvegarder
       </button>
@@ -91,6 +91,7 @@
   <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
     Brouillon sauvegardé.
   </app-message>
+
   <app-message class="!mb-0 mt-8" type="danger" [(visible)]="showDraftError" i18n="@@Message.DraftNotSaved">
     Brouillon non enregistré.
   </app-message>

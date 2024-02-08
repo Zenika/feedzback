@@ -1,22 +1,46 @@
-import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Injectable, inject } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { map, of } from 'rxjs';
+import { LeaveFormComponent } from './leave-form.component';
 
 @Injectable()
 export class LeaveFormService {
-  formGroup!: FormGroup;
+  private form?: AbstractControl;
 
-  private snapshot?: unknown;
+  private snapshot?: string;
 
-  registerForm(formGroup: FormGroup) {
-    this.formGroup = formGroup;
+  private matDialog = inject(MatDialog);
+
+  registerForm(form: AbstractControl) {
+    this.form = form;
     this.takeSnapshot();
   }
 
-  takeSnapshot() {
-    this.snapshot = this.formGroup.value;
+  unregisterForm() {
+    this.form = undefined;
+    this.snapshot = undefined;
   }
 
-  valueChanged() {
-    return JSON.stringify(this.formGroup.value) !== JSON.stringify(this.snapshot);
+  takeSnapshot() {
+    this.snapshot = this.stringifyFormValue();
+  }
+
+  canLeave() {
+    if (!this.form || this.stringifyFormValue() === this.snapshot) {
+      return of(true);
+    }
+    return this.matDialog
+      .open(LeaveFormComponent)
+      .afterClosed()
+      .pipe(map((result?: boolean) => (result === undefined ? false : result)));
+  }
+
+  private stringifyFormValue() {
+    if (!this.form) {
+      console.error('LeaveFormService.stringifyFormValue: you first need to register a form.');
+      return;
+    }
+    return JSON.stringify(this.form.value);
   }
 }
