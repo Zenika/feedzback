@@ -12,6 +12,7 @@
     "Action.PreviousPage": "Page précédente",
     "Action.ReportIssue": "Signaler un problème",
     "Action.Save": " Sauvegarder ",
+    "Action.SaveAsDraft": "Enregistrer en tant que brouillon",
     "Action.Send": " Envoyer ",
     "Action.SignInWithGoogle": "Se connecter avec Google",
     "Action.SignOut": "Se déconnecter",
@@ -32,6 +33,7 @@
     "Component.GiveRequestedFeedbackListEmpty1": " Vous n'avez pas de demande de feedZback à traiter... ",
     "Component.GiveRequestedFeedbackListEmpty2": " Profitez-en pour demander ou donner du feedZback à vos collègues ! ",
     "Component.Home.LinkToGuide": "Comment écrire un ",
+    "Component.LeaveForm.Message": "Les modifications apportées au formulaire n'ont pas été sauvegardées.",
     "Component.Manager.Collaborator": "Collaborateur",
     "Component.Manager.NoData": "Aucun feedZback partagé...",
     "Component.ManagerFeedbackList.GivenBy": "Donné par",
@@ -101,12 +103,15 @@
     "Title.GiveRequestedFeedback": " Répondre à une demande de feedZback ",
     "Title.Guide": "Guide du feedZback",
     "Title.History": "Historique des feedZbacks",
+    "Title.LeaveForm": "Quitter la page sans sauvegarder ?",
     "Title.Manager": "FeedZbacks partagés",
     "Title.ReceivedFeedback": "FeedZback reçu",
     "Title.RequestFeedback": "Demander du feedZback",
     "Title.RequestedFeedback": "FeedZback demandé",
     "Title.RequestedFeedbackList": " Répondre aux demandes de feedZback ",
     "Title.Settings": "Paramètres",
-    "Title.SignIn": "Connexion"
+    "Title.SignIn": "Connexion",
+    "Question.Cancel": "Annuler",
+    "Question.Leave": "Quitter"
   }
 }

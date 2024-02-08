@@ -12,6 +12,7 @@
     "Action.PreviousPage": "Previous page",
     "Action.ReportIssue": "Report an issue",
     "Action.Save": "Save",
+    "Action.SaveAsDraft": "Save as draft",
     "Action.Send": "Send",
     "Action.SignInWithGoogle": "Sign in with Google",
     "Action.SignOut": "Sign out",
@@ -32,6 +33,7 @@
     "Component.GiveRequestedFeedbackListEmpty1": "You have no feedZback requests to process...",
     "Component.GiveRequestedFeedbackListEmpty2": "Take this opportunity to request or give feedZback to your colleagues!",
     "Component.Home.LinkToGuide": "How to write a ",
+    "Component.LeaveForm.Message": "Changes made to the form have not ben saved",
     "Component.Manager.Collaborator": "Collaborator",
     "Component.Manager.NoData": "No shared feedZback...",
     "Component.ManagerFeedbackList.GivenBy": "Given by",
@@ -101,12 +103,15 @@
     "Title.GiveRequestedFeedback": "Reply to a feedZback request",
     "Title.Guide": "FeedZback guide",
     "Title.History": "FeedZback history",
+    "Title.LeaveForm": "Leave the page?",
     "Title.Manager": "Shared feedZbacks",
     "Title.ReceivedFeedback": "FeedZback received",
     "Title.RequestFeedback": "Request feedZback",
     "Title.RequestedFeedback": "FeedZback requested",
     "Title.RequestedFeedbackList": "Reply to feedZback requests",
     "Title.Settings": "Settings",
-    "Title.SignIn": "Sign in"
+    "Title.SignIn": "Sign in",
+    "Question.Cancel": "Cancel",
+    "Question.Leave": "Leave"
   }
 }
