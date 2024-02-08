@@ -35,13 +35,14 @@
 }
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-message type="light" icon="lightbulb" i18n="@@Component.RequestFeedback.EmailsRequirements">
+    Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion).
+  </app-message>
+
   <app-multi-autocomplete-email
     class="gbl-form-field"
     [emails]="form.controls.recipients"
     [isInvalidEmail]="isInvalidRecipient"
-    matTooltipPosition="above"
-    matTooltip="Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion)."
-    i18n-matTooltip="@@Component.RequestFeedback.EmailsRequirements"
   />
 
   <mat-form-field appearance="outline" class="gbl-form-field">
@@ -80,14 +81,19 @@
 
   @if (hasManagerFeature) {
     <div class="gbl-form-field">
-      <mat-slide-toggle
-        [formControl]="form.controls.shared"
-        color="primary"
-        matTooltip="Cela vous permettra d'échanger avec votre manager, sur les feedbacks de vos clients et collaborateurs, en toute transparence."
-        i18n-matTooltip
-        i18n="@@Component.RequestFeedback.Share"
-      >
-        Partager le feedZback avec votre manager
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        <ng-container i18n="@@Component.RequestFeedback.Share">Partager le feedZback avec votre manager</ng-container>
+        <mat-icon
+          class="gbl-link ms-1 align-bottom"
+          appDialogTooltip
+          dialogWidth="600px"
+          dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
+          dialogContent="Le partage du feedZback s'inscrit dans une démarche d'amélioration continue chère à Zenika, qui place son destinataire au centre des échanges."
+          i18n-dialogTitle="@@Message.ShareFeedbackTitle"
+          i18n-dialogContent="@@Message.ShareFeedbackContent"
+        >
+          info
+        </mat-icon>
       </mat-slide-toggle>
     </div>
   }

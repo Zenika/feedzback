@@ -21,6 +21,7 @@ import {
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/form/multiple-emails';
+import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../shared/ui/message/message.component';
 import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
 import { REQUEST_TEMPLATES } from './request-feedback.config';
@@ -38,6 +39,7 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
     MatSlideToggleModule,
     MatTooltipModule,
     MultiAutocompleteEmailComponent,
+    DialogTooltipDirective,
     MessageComponent,
   ],
   templateUrl: './request-feedback.component.html',

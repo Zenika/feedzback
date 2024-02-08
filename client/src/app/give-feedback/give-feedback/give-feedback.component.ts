@@ -15,6 +15,7 @@ import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
+import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
@@ -33,6 +34,7 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     MatTooltipModule,
     AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
+    DialogTooltipDirective,
     MessageComponent,
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
