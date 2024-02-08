@@ -6,7 +6,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
@@ -88,7 +88,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
   errorType: null | 'error' | 'invalid_email' = null;
 
   showDraft = false;
-  showDraftError = false
+  showDraftError = false;
 
   feedbackId?: string;
 
@@ -123,9 +123,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
     if (changedWithoutSaving) {
       this.savingDialogRef = this.matDialog.open(this.confirmSaveTmpl, { width: '560px' });
-      return this.savingDialogRef.afterClosed().pipe(
-        tap(console.log)
-      );
+      return this.savingDialogRef.afterClosed().pipe(tap(console.log));
     } else {
       return true;
     }
@@ -153,6 +151,8 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
+        this.previousValues = this.form.value
+
         this.navigateToSuccess();
       }
     });
@@ -169,12 +169,14 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
         complete: () => {
           this.showDraft = true;
           this.disableForm(false);
+          this.previousValues = this.form.value
           resolve();
         },
         error: (err) => {
           this.showDraftError = true;
           this.disableForm(false);
-          reject(err)},
+          reject(err);
+        },
       }),
     );
 
