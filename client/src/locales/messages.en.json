@@ -42,7 +42,7 @@
     "Component.PendingFeedback.Remind": "Send a reminder",
     "Component.PendingFeedback.ReminderAlreadySentOn": "You have already reminded your colleague on ",
     "Component.PendingFeedback.ReminderSent": "A reminder has been sent to your colleague.",
-    "Component.RequestFeedback.EmailsRequirements": "Use your colleagues' personal e-mail addresses (avoid mailing lists).",
+    "Component.RequestFeedback.EmailsRequirements": "Use your colleagues' personal email addresses (avoid mailing lists).",
     "Component.RequestFeedback.Error": "An error occurred when sending to:",
     "Component.RequestFeedback.NoTemplate": "No template",
     "Component.RequestFeedback.Share": "Share feedZback with your manager",
