@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
@@ -115,13 +116,24 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
     const { positive, negative, comment, shared } = this.form.value;
 
     const someDataHasChanged =
-      this.previousValues.positive !== positive ||
-      this.previousValues.negative !== negative ||
-      this.previousValues.comment !== comment ||
-      this.previousValues.shared !== shared;
+      this.form.controls.receiverEmail.valid &&
+      (this.previousValues.positive !== positive ||
+        this.previousValues.negative !== negative ||
+        this.previousValues.comment !== comment ||
+        this.previousValues.shared !== shared);
 
     if (someDataHasChanged) {
-      return this.matDialog.open(this.confirmSaveTmpl, { width: '560px' }).afterClosed();
+      return this.matDialog
+        .open(this.confirmSaveTmpl, { width: '560px' })
+        .afterClosed()
+        .pipe(
+          switchMap(async (actionResult) => {
+            if (actionResult === 'saveDraft') {
+              return await this.onDraft();
+            }
+            return true;
+          }),
+        );
     }
     return true;
   }
@@ -161,18 +173,18 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    const resultPromise = new Promise<void>((resolve, reject) =>
+    const resultPromise = new Promise<boolean>((resolve) =>
       this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
         complete: () => {
           this.showDraft = true;
           this.disableForm(false);
           this.previousValues = this.form.value;
-          resolve();
+          resolve(true);
         },
-        error: (err) => {
+        error: () => {
           this.showDraftError = true;
           this.disableForm(false);
-          reject(err);
+          resolve(false);
         },
       }),
     );

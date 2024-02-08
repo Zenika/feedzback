@@ -21,14 +21,7 @@
   <div mat-dialog-content>Enregistrez vos modifications dans un brouillon afin de les récupérer ultérieurement ?</div>
   <div mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false" i18n="@@Action.Cancel">Non</button>
-    <button
-      mat-button
-      [mat-dialog-close]="true"
-      cdkFocusInitial
-      i18n="@@Action.Save"
-      color="accent"
-      (click)="onDraft()"
-    >
+    <button mat-button [mat-dialog-close]="'saveDraft'" cdkFocusInitial i18n="@@Action.Save" color="accent">
       Enregistrer en brouillon
     </button>
   </div>
