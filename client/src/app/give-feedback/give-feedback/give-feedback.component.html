@@ -10,19 +10,26 @@
   <div mat-dialog-content>
     <app-give-feedback-draft />
   </div>
-  <div mat-dialog-actions>
+  <div mat-dialog-actions align="end">
     <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
   </div>
 </ng-template>
 
 <ng-template #confirmSaveTmpl>
-  <h1 mat-dialog-title i18n="@@Title.ConfirmSavingBeforeNavigate">Sauvegarder</h1>
+  <h1 mat-dialog-title i18n="@@Title.ConfirmSavingBeforeNavigate">Enregistrer</h1>
 
-  <div mat-dialog-content>Attention, vous n'avez pas sauvegardé votre feedback.</div>
+  <div mat-dialog-content>Enregistrez vos modifications dans un brouillon afin de les récupérer ultérieurement ?</div>
   <div mat-dialog-actions align="end">
-    <button mat-button i18n="@@Action.Cancel" (click)="closeSavingDialog(true)">Poursuivre sans enregistrer</button>
-    <button mat-button cdkFocusInitial i18n="@@Action.Save" color="accent" (click)="saveBeforeNavigate()">
-      Enregistrer
+    <button mat-button [mat-dialog-close]="false" i18n="@@Action.Cancel">Non</button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      i18n="@@Action.Save"
+      color="accent"
+      (click)="onDraft()"
+    >
+      Enregistrer en brouillon
     </button>
   </div>
 </ng-template>

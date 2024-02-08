@@ -6,7 +6,6 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
@@ -115,18 +114,16 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
   canDeactivate() {
     const { positive, negative, comment, shared } = this.form.value;
 
-    const changedWithoutSaving =
+    const someDataHasChanged =
       this.previousValues.positive !== positive ||
       this.previousValues.negative !== negative ||
       this.previousValues.comment !== comment ||
       this.previousValues.shared !== shared;
 
-    if (changedWithoutSaving) {
-      this.savingDialogRef = this.matDialog.open(this.confirmSaveTmpl, { width: '560px' });
-      return this.savingDialogRef.afterClosed().pipe(tap(console.log));
-    } else {
-      return true;
+    if (someDataHasChanged) {
+      return this.matDialog.open(this.confirmSaveTmpl, { width: '560px' }).afterClosed();
     }
+    return true;
   }
 
   ngOnDestroy(): void {
@@ -151,7 +148,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
-        this.previousValues = this.form.value
+        this.previousValues = this.form.value;
 
         this.navigateToSuccess();
       }
@@ -169,7 +166,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
         complete: () => {
           this.showDraft = true;
           this.disableForm(false);
-          this.previousValues = this.form.value
+          this.previousValues = this.form.value;
           resolve();
         },
         error: (err) => {
@@ -203,16 +200,5 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
   protected closeDraftDialog() {
     this.draftDialogRef?.close();
-  }
-
-  protected closeSavingDialog(savingResult: boolean) {
-    console.log('savingResult', savingResult);
-    this.savingDialogRef?.close(savingResult);
-  }
-
-  protected saveBeforeNavigate() {
-    this.onDraft()
-      .then(() => this.closeSavingDialog(true))
-      .catch(() => this.closeSavingDialog(false));
   }
 }
