@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
+import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
@@ -23,6 +24,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    DialogTooltipDirective,
     MessageComponent,
     GiveFeedbackDetailsComponent,
   ],

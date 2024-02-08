@@ -42,8 +42,21 @@
 
   @if (hasManagerFeature) {
     <div class="gbl-form-field">
-      <mat-slide-toggle [formControl]="form.controls.shared" color="primary" i18n="@@Component.GiveFeedback.Share">
-        Partager le feedZback avec le manager de votre collègue
+      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+        <ng-container i18n="@@Component.GiveFeedback.Share">
+          Partager le feedZback avec le manager de votre collègue
+        </ng-container>
+        <mat-icon
+          class="gbl-link ms-1 align-bottom"
+          appDialogTooltip
+          dialogWidth="600px"
+          dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
+          dialogContent="Le partage du feedZback s'inscrit dans une démarche d'amélioration continue chère à Zenika, qui place son destinataire au centre des échanges."
+          i18n-dialogTitle="@@Message.ShareFeedbackTitle"
+          i18n-dialogContent="@@Message.ShareFeedbackContent"
+        >
+          help
+        </mat-icon>
       </mat-slide-toggle>
     </div>
   }

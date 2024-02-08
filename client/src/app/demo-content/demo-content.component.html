@@ -1,3 +1,17 @@
+<p>
+  Hello dialog tooltip
+  <mat-icon appDialogTooltip [dialogTitle]="'Hello'" [dialogContent]="'Content'">lightbulb</mat-icon>
+</p>
+
+<p>
+  Hello dialog tooltip
+  <mat-icon appDialogTooltip [dialogTitle]="'Hello'" [dialogContent]="tmpl">lightbulb</mat-icon>
+
+  <ng-template #tmpl>
+    <h3>Coucou TMPL</h3>
+  </ng-template>
+</p>
+
 <p i18n="@@Demo.LoremIpsum" data-test-id="lorem-ipsum">{{ loremIpsum }}</p>
 
 <div class="mat-headline-1">Headline-1. Lorem ipsum</div>
