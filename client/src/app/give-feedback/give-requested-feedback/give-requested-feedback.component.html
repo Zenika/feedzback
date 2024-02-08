@@ -9,10 +9,8 @@
   </ng-container>
   <strong>{{ request.receiverEmail }}</strong
   >.
-</app-message>
-
-@if (request.shared) {
-  <app-message type="info" nonclosable>
+  @if (request.shared) {
+    <br />
     <strong i18n="@@Component.GiveRequestedFeedback.Message2">
       Notez que votre réponse sera partagée avec son manager.
     </strong>
@@ -25,10 +23,10 @@
       i18n-dialogTitle="@@Message.ShareFeedbackTitle"
       i18n-dialogContent="@@Message.ShareFeedbackContent"
     >
-      info
+      help
     </mat-icon>
-  </app-message>
-}
+  }
+</app-message>
 
 <app-message type="danger" [(visible)]="showError" i18n="@@Message.ErrorOccured"
   >Une erreur s'est produite.</app-message
