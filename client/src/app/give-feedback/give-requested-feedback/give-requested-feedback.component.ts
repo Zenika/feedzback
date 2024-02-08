@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
@@ -24,6 +25,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatTooltipModule,
     MatIconModule,
     MatInputModule,
     DialogTooltipDirective,
