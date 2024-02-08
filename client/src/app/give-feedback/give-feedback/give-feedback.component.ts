@@ -69,7 +69,7 @@ export class GiveFeedbackComponent implements OnDestroy, CanDeactivateForm {
 
   form = this.formBuilder.group({
     receiverEmail: [
-      'jjjjj.dddd@zenika.com' ?? this.getQueryParam('receiverEmail'),
+      this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
     ],
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
