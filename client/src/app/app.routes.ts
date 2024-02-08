@@ -7,10 +7,8 @@ import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { settingsGuard } from './settings/setings.guard';
 import { authGuard } from './shared/auth';
-import { canDeactivateGuard } from './shared/can-deactivate/can-deactivate.guard';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
-import { GiveFeedbackComponent } from './give-feedback/give-feedback/give-feedback.component';
 
 export const routes: Routes = [
   {
@@ -30,10 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'give',
-    component : GiveFeedbackComponent,
-    // loadChildren: () => import('./give-feedback/give-feedback.routes'),
-    canDeactivate: [canDeactivateGuard],
-
+    loadChildren: () => import('./give-feedback/give-feedback.routes'),
   },
   {
     path: 'give-requested',
