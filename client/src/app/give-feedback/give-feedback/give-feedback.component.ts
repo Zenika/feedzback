@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
@@ -31,7 +30,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     MatDialogModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatTooltipModule,
     AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
     DialogTooltipDirective,
