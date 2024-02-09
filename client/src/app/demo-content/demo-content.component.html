@@ -1,17 +1,3 @@
-<p>
-  Hello dialog tooltip
-  <mat-icon appDialogTooltip [dialogTitle]="'Hello'" [dialogContent]="'Content'">lightbulb</mat-icon>
-</p>
-
-<p>
-  Hello dialog tooltip
-  <mat-icon appDialogTooltip [dialogTitle]="'Hello'" [dialogContent]="tmpl">lightbulb</mat-icon>
-
-  <ng-template #tmpl>
-    <h3>Coucou TMPL</h3>
-  </ng-template>
-</p>
-
 <p i18n="@@Demo.LoremIpsum" data-test-id="lorem-ipsum">{{ loremIpsum }}</p>
 
 <div class="mat-headline-1">Headline-1. Lorem ipsum</div>
@@ -62,6 +48,46 @@
   Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
   occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </app-message>
+
+<hr />
+
+<p>
+  <a class="gbl-link" role="presentation" (click)="notificationService.show('Notification info.')">
+    Show notification info
+  </a>
+  <br />
+  <a class="gbl-link" role="presentation" (click)="notificationService.show('Notification success.', 'success')">
+    Show notification success
+  </a>
+  <br />
+  <a class="gbl-link" role="presentation" (click)="notificationService.show('Notification danger.', 'danger')">
+    Show notification danger
+  </a>
+</p>
+
+<hr />
+
+<p>
+  Open dialog tooltip with content as string
+  <mat-icon
+    style="vertical-align: bottom"
+    appDialogTooltip
+    dialogTitle="Dialog tooltip"
+    dialogContent="Dialog content as string."
+  >
+    lightbulb
+  </mat-icon>
+</p>
+
+<p>
+  Open dialog tooltip with content as template
+  <mat-icon appDialogTooltip dialogTitle="Dialog tooltip" [dialogContent]="dialogTooltipTemplate">lightbulb</mat-icon>
+
+  <ng-template #dialogTooltipTemplate>
+    <mat-icon>beach_access</mat-icon>
+    Dialog content as template.
+  </ng-template>
+</p>
 
 <hr />
 

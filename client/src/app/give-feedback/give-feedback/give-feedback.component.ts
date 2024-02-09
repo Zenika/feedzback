@@ -17,8 +17,8 @@ import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-val
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
 import { LeaveForm } from '../../shared/leave-form/leave-form.types';
+import { NotificationService } from '../../shared/notification/notification.service';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
-import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
@@ -37,7 +37,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
     DialogTooltipDirective,
-    MessageComponent,
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
   ],
@@ -60,6 +59,8 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
 
   private giveFeedbackDraftService = inject(GiveFeedbackDraftService);
 
+  private notificationService = inject(NotificationService);
+
   leaveFormService = inject(LeaveFormService);
 
   private getQueryParam(key: string): string {
@@ -74,7 +75,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
 
   private draftDialogRef?: MatDialogRef<unknown>;
 
-  form = this.formBuilder.group({
+  protected form = this.formBuilder.group({
     receiverEmail: [
       this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
@@ -85,19 +86,11 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     shared: [this.hasManagerFeature ? true : false],
   });
 
-  submitInProgress = false;
+  protected submitInProgress = false;
 
-  showError = false;
+  protected feedbackId?: string;
 
-  errorType: null | 'error' | 'invalid_email' = null;
-
-  showDraft = false;
-
-  showDraftError = false;
-
-  feedbackId?: string;
-
-  hasDraft = this.giveFeedbackDraftService.hasDraft;
+  protected hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   constructor() {
     this.leaveFormService.registerForm(this.form);
@@ -143,17 +136,18 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-    this.showError = false;
-    this.errorType = null;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
     this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe((result) => {
       if (result.id === undefined) {
-        this.showError = true;
-        this.errorType = result.message === 'invalid_email' ? 'invalid_email' : 'error';
         this.disableForm(false);
+        if (result.message === 'invalid_email') {
+          this.notificationService.show($localize`:@@Message.InvalidEmail:L'adresse email est invalide.`, 'danger');
+        } else {
+          this.notificationService.showError();
+        }
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
@@ -164,20 +158,19 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   }
 
   protected onDraft() {
-    this.showDraft = false;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
     this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
       error: () => {
-        this.showDraftError = true;
         this.disableForm(false);
+        this.notificationService.showError();
       },
       complete: () => {
-        this.showDraft = true;
         this.disableForm(false);
         this.leaveFormService.takeSnapshot();
+        this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });
   }

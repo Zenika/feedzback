@@ -1,0 +1,41 @@
+.app-notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &--info {
+      color: rgb(158, 197, 254);
+    }
+
+    &--success {
+      color: rgb(163, 207, 187);
+    }
+
+    &--danger {
+      color: rgb(241, 174, 181);
+    }
+  }
+
+  &__icon {
+    margin-right: 0.5rem;
+  }
+
+  &__close {
+    cursor: pointer;
+    padding-left: 0.5rem;
+    transition: opacity 250ms ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    mat-icon {
+      vertical-align: text-bottom;
+    }
+  }
+}

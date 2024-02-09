@@ -11,6 +11,7 @@ import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
 import { LeaveForm } from '../../shared/leave-form/leave-form.types';
+import { NotificationService } from '../../shared/notification/notification.service';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
@@ -53,6 +54,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private feedbackService = inject(FeedbackService);
 
+  private notificationService = inject(NotificationService);
+
   leaveFormService = inject(LeaveFormService);
 
   form = this.formBuilder.group({
@@ -62,10 +65,6 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   });
 
   submitInProgress = false;
-
-  showError = false;
-
-  showDraft = false;
 
   feedbackId?: string;
 
@@ -85,15 +84,14 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
     if (this.form.invalid) {
       return;
     }
-    this.showError = false;
     this.disableForm(true);
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
     this.feedbackService.giveRequested({ token: this.token, positive, negative, comment }).subscribe((success) => {
       if (!success) {
-        this.showError = true;
         this.disableForm(false);
+        this.notificationService.showError();
       } else {
         this.leaveFormService.unregisterForm();
         this.feedbackId = this.isAnonymous ? undefined : this.request?.id;
@@ -103,17 +101,16 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   }
 
   protected onDraft() {
-    this.showError = false;
     this.disableForm(true);
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
     this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe({
-      error: () => {},
+      error: () => this.notificationService.showError(),
       complete: () => {
-        this.showDraft = true;
         this.disableForm(false);
         this.leaveFormService.takeSnapshot();
+        this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });
   }

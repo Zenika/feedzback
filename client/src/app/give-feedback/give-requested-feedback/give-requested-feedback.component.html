@@ -9,6 +9,7 @@
   </ng-container>
   <strong>{{ request.receiverEmail }}</strong
   >.
+
   @if (request.shared) {
     <br />
     <strong i18n="@@Component.GiveRequestedFeedback.Message2">
@@ -27,10 +28,6 @@
     </mat-icon>
   }
 </app-message>
-
-<app-message type="danger" [(visible)]="showError" i18n="@@Message.ErrorOccured"
-  >Une erreur s'est produite.</app-message
->
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   @if (isAnonymous) {
@@ -103,8 +100,4 @@
       <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
-
-  <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
-    Brouillon sauvegardé.
-  </app-message>
 </form>

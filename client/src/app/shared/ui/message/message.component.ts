@@ -34,7 +34,7 @@ export class MessageComponent {
   protected iconMap: Record<MessageType, string> = {
     info: 'info',
     success: 'check_circle',
-    danger: 'error',
+    danger: 'warning',
     light: '',
   };
 

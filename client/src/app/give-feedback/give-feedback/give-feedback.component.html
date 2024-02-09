@@ -20,17 +20,6 @@
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
 </h1>
 
-<app-message type="danger" [(visible)]="showError">
-  @switch (errorType) {
-    @case ('error') {
-      <ng-container i18n="@@Message.ErrorOccured">Une erreur s'est produite.</ng-container>
-    }
-    @case ('invalid_email') {
-      <ng-container i18n="@@Message.InvalidEmail">L'adresse email est invalide.</ng-container>
-    }
-  }
-</app-message>
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
 
@@ -87,12 +76,4 @@
       <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
-
-  <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
-    Brouillon sauvegardé.
-  </app-message>
-
-  <app-message class="!mb-0 mt-8" type="danger" [(visible)]="showDraftError" i18n="@@Message.DraftNotSaved">
-    Brouillon non enregistré.
-  </app-message>
 </form>
