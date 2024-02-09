@@ -3,17 +3,6 @@
   <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
 </h1>
 
-@switch (success) {
-  @case (false) {
-    <app-message type="danger" i18n="@@Message.ErrorOccured">Une erreur s'est produite.</app-message>
-  }
-  @case (true) {
-    <app-message type="success" i18n="@@Component.Settings.UpdateSuccess">
-      Vos paramètres ont bien été mis à jour.
-    </app-message>
-  }
-}
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-autocomplete-email forManager [email]="form.controls.managerEmail" class="gbl-form-field" />
 

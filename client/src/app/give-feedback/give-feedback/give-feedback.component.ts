@@ -5,17 +5,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { FeedbackDraft } from '../../shared/feedback/feedback.types';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
+import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
+import { LeaveForm } from '../../shared/leave-form/leave-form.types';
+import { NotificationService } from '../../shared/notification/notification.service';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
-import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
@@ -30,17 +33,18 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     MatDialogModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatTooltipModule,
     AutocompleteEmailComponent,
     ValidationErrorMessagePipe,
     DialogTooltipDirective,
-    MessageComponent,
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
   ],
+  providers: [LeaveFormService],
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements OnDestroy {
+export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
 
   private router = inject(Router);
@@ -55,6 +59,10 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   private giveFeedbackDraftService = inject(GiveFeedbackDraftService);
 
+  private notificationService = inject(NotificationService);
+
+  leaveFormService = inject(LeaveFormService);
+
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
   }
@@ -65,7 +73,9 @@ export class GiveFeedbackComponent implements OnDestroy {
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 
-  form = this.formBuilder.group({
+  private draftDialogRef?: MatDialogRef<unknown>;
+
+  protected form = this.formBuilder.group({
     receiverEmail: [
       this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
@@ -76,26 +86,31 @@ export class GiveFeedbackComponent implements OnDestroy {
     shared: [this.hasManagerFeature ? true : false],
   });
 
-  submitInProgress = false;
+  protected submitInProgress = false;
 
-  showError = false;
+  protected feedbackId?: string;
 
-  errorType: null | 'error' | 'invalid_email' = null;
-
-  showDraft = false;
-
-  feedbackId?: string;
-
-  hasDraft = this.giveFeedbackDraftService.hasDraft;
-
-  private draftDialogRef?: MatDialogRef<unknown>;
+  protected hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   constructor() {
-    this.giveFeedbackDraftService.applyDraft$.pipe(takeUntilDestroyed()).subscribe((draft: FeedbackDraft) => {
-      this.form.setValue(draft);
-      this.form.updateValueAndValidity();
-      this.closeDraftDialog();
-    });
+    this.leaveFormService.registerForm(this.form);
+
+    this.giveFeedbackDraftService.applyDraft$
+      .pipe(
+        takeUntilDestroyed(),
+        switchMap((draft) => {
+          this.closeDraftDialog();
+          return this.leaveFormService.canLeave().pipe(
+            filter((canLeave) => canLeave),
+            map(() => draft),
+          );
+        }),
+      )
+      .subscribe((draft) => {
+        this.form.setValue(draft);
+        this.form.updateValueAndValidity();
+        this.leaveFormService.takeSnapshot();
+      });
 
     effect(() => {
       if (!this.giveFeedbackDraftService.hasDraft()) {
@@ -108,38 +123,55 @@ export class GiveFeedbackComponent implements OnDestroy {
     this.closeDraftDialog();
   }
 
+  protected openDraftDialog() {
+    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
+    this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
+  }
+
+  protected closeDraftDialog() {
+    this.draftDialogRef?.close();
+  }
+
   protected onSubmit() {
     if (this.form.invalid) {
       return;
     }
-    this.showError = false;
-    this.errorType = null;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
     this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe((result) => {
       if (result.id === undefined) {
-        this.showError = true;
-        this.errorType = result.message === 'invalid_email' ? 'invalid_email' : 'error';
         this.disableForm(false);
+        if (result.message === 'invalid_email') {
+          this.notificationService.show($localize`:@@Message.InvalidEmail:L'adresse email est invalide.`, 'danger');
+        } else {
+          this.notificationService.showError();
+        }
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
+        this.leaveFormService.unregisterForm();
         this.navigateToSuccess();
       }
     });
   }
 
   protected onDraft() {
-    this.showDraft = false;
     this.disableForm(true);
 
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
-    this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe(() => {
-      this.showDraft = true;
-      this.disableForm(false);
+    this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
+      error: () => {
+        this.disableForm(false);
+        this.notificationService.showError();
+      },
+      complete: () => {
+        this.disableForm(false);
+        this.leaveFormService.takeSnapshot();
+        this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
+      },
     });
   }
 
@@ -154,14 +186,5 @@ export class GiveFeedbackComponent implements OnDestroy {
       feedbackId: this.feedbackId,
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
-  }
-
-  protected openDraftDialog() {
-    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
-    this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
-  }
-
-  protected closeDraftDialog() {
-    this.draftDialogRef?.close();
   }
 }

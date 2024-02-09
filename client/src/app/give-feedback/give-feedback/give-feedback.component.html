@@ -10,7 +10,7 @@
   <div mat-dialog-content>
     <app-give-feedback-draft />
   </div>
-  <div mat-dialog-actions>
+  <div mat-dialog-actions align="end">
     <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
   </div>
 </ng-template>
@@ -19,17 +19,6 @@
   <mat-icon>chat</mat-icon>
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
 </h1>
-
-<app-message type="danger" [(visible)]="showError">
-  @switch (errorType) {
-    @case ('error') {
-      <ng-container i18n="@@Message.ErrorOccured">Une erreur s'est produite.</ng-container>
-    }
-    @case ('invalid_email') {
-      <ng-container i18n="@@Message.InvalidEmail">L'adresse email est invalide.</ng-container>
-    }
-  }
-</app-message>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
@@ -73,8 +62,10 @@
         mat-stroked-button
         color="primary"
         class="ms-6"
-        (click)="onDraft()"
+        matTooltip="Enregistrer en tant que brouillon"
+        i18n-matTooltip="@@Action.SaveAsDraft"
         i18n="@@Action.Save"
+        (click)="onDraft()"
       >
         Sauvegarder
       </button>
@@ -85,8 +76,4 @@
       <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
     </div>
   </div>
-
-  <app-message class="!mb-0 mt-8" type="success" [(visible)]="showDraft" i18n="@@Message.DraftSaved">
-    Brouillon sauvegardé.
-  </app-message>
 </form>
