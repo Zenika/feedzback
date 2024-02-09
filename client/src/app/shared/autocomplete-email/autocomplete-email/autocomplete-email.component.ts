@@ -61,5 +61,6 @@ export class AutocompleteEmailComponent {
   protected selectEmail(email: string) {
     this.email.setValue(email);
     this.email.updateValueAndValidity();
+    this.query$.next('');
   }
 }
