@@ -36,7 +36,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   templateUrl: './give-requested-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, OnInit, LeaveForm {
+export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm, OnInit {
   @Input({ required: true }) token!: string;
 
   @Input({ required: true }) request!: FeedbackRequest;
@@ -53,13 +53,13 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private feedbackService = inject(FeedbackService);
 
+  leaveFormService = inject(LeaveFormService);
+
   form = this.formBuilder.group({
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     negative: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
   });
-
-  leaveFormService = inject(LeaveFormService);
 
   submitInProgress = false;
 
@@ -108,10 +108,13 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe(() => {
-      this.showDraft = true;
-      this.disableForm(false);
-      this.leaveFormService.takeSnapshot();
+    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe({
+      error: () => {},
+      complete: () => {
+        this.showDraft = true;
+        this.disableForm(false);
+        this.leaveFormService.takeSnapshot();
+      },
     });
   }
 

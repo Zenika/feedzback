@@ -48,8 +48,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
 export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
 
-  @ViewChild('confirmSaveTmpl') confirmSaveTmpl!: TemplateRef<unknown>;
-
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
@@ -61,6 +59,8 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   private feedbackService = inject(FeedbackService);
 
   private giveFeedbackDraftService = inject(GiveFeedbackDraftService);
+
+  leaveFormService = inject(LeaveFormService);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';
@@ -84,8 +84,6 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     shared: [this.hasManagerFeature ? true : false],
   });
-
-  leaveFormService = inject(LeaveFormService);
 
   submitInProgress = false;
 
@@ -127,8 +125,18 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
       }
     });
   }
+
   ngOnDestroy(): void {
     this.closeDraftDialog();
+  }
+
+  protected openDraftDialog() {
+    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
+    this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
+  }
+
+  protected closeDraftDialog() {
+    this.draftDialogRef?.close();
   }
 
   protected onSubmit() {
@@ -162,14 +170,14 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
 
     this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
+      error: () => {
+        this.showDraftError = true;
+        this.disableForm(false);
+      },
       complete: () => {
         this.showDraft = true;
         this.disableForm(false);
         this.leaveFormService.takeSnapshot();
-      },
-      error: () => {
-        this.showDraftError = true;
-        this.disableForm(false);
       },
     });
   }
@@ -185,14 +193,5 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
       feedbackId: this.feedbackId,
     };
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
-  }
-
-  protected openDraftDialog() {
-    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
-    this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
-  }
-
-  protected closeDraftDialog() {
-    this.draftDialogRef?.close();
   }
 }

@@ -26,8 +26,12 @@ export class LeaveFormService {
     this.snapshot = this.stringifyFormValue();
   }
 
+  hasChanged() {
+    return this.form && this.stringifyFormValue() !== this.snapshot;
+  }
+
   canLeave() {
-    if (!this.form || this.stringifyFormValue() === this.snapshot) {
+    if (!this.hasChanged()) {
       return of(true);
     }
     return this.matDialog

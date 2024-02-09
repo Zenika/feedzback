@@ -46,7 +46,7 @@ export class EmailService {
 
   async send(params: SendParams) {
     try {
-      await this.client.messages.create(this.domain, params);
+      //await this.client.messages.create(this.domain, params);
 
       return true;
     } catch (err) {
