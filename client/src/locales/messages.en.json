@@ -85,7 +85,6 @@
     "FieldError.MultipleEmails": "Invalid email(s): ",
     "FieldError.Pattern": "Invalid format",
     "FieldError.Required": "Required field",
-    "Message.DraftNotSaved": "Draft not saved.",
     "Message.DraftSaved": "Draft saved.",
     "Message.ErrorOccured": "An error occured.",
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": "This feedZback is shared with the manager of your colleague",

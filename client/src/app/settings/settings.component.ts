@@ -8,6 +8,7 @@ import { EmployeeService } from '../shared/employee/employee.service';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
 import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
+import { NotificationService } from '../shared/notification/notification.service';
 import { MessageComponent } from '../shared/ui/message/message.component';
 
 @Component({
@@ -26,6 +27,8 @@ import { MessageComponent } from '../shared/ui/message/message.component';
 })
 export default class SettingsComponent {
   private employeeService = inject(EmployeeService);
+
+  private notificationService = inject(NotificationService);
 
   protected submitInProgress = false;
 
@@ -48,23 +51,23 @@ export default class SettingsComponent {
     );
   }
 
-  protected success: boolean | null = null;
-
   protected onSubmit() {
     this.form.disable();
     this.submitInProgress = true;
-    this.success = null;
     this.employeeService.updateManager(this.form.controls.managerEmail.value).subscribe({
       error: () => {
         this.form.enable();
         this.submitInProgress = false;
-        this.success = false;
+        this.notificationService.showError();
       },
       complete: () => {
         this.form.enable();
         this.submitInProgress = false;
-        this.success = true;
         this.currentManagerEmail = this.form.controls.managerEmail.value;
+        this.notificationService.show(
+          $localize`:@@Component.Settings.UpdateSuccess:Vos paramètres ont bien été mis à jour.`,
+          'success',
+        );
       },
     });
   }

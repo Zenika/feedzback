@@ -37,7 +37,7 @@ export class LeaveFormService {
     return this.matDialog
       .open(LeaveFormComponent)
       .afterClosed()
-      .pipe(map((result?: boolean) => (result === undefined ? false : result)));
+      .pipe(map((canLeave?: boolean) => (canLeave === undefined ? false : canLeave)));
   }
 
   private stringifyFormValue() {
