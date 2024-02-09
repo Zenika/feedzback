@@ -99,8 +99,9 @@
   }
 
   <div class="gbl-form-submit">
-    <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary" i18n="@@Action.Send">
-      Envoyer
+    <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary">
+      <mat-icon>send</mat-icon>
+      <ng-container i18n="@@Action.Send">Envoyer</ng-container>
     </button>
 
     <div class="gbl-form-submit__info">
