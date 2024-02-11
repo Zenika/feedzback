@@ -1,0 +1,19 @@
+<h2 mat-dialog-title i18n="@@Component.ConfirmBeforeSubmit.Title">Demande de confirmation</h2>
+
+<mat-dialog-content>
+  @if (data.content) {
+    {{ data.content }}
+  } @else {
+    <ng-container i18n="@@Component.ConfirmBeforeSubmit.Content">
+      L'opération va être traitée dès confirmation.
+    </ng-container>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false" i18n="@@Action.Cancel">Annuler</button>
+
+  <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial i18n="@@Action.Confirm">
+    Confirmer
+  </button>
+</mat-dialog-actions>

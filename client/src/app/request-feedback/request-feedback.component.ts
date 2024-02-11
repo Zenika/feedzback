@@ -12,6 +12,7 @@ import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
+import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { StringArrayError } from '../shared/form';
@@ -40,6 +41,7 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
     MatSlideToggleModule,
     MatTooltipModule,
     MultiAutocompleteEmailComponent,
+    ConfirmBeforeSubmitDirective,
     DialogTooltipDirective,
     MessageComponent,
   ],

@@ -11,6 +11,7 @@ import { filter, map, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
+import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
@@ -35,6 +36,7 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     MatSlideToggleModule,
     MatTooltipModule,
     AutocompleteEmailComponent,
+    ConfirmBeforeSubmitDirective,
     ValidationErrorMessagePipe,
     DialogTooltipDirective,
     GiveFeedbackDetailsComponent,
