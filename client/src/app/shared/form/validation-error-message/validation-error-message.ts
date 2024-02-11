@@ -1,5 +1,7 @@
 import { ValidationErrors } from '@angular/forms';
+import { AllowedEmailDomainsError } from '../allowed-email-domains/allowed-email-domains.types';
 import { ALLOWED_EMAIL_DOMAINS_ERROR_KEY } from '../allowed-email-domains/allowed-email-domains.validator';
+import { StringArrayError } from '../emails-validation-error.types';
 import { FORBIDDEN_VALUES_KEY } from '../forbidden-values';
 import { MULTIPLE_EMAILS_ERROR_KEY } from '../multiple-emails';
 
@@ -10,19 +12,19 @@ export const getValidationErrorMessage = (errors: ValidationErrors | null): stri
   if (errors?.['email']) {
     return $localize`:@@FieldError.Email:Email invalide`;
   }
-  if (errors?.[MULTIPLE_EMAILS_ERROR_KEY]?.length > 0) {
-    return (
-      $localize`:@@FieldError.MultipleEmails:Email(s) invalide(s) : ` + errors?.[MULTIPLE_EMAILS_ERROR_KEY].join(', ')
-    );
+  if (errors?.[MULTIPLE_EMAILS_ERROR_KEY]) {
+    const error: StringArrayError = errors?.[MULTIPLE_EMAILS_ERROR_KEY];
+    return $localize`:@@FieldError.MultipleEmails:Email(s) invalide(s) : ` + error.fieldValues.join(', ');
   }
   if (errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY]) {
+    const error: AllowedEmailDomainsError = errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY];
     return (
-      $localize`:@@FieldError.AllowedEmailDomains:L'email doit se terminer par : ` +
-      `@${errors?.[ALLOWED_EMAIL_DOMAINS_ERROR_KEY].join(', @')}`
+      $localize`:@@FieldError.AllowedEmailDomains:L'email doit se terminer par : ` + `@${error.domains.join(', @')}`
     );
   }
   if (errors?.[FORBIDDEN_VALUES_KEY]) {
-    return $localize`:@@FieldError.ForbiddenValues:Valeur non autorisée : ` + errors?.[FORBIDDEN_VALUES_KEY].join(', ');
+    const error: StringArrayError = errors?.[FORBIDDEN_VALUES_KEY];
+    return $localize`:@@FieldError.ForbiddenValues:Valeur non autorisée : ` + error.fieldValues.join(', ');
   }
   if (errors?.['minlength']) {
     return errors?.['minlength'].requiredLength + $localize`:@@FieldError.MinLength: caractères au minimum`;

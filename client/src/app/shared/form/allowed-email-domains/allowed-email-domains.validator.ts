@@ -1,5 +1,7 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { StringArrayError } from '../emails-validation-error.types';
 import { isAllowedEmailDomain } from './allowed-email-domains';
+import { AllowedEmailDomainsError } from './allowed-email-domains.types';
 
 export const ALLOWED_EMAIL_DOMAINS_ERROR_KEY = 'allowedEmailDomains';
 
@@ -10,7 +12,15 @@ export const allowedEmailDomainsValidatorFactory =
 
     const values = controlValue ? (Array.isArray(controlValue) ? controlValue : [controlValue]) : [];
 
-    const emailsErrors = values.filter((value) => !isAllowedEmailDomain(value, domains));
+    const emailErrors = values.filter((value) => !isAllowedEmailDomain(value, domains));
 
-    return emailsErrors.length === 0 ? null : { [ALLOWED_EMAIL_DOMAINS_ERROR_KEY]: emailsErrors };
+    if (emailErrors.length === 0) {
+      return null;
+    }
+    return {
+      [ALLOWED_EMAIL_DOMAINS_ERROR_KEY]: {
+        fieldValues: emailErrors,
+        domains,
+      } satisfies StringArrayError & AllowedEmailDomainsError,
+    };
   };
