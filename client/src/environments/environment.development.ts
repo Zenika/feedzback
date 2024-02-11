@@ -14,7 +14,7 @@ export const environment = {
   production: false,
   firebaseOptions,
   apiBaseUrl: 'http://localhost:3000',
-  allowedEmailDomains: ['zenika.com'],
+  allowedEmailDomains: ['zenika.com', 'zenika.ch'],
   featureFlipping: {
     manager: true,
     localize: false,

@@ -77,14 +77,16 @@
     "Field.YourEmail": "Votre email",
     "FieldError.AllowedEmailDomains": "L'email doit se terminer par : ",
     "FieldError.Email": "Email invalide",
-    "FieldError.ForbiddenValues": "Valeur non autorisée : ",
+    "FieldError.ForbiddenValue": "Valeur non autorisée : ",
+    "FieldError.ForbiddenValues": "Valeurs non autorisées : ",
     "FieldError.Max": "Maximum ",
     "FieldError.MaxLength": " caractères au maximum",
     "FieldError.Min": "Minimum ",
     "FieldError.MinLength": " caractères au minimum",
-    "FieldError.MultipleEmails": "Email(s) invalide(s) : ",
+    "FieldError.MultipleEmail": "Email invalide : ",
+    "FieldError.MultipleEmails": "Emails invalides : ",
     "FieldError.Pattern": "Format invalide",
-    "FieldError.Required": "Champ requis",
+    "FieldError.Required": "Champ obligatoire",
     "Message.DraftSaved": "Brouillon sauvegardé.",
     "Message.ErrorOccured": "Une erreur s'est produite.",
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": " Ce feedZback est partagé avec le manager de votre collègue ",
@@ -112,6 +114,7 @@
     "Title.RequestedFeedback": "FeedZback demandé",
     "Title.RequestedFeedbackList": " Répondre aux demandes de feedZback ",
     "Title.Settings": "Paramètres",
-    "Title.SignIn": "Connexion"
+    "Title.SignIn": "Connexion",
+    "Word.Or": "ou"
   }
 }
