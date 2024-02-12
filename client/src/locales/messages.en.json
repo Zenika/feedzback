@@ -77,12 +77,14 @@
     "Field.YourEmail": "VoYourtre email",
     "FieldError.AllowedEmailDomains": "The email must end with: ",
     "FieldError.Email": "Invalid email",
-    "FieldError.ForbiddenValues": "Forbidden value : ",
+    "FieldError.ForbiddenValue": "Forbidden value : ",
+    "FieldError.ForbiddenValues": "Forbidden values : ",
     "FieldError.Max": "Maximum ",
     "FieldError.MaxLength": " characters maximum",
     "FieldError.Min": "Minimum ",
     "FieldError.MinLength": " characters minimum",
-    "FieldError.MultipleEmails": "Invalid email(s): ",
+    "FieldError.MultipleEmail": "Invalid email: ",
+    "FieldError.MultipleEmails": "Invalid emails: ",
     "FieldError.Pattern": "Invalid format",
     "FieldError.Required": "Required field",
     "Message.DraftSaved": "Draft saved.",
@@ -112,6 +114,7 @@
     "Title.RequestedFeedback": "FeedZback requested",
     "Title.RequestedFeedbackList": "Reply to feedZback requests",
     "Title.Settings": "Settings",
-    "Title.SignIn": "Sign in"
+    "Title.SignIn": "Sign in",
+    "Word.Or": "or"
   }
 }

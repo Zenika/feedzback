@@ -1,4 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { StringArrayError } from '../emails-validation-error.types';
 
 export const FORBIDDEN_VALUES_KEY = 'forbiddenValues';
 
@@ -13,5 +14,10 @@ export const forbiddenValuesValidatorFactory =
       forbiddenValues.includes((caseSensitive ? value : value.toLowerCase()).trim()),
     );
 
-    return emailErrors.length === 0 ? null : { [FORBIDDEN_VALUES_KEY]: emailErrors };
+    if (emailErrors.length === 0) {
+      return null;
+    }
+    return {
+      [FORBIDDEN_VALUES_KEY]: { fieldValues: emailErrors } satisfies StringArrayError,
+    };
   };

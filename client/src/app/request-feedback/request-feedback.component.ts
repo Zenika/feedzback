@@ -14,6 +14,7 @@ import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
+import { StringArrayError } from '../shared/form';
 import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
 import {
   MULTIPLE_EMAILS_ERROR_KEY,
@@ -86,10 +87,13 @@ export class RequestFeedbackComponent {
   protected isInvalidRecipient = (recipient: string) => {
     const { errors } = this.form.controls.recipients;
 
+    const multipleEmailsError: StringArrayError | undefined = errors?.[MULTIPLE_EMAILS_ERROR_KEY];
+    const forbiddenValuesError: StringArrayError | undefined = errors?.[FORBIDDEN_VALUES_KEY];
+
     const emailErrorsAggregate = [
-      ...(errors?.[MULTIPLE_EMAILS_ERROR_KEY] ?? []),
-      ...(errors?.[FORBIDDEN_VALUES_KEY] ?? []),
-    ] as string[];
+      ...(multipleEmailsError?.fieldValues ?? []),
+      ...(forbiddenValuesError?.fieldValues ?? []),
+    ] satisfies string[];
 
     return emailErrorsAggregate.includes(recipient);
   };

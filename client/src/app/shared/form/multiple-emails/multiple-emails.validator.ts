@@ -1,4 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { StringArrayError } from '../emails-validation-error.types';
 
 // !FIXME: this regular exp. (which accepts domain like `domain` without extension) does NOT match the one on the server side (which expects domain like `domain.com`)
 // Source: https://github.com/angular/angular/blob/main/packages/forms/src/validators.ts
@@ -33,9 +34,11 @@ export const multipleEmailsValidatorFactory =
   (control: AbstractControl): ValidationErrors | null => {
     const emails = getMultipleEmails(control.value, emailSeparator);
 
-    const emailsErrors = emails.filter((email) => !EMAIL_REGEXP.test(email)); // List of invalid emails
-    if (emailsErrors.length) {
-      return { [MULTIPLE_EMAILS_ERROR_KEY]: emailsErrors };
+    const emailErrors = emails.filter((email) => !EMAIL_REGEXP.test(email)); // List of invalid emails
+    if (emailErrors.length) {
+      return {
+        [MULTIPLE_EMAILS_ERROR_KEY]: { fieldValues: emailErrors } satisfies StringArrayError,
+      };
     }
 
     if (required && !emails.length) {
