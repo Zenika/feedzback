@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -8,12 +9,13 @@ import { environment } from '../../environments/environment';
     '[class.app-version--hover]': 'hover',
     '(mouseover)': 'hover = true',
     '(mouseleave)': 'hover = false',
+    '(click)': 'copyToClipboard()',
   },
   standalone: true,
   template: '{{ appVersion }}',
   styles: `
     .app-version {
-      cursor: default;
+      cursor: copy;
       z-index: 2;
       position: fixed;
       right: 1.25em;
@@ -33,7 +35,13 @@ import { environment } from '../../environments/environment';
   encapsulation: ViewEncapsulation.None,
 })
 export class VersionComponent {
+  private document = inject(DOCUMENT);
+
   readonly appVersion = environment.appVersion;
 
   hover = false;
+
+  copyToClipboard() {
+    this.document.defaultView?.navigator.clipboard.writeText(this.appVersion);
+  }
 }
