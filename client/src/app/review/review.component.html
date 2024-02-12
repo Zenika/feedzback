@@ -12,9 +12,10 @@
       <div class="app-review__sentiment-container">
         @for (iconSentiment of iconSentiments; track iconSentiment; let sentimentNote = $index) {
           <span
-            [ngClass]="getClass(sentimentNote + 1)"
             (click)="chooseNote(sentimentNote + 1)"
-            (keyup)="chooseNote(sentimentNote + 1)"
+            role="presentation"
+            tabIndex="-1"
+            [ngClass]="getClass(sentimentNote + 1)"
           >
           </span>
         }
