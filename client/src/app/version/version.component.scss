@@ -2,14 +2,14 @@
   cursor: copy;
 
   position: absolute;
-  right: 0.25em;
-  bottom: 0.25em;
+  right: 0.125em;
+  bottom: 0em;
 
   line-height: 1em;
   font-size: 0.75rem;
 
   transition: opacity 250ms ease;
-  opacity: 0.25;
+  opacity: 0.2;
 
   &--hover {
     opacity: 1;
