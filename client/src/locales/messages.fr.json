@@ -90,7 +90,7 @@
     "FieldError.MultipleEmails": "Emails invalides : ",
     "FieldError.Pattern": "Format invalide",
     "FieldError.Required": "Champ obligatoire",
-    "Message.ConfirmBeforeSubmitFeedback": "Une fois envoyé, votre feedZback ne peut plus être modifié.",
+    "Message.ConfirmBeforeSubmitFeedback": "Une fois confirmé, votre feedZback ne peut plus être modifié.",
     "Message.DraftSaved": "Brouillon sauvegardé.",
     "Message.ErrorOccured": "Une erreur s'est produite.",
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": " Ce feedZback est partagé avec le manager de votre collègue ",

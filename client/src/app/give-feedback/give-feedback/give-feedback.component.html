@@ -23,7 +23,7 @@
 <form
   [formGroup]="form"
   [appConfirmBeforeSubmit]="onSubmit.bind(this)"
-  appConfirmBeforeSubmitContent="Une fois envoyé, votre feedZback ne peut plus être modifié."
+  appConfirmBeforeSubmitContent="Une fois confirmé, votre feedZback ne peut plus être modifié."
   i18n-appConfirmBeforeSubmitContent="@@Message.ConfirmBeforeSubmitFeedback"
 >
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />

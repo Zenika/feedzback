@@ -90,7 +90,7 @@
     "FieldError.MultipleEmails": "Invalid emails: ",
     "FieldError.Pattern": "Invalid format",
     "FieldError.Required": "Required field",
-    "Message.ConfirmBeforeSubmitFeedback": "Once sent, your feedZback cannot be modified.",
+    "Message.ConfirmBeforeSubmitFeedback": "Once confirmed, your feedZback cannot be modified.",
     "Message.DraftSaved": "Draft saved.",
     "Message.ErrorOccured": "An error occured.",
     "Message.FeedbackIsSharedWithTheManagerOfYourColleague": "This feedZback is shared with the manager of your colleague",
