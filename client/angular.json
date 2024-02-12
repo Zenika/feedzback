@@ -74,6 +74,27 @@
                 }
               ]
             },
+            "dev-remote": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1.5mb",
+                  "maximumError": "2.5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2.5kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-remote.ts"
+                }
+              ]
+            },
             "development": {
               "localize": ["fr"],
               "optimization": false,
