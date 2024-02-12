@@ -1,4 +1,5 @@
 import { FirebaseOptions } from 'firebase/app';
+import { APP_VERSION } from '../../app-version';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: 'AIzaSyBJuOG9cIfUN1s1d6uYvB2eo1zKHDFXKZY',
@@ -12,6 +13,7 @@ const firebaseOptions: FirebaseOptions = {
 
 export const environment = {
   production: true,
+  appVersion: APP_VERSION,
   firebaseOptions,
   apiBaseUrl: 'https://server.feedzback.znk.io',
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
@@ -20,5 +22,6 @@ export const environment = {
     localize: false,
     requestTemplate: false,
     autocompleteEmail: true,
+    appVersion: false,
   },
 };

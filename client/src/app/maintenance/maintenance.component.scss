@@ -1,0 +1,14 @@
+@use '../app.scss' as app;
+
+.app-maintenance {
+  font-size: 2rem;
+
+  &__icon {
+    color: app.$primary-color;
+    transform: scale(6);
+  }
+
+  &__message {
+    font-size: 1.5rem;
+  }
+}

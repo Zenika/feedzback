@@ -1,5 +1,13 @@
-<app-layout>
-  <app-header appLayoutHeader />
-  <router-outlet appLayoutMain />
-  <app-footer appLayoutFooter />
-</app-layout>
+@if (serverVersionMatches) {
+  <app-layout>
+    <app-header appLayoutHeader />
+    <router-outlet appLayoutMain />
+    <app-footer appLayoutFooter />
+  </app-layout>
+} @else {
+  <app-layout>
+    <app-maintenance appLayoutMain />
+  </app-layout>
+}
+
+<app-version />

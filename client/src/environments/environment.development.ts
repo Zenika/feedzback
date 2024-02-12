@@ -1,4 +1,5 @@
 import { FirebaseOptions } from 'firebase/app';
+import { APP_VERSION } from '../../app-version';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: 'AIzaSyAZ_4GHJ6mMUBYxMVTYjIENvUla5uIY6C4',
@@ -12,6 +13,7 @@ const firebaseOptions: FirebaseOptions = {
 
 export const environment = {
   production: false,
+  appVersion: APP_VERSION,
   firebaseOptions,
   apiBaseUrl: 'http://localhost:3000',
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
@@ -20,5 +22,6 @@ export const environment = {
     localize: false,
     requestTemplate: true,
     autocompleteEmail: true,
+    appVersion: true,
   },
 };
