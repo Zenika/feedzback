@@ -135,14 +135,14 @@ workflows:
           requires:
             - node-test-client
             - node-lint-client
-          environment: dev
+          environment: development
       ### ...and deploying it using Firebase CLI.
       - deploy-client:
           name: deploy-dev-client
           filters: *filter-dev
           requires:
             - build-client-for-dev
-          environment: dev
+          environment: development
           context: feedzback-dev
       # ---------------------------------------------------------------------------
       # This section will only run for staging deployments: either "main" branch or
