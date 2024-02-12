@@ -5,6 +5,5 @@ import { VersionService } from './version.service';
 @Module({
   controllers: [VersionController],
   providers: [VersionService],
-  exports: [VersionService],
 })
 export class VersionModule {}
