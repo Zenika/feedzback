@@ -13,7 +13,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../shared/auth';
-import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
 import { ReviewService } from '../shared/review/review.service';
 
 export const NoteValidator = (control: AbstractControl): ValidationErrors | null =>
@@ -31,7 +30,6 @@ export const NoteValidator = (control: AbstractControl): ValidationErrors | null
     MatInputModule,
     MatButtonModule,
     CommonModule,
-    ValidationErrorMessagePipe,
   ],
 
   templateUrl: './review.component.html',
@@ -46,7 +44,7 @@ export class ReviewComponent {
   private formBuilder = inject(NonNullableFormBuilder);
 
   protected authService = inject(AuthService);
-  
+
   protected reviewService = inject(ReviewService);
 
   protected iconSentiments = [
