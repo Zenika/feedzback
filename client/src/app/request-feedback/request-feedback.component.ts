@@ -15,16 +15,16 @@ import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { StringArrayError } from '../shared/form';
-import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
+import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip/dialog-tooltip.directive';
+import { MessageComponent } from '../shared/ui/message/message.component';
+import { StringArrayError } from '../shared/validation';
+import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import {
   MULTIPLE_EMAILS_ERROR_KEY,
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../shared/form/multiple-emails';
-import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip/dialog-tooltip.directive';
-import { MessageComponent } from '../shared/ui/message/message.component';
+} from '../shared/validation/multiple-emails';
 import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
 import { REQUEST_TEMPLATES } from './request-feedback.config';
 

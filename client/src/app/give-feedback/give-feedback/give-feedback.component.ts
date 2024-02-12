@@ -13,13 +13,16 @@ import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../shared/form/allowed-email-domains';
-import { forbiddenValuesValidatorFactory } from '../../shared/form/forbidden-values';
-import { ValidationErrorMessagePipe } from '../../shared/form/validation-error-message';
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
 import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
+import {
+  ALLOWED_EMAIL_DOMAINS,
+  allowedEmailDomainsValidatorFactory,
+} from '../../shared/validation/allowed-email-domains';
+import { forbiddenValuesValidatorFactory } from '../../shared/validation/forbidden-values';
+import { ValidationErrorMessagePipe } from '../../shared/validation/validation-error-message';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ValidationErrorMessagePipe } from '../../../shared/form/validation-error-message';
+import { ValidationErrorMessagePipe } from '../../../shared/validation/validation-error-message';
 
 @Component({
   selector: 'app-give-feedback-details',
