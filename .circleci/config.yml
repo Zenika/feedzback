@@ -55,6 +55,7 @@ workflows:
               only:
                 - /^v\d+\.\d+\.\d+$/
                 - /^staging-\d+\.\d+\.\d+$/
+                - /^dev-\d+\.\d+\.\d+$/
       - node-install:
           name: node-install-<< matrix.module >>
           filters: *filter-every-build
@@ -102,6 +103,47 @@ workflows:
             - node-lint-server
           context: feedzback-staging
           tag-and-store-container: false
+      # ---------------------------------------------------------------------------
+      # This section will only run for dev deployments: 
+      # tags that match "dev-X.Y.Z"
+      # ---------------------------------------------------------------------------
+      ### Building Server container with Google Cloud Build...
+      - build-server:
+          name: build-server-for-dev
+          filters: &filter-dev
+            branches:
+              only: main
+            tags:
+              only: /^dev-\d+\.\d+\.\d+$/
+          requires:
+            - node-test-server
+            - node-lint-server
+          context: feedzback-dev
+          tag-and-store-container: true
+      ### ...and deploying it to Google Cloud Run.
+      - deploy-server:
+          name: deploy-dev-server
+          filters: *filter-dev
+          requires:
+            - build-server-for-dev
+          service-name: feedzback-dev
+          context: feedzback-dev
+      ### Building Client with CircleCI...
+      - build-client:
+          name: build-client-for-dev
+          filters: *filter-dev
+          requires:
+            - node-test-client
+            - node-lint-client
+          environment: dev
+      ### ...and deploying it using Firebase CLI.
+      - deploy-client:
+          name: deploy-dev-client
+          filters: *filter-dev
+          requires:
+            - build-client-for-dev
+          environment: dev
+          context: feedzback-dev
       # ---------------------------------------------------------------------------
       # This section will only run for staging deployments: either "main" branch or
       # tags that match "staging-X.Y.Z"
