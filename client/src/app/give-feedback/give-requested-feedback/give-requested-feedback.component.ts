@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from '../../shared/auth';
+import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
@@ -29,6 +30,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     MatTooltipModule,
     MatIconModule,
     MatInputModule,
+    ConfirmBeforeSubmitDirective,
     DialogTooltipDirective,
     MessageComponent,
     GiveFeedbackDetailsComponent,

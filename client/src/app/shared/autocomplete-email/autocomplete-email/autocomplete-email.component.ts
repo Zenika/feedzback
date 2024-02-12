@@ -5,10 +5,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
-import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../form/allowed-email-domains';
-import { ValidationErrorMessagePipe } from '../../form/validation-error-message/validation-error-message.pipe';
 import { PeopleService } from '../../people/people.service';
 import { AvatarComponent } from '../../ui/avatar/avatar.component';
+import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../validation/allowed-email-domains';
+import { ValidationErrorMessagePipe } from '../../validation/validation-error-message';
 
 @Component({
   selector: 'app-autocomplete-email',

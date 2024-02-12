@@ -5,11 +5,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../shared/auth';
 import { AutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { EmployeeService } from '../shared/employee/employee.service';
-import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/form/allowed-email-domains';
-import { forbiddenValuesValidatorFactory } from '../shared/form/forbidden-values';
-import { ValidationErrorMessagePipe } from '../shared/form/validation-error-message';
 import { NotificationService } from '../shared/notification/notification.service';
 import { MessageComponent } from '../shared/ui/message/message.component';
+import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains';
+import { forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
+import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message';
 
 @Component({
   selector: 'app-settings',

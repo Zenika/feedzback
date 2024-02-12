@@ -18,14 +18,14 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
+import { PeopleService } from '../../people/people.service';
+import { AvatarComponent } from '../../ui/avatar/avatar.component';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../../form/multiple-emails';
-import { ValidationErrorMessagePipe } from '../../form/validation-error-message/validation-error-message.pipe';
-import { PeopleService } from '../../people/people.service';
-import { AvatarComponent } from '../../ui/avatar/avatar.component';
+} from '../../validation/multiple-emails';
+import { ValidationErrorMessagePipe } from '../../validation/validation-error-message';
 
 @Component({
   selector: 'app-multi-autocomplete-email',

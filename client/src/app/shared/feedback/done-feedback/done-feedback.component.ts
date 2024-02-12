@@ -3,8 +3,8 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { AllowedEmailDomainsPipe } from '../../form/allowed-email-domains';
 import { MessageComponent } from '../../ui/message/message.component';
+import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { Feedback, FeedbackType } from '../feedback.types';
 
