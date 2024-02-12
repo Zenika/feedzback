@@ -1,3 +1,5 @@
+@use '../app.scss' as app;
+
 .app-review {
   /* Box model */
   display: flex;
@@ -21,15 +23,65 @@
 
   &__note {
     /* Box model */
-    margin: 2rem 2rem 1rem 0;
+    display: inline-block;
+    position: relative;
+    margin: 2rem;
     transform: scale(2);
+    min-width: 32px;
+    min-height: 32px;
+    width: 32px;
+    height: 32px;
 
     /* Visuel */
     opacity: 0.5;
+    background-image: url('/assets/images/sentiments.png');
+    background-size: 704px 32px;
+    background-repeat: no-repeat;
+    cursor: pointer;
 
-    &:hover,
-    &--selected {
+    @include app.media-breakpoint-down(md) {
+      transform: scale(1);
+      margin: 0.5rem;
+    }
+
+    &:hover {
       opacity: 1;
+    }
+
+    &__1 {
+      background-position: 0px 0;
+      &--selected {
+        background-position: -160px 0;
+        opacity: 1;
+      }
+    }
+    &__2 {
+      background-position: -32px 0;
+      &--selected {
+        background-position: -192px 0;
+        opacity: 1;
+      }
+    }
+    &__3 {
+      background-position: -64px 0;
+      &--selected {
+        background-position: -224px 0;
+        opacity: 1;
+      }
+    }
+    &__4 {
+      background-position: -96px 0;
+      &--selected {
+        background-position: -256px 0;
+        opacity: 1;
+      }
+    }
+    &__5 {
+      background-position: -128px 0;
+      &--selected {
+        background-position: -288px 0;
+        opacity: 1;
+      }
     }
   }
 }

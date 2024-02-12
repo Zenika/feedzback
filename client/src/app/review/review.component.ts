@@ -75,10 +75,18 @@ export class ReviewComponent {
   }
 
   protected open() {
-    this.matDialog.open(this.reviewStep1Tmpl, { width: '50%' });
+    this.matDialog.open(this.reviewStep1Tmpl, { width: '600px' });
   }
 
   protected chooseNote(newNote: number) {
     this.form.controls.note.setValue(newNote);
+  }
+
+  protected getClass(index: number) {
+    return {
+      'app-review__note': true,
+      [`app-review__note__${index}`]: true,
+      [`app-review__note__${index}--selected`]: this.form.controls.note.value === index,
+    };
   }
 }
