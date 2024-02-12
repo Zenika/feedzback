@@ -1,0 +1,17 @@
+.app-version {
+  cursor: copy;
+
+  position: absolute;
+  right: 0.25em;
+  bottom: 0.25em;
+
+  line-height: 1em;
+  font-size: 0.75rem;
+
+  transition: opacity 250ms ease;
+  opacity: 0.25;
+
+  &--hover {
+    opacity: 1;
+  }
+}
