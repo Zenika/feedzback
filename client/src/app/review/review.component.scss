@@ -1,0 +1,35 @@
+.app-review {
+  /* Box model */
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  line-height: 1.2;
+
+  /* Font */
+  font-size: 0.875rem;
+
+  &__sentiment-container {
+    /* Box model */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__note {
+    /* Box model */
+    margin: 2rem 2rem 1rem 0;
+    transform: scale(2);
+
+    /* Visuel */
+    opacity: 0.5;
+
+    &:hover,
+    &--selected {
+      opacity: 1;
+    }
+  }
+}
