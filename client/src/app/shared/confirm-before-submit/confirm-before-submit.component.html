@@ -1,11 +1,11 @@
-<h2 mat-dialog-title i18n="@@Component.ConfirmBeforeSubmit.Title">Demande de confirmation</h2>
+<h2 mat-dialog-title i18n="@@Component.ConfirmBeforeSubmit.Title">Confirmation demandée</h2>
 
 <mat-dialog-content>
   @if (data.content) {
     {{ data.content }}
   } @else {
     <ng-container i18n="@@Component.ConfirmBeforeSubmit.Content">
-      L'opération va être traitée dès confirmation.
+      La requête sera traitée si vous décidez de confirmer.
     </ng-container>
   }
 </mat-dialog-content>

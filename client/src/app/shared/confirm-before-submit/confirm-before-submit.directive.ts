@@ -1,6 +1,6 @@
 import { Directive, inject, input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, tap } from 'rxjs';
+import { filter } from 'rxjs';
 import { ConfirmBeforeSubmitComponent } from './confirm-before-submit.component';
 import { ConfirmBeforeSubmitData } from './confirm-before-submit.types';
 
@@ -26,10 +26,7 @@ export class ConfirmBeforeSubmitDirective {
     this.matDialog
       .open(ConfirmBeforeSubmitComponent, { data })
       .afterClosed()
-      .pipe(
-        filter((confirm?: boolean) => (confirm === undefined ? false : confirm)),
-        tap(() => this.submit()()),
-      )
-      .subscribe();
+      .pipe(filter((confirm?: boolean) => (confirm === undefined ? false : confirm)))
+      .subscribe(() => this.submit()());
   }
 }
