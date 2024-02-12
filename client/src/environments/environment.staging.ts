@@ -22,5 +22,6 @@ export const environment = {
     localize: false,
     requestTemplate: true,
     autocompleteEmail: true,
+    appVersion: true,
   },
 };

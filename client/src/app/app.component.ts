@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { environment } from '../environments/environment';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
@@ -15,5 +16,7 @@ import { VersionService } from './version/version.service';
   imports: [RouterOutlet, FooterComponent, HeaderComponent, LayoutModule, MaintenanceComponent, VersionComponent],
 })
 export class AppComponent {
-  readonly serverVersionMatches = inject(VersionService).serverVersionMatches;
+  readonly hasAppVersionFeature = environment.featureFlipping.appVersion;
+
+  readonly serverVersionMatches = this.hasAppVersionFeature ? inject(VersionService).serverVersionMatches : true;
 }
