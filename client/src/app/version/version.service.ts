@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { firstValueFrom, map, tap } from 'rxjs';
+import { catchError, firstValueFrom, map, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -20,6 +20,7 @@ export class VersionService {
       this.httpClient.get<{ appVersion: string }>(`${this.apiBaseUrl}/version`).pipe(
         map(({ appVersion }) => appVersion),
         tap((serverAppVersion) => (this.serverAppVersion = serverAppVersion)),
+        catchError(() => of('unknown')),
       ),
     );
   }
