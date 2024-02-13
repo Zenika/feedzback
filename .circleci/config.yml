@@ -126,7 +126,7 @@ workflows:
           filters: *filter-dev
           requires:
             - build-server-for-dev
-          service-name: feedzback-dev
+          service-name: feedzback-server
           context: feedzback-dev
       ### Building Client with CircleCI...
       - build-client:
