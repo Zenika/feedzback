@@ -21,7 +21,7 @@ export const environment = {
     autocompleteEmail: true,
     appVersion: true,
     requestTemplate: false,
-    manager: false,
     localize: false,
+    manager: false,
   },
 };
