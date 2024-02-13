@@ -13,7 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../shared/auth';
-import { ReviewService } from '../shared/review/review.service';
+import { ReviewService } from './review.service';
+import { SentimentComponent } from './sentiment/sentiment.component';
 
 export const NoteValidator = (control: AbstractControl): ValidationErrors | null =>
   control.value > 0 && control.value <= 5 ? null : { required: 'Une note est requise.' };
@@ -22,6 +23,9 @@ export const NoteValidator = (control: AbstractControl): ValidationErrors | null
   selector: 'app-review',
   standalone: true,
   host: { class: 'app-review' },
+  templateUrl: './review.component.html',
+  styleUrl: './review.component.scss',
+  encapsulation: ViewEncapsulation.None,
   imports: [
     MatIconModule,
     MatDialogModule,
@@ -30,11 +34,8 @@ export const NoteValidator = (control: AbstractControl): ValidationErrors | null
     MatInputModule,
     MatButtonModule,
     CommonModule,
+    SentimentComponent,
   ],
-
-  templateUrl: './review.component.html',
-  styleUrl: './review.component.scss',
-  encapsulation: ViewEncapsulation.None,
 })
 export class ReviewComponent {
   @ViewChild('reviewStep1') reviewStep1Tmpl!: TemplateRef<unknown>;
@@ -56,8 +57,8 @@ export class ReviewComponent {
   ];
 
   protected form = this.formBuilder.group({
-    note: [0, [Validators.required, NoteValidator]],
-    comment: [],
+    note: this.formBuilder.control<number | undefined>(3, [Validators.required, NoteValidator]),
+    comment: [''],
   });
 
   protected get canReview() {
@@ -77,9 +78,4 @@ export class ReviewComponent {
   protected open() {
     this.matDialog.open(this.reviewStep1Tmpl, { width: '600px' });
   }
-
-  protected chooseNote(newNote: number) {
-    this.form.controls.note.setValue(newNote);
-  }
-
 }

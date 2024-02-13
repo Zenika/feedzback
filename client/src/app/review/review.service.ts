@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { AuthService } from '../auth';
+import { environment } from '../../environments/environment';
+import { AuthService } from '../shared/auth';
 import { SetReviewDto } from './review.dto';
 
 @Injectable({

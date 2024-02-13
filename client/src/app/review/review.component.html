@@ -10,17 +10,9 @@
     <h2 mat-dialog-title i18n="@@Title.Review.Step1">Evaluez votre expérience sur Feedzback.</h2>
     <div mat-dialog-content>
       <div class="app-review__sentiment-container">
-        @for (iconSentiment of iconSentiments; track iconSentiment; let sentimentNote = $index) {
-          <mat-icon
-            class="material-symbols-outlined app-review__note"
-            [ngClass]="{ 'app-review__note--selected': form.controls.note.value === sentimentNote + 1 }"
-            (click)="chooseNote(sentimentNote + 1)"
-            ><span>
-              <span> {{ iconSentiment }}</span>
-            </span>
-          </mat-icon>
-        }
+        <app-sentiment [formControl]="form.controls.note" [scale]="1" />
       </div>
+
       @if (form.controls.note) {
         <div>
           <mat-form-field appearance="outline" class="gbl-form-field">
