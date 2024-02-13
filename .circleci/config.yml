@@ -236,6 +236,11 @@ jobs:
           command: mkdir -p workspace
       - checkout:
           path: workspace
+      - run:
+          name: Set version
+          command: |
+            if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/client/src/app/app.version.ts; fi
+            if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/server/src/app.version.ts; fi
       - persist_to_workspace:
           root: workspace
           paths:
