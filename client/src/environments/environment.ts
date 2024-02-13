@@ -19,7 +19,7 @@ export const environment = {
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
   featureFlipping: {
     autocompleteEmail: true,
-    appVersion: false,
+    appVersion: true,
     requestTemplate: false,
     manager: false,
     localize: false,

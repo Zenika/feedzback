@@ -24,6 +24,12 @@ h1.gbl-page-title {
       transform: scale(2);
     }
   }
+
+  @include m.media-breakpoint-down(sm) {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
 }
 
 /* ----- Link ----- */

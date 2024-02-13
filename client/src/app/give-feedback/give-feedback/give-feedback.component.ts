@@ -1,5 +1,5 @@
 import { Component, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, effect, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { filter, map, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
+import { BreakpointService } from '../../shared/breakpoint';
 import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
@@ -67,6 +68,8 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   private notificationService = inject(NotificationService);
 
   leaveFormService = inject(LeaveFormService);
+
+  protected device = toSignal(inject(BreakpointService).device$);
 
   private getQueryParam(key: string): string {
     return this.activatedRoute.snapshot.queryParams[key] ?? '';

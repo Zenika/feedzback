@@ -1,12 +1,29 @@
 @if (hasDraft()) {
-  <button mat-raised-button color="primary" class="float-right" (click)="openDraftDialog()">
-    <mat-icon>draft</mat-icon>
-    <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
-  </button>
+  @if (device() !== 'mobile') {
+    <button mat-raised-button color="primary" class="float-right ms-4" (click)="openDraftDialog()">
+      <mat-icon>edit_note</mat-icon>
+      <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
+    </button>
+  } @else {
+    <button
+      mat-mini-fab
+      color="primary"
+      class="!absolute right-5 top-5"
+      matTooltipPosition="left"
+      matTooltip="Brouillons"
+      i18n-matTooltip="@@Title.Drafts"
+      (click)="openDraftDialog()"
+    >
+      <mat-icon>edit_note</mat-icon>
+    </button>
+  }
 }
 
 <ng-template #draftDialogTmpl>
-  <h1 mat-dialog-title i18n="@@Title.Drafts">Brouillons</h1>
+  <h1 mat-dialog-title>
+    <mat-icon class="me-2 scale-125 align-middle">edit_note</mat-icon>
+    <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
+  </h1>
   <div mat-dialog-content>
     <app-give-feedback-draft />
   </div>
