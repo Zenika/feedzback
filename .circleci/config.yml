@@ -302,7 +302,7 @@ jobs:
             - run:
                 name: Set server version
                 command: |
-                  if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/server/src/app.version.ts; fi
+                  if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./server/src/app.version.ts; fi
             - run:
                 name: Submitting Docker image to build and tagging it
                 working_directory: server
