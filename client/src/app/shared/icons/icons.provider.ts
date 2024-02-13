@@ -7,7 +7,7 @@ import { svgIconNames } from './icons.constants';
 export const provideSvgIcons = (): FactoryProvider => ({
   provide: APP_INITIALIZER,
   useFactory: (iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, baseHref: string) => (): Promise<void> => {
-    // Set font class according to the NPM package installed: "material-symbols"
+    // Set font class according to the NPM package installed: "@material-symbols/font-600"
     // Values: 'material-symbols-outlined', 'material-symbols-rounded' or 'material-symbols-sharp'.
     // For more infos: https://fonts.google.com/icons
     iconRegistry.setDefaultFontSetClass('material-symbols-rounded');
