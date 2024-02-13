@@ -302,7 +302,6 @@ jobs:
             - run:
                 name: Set server version
                 command: |
-                  if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/client/src/app/app.version.ts; fi
                   if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/server/src/app.version.ts; fi
             - run:
                 name: Submitting Docker image to build and tagging it
@@ -354,9 +353,9 @@ jobs:
       - restore_workspace_and_npm_cache:
           directory: client
       - run:
-        name: Set server version
-        command: |
-          if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/client/src/app/app.version.ts; fi
+          name: Set server version
+          command: |
+            if [[ $CIRCLE_TAG != "" ]]; then echo "export const APP_VERSION = '$CIRCLE_TAG';" > ./workspace/client/src/app/app.version.ts; fi
       - run:
           working_directory: workspace/client
           name: Building << parameters.environment >> package
