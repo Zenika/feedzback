@@ -15,7 +15,7 @@ export const environment = {
   production: false,
   appVersion: APP_VERSION,
   firebaseOptions,
-  apiBaseUrl: 'http://localhost:3000',
+  apiBaseUrl: 'https://server.dev.feedzback.znk.io',
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
   featureFlipping: {
     autocompleteEmail: true,
