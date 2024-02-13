@@ -111,10 +111,10 @@ workflows:
       - build-server:
           name: build-server-for-dev
           filters: &filter-dev
-            branches:
-              only: main
             tags:
               only: /^dev-\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
           requires:
             - node-test-server
             - node-lint-server
