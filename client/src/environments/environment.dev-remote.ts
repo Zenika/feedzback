@@ -1,4 +1,5 @@
 import { FirebaseOptions } from 'firebase/app';
+import { APP_VERSION } from '../app/app.version';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: 'AIzaSyBY-HULaNWkEPCoQWCIy3vOB2KB98z4HGs',
