@@ -23,7 +23,6 @@ export const environment = {
     requestTemplate: true,
     autocompleteEmail: true,
     review: true,
-
     appVersion: true,
   },
 };
