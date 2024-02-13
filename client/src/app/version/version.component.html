@@ -1,0 +1,9 @@
+<span
+  role="presentation"
+  class="app-version__value"
+  [class.app-version__value--mismatch]="versionsMismatch()"
+  [matTooltip]="tooltip()"
+  (click)="toClipboard()"
+>
+  {{ clientAppVersion }}
+</span>

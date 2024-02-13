@@ -1,27 +1,29 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, computed, inject } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { VersionService } from './version.service';
 
 @Component({
   selector: 'app-version',
-  host: {
-    class: 'app-version',
-    '[class.app-version--hover]': 'hover',
-    '(mouseover)': 'hover = true',
-    '(mouseleave)': 'hover = false',
-    '(click)': 'toClipboard()',
-  },
+  host: { class: 'app-version' },
   standalone: true,
-  template: '{{ clientAppVersion }}',
+  imports: [MatTooltipModule],
+  templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class VersionComponent {
+  private versionService = inject(VersionService);
+
+  protected readonly clientAppVersion = this.versionService.clientAppVersion;
+
+  protected versionsMismatch = this.versionService.versionsMismatch;
+
+  protected tooltip = computed(() =>
+    this.versionsMismatch() ? `🚨 Server version: ${this.versionService.serverAppVersion}` : '',
+  );
+
   private document = inject(DOCUMENT);
-
-  readonly clientAppVersion = inject(VersionService).clientAppVersion;
-
-  hover = false;
 
   toClipboard() {
     this.document.defaultView?.navigator.clipboard.writeText(this.clientAppVersion);

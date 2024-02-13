@@ -1,17 +1,37 @@
 .app-version {
-  cursor: copy;
-
+  cursor: pointer;
+  overflow: hidden;
   position: absolute;
   right: 0.125em;
   bottom: 0em;
-
   line-height: 1em;
   font-size: 0.75rem;
 
-  transition: opacity 250ms ease;
-  opacity: 0.2;
+  &__value {
+    transition: opacity 250ms ease;
+    opacity: 0.2;
 
-  &--hover {
+    &:hover {
+      opacity: 1;
+    }
+
+    &--mismatch {
+      animation: AppVersionMismatch 1s ease infinite;
+    }
+  }
+}
+
+@keyframes AppVersionMismatch {
+  0% {
+    opacity: 0.2;
+    color: inherit;
+  }
+  50% {
     opacity: 1;
+    color: crimson;
+  }
+  100% {
+    opacity: 0.2;
+    color: inherit;
   }
 }
