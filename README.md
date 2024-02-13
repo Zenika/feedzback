@@ -96,7 +96,7 @@ The CI is configured to check that:
 
 Tagging a revision `dev-X.Y.Z` where `X`, `Y`, and `Z` are integers, the full stack is then deployed to dev:
 
-- backend on Google Cloud Run: [Staging Backend Health Check](https://<TODO>.a.run.app/health)
+- backend on Google Cloud Run: [Dev Backend Health Check](https://server.dev.feedzback.znk.io/health)
 - frontend on Firebase hosting: [Staging app](https://dev.feedzback.znk.io)
 
 
