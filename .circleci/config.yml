@@ -294,7 +294,7 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
-          version: 463.0.0
+          version: latest
       - checkout
       - when:
           condition: << parameters.tag-and-store-container >>
