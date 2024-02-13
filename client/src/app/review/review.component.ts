@@ -82,11 +82,4 @@ export class ReviewComponent {
     this.form.controls.note.setValue(newNote);
   }
 
-  protected getClass(index: number) {
-    return {
-      'app-review__note': true,
-      [`app-review__note__${index}`]: true,
-      [`app-review__note__${index}--selected`]: this.form.controls.note.value === index,
-    };
-  }
 }
