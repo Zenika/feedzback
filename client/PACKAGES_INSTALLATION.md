@@ -203,7 +203,7 @@ import '@angular/localize/init';
 #### Add other packages
 
 ```shell
-npm i @fontsource/nunito canvas-confetti firebase js-cookie material-symbols
+npm i @fontsource/nunito canvas-confetti firebase js-cookie @material-symbols/font-600
 
 npm i -D @types/canvas-confetti @types/js-cookie
 ```

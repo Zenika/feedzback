@@ -31,10 +31,10 @@
     "@angular/platform-browser-dynamic": "^17.1.2",
     "@angular/router": "^17.1.2",
     "@fontsource/nunito": "^5.0.16",
+    "@material-symbols/font-600": "^0.14.7",
     "canvas-confetti": "^1.9.2",
     "firebase": "^10.8.0",
     "js-cookie": "^3.0.5",
-    "material-symbols": "^0.14.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
