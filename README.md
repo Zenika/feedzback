@@ -28,8 +28,8 @@ FIREBASE_PRIVATE_KEY=<SECRET_VALUE>
 FIREBASE_CLIENT_EMAIL=<SECRET_VALUE>
 MAILGUN_USERNAME=<SECRET_VALUE>
 MAILGUN_KEY=<SECRET_VALUE>
-CRYPTO_IV=<SECRET_VALUE>
-CRYPTO_KEY=<SECRET_VALUE>
+CRYPTO_SECRET_IV=<SECRET_VALUE>
+CRYPTO_SECRET_KEY=<SECRET_VALUE>
 ```
 
 **FIREBASE_** values are coming from the console project.
@@ -51,10 +51,10 @@ https://console.cloud.google.com/run/deploy/europe-west1/feedzback-staging?hl=en
 Inside "Edit Container", tab "Variables and Secrets" you will find values to fill MAILGUN_USERNAME and 
 MAILGUN_KEY
 
-CRYPTO_IV and CRYPTO_KEY are secret values used to encrypt data.
+CRYPTO_SECRET_IV and CRYPTO_SECRET_KEY are secret values used to encrypt data.
 You can set them to the following values for local development:
-- CRYPTO_IV=feedzback
-- CRYPTO_KEY=feedzback
+- CRYPTO_SECRET_IV=feedzback
+- CRYPTO_SECRET_KEY=feedzback
 
 #### Installation
 
