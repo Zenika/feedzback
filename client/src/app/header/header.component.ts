@@ -1,12 +1,14 @@
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { GiveRequestedFeedbackListService } from '../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { AuthService } from '../shared/auth';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { LanguageService } from '../shared/i18n/language';
@@ -26,6 +28,7 @@ import { BurgerComponent } from './burger/burger.component';
     RouterLink,
     RouterLinkActive,
     RouterLinkWithHref,
+    MatBadgeModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
@@ -44,6 +47,8 @@ export class HeaderComponent {
   protected languageService = inject(LanguageService);
 
   protected isManager = toSignal(inject(EmployeeService).isManager$, { initialValue: false });
+
+  protected receivedRequest = inject(GiveRequestedFeedbackListService).receivedRequest;
 
   protected userInfo$ = this.authService.userInfo$;
 

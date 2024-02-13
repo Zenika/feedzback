@@ -16,6 +16,7 @@ import { NotificationService } from '../../shared/notification/notification.serv
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
 import { MessageComponent } from '../../shared/ui/message/message.component';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
+import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
@@ -56,6 +57,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private feedbackService = inject(FeedbackService);
 
+  private giveRequestedFeedbackListService = inject(GiveRequestedFeedbackListService);
+
   private notificationService = inject(NotificationService);
 
   leaveFormService = inject(LeaveFormService);
@@ -95,6 +98,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
         this.disableForm(false);
         this.notificationService.showError();
       } else {
+        this.giveRequestedFeedbackListService.refresh();
         this.leaveFormService.unregisterForm();
         this.feedbackId = this.isAnonymous ? undefined : this.request?.id;
         this.navigateToSuccess();
