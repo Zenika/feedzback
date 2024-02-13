@@ -20,22 +20,4 @@
     align-items: center;
     margin-bottom: 1rem;
   }
-
-  &__note {
-    /* Box model */
-    margin: 2rem 2rem 1rem 0;
-    transform: scale(2);
-    @include app.media-breakpoint-down(md) {
-      transform: scale(1.5);
-      margin: 0.5rem;
-    }
-
-    /* Visuel */
-    opacity: 0.5;
-
-    &:hover,
-    &--selected {
-      opacity: 1;
-    }
-  }
 }

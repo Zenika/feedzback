@@ -10,7 +10,7 @@
     <h2 mat-dialog-title i18n="@@Title.Review.Step1">Evaluez votre expérience sur Feedzback.</h2>
     <div mat-dialog-content>
       <div class="app-review__sentiment-container">
-        <app-sentiment [formControl]="form.controls.note" [scale]="1" />
+        <app-sentiment [formControl]="form.controls.note" [scale]="3" />
       </div>
 
       @if (form.controls.note) {

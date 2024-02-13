@@ -6,8 +6,8 @@
   gap: 0rem;
 
   &--scale-2 {
-    padding: 0.75rem;
-    gap: 1.5rem;
+    padding: 1rem;
+    gap: 2rem;
   }
 
   &--scale-2 &__note {
@@ -15,8 +15,8 @@
   }
 
   &--scale-3 {
-    padding: 1.5rem;
-    gap: 3rem;
+    padding: 2rem;
+    gap: 4rem;
   }
 
   &--scale-3 &__note {
@@ -43,5 +43,12 @@
       cursor: default;
       opacity: 0.5 !important;
     }
+    @include app.media-breakpoint-down(sm) {
+      transform: scale(1.5) !important;
+    }
+  }
+  @include app.media-breakpoint-down(sm) {
+    gap: 1rem !important;
+    padding: 0.5rem !important;
   }
 }
