@@ -104,7 +104,7 @@ workflows:
           context: feedzback-staging
           tag-and-store-container: false
       # ---------------------------------------------------------------------------
-      # This section will only run for dev deployments: 
+      # This section will only run for dev deployments:
       # tags that match "dev-X.Y.Z"
       # ---------------------------------------------------------------------------
       ### Building Server container with Google Cloud Build...
@@ -294,7 +294,7 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
-          version: 463.0.0
+          version: latest
       - checkout
       - when:
           condition: << parameters.tag-and-store-container >>
@@ -322,7 +322,7 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
-          version: 463.0.0
+          version: latest
       - run:
           working_directory: server
           name: Running gcloud run deploy
