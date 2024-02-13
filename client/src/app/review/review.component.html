@@ -11,13 +11,14 @@
     <div mat-dialog-content>
       <div class="app-review__sentiment-container">
         @for (iconSentiment of iconSentiments; track iconSentiment; let sentimentNote = $index) {
-          <span
+          <mat-icon
+            class="material-symbols-outlined app-review__note"
+            [ngClass]="{ 'app-review__note--selected': form.controls.note.value === sentimentNote + 1 }"
             (click)="chooseNote(sentimentNote + 1)"
-            role="presentation"
-            tabIndex="-1"
-            [ngClass]="getClass(sentimentNote + 1)"
-          >
-          </span>
+            ><span>
+              <span> {{ iconSentiment }}</span>
+            </span>
+          </mat-icon>
         }
       </div>
       @if (form.controls.note) {
