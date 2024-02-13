@@ -28,7 +28,9 @@
 
     &__item {
       position: relative;
-      padding: 1.25em 0.25em;
+      // Note: 0.75em (margin-top) + 0.5em (padding-top) == 1.25em (padding-bottom)
+      margin-top: 0.75em;
+      padding: 0.5em 0.25em 1.25em 0.25em;
       text-decoration: none;
       color: rgb(0 0 0 / 0.6);
       transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);

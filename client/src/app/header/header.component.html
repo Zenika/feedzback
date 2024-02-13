@@ -32,6 +32,7 @@
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
       routerLink="/give-requested"
+      [matBadge]="receivedRequest()?.length || undefined"
       i18n="@@Feedback.Reply"
     >
       Répondre
