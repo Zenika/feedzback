@@ -322,7 +322,7 @@ jobs:
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
-          version: 463.0.0
+          version: latest
       - run:
           working_directory: server
           name: Running gcloud run deploy
