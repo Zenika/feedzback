@@ -305,7 +305,7 @@ jobs:
             - run:
                 name: Set server version
                 command: |
-                  if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}-${CIRCLE_BUILD_NUM}"; fi
+                  if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}-${CIRCLE_WORKFLOW_ID}"; fi
                   echo "export const APP_VERSION = '$APP_VERSION';" > ./server/src/app.version.ts
             - run:
                 name: Submitting Docker image to build and tagging it
@@ -359,7 +359,7 @@ jobs:
       - run:
           name: Set client version
           command: |
-            if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}-${CIRCLE_BUILD_NUM}"; fi
+            if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}-${CIRCLE_WORKFLOW_ID}"; fi
             echo "export const APP_VERSION = '$APP_VERSION';" > ./workspace/client/src/app/app.version.ts
       - run:
           working_directory: workspace/client
