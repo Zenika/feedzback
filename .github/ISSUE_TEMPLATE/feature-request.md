@@ -1,16 +1,18 @@
 ---
 name: Feature request
-about: Demande de fonctionnalité
+about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
 
-# Besoin
+# Need from the user's point of view
 
-Description claire du contexte et du besoin.
+A clear and precise description of the context and the need.
 
-# Solution
+_OR_
 
-Description de la solution proposée.
+# Technical improvement from the developer's point of view
+
+A clear and precise description of the context and benefits of the improvement.
