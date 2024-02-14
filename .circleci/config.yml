@@ -142,6 +142,7 @@ workflows:
           filters: *filter-dev
           requires:
             - build-client-for-dev
+            - deploy-dev-server
           environment: dev
           context: feedzback-dev
       # ---------------------------------------------------------------------------
@@ -183,6 +184,7 @@ workflows:
           filters: *filter-staging
           requires:
             - build-client-for-staging
+            - deploy-staging-server
           environment: staging
           context: feedzback-staging
       # ---------------------------------------------------------------------------
@@ -224,6 +226,7 @@ workflows:
           filters: *filter-only-production
           requires:
             - build-client-for-production
+            - deploy-production-server
           environment: production
           context: feedzback-production
 
