@@ -6,8 +6,6 @@ export type Review = {
   updatedAt: number;
 };
 
-// ----- ReviewEncryptedFields -----
-
-export type ReviewEncryptedFields = Pick<Review, 'comment'>;
-
-export const reviewEncryptedFields: (keyof ReviewEncryptedFields)[] = ['comment'] as const;
+export type ReviewCollection = {
+  reviews: Review[];
+};

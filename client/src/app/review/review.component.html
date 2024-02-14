@@ -1,7 +1,7 @@
-@if (canReview) {
+@if (canReview | async) {
   <a class="gbl-link gbl-link--no-underline app-review" role="presentation" (click)="open()">
     <mat-icon>reviews</mat-icon>
-    <ng-container> Donnez-nous notre avis</ng-container>
+    <ng-container> Donnez-nous notre avis sur l'application Feedzback</ng-container>
   </a>
 }
 

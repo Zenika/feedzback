@@ -57,18 +57,17 @@ export class ReviewComponent {
   ];
 
   protected form = this.formBuilder.group({
-    note: this.formBuilder.control<number | undefined>(3, [Validators.required, NoteValidator]),
+    note: this.formBuilder.control<number | undefined>(undefined, [Validators.required, NoteValidator]),
     comment: [''],
   });
 
   protected get canReview() {
-    return this.authService.userSnapshotEmail;
+    return this.authService.isKnownUser$;
   }
 
   protected onSubmit() {
     this.reviewService
       .setReview({
-        reviewerEmail: this.authService.userSnapshotEmail!,
         note: this.form.controls.note.value!,
         comment: this.form.controls.comment.value,
       })

@@ -1,12 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ReviewComponent } from '../review/review.component';
 
 @Component({
   selector: 'app-footer',
   host: { class: 'app-footer' },
   standalone: true,
-  imports: [MatIconModule, ReviewComponent],
+  imports: [MatIconModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
   encapsulation: ViewEncapsulation.None,
