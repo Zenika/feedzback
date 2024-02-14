@@ -51,10 +51,10 @@ export class SentimentComponent implements ControlValueAccessor {
     }
   }
 
-  scale = input<1 | 2 | 3>(1);
+  size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
 
   get hostCss() {
-    return `app-sentiment app-sentiment--scale-${this.scale()}`;
+    return `app-sentiment app-sentiment--size-${this.size()}`;
   }
 
   /* ----- ControlValueAccessor ----- */

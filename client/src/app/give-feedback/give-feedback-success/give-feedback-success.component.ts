@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, ViewEncapsulation, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
@@ -25,6 +26,8 @@ export class GiveFeedbackSuccessComponent implements AfterViewInit {
   private router = inject(Router);
 
   protected hasReviewFeature = environment.featureFlipping.review;
+
+  protected isKnownUser = toSignal(this.authService.isKnownUser$);
 
   protected signOut() {
     this.authService.signOut().subscribe();

@@ -1,23 +1,12 @@
 @use '../app.scss' as app;
 
 .app-review {
-  /* Box model */
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  align-items: center;
-  line-height: 1.2;
+  display: block;
+  max-width: 360px;
+  margin: 0 auto;
+  text-align: center;
 
-  /* Font */
-  font-size: 0.875rem;
-
-  &__sentiment-container {
-    /* Box model */
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 0.5rem;
-    align-items: center;
-    margin-bottom: 1rem;
+  &__title {
+    font-weight: normal !important;
   }
 }

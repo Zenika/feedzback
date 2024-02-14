@@ -1,44 +1,20 @@
-@if (canReview | async) {
-  <a class="gbl-link gbl-link--no-underline app-review" role="presentation" (click)="open()">
-    <mat-icon>reviews</mat-icon>
-    <ng-container> Donnez-nous notre avis sur l'application Feedzback</ng-container>
-  </a>
-}
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h3 class="app-review__title" i18n="@@Component.Review.Title">Évaluez l'application FeedZback</h3>
 
-<ng-template #reviewStep1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2 mat-dialog-title i18n="@@Title.Review.Step1">Evaluez votre expérience sur Feedzback.</h2>
-    <div mat-dialog-content>
-      <div class="app-review__sentiment-container">
-        <app-sentiment [formControl]="form.controls.note" [scale]="3" />
-      </div>
+  <app-sentiment [formControl]="form.controls.note" class="mb-5" />
 
-      @if (form.controls.note) {
-        <div>
-          <mat-form-field appearance="outline" class="gbl-form-field">
-            <textarea
-              matInput
-              [formControl]="form.controls.comment"
-              rows="3"
-              placeholder="Dites-nous en plus..."
-              i18n-placeholder="@@Component.ReviewComponent.Comment.Placeholder"
-            ></textarea>
-          </mat-form-field>
-        </div>
-      }
-      <mat-dialog-actions align="end">
-        <button
-          mat-button
-          [mat-dialog-close]="true"
-          color="primary"
-          cdkFocusInitial
-          [disabled]="form.invalid"
-          i18n="@@Action.Continue"
-          (click)="onSubmit()"
-        >
-          Envoyer
-        </button>
-      </mat-dialog-actions>
-    </div>
-  </form>
-</ng-template>
+  <mat-form-field appearance="outline" class="!mb-0 w-full">
+    <mat-label i18n="@@Component.Review.Comment">Commentaire</mat-label>
+    <textarea
+      [formControl]="form.controls.comment"
+      matInput
+      rows="2"
+      placeholder="Décrivez votre expérience..."
+      i18n-placeholder="@@Component.Review.CommentPlaceholder"
+    ></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="form.invalid || form.disabled" (click)="onSubmit()">
+    <ng-container i18n="@@Action.Send">Envoyer</ng-container>
+  </button>
+</form>
