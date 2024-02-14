@@ -1,0 +1,20 @@
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard, AuthService } from 'src/core/auth';
+import { ReviewDbService } from './review-db/review-db.service';
+import { GiveReviewDto } from './review.dto';
+
+@Controller('review')
+export class ReviewController {
+  constructor(
+    private reviewDbService: ReviewDbService,
+    private authService: AuthService,
+  ) {}
+
+  @UseGuards(AuthGuard)
+  @Post()
+  async setRewiew(@Body() { note, comment }: GiveReviewDto) {
+    const reviewerEmail = this.authService.userEmail!;
+
+    return await this.reviewDbService.setReview({ reviewerEmail, note, comment });
+  }
+}
