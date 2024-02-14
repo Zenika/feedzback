@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { FirebaseService } from '../../core/firebase';
 import { Collection } from './review-db.config';
 import { SetReviewParams } from './review-db.params';
-import { ReviewCollection } from './review-db.types';
+import { Review, ReviewCollection, ReviewStats } from './review-db.types';
 
 @Injectable()
 export class ReviewDbService {
@@ -35,5 +35,26 @@ export class ReviewDbService {
     }
 
     return true;
+  }
+
+  async getStats() {
+    const snapshot = await this.reviewCollection.get();
+
+    const splits = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 };
+
+    snapshot.forEach((doc) => {
+      (doc.data().reviews as Review[]).forEach((review) => (splits[review.note] = splits[review.note] + 1));
+    });
+
+    const { nb, tt } = Object.entries(splits).reduce(
+      (acc, [key, value]) => ({
+        nb: acc.nb + value,
+        tt: acc.tt + Number(key) * value,
+      }),
+      { nb: 0, tt: 0 },
+    );
+    const stats: ReviewStats = { average: nb ? tt / nb : 0, splits };
+
+    return stats;
   }
 }

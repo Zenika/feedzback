@@ -9,3 +9,7 @@ export type Review = {
 export type ReviewCollection = {
   reviews: Review[];
 };
+export type ReviewStats = {
+  splits: Record<ReviewNote, number>;
+  average: number;
+};
