@@ -1,0 +1,10 @@
+@for (sentimentIcon of sentimentIcons; track sentimentIcon; let index = $index) {
+  <mat-icon
+    class="app-sentiment__note"
+    [class.app-sentiment__note--selected]="note === index + 1"
+    [class.app-sentiment__note--disabled]="disabled"
+    (click)="giveSentiment(index + 1)"
+  >
+    {{ sentimentIcon }}
+  </mat-icon>
+}

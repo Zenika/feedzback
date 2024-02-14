@@ -1,0 +1,12 @@
+@use '../app.scss' as app;
+
+.app-review {
+  display: block;
+  max-width: 360px;
+  margin: 0 auto;
+  text-align: center;
+
+  &__title {
+    font-weight: normal !important;
+  }
+}

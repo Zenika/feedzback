@@ -6,6 +6,10 @@
     <p>{{ state.receiverEmail }}</p>
   </div>
 
+  @if (hasReviewFeature && isKnownUser()) {
+    <app-review />
+  }
+
   <div class="gbl-info__buttons">
     @if (state.feedbackId) {
       <button mat-stroked-button color="primary" [routerLink]="['/history/id', state.feedbackId]">

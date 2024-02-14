@@ -1,0 +1,64 @@
+@use '../../app.scss' as app;
+
+.app-sentiment {
+  display: inline-flex;
+  align-items: center;
+
+  // Overall width: 140px;
+  &--size-sm {
+    gap: 0.283rem;
+    padding: 0;
+  }
+  &--size-sm &__note {
+    transform: scale(1);
+  }
+
+  // Overall width: 210px;
+  &--size-md {
+    padding: 0.25rem;
+    gap: 1.25rem;
+  }
+  &--size-md &__note {
+    transform: scale(1.5);
+  }
+
+  // Overall width: 280px;
+  &--size-lg {
+    padding: 0.6rem;
+    gap: 2.17rem;
+  }
+  &--size-lg &__note {
+    transform: scale(2);
+  }
+
+  // Overall width: 350px;
+  &--size-xl {
+    padding: 0.95rem;
+    gap: 3.1rem;
+  }
+  &--size-xl &__note {
+    transform: scale(2.5);
+  }
+
+  &__note {
+    cursor: pointer;
+    opacity: 0.5;
+    transition:
+      opacity 250ms ease,
+      color 250ms ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &--selected {
+      opacity: 1;
+      color: app.$primary-color;
+    }
+
+    &--disabled {
+      cursor: default;
+      opacity: 0.5 !important;
+    }
+  }
+}
