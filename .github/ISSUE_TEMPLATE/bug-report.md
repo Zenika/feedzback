@@ -1,21 +1,21 @@
 ---
 name: Bug report
-about: Rapport de bug
+about: Create a report to help us improve
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
 
-# Description du bug
+# Bug description
 
-Une description claire et concise du bug, avec si c'est pertinent, des screenshots.
+A clear and concise description of the context and the bug, with screenshots if relevant.
 
-# Etapes pour reproduire
+# Steps to follow to reproduce the bug
 
-1. Aller sur la page...
-2. Cliquer sur...
+1. Visite page...
+2. Click on...
 
-# Comportement attendu
+# Expected behaviour
 
-Une description claire et concise du comportement attendu.
+A clear, concise description of the expected behaviour.
