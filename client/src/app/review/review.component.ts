@@ -1,12 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
-import {
-  AbstractControl,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,17 +9,13 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../shared/auth';
 import { ReviewService } from './review.service';
 import { SentimentComponent } from './sentiment/sentiment.component';
-
-export const NoteValidator = (control: AbstractControl): ValidationErrors | null =>
-  control.value > 0 && control.value <= 5 ? null : { required: 'Une note est requise.' };
+import { SentimentNote } from './sentiment/sentiment.types';
+import { requiredSentimentValidator } from './sentiment/sentiment.validator';
 
 @Component({
   selector: 'app-review',
-  standalone: true,
   host: { class: 'app-review' },
-  templateUrl: './review.component.html',
-  styleUrl: './review.component.scss',
-  encapsulation: ViewEncapsulation.None,
+  standalone: true,
   imports: [
     MatIconModule,
     MatDialogModule,
@@ -36,6 +26,9 @@ export const NoteValidator = (control: AbstractControl): ValidationErrors | null
     CommonModule,
     SentimentComponent,
   ],
+  templateUrl: './review.component.html',
+  styleUrl: './review.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class ReviewComponent {
   @ViewChild('reviewStep1') reviewStep1Tmpl!: TemplateRef<unknown>;
@@ -48,16 +41,8 @@ export class ReviewComponent {
 
   protected reviewService = inject(ReviewService);
 
-  protected iconSentiments = [
-    'sentiment_extremely_dissatisfied',
-    'sentiment_dissatisfied',
-    'sentiment_neutral',
-    'sentiment_satisfied',
-    'sentiment_very_satisfied',
-  ];
-
   protected form = this.formBuilder.group({
-    note: this.formBuilder.control<number | undefined>(undefined, [Validators.required, NoteValidator]),
+    note: this.formBuilder.control<SentimentNote>(0, [requiredSentimentValidator]),
     comment: [''],
   });
 
@@ -66,12 +51,13 @@ export class ReviewComponent {
   }
 
   protected onSubmit() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.form.disable();
     this.reviewService
-      .setReview({
-        note: this.form.controls.note.value!,
-        comment: this.form.controls.comment.value,
-      })
-      .subscribe();
+      .setReview(this.form.value as Required<typeof this.form.value>)
+      .subscribe(() => this.form.enable());
   }
 
   protected open() {

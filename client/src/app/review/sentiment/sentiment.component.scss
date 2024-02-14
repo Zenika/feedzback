@@ -9,7 +9,6 @@
     padding: 1rem;
     gap: 2rem;
   }
-
   &--scale-2 &__note {
     transform: scale(2);
   }
@@ -18,7 +17,6 @@
     padding: 2rem;
     gap: 4rem;
   }
-
   &--scale-3 &__note {
     transform: scale(3);
   }
@@ -43,12 +41,14 @@
       cursor: default;
       opacity: 0.5 !important;
     }
-    @include app.media-breakpoint-down(sm) {
-      transform: scale(1.5) !important;
-    }
+
+    //@include app.media-breakpoint-down(sm) {
+    //  transform: scale(1.5) !important;
+    //}
   }
-  @include app.media-breakpoint-down(sm) {
-    gap: 1rem !important;
-    padding: 0.5rem !important;
-  }
+
+  //@include app.media-breakpoint-down(sm) {
+  //  gap: 1rem !important;
+  //  padding: 0.5rem !important;
+  //}
 }

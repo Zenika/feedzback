@@ -29,21 +29,27 @@ export class SentimentComponent implements ControlValueAccessor {
     'sentiment_very_satisfied',
   ] as const;
 
-  @Input() note: SentimentNote = undefined;
+  @Input() note: SentimentNote = 0;
 
   @Output() noteChange = new EventEmitter<SentimentNote>();
 
-  protected giveSentiment(note: number | undefined) {
+  protected disabled = false;
+
+  protected touched = false;
+
+  protected giveSentiment(note: number) {
     if (this.disabled) {
       return;
     }
-    this.note = this.note === note ? undefined : (note as SentimentNote);
+    this.note = this.note === note ? 0 : (note as SentimentNote);
     this.noteChange.emit(this.note);
     this.onChange(this.note);
-    this.onTouched();
-  }
 
-  protected disabled = false;
+    if (!this.touched) {
+      this.onTouched();
+      this.touched = true;
+    }
+  }
 
   scale = input<1 | 2 | 3>(1);
 
@@ -53,11 +59,11 @@ export class SentimentComponent implements ControlValueAccessor {
 
   /* ----- ControlValueAccessor ----- */
 
-  protected onChange: (note: number | undefined) => undefined = () => undefined;
+  protected onChange: (note: SentimentNote) => undefined = () => undefined;
 
   protected onTouched = (): void => undefined;
 
-  registerOnChange(onChange: (note: number | undefined) => undefined): void {
+  registerOnChange(onChange: (note: SentimentNote) => undefined): void {
     this.onChange = onChange;
   }
 

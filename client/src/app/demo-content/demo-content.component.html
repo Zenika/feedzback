@@ -1,3 +1,21 @@
+<div>
+  <h3>Using Input/Output</h3>
+  <app-sentiment [(note)]="sentimentNote" />
+  <p>Note: {{ sentimentNote }}</p>
+</div>
+
+<div>
+  <h3>Using FormControl</h3>
+  <app-sentiment [formControl]="sentimentNoteCtrl" />
+  <p>
+    Note: {{ sentimentNoteCtrl.value }}
+
+    @if (sentimentNoteCtrl.hasError('required')) {
+      (field is required)
+    }
+  </p>
+</div>
+
 <p i18n="@@Demo.LoremIpsum" data-test-id="lorem-ipsum">{{ loremIpsum }}</p>
 
 <div class="mat-headline-1">Headline-1. Lorem ipsum</div>
