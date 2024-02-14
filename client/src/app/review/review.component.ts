@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,9 +37,11 @@ export class ReviewComponent {
 
   protected notificationService = inject(NotificationService);
 
+  protected readonly commentMaxLength = 500;
+
   protected form = this.formBuilder.group({
     note: this.formBuilder.control<SentimentNote>(0, [requiredSentimentValidator]),
-    comment: [''],
+    comment: ['', [Validators.maxLength(this.commentMaxLength)]],
   });
 
   protected onSubmit() {
