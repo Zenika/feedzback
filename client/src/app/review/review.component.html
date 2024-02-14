@@ -1,0 +1,44 @@
+@if (canReview | async) {
+  <a class="gbl-link gbl-link--no-underline app-review" role="presentation" (click)="open()">
+    <mat-icon>reviews</mat-icon>
+    <ng-container> Donnez-nous notre avis sur l'application Feedzback</ng-container>
+  </a>
+}
+
+<ng-template #reviewStep1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2 mat-dialog-title i18n="@@Title.Review.Step1">Evaluez votre expérience sur Feedzback.</h2>
+    <div mat-dialog-content>
+      <div class="app-review__sentiment-container">
+        <app-sentiment [formControl]="form.controls.note" [scale]="3" />
+      </div>
+
+      @if (form.controls.note) {
+        <div>
+          <mat-form-field appearance="outline" class="gbl-form-field">
+            <textarea
+              matInput
+              [formControl]="form.controls.comment"
+              rows="3"
+              placeholder="Dites-nous en plus..."
+              i18n-placeholder="@@Component.ReviewComponent.Comment.Placeholder"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      }
+      <mat-dialog-actions align="end">
+        <button
+          mat-button
+          [mat-dialog-close]="true"
+          color="primary"
+          cdkFocusInitial
+          [disabled]="form.invalid"
+          i18n="@@Action.Continue"
+          (click)="onSubmit()"
+        >
+          Envoyer
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </form>
+</ng-template>

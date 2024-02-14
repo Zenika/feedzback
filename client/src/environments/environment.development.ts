@@ -23,5 +23,6 @@ export const environment = {
     requestTemplate: true,
     localize: true,
     manager: true,
+    review: true,
   },
 };
