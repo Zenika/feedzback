@@ -1,5 +1,7 @@
-import { Review } from './review-db.types';
+import { ReviewNote } from './review-db.types';
 
-export type ReviewParams = Pick<Review, 'note' | 'comment'>;
-
-export type SetReviewParams = { reviewerEmail: string } & ReviewParams;
+export type PostReviewParams = {
+  reviewerEmail: string;
+  note: ReviewNote;
+  comment: string;
+};

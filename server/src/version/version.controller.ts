@@ -9,6 +9,7 @@ export class VersionController {
 
   @Get('')
   get() {
-    return { appVersion: this.versionService.appVersion };
+    const { appVersion } = this.versionService;
+    return { appVersion };
   }
 }

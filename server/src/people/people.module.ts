@@ -8,7 +8,7 @@ import { PeopleService } from './people.service';
 
 @Module({
   imports: [AppConfigModule, AuthModule, GoogleApisModule],
-  controllers: [PeopleController],
   providers: [PeopleService, PeopleCacheService],
+  controllers: [PeopleController],
 })
 export class PeopleModule {}
