@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmailService } from '../core/email';
 import { EmployeeDbService } from '../employee/employee-db';
@@ -7,12 +8,15 @@ import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   DeleteFeedbackDraftDto,
   FeedbackListMapDto,
+  FeedbackRequestAgainDto,
   FeedbackRequestDto,
   GiveFeedbackDto,
   GiveRequestedFeedbackDto,
   ManagedFeedbacksDto,
 } from './feedback.dto';
 
+@ApiBearerAuth()
+@ApiTags('Feedback')
 @Controller('feedback')
 export class FeedbackController {
   constructor(
@@ -23,6 +27,7 @@ export class FeedbackController {
     private employeeDbService: EmployeeDbService,
   ) {}
 
+  @ApiOperation({ summary: 'Ping the server and database connections' })
   @Get('ping')
   async ping() {
     return { ok: await this.feedbackDbService.ping() };
@@ -30,6 +35,7 @@ export class FeedbackController {
 
   // ----- Request feedback and give requested feedback -----
 
+  @ApiOperation({ summary: 'Request feedback from one or more people' })
   @UseGuards(AuthGuard)
   @Post('request')
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
@@ -45,9 +51,10 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 
+  @ApiOperation({ summary: 'Send a reminder email about a requested feedback' })
   @UseGuards(AuthGuard)
   @Post('request-again')
-  async requestAgain(@Body() { feedbackId }: { feedbackId: string }) {
+  async requestAgain(@Body() { feedbackId }: FeedbackRequestAgainDto) {
     const receiverEmail = this.authService.userEmail!;
 
     const requestWithToken = await this.feedbackDbService.requestAgain(feedbackId, receiverEmail);
@@ -59,6 +66,10 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
   }
 
+  @ApiOperation({
+    summary: 'Get the details of a requested feedback from the secret token ID',
+    description: 'Note that this endpoint is public and does not require authentication.',
+  })
   @Get('check-request/:token')
   async checkRequest(@Param('token') tokenId: string) {
     const request = await this.feedbackDbService.checkRequest(tokenId);
@@ -70,6 +81,7 @@ export class FeedbackController {
     return { request, draft };
   }
 
+  @ApiOperation({ summary: 'Reveal the secret token ID from the feedback ID for the authenticated user' })
   @UseGuards(AuthGuard)
   @Get('reveal-request-token/:id')
   async revealRequestTokenId(@Param('id') feedbackId: string) {
@@ -81,6 +93,7 @@ export class FeedbackController {
     return { token: tokenId } as TokenObject;
   }
 
+  @ApiOperation({ summary: 'Get drafts of the responses to requested feedbacks' })
   @UseGuards(AuthGuard)
   @Get('give-requested/draft')
   getRequestedDraftList() {
@@ -88,6 +101,7 @@ export class FeedbackController {
     return this.feedbackDbService.getDraftList(giverEmail, FeedbackRequestDraftType);
   }
 
+  @ApiOperation({ summary: 'Save the response to a requested feedback as a draft' })
   @Post('give-requested/draft')
   async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
     const success = await this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
@@ -96,6 +110,7 @@ export class FeedbackController {
     }
   }
 
+  @ApiOperation({ summary: 'Give requested feedback' })
   @Post('give-requested')
   async giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
     const infos = await this.feedbackDbService.giveRequested(token, { positive, negative, comment });
@@ -107,6 +122,7 @@ export class FeedbackController {
 
   // ----- Give spontaneous feedback -----
 
+  @ApiOperation({ summary: 'Get drafts of spontaneous feedbacks' })
   @UseGuards(AuthGuard)
   @Get('give/draft')
   getDraftList() {
@@ -114,6 +130,7 @@ export class FeedbackController {
     return this.feedbackDbService.getDraftList(giverEmail, FeedbackDraftType);
   }
 
+  @ApiOperation({ summary: 'Save a spontaneous feedback as a draft' })
   @UseGuards(AuthGuard)
   @Post('give/draft')
   giveDraft(@Body() dto: GiveFeedbackDto) {
@@ -121,6 +138,7 @@ export class FeedbackController {
     return this.feedbackDbService.giveDraft({ giverEmail, ...dto });
   }
 
+  @ApiOperation({ summary: 'Give spontaneous feedback' })
   @UseGuards(AuthGuard)
   @Post('give')
   async give(@Body() dto: GiveFeedbackDto) {
@@ -139,6 +157,7 @@ export class FeedbackController {
 
   // ----- feedback draft (common tasks) -----
 
+  @ApiOperation({ summary: 'Delete a feedback draft' })
   @UseGuards(AuthGuard)
   @Delete('draft/:type/:receiverEmailOrToken')
   deleteDraft(@Param() { type, receiverEmailOrToken }: DeleteFeedbackDraftDto) {
@@ -148,6 +167,7 @@ export class FeedbackController {
 
   // ----- View feedbacks (requested and given) -----
 
+  @ApiOperation({ summary: 'Get the list of feedback mapped by type' })
   @UseGuards(AuthGuard)
   @Get('list-map')
   getListMap(@Query() { types }: FeedbackListMapDto) {
@@ -155,6 +175,7 @@ export class FeedbackController {
     return this.feedbackDbService.getListMap(viewerEmail, types);
   }
 
+  @ApiOperation({ summary: 'Get feedback by ID' })
   @UseGuards(AuthGuard)
   @Get('document/:id')
   async getDocument(@Param('id') id: string) {
@@ -166,6 +187,7 @@ export class FeedbackController {
     return document;
   }
 
+  @ApiOperation({ summary: 'Get the list of feedback shared with the authenticated user viewed as manager' })
   @UseGuards(AuthGuard)
   @Get('managed/:managedEmail')
   async getManagedFeedbacks(@Param() { managedEmail }: ManagedFeedbacksDto) {

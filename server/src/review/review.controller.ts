@@ -1,8 +1,11 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from 'src/core/auth';
 import { ReviewDbService } from './review-db/review-db.service';
 import { GiveReviewDto } from './review.dto';
 
+@ApiBearerAuth()
+@ApiTags('Review')
 @Controller('review')
 export class ReviewController {
   constructor(

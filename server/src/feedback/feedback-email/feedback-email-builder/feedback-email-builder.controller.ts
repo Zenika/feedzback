@@ -1,6 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { FeedbackEmailBuilderService } from './feedback-email-builder.service';
 
+@ApiTags('FeedbackEmailBuilder')
 @Controller('feedback-email-builder')
 export class FeedbackEmailBuilderController {
   constructor(private feedbackEmailBuilderService: FeedbackEmailBuilderService) {}
