@@ -1,4 +1,4 @@
-export type SetReviewDto = {
+export type PostReviewDto = {
   note: number;
-  comment: string | null;
+  comment: string;
 };

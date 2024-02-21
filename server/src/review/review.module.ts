@@ -4,7 +4,7 @@ import { ReviewDbModule } from './review-db/review-db.module';
 import { ReviewController } from './review.controller';
 
 @Module({
-  imports: [ReviewDbModule, AuthModule],
+  imports: [AuthModule, ReviewDbModule],
   controllers: [ReviewController],
 })
 export class ReviewModule {}

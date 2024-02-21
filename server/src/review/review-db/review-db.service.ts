@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { FieldValue } from 'firebase-admin/firestore';
 import { FirebaseService } from '../../core/firebase';
 import { Collection } from './review-db.config';
-import { SetReviewParams } from './review-db.params';
-import { Review, ReviewCollection, ReviewStats } from './review-db.types';
+import { PostReviewParams } from './review-db.params';
+import { AllReviewStats, Review, ReviewNote } from './review-db.types';
+import { buildEmptyPercentagePerNote } from './review-db.utils';
 
 @Injectable()
 export class ReviewDbService {
@@ -12,49 +14,48 @@ export class ReviewDbService {
     return this.firebaseService.db.collection(Collection.review);
   }
 
-  async setReview({ reviewerEmail, note, comment = null }: SetReviewParams) {
-    const initalData = { reviews: [] };
-    const reviewerEmailDocumentRef = this.reviewCollection.doc(reviewerEmail);
-    const reviewerEmailDocument = await reviewerEmailDocumentRef.get();
-
-    const oldData = reviewerEmailDocument.data() ?? initalData;
-
-    const oldReviews = oldData.reviews;
-
-    const data: ReviewCollection = {
-      reviews: [{ note, comment, updatedAt: Date.now() }],
-    };
-
-    /**
-     * We handle a unique review
-     */
-    if (oldReviews.length > 0) {
-      await reviewerEmailDocumentRef.update(data);
-    } else {
-      await reviewerEmailDocumentRef.create(data);
-    }
-
-    return true;
+  async postReview({ reviewerEmail, note, comment }: PostReviewParams) {
+    const review: Review = { note, comment, updatedAt: Date.now() };
+    await this.reviewCollection.doc(reviewerEmail).set({ reviews: FieldValue.arrayUnion(review) }, { merge: true });
   }
 
   async getStats() {
-    const snapshot = await this.reviewCollection.get();
+    let numberOfReviews = 0;
+    let score = 0;
+    const scorePerNote = buildEmptyPercentagePerNote();
 
-    const splits = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 };
-
-    snapshot.forEach((doc) => {
-      (doc.data().reviews as Review[]).forEach((review) => (splits[review.note] = splits[review.note] + 1));
+    const reviewQuery = await this.reviewCollection.get();
+    reviewQuery.forEach((reviewDoc) => {
+      const lastReview = (reviewDoc.data().reviews as Review[]).pop();
+      if (!lastReview) {
+        return;
+      }
+      numberOfReviews += 1;
+      score += lastReview.note;
+      scorePerNote[lastReview.note] += 1;
     });
 
-    const { nb, tt } = Object.entries(splits).reduce(
-      (acc, [key, value]) => ({
-        nb: acc.nb + value,
-        tt: acc.tt + Number(key) * value,
-      }),
-      { nb: 0, tt: 0 },
-    );
-    const stats: ReviewStats = { average: nb ? tt / nb : 0, splits };
+    if (numberOfReviews === 0) {
+      return {
+        numberOfReviews,
+        averageOutOfFive: 0,
+        percentagePerNote: scorePerNote,
+      } satisfies AllReviewStats;
+    }
 
-    return stats;
+    const averageOutOfFive = Math.round((10 * score) / numberOfReviews) / 10;
+
+    const percentagePerNote = buildEmptyPercentagePerNote();
+    for (const key in scorePerNote) {
+      const noteKey = key as unknown as ReviewNote;
+      const noteValue = scorePerNote[noteKey];
+      percentagePerNote[noteKey] = Math.round((1000 * noteValue) / numberOfReviews) / 10;
+    }
+
+    return {
+      numberOfReviews,
+      averageOutOfFive,
+      percentagePerNote,
+    } satisfies AllReviewStats;
   }
 }

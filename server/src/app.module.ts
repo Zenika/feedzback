@@ -5,12 +5,12 @@ import { AppConfigModule } from './core/config';
 import { ContextMiddleware, ContextModule } from './core/context';
 import { CryptoModule } from './core/crypto/crypto.module';
 import { GoogleApisModule } from './core/google-apis';
-import { VersionModule } from './core/version/version.module';
 import { EmployeeModule } from './employee';
 import { FeedbackModule } from './feedback';
 import { HealthModule } from './health';
 import { PeopleModule } from './people';
-import { ReviewModule } from './review/review.module';
+import { ReviewModule } from './review';
+import { VersionModule } from './version';
 
 @Module({
   imports: [

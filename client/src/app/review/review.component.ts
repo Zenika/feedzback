@@ -49,7 +49,7 @@ export class ReviewComponent {
       return;
     }
     this.form.disable();
-    this.reviewService.setReview(this.form.value as Required<typeof this.form.value>).subscribe(() => {
+    this.reviewService.postReview(this.form.value as Required<typeof this.form.value>).subscribe(() => {
       this.form.enable();
       this.notificationService.show(
         $localize`:@@Component.Review.Success:Votre évaluation a bien été enregistrée.`,

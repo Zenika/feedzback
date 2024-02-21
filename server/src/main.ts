@@ -5,7 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { Request } from 'express';
 import { AppModule } from './app.module';
-import { AppConfig } from './core/config';
+import { AppConfig, AppEnv } from './core/config';
 import { setupSwagger } from './core/swagger';
 
 async function bootstrap() {
@@ -21,16 +21,19 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, { cors });
 
-  setupSwagger(app);
-
   app.use(cookieParser());
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const configService: ConfigService<AppConfig> = app.get(ConfigService);
 
-  const port = configService.get('serverPort');
+  if (configService.get<AppEnv>('appEnv') !== 'production') {
+    setupSwagger(app);
+  }
+
+  const port = configService.get('serverPort', { infer: true })!;
 
   await app.listen(port);
 }
+
 bootstrap();
