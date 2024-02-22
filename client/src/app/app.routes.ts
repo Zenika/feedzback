@@ -73,6 +73,12 @@ export const routes: Routes = [
     title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
   },
   {
+    path: 'manager/:feedbackId',
+    loadComponent: () => import('./manager/manager-feedback-item/manager-feedback-item.component'),
+    canActivate: [authGuard, managerGuard],
+    title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
+  },
+  {
     path: 'sign-in',
     component: SignInComponent,
     canActivate: [signInGuard],

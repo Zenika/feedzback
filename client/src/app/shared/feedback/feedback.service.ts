@@ -8,11 +8,13 @@ import {
   Feedback,
   FeedbackDraft,
   FeedbackDraftType,
+  FeedbackItem,
   FeedbackListMap,
   FeedbackListType,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
+  FeedbackRequestItem,
   IdObject,
   TokenObject,
 } from './feedback.types';
@@ -137,11 +139,21 @@ export class FeedbackService {
     );
   }
 
-  getManagedFeedbacks(managedEmail: string) {
+  getManagedFeedbackList(managedEmail: string) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<Feedback[]>(`${this.apiBaseUrl}/feedback/managed/${managedEmail}`, {
-        headers,
-      }),
+      this.httpClient.get<(FeedbackItem | FeedbackRequestItem)[]>(
+        `${this.apiBaseUrl}/feedback/managed/${managedEmail}`,
+        { headers },
+      ),
+    );
+  }
+
+  getManagedFeedbackDocument(managedEmail: string, id: string) {
+    return this.authService.withBearerIdToken((headers) =>
+      this.httpClient.get<Feedback | FeedbackRequest | null>(
+        `${this.apiBaseUrl}/feedback/managed/${managedEmail}/${id}`,
+        { headers },
+      ),
     );
   }
 }

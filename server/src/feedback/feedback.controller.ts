@@ -12,7 +12,8 @@ import {
   FeedbackRequestDto,
   GiveFeedbackDto,
   GiveRequestedFeedbackDto,
-  ManagedFeedbacksDto,
+  ManagedFeedbackDocumentDto,
+  ManagedFeedbackListDto,
 } from './feedback.dto';
 
 @ApiBearerAuth()
@@ -190,13 +191,25 @@ export class FeedbackController {
   @ApiOperation({ summary: 'Get the list of feedback shared with the authenticated user viewed as manager' })
   @UseGuards(AuthGuard)
   @Get('managed/:managedEmail')
-  async getManagedFeedbacks(@Param() { managedEmail }: ManagedFeedbacksDto) {
+  async getManagedFeedbackList(@Param() { managedEmail }: ManagedFeedbackListDto) {
     const managerEmail = this.authService.userEmail!;
     const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;
     if (!managedEmails?.includes(managedEmail)) {
       throw new BadRequestException();
     }
-    return await this.feedbackDbService.getManagedFeedbacks(managedEmail);
+    return await this.feedbackDbService.getManagedFeedbackList(managedEmail);
+  }
+
+  @ApiOperation({ summary: 'Get feedback by ID shared with the authenticated user viewed as manager' })
+  @UseGuards(AuthGuard)
+  @Get('managed/:managedEmail/:feedbackId')
+  async getManagedFeedbackDocument(@Param() { managedEmail, feedbackId }: ManagedFeedbackDocumentDto) {
+    const managerEmail = this.authService.userEmail!;
+    const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;
+    if (!managedEmails?.includes(managedEmail)) {
+      throw new BadRequestException();
+    }
+    return await this.feedbackDbService.getManagedFeedbackDocument(managedEmail, feedbackId);
   }
 
   // ----- Shared tasks -----

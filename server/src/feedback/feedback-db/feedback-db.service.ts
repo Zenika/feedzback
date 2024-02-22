@@ -340,15 +340,33 @@ export class FeedbackDbService {
     return this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
   }
 
-  async getManagedFeedbacks(managedEmail: string) {
+  async getManagedFeedbackList(managedEmail: string) {
     const feedbackQuery = await this.feedbackCollection
       .where('receiverEmail', '==', managedEmail)
-      .where('status', '==', FeedbackStatus)
+      // .where('status', '==', FeedbackStatus) // TODO: validate this choice (to get also the requested ones...)
       .where('shared', '==', true)
+      .select(...feedbackItemFields)
       .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return (docsWithId(feedbackQuery.docs) as FeedbackWithId[]).map(this.decryptFeedback.bind(this));
+    return docsWithId(feedbackQuery.docs) as FeedbackWithId[];
+  }
+
+  async getManagedFeedbackDocument(
+    receiverEmail: string,
+    id: string,
+  ): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
+    const feedbackQuery = await this.feedbackCollection
+      .where(FieldPath.documentId(), '==', id)
+      .where('receiverEmail', '==', receiverEmail)
+      .get();
+
+    const feedbackDoc = feedbackQuery.docs.at(0);
+    if (!feedbackDoc) {
+      return null;
+    }
+
+    return this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
   }
 
   // ----- Encrypt and decrypt feedback -----
