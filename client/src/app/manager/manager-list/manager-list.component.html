@@ -12,10 +12,10 @@
   </mat-select>
 </mat-form-field>
 
-@if (sharedFeedbackItems(); as items) {
+@if (list(); as items) {
   @if (items?.length) {
     <app-manager-list-view [items]="items" />
-  } @else if (items !== null && managedEmail()) {
+  } @else if (managedEmail() !== root) {
     <div class="mt-4 flex items-center justify-center gap-2 italic opacity-50">
       <mat-icon>share_off</mat-icon>
       <ng-container i18n="@@Component.Manager.NoData">Aucun feedZback partagé...</ng-container>

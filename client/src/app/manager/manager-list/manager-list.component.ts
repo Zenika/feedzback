@@ -1,13 +1,11 @@
 import { Component, ViewEncapsulation, inject, input } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { of, switchMap } from 'rxjs';
 import { EmployeeService } from '../../shared/employee/employee.service';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackItem, FeedbackRequestItem } from '../../shared/feedback/feedback.types';
 import { ManagerListViewComponent } from './manager-list-view/manager-list-view.component';
 import { MANAGER_LIST_ROOT } from './manager-list.config';
 import { ManagerListData } from './manager-list.types';
@@ -33,24 +31,11 @@ export default class ManagerListComponent implements ManagerListData {
 
   protected managedEmails = inject(EmployeeService).dataSnapshot.managedEmails;
 
-  private feedbackService = inject(FeedbackService);
+  protected readonly root = MANAGER_LIST_ROOT;
 
-  managedEmail = input<string>('');
+  managedEmail = input<string>(MANAGER_LIST_ROOT);
 
-  protected sharedFeedbackItems = toSignal(
-    toObservable(this.managedEmail).pipe(
-      switchMap((managedEmail) => {
-        if (managedEmail === MANAGER_LIST_ROOT) {
-          return of(null);
-        }
-        if (!this.managedEmails.includes(managedEmail)) {
-          this.selectManagedEmail(MANAGER_LIST_ROOT);
-          return of(null);
-        }
-        return this.feedbackService.getSharedFeedbackList(managedEmail);
-      }),
-    ),
-  );
+  list = input<(FeedbackItem | FeedbackRequestItem)[]>([]);
 
   protected selectManagedEmail(managedEmail: string) {
     this.router.navigate(['../', managedEmail], { relativeTo: this.activatedRoute });

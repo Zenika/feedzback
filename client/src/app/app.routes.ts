@@ -3,7 +3,6 @@ import { FeedbackDetailsTemporaryRedirectComponent } from './feedback-details-te
 import { feedbackDetailsResolver } from './feedback-details/feedback-details.resolver';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
-import { MANAGER_LIST_ROOT } from './manager/manager-list/manager-list.config';
 import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { settingsGuard } from './settings/setings.guard';
@@ -66,11 +65,6 @@ export const routes: Routes = [
     loadComponent: () => import('./settings/settings.component'),
     canActivate: [authGuard, settingsGuard],
     title: 'FeedZback - ' + $localize`:@@Title.Settings:Paramètres`,
-  },
-  {
-    path: 'manager',
-    pathMatch: 'full',
-    redirectTo: `/manager/list/${MANAGER_LIST_ROOT}`,
   },
   {
     path: 'manager',
