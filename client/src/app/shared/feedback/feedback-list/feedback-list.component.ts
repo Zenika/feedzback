@@ -20,7 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { NormalizedFeedback } from '../../../history/history.types';
 import { BreakpointService } from '../../breakpoint';
-import { DivisionComponent } from '../../ui/division/division.component';
+import { DivisionComponent } from '../../ui/division';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({

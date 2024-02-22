@@ -16,7 +16,23 @@ export class ReviewDbService {
 
   async postReview({ reviewerEmail, note, comment }: PostReviewParams) {
     const review: Review = { note, comment, updatedAt: Date.now() };
-    await this.reviewCollection.doc(reviewerEmail).set({ reviews: FieldValue.arrayUnion(review) }, { merge: true });
+
+    // Note:
+    // For the moment, we don't store review history. So each review overwrites the previous one.
+    // To enable review history, simply set `{ merge: true }`.
+    await this.reviewCollection.doc(reviewerEmail).set({ reviews: FieldValue.arrayUnion(review) }, { merge: false });
+  }
+
+  async getLastReview(reviewerEmail: string) {
+    const reviewDoc = await this.reviewCollection.doc(reviewerEmail).get();
+    if (!reviewDoc.exists) {
+      return;
+    }
+    const lastReview = ((reviewDoc.data()?.reviews ?? []) as Review[]).pop();
+    if (!lastReview) {
+      return;
+    }
+    return lastReview;
   }
 
   async getStats() {
@@ -26,7 +42,7 @@ export class ReviewDbService {
 
     const reviewQuery = await this.reviewCollection.get();
     reviewQuery.forEach((reviewDoc) => {
-      const lastReview = (reviewDoc.data().reviews as Review[]).pop();
+      const lastReview = ((reviewDoc.data().reviews ?? []) as Review[]).pop();
       if (!lastReview) {
         return;
       }
@@ -46,11 +62,9 @@ export class ReviewDbService {
     const averageOutOfFive = Math.round((10 * score) / numberOfReviews) / 10;
 
     const percentagePerNote = buildEmptyPercentagePerNote();
-    for (const key in scorePerNote) {
-      const noteKey = key as unknown as ReviewNote;
-      const noteValue = scorePerNote[noteKey];
-      percentagePerNote[noteKey] = Math.round((1000 * noteValue) / numberOfReviews) / 10;
-    }
+    Object.entries(scorePerNote).forEach(([noteKey, noteValue]) => {
+      percentagePerNote[noteKey as unknown as ReviewNote] = Math.round((1000 * noteValue) / numberOfReviews) / 10;
+    });
 
     return {
       numberOfReviews,

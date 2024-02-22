@@ -13,8 +13,8 @@ import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/fee
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
 import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { NotificationService } from '../../shared/notification/notification.service';
-import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
-import { MessageComponent } from '../../shared/ui/message/message.component';
+import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip';
+import { MessageComponent } from '../../shared/ui/message';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';

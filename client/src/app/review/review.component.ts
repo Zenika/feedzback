@@ -1,41 +1,49 @@
-import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, computed, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { NotificationService } from '../shared/notification/notification.service';
+import { switchMap } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { SentimentComponent, SentimentNote, requiredSentimentValidator } from '../shared/ui/sentiment';
+import { ReviewPopupComponent } from './review-popup/review-popup.component';
 import { ReviewService } from './review.service';
-import { SentimentComponent } from './sentiment/sentiment.component';
-import { SentimentNote } from './sentiment/sentiment.types';
-import { requiredSentimentValidator } from './sentiment/sentiment.validator';
+import { AllReviewStats } from './review.types';
 
 @Component({
   selector: 'app-review',
-  host: { class: 'app-review' },
+  host: {
+    class: 'app-review',
+    '[class.app-review--completed]': 'completed()',
+  },
   standalone: true,
   imports: [
-    MatIconModule,
-    MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule,
     SentimentComponent,
+    ReviewPopupComponent,
   ],
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ReviewComponent {
+export class ReviewComponent implements OnInit {
   private formBuilder = inject(NonNullableFormBuilder);
 
   protected reviewService = inject(ReviewService);
 
-  protected notificationService = inject(NotificationService);
+  protected reviewStats = signal<AllReviewStats | undefined>(undefined);
+
+  protected hasRelevantNumberOfReviews = computed(() => {
+    const reviewStats = this.reviewStats();
+    return (reviewStats && reviewStats.numberOfReviews > 10) || !environment.production;
+  });
+
+  protected completed = signal(false);
 
   protected readonly commentMaxLength = 500;
 
@@ -44,17 +52,35 @@ export class ReviewComponent {
     comment: ['', [Validators.maxLength(this.commentMaxLength)]],
   });
 
+  ngOnInit(): void {
+    this.form.disable();
+    this.reviewService.getLastReview().subscribe((review) => {
+      if (review) {
+        const { note, comment } = review;
+        this.form.setValue({ note, comment });
+        this.form.updateValueAndValidity();
+      }
+      this.form.enable();
+    });
+  }
+
   protected onSubmit() {
     if (this.form.invalid) {
       return;
     }
     this.form.disable();
-    this.reviewService.postReview(this.form.value as Required<typeof this.form.value>).subscribe(() => {
-      this.form.enable();
-      this.notificationService.show(
-        $localize`:@@Component.Review.Success:Votre évaluation a bien été enregistrée.`,
-        'success',
-      );
-    });
+
+    this.reviewService
+      .postReview(this.form.value as Required<typeof this.form.value>)
+      .pipe(switchMap(() => this.reviewService.getStats()))
+      .subscribe((reviewStats) => {
+        this.reviewStats.set(reviewStats);
+        this.completed.set(true);
+      });
+  }
+
+  protected modifyReview() {
+    this.form.enable();
+    this.completed.set(false);
   }
 }

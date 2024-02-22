@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MultiLineComponent } from '../../ui/multi-line/multi-line.component';
+import { MultiLineComponent } from '../../ui/multi-line';
 import { Feedback, FeedbackRequest, FeedbackType } from '../feedback.types';
 
 @Component({

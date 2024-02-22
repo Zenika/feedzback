@@ -9,7 +9,7 @@ import { Notification, NotificationType } from './notification.types';
 export class NotificationService {
   private matSnackBar = inject(MatSnackBar);
 
-  readonly DURATION = 5000;
+  readonly DURATION = 7000;
 
   show(message: string, type: NotificationType = 'info') {
     const data: Notification = { message, type };
