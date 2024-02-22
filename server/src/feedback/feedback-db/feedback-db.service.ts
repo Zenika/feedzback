@@ -340,25 +340,21 @@ export class FeedbackDbService {
     return this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
   }
 
-  async getManagedFeedbackList(managedEmail: string) {
+  async getSharedFeedbackList(receiverEmail: string) {
     const feedbackQuery = await this.feedbackCollection
-      .where('receiverEmail', '==', managedEmail)
-      // .where('status', '==', FeedbackStatus) // TODO: validate this choice (to get also the requested ones...)
+      .where('receiverEmail', '==', receiverEmail)
       .where('shared', '==', true)
       .select(...feedbackItemFields)
       .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return docsWithId(feedbackQuery.docs) as FeedbackWithId[];
+    return docsWithId<FeedbackItemWithId | FeedbackRequestItemWithId>(feedbackQuery.docs);
   }
 
-  async getManagedFeedbackDocument(
-    receiverEmail: string,
-    id: string,
-  ): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
+  async getSharedFeedbackDocument(id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
     const feedbackQuery = await this.feedbackCollection
       .where(FieldPath.documentId(), '==', id)
-      .where('receiverEmail', '==', receiverEmail)
+      .where('shared', '==', true)
       .get();
 
     const feedbackDoc = feedbackQuery.docs.at(0);

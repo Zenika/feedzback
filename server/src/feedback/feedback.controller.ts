@@ -12,8 +12,8 @@ import {
   FeedbackRequestDto,
   GiveFeedbackDto,
   GiveRequestedFeedbackDto,
-  ManagedFeedbackDocumentDto,
-  ManagedFeedbackListDto,
+  SharedFeedbackDocumentDto,
+  SharedFeedbackListDto,
 } from './feedback.dto';
 
 @ApiBearerAuth()
@@ -190,26 +190,33 @@ export class FeedbackController {
 
   @ApiOperation({ summary: 'Get the list of feedback shared with the authenticated user viewed as manager' })
   @UseGuards(AuthGuard)
-  @Get('managed/:managedEmail')
-  async getManagedFeedbackList(@Param() { managedEmail }: ManagedFeedbackListDto) {
+  @Get('shared/list/:managedEmail')
+  async getSharedFeedbackList(@Param() { managedEmail }: SharedFeedbackListDto) {
     const managerEmail = this.authService.userEmail!;
     const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;
     if (!managedEmails?.includes(managedEmail)) {
       throw new BadRequestException();
     }
-    return await this.feedbackDbService.getManagedFeedbackList(managedEmail);
+    return await this.feedbackDbService.getSharedFeedbackList(managedEmail);
   }
 
   @ApiOperation({ summary: 'Get feedback by ID shared with the authenticated user viewed as manager' })
   @UseGuards(AuthGuard)
-  @Get('managed/:managedEmail/:feedbackId')
-  async getManagedFeedbackDocument(@Param() { managedEmail, feedbackId }: ManagedFeedbackDocumentDto) {
+  @Get('shared/document/:feedbackId')
+  async getManagedFeedbackDocument(@Param() { feedbackId }: SharedFeedbackDocumentDto) {
+    const document = await this.feedbackDbService.getSharedFeedbackDocument(feedbackId);
+    if (!document) {
+      throw new BadRequestException();
+    }
+
     const managerEmail = this.authService.userEmail!;
     const managedEmails = (await this.employeeDbService.get(managerEmail))?.managedEmails;
+    const managedEmail = document.receiverEmail;
     if (!managedEmails?.includes(managedEmail)) {
       throw new BadRequestException();
     }
-    return await this.feedbackDbService.getManagedFeedbackDocument(managedEmail, feedbackId);
+
+    return document;
   }
 
   // ----- Shared tasks -----

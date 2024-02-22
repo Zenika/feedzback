@@ -3,6 +3,7 @@ import { FeedbackDetailsTemporaryRedirectComponent } from './feedback-details-te
 import { feedbackDetailsResolver } from './feedback-details/feedback-details.resolver';
 import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
+import { MANAGER_LIST_ROOT } from './manager/manager-list/manager-list.config';
 import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { settingsGuard } from './settings/setings.guard';
@@ -68,14 +69,13 @@ export const routes: Routes = [
   },
   {
     path: 'manager',
-    loadComponent: () => import('./manager/manager.component'),
-    canActivate: [authGuard, managerGuard],
-    title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
+    pathMatch: 'full',
+    redirectTo: `/manager/list/${MANAGER_LIST_ROOT}`,
   },
   {
-    path: 'manager/:feedbackId',
-    loadComponent: () => import('./manager/manager-feedback-item/manager-feedback-item.component'),
+    path: 'manager',
     canActivate: [authGuard, managerGuard],
+    loadChildren: () => import('./manager/manager.routes'),
     title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
   },
   {

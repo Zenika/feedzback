@@ -139,21 +139,20 @@ export class FeedbackService {
     );
   }
 
-  getManagedFeedbackList(managedEmail: string) {
+  getSharedFeedbackList(managedEmail: string) {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.get<(FeedbackItem | FeedbackRequestItem)[]>(
-        `${this.apiBaseUrl}/feedback/managed/${managedEmail}`,
+        `${this.apiBaseUrl}/feedback/shared/list/${managedEmail}`,
         { headers },
       ),
     );
   }
 
-  getManagedFeedbackDocument(managedEmail: string, id: string) {
+  getSharedFeedbackDocument(id: string) {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<Feedback | FeedbackRequest | null>(
-        `${this.apiBaseUrl}/feedback/managed/${managedEmail}/${id}`,
-        { headers },
-      ),
+      this.httpClient.get<Feedback | FeedbackRequest>(`${this.apiBaseUrl}/feedback/shared/document/${id}`, {
+        headers,
+      }),
     );
   }
 }
