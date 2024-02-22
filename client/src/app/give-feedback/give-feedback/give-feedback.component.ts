@@ -17,7 +17,7 @@ import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
 import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { NotificationService } from '../../shared/notification/notification.service';
-import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip/dialog-tooltip.directive';
+import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip';
 import {
   ALLOWED_EMAIL_DOMAINS,
   allowedEmailDomainsValidatorFactory,

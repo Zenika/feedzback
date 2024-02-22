@@ -20,7 +20,14 @@ export class ReviewController {
     await this.reviewDbService.postReview({ reviewerEmail, note, comment });
   }
 
-  @Get('/stats')
+  @UseGuards(AuthGuard)
+  @Get()
+  async getLastReview() {
+    const reviewerEmail = this.authService.userEmail!;
+    return await this.reviewDbService.getLastReview(reviewerEmail);
+  }
+
+  @Get('stats')
   getStats() {
     return this.reviewDbService.getStats();
   }

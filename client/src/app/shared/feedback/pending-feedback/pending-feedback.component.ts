@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MessageComponent } from '../../ui/message/message.component';
+import { MessageComponent } from '../../ui/message';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackService } from '../feedback.service';

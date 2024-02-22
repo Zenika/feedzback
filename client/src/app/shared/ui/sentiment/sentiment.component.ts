@@ -1,13 +1,15 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, computed, inject, input } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SENTIMENTS_ASC } from './sentiment.config';
 import { SentimentNote } from './sentiment.types';
 
 @Component({
   selector: 'app-sentiment',
-  host: { '[class]': 'hostCss' },
+  host: { '[class]': 'hostClass()' },
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatTooltipModule],
   templateUrl: './sentiment.component.html',
   styleUrl: './sentiment.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -21,13 +23,7 @@ export class SentimentComponent implements ControlValueAccessor {
     }
   }
 
-  protected sentimentIcons = [
-    'sentiment_extremely_dissatisfied',
-    'sentiment_dissatisfied',
-    'sentiment_neutral',
-    'sentiment_satisfied',
-    'sentiment_very_satisfied',
-  ] as const;
+  protected sentiments = SENTIMENTS_ASC;
 
   @Input() note: SentimentNote = 0;
 
@@ -53,9 +49,7 @@ export class SentimentComponent implements ControlValueAccessor {
 
   size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
 
-  get hostCss() {
-    return `app-sentiment app-sentiment--size-${this.size()}`;
-  }
+  hostClass = computed(() => `app-sentiment app-sentiment--size-${this.size()}`);
 
   /* ----- ControlValueAccessor ----- */
 

@@ -1,12 +1,35 @@
-@use '../app.scss' as app;
-
 .app-review {
   display: block;
+  position: relative;
   max-width: 360px;
   margin: 0 auto;
   text-align: center;
 
+  &--completed {
+    max-width: none;
+  }
+
+  &__form {
+    &--completed {
+      opacity: 0;
+    }
+  }
+
   &__title {
     font-weight: normal !important;
+  }
+
+  &__completed {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-wrap: balance;
   }
 }

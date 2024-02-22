@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { FeedbackListComponent } from '../../shared/feedback/feedback-list/feedback-list.component';
-import { MessageComponent } from '../../shared/ui/message/message.component';
+import { MessageComponent } from '../../shared/ui/message';
 import { GiveRequestedFeedbackListService } from './give-requested-feedback-list.service';
 
 @Component({

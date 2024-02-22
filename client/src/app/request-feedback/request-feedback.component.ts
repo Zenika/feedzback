@@ -15,8 +15,8 @@ import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit/confirm-before-submit.directive';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip/dialog-tooltip.directive';
-import { MessageComponent } from '../shared/ui/message/message.component';
+import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip';
+import { MessageComponent } from '../shared/ui/message';
 import { StringArrayError } from '../shared/validation';
 import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import {

@@ -1,0 +1,15 @@
+@for (sentiment of sentiments; track sentiment.note) {
+  <div class="app-sentiment__item" [class.app-sentiment__item--disabled]="disabled">
+    <mat-icon
+      class="app-sentiment__icon"
+      [class.app-sentiment__icon--selected]="note === sentiment.note"
+      (click)="giveSentiment(sentiment.note)"
+    >
+      {{ sentiment.icon }}
+    </mat-icon>
+
+    @if (note === sentiment.note) {
+      <div class="app-sentiment__text">{{ sentiment.text }}</div>
+    }
+  </div>
+}

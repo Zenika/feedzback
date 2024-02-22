@@ -6,7 +6,7 @@ import { AuthService } from '../shared/auth';
 import { AutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { NotificationService } from '../shared/notification/notification.service';
-import { MessageComponent } from '../shared/ui/message/message.component';
+import { MessageComponent } from '../shared/ui/message';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message';

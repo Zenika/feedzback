@@ -1,0 +1,24 @@
+<button
+  type="button"
+  mat-button
+  color="primary"
+  cdkOverlayOrigin
+  #overlayTrigger="cdkOverlayOrigin"
+  (click)="overlayOpened.set(true)"
+>
+  <mat-icon>bar_chart_4_bars</mat-icon>
+  <ng-container i18n="@@Component.ReviewPopup.Button">Voir les évaluations</ng-container>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop="true"
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  cdkConnectedOverlayPanelClass="app-review-popup-panel"
+  [cdkConnectedOverlayOrigin]="overlayTrigger"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayOpen]="overlayOpened()"
+  (backdropClick)="overlayOpened.set(false)"
+>
+  <app-review-stats [stats]="stats()" />
+</ng-template>
