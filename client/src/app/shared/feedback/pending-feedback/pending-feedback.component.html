@@ -1,11 +1,11 @@
 <h1 class="gbl-page-title">
   @switch (type) {
     @case (feedbackType.sentRequest) {
-      <mat-icon>schedule</mat-icon>
+      <mat-icon>{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
       <ng-container i18n="@@Title.RequestedFeedback">FeedZback demandé</ng-container>
     }
     @case (feedbackType.receivedRequest) {
-      <mat-icon>comment</mat-icon>
+      <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
       <ng-container i18n="@@Title.FeedbackToGive">FeedZback à donner</ng-container>
     }
   }
@@ -26,9 +26,9 @@
 <app-feedback-body [feedback]="feedback" />
 
 @if (feedback.shared) {
-  <div class="app-pending-feedback-list">
-    <div class="app-pending-feedback-list__item">
-      <mat-icon>share</mat-icon>
+  <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
+    <li class="gbl-icon-list__item">
+      <mat-icon class="gbl-icon-list__icon">share</mat-icon>
       @if (type === feedbackType.sentRequest) {
         <ng-container i18n="@@Message.FeedbackIsSharedWithYourManager">
           Ce feedZback est partagé avec votre manager
@@ -38,22 +38,22 @@
           Ce feedZback est partagé avec le manager de votre collègue
         </ng-container>
       }
-    </div>
-  </div>
+    </li>
+  </ul>
 }
 
 @switch (type) {
   @case (feedbackType.sentRequest) {
     @if (feedback.updatedAt > feedback.createdAt) {
-      <div class="app-pending-feedback-list">
-        <div class="app-pending-feedback-list__item">
-          <mat-icon>history</mat-icon>
+      <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
+        <li class="gbl-icon-list__item">
+          <mat-icon class="gbl-icon-list__icon">history</mat-icon>
           <ng-container i18n="@@Component.PendingFeedback.ReminderAlreadySentOn">
             Vous avez déjà relancé votre collègue le
           </ng-container>
           {{ feedback.updatedAt | date: 'longDate' }}
-        </div>
-      </div>
+        </li>
+      </ul>
     }
 
     @if (showRequestAgainSuccess) {

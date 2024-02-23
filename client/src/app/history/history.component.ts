@@ -7,10 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FeedbackListComponent } from '../shared/feedback/feedback-list/feedback-list.component';
+import { FeedbackTypeIconPipe } from '../shared/feedback/feedback-type-icon.pipe';
 import { FeedbackService } from '../shared/feedback/feedback.service';
-import { FeedbackType } from '../shared/feedback/feedback.types';
-import { NormalizedFeedback } from './history.types';
-import { getFeedbackType, normalizeGivenList, normalizeReceivedList, normalizeSentRequestList } from './history.utils';
+import { FeedbackType, NormalizedFeedback } from '../shared/feedback/feedback.types';
+import {
+  getFeedbackType,
+  normalizeGivenList,
+  normalizeReceivedList,
+  normalizeSentRequestList,
+} from '../shared/feedback/feedback.utils';
 
 @Component({
   selector: 'app-history',
@@ -25,6 +30,7 @@ import { getFeedbackType, normalizeGivenList, normalizeReceivedList, normalizeSe
     MatIconModule,
     MatInputModule,
     FeedbackListComponent,
+    FeedbackTypeIconPipe,
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss',

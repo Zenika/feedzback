@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { MessageComponent } from '../../ui/message';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
+import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { Feedback, FeedbackType } from '../feedback.types';
 
 @Component({
@@ -19,6 +20,7 @@ import { Feedback, FeedbackType } from '../feedback.types';
     AllowedEmailDomainsPipe,
     MessageComponent,
     FeedbackBodyComponent,
+    FeedbackTypeIconPipe,
   ],
   templateUrl: './done-feedback.component.html',
   encapsulation: ViewEncapsulation.None,

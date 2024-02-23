@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
+  booleanAttribute,
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -18,9 +19,10 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { NormalizedFeedback } from '../../../history/history.types';
 import { BreakpointService } from '../../breakpoint';
 import { DivisionComponent } from '../../ui/division';
+import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
+import { NormalizedFeedback } from '../feedback.types';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({
@@ -38,6 +40,7 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     MatTableModule,
     MatTooltipModule,
     DivisionComponent,
+    FeedbackTypeIconPipe,
     GiveRequestedFeedbackDirective,
   ],
   templateUrl: './feedback-list.component.html',
@@ -45,7 +48,7 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackListComponent implements OnChanges, AfterViewInit {
-  @Input({ required: true }) type!: 'received' | 'given' | 'sentRequest' | 'receivedRequest';
+  @Input({ transform: booleanAttribute }) asManager = false;
 
   @Input({ required: true }) set feedbacks(value: NormalizedFeedback[]) {
     this.dataSource = new MatTableDataSource(value);

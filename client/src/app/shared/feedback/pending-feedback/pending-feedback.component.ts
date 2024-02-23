@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MessageComponent } from '../../ui/message';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
+import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackRequest, FeedbackType } from '../feedback.types';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
@@ -19,6 +20,7 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     AllowedEmailDomainsPipe,
     MessageComponent,
     FeedbackBodyComponent,
+    FeedbackTypeIconPipe,
     GiveRequestedFeedbackDirective,
   ],
   templateUrl: './pending-feedback.component.html',

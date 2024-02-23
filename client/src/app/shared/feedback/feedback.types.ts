@@ -100,3 +100,10 @@ export const FeedbackType = {
 } as const;
 
 export type FeedbackType = (typeof FeedbackType)[keyof typeof FeedbackType];
+
+export type NormalizedFeedback = {
+  type: FeedbackType;
+  id: string;
+  email: string;
+  date: number;
+};

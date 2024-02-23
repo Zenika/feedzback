@@ -3,6 +3,11 @@
   width: 100%;
   overflow: auto;
 
+  &__pending {
+    font-style: italic;
+    opacity: 0.65;
+  }
+
   &__mobile {
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;

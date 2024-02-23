@@ -14,7 +14,7 @@
 
 @if (list(); as items) {
   @if (items?.length) {
-    <app-manager-list-view [items]="items" />
+    <app-feedback-list asManager [feedbacks]="normalizedList()" />
   } @else if (managedEmail() !== root) {
     <div class="mt-4 flex items-center justify-center gap-2 italic opacity-50">
       <mat-icon>share_off</mat-icon>

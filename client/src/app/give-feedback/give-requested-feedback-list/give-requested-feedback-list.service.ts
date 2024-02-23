@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Subject, exhaustMap, map, shareReplay, startWith } from 'rxjs';
-import { normalizeReceivedRequestList } from '../../history/history.utils';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { normalizeReceivedRequestList } from '../../shared/feedback/feedback.utils';
 
 @Injectable({
   providedIn: 'root',

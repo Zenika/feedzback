@@ -5,10 +5,10 @@
 
 <h1 class="gbl-page-title">
   @if (document().status === 'done') {
-    <mat-icon>move_to_inbox</mat-icon>
+    <mat-icon>{{ 'received' | feedbackTypeIcon }}</mat-icon>
     <ng-container i18n>FeedZback partagé</ng-container>
   } @else {
-    <mat-icon>schedule</mat-icon>
+    <mat-icon>{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
     <ng-container i18n>Demande de feedZback partagé</ng-container>
   }
 </h1>

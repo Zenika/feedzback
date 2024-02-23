@@ -11,14 +11,14 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="app-history__label-icon">move_to_inbox</mat-icon>
+        <mat-icon class="app-history__label-icon">{{ 'received' | feedbackTypeIcon }}</mat-icon>
         <ng-container i18n="@@Component.MyFeedbacks.Received">reçus</ng-container>
       </ng-template>
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (received.length) {
-        <app-feedback-list type="received" [feedbacks]="received" [filter]="filter" />
+        <app-feedback-list [feedbacks]="received" [filter]="filter" />
       } @else {
         <div class="app-history-empty">
           <div class="app-history-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
@@ -33,14 +33,14 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="app-history__label-icon">outgoing_mail</mat-icon>
+        <mat-icon class="app-history__label-icon">{{ 'given' | feedbackTypeIcon }}</mat-icon>
         <ng-container i18n="@@Component.MyFeedbacks.Given">donnés</ng-container>
       </ng-template>
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
 
       @if (given.length) {
-        <app-feedback-list type="given" [feedbacks]="given" [filter]="filter" />
+        <app-feedback-list [feedbacks]="given" [filter]="filter" />
       } @else {
         <div class="app-history-empty">
           <div class="app-history-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
@@ -56,13 +56,13 @@
     @if (sentRequest.length) {
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="app-history__label-icon">schedule</mat-icon>
+          <mat-icon class="app-history__label-icon">{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
           <ng-container i18n="@@Component.MyFeedbacks.Requested">demandés</ng-container>
         </ng-template>
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
 
-        <app-feedback-list type="sentRequest" [feedbacks]="sentRequest" [filter]="filter" />
+        <app-feedback-list [feedbacks]="sentRequest" [filter]="filter" />
       </mat-tab>
     }
   </mat-tab-group>
