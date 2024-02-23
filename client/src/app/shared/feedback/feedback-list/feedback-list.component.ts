@@ -2,13 +2,12 @@ import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
   ViewChild,
   ViewEncapsulation,
   booleanAttribute,
+  effect,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,18 +46,14 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
   styleUrl: './feedback-list.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class FeedbackListComponent implements OnChanges, AfterViewInit {
-  @Input({ transform: booleanAttribute }) asManager = false;
+export class FeedbackListComponent implements AfterViewInit {
+  feedbacks = input.required<NormalizedFeedback[]>();
 
-  @Input({ required: true }) set feedbacks(value: NormalizedFeedback[]) {
-    this.dataSource = new MatTableDataSource(value);
-    this.linkDataSource();
-    this.applyFilter();
-  }
+  filter = input(undefined, { transform: (value?: string) => value?.trim().toLowerCase() });
 
-  @Input({ transform: (value?: string) => value?.trim().toLowerCase() }) filter?: string;
+  asManager = input(false, { transform: booleanAttribute });
 
-  protected dataSource!: MatTableDataSource<NormalizedFeedback>;
+  protected dataSource = new MatTableDataSource<NormalizedFeedback>([]);
 
   protected columns: (keyof NormalizedFeedback | 'actions' | 'mixed')[] = ['email', 'date', 'actions'];
 
@@ -79,6 +74,13 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
   private isMobile = false;
 
   constructor() {
+    effect(() => {
+      this.dataSource = new MatTableDataSource(this.feedbacks());
+      this.init();
+    });
+
+    effect(() => this.applyFilter(this.filter()));
+
     inject(BreakpointService)
       .device$.pipe(takeUntilDestroyed())
       .subscribe((device) => {
@@ -87,20 +89,18 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
       });
   }
 
-  ngOnChanges({ filter }: SimpleChanges): void {
-    if (filter) {
-      this.applyFilter();
-    }
-  }
-
   ngAfterViewInit() {
-    this.linkDataSource();
-    this.applyFilter();
+    this.init();
   }
 
   // "nf" means "normalized feedback"
   protected nf(value: unknown) {
     return value as NormalizedFeedback;
+  }
+
+  private init() {
+    this.linkDataSource();
+    this.applyFilter(this.filter());
   }
 
   private linkDataSource() {
@@ -111,12 +111,12 @@ export class FeedbackListComponent implements OnChanges, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  private applyFilter() {
+  private applyFilter(filter?: string) {
     if (!this.dataSource.paginator) {
       return;
     }
     this.dataSource.filterPredicate = (data, filter) => data.email.toLowerCase().includes(filter);
-    this.dataSource.filter = this.filter ?? '';
+    this.dataSource.filter = filter ?? '';
     this.dataSource.paginator.firstPage();
   }
 }

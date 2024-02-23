@@ -41,12 +41,12 @@
             ? viewFeedbackTooltip
             : viewFeedbackRequestTooltip
         "
-        [routerLink]="[asManager ? '/manager/document' : '/history/id', nf(element).id]"
+        [routerLink]="[asManager() ? '/manager/document' : '/history/id', nf(element).id]"
       >
         <mat-icon>{{ nf(element).type | feedbackTypeIcon }}</mat-icon>
       </button>
 
-      @if (!asManager && nf(element).type === 'receivedRequest') {
+      @if (!asManager() && nf(element).type === 'receivedRequest') {
         <button
           mat-icon-button
           color="primary"
@@ -65,13 +65,13 @@
   <tr mat-row *matRowDef="let element; columns: columns"></tr>
 
   <tr class="mat-row" *matNoDataRow>
-    @if (filter) {
+    @if (filter()) {
       <td
         class="mat-cell p-6 text-center italic text-gray-400"
         [attr.colspan]="columns.length"
         i18n="@@Message.NoResultsFor"
       >
-        Aucun résultat pour "{{ filter }}"
+        Aucun résultat pour "{{ filter() }}"
       </td>
     }
   </tr>
