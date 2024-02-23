@@ -80,7 +80,7 @@ h1.gbl-page-title {
   }
 }
 
-/* ----- Lists ----- */
+/* ----- List ----- */
 
 ul.gbl-list,
 ol.gbl-list {
@@ -112,6 +112,45 @@ ul.gbl-list {
 
     ul.gbl-list > li.gbl-list__item::marker {
       content: '→';
+    }
+  }
+}
+
+/* ----- Icon list ----- */
+
+.gbl-icon-list {
+  list-style: none;
+  margin: 0 0 1.25rem 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__icon {
+    margin-right: 0.25rem;
+    transform: scale(0.9);
+  }
+
+  &--horizontal-md {
+    @include m.media-breakpoint-up(md) {
+      flex-direction: row;
+      align-items: center;
+      gap: 1.25rem;
+    }
+  }
+
+  &--horizontal-lg {
+    @include m.media-breakpoint-up(lg) {
+      flex-direction: row;
+      align-items: center;
+      gap: 1.25rem;
     }
   }
 }

@@ -11,12 +11,17 @@
   }
 </h1>
 
-<div class="app-pending-feedback-list">
-  <div class="app-pending-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
-  <div class="app-pending-feedback-list__item">
-    <mat-icon>calendar_today</mat-icon>{{ feedback.createdAt | date: 'longDate' }}
-  </div>
-</div>
+<ul class="gbl-icon-list gbl-icon-list--horizontal-md">
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">email</mat-icon>
+    {{ getColleagueEmail(feedback) }}
+  </li>
+
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">calendar_today</mat-icon>
+    {{ feedback.createdAt | date: 'longDate' }}
+  </li>
+</ul>
 
 <app-feedback-body [feedback]="feedback" />
 

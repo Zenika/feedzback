@@ -19,7 +19,9 @@ export class EmployeeController {
   @Get('')
   async get() {
     const employeeEmail = this.authService.userEmail!;
-    return buildRequiredEmployeeData(await this.employeeDbService.get(employeeEmail));
+    const data = buildRequiredEmployeeData(await this.employeeDbService.get(employeeEmail));
+    data.managedEmails.sort();
+    return data;
   }
 
   @ApiOperation({ summary: "Define the email address of the authenticated user's manager" })

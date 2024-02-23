@@ -11,7 +11,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
 
 @Component({
   selector: 'app-pending-feedback',
-  host: { class: 'app-pending-feedback' },
   standalone: true,
   imports: [
     DatePipe,
@@ -23,7 +22,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     GiveRequestedFeedbackDirective,
   ],
   templateUrl: './pending-feedback.component.html',
-  styleUrl: './pending-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class PendingFeedbackComponent {

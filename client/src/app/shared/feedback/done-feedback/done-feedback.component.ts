@@ -10,7 +10,6 @@ import { Feedback, FeedbackType } from '../feedback.types';
 
 @Component({
   selector: 'app-done-feedback',
-  host: { class: 'app-done-feedback' },
   standalone: true,
   imports: [
     DatePipe,
@@ -22,7 +21,6 @@ import { Feedback, FeedbackType } from '../feedback.types';
     FeedbackBodyComponent,
   ],
   templateUrl: './done-feedback.component.html',
-  styleUrl: './done-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class DoneFeedbackComponent {

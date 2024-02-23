@@ -1,3 +1,33 @@
-<a [routerLink]="['../../list', document().receiverEmail]" class="gbl-link">Retour</a>
+<button class="gbl-link gbl-link--back" [routerLink]="['../../list', document().receiverEmail]">
+  <mat-icon>arrow_back</mat-icon>
+  <ng-container i18n>Liste des feedZbacks partagés</ng-container>
+</button>
 
-<pre>{{ document() | json }}</pre>
+<h1 class="gbl-page-title">
+  @if (document().status === 'done') {
+    <mat-icon>move_to_inbox</mat-icon>
+    <ng-container i18n>FeedZback partagé</ng-container>
+  } @else {
+    <mat-icon>schedule</mat-icon>
+    <ng-container i18n>Demande de feedZback partagé</ng-container>
+  }
+</h1>
+
+<ul class="gbl-icon-list gbl-icon-list--horizontal-md">
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">voice_selection</mat-icon>
+    {{ document().giverEmail }}
+  </li>
+
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">hearing</mat-icon>
+    {{ document().receiverEmail }}
+  </li>
+
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">calendar_today</mat-icon>
+    {{ document().createdAt | date: 'longDate' }}
+  </li>
+</ul>
+
+<app-feedback-body [feedback]="document()" />
