@@ -1,0 +1,24 @@
+<h1 class="gbl-page-title">
+  <mat-icon>hub</mat-icon>
+  <ng-container i18n="@@Title.SharedFeedZbacks">FeedZbacks partagés</ng-container>
+</h1>
+
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label i18n="@@Component.ManagerList.Collaborator">Collaborateur</mat-label>
+  <mat-select [value]="managedEmail()" (valueChange)="selectManagedEmail($event)">
+    @for (email of managedEmails; track $index) {
+      <mat-option [value]="email">{{ email }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+@if (list(); as items) {
+  @if (items?.length) {
+    <app-feedback-list asManager [feedbacks]="normalizedList()" />
+  } @else if (managedEmail() !== root) {
+    <div class="mt-4 flex items-center justify-center gap-2 italic opacity-50">
+      <mat-icon>share_off</mat-icon>
+      <ng-container i18n="@@Component.ManagerList.NoData">Aucun feedZback partagé...</ng-container>
+    </div>
+  }
+}

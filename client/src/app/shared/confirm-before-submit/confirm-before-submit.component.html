@@ -1,12 +1,15 @@
-<h2 mat-dialog-title i18n="@@Component.ConfirmBeforeSubmit.Title">Confirmation demandée</h2>
+<h2 mat-dialog-title>
+  <mat-icon class="me-3 scale-150">cloud_upload</mat-icon>
+  <ng-container i18n="@@Component.ConfirmBeforeSubmit.Title">Confirmer l'envoi ?</ng-container>
+</h2>
 
 <mat-dialog-content>
   @if (data.content) {
     {{ data.content }}
   } @else {
-    <ng-container i18n="@@Component.ConfirmBeforeSubmit.Content">
-      La requête sera traitée si vous décidez de confirmer.
-    </ng-container>
+    <ng-container i18n="@@Component.ConfirmBeforeSubmit.Content"
+      >Vous êtes sur le point d'envoyer le formulaire.</ng-container
+    >
   }
 </mat-dialog-content>
 

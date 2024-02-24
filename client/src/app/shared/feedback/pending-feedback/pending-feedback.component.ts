@@ -5,13 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MessageComponent } from '../../ui/message';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
+import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackRequest, FeedbackType } from '../feedback.types';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({
   selector: 'app-pending-feedback',
-  host: { class: 'app-pending-feedback' },
   standalone: true,
   imports: [
     DatePipe,
@@ -20,10 +20,10 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     AllowedEmailDomainsPipe,
     MessageComponent,
     FeedbackBodyComponent,
+    FeedbackTypeIconPipe,
     GiveRequestedFeedbackDirective,
   ],
   templateUrl: './pending-feedback.component.html',
-  styleUrl: './pending-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class PendingFeedbackComponent {

@@ -49,6 +49,10 @@ export class FeedbackListMapDto {
   types!: FeedbackListType[];
 }
 
-export class ManagedFeedbacksDto {
+export class SharedFeedbackListDto {
   @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) managedEmail!: string;
+}
+
+export class SharedFeedbackDocumentDto {
+  @IsString() feedbackId!: string;
 }

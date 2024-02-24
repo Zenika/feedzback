@@ -1,28 +1,33 @@
 <h1 class="gbl-page-title">
   @switch (type) {
     @case (feedbackType.given) {
-      <mat-icon>outgoing_mail</mat-icon>
+      <mat-icon>{{ 'given' | feedbackTypeIcon }}</mat-icon>
       <ng-container i18n="@@Title.FeedbackGiven">FeedZback donné</ng-container>
     }
     @case (feedbackType.received) {
-      <mat-icon>move_to_inbox</mat-icon>
+      <mat-icon>{{ 'received' | feedbackTypeIcon }}</mat-icon>
       <ng-container i18n="@@Title.ReceivedFeedback">FeedZback reçu</ng-container>
     }
   }
 </h1>
 
-<div class="app-done-feedback-list">
-  <div class="app-done-feedback-list__item"><mat-icon>email</mat-icon>{{ getColleagueEmail(feedback) }}</div>
-  <div class="app-done-feedback-list__item">
-    <mat-icon>calendar_today</mat-icon>{{ feedback.updatedAt | date: 'longDate' }}
-  </div>
-</div>
+<ul class="gbl-icon-list gbl-icon-list--horizontal-md">
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">email</mat-icon>
+    {{ getColleagueEmail(feedback) }}
+  </li>
+
+  <li class="gbl-icon-list__item">
+    <mat-icon class="gbl-icon-list__icon">calendar_today</mat-icon>
+    {{ feedback.updatedAt | date: 'longDate' }}
+  </li>
+</ul>
 
 <app-feedback-body [feedback]="feedback" />
 
 @if (feedback.shared) {
-  <div class="app-done-feedback-list">
-    <div class="app-done-feedback-list__item">
+  <div class="gbl-icon-list">
+    <div class="gbl-icon-list__item">
       <mat-icon>share</mat-icon>
       @if (type === feedbackType.received) {
         <ng-container i18n="@@Message.FeedbackIsSharedWithYourManager">

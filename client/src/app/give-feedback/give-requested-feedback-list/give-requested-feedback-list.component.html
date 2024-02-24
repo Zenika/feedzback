@@ -1,11 +1,11 @@
 <h1 class="gbl-page-title">
-  <mat-icon>comment</mat-icon>
+  <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
   <ng-container i18n="@@Title.RequestedFeedbackList"> Répondre aux demandes de feedZback </ng-container>
 </h1>
 
 @if (receivedRequest(); as list) {
   @if (list.length) {
-    <app-feedback-list [feedbacks]="list" type="receivedRequest" />
+    <app-feedback-list [feedbacks]="list" />
   } @else {
     <app-message type="info" icon="beach_access" nonclosable>
       <ng-container i18n="@@Component.GiveRequestedFeedbackListEmpty1">

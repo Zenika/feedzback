@@ -51,13 +51,11 @@ export class FeedbackEmailBuilderService {
     };
   }
 
-  // NOTE: for now, the `feedbackId` is NOT used to build the email content (but it might be useful in the future...)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async shared(managedEmail: string, feedbackId: string) {
     const content: SharedContent = sharedContentMap[this.contextService.clientLocalId];
     const data: SharedData = {
       managedEmail: uglifyEmail(managedEmail),
-      cta: `${this.configService.get('clientUrl')}/manager?employee=${managedEmail}`,
+      cta: `${this.configService.get('clientUrl')}/manager/document/${feedbackId}`,
       serverBaseUrl: this.contextService.serverBaseUrl,
     };
     return {

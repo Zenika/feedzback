@@ -1,19 +1,28 @@
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Field.Email">Email</th>
-    <td mat-cell *matCellDef="let element">{{ nf(element).email }}</td>
+    <td mat-cell *matCellDef="let element" [class.app-feedback-list__pending]="nf(element).type === 'sentRequest'">
+      {{ nf(element).email }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Field.Date">Date</th>
-    <td mat-cell *matCellDef="let element">{{ nf(element).date | date: 'shortDate' }}</td>
+    <td mat-cell *matCellDef="let element" [class.app-feedback-list__pending]="nf(element).type === 'sentRequest'">
+      {{ nf(element).date | date: 'shortDate' }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="mixed">
     <th mat-header-cell *matHeaderCellDef>
       <app-division a="Email" b="Date" i18n-a="@@Field.Email" i18n-b="@@Field.Date"></app-division>
     </th>
-    <td mat-cell *matCellDef="let element" class="app-feedback-list__mobile">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      class="app-feedback-list__mobile"
+      [class.app-feedback-list__pending]="nf(element).type === 'sentRequest'"
+    >
       <strong>{{ nf(element).email }}</strong>
       <br />
       <small>{{ nf(element).date | date: 'shortDate' }}</small>
@@ -27,13 +36,17 @@
         mat-icon-button
         color="primary"
         matTooltipPosition="left"
-        [matTooltip]="type === 'received' || type === 'given' ? viewFeedbackTooltip : viewFeedbackRequestTooltip"
-        [routerLink]="['/history/id', nf(element).id]"
+        [matTooltip]="
+          nf(element).type === 'received' || nf(element).type === 'given'
+            ? viewFeedbackTooltip
+            : viewFeedbackRequestTooltip
+        "
+        [routerLink]="[asManager() ? '/manager/document' : '/history/id', nf(element).id]"
       >
         <mat-icon>visibility</mat-icon>
       </button>
 
-      @if (type === 'receivedRequest') {
+      @if (!asManager() && nf(element).type === 'receivedRequest') {
         <button
           mat-icon-button
           color="primary"
@@ -42,7 +55,7 @@
           i18n-matTooltip="@@Feedback.Reply"
           [appGiveRequestedFeedback]="nf(element).id"
         >
-          <mat-icon>comment</mat-icon>
+          <mat-icon>edit</mat-icon>
         </button>
       }
     </td>
@@ -52,13 +65,13 @@
   <tr mat-row *matRowDef="let element; columns: columns"></tr>
 
   <tr class="mat-row" *matNoDataRow>
-    @if (filter) {
+    @if (filter()) {
       <td
         class="mat-cell p-6 text-center italic text-gray-400"
         [attr.colspan]="columns.length"
         i18n="@@Message.NoResultsFor"
       >
-        Aucun résultat pour "{{ filter }}"
+        Aucun résultat pour "{{ filter() }}"
       </td>
     }
   </tr>
