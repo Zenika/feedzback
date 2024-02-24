@@ -37,12 +37,7 @@
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
 </h1>
 
-<form
-  [formGroup]="form"
-  [appConfirmBeforeSubmit]="onSubmit.bind(this)"
-  appConfirmBeforeSubmitContent="Une fois confirmé, votre feedZback ne peut plus être modifié."
-  i18n-appConfirmBeforeSubmitContent="@@Message.ConfirmBeforeSubmitFeedback"
->
+<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
 
   <app-give-feedback-details
@@ -62,7 +57,7 @@
           appDialogTooltip
           dialogWidth="600px"
           dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
-          dialogContent="En partageant votre feedZback, votre collègue et son manager pourront échanger ensemble et ainsi recueillir et bénéficier au mieux de son contenu."
+          dialogContent="En partageant votre feedZback, votre collègue et son manager pourront échanger ensemble et ainsi bénéficier au mieux de son contenu."
           i18n-dialogTitle="@@Component.GiveFeedback.ShareFeedbackMessageTitle"
           i18n-dialogContent="@@Component.GiveFeedback.ShareFeedbackMessageContent"
         >

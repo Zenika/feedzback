@@ -1,15 +1,15 @@
 <button class="gbl-link gbl-link--back" [routerLink]="['../../list', document().receiverEmail]">
   <mat-icon>arrow_back</mat-icon>
-  <ng-container i18n>Liste des feedZbacks partagés</ng-container>
+  <ng-container i18n="@@Title.SharedFeedZbacks">FeedZbacks partagés</ng-container>
 </button>
 
 <h1 class="gbl-page-title">
   @if (document().status === 'done') {
     <mat-icon>{{ 'received' | feedbackTypeIcon }}</mat-icon>
-    <ng-container i18n>FeedZback partagé</ng-container>
+    <ng-container i18n="@@Component.ManagerDocument.SharedFeedback">FeedZback partagé</ng-container>
   } @else {
     <mat-icon>{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
-    <ng-container i18n>Demande de feedZback partagé</ng-container>
+    <ng-container i18n="@@Component.ManagerDocument.SharedFeedbackRequest">Demande de feedZback partagé</ng-container>
   }
 </h1>
 

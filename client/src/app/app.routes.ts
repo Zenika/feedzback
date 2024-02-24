@@ -68,8 +68,8 @@ export const routes: Routes = [
   },
   {
     path: 'manager',
-    canActivate: [authGuard, managerGuard],
     loadChildren: () => import('./manager/manager.routes'),
+    canActivate: [authGuard, managerGuard],
     title: 'FeedZback - ' + $localize`:@@Action.Manager: Manager `,
   },
   {

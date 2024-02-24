@@ -12,7 +12,6 @@ import { ManagerDocumentData } from './manager-document.types';
   standalone: true,
   imports: [DatePipe, RouterLink, MatIconModule, FeedbackBodyComponent, FeedbackTypeIconPipe],
   templateUrl: './manager-document.component.html',
-  styleUrl: './manager-document.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export default class ManagerDocumentComponent implements ManagerDocumentData {

@@ -43,7 +43,7 @@
         "
         [routerLink]="[asManager() ? '/manager/document' : '/history/id', nf(element).id]"
       >
-        <mat-icon>{{ nf(element).type | feedbackTypeIcon }}</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
 
       @if (!asManager() && nf(element).type === 'receivedRequest') {
