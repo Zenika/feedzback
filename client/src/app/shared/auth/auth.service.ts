@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
@@ -17,6 +17,7 @@ import {
 } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
+import { UserState } from './auth.types';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,8 @@ export class AuthService {
   private activatedRoute = inject(ActivatedRoute);
 
   private document = inject(DOCUMENT);
+
+  private baseHref = inject(APP_BASE_HREF);
 
   userSnapshot?: User | null;
 
@@ -60,13 +63,22 @@ export class AuthService {
     distinctUntilChanged(),
   );
 
+  isAnonymous$ = this._user$.pipe(
+    map((user) => user?.isAnonymous === true),
+    distinctUntilChanged(),
+  );
+
   isKnownUser$ = this._user$.pipe(
     map((user) => user?.isAnonymous === false),
     distinctUntilChanged(),
   );
 
-  isAnonymous$ = this._user$.pipe(
-    map((user) => user?.isAnonymous === true),
+  userState$: Observable<UserState> = this._user$.pipe(
+    map((user) => ({
+      signedIn: user !== null,
+      anonymous: user?.isAnonymous === true,
+      knownUser: user?.isAnonymous === false,
+    })),
     distinctUntilChanged(),
   );
 
@@ -99,11 +111,10 @@ export class AuthService {
     return from(this.firebaseAuth.signOut()).pipe(
       concatMap(() => this.isSignedIn$),
       first((isSignedIn) => !isSignedIn),
-      tap(async () => {
-        await this.router.navigate(['/sign-in']);
-
-        // Make sure all service state has been reset!
-        this.document.defaultView?.location.reload();
+      tap(() => {
+        // Don't use `router.navigate(['/sign-in'])` here.
+        // Instead, let the browser reload the page to make sure all service state has been reset!
+        this.document.defaultView?.location.assign(this.baseHref + 'sign-in');
       }),
       catchError(() => of(false)),
     );
