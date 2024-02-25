@@ -42,7 +42,7 @@
     "Component.GiveRequestedFeedbackListEmpty1": " Vous n'avez pas de demande de feedZback à traiter... ",
     "Component.GiveRequestedFeedbackListEmpty2": " Profitez-en pour demander ou donner du feedZback à vos collègues ! ",
     "Component.Home.LinkToGuide": "Comment écrire un ",
-    "Component.LeaveForm.Content": "Les modifications apportées au formulaire vont être perdues.",
+    "Component.LeaveForm.Content": "Les modifications apportées au formulaire seront perdues.",
     "Component.LeaveForm.Title": "Confirmer l'action ?",
     "Component.ManagerDocument.SharedFeedback": "FeedZback partagé",
     "Component.ManagerDocument.SharedFeedbackRequest": "Demande de feedZback partagé",

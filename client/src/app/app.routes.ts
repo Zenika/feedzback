@@ -5,7 +5,7 @@ import { GuideComponent } from './guide/guide.component';
 import { HomeComponent } from './home/home.component';
 import { managerGuard } from './manager/manager.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { settingsGuard } from './settings/setings.guard';
+import { settingsGuard } from './settings/settings.guard';
 import { authGuard } from './shared/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';

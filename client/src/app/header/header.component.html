@@ -1,5 +1,5 @@
 <div class="app-header__burger">
-  @if (isKnownUser$ | async) {
+  @if (userState()?.knownUser) {
     <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
   }
 </div>
@@ -11,7 +11,7 @@
 </div>
 
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
-  @if (isKnownUser$ | async) {
+  @if (userState()?.knownUser) {
     <a
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
@@ -32,7 +32,7 @@
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
       routerLink="/give-requested"
-      [matBadge]="receivedRequest()?.length || undefined"
+      [matBadge]="receivedRequestLength()"
       i18n="@@Feedback.Reply"
     >
       Répondre
@@ -59,8 +59,8 @@
 </nav>
 
 <div class="app-header-account">
-  @if (isSignedIn$ | async) {
-    @if (userInfo$ | async; as userInfo) {
+  @if (userState()?.signedIn) {
+    @if (userInfo(); as userInfo) {
       <app-avatar
         class="app-header-account__photo"
         [photoUrl]="userInfo.photoURL"
@@ -78,7 +78,7 @@
         <ng-container [ngTemplateOutlet]="languageMenuItem" />
       }
 
-      @if (hasManagerFeature && (isKnownUser$ | async)) {
+      @if (hasManagerFeature && userState()?.knownUser) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
@@ -87,7 +87,7 @@
 
       <button mat-menu-item (click)="signOut()">
         <mat-icon color="primary">logout</mat-icon>
-        @if (isKnownUser$ | async) {
+        @if (userState()?.knownUser) {
           <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
         } @else {
           <ng-container i18n="@@Action.CloseSession">Fermer la session</ng-container>
