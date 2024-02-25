@@ -27,7 +27,7 @@ export class GiveFeedbackSuccessComponent implements AfterViewInit {
 
   protected hasReviewFeature = environment.featureFlipping.review;
 
-  protected isKnownUser = toSignal(this.authService.isKnownUser$);
+  protected authenticated = toSignal(this.authService.authenticated$);
 
   protected signOut() {
     this.authService.signOut().subscribe();

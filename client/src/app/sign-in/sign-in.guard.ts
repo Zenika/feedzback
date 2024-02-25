@@ -5,12 +5,12 @@ import { AuthService } from '../shared/auth';
 
 export const signInGuard: CanActivateFn = () => {
   const router = inject(Router);
-  return inject(AuthService).isKnownUser$.pipe(
-    tap((isKnownUser) => {
-      if (isKnownUser) {
+  return inject(AuthService).authenticated$.pipe(
+    tap((authenticated) => {
+      if (authenticated) {
         router.navigate(['/home']);
       }
     }),
-    map((isKnownUser) => !isKnownUser),
+    map((authenticated) => !authenticated),
   );
 };

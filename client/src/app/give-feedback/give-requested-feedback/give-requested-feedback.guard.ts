@@ -10,9 +10,9 @@ export const giveRequestedFeedbackGuard = (route: ActivatedRouteSnapshot): Obser
   const feedbackService = inject(FeedbackService);
   const router = inject(Router);
 
-  return authService.isSignedIn$.pipe(
+  return authService.guest$.pipe(
     first(),
-    switchMap((isSignedIn) => {
+    switchMap((guest) => {
       const { token } = route.params;
       return feedbackService.checkRequest(token).pipe(
         tap(({ request, draft }) => {
@@ -25,7 +25,7 @@ export const giveRequestedFeedbackGuard = (route: ActivatedRouteSnapshot): Obser
           route.data = { token, request, draft: _draft } satisfies GiveRequestedFeedbackData;
         }),
         switchMap(() => {
-          if (isSignedIn) {
+          if (!guest) {
             return of(true);
           }
           return authService.signInAnonymously();

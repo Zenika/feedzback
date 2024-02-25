@@ -28,10 +28,10 @@ export class EmployeeService {
   isManager = computed(() => this._data().managedEmails.length > 0);
 
   constructor() {
-    this.authService.isKnownUser$
+    this.authService.authenticated$
       .pipe(
-        switchMap((isKnownUser) => {
-          if (!isKnownUser) {
+        switchMap((authenticated) => {
+          if (!authenticated) {
             return EMPTY;
           }
           return this.fetchData();

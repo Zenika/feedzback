@@ -8,9 +8,9 @@ export const authGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnaps
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.isKnownUser$.pipe(
-    tap((isKnownUser) => {
-      if (isKnownUser) {
+  return authService.authenticated$.pipe(
+    tap((authenticated) => {
+      if (authenticated) {
         return;
       }
       const redirectUrlAfterSignIn = state.url;

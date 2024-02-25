@@ -45,17 +45,17 @@ export class HeaderComponent {
 
   protected languageService = inject(LanguageService);
 
-  protected userState = toSignal(this.authService.userState$);
+  protected userState = this.authService.userState;
 
-  protected userInfo = toSignal(this.authService.userInfo$);
+  protected userInfo = this.authService.userInfo;
 
   protected isManager = inject(EmployeeService).isManager;
 
   private receivedRequest$ = inject(GiveRequestedFeedbackListService).receivedRequest$;
 
   protected receivedRequestLength = toSignal(
-    this.authService.isKnownUser$.pipe(
-      first((isKnownUser) => isKnownUser),
+    this.authService.authenticated$.pipe(
+      first((authenticated) => authenticated),
       switchMap(() => this.receivedRequest$),
       map(({ length }) => length),
     ),

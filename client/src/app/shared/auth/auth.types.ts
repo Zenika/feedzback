@@ -1,5 +1,5 @@
 export type UserState = {
-  signedIn: boolean;
+  guest: boolean;
   anonymous: boolean;
-  knownUser: boolean;
+  authenticated: boolean;
 };

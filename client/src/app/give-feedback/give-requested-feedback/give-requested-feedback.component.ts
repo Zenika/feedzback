@@ -55,7 +55,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private formBuilder = inject(NonNullableFormBuilder);
 
-  protected isAnonymous = inject(AuthService).userSnapshot?.isAnonymous;
+  protected anonymous = inject(AuthService).userState().anonymous;
 
   private feedbackService = inject(FeedbackService);
 
@@ -102,7 +102,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
       } else {
         this.giveRequestedFeedbackListService.refresh();
         this.leaveFormService.unregisterForm();
-        this.feedbackId = this.isAnonymous ? undefined : this.request?.id;
+        this.feedbackId = this.anonymous ? undefined : this.request?.id;
         this.navigateToSuccess();
       }
     });
@@ -131,7 +131,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   private navigateToSuccess() {
     const state: GiveFeedbackSuccess = {
       receiverEmail: this.request.receiverEmail,
-      feedbackId: this.isAnonymous ? undefined : this.feedbackId,
+      feedbackId: this.anonymous ? undefined : this.feedbackId,
     };
     this.router.navigate(['../../success'], { relativeTo: this.activatedRoute, state });
   }

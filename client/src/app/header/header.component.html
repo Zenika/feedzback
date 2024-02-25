@@ -1,5 +1,5 @@
 <div class="app-header__burger">
-  @if (userState()?.knownUser) {
+  @if (userState().authenticated) {
     <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
   }
 </div>
@@ -11,7 +11,7 @@
 </div>
 
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
-  @if (userState()?.knownUser) {
+  @if (userState().authenticated) {
     <a
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"
@@ -59,7 +59,7 @@
 </nav>
 
 <div class="app-header-account">
-  @if (userState()?.signedIn) {
+  @if (!userState().guest) {
     @if (userInfo(); as userInfo) {
       <app-avatar
         class="app-header-account__photo"
@@ -78,7 +78,7 @@
         <ng-container [ngTemplateOutlet]="languageMenuItem" />
       }
 
-      @if (hasManagerFeature && userState()?.knownUser) {
+      @if (hasManagerFeature && userState().authenticated) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
@@ -87,7 +87,7 @@
 
       <button mat-menu-item (click)="signOut()">
         <mat-icon color="primary">logout</mat-icon>
-        @if (userState()?.knownUser) {
+        @if (userState().authenticated) {
           <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
         } @else {
           <ng-container i18n="@@Action.CloseSession">Fermer la session</ng-container>

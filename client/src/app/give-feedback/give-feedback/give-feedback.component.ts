@@ -77,7 +77,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
-  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userSnapshotEmail!]);
+  private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 
   protected hasManagerFeature = environment.featureFlipping.manager;
 
