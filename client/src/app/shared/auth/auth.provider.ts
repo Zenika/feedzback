@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 export const provideAuth = (): FactoryProvider => ({
   provide: APP_INITIALIZER,
   useFactory: (authService: AuthService) => (): Promise<unknown> => {
-    return firstValueFrom(authService.user$);
+    return firstValueFrom(authService.next$);
   },
   deps: [AuthService],
   multi: true,

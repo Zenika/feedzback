@@ -23,7 +23,7 @@ export default class ManagerListComponent implements ManagerListData {
 
   private activatedRoute = inject(ActivatedRoute);
 
-  protected managedEmails = inject(EmployeeService).data()!.managedEmails;
+  protected managedEmails = inject(EmployeeService).data().managedEmails;
 
   protected readonly root = MANAGER_LIST_ROOT;
 

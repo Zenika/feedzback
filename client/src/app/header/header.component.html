@@ -11,7 +11,7 @@
 </div>
 
 <nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
-  @if (userState().authenticated) {
+  @if (userState().authenticated && (isManagerReady$ | async)) {
     <a
       class="app-header-menu__item"
       routerLinkActive="app-header-menu__item--active"

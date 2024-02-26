@@ -1,4 +1,4 @@
-import { NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -23,6 +23,7 @@ import { BurgerComponent } from './burger/burger.component';
   },
   standalone: true,
   imports: [
+    AsyncPipe,
     NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
@@ -48,6 +49,8 @@ export class HeaderComponent {
   protected userState = this.authService.userState;
 
   protected userInfo = this.authService.userInfo;
+
+  protected isManagerReady$ = inject(EmployeeService).next$;
 
   protected isManager = inject(EmployeeService).isManager;
 

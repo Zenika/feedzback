@@ -1,5 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Subject, combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, EMPTY, ReplaySubject, combineLatest, map, switchMap } from 'rxjs';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { NormalizedFeedback } from '../../shared/feedback/feedback.types';
@@ -13,24 +14,31 @@ export class GiveRequestedFeedbackListService {
 
   private feedbackService = inject(FeedbackService);
 
-  private _list = signal<NormalizedFeedback[] | undefined>(undefined);
+  private _list = signal<NormalizedFeedback[]>([]);
 
   list = this._list.asReadonly();
 
-  listLength = computed(() => {
-    const list = this._list();
-    return list ? list.length || null : undefined;
-  });
+  listLength = computed(() => this._list().length || null);
 
-  private trigger$ = new Subject<''>();
+  private _next$ = new ReplaySubject<true>();
+
+  next$ = this._next$.asObservable();
+
+  private trigger$ = new BehaviorSubject<''>('');
 
   constructor() {
     combineLatest({
-      trigger: this.trigger$.pipe(startWith('')),
+      trigger: this.trigger$,
       authenticated: this.authService.authenticated$,
     })
-      .pipe(switchMap(({ authenticated }) => (authenticated ? this.fetch() : of([]))))
-      .subscribe((feedbacks) => this._list.set(feedbacks));
+      .pipe(
+        takeUntilDestroyed(),
+        switchMap(({ authenticated }) => (authenticated ? this.fetch() : EMPTY)),
+      )
+      .subscribe((list) => {
+        this._list.set(list);
+        this._next$.next(true);
+      });
   }
 
   refresh() {

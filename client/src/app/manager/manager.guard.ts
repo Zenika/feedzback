@@ -5,5 +5,5 @@ import { EmployeeService } from '../shared/employee/employee.service';
 
 export const managerGuard: CanActivateFn = () => {
   const employeeService = inject(EmployeeService);
-  return employeeService.data$.pipe(map(() => employeeService.isManager()));
+  return employeeService.next$.pipe(map(() => employeeService.isManager()));
 };
