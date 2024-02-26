@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { EMPTY, first, skipWhile, switchMap, tap } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { of, skipWhile, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData } from './employee.types';
-
-const DUMMY_EMPLOYEE_DATA: EmployeeData = Object.freeze({ managerEmail: '', managedEmails: [] });
 
 @Injectable({
   providedIn: 'root',
@@ -19,33 +17,29 @@ export class EmployeeService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
-  private _data = signal<EmployeeData>(DUMMY_EMPLOYEE_DATA);
+  private _data = signal<EmployeeData | null | undefined>(undefined);
 
   data = this._data.asReadonly();
 
-  data$ = toObservable(this._data).pipe(skipWhile((data) => data === DUMMY_EMPLOYEE_DATA));
+  data$ = toObservable(this._data).pipe(skipWhile((data) => data === undefined));
 
-  isManager = computed(() => this._data().managedEmails.length > 0);
+  isManager = computed(() => {
+    const data = this._data();
+    return data ? data.managedEmails.length > 0 : false;
+  });
 
   constructor() {
     this.authService.authenticated$
       .pipe(
-        switchMap((authenticated) => {
-          if (!authenticated) {
-            return EMPTY;
-          }
-          return this.fetchData();
-        }),
-        first(),
+        takeUntilDestroyed(),
+        switchMap((authenticated) => (authenticated ? this.fetchData() : of(null))),
       )
-      .subscribe();
+      .subscribe((data) => this._data.set(data));
   }
 
   private fetchData() {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient
-        .get<EmployeeData>(`${this.apiBaseUrl}/employee`, { headers })
-        .pipe(tap((data) => this._data.set(data))),
+      this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { headers }),
     );
   }
 
@@ -53,7 +47,7 @@ export class EmployeeService {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient
         .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
-        .pipe(tap(() => this._data.update((data) => ({ ...data, managerEmail })))),
+        .pipe(tap(() => this._data.update((data) => ({ ...data!, managerEmail })))),
     );
   }
 }

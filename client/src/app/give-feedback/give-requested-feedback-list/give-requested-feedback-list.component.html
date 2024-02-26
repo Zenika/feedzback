@@ -3,9 +3,9 @@
   <ng-container i18n="@@Title.RequestedFeedbackList"> Répondre aux demandes de feedZback </ng-container>
 </h1>
 
-@if (receivedRequest(); as list) {
-  @if (list.length) {
-    <app-feedback-list [feedbacks]="list" />
+@if (list(); as feedbacks) {
+  @if (feedbacks.length) {
+    <app-feedback-list [feedbacks]="feedbacks" />
   } @else {
     <app-message type="info" icon="beach_access" nonclosable>
       <ng-container i18n="@@Component.GiveRequestedFeedbackListEmpty1">

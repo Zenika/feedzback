@@ -1,12 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
-import { delay, filter, first, map, switchMap } from 'rxjs';
+import { delay, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { GiveRequestedFeedbackListService } from '../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { AuthService } from '../shared/auth';
@@ -51,15 +51,7 @@ export class HeaderComponent {
 
   protected isManager = inject(EmployeeService).isManager;
 
-  private receivedRequest$ = inject(GiveRequestedFeedbackListService).receivedRequest$;
-
-  protected receivedRequestLength = toSignal(
-    this.authService.authenticated$.pipe(
-      first((authenticated) => authenticated),
-      switchMap(() => this.receivedRequest$),
-      map(({ length }) => length),
-    ),
-  );
+  protected receivedRequestLength = inject(GiveRequestedFeedbackListService).listLength;
 
   protected isMenuOpen = false;
 

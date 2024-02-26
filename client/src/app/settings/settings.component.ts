@@ -32,7 +32,7 @@ export default class SettingsComponent {
 
   protected submitInProgress = false;
 
-  private currentManagerEmail = this.employeeService.data().managerEmail;
+  private currentManagerEmail = this.employeeService.data()!.managerEmail;
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
