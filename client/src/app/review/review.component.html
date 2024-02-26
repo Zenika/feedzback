@@ -27,14 +27,16 @@
     <div>
       <h3 class="app-review__title" i18n="@@Component.Review.Success">Votre évaluation a bien été enregistrée</h3>
 
-      <button mat-stroked-button color="primary" (click)="modifyReview()">
-        <mat-icon>edit</mat-icon>
-        <ng-container i18n="@@Action.Modify">Modifier</ng-container>
-      </button>
+      <div class="app-review__links">
+        <button mat-stroked-button color="primary" (click)="modifyReview()">
+          <mat-icon>edit</mat-icon>
+          <ng-container i18n="@@Action.Modify">Modifier</ng-container>
+        </button>
 
-      @if (hasRelevantNumberOfReviews()) {
-        <app-review-popup class="ms-6" [stats]="reviewStats()!" />
-      }
+        @if (hasRelevantNumberOfReviews()) {
+          <app-review-popup [stats]="reviewStats()!" />
+        }
+      </div>
     </div>
   </div>
 }

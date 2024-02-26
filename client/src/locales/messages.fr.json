@@ -73,7 +73,7 @@
     "Component.Review.CommentPlaceholder": "Décrivez votre expérience...",
     "Component.Review.Success": "Votre évaluation a bien été enregistrée",
     "Component.Review.Title": "Évaluer l'application FeedZback",
-    "Component.ReviewPopup.Button": "Voir les évaluations",
+    "Component.ReviewPopup.Button": "Consulter les évaluations",
     "Component.ReviewStats.Info1": "{$START_TAG_STRONG}{$INTERPOLATION} sur 5{$CLOSE_TAG_STRONG} de moyenne ",
     "Component.ReviewStats.Info2": "{$START_TAG_STRONG}{$INTERPOLATION}{$CLOSE_TAG_STRONG} évaluations ",
     "Component.Sentiment.Note1": "pas du tout satisfait",

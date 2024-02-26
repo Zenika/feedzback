@@ -1,3 +1,5 @@
+@use '../app.scss' as app;
+
 .app-review {
   display: block;
   position: relative;
@@ -31,5 +33,15 @@
     justify-content: center;
     align-items: center;
     text-wrap: balance;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    @include app.media-breakpoint-down(md) {
+      flex-direction: column;
+    }
   }
 }

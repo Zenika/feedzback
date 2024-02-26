@@ -73,7 +73,7 @@
     "Component.Review.CommentPlaceholder": "Tell us about your experience...",
     "Component.Review.Success": "Your evaluation has been saved",
     "Component.Review.Title": "Evaluate FeedZback app",
-    "Component.ReviewPopup.Button": "See reviews",
+    "Component.ReviewPopup.Button": "View reviews",
     "Component.ReviewStats.Info1": "{$START_TAG_STRONG}{$INTERPOLATION} out of 5{$CLOSE_TAG_STRONG} average",
     "Component.ReviewStats.Info2": "{$START_TAG_STRONG}{$INTERPOLATION}{$CLOSE_TAG_STRONG} reviews",
     "Component.Sentiment.Note1": "very dissatisfied",
