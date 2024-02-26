@@ -12,7 +12,7 @@
   }
 
   &__burger,
-  &-account {
+  &__account {
     width: 1%;
   }
 
@@ -20,55 +20,55 @@
     line-height: 0;
   }
 
-  &-menu {
+  &__menu {
     display: flex;
     justify-content: center;
     gap: 1.25em;
     padding: 0 1.25em;
+  }
 
-    &__item {
-      position: relative;
-      // Note: 0.75em (margin-top) + 0.5em (padding-top) == 1.25em (padding-bottom)
-      margin-top: 0.75em;
-      padding: 0.5em 0.25em 1.25em 0.25em;
-      text-decoration: none;
-      color: rgb(0 0 0 / 0.6);
-      transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  &__menu-item {
+    position: relative;
+    // Note: 0.75em (margin-top) + 0.5em (padding-top) == 1.25em (padding-bottom)
+    margin-top: 0.75em;
+    padding: 0.5em 0.25em 1.25em 0.25em;
+    text-decoration: none;
+    color: rgb(0 0 0 / 0.6);
+    transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
-      &:hover,
-      &--active {
-        color: app.$primary-color;
-      }
+    &:hover,
+    &--active {
+      color: app.$primary-color;
+    }
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0.75em;
-        height: 4px;
-        left: 50%;
-        width: 0%;
-        opacity: 0;
-        border-radius: 4px;
-        background-color: app.$primary-color;
-        transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-      }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0.75em;
+      height: 4px;
+      left: 50%;
+      width: 0%;
+      opacity: 0;
+      border-radius: 4px;
+      background-color: app.$primary-color;
+      transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
 
-      &--active::after {
-        left: 0%;
-        width: 100%;
-        opacity: 1;
-      }
+    &--active::after {
+      left: 0%;
+      width: 100%;
+      opacity: 1;
     }
   }
 
-  &-account {
+  &__account {
     position: relative;
     display: flex;
     justify-content: flex-end;
+  }
 
-    &__photo {
-      cursor: pointer;
-    }
+  &__account-photo {
+    cursor: pointer;
   }
 
   @include app.media-breakpoint-up(md) {
@@ -90,7 +90,7 @@
       text-align: center;
     }
 
-    &-menu {
+    &__menu {
       position: fixed;
       z-index: 98;
       box-sizing: border-box;
@@ -116,28 +116,6 @@
           0px 8px 10px 1px rgba(0, 0, 0, 0.14),
           0px 3px 14px 2px rgba(0, 0, 0, 0.12);
       }
-
-      /* --- V1 --- */
-      // &__item::after {
-      //   left: 0%;
-      //   width: 100%;
-      //   height: 0px;
-      //   bottom: 1.25em;
-      // }
-
-      // &__item--active::after {
-      //   height: 4px;
-      //   bottom: 0.75em;
-      // }
-
-      /* --- V2 --- */
-      // &__item::after {
-      //   left: 100%;
-      // }
-
-      // &__item--active::after {
-      //   left: 0%;
-      // }
     }
   }
 }
