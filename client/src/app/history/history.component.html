@@ -20,8 +20,8 @@
       @if (received.length) {
         <app-feedback-list [feedbacks]="received" [filter]="filter" />
       } @else {
-        <div class="app-history-empty">
-          <div class="app-history-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
+        <div class="app-history__empty">
+          <div class="app-history__empty-label" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/request">
             <mat-icon>contact_support</mat-icon>
@@ -42,8 +42,8 @@
       @if (given.length) {
         <app-feedback-list [feedbacks]="given" [filter]="filter" />
       } @else {
-        <div class="app-history-empty">
-          <div class="app-history-empty__info" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
+        <div class="app-history__empty">
+          <div class="app-history__empty-label" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
 
           <button mat-stroked-button color="primary" routerLink="/give">
             <mat-icon>chat</mat-icon>

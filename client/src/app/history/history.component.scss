@@ -3,18 +3,18 @@
     margin-right: 0.5rem;
   }
 
-  &-empty {
+  &__empty {
     margin: 0rem 0 2rem 0;
     text-align: center;
+  }
 
-    &__info {
-      margin: 1rem 0 3rem 0;
-      font-style: italic;
-      opacity: 0.5;
+  &__empty-label {
+    margin: 1rem 0 3rem 0;
+    font-style: italic;
+    opacity: 0.5;
 
-      mat-icon {
-        vertical-align: text-bottom;
-      }
+    mat-icon {
+      vertical-align: text-bottom;
     }
   }
 

@@ -10,27 +10,27 @@
   </a>
 </div>
 
-<nav class="app-header-menu app-header-menu-target mat-body-strong" [class.app-header-menu--visible]="isMenuOpen">
+<nav class="app-header__menu app-header-menu-target mat-body-strong" [class.app-header__menu--visible]="isMenuOpen">
   @if (userState().authenticated && (isManagerReady$ | async)) {
     <a
-      class="app-header-menu__item"
-      routerLinkActive="app-header-menu__item--active"
+      class="app-header__menu-item"
+      routerLinkActive="app-header__menu-item--active"
       routerLink="/request"
       i18n="@@Feedback.Request"
     >
       Demander
     </a>
     <a
-      class="app-header-menu__item"
-      routerLinkActive="app-header-menu__item--active"
+      class="app-header__menu-item"
+      routerLinkActive="app-header__menu-item--active"
       routerLink="/give"
       i18n="@@Feedback.Give"
     >
       Donner
     </a>
     <a
-      class="app-header-menu__item"
-      routerLinkActive="app-header-menu__item--active"
+      class="app-header__menu-item"
+      routerLinkActive="app-header__menu-item--active"
       routerLink="/give-requested"
       [matBadge]="receivedRequestLength()"
       i18n="@@Feedback.Reply"
@@ -38,8 +38,8 @@
       Répondre
     </a>
     <a
-      class="app-header-menu__item"
-      routerLinkActive="app-header-menu__item--active"
+      class="app-header__menu-item"
+      routerLinkActive="app-header__menu-item--active"
       routerLink="/history"
       i18n="@@Action.History"
       >Mes feedZbacks</a
@@ -47,8 +47,8 @@
 
     @if (hasManagerFeature && isManager()) {
       <a
-        class="app-header-menu__item"
-        routerLinkActive="app-header-menu__item--active"
+        class="app-header__menu-item"
+        routerLinkActive="app-header__menu-item--active"
         routerLink="/manager"
         i18n="@@Action.Manager"
       >
@@ -58,11 +58,11 @@
   }
 </nav>
 
-<div class="app-header-account">
+<div class="app-header__account">
   @if (!userState().guest) {
     @if (userInfo(); as userInfo) {
       <app-avatar
-        class="app-header-account__photo"
+        class="app-header__account-photo"
         [photoUrl]="userInfo.photoURL"
         [name]="userInfo.displayName"
         [matMenuTriggerFor]="accountMenu"
