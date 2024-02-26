@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, computed, inject, input } from '@angular/core';
+import { Component, ViewEncapsulation, computed, inject, input, model } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -25,21 +25,18 @@ export class SentimentComponent implements ControlValueAccessor {
 
   protected sentiments = SENTIMENTS_ASC;
 
-  @Input() note: SentimentNote = 0;
-
-  @Output() noteChange = new EventEmitter<SentimentNote>();
+  note = model<SentimentNote>(0);
 
   protected disabled = false;
 
   protected touched = false;
 
-  protected giveSentiment(note: number) {
+  protected giveSentiment(newNote: number) {
     if (this.disabled) {
       return;
     }
-    this.note = this.note === note ? 0 : (note as SentimentNote);
-    this.noteChange.emit(this.note);
-    this.onChange(this.note);
+    this.note.update((oldNote) => (newNote === oldNote ? 0 : (newNote as SentimentNote)));
+    this.onChange(this.note());
 
     if (!this.touched) {
       this.onTouched();
@@ -66,7 +63,7 @@ export class SentimentComponent implements ControlValueAccessor {
   }
 
   writeValue(note: SentimentNote): void {
-    this.note = note;
+    this.note.set(note);
   }
 
   setDisabledState?(disabled: boolean): void {

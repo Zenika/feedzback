@@ -1,11 +1,11 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, booleanAttribute, input } from '@angular/core';
+import { Component, ViewEncapsulation, booleanAttribute, computed, input, model } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageType } from './message.types';
 
 @Component({
   selector: 'app-message',
-  host: { '[class]': 'getClass()' },
+  host: { '[class]': 'hostClass()' },
   standalone: true,
   imports: [NgClass, MatIconModule],
   templateUrl: './message.component.html',
@@ -19,17 +19,15 @@ export class MessageComponent {
 
   type = input<MessageType>('light');
 
-  @Input() visible = true;
+  visible = model(true);
 
-  @Output() visibleChange = new EventEmitter<boolean>();
-
-  getClass() {
+  hostClass = computed(() => {
     const css = ['app-message', `app-message--${this.type()}`];
-    if (!this.visible) {
+    if (!this.visible()) {
       css.push('app-message--hidden');
     }
     return css.join(' ');
-  }
+  });
 
   protected iconMap: Record<MessageType, string> = {
     info: 'info',
@@ -39,7 +37,6 @@ export class MessageComponent {
   };
 
   close() {
-    this.visible = false;
-    this.visibleChange.emit(false);
+    this.visible.set(false);
   }
 }

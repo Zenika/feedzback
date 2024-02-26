@@ -30,7 +30,7 @@
 </app-message>
 
 <form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)">
-  @if (isAnonymous) {
+  @if (anonymous) {
     <h3>
       <mat-icon>voice_selection</mat-icon>
       <ng-container i18n="@@Component.GiveRequestedFeedback.You">Vous</ng-container>

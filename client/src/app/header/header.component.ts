@@ -1,12 +1,12 @@
-import { NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
-import { delay, filter, first, map, switchMap } from 'rxjs';
+import { delay, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { GiveRequestedFeedbackListService } from '../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { AuthService } from '../shared/auth';
@@ -23,6 +23,7 @@ import { BurgerComponent } from './burger/burger.component';
   },
   standalone: true,
   imports: [
+    AsyncPipe,
     NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
@@ -45,21 +46,15 @@ export class HeaderComponent {
 
   protected languageService = inject(LanguageService);
 
-  protected userState = toSignal(this.authService.userState$);
+  protected userState = this.authService.userState;
 
-  protected userInfo = toSignal(this.authService.userInfo$);
+  protected userInfo = this.authService.userInfo;
+
+  protected isManagerReady$ = inject(EmployeeService).next$;
 
   protected isManager = inject(EmployeeService).isManager;
 
-  private receivedRequest$ = inject(GiveRequestedFeedbackListService).receivedRequest$;
-
-  protected receivedRequestLength = toSignal(
-    this.authService.isKnownUser$.pipe(
-      first((isKnownUser) => isKnownUser),
-      switchMap(() => this.receivedRequest$),
-      map(({ length }) => length),
-    ),
-  );
+  protected receivedRequestLength = inject(GiveRequestedFeedbackListService).listLength;
 
   protected isMenuOpen = false;
 

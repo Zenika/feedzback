@@ -8,18 +8,18 @@ import { inferFeedbackType } from './feedback-details.utils';
 
 export const feedbackDetailsResolver: ResolveFn<FeedbackDetails> = (route) => {
   const feedbackService = inject(FeedbackService);
-  const user$ = inject(AuthService).user$;
+  const authService = inject(AuthService);
   const router = inject(Router);
 
   return feedbackService.getDocument(route.params['id']).pipe(
-    withLatestFrom(user$),
-    map(([feedback, user]) => {
-      if (!feedback || !user?.email) {
+    withLatestFrom(authService.next$),
+    map(([feedback]) => {
+      if (!feedback || !authService.userEmail()) {
         throw new Error();
       }
       return {
         feedback,
-        type: inferFeedbackType(feedback, user.email)!,
+        type: inferFeedbackType(feedback, authService.userEmail())!,
       };
     }),
     catchError(() => {

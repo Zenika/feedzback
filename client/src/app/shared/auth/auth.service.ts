@@ -1,20 +1,8 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
-import {
-  Observable,
-  ReplaySubject,
-  catchError,
-  concatMap,
-  distinctUntilChanged,
-  first,
-  from,
-  map,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { Observable, ReplaySubject, catchError, concatMap, first, from, map, of, switchMap, tap } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 import { UserState } from './auth.types';
@@ -33,67 +21,53 @@ export class AuthService {
 
   private baseHref = inject(APP_BASE_HREF);
 
-  userSnapshot?: User | null;
+  private _user = signal<User | null>(null);
 
-  get userSnapshotEmail() {
-    return this.userSnapshot?.email ?? null;
-  }
+  user = this._user.asReadonly();
 
-  private _user$ = new ReplaySubject<User | null>(1);
-
-  user$ = this._user$.asObservable();
-
-  userInfo$ = this._user$.pipe(
-    map((user) => {
-      if (!user?.photoURL && !user?.displayName) {
-        return undefined;
-      }
-      return {
-        photoURL: user?.photoURL ?? undefined,
-        displayName: user?.displayName ?? undefined,
-      };
-    }),
-  );
-
-  /**
-   * Logged user can be a known user or an anonymous user
-   */
-  isSignedIn$ = this._user$.pipe(
-    map((user) => user !== null),
-    distinctUntilChanged(),
-  );
-
-  isAnonymous$ = this._user$.pipe(
-    map((user) => user?.isAnonymous === true),
-    distinctUntilChanged(),
-  );
-
-  isKnownUser$ = this._user$.pipe(
-    map((user) => user?.isAnonymous === false),
-    distinctUntilChanged(),
-  );
-
-  userState$: Observable<UserState> = this._user$.pipe(
-    map((user) => ({
-      signedIn: user !== null,
+  userState = computed<UserState>(() => {
+    const user = this.user();
+    return {
+      guest: user === null,
       anonymous: user?.isAnonymous === true,
-      knownUser: user?.isAnonymous === false,
-    })),
-    distinctUntilChanged(),
-  );
+      authenticated: user?.isAnonymous === false,
+    } satisfies UserState;
+  });
+
+  userEmail = computed(() => this.user()?.email ?? '');
+
+  userInfo = computed(() => {
+    const user = this.user();
+    if (!user?.photoURL && !user?.displayName) {
+      return undefined;
+    }
+    return {
+      photoURL: user?.photoURL ?? undefined,
+      displayName: user?.displayName ?? undefined,
+    };
+  });
+
+  private _next$ = new ReplaySubject<true>();
+
+  next$ = this._next$.asObservable();
+
+  guest$ = this.next$.pipe(map(() => this.userState().guest));
+
+  anonymous$ = this.next$.pipe(map(() => this.userState().anonymous));
+
+  authenticated$ = this.next$.pipe(map(() => this.userState().authenticated));
 
   constructor() {
     this.firebaseAuth.onAuthStateChanged((user) => {
-      this.userSnapshot = user;
-      this._user$.next(user);
+      this._user.set(user);
+      this._next$.next(true);
     });
   }
 
   signInWithGoogle(): Observable<boolean> {
     return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
-      // Once the user has signed-in, wait until the `AuthService` state (`this._user$`) has been fully propagated.
-      concatMap(() => this.isKnownUser$),
-      first(), // Force unsubscribing from `this.isKnownUser$` observable
+      concatMap(() => this.authenticated$),
+      first((authenticated) => authenticated),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
       catchError(() => of(false)),
     );
@@ -101,16 +75,16 @@ export class AuthService {
 
   signInAnonymously(): Observable<boolean> {
     return from(signInAnonymously(this.firebaseAuth)).pipe(
-      concatMap(() => this.isAnonymous$),
-      first((isAnonymous) => isAnonymous),
+      concatMap(() => this.anonymous$),
+      first((anonymous) => anonymous),
       catchError(() => of(false)),
     );
   }
 
   signOut(): Observable<boolean> {
     return from(this.firebaseAuth.signOut()).pipe(
-      concatMap(() => this.isSignedIn$),
-      first((isSignedIn) => !isSignedIn),
+      concatMap(() => this.guest$),
+      first((guest) => guest),
       tap(() => {
         // Don't use `router.navigate(['/sign-in'])` here.
         // Instead, let the browser reload the page to make sure all service state has been reset!
@@ -121,7 +95,7 @@ export class AuthService {
   }
 
   getIdToken(): Observable<string | null> {
-    return from(this.userSnapshot?.getIdToken() ?? Promise.resolve(null));
+    return from(this.user()?.getIdToken() ?? Promise.resolve(null));
   }
 
   withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {

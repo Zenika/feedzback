@@ -1,21 +1,45 @@
-import { Injectable, inject } from '@angular/core';
-import { Subject, exhaustMap, map, shareReplay, startWith } from 'rxjs';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, EMPTY, ReplaySubject, combineLatest, map, switchMap } from 'rxjs';
+import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { NormalizedFeedback } from '../../shared/feedback/feedback.types';
 import { normalizeReceivedRequestList } from '../../shared/feedback/feedback.utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GiveRequestedFeedbackListService {
+  private authService = inject(AuthService);
+
   private feedbackService = inject(FeedbackService);
 
-  private trigger$ = new Subject<''>();
+  private _list = signal<NormalizedFeedback[]>([]);
 
-  receivedRequest$ = this.trigger$.pipe(
-    startWith(''),
-    exhaustMap(() => this.fetch()),
-    shareReplay(1),
-  );
+  list = this._list.asReadonly();
+
+  listLength = computed(() => this._list().length || null);
+
+  private _next$ = new ReplaySubject<true>();
+
+  next$ = this._next$.asObservable();
+
+  private trigger$ = new BehaviorSubject<''>('');
+
+  constructor() {
+    combineLatest({
+      trigger: this.trigger$,
+      authenticated: this.authService.authenticated$,
+    })
+      .pipe(
+        takeUntilDestroyed(),
+        switchMap(({ authenticated }) => (authenticated ? this.fetch() : EMPTY)),
+      )
+      .subscribe((list) => {
+        this._list.set(list);
+        this._next$.next(true);
+      });
+  }
 
   refresh() {
     this.trigger$.next('');

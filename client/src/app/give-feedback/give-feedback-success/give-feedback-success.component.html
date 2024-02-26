@@ -6,7 +6,7 @@
     <p>{{ state.receiverEmail }}</p>
   </div>
 
-  @if (hasReviewFeature && isKnownUser()) {
+  @if (hasReviewFeature && userState().authenticated) {
     <app-review />
   }
 

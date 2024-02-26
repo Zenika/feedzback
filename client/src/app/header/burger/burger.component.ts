@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, model } from '@angular/core';
 
 @Component({
   selector: 'app-burger',
   host: {
     class: 'app-burger',
-    '[class.app-burger--active]': 'active',
+    '[class.app-burger--active]': 'active()',
     '(click)': 'onClick()',
   },
   standalone: true,
@@ -13,12 +13,9 @@ import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angu
   encapsulation: ViewEncapsulation.None,
 })
 export class BurgerComponent {
-  @Input() active = false;
-
-  @Output() activeChange = new EventEmitter<boolean>();
+  active = model(false);
 
   onClick() {
-    this.active = !this.active;
-    this.activeChange.emit(this.active);
+    this.active.update((active) => !active);
   }
 }
