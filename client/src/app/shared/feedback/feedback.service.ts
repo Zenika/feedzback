@@ -3,7 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
-import { FeedbackRequestDto, GiveFeedbackDto, GiveRequestedFeedbackDto } from './feedback.dto';
+import {
+  FeedbackDeleteRequestDto,
+  FeedbackRequestAgainDto,
+  FeedbackRequestDto,
+  GiveFeedbackDto,
+  GiveRequestedFeedbackDto,
+} from './feedback.dto';
 import {
   Feedback,
   FeedbackDraft,
@@ -48,9 +54,25 @@ export class FeedbackService {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(
         `${this.apiBaseUrl}/feedback/request-again`,
-        { feedbackId },
+        { feedbackId } satisfies FeedbackRequestAgainDto,
         { headers, withCredentials: true },
       ),
+    );
+  }
+
+  deleteRequest(feedbackId: string): Observable<{ error: boolean; message?: 'Forbidden' }> {
+    return this.authService.withBearerIdToken((headers) =>
+      this.httpClient
+        .post<void>(`${this.apiBaseUrl}/feedback/delete-request`, { feedbackId } satisfies FeedbackDeleteRequestDto, {
+          headers,
+        })
+        .pipe(
+          map(() => ({ error: false })),
+          catchError(({ error }: HttpErrorResponse) => {
+            const isForbidden = (error?.message as 'Bad Request' | 'Forbidden') === 'Forbidden';
+            return of({ error: true, message: isForbidden ? ('Forbidden' as const) : undefined });
+          }),
+        ),
     );
   }
 

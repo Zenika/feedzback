@@ -25,7 +25,7 @@ import {
   TokenObject,
   feedbackEncryptedFields,
 } from './feedback-db.types';
-import { mapToFeedbackListMap } from './feedback-db.utils';
+import { isRecentFeedbackRequest, mapToFeedbackListMap } from './feedback-db.utils';
 
 @Injectable()
 export class FeedbackDbService {
@@ -96,6 +96,32 @@ export class FeedbackDbService {
     await this.feedbackCollection.doc(feedbackId).update(partialFeedbackRequest);
 
     return { ...this.decryptFeedback(request), token: tokenId } satisfies FeedbackRequest & TokenObject;
+  }
+
+  async deleteRequest(feedbackId: string, receiverEmail: string) {
+    const requestDoc = await this.feedbackCollection.doc(feedbackId).get();
+    if (!requestDoc.exists) {
+      return null;
+    }
+    const request = requestDoc.data() as FeedbackRequest;
+
+    if (request.receiverEmail !== receiverEmail) {
+      return null;
+    }
+
+    const tokenId = await this.revealRequestTokenId(feedbackId, request.giverEmail);
+    if (!tokenId) {
+      return null;
+    }
+
+    if (isRecentFeedbackRequest(request.updatedAt)) {
+      return false;
+    }
+
+    await this.feedbackCollection.doc(feedbackId).delete();
+    await this.feedbackRequestTokenCollection.doc(tokenId).delete();
+    await this.deleteDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
+    return true;
   }
 
   async checkRequest(tokenId: string) {

@@ -1,4 +1,15 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  ForbiddenException,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from '../core/auth';
 import { EmailService } from '../core/email';
@@ -7,6 +18,7 @@ import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenOb
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   DeleteFeedbackDraftDto,
+  FeedbackDeleteRequestDto,
   FeedbackListMapDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
@@ -65,6 +77,21 @@ export class FeedbackController {
 
     const { giverEmail, message, token } = requestWithToken;
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
+  }
+
+  @ApiOperation({ summary: 'Delete a feedback request' })
+  @UseGuards(AuthGuard)
+  @Post('delete-request')
+  async deleteRequest(@Body() { feedbackId }: FeedbackDeleteRequestDto) {
+    const receiverEmail = this.authService.userEmail!;
+
+    const result = await this.feedbackDbService.deleteRequest(feedbackId, receiverEmail);
+    if (result === null) {
+      throw new BadRequestException();
+    }
+    if (result === false) {
+      throw new ForbiddenException();
+    }
   }
 
   @ApiOperation({

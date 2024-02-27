@@ -56,14 +56,41 @@
       </ul>
     }
 
-    @if (showRequestAgainSuccess) {
-      <app-message type="success" [visible]="showRequestAgainSuccess" i18n="@@Component.PendingFeedback.ReminderSent">
-        Un rappel a été envoyé à votre collègue.
-      </app-message>
-    } @else {
-      <button mat-raised-button color="primary" (click)="requestAgain()" i18n="@@Component.PendingFeedback.Remind">
+    @if (isRecentFeedbackRequest) {
+      <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
+        <li class="gbl-icon-list__item">
+          <mat-icon class="gbl-icon-list__icon">hourglass_top</mat-icon>
+          <ng-container i18n="@@Component.PendingFeedback.CanNotBeDeleted">
+            La demande est récente (moins de {{ DEADLINE_IN_DAYS }} jours) et ne peut pas encore être supprimée
+          </ng-container>
+        </li>
+      </ul>
+    }
+
+    @if (actionsStatus !== 'hidden') {
+      <button
+        class="me-5"
+        mat-raised-button
+        color="primary"
+        [disabled]="actionsStatus === 'disabled'"
+        (click)="requestAgain()"
+        i18n="@@Component.PendingFeedback.Remind"
+      >
         Relancer
       </button>
+
+      @if (!isRecentFeedbackRequest) {
+        <form
+          class="inline"
+          [formGroup]="deleteRequestForm"
+          [appConfirmBeforeSubmit]="deleteRequest.bind(this)"
+          appConfirmBeforeSubmitConfig="delete"
+        >
+          <button mat-button color="primary" [disabled]="actionsStatus === 'disabled'">
+            <ng-container i18n="@@Action.Delete"> Supprimer </ng-container>
+          </button>
+        </form>
+      }
     }
   }
   @case (feedbackType.receivedRequest) {
