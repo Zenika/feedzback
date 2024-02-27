@@ -12,5 +12,5 @@ import { ConfirmBeforeSubmitData } from './confirm-before-submit.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class ConfirmBeforeSubmitComponent {
-  data: ConfirmBeforeSubmitData = inject(MAT_DIALOG_DATA);
+  data = inject<ConfirmBeforeSubmitData>(MAT_DIALOG_DATA);
 }

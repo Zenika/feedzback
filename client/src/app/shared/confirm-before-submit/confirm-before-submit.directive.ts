@@ -2,7 +2,8 @@ import { Directive, inject, input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs';
 import { ConfirmBeforeSubmitComponent } from './confirm-before-submit.component';
-import { ConfirmBeforeSubmitData } from './confirm-before-submit.types';
+import { confirmBeforeSubmitMap } from './confirm-before-submit.config';
+import { ConfirmBeforeSubmitConfig, ConfirmBeforeSubmitData } from './confirm-before-submit.types';
 
 @Directive({
   selector: '[appConfirmBeforeSubmit]',
@@ -14,14 +15,13 @@ import { ConfirmBeforeSubmitData } from './confirm-before-submit.types';
 export class ConfirmBeforeSubmitDirective {
   private matDialog = inject(MatDialog);
 
-  content = input<string | undefined>(undefined, { alias: 'appConfirmBeforeSubmitContent' });
+  config = input.required<ConfirmBeforeSubmitConfig>({ alias: 'appConfirmBeforeSubmitConfig' });
 
   submit = input.required<CallableFunction>({ alias: 'appConfirmBeforeSubmit' });
 
   confirmBeforeSubmit() {
-    const data: ConfirmBeforeSubmitData = {
-      content: this.content(),
-    };
+    const config = this.config();
+    const data: ConfirmBeforeSubmitData = typeof config === 'string' ? confirmBeforeSubmitMap[config] : config;
 
     this.matDialog
       .open(ConfirmBeforeSubmitComponent, { data })

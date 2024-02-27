@@ -37,7 +37,7 @@
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
 </h1>
 
-<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)">
+<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="send">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
 
   <app-give-feedback-details
