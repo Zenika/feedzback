@@ -44,12 +44,12 @@
 
 @switch (type) {
   @case (feedbackType.sentRequest) {
-    @if (feedback.updatedAt > feedback.createdAt) {
+    @if (hasBeenRequestedAgain) {
       <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
         <li class="gbl-icon-list__item">
           <mat-icon class="gbl-icon-list__icon">history</mat-icon>
           <ng-container i18n="@@Component.PendingFeedback.ReminderAlreadySentOn">
-            Vous avez déjà relancé votre collègue le
+            Vous avez envoyé une relance à votre collègue le
           </ng-container>
           {{ feedback.updatedAt | date: 'longDate' }}
         </li>
@@ -68,16 +68,18 @@
     }
 
     @if (actionsStatus !== 'hidden') {
-      <button
-        class="me-5"
-        mat-raised-button
-        color="primary"
-        [disabled]="actionsStatus === 'disabled'"
-        (click)="requestAgain()"
-        i18n="@@Component.PendingFeedback.Remind"
-      >
-        Relancer
-      </button>
+      @if (!hasBeenRequestedAgain) {
+        <button
+          class="me-5"
+          mat-raised-button
+          color="primary"
+          [disabled]="actionsStatus === 'disabled'"
+          (click)="requestAgain()"
+          i18n="@@Component.PendingFeedback.Remind"
+        >
+          Relancer
+        </button>
+      }
 
       @if (!isRecentFeedbackRequest) {
         <form

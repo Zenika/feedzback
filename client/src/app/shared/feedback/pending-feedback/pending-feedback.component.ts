@@ -46,6 +46,10 @@ export class PendingFeedbackComponent {
 
   private notificationService = inject(NotificationService);
 
+  protected get hasBeenRequestedAgain() {
+    return this.feedback.updatedAt > this.feedback.createdAt;
+  }
+
   protected get isRecentFeedbackRequest() {
     return isRecentFeedbackRequest(this.feedback.updatedAt);
   }

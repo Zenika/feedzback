@@ -75,6 +75,11 @@ export class FeedbackController {
       throw new BadRequestException();
     }
 
+    if (requestWithToken.updatedAt > requestWithToken.createdAt) {
+      // Only one reminder can be sent
+      throw new ForbiddenException();
+    }
+
     const { giverEmail, message, token } = requestWithToken;
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
   }

@@ -54,7 +54,7 @@
     "Component.MyFeedbacks.Requested": "requested",
     "Component.PendingFeedback.CanNotBeDeleted": "The request is recent (less than {$INTERPOLATION} days) and cannot yet be deleted",
     "Component.PendingFeedback.Remind": "Send a reminder",
-    "Component.PendingFeedback.ReminderAlreadySentOn": "You have already reminded your colleague on ",
+    "Component.PendingFeedback.ReminderAlreadySentOn": "You have sent a reminder to your colleague on ",
     "Component.PendingFeedback.ReminderSent": "A reminder has been sent to your colleague.",
     "Component.PendingFeedback.RequestDeleted": "The feedZback request has been deleted.",
     "Component.RequestFeedback.EmailsRequirements": "Use your colleagues' personal email addresses (avoid mailing lists).",
