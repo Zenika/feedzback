@@ -1,3 +1,4 @@
+import { FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from './feedback-db.config';
 import { FeedbackItemWithId, FeedbackListMap, FeedbackRequestItemWithId } from './feedback-db.types';
 
 type Item = FeedbackItemWithId | FeedbackRequestItemWithId;
@@ -30,3 +31,11 @@ export const mapToFeedbackListMap = (items: Item[], viewerEmail: string): Feedba
       receivedRequest: [],
     } satisfies FeedbackListMap as FeedbackListMap,
   );
+
+/**
+ * A feedback request less than `FEEDBACK_REQUEST_DEADLINE_IN_DAYS` days old is considered recent.
+ */
+export const isRecentFeedbackRequest = (updatedAt: number) => {
+  const DAY_IN_MS = 86_400_000;
+  return (Date.now() - updatedAt) / DAY_IN_MS < FEEDBACK_REQUEST_DEADLINE_IN_DAYS;
+};

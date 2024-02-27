@@ -1,13 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MessageComponent } from '../../ui/message';
+import { ConfirmBeforeSubmitDirective } from '../../confirm-before-submit';
+import { NotificationService } from '../../notification/notification.service';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
+import { FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from '../feedback.config';
 import { FeedbackService } from '../feedback.service';
 import { FeedbackRequest, FeedbackType } from '../feedback.types';
+import { isRecentFeedbackRequest } from '../feedback.utils';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({
@@ -15,10 +19,11 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
   standalone: true,
   imports: [
     DatePipe,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     AllowedEmailDomainsPipe,
-    MessageComponent,
+    ConfirmBeforeSubmitDirective,
     FeedbackBodyComponent,
     FeedbackTypeIconPipe,
     GiveRequestedFeedbackDirective,
@@ -39,9 +44,40 @@ export class PendingFeedbackComponent {
 
   private feedbackService = inject(FeedbackService);
 
-  protected showRequestAgainSuccess = false;
+  private notificationService = inject(NotificationService);
+
+  protected get isRecentFeedbackRequest() {
+    return isRecentFeedbackRequest(this.feedback.updatedAt);
+  }
+
+  protected DEADLINE_IN_DAYS = FEEDBACK_REQUEST_DEADLINE_IN_DAYS;
+
+  protected deleteRequestForm = new FormGroup({});
+
+  protected actionsStatus: 'enabled' | 'disabled' | 'hidden' = 'enabled';
 
   protected requestAgain() {
-    this.feedbackService.requestAgain(this.feedback.id).subscribe(() => (this.showRequestAgainSuccess = true));
+    this.actionsStatus = 'disabled';
+    this.feedbackService.requestAgain(this.feedback.id).subscribe(() => {
+      this.actionsStatus = 'hidden';
+      this.notificationService.show(
+        $localize`:@@Component.PendingFeedback.ReminderSent:Un rappel a été envoyé à votre collègue.`,
+        'success',
+      );
+    });
+  }
+
+  protected deleteRequest() {
+    this.actionsStatus = 'disabled';
+    this.feedbackService.deleteRequest(this.feedback.id).subscribe(({ error }) => {
+      if (error) {
+        return;
+      }
+      this.actionsStatus = 'hidden';
+      this.notificationService.show(
+        $localize`:@@Component.PendingFeedback.RequestDeleted:La demande de feedZback a bien été supprimée.`,
+        'success',
+      );
+    });
   }
 }

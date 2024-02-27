@@ -4,6 +4,14 @@ export type FeedbackRequestDto = {
   shared: boolean;
 };
 
+export type FeedbackRequestAgainDto = {
+  feedbackId: string;
+};
+
+export type FeedbackDeleteRequestDto = {
+  feedbackId: string;
+};
+
 export type GiveRequestedFeedbackDto = {
   token: string;
   positive: string;

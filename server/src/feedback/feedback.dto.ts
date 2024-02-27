@@ -15,6 +15,10 @@ export class FeedbackRequestAgainDto {
   @IsString() feedbackId!: string;
 }
 
+export class FeedbackDeleteRequestDto {
+  @IsString() feedbackId!: string;
+}
+
 export class GiveRequestedFeedbackDto {
   @IsString() token!: string;
 
