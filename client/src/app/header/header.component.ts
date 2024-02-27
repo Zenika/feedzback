@@ -1,6 +1,6 @@
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,10 +10,12 @@ import { delay, filter } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { GiveRequestedFeedbackListService } from '../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { AuthService } from '../shared/auth';
+import { BreakpointService } from '../shared/breakpoint';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { LanguageService } from '../shared/i18n/language';
 import { AvatarComponent } from '../shared/ui/avatar/avatar.component';
 import { BurgerComponent } from './burger/burger.component';
+import { headerAnimations } from './header.animations';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +25,6 @@ import { BurgerComponent } from './burger/burger.component';
   },
   standalone: true,
   imports: [
-    AsyncPipe,
     NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
@@ -35,6 +36,7 @@ import { BurgerComponent } from './burger/burger.component';
     AvatarComponent,
     BurgerComponent,
   ],
+  animations: [headerAnimations],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -50,11 +52,11 @@ export class HeaderComponent {
 
   protected userInfo = this.authService.userInfo;
 
-  protected isManagerReady$ = inject(EmployeeService).next$;
-
   protected isManager = inject(EmployeeService).isManager;
 
   protected receivedRequestLength = inject(GiveRequestedFeedbackListService).listLength;
+
+  protected device = toSignal(inject(BreakpointService).device$);
 
   protected isMenuOpen = false;
 

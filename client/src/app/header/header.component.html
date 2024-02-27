@@ -11,7 +11,7 @@
 </div>
 
 <nav class="app-header__menu app-header-menu-target mat-body-strong" [class.app-header__menu--visible]="isMenuOpen">
-  @if (userState().authenticated && (isManagerReady$ | async)) {
+  @if (userState().authenticated) {
     <a
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
@@ -47,6 +47,7 @@
 
     @if (hasManagerFeature && isManager()) {
       <a
+        [@smoothWidth]="device() !== 'mobile'"
         class="app-header__menu-item"
         routerLinkActive="app-header__menu-item--active"
         routerLink="/manager"
