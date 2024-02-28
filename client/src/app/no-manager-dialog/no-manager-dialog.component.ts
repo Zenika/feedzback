@@ -44,7 +44,7 @@ export class NoManagerDialogComponent implements AfterViewInit {
           if (hasManager) {
             return of(false);
           }
-          return this.dialog.open(this.templateRef, { width: '500px' }).afterClosed();
+          return this.dialog.open(this.templateRef, { width: '500px', disableClose: true }).afterClosed();
         }),
         first(),
       )
