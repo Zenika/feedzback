@@ -1,7 +1,11 @@
 <div class="app-notification__content" [class]="'app-notification__content--' + data.type">
   <mat-icon class="app-notification__icon">{{ iconMap[data.type] }}</mat-icon>
 
-  <span>{{ data.message }}</span>
+  @if (isTemplateRef(data.message)) {
+    <ng-container [ngTemplateOutlet]="data.message" />
+  } @else {
+    <span>{{ data.message }}</span>
+  }
 </div>
 
 <a class="app-notification__close">

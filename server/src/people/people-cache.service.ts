@@ -21,7 +21,7 @@ export class PeopleCacheService {
   }
 
   getSearchablePersons() {
-    this.checkExpiryTime();
+    this.checkExpiryDate();
     if (this.state === 'notAvailable') {
       throw new Error();
     }
@@ -59,7 +59,7 @@ export class PeopleCacheService {
     this.cachingInProgress = false;
   }
 
-  private checkExpiryTime() {
+  private checkExpiryDate() {
     if (Date.now() <= this.searchablePersonsExpiryDate) {
       return;
     }

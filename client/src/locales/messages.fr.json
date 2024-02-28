@@ -52,6 +52,7 @@
     "Component.MyFeedbacks.NoData": "Aucun feedZback...",
     "Component.MyFeedbacks.Received": "reçus",
     "Component.MyFeedbacks.Requested": "demandés",
+    "Component.NoManagerDialog.Message": " Pour profiter au mieux de l'application FeedZback, merci de {$START_TAG_STRONG}renseigner l'email de votre manager{$CLOSE_TAG_STRONG} dans les paramètres. ",
     "Component.PendingFeedback.CanNotBeDeleted": " La demande est récente (moins de {$INTERPOLATION} jours) et ne peut pas encore être supprimée ",
     "Component.PendingFeedback.Remind": " Relancer ",
     "Component.PendingFeedback.ReminderAlreadySentOn": " Vous avez envoyé une relance à votre collègue le ",
@@ -137,6 +138,7 @@
     "Title.Settings": "Paramètres",
     "Title.SharedFeedZbacks": "FeedZbacks partagés",
     "Title.SignIn": "Connexion",
+    "Word.Later": "Plus tard",
     "Word.Or": "ou"
   }
 }
