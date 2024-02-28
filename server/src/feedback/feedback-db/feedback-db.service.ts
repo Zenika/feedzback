@@ -50,6 +50,18 @@ export class FeedbackDbService {
     return !!(await this.feedbackCollection.get());
   }
 
+  onFeedbackChanges(callback: (feedbacks: FeedbackWithId[]) => unknown) {
+    return this.feedbackCollection.where('status', '==', FeedbackStatus).onSnapshot((snapshot) => {
+      callback(
+        snapshot.docChanges().map((docChange) => {
+          const { id } = docChange.doc;
+          const feedback = docChange.doc.data() as Feedback;
+          return { id, ...feedback };
+        }),
+      );
+    });
+  }
+
   // ----- Request feedback and give requested feedback -----
 
   async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
