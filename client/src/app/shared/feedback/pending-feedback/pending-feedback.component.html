@@ -56,7 +56,7 @@
       </ul>
     }
 
-    @if (isRecentFeedbackRequest) {
+    @if (hasCancelRequestFeature && isRecentFeedbackRequest) {
       <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
         <li class="gbl-icon-list__item">
           <mat-icon class="gbl-icon-list__icon">hourglass_top</mat-icon>
@@ -81,7 +81,7 @@
         </button>
       }
 
-      @if (!isRecentFeedbackRequest) {
+      @if (hasCancelRequestFeature && !isRecentFeedbackRequest) {
         <form
           class="inline"
           [formGroup]="deleteRequestForm"

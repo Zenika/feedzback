@@ -20,9 +20,10 @@ export const environment = {
   featureFlipping: {
     autocompleteEmail: true,
     appVersion: true,
-    requestTemplate: false,
+    manager: true,
     localize: false,
-    manager: false,
+    requestTemplate: false,
+    cancelRequest: false,
     review: false,
   },
 };

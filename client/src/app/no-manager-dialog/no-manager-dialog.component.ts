@@ -34,10 +34,10 @@ export class NoManagerDialogComponent implements AfterViewInit {
       return;
     }
 
-    this.employeeService.next$
+    this.employeeService.data$
       .pipe(
         delay(this.delay),
-        map(() => !!this.employeeService.data().managerEmail),
+        map(({ managerEmail }) => !!managerEmail),
       )
       .pipe(
         switchMap((hasManager) => {
