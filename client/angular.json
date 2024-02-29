@@ -39,7 +39,6 @@
           },
           "configurations": {
             "production": {
-              "localize": false,
               "budgets": [
                 {
                   "type": "initial",
