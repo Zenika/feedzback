@@ -24,6 +24,5 @@ export const environment = {
     cancelRequest: false,
     localize: false,
     requestTemplate: false,
-    review: false,
   },
 };
