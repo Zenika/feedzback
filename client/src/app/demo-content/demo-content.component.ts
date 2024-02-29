@@ -25,7 +25,7 @@ export default class DemoContentComponent {
 
   sentimentNote: SentimentNote = 0;
 
-  sentimentNoteCtrl = new FormControl<SentimentNote>(4, {
+  sentimentNoteCtrl = new FormControl<SentimentNote>(5, {
     nonNullable: true,
     validators: [requiredSentimentValidator],
   });
