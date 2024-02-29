@@ -56,12 +56,12 @@ export class FeedbackDbService {
     return !!(await this.feedbackCollection.get());
   }
 
-  onFeedbackChanges(callback: (feedbacks: FeedbackWithId[]) => unknown) {
-    return this.feedbackCollection.where('status', '==', FeedbackStatus).onSnapshot((snapshot) => {
+  onFeedbackChanges(callback: (feedbacks: (FeedbackWithId | FeedbackRequestWithId)[]) => unknown) {
+    return this.feedbackCollection.onSnapshot((snapshot) => {
       callback(
         snapshot.docChanges().map((docChange) => {
           const { id } = docChange.doc;
-          const feedback = docChange.doc.data() as Feedback;
+          const feedback = docChange.doc.data() as Feedback | FeedbackRequest;
           return { id, ...feedback };
         }),
       );
