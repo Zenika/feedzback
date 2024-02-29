@@ -18,7 +18,7 @@ export class GiveRequestedFeedbackListService {
 
   list = this._list.asReadonly();
 
-  listLength = computed(() => this._list()?.length);
+  listLength = computed(() => this._list()?.length || null);
 
   private trigger$ = new BehaviorSubject<''>('');
 

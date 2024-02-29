@@ -18,7 +18,7 @@ import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenOb
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   DeleteFeedbackDraftDto,
-  FeedbackDeleteRequestDto,
+  FeedbackCancelRequestDto,
   FeedbackListMapDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
@@ -84,13 +84,13 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
   }
 
-  @ApiOperation({ summary: 'Delete a feedback request' })
+  @ApiOperation({ summary: 'Cancel a feedback request' })
   @UseGuards(AuthGuard)
-  @Post('delete-request')
-  async deleteRequest(@Body() { feedbackId }: FeedbackDeleteRequestDto) {
+  @Post('cancel-request')
+  async cancelRequest(@Body() { feedbackId }: FeedbackCancelRequestDto) {
     const receiverEmail = this.authService.userEmail!;
 
-    const result = await this.feedbackDbService.deleteRequest(feedbackId, receiverEmail);
+    const result = await this.feedbackDbService.cancelRequest(feedbackId, receiverEmail);
     if (result === null) {
       throw new BadRequestException();
     }
@@ -235,7 +235,7 @@ export class FeedbackController {
   @ApiOperation({ summary: 'Get feedback by ID shared with the authenticated user viewed as manager' })
   @UseGuards(AuthGuard)
   @Get('shared/document/:feedbackId')
-  async getManagedFeedbackDocument(@Param() { feedbackId }: SharedFeedbackDocumentDto) {
+  async getSharedFeedbackDocument(@Param() { feedbackId }: SharedFeedbackDocumentDto) {
     const document = await this.feedbackDbService.getSharedFeedbackDocument(feedbackId);
     if (!document) {
       throw new BadRequestException();
