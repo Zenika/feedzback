@@ -22,7 +22,7 @@ export const environment = {
     appVersion: true,
     manager: true,
     cancelRequest: true,
-    localize: false,
+    localize: true,
     requestTemplate: false,
   },
 };
