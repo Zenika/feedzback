@@ -40,25 +40,6 @@ export class FeedbackController {
     private employeeDbService: EmployeeDbService,
   ) {}
 
-  // #############################################################################
-  // #############################################################################
-  // PATCH FEEDBACK COLLECTION ADDING "archived: 0" FIELD FOR ALL EXISTING ENTRIES
-  // ---- REMOVE THIS CODE AFTER THE COLLECTION HAS BEEN PATCHED IN PRODUCTION ---
-  private patchDone = false;
-
-  @Get('patch')
-  async PATCH_FEEDBACK_COLLECTION() {
-    if (this.patchDone) {
-      return { patchExecuted: 'no (already executed)' };
-    }
-
-    await this.feedbackDbService.PATCH_FEEDBACK_COLLECTION();
-    this.patchDone = true;
-    return { patchExecuted: 'yes' };
-  }
-  // #############################################################################
-  // #############################################################################
-
   @ApiOperation({ summary: 'Ping the server and database connections' })
   @Get('ping')
   async ping() {
