@@ -4,7 +4,7 @@ import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
 import {
-  FeedbackDeleteRequestDto,
+  FeedbackCancelRequestDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
   GiveFeedbackDto,
@@ -60,10 +60,10 @@ export class FeedbackService {
     );
   }
 
-  deleteRequest(feedbackId: string): Observable<{ error: boolean; message?: 'Forbidden' }> {
+  cancelRequest(feedbackId: string): Observable<{ error: boolean; message?: 'Forbidden' }> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient
-        .post<void>(`${this.apiBaseUrl}/feedback/delete-request`, { feedbackId } satisfies FeedbackDeleteRequestDto, {
+        .post<void>(`${this.apiBaseUrl}/feedback/cancel-request`, { feedbackId } satisfies FeedbackCancelRequestDto, {
           headers,
         })
         .pipe(

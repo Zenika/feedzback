@@ -59,7 +59,7 @@ export class PendingFeedbackComponent {
 
   protected DEADLINE_IN_DAYS = FEEDBACK_REQUEST_DEADLINE_IN_DAYS;
 
-  protected deleteRequestForm = new FormGroup({});
+  protected cancelRequestForm = new FormGroup({});
 
   protected actionsStatus: 'enabled' | 'disabled' | 'hidden' = 'enabled';
 
@@ -74,15 +74,15 @@ export class PendingFeedbackComponent {
     });
   }
 
-  protected deleteRequest() {
+  protected cancelRequest() {
     this.actionsStatus = 'disabled';
-    this.feedbackService.deleteRequest(this.feedback.id).subscribe(({ error }) => {
+    this.feedbackService.cancelRequest(this.feedback.id).subscribe(({ error }) => {
       if (error) {
         return;
       }
       this.actionsStatus = 'hidden';
       this.notificationService.show(
-        $localize`:@@Component.PendingFeedback.RequestDeleted:La demande de feedZback a bien été supprimée.`,
+        $localize`:@@Component.PendingFeedback.RequestCancelled:La demande de feedZback a bien été supprimée.`,
         'success',
       );
     });

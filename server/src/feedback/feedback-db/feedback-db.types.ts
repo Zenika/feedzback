@@ -12,6 +12,7 @@ export type Feedback = {
   status: FeedbackStatus;
   createdAt: number;
   updatedAt: number;
+  archived: FeedbackArchived;
 };
 
 export const FeedbackStatus = 'done';
@@ -30,12 +31,29 @@ export type FeedbackRequest = {
   status: FeedbackRequestStatus;
   createdAt: number;
   updatedAt: number;
+  archived: typeof FeedbackArchived.No | typeof FeedbackArchived.Both;
 };
 
 export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
 
 export type FeedbackRequestWithId = FeedbackRequest & IdObject;
+
+// ----- FeedbackArchived -----
+
+// Explanation of possible values for field `Feedback['archived']`:
+//    == 0   ->   archived for no-one
+//    == 1   ->   archived for the receiver
+//    == 2   ->   archived for the giver
+//    == 3   ->   archived for both the receiver and the giver
+
+export const FeedbackArchived = {
+  No: 0,
+  Receiver: 1,
+  Giver: 2,
+  Both: 3,
+} as const;
+export type FeedbackArchived = (typeof FeedbackArchived)[keyof typeof FeedbackArchived];
 
 // ----- FeedbackListMap -----
 
@@ -46,7 +64,10 @@ export type FeedbackRequestWithId = FeedbackRequest & IdObject;
 export type FeedbackItem = Pick<Feedback, 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'>;
 export type FeedbackItemWithId = FeedbackItem & IdObject;
 
-export type FeedbackRequestItem = Pick<FeedbackRequest, 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
+export type FeedbackRequestItem = Pick<
+  FeedbackRequest,
+  'giverEmail' | 'receiverEmail' | 'status' | 'createdAt' | 'updatedAt'
+>;
 export type FeedbackRequestItemWithId = FeedbackRequestItem & IdObject;
 
 export type FeedbackListMap = {
