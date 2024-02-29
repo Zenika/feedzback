@@ -68,6 +68,26 @@ export class FeedbackDbService {
     });
   }
 
+  // #############################################################################
+  // #############################################################################
+  // PATCH FEEDBACK COLLECTION ADDING "archived: 0" FIELD FOR ALL EXISTING ENTRIES
+  // ---- REMOVE THIS CODE AFTER THE COLLECTION HAS BEEN PATCHED IN PRODUCTION ---
+  async PATCH_FEEDBACK_COLLECTION() {
+    const feedbacksDocs = await this.feedbackCollection.listDocuments();
+    feedbacksDocs.forEach(async (doc) => {
+      try {
+        await doc.update({
+          archived: FeedbackArchived.No,
+        } satisfies Partial<FeedbackRequest>);
+        console.log(`PATCH [OK]: "archived: 0" added to feedback id=${doc.id}`);
+      } catch (err) {
+        console.error(`PATCH [KO]: "archived: 0" added to feedback id=${doc.id}`);
+      }
+    });
+  }
+  // #############################################################################
+  // #############################################################################
+
   // ----- Request feedback and give requested feedback -----
 
   async request({ giverEmail, receiverEmail, message, shared }: FeedbackRequestParams) {
