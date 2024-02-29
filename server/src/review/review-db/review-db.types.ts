@@ -4,7 +4,7 @@ export type Review = {
   updatedAt: number;
 };
 
-export type ReviewNote = 1 | 2 | 3 | 4 | 5;
+export type ReviewNote = 1 | 3 | 5;
 
 export type AllReviewStats = {
   numberOfReviews: number;
