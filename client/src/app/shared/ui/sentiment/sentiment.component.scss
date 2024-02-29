@@ -14,12 +14,9 @@
 
   &__icon {
     cursor: pointer;
-    border-radius: 50%;
     opacity: 0.5;
-    background-color: transparent;
     transition:
       opacity 250ms ease,
-      background-color 250ms ease,
       color 250ms ease;
 
     &:hover {
@@ -28,7 +25,6 @@
 
     &--selected {
       opacity: 1;
-      background-color: rgb(app.$primary-color, 0.1);
       color: app.$primary-color;
     }
   }
