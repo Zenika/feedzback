@@ -427,7 +427,7 @@ export class FeedbackDbService {
   }
 
   async getSharedFeedbackList(receiverEmail: string) {
-    // Note: the manager can see the "done" feedback even if it has been archived
+    // Note: the manager can see the "done" feedback, even if it has been archived by the "receiver" or the "giver"
     const feedbackQuery = await this.feedbackCollection
       .where('status', '==', FeedbackStatus)
       .where('receiverEmail', '==', receiverEmail)
@@ -461,6 +461,7 @@ export class FeedbackDbService {
       return null;
     }
 
+    // Note: it makes no sense to show the manager feedback that has been cancelled
     const document = this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
     if (document.status === FeedbackRequestStatus && document.archived === FeedbackArchived.Both) {
       return null;
