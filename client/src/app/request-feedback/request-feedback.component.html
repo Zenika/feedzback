@@ -34,7 +34,11 @@
   }
 }
 
-<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="send">
+<form
+  [formGroup]="form"
+  [appConfirmBeforeSubmit]="onSubmit.bind(this)"
+  appConfirmBeforeSubmitConfig="sendFeedbackRequest"
+>
   <app-message type="light" icon="lightbulb" i18n="@@Component.RequestFeedback.EmailsRequirements">
     Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion).
   </app-message>

@@ -82,7 +82,7 @@ export class PendingFeedbackComponent {
       }
       this.actionsStatus = 'hidden';
       this.notificationService.show(
-        $localize`:@@Component.PendingFeedback.RequestCancelled:La demande de feedZback a bien été supprimée.`,
+        $localize`:@@Component.PendingFeedback.RequestCancelled:La demande de feedZback a bien été archivée.`,
         'success',
       );
     });
