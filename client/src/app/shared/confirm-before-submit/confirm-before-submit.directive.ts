@@ -24,7 +24,7 @@ export class ConfirmBeforeSubmitDirective {
     const data: ConfirmBeforeSubmitData = typeof config === 'string' ? confirmBeforeSubmitMap[config] : config;
 
     this.matDialog
-      .open(ConfirmBeforeSubmitComponent, { data })
+      .open(ConfirmBeforeSubmitComponent, { data, width: '480px' })
       .afterClosed()
       .pipe(filter((confirm?: boolean) => (confirm === undefined ? false : confirm)))
       .subscribe(() => this.submit()());

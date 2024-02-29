@@ -61,7 +61,7 @@
         <li class="gbl-icon-list__item">
           <mat-icon class="gbl-icon-list__icon">hourglass_top</mat-icon>
           <ng-container i18n="@@Component.PendingFeedback.CanNotBeCancelled">
-            La demande est récente (moins de {{ DEADLINE_IN_DAYS }} jours) et ne peut pas encore être supprimée
+            La demande est récente (moins de {{ DEADLINE_IN_DAYS }} jours) et ne peut pas encore être archivée
           </ng-container>
         </li>
       </ul>
@@ -86,10 +86,10 @@
           class="inline"
           [formGroup]="cancelRequestForm"
           [appConfirmBeforeSubmit]="cancelRequest.bind(this)"
-          appConfirmBeforeSubmitConfig="delete"
+          appConfirmBeforeSubmitConfig="cancelFeedbackRequest"
         >
           <button mat-button color="primary" [disabled]="actionsStatus === 'disabled'">
-            <ng-container i18n="@@Action.Delete">Supprimer</ng-container>
+            <ng-container i18n="@@Action.Archive">Archiver</ng-container>
           </button>
         </form>
       }
