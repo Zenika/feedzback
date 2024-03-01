@@ -1,11 +1,10 @@
 <h2 mat-dialog-title>
-  <mat-icon class="me-3 scale-150">signpost</mat-icon>
-  <ng-container i18n="@@Component.LeaveForm.Title">Confirmer l'action ?</ng-container>
+  <ng-container i18n="@@Component.LeaveForm.Title">Confirmer l'action</ng-container>
 </h2>
 
-<mat-dialog-content i18n="@@Component.LeaveForm.Content"
-  >Les modifications apportées au formulaire seront perdues.</mat-dialog-content
->
+<mat-dialog-content i18n="@@Component.LeaveForm.Content">
+  Notez qu'en confirmant cette action, le formulaire que vous avez commencé à remplir sera perdu.
+</mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="false" i18n="@@Action.Cancel">Annuler</button>
