@@ -13,12 +13,12 @@ export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, ConfirmBefo
   },
   sendRequestedFeedback: {
     title: $localize`:@@Action.Send:Envoyer`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendRequestedFeedbackContent:Voulez-vous envoyer votre réponse ?`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendRequestedFeedbackContent:Voulez-vous envoyer votre feedZback ? Notez qu'un feedZback envoyé n'est plus modifiable.`,
     action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
   },
   sendSpontaneousFeedback: {
     title: $localize`:@@Action.Send:Envoyer`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendSpontaneousFeedbackContent:Voulez-vous envoyer votre feedZback spontané ?`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendSpontaneousFeedbackContent:Voulez-vous envoyer votre feedZback spontané ? Notez qu'un feedZback envoyé n'est plus modifiable.`,
     action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
   },
 };
