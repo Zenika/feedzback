@@ -9,4 +9,8 @@ export type ConfirmBeforeSubmitType =
 export type ConfirmBeforeSubmitData = {
   title: string;
   content?: string;
+  action?: {
+    label: string;
+    icon?: string;
+  };
 };

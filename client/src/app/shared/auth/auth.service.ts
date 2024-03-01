@@ -27,12 +27,12 @@ export class AuthService {
 
   user = this._user.asReadonly();
 
-  userState = computed<UserState>(() => buildUserState(this.user()));
+  userState = computed<UserState>(() => buildUserState(this._user()));
 
-  userEmail = computed(() => this.user()?.email ?? '');
+  userEmail = computed(() => this._user()?.email ?? '');
 
   userInfo = computed(() => {
-    const user = this.user();
+    const user = this._user();
     if (!user?.photoURL && !user?.displayName) {
       return undefined;
     }
@@ -58,7 +58,7 @@ export class AuthService {
     return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
       concatMap(() => this.authenticated$),
       first((authenticated) => authenticated),
-      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
+      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/')),
       catchError(() => of(false)),
     );
   }
@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   getIdToken(): Observable<string | null> {
-    return from(this.user()?.getIdToken() ?? Promise.resolve(null));
+    return from(this._user()?.getIdToken() ?? Promise.resolve(null));
   }
 
   withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {

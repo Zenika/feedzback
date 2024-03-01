@@ -2,19 +2,23 @@ import { ConfirmBeforeSubmitData, ConfirmBeforeSubmitType } from './confirm-befo
 
 export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, ConfirmBeforeSubmitData> = {
   sendFeedbackRequest: {
-    title: $localize`:@@Component.ConfirmBeforeSubmit.ConfirmSending:Confirmer l'envoi ?`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackRequestContent:Cliquer sur "Confirmer" pour finaliser l'envoi de votre demande de feedZback.`,
+    title: $localize`:@@Action.Send:Envoyer`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackRequestContent:Voulez-vous envoyer votre demande de feedZback ?`,
+    action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
   },
   cancelFeedbackRequest: {
-    title: $localize`:@@Component.ConfirmBeforeSubmit.ConfirmAction:Confirmer l'action ?`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestContent:Cliquer sur "Confirmer" pour archiver votre demande de feedZback.`,
+    title: $localize`:@@Action.Archive:Archiver`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestContent:Voulez-vous archiver votre demande de feedZback ?`,
+    action: { label: $localize`:@@Action.Archive:Archiver`, icon: 'archive' },
   },
   sendRequestedFeedback: {
-    title: $localize`:@@Component.ConfirmBeforeSubmit.ConfirmSending:Confirmer l'envoi ?`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendRequestedFeedbackContent:Cliquer sur "Confirmer" pour finaliser l'envoi de votre réponse.`,
+    title: $localize`:@@Action.Send:Envoyer`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendRequestedFeedbackContent:Voulez-vous envoyer votre réponse ?`,
+    action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
   },
   sendSpontaneousFeedback: {
-    title: $localize`:@@Component.ConfirmBeforeSubmit.ConfirmSending:Confirmer l'envoi ?`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendSpontaneousFeedbackContent:Cliquer sur "Confirmer" pour finaliser l'envoi de votre feedZback spontané.`,
+    title: $localize`:@@Action.Send:Envoyer`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendSpontaneousFeedbackContent:Voulez-vous envoyer votre feedZback spontané ?`,
+    action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
   },
 };
