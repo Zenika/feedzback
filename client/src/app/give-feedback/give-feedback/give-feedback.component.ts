@@ -8,7 +8,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { BreakpointService } from '../../shared/breakpoint';
@@ -79,8 +78,6 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
 
   private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 
-  protected hasManagerFeature = environment.featureFlipping.manager;
-
   private draftDialogRef?: MatDialogRef<unknown>;
 
   protected form = this.formBuilder.group({
@@ -91,7 +88,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     negative: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
-    shared: [this.hasManagerFeature ? true : false],
+    shared: [true],
   });
 
   protected submitInProgress = false;

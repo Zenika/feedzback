@@ -83,24 +83,22 @@
     <mat-hint align="end">{{ message.value.length }} / {{ messageMaxLength }}</mat-hint>
   </mat-form-field>
 
-  @if (hasManagerFeature) {
-    <div class="gbl-form-field">
-      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
-        <ng-container i18n="@@Component.RequestFeedback.Share">Partager le feedZback avec votre manager</ng-container>
-        <mat-icon
-          class="gbl-link ms-1 align-bottom"
-          appDialogTooltip
-          dialogWidth="600px"
-          dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
-          dialogContent="En partageant le feedZback avec votre manager, vous pourrez échanger ensemble et ainsi bénéficier au mieux de son contenu."
-          i18n-dialogTitle="@@Component.RequestFeedback.ShareFeedbackMessageTitle"
-          i18n-dialogContent="@@Component.RequestFeedback.ShareFeedbackMessageContent"
-        >
-          help
-        </mat-icon>
-      </mat-slide-toggle>
-    </div>
-  }
+  <div class="gbl-form-field">
+    <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+      <ng-container i18n="@@Component.RequestFeedback.Share">Partager le feedZback avec votre manager</ng-container>
+      <mat-icon
+        class="gbl-link ms-1 align-bottom"
+        appDialogTooltip
+        dialogWidth="600px"
+        dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
+        dialogContent="En partageant le feedZback avec votre manager, vous pourrez échanger ensemble et ainsi bénéficier au mieux de son contenu."
+        i18n-dialogTitle="@@Component.RequestFeedback.ShareFeedbackMessageTitle"
+        i18n-dialogContent="@@Component.RequestFeedback.ShareFeedbackMessageContent"
+      >
+        help
+      </mat-icon>
+    </mat-slide-toggle>
+  </div>
 
   <div class="gbl-form-submit">
     <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary">

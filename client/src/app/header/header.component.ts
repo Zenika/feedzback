@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { GiveRequestedFeedbackListService } from '../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { AuthService } from '../shared/auth';
 import { BreakpointService } from '../shared/breakpoint';
@@ -59,10 +58,6 @@ export class HeaderComponent {
   protected device = toSignal(inject(BreakpointService).device$);
 
   protected isMenuOpen = false;
-
-  protected hasLocalizeFeature = environment.featureFlipping.localize;
-
-  protected hasManagerFeature = environment.featureFlipping.manager;
 
   constructor() {
     this.router.events

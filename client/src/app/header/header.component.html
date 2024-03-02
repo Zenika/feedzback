@@ -45,7 +45,7 @@
       >Mes feedZbacks</a
     >
 
-    @if (hasManagerFeature && isManager()) {
+    @if (isManager()) {
       <a
         [@smoothWidth]="device() !== 'mobile'"
         class="app-header__menu-item"
@@ -75,11 +75,9 @@
     }
 
     <mat-menu #accountMenu="matMenu" xPosition="before">
-      @if (hasLocalizeFeature) {
-        <ng-container [ngTemplateOutlet]="languageMenuItem" />
-      }
+      <ng-container [ngTemplateOutlet]="languageMenuItem" />
 
-      @if (hasManagerFeature && userState().authenticated) {
+      @if (userState().authenticated) {
         <button mat-menu-item routerLink="/settings">
           <mat-icon color="primary">settings</mat-icon>
           <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
@@ -95,7 +93,7 @@
         }
       </button>
     </mat-menu>
-  } @else if (hasLocalizeFeature) {
+  } @else {
     <button mat-icon-button [matMenuTriggerFor]="accountMenu">
       <mat-icon color="primary">more_vert</mat-icon>
     </button>
