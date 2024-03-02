@@ -29,11 +29,7 @@
   }
 </app-message>
 
-<form
-  [formGroup]="form"
-  [appConfirmBeforeSubmit]="onSubmit.bind(this)"
-  appConfirmBeforeSubmitConfig="sendRequestedFeedback"
->
+<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
   @if (anonymous) {
     <h3>
       <mat-icon>voice_selection</mat-icon>

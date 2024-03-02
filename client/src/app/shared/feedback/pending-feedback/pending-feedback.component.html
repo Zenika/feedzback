@@ -56,7 +56,7 @@
       </ul>
     }
 
-    @if (hasCancelRequestFeature && isRecentFeedbackRequest) {
+    @if (isRecentFeedbackRequest) {
       <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
         <li class="gbl-icon-list__item">
           <mat-icon class="gbl-icon-list__icon">hourglass_top</mat-icon>
@@ -70,29 +70,33 @@
     @if (actionsStatus !== 'hidden') {
       @if (!hasBeenRequestedAgain) {
         <button
-          class="me-5"
+          class="mb-4 me-5"
           mat-raised-button
           color="primary"
           [disabled]="actionsStatus === 'disabled'"
           (click)="requestAgain()"
-          i18n="@@Component.PendingFeedback.Remind"
         >
-          Relancer
+          <mat-icon>mail</mat-icon>
+          <ng-container i18n="@@Component.PendingFeedback.Remind">Envoyer un rappel</ng-container>
         </button>
       }
 
-      @if (hasCancelRequestFeature && !isRecentFeedbackRequest) {
-        <form
-          class="inline"
-          [formGroup]="cancelRequestForm"
-          [appConfirmBeforeSubmit]="cancelRequest.bind(this)"
-          appConfirmBeforeSubmitConfig="cancelFeedbackRequest"
+      <form
+        class="inline"
+        [formGroup]="cancelRequestForm"
+        [appConfirmBeforeSubmit]="cancelRequest.bind(this)"
+        appConfirmBeforeSubmitConfig="cancelFeedbackRequest"
+      >
+        <button
+          class="mb-4"
+          mat-button
+          color="primary"
+          [disabled]="isRecentFeedbackRequest || actionsStatus === 'disabled'"
         >
-          <button mat-button color="primary" [disabled]="actionsStatus === 'disabled'">
-            <ng-container i18n="@@Action.Archive">Archiver</ng-container>
-          </button>
-        </form>
-      }
+          <mat-icon>archive</mat-icon>
+          <ng-container i18n="@@Action.Archive">Archiver</ng-container>
+        </button>
+      </form>
     }
   }
   @case (feedbackType.receivedRequest) {

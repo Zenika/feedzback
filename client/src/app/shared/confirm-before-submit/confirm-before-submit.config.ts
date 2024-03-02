@@ -2,23 +2,20 @@ import { ConfirmBeforeSubmitData, ConfirmBeforeSubmitType } from './confirm-befo
 
 export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, ConfirmBeforeSubmitData> = {
   sendFeedbackRequest: {
-    title: $localize`:@@Action.Send:Envoyer`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackRequestContent:Voulez-vous envoyer votre demande de feedZback ?`,
-    action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
+    title: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackRequestTitle:Confirmer l'envoi`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackRequestContent:Notez qu'une fois envoyée, votre demande de feedZback ne sera plus modifiable.`,
+    action: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
+
   cancelFeedbackRequest: {
-    title: $localize`:@@Action.Archive:Archiver`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestContent:Voulez-vous archiver votre demande de feedZback ?`,
-    action: { label: $localize`:@@Action.Archive:Archiver`, icon: 'archive' },
+    title: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestTitle:Confirmer l'archivage`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestContent:Notez qu'une fois archivée, votre demande de feedZback sera retirée de votre historique.`,
+    action: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
-  sendRequestedFeedback: {
-    title: $localize`:@@Action.Send:Envoyer`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendRequestedFeedbackContent:Voulez-vous envoyer votre feedZback ? Notez qu'un feedZback envoyé n'est plus modifiable.`,
-    action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
-  },
-  sendSpontaneousFeedback: {
-    title: $localize`:@@Action.Send:Envoyer`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.SendSpontaneousFeedbackContent:Voulez-vous envoyer votre feedZback spontané ? Notez qu'un feedZback envoyé n'est plus modifiable.`,
-    action: { label: $localize`:@@Action.Send:Envoyer`, icon: 'send' },
+
+  sendFeedback: {
+    title: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackTitle:Confirmer l'envoi`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackContent:Notez qu'une fois envoyé, votre feedZback ne sera plus modifiable.`,
+    action: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
 };

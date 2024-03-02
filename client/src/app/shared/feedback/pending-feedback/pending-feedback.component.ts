@@ -3,7 +3,7 @@ import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
 import { ConfirmBeforeSubmitDirective } from '../../confirm-before-submit';
 import { NotificationService } from '../../notification/notification.service';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
@@ -43,11 +43,11 @@ export class PendingFeedbackComponent {
     return this.type === this.feedbackType.sentRequest ? feedback.giverEmail : feedback.receiverEmail;
   }
 
+  private router = inject(Router);
+
   private feedbackService = inject(FeedbackService);
 
   private notificationService = inject(NotificationService);
-
-  protected hasCancelRequestFeature = environment.featureFlipping.cancelRequest;
 
   protected get hasBeenRequestedAgain() {
     return this.feedback.updatedAt > this.feedback.createdAt;
@@ -85,6 +85,7 @@ export class PendingFeedbackComponent {
         $localize`:@@Component.PendingFeedback.RequestCancelled:La demande de feedZback a bien été archivée.`,
         'success',
       );
+      this.router.navigate(['/history/type/sentRequest']);
     });
   }
 }
