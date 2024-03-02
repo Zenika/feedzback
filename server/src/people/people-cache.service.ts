@@ -12,20 +12,23 @@ export class PeopleCacheService {
 
   private cachingInProgress = false;
 
-  private _searchablePersons: SearchablePerson[] = [];
-
   private searchablePersonsExpiryDate = 0;
+
+  searchablePersons: SearchablePerson[] = [];
+
+  get isReady() {
+    return this.state === 'ready';
+  }
 
   constructor(private googleApis: GoogleApisService) {
     this.refreshPeople();
   }
 
-  getSearchablePersons() {
-    this.checkExpiryDate();
-    if (this.state === 'notAvailable') {
-      throw new Error();
+  checkExpiryDateAndRefreshPeople() {
+    if (Date.now() <= this.searchablePersonsExpiryDate) {
+      return;
     }
-    return this._searchablePersons;
+    this.refreshPeople();
   }
 
   private async refreshPeople() {
@@ -44,7 +47,7 @@ export class PeopleCacheService {
         pageToken = nextPageToken;
       } while (pageToken);
 
-      this._searchablePersons = allPersons.map(mapToSearchablePerson);
+      this.searchablePersons = allPersons.map(mapToSearchablePerson);
       this.searchablePersonsExpiryDate = Date.now() + PEOPLE_CACHE_VALIDITY_DURATION;
       this.state = 'ready';
 
@@ -57,12 +60,5 @@ export class PeopleCacheService {
     }
 
     this.cachingInProgress = false;
-  }
-
-  private checkExpiryDate() {
-    if (Date.now() <= this.searchablePersonsExpiryDate) {
-      return;
-    }
-    this.refreshPeople();
   }
 }
