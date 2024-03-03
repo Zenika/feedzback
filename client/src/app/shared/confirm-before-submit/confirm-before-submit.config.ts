@@ -21,7 +21,7 @@ export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, ConfirmBefo
 
   archiveFeedback: {
     title: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackTitle:Confirmer l'archivage`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackContent:Notez qu'une fois archivé, votre feedZback sera retirée de votre historique.`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackContent:Notez qu'une fois archivé, votre feedZback sera retiré de votre historique.`,
     action: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
 };
