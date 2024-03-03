@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, computed, inject, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,15 +33,15 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
   encapsulation: ViewEncapsulation.None,
 })
 export class PendingFeedbackComponent {
-  @Input({ required: true }) feedback!: FeedbackRequest;
-
-  @Input({ required: true }) type!: FeedbackType;
-
   protected feedbackType = FeedbackType;
 
-  protected getColleagueEmail(feedback: FeedbackRequest): string | undefined {
-    return this.type === this.feedbackType.sentRequest ? feedback.giverEmail : feedback.receiverEmail;
-  }
+  feedback = input.required<FeedbackRequest>();
+
+  type = input.required<FeedbackType>();
+
+  colleagueEmail = computed(() =>
+    this.type() === this.feedbackType.sentRequest ? this.feedback().giverEmail : this.feedback().receiverEmail,
+  );
 
   private router = inject(Router);
 
@@ -50,11 +50,11 @@ export class PendingFeedbackComponent {
   private notificationService = inject(NotificationService);
 
   protected get hasBeenRequestedAgain() {
-    return this.feedback.updatedAt > this.feedback.createdAt;
+    return this.feedback().updatedAt > this.feedback().createdAt;
   }
 
   protected get isRecentFeedbackRequest() {
-    return isRecentFeedbackRequest(this.feedback.updatedAt);
+    return isRecentFeedbackRequest(this.feedback().updatedAt);
   }
 
   protected DEADLINE_IN_DAYS = FEEDBACK_REQUEST_DEADLINE_IN_DAYS;
@@ -65,7 +65,7 @@ export class PendingFeedbackComponent {
 
   protected requestAgain() {
     this.actionsStatus = 'disabled';
-    this.feedbackService.requestAgain(this.feedback.id).subscribe(() => {
+    this.feedbackService.requestAgain(this.feedback().id).subscribe(() => {
       this.actionsStatus = 'hidden';
       this.notificationService.show(
         $localize`:@@Component.PendingFeedback.ReminderSent:Un rappel a été envoyé à votre collègue.`,
@@ -76,7 +76,7 @@ export class PendingFeedbackComponent {
 
   protected cancelRequest() {
     this.actionsStatus = 'disabled';
-    this.feedbackService.cancelRequest(this.feedback.id).subscribe(({ error }) => {
+    this.feedbackService.cancelRequest(this.feedback().id).subscribe(({ error }) => {
       if (error) {
         return;
       }

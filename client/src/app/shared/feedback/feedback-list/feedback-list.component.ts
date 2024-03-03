@@ -2,12 +2,12 @@ import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
-  ViewChild,
   ViewEncapsulation,
   booleanAttribute,
   effect,
   inject,
   input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -59,9 +59,9 @@ export class FeedbackListComponent implements AfterViewInit {
 
   protected readonly pageSizeOptions = [10, 25, 100];
 
-  @ViewChild(MatSort) sort?: MatSort;
+  sort = viewChild(MatSort);
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  paginator = viewChild(MatPaginator);
 
   protected get hasPaginator() {
     return this.dataSource.data.length > this.pageSizeOptions[0];
@@ -104,11 +104,15 @@ export class FeedbackListComponent implements AfterViewInit {
   }
 
   private linkDataSource() {
-    if (!this.paginator || !this.sort) {
+    const paginator = this.paginator();
+    const sort = this.sort();
+
+    if (!paginator || !sort) {
       return;
     }
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+    this.dataSource.paginator = paginator;
+    this.dataSource.sort = sort;
   }
 
   private applyFilter(filter?: string) {

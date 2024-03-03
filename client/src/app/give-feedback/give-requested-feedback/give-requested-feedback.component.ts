@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -43,11 +43,11 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm, OnInit {
-  @Input({ required: true }) token!: string;
+  token = input.required<string>();
 
-  @Input({ required: true }) request!: FeedbackRequest;
+  request = input.required<FeedbackRequest>();
 
-  @Input({ required: true }) draft?: Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>;
+  draft = input<Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>>();
 
   private router = inject(Router);
 
@@ -80,8 +80,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   }
 
   ngOnInit(): void {
-    if (this.draft) {
-      this.form.setValue(this.draft);
+    if (this.draft()) {
+      this.form.setValue(this.draft()!);
       this.form.updateValueAndValidity();
       this.leaveFormService.takeSnapshot();
     }
@@ -95,14 +95,14 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequested({ token: this.token, positive, negative, comment }).subscribe((success) => {
+    this.feedbackService.giveRequested({ token: this.token(), positive, negative, comment }).subscribe((success) => {
       if (!success) {
         this.disableForm(false);
         this.notificationService.showError();
       } else {
         this.giveRequestedFeedbackListService.refresh();
         this.leaveFormService.unregisterForm();
-        this.feedbackId = this.anonymous ? undefined : this.request?.id;
+        this.feedbackId = this.anonymous ? undefined : this.request()?.id;
         this.navigateToSuccess();
       }
     });
@@ -113,7 +113,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe({
+    this.feedbackService.giveRequestedDraft({ token: this.token(), positive, negative, comment }).subscribe({
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);
@@ -130,7 +130,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private navigateToSuccess() {
     const state: GiveFeedbackSuccess = {
-      receiverEmail: this.request.receiverEmail,
+      receiverEmail: this.request().receiverEmail,
       feedbackId: this.anonymous ? undefined : this.feedbackId,
     };
     this.router.navigate(['../../success'], { relativeTo: this.activatedRoute, state });

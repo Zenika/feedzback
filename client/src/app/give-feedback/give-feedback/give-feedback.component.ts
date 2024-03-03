@@ -1,4 +1,4 @@
-import { Component, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, effect, inject } from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewEncapsulation, effect, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,7 +50,7 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
-  @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
+  draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
 
   private router = inject(Router);
 
@@ -129,7 +129,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   }
 
   protected openDraftDialog() {
-    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
+    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl(), { width: '560px' });
     this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
   }
 

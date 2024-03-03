@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, computed, input } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -26,13 +26,13 @@ import { Feedback, FeedbackType } from '../feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class DoneFeedbackComponent {
-  @Input({ required: true }) feedback!: Feedback;
-
-  @Input({ required: true }) type!: FeedbackType;
-
   protected feedbackType = FeedbackType;
 
-  protected getColleagueEmail(feedback: Feedback): string | undefined {
-    return this.type === this.feedbackType.received ? feedback.giverEmail : feedback.receiverEmail;
-  }
+  feedback = input.required<Feedback>();
+
+  type = input.required<FeedbackType>();
+
+  colleagueEmail = computed(() =>
+    this.type() === this.feedbackType.received ? this.feedback().giverEmail : this.feedback().receiverEmail,
+  );
 }

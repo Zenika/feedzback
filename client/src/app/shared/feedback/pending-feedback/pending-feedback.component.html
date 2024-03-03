@@ -1,5 +1,5 @@
 <h1 class="gbl-page-title">
-  @switch (type) {
+  @switch (type()) {
     @case (feedbackType.sentRequest) {
       <mat-icon>{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
       <ng-container i18n="@@Title.RequestedFeedback">FeedZback demandé</ng-container>
@@ -14,22 +14,22 @@
 <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
   <li class="gbl-icon-list__item">
     <mat-icon class="gbl-icon-list__icon">email</mat-icon>
-    {{ getColleagueEmail(feedback) }}
+    {{ colleagueEmail() }}
   </li>
 
   <li class="gbl-icon-list__item">
     <mat-icon class="gbl-icon-list__icon">calendar_today</mat-icon>
-    {{ feedback.createdAt | date: 'longDate' }}
+    {{ feedback().createdAt | date: 'longDate' }}
   </li>
 </ul>
 
-<app-feedback-body [feedback]="feedback" />
+<app-feedback-body [feedback]="feedback()" />
 
-@if (feedback.shared) {
+@if (feedback().shared) {
   <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
     <li class="gbl-icon-list__item">
       <mat-icon class="gbl-icon-list__icon">share</mat-icon>
-      @if (type === feedbackType.sentRequest) {
+      @if (type() === feedbackType.sentRequest) {
         <ng-container i18n="@@Message.FeedbackIsSharedWithYourManager">
           Ce feedZback est partagé avec votre manager
         </ng-container>
@@ -42,7 +42,7 @@
   </ul>
 }
 
-@switch (type) {
+@switch (type()) {
   @case (feedbackType.sentRequest) {
     @if (hasBeenRequestedAgain) {
       <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
@@ -51,7 +51,7 @@
           <ng-container i18n="@@Component.PendingFeedback.ReminderAlreadySentOn">
             Vous avez envoyé une relance à votre collègue le
           </ng-container>
-          {{ feedback.updatedAt | date: 'longDate' }}
+          {{ feedback().updatedAt | date: 'longDate' }}
         </li>
       </ul>
     }
@@ -100,7 +100,7 @@
     }
   }
   @case (feedbackType.receivedRequest) {
-    <button mat-raised-button color="primary" [appGiveRequestedFeedback]="this.feedback.id">
+    <button mat-raised-button color="primary" [appGiveRequestedFeedback]="feedback().id">
       <ng-container i18n="@@Feedback.Reply"> Répondre </ng-container>
     </button>
   }
