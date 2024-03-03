@@ -1,6 +1,10 @@
 export type ConfirmBeforeSubmitConfig = ConfirmBeforeSubmitType | ConfirmBeforeSubmitData;
 
-export type ConfirmBeforeSubmitType = 'sendFeedbackRequest' | 'cancelFeedbackRequest' | 'sendFeedback';
+export type ConfirmBeforeSubmitType =
+  | 'sendFeedbackRequest'
+  | 'cancelFeedbackRequest'
+  | 'sendFeedback'
+  | 'archiveFeedback';
 
 export type ConfirmBeforeSubmitData = {
   title: string;

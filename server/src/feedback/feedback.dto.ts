@@ -47,6 +47,10 @@ export class DeleteFeedbackDraftDto {
   @IsString() receiverEmailOrToken!: string;
 }
 
+export class ArchiveFeedbackDto {
+  @IsString() feedbackId!: string;
+}
+
 export class FeedbackListMapDto {
   @Transform((params) => (params.value as string).split(','))
   @IsIn(['received', 'given', 'sentRequest', 'receivedRequest'] satisfies FeedbackListType[], { each: true })

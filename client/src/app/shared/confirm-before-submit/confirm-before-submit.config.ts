@@ -18,4 +18,10 @@ export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, ConfirmBefo
     content: $localize`:@@Component.ConfirmBeforeSubmit.SendFeedbackContent:Notez qu'une fois envoyé, votre feedZback ne sera plus modifiable.`,
     action: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
+
+  archiveFeedback: {
+    title: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackTitle:Confirmer l'archivage`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackContent:Notez qu'une fois archivé, votre feedZback sera retirée de votre historique.`,
+    action: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
+  },
 };

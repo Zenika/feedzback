@@ -20,3 +20,13 @@ export const sortFeedbackItemsDesc = (
     const dateB = b.status === FeedbackStatus ? b.updatedAt : b.createdAt;
     return dateA > dateB ? -1 : dateA < dateB ? 1 : 0;
   });
+
+export const sumFeedbackArchived = (current: FeedbackArchived, extra: FeedbackArchived): FeedbackArchived | null => {
+  if (current === FeedbackArchived.No) {
+    return extra;
+  }
+  if (current + extra === FeedbackArchived.Both) {
+    return FeedbackArchived.Both;
+  }
+  return null;
+};
