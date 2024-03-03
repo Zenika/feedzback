@@ -7,10 +7,10 @@
   <ng-container i18n="@@Component.GiveRequestedFeedback.Message1">
     Vous répondez à la demande de feedZback qui vous a été envoyée par
   </ng-container>
-  <strong>{{ request.receiverEmail }}</strong
+  <strong>{{ request().receiverEmail }}</strong
   >.
 
-  @if (request.shared) {
+  @if (request().shared) {
     <br />
     <strong i18n="@@Component.GiveRequestedFeedback.Message2">
       Notez que votre réponse sera partagée avec son manager.
@@ -29,11 +29,7 @@
   }
 </app-message>
 
-<form
-  [formGroup]="form"
-  [appConfirmBeforeSubmit]="onSubmit.bind(this)"
-  appConfirmBeforeSubmitConfig="sendRequestedFeedback"
->
+<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
   @if (anonymous) {
     <h3>
       <mat-icon>voice_selection</mat-icon>
@@ -43,7 +39,7 @@
     <mat-form-field appearance="outline" class="gbl-form-field">
       <mat-label i18n="@@Field.YourEmail">Votre email</mat-label>
       <input
-        [value]="request.giverEmail"
+        [value]="request().giverEmail"
         required
         readonly
         type="email"
@@ -62,7 +58,7 @@
   <mat-form-field appearance="outline" class="gbl-form-field">
     <mat-label i18n="@@Field.EmailOfYourColleague">Email de votre collègue</mat-label>
     <input
-      [value]="request.receiverEmail"
+      [value]="request().receiverEmail"
       required
       readonly
       type="email"

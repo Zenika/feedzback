@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { MultiLineComponent } from '../../ui/multi-line';
 import { Feedback, FeedbackRequest, FeedbackType } from '../feedback.types';
 
@@ -12,7 +12,7 @@ import { Feedback, FeedbackRequest, FeedbackType } from '../feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackBodyComponent {
-  @Input({ required: true }) feedback!: Feedback | FeedbackRequest;
+  feedback = input.required<Feedback | FeedbackRequest>();
 
   protected feedbackType = FeedbackType;
 }

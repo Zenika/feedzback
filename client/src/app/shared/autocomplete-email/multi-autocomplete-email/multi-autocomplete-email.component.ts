@@ -1,6 +1,6 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, Component, Input, OnDestroy, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, ViewEncapsulation, inject, viewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
@@ -54,9 +54,9 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
 
   @Input() isInvalidEmail?: (email: string) => boolean;
 
-  @ViewChild(MatChipInput) matChipInput!: MatChipInput;
+  matChipInput = viewChild.required(MatChipInput);
 
-  @ViewChild(MatAutocomplete) matAutocomplete!: MatAutocomplete;
+  matAutocomplete = viewChild.required(MatAutocomplete);
 
   private peopleService = inject(PeopleService);
 
@@ -88,21 +88,21 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
   protected onQueryInputBlur() {
     this.queryInputFocused$.next(false);
 
-    if (!this.matAutocomplete.isOpen && this.matChipInput.inputElement.value) {
-      this.add(this.matChipInput.inputElement.value);
+    if (!this.matAutocomplete().isOpen && this.matChipInput().inputElement.value) {
+      this.add(this.matChipInput().inputElement.value);
     }
   }
 
   private subscription?: Subscription;
 
   ngAfterViewInit(): void {
-    this.subscription = this.matAutocomplete.closed
-      .pipe(
+    this.subscription = this.matAutocomplete()
+      .closed.pipe(
         withLatestFrom(this.queryInputFocused$),
         filter(([, queryInputFocused]) => !queryInputFocused),
       )
       .subscribe(() => {
-        this.matChipInput.clear();
+        this.matChipInput().clear();
         this.query$.next('');
       });
   }
@@ -116,7 +116,7 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
     if (emails.length) {
       this.updateEmailsValue([...this.emails.value, ...emails]);
     }
-    this.matChipInput.clear();
+    this.matChipInput().clear();
     this.query$.next('');
   }
 

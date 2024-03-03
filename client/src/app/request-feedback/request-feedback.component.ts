@@ -61,8 +61,6 @@ export class RequestFeedbackComponent {
 
   protected messageMaxLength = 500;
 
-  protected hasManagerFeature = environment.featureFlipping.manager;
-
   protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
   private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
@@ -73,7 +71,7 @@ export class RequestFeedbackComponent {
       [Validators.required, multipleEmailsValidatorFactory(), this.forbiddenValuesValidator],
     ],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [this.hasManagerFeature ? true : false],
+    shared: [true],
   });
 
   protected requestTemplates = REQUEST_TEMPLATES;

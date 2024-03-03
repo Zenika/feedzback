@@ -1,4 +1,4 @@
-import { Component, OnDestroy, TemplateRef, ViewChild, ViewEncapsulation, effect, inject } from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewEncapsulation, effect, inject, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { BreakpointService } from '../../shared/breakpoint';
@@ -51,7 +50,7 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
-  @ViewChild('draftDialogTmpl') draftDialogTmpl!: TemplateRef<unknown>;
+  draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
 
   private router = inject(Router);
 
@@ -79,8 +78,6 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
 
   private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 
-  protected hasManagerFeature = environment.featureFlipping.manager;
-
   private draftDialogRef?: MatDialogRef<unknown>;
 
   protected form = this.formBuilder.group({
@@ -91,7 +88,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     negative: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
-    shared: [this.hasManagerFeature ? true : false],
+    shared: [true],
   });
 
   protected submitInProgress = false;
@@ -132,7 +129,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   }
 
   protected openDraftDialog() {
-    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl, { width: '560px' });
+    this.draftDialogRef = this.matDialog.open(this.draftDialogTmpl(), { width: '560px' });
     this.draftDialogRef.afterClosed().subscribe(() => (this.draftDialogRef = undefined));
   }
 
