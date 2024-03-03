@@ -41,3 +41,15 @@
     </div>
   </div>
 }
+
+<form
+  class="pt-4"
+  [formGroup]="archiveForm"
+  [appConfirmBeforeSubmit]="archive.bind(this)"
+  appConfirmBeforeSubmitConfig="archiveFeedback"
+>
+  <button mat-stroked-button color="primary" [disabled]="actionsStatus === 'disabled'">
+    <mat-icon>archive</mat-icon>
+    <ng-container i18n="@@Action.Archive">Archiver</ng-container>
+  </button>
+</form>

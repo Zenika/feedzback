@@ -31,6 +31,7 @@ import {
   NOT_ARCHIVED_FOR_RECEIVER,
   isRecentFeedbackRequest,
   sortFeedbackItemsDesc,
+  sumFeedbackArchived,
 } from './feedback-db.utils';
 
 @Injectable()
@@ -313,6 +314,35 @@ export class FeedbackDbService {
       draftQuery.docs.map((doc) => this.decryptFeedback(doc.data())),
       'receiverEmail',
     ) as FeedbackDraft[] | FeedbackRequestDraft[];
+  }
+
+  // ----- Archive feedback (with status "done") -----
+
+  async archive(feedbackId: string, archivedByEmail: string) {
+    const feedbackDoc = await this.feedbackCollection.doc(feedbackId).get();
+    if (!feedbackDoc?.exists) {
+      return false;
+    }
+    const feedback = feedbackDoc.data() as Feedback;
+
+    let extra: FeedbackArchived = FeedbackArchived.No;
+    if (feedback.giverEmail === archivedByEmail) {
+      extra = FeedbackArchived.Giver;
+    } else if (feedback.receiverEmail === archivedByEmail) {
+      extra = FeedbackArchived.Receiver;
+    } else {
+      return false;
+    }
+    const archived = sumFeedbackArchived(feedback.archived, extra);
+    if (archived === null) {
+      return false;
+    }
+
+    const partialFeedback: Partial<Feedback> = {
+      archived,
+    };
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
+    return true;
   }
 
   // ----- View feedbacks (requested and given) -----

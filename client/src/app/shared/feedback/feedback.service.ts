@@ -144,6 +144,14 @@ export class FeedbackService {
     );
   }
 
+  // ----- Archive feedback (with status "done") -----
+
+  archive(feedbackId: string) {
+    return this.authService.withBearerIdToken((headers) =>
+      this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/archive/${feedbackId}`, {}, { headers }),
+    );
+  }
+
   // ----- View feedbacks (requested and given) -----
 
   getListMap(types: FeedbackListType[]) {

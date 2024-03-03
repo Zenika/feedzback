@@ -17,6 +17,7 @@ import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
+  ArchiveFeedbackDto,
   DeleteFeedbackDraftDto,
   FeedbackCancelRequestDto,
   FeedbackListMapDto,
@@ -196,6 +197,19 @@ export class FeedbackController {
   deleteDraft(@Param() { type, receiverEmailOrToken }: DeleteFeedbackDraftDto) {
     const giverEmail = this.authService.userEmail!;
     return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
+  }
+
+  // ----- Archive feedback (with status "done") -----
+
+  @ApiOperation({ summary: 'Archive "done" feedback' })
+  @UseGuards(AuthGuard)
+  @Post('archive/:feedbackId')
+  async archive(@Param() { feedbackId }: ArchiveFeedbackDto) {
+    const archivedByEmail = this.authService.userEmail!;
+    const success = await this.feedbackDbService.archive(feedbackId, archivedByEmail);
+    if (!success) {
+      throw new BadRequestException();
+    }
   }
 
   // ----- View feedbacks (requested and given) -----
