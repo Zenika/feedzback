@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { ConfirmBeforeSubmitDirective } from '../../confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../../dialogs/confirm-before-submit';
 import { NotificationService } from '../../notification/notification.service';
 import { MessageComponent } from '../../ui/message';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';

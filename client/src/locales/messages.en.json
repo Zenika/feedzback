@@ -1,6 +1,7 @@
 {
   "locale": "en",
   "translations": {
+    "Action.Apply": "Apply",
     "Action.Archive": "Archive",
     "Action.BackToHome": "Back to home",
     "Action.Cancel": "Cancel",
@@ -13,6 +14,7 @@
     "Action.Manager": " Manager ",
     "Action.NextPage": "Next page",
     "Action.PreviousPage": "Previous page",
+    "Action.Quit": "Quit",
     "Action.ReportIssue": "Report an issue",
     "Action.Save": "Save",
     "Action.SaveAsDraft": "Save as draft",
@@ -49,8 +51,10 @@
     "Component.GiveRequestedFeedbackListEmpty1": "You have no feedZback requests to process...",
     "Component.GiveRequestedFeedbackListEmpty2": "Take this opportunity to request or give feedZback to your colleagues!",
     "Component.Home.LinkToGuide": "How to write a ",
-    "Component.LeaveForm.Content": "Note that by confirming this action, the form you have started to fill in will be lost.",
-    "Component.LeaveForm.Title": "Confirm action",
+    "Component.LeaveForm.ApplyFeedbackDraftContent": "If you apply the draft, the feedZback you have started to fill in will be lost.",
+    "Component.LeaveForm.ApplyFeedbackDraftTitle": "Apply draft?",
+    "Component.LeaveForm.QuitFeedbackContent": "If you leave the page, the feedZback you have started to fill in will be lost.",
+    "Component.LeaveForm.QuitFeedbackTitle": "Leave page?",
     "Component.ManagerDocument.SharedFeedback": "Shared feedZback",
     "Component.ManagerDocument.SharedFeedbackRequest": "Request for shared feedback",
     "Component.ManagerList.Collaborator": "Collaborator",

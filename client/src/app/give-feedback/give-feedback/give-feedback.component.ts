@@ -11,10 +11,9 @@ import { filter, map, switchMap } from 'rxjs';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { BreakpointService } from '../../shared/breakpoint';
-import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../../shared/dialogs/confirm-before-submit';
+import { LeaveForm, LeaveFormService } from '../../shared/dialogs/leave-form';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
-import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip';
 import {
@@ -105,7 +104,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
         takeUntilDestroyed(),
         switchMap((draft) => {
           this.closeDraftDialog();
-          return this.leaveFormService.canLeave().pipe(
+          return this.leaveFormService.canLeave('applyFeedbackDraft').pipe(
             filter((canLeave) => canLeave),
             map(() => draft),
           );

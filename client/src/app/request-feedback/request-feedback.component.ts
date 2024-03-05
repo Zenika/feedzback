@@ -12,7 +12,7 @@ import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
-import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../shared/dialogs/confirm-before-submit';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip';

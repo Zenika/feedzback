@@ -4,7 +4,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { ConfirmBeforeSubmitDirective } from '../../confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../../dialogs/confirm-before-submit';
 import { NotificationService } from '../../notification/notification.service';
 import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
