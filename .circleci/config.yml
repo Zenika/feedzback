@@ -423,7 +423,7 @@ jobs:
           working_directory: usage_analytics
           name: Running gcloud functions deploy
           command: |
-            env && gcloud functions deploy create_analytics \                                    
+            echo "Google compute zone ${GOOGLE_COMPUTE_ZONE}" && env && gcloud functions deploy create_analytics \                                    
             --gen2 \
             --region=${GOOGLE_COMPUTE_ZONE} \
             --runtime=python312 \
