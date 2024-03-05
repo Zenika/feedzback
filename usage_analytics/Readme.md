@@ -1,4 +1,8 @@
 # How to setup analytics on a feedzback google cloud project
+1. Create a service account that will be the only one allowed to read or write data on the firestore export (because it contains personal data)
+```bash
+gcloud iam service-accounts create firestore-export-account --display-name="Only account allowed to read or write on the firestore export"
+```
 1. Activate the plugin "Stream Firestore to BigQuery"
     1. To mirror the firestore collection "feedback"
     2. Make sure to run the initial import collection to import existing data into BigQuery. If you missed it use the script https://github.com/firebase/extensions/blob/master/firestore-bigquery-export/guides/IMPORT_EXISTING_DOCUMENTS.md
