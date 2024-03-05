@@ -151,7 +151,6 @@ workflows:
           filters: *filter-dev
           requires:
             - prepare-workspace
-          environment: dev
           context: feedzback-dev
       # ---------------------------------------------------------------------------
       # This section will only run for staging deployments: either "main" branch or
@@ -201,7 +200,6 @@ workflows:
           filters: *filter-staging
           requires:
             - prepare-workspace
-          environment: staging
           context: feedzback-staging
 
       # ---------------------------------------------------------------------------
@@ -252,7 +250,6 @@ workflows:
           filters: *filter-only-production
           requires:
             - prepare-workspace
-          environment: production
           context: feedzback-production
 
 
@@ -418,7 +415,6 @@ jobs:
             ./firebase_bin --config ./workspace/client/firebase.json use << parameters.environment >>
             ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting:<< parameters.environment >>
   deploy-functions:
-    # parameters: *param-service
     executor: gcp-cli/google
     steps:
       - gcp-cli/setup:
