@@ -2,7 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map, of } from 'rxjs';
-import { LeaveFormComponent } from './leave-form.component';
+import { DialogComponent } from '../dialog.component';
+import { DialogData } from '../dialog.types';
+import { leaveFormMap } from './leave-form.config';
+import { LeaveFormConfig } from './leave-form.types';
 
 @Injectable()
 export class LeaveFormService {
@@ -30,12 +33,15 @@ export class LeaveFormService {
     return this.form && this.stringifyFormValue() !== this.snapshot;
   }
 
-  canLeave() {
+  canLeave(config: LeaveFormConfig) {
     if (!this.hasChanged()) {
       return of(true);
     }
+
+    const data: DialogData = typeof config === 'string' ? leaveFormMap[config] : config;
+
     return this.matDialog
-      .open(LeaveFormComponent, { width: '480px' })
+      .open(DialogComponent, { data, width: '480px' })
       .afterClosed()
       .pipe(map((canLeave?: boolean) => (canLeave === undefined ? false : canLeave)));
   }

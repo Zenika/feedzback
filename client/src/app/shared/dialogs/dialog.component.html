@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+@if (data.content) {
+  <mat-dialog-content>{{ data.content }}</mat-dialog-content>
+}
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">
+    @if (data.cancel?.icon) {
+      <mat-icon>{{ data.cancel!.icon }}</mat-icon>
+    }
+    @if (data.cancel?.label) {
+      {{ data.cancel!.label }}
+    } @else {
+      <ng-container i18n="@@Action.Cancel">Annuler</ng-container>
+    }
+  </button>
+
+  <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>
+    @if (data.confirm?.icon) {
+      <mat-icon>{{ data.confirm!.icon }}</mat-icon>
+    }
+    @if (data.confirm?.label) {
+      {{ data.confirm!.label }}
+    } @else {
+      <ng-container i18n="@@Action.Confirm">Confirmer</ng-container>
+    }
+  </button>
+</mat-dialog-actions>
