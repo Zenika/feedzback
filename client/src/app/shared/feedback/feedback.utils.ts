@@ -23,3 +23,27 @@ export const isRecentFeedbackRequest = (updatedAt: number) => {
   const DAY_IN_MS = 86_400_000;
   return (Date.now() - updatedAt) / DAY_IN_MS < FEEDBACK_REQUEST_DEADLINE_IN_DAYS;
 };
+
+export const buildFeedbackTitle = (type: FeedbackType): string => {
+  return (
+    {
+      received: $localize`:@@Title.ReceivedFeedback:FeedZback reçu`,
+      given: $localize`:@@Title.FeedbackGiven:FeedZback donné`,
+      sentRequest: $localize`:@@Title.RequestedFeedback:FeedZback demandé`,
+      receivedRequest: $localize`:@@Title.FeedbackToGive:FeedZback à donner`,
+    } satisfies Record<FeedbackType, string>
+  )[type];
+};
+
+export const buildFeedbackSharedMessage = (type: FeedbackType): string => {
+  switch (type) {
+    case 'receivedRequest':
+    case 'given': {
+      return $localize`:@@Message.FeedbackIsSharedWithTheManagerOfYourColleague:Ce feedZback est partagé avec le manager de votre collègue`;
+    }
+    case 'sentRequest':
+    case 'received': {
+      return $localize`:@@Message.FeedbackIsSharedWithYourManager:Ce feedZback est partagé avec votre manager`;
+    }
+  }
+};

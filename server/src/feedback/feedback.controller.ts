@@ -19,7 +19,7 @@ import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
   ArchiveFeedbackDto,
   DeleteFeedbackDraftDto,
-  FeedbackCancelRequestDto,
+  FeedbackArchiveRequestDto,
   FeedbackListMapDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
@@ -85,13 +85,13 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
   }
 
-  @ApiOperation({ summary: 'Cancel a feedback request' })
+  @ApiOperation({ summary: 'Archive a feedback request' })
   @UseGuards(AuthGuard)
-  @Post('cancel-request')
-  async cancelRequest(@Body() { feedbackId }: FeedbackCancelRequestDto) {
-    const receiverEmail = this.authService.userEmail!;
+  @Post('archive-request')
+  async archiveRequest(@Body() { feedbackId }: FeedbackArchiveRequestDto) {
+    const viewerEmail = this.authService.userEmail!;
 
-    const result = await this.feedbackDbService.cancelRequest(feedbackId, receiverEmail);
+    const result = await this.feedbackDbService.archiveRequest(feedbackId, viewerEmail);
     if (result === null) {
       throw new BadRequestException();
     }

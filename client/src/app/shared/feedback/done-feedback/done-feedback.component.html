@@ -1,14 +1,6 @@
 <h1 class="gbl-page-title">
-  @switch (type()) {
-    @case (feedbackType.given) {
-      <mat-icon>{{ 'given' | feedbackTypeIcon }}</mat-icon>
-      <ng-container i18n="@@Title.FeedbackGiven">FeedZback donné</ng-container>
-    }
-    @case (feedbackType.received) {
-      <mat-icon>{{ 'received' | feedbackTypeIcon }}</mat-icon>
-      <ng-container i18n="@@Title.ReceivedFeedback">FeedZback reçu</ng-container>
-    }
-  }
+  <mat-icon>{{ type() | feedbackTypeIcon }}</mat-icon>
+  {{ title() }}
 </h1>
 
 <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
@@ -26,20 +18,12 @@
 <app-feedback-body [feedback]="feedback()" />
 
 @if (feedback().shared) {
-  <div class="gbl-icon-list">
-    <div class="gbl-icon-list__item">
+  <ul class="gbl-icon-list">
+    <li class="gbl-icon-list__item">
       <mat-icon class="gbl-icon-list__icon">share</mat-icon>
-      @if (type() === feedbackType.received) {
-        <ng-container i18n="@@Message.FeedbackIsSharedWithYourManager">
-          Ce feedZback est partagé avec votre manager
-        </ng-container>
-      } @else {
-        <ng-container i18n="@@Message.FeedbackIsSharedWithTheManagerOfYourColleague">
-          Ce feedZback est partagé avec le manager de votre collègue
-        </ng-container>
-      }
-    </div>
-  </div>
+      {{ sharedMessage() }}
+    </li>
+  </ul>
 }
 
 <form

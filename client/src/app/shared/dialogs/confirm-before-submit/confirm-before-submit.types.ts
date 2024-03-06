@@ -4,6 +4,6 @@ export type ConfirmBeforeSubmitConfig = ConfirmBeforeSubmitType | DialogData;
 
 export type ConfirmBeforeSubmitType =
   | 'sendFeedbackRequest'
-  | 'cancelFeedbackRequest'
+  | 'archiveFeedbackRequest'
   | 'sendFeedback'
   | 'archiveFeedback';

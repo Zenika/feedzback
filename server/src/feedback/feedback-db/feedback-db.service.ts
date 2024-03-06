@@ -118,14 +118,14 @@ export class FeedbackDbService {
     return { ...this.decryptFeedback(request), token: tokenId } satisfies FeedbackRequest & TokenObject;
   }
 
-  async cancelRequest(feedbackId: string, receiverEmail: string) {
+  async archiveRequest(feedbackId: string, viewerEmail: string) {
     const requestDoc = await this.feedbackCollection.doc(feedbackId).get();
     if (!requestDoc.exists) {
       return null;
     }
     const request = requestDoc.data() as FeedbackRequest;
 
-    if (request.receiverEmail !== receiverEmail) {
+    if (viewerEmail !== request.giverEmail && viewerEmail !== request.receiverEmail) {
       return null;
     }
 
