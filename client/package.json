@@ -32,7 +32,7 @@
     "@angular/platform-browser-dynamic": "^17.2.0",
     "@angular/router": "^17.2.0",
     "@fontsource/nunito": "^5.0.16",
-    "@material-symbols/font-600": "^0.15.0",
+    "@material-symbols/font-600": "^0.16.0",
     "canvas-confetti": "^1.9.2",
     "firebase": "^10.8.0",
     "js-cookie": "^3.0.5",
