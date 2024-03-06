@@ -93,7 +93,7 @@ export class PendingFeedbackComponent {
         'success',
       );
       this.giveRequestedFeedbackListService.refresh();
-      this.router.navigate(['/history']);
+      this.router.navigate(this.type() === 'sentRequest' ? ['/history'] : ['/give-requested']);
     });
   }
 }
