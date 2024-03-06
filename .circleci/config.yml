@@ -417,9 +417,9 @@ jobs:
   deploy-functions:
     executor: gcp-cli/google
     steps:
-      - restore_workspace
       - gcp-cli/setup:
           version: latest
+      - checkout
       - run:
           working_directory: usage_analytics
           name: Running gcloud functions deploy
