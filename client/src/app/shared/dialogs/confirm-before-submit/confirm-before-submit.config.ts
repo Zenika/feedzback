@@ -8,9 +8,9 @@ export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, DialogData>
     confirm: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
 
-  cancelFeedbackRequest: {
-    title: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestTitle:Confirmer l'archivage`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.CancelFeedbackRequestContent:Notez qu'une fois archivée, votre demande de feedZback sera retirée de votre historique.`,
+  archiveFeedbackRequest: {
+    title: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackRequestTitle:Confirmer l'archivage`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackRequestContent:Notez qu'une fois archivée, la demande de feedZback sera retirée de votre historique.`,
     confirm: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
 
@@ -22,7 +22,7 @@ export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, DialogData>
 
   archiveFeedback: {
     title: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackTitle:Confirmer l'archivage`,
-    content: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackContent:Notez qu'une fois archivé, votre feedZback sera retiré de votre historique.`,
+    content: $localize`:@@Component.ConfirmBeforeSubmit.ArchiveFeedbackContent:Notez qu'une fois archivé, le feedZback sera retiré de votre historique.`,
     confirm: { label: $localize`:@@Action.Confirm:Confirmer`, icon: 'check' },
   },
 };

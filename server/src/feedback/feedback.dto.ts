@@ -15,7 +15,7 @@ export class FeedbackRequestAgainDto {
   @IsString() feedbackId!: string;
 }
 
-export class FeedbackCancelRequestDto {
+export class FeedbackArchiveRequestDto {
   @IsString() feedbackId!: string;
 }
 

@@ -8,7 +8,7 @@ export type FeedbackRequestAgainDto = {
   feedbackId: string;
 };
 
-export type FeedbackCancelRequestDto = {
+export type FeedbackArchiveRequestDto = {
   feedbackId: string;
 };
 

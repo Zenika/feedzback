@@ -13,6 +13,7 @@ import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component'
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { FeedbackService } from '../feedback.service';
 import { Feedback, FeedbackType } from '../feedback.types';
+import { buildFeedbackSharedMessage, buildFeedbackTitle } from '../feedback.utils';
 
 @Component({
   selector: 'app-done-feedback',
@@ -40,9 +41,13 @@ export class DoneFeedbackComponent {
 
   type = input.required<FeedbackType>();
 
-  colleagueEmail = computed(() =>
+  protected title = computed(() => buildFeedbackTitle(this.type()));
+
+  protected colleagueEmail = computed(() =>
     this.type() === this.feedbackType.received ? this.feedback().giverEmail : this.feedback().receiverEmail,
   );
+
+  protected sharedMessage = computed(() => buildFeedbackSharedMessage(this.type()));
 
   private router = inject(Router);
 
