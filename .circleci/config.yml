@@ -417,13 +417,14 @@ jobs:
   deploy-functions:
     executor: gcp-cli/google
     steps:
+      - restore_workspace
       - gcp-cli/setup:
           version: latest
       - run:
           working_directory: usage_analytics
           name: Running gcloud functions deploy
           command: |
-            echo "Google compute zone ${GOOGLE_COMPUTE_ZONE}" && env && gcloud functions deploy create_analytics \                                    
+            gcloud functions deploy create_analytics \
             --gen2 \
             --region=${GOOGLE_COMPUTE_ZONE} \
             --runtime=python312 \
