@@ -430,5 +430,5 @@ jobs:
             --runtime=python312 \
             --source=create_analytics \
             --entry-point=create_analytics_tables \
-            --trigger-http\
+            --trigger-http \
             --no-allow-unauthenticated
