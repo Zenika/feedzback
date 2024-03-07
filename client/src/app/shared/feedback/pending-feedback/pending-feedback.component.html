@@ -26,7 +26,7 @@
   </ul>
 }
 
-@if (type() === feedbackType.sentRequest && hasBeenRequestedAgain) {
+@if (type() === feedbackType.sentRequest && hasBeenRequestedAgain()) {
   <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
     <li class="gbl-icon-list__item">
       <mat-icon class="gbl-icon-list__icon">history</mat-icon>
@@ -38,7 +38,7 @@
   </ul>
 }
 
-@if (isRecentFeedbackRequest) {
+@if (isRecentFeedbackRequest()) {
   <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
     <li class="gbl-icon-list__item">
       <mat-icon class="gbl-icon-list__icon">hourglass_top</mat-icon>
@@ -52,7 +52,7 @@
 @if (actionsStatus !== 'hidden') {
   @switch (type()) {
     @case (feedbackType.sentRequest) {
-      @if (!hasBeenRequestedAgain) {
+      @if (!hasBeenRequestedAgain()) {
         <button
           class="mb-4 me-5"
           mat-raised-button
@@ -89,7 +89,7 @@
       class="mb-4"
       mat-stroked-button
       color="primary"
-      [disabled]="isRecentFeedbackRequest || actionsStatus === 'disabled'"
+      [disabled]="isRecentFeedbackRequest() || actionsStatus === 'disabled'"
     >
       <mat-icon>archive</mat-icon>
       <ng-container i18n="@@Action.Archive">Archiver</ng-container>

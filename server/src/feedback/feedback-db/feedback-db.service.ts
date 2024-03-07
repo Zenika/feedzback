@@ -445,11 +445,11 @@ export class FeedbackDbService {
       .select(...feedbackItemFields)
       .get();
 
-    // Note: it makes no sense to show the manager feedback that has been cancelled
+    // Note: the manager does not need to see a feedback request that has been archived
     const feedbackRequestQuery = await this.feedbackCollection
       .where('status', '==', FeedbackRequestStatus)
       .where('receiverEmail', '==', receiverEmail)
-      .where('archived', 'in', [FeedbackArchived.No])
+      .where('archived', 'in', [FeedbackArchived.No]) // archived feedback requests will not be returned by this query
       .where('shared', '==', true)
       .select(...feedbackItemFields)
       .get();
@@ -471,8 +471,9 @@ export class FeedbackDbService {
       return null;
     }
 
-    // Note: it makes no sense to show the manager feedback that has been cancelled
     const document = this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
+
+    // Note: the manager does not need to see a feedback request that has been archived
     if (document.status === FeedbackRequestStatus && document.archived === FeedbackArchived.Both) {
       return null;
     }

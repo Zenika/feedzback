@@ -55,6 +55,7 @@
     "Component.LeaveForm.ApplyFeedbackDraftTitle": "Apply draft?",
     "Component.LeaveForm.QuitFeedbackContent": "If you leave the page, the feedZback you've started will be lost.",
     "Component.LeaveForm.QuitFeedbackTitle": "Leave page?",
+    "Component.ManagerDocument.ReminderSentOn": "A reminder was sent on",
     "Component.ManagerDocument.SharedFeedback": "Shared feedZback",
     "Component.ManagerDocument.SharedFeedbackRequest": "Request for shared feedback",
     "Component.ManagerList.Collaborator": "Collaborator",

@@ -46,6 +46,10 @@ export class PendingFeedbackComponent {
     this.type() === this.feedbackType.sentRequest ? this.feedback().giverEmail : this.feedback().receiverEmail,
   );
 
+  protected hasBeenRequestedAgain = computed(() => this.feedback().updatedAt > this.feedback().createdAt);
+
+  protected isRecentFeedbackRequest = computed(() => isRecentFeedbackRequest(this.feedback().updatedAt));
+
   protected sharedMessage = computed(() => buildFeedbackSharedMessage(this.type()));
 
   private router = inject(Router);
@@ -55,14 +59,6 @@ export class PendingFeedbackComponent {
   private giveRequestedFeedbackListService = inject(GiveRequestedFeedbackListService);
 
   private notificationService = inject(NotificationService);
-
-  protected get hasBeenRequestedAgain() {
-    return this.feedback().updatedAt > this.feedback().createdAt;
-  }
-
-  protected get isRecentFeedbackRequest() {
-    return isRecentFeedbackRequest(this.feedback().updatedAt);
-  }
 
   protected DEADLINE_IN_DAYS = FEEDBACK_REQUEST_DEADLINE_IN_DAYS;
 
