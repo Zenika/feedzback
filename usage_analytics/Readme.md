@@ -7,6 +7,11 @@ gcloud iam service-accounts create firestore-export-account --display-name="Serv
     1. To mirror the firestore collection "feedback"
     2. Use the service account `firestore-export-account`
     2. Make sure to run the initial import collection to import existing data into BigQuery. If you missed it use the script https://github.com/firebase/extensions/blob/master/firestore-bigquery-export/guides/IMPORT_EXISTING_DOCUMENTS.md
+2. Allow CircleCI to deploy Cloud functions 
+```bash
+gcloud projects add-iam-policy-binding feedzback-v2-dev --member='serviceAccount:circleci@feedzback-v2-dev.iam.gserviceaccount.com' --role='roles/cloudfunctions.developer'
+
+```
 2. Create the tag for your revision i.e. dev-x.y.z or staging-x.y.z. The CI should deploy the cloud function 
 ```bash
 # Run it once to initialize the database
