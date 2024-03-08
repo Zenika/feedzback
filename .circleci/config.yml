@@ -431,4 +431,5 @@ jobs:
             --source=create_analytics \
             --entry-point=create_analytics_tables \
             --trigger-http \
-            --no-allow-unauthenticated
+            --no-allow-unauthenticated \
+            --run-service-account="analytics-editor@${GOOGLE_PROJECT_ID}.iam.gserviceaccount.com"
