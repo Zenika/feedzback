@@ -75,10 +75,18 @@ Identifier used to authenticate against the Firebase stack. Found in the firebas
 
 #### FIREBASE_PRIVATE_KEY / Firebase Private Key
 
-A Service Account must be defined with the proper key. The private key used in the FIREBASE_PRIVATE_KEY environment variable needs to be base64 encoded:
+A Service Account must be defined with the proper key. The private key used in the FIREBASE_PRIVATE_KEY environment variable needs to be base64 encoded.
+
+- Using bash:
 
 ```bash
 echo "content_of_private_key_field_in_json_key" | base64
+```
+
+- Using Node.js:
+
+```js
+Buffer.from("content_of_private_key_field_in_json_key").toString("base64");
 ```
 
 #### FIREBASE_PROJECT_ID / Firebase Project ID
@@ -93,8 +101,9 @@ On staging, a sandbox account is used that redirects any sent email to [feedzbac
 ### MAILGUN_URL
 
 The mailgun endpoint to use to connect to mailgun sending server.
-* for sandbox mailgun account: `https://api.mailgun.net`
-* for production account (which is in EU): `https://api.eu.mailgun.net`
+
+- for sandbox mailgun account: `https://api.mailgun.net`
+- for production account (which is in EU): `https://api.eu.mailgun.net`
 
 #### MAILGUN_USERNAME
 
@@ -121,6 +130,7 @@ In staging set their values to: `feedzback`.
 ### Node Settings
 
 #### NODE_ENV
+
 Should be `production` for production environment, otherwise all mails will be sent to feedzback@zenika.com.
 
 ## LINKS
