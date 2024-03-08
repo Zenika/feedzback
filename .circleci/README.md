@@ -123,6 +123,9 @@ In staging set their values to: `feedzback`.
 #### NODE_ENV
 Should be `production` for production environment, otherwise all mails will be sent to feedzback@zenika.com.
 
+## Usage analytics
+Usage analytics can be set up using [these instructions](/usage_analytics/Readme.md)
+
 ## LINKS
 
 | ENVIRONMENT   | FIREBASE PROJECT                                                                     | GCP PROJECT                                                                                   | CIRCLECI CONTEXT                                                                                                                    |
