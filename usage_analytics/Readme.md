@@ -4,6 +4,12 @@
 3. A [Looker Studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) query the tables from `feedzback_usage` using a service-account `analytics-viewer` which has access only to `feedzback_usage` and does not have access to personal data.
 
 # Installation instructions
+## Prerequisites
+- Have gcloud installed and a project owner accout
+- Be on UNIX
+- Have `bq`, and `jq` installed
+If you do not satisfy the 2 last items you still can deploy the changes using Cloud Shell
+## Installation
 1. Activate the plugin "[Stream Firestore to BigQuery](https://extensions.dev/extensions/firebase/firestore-bigquery-export)"
     1. This will enable the APIs
         1. BigQuery API
@@ -42,6 +48,9 @@ gcloud config set project $GCLOUD_PROJECT
 4. Allow CircleCI to deploy Cloud functions. Every change in the function will be deployed the same way as the rest of the codebase.
 ```bash
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} --member="serviceAccount:circleci@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --role="roles/cloudfunctions.developer"
+gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} \
+--member="serviceAccount:circleci@${GCLOUD_PROJECT}.iam.gserviceaccount.com" \
+--role="roles/iam.serviceAccountUser"
 ```
 5. Create the tag for your revision and push it. The CI should deploy the cloud function 
 ```bash
@@ -62,8 +71,7 @@ bq show --format=prettyjson ${GCLOUD_PROJECT}:firestore_export > /tmp/firestore_
 jq '.access += [{"role" : "READER", "userByEmail" : "analytics-editor@'${GCLOUD_PROJECT}'.iam.gserviceaccount.com"},{"role" : "WRITER", "userByEmail" : "analytics-editor@'${GCLOUD_PROJECT}'.iam.gserviceaccount.com"} ]' /tmp/firestore_export.json > /tmp/firestore_export_updated.json
 bq update --source /tmp/firestore_export_updated.json firestore_export
 
-# Allow analytics-editor to run the cloud function and use bigquery
-gcloud functions add-invoker-policy-binding create_analytics --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --region="${GOOGLE_COMPUTE_ZONE}"
+# Allow analytics-editor to use BQ
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --role="roles/bigquery.user"
 
 # Allow analytics-viewer to create queries in BQ
@@ -87,14 +95,17 @@ gcloud scheduler jobs create http daily_usage_export \
 --oidc-service-account-email="analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" \
 --oidc-token-audience="https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create_analytics"
 ``` 
-
-8. Run the cloud function once to initialize the database
+8. [Wait for the CI](https://app.circleci.com/pipelines/github/Zenika/feedzback) to have deployed the cloud function
+8. Give analytics-editor the rights to invoke cloud function and run it once once to initialize the database
 ```bash
+gcloud functions add-invoker-policy-binding create_analytics --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --region="${GOOGLE_COMPUTE_ZONE}"
+
 gcloud functions call create_analytics --gen2 --region=${GOOGLE_COMPUTE_ZONE}
 ```
 9. Grant looker studio the right to use service accounts to retrieve data
 ```bash
+# NB : the value of member can be found here : https://lookerstudio.google.com/serviceAgentHelp
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} --member="serviceAccount:service-org-506755999458@gcp-sa-datastudio.iam.gserviceaccount.com" --role="roles/iam.serviceAccountTokenCreator"
 ```
 
-10. Modify [the looker studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) to include your analysis.  **Make sure each datasource uses the service account `analytics-viewer`**
+10. Modify [the looker studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) to include your analysis.  **Make sure each datasource uses the service account `analytics-viewer@${GCLOUD_PROJECT}.iam.gserviceaccount.com`**
