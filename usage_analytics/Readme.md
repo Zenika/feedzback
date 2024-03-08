@@ -1,5 +1,5 @@
 # How it works
-1. The plugin _Stream Firestore to BigQuery_ streams every change in the firestore DB to a BigQuery table (including the user e-mails which are sensitive data, but the feedback itself is encrypted)
+1. The plugin _Stream Firestore to BigQuery_ streams every change in the firestore DB into a BigQuery table (including the user e-mails which are personal data, but the feedback itself is encrypted)
 2. A Cloud function runs a query that aggregates data into another dataset called `feedzback_usage` every day, removing personal data. Using a service account `analytics-editor` that has access to all data in BQ
 3. A [Looker Studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) query the tables from `feedzback_usage` using a service-account `analytics-viewer` which has access only to `feedzback_usage` and does not have access to personal data.
 
@@ -96,16 +96,16 @@ gcloud scheduler jobs create http daily_usage_export \
 --oidc-token-audience="https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create_analytics"
 ``` 
 8. [Wait for the CI](https://app.circleci.com/pipelines/github/Zenika/feedzback) to have deployed the cloud function
-8. Give analytics-editor the rights to invoke cloud function and run it once once to initialize the database
+9. Give analytics-editor the rights to invoke cloud function and run it once once to initialize the database
 ```bash
 gcloud functions add-invoker-policy-binding create_analytics --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --region="${GOOGLE_COMPUTE_ZONE}"
 
 gcloud functions call create_analytics --gen2 --region=${GOOGLE_COMPUTE_ZONE}
 ```
-9. Grant looker studio the right to use service accounts to retrieve data
+10. Grant looker studio the right to use service accounts to retrieve data
 ```bash
 # NB : the value of member can be found here : https://lookerstudio.google.com/serviceAgentHelp
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} --member="serviceAccount:service-org-506755999458@gcp-sa-datastudio.iam.gserviceaccount.com" --role="roles/iam.serviceAccountTokenCreator"
 ```
 
-10. Modify [the looker studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) to include your analysis.  **Make sure each datasource uses the service account `analytics-viewer@${GCLOUD_PROJECT}.iam.gserviceaccount.com`**
+11. Modify [the looker studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) to include your analysis.  **Make sure each datasource uses the service account `analytics-viewer@${GCLOUD_PROJECT}.iam.gserviceaccount.com`**. By default it uses your google account which has the owner rights.

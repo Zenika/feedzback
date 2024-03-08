@@ -430,6 +430,7 @@ jobs:
             --runtime=python312 \
             --source=create_analytics \
             --entry-point=create_analytics_tables \
+            --set-env-vars GCP_PROJECT=${GOOGLE_PROJECT_ID} \
             --trigger-http \
             --no-allow-unauthenticated \
             --run-service-account="analytics-editor@${GOOGLE_PROJECT_ID}.iam.gserviceaccount.com"
