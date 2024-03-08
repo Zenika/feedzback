@@ -9,6 +9,14 @@ updates:
     directory: "/client"
     schedule:
       interval: weekly
+    groups:
+      angular:
+        applies-to: version-updates
+        patterns:
+          - "@angular*"
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 10
     labels:
       - dependencies
@@ -17,6 +25,14 @@ updates:
     directory: "/server"
     schedule:
       interval: weekly
+    groups:
+      angular:
+        applies-to: version-updates
+        patterns:
+          - "@nest*"
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 10
     labels:
       - dependencies
