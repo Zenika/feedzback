@@ -29,7 +29,7 @@ updates:
       nest:
         applies-to: version-updates
         patterns:
-          - "@nest*"
+          - "@nestjs*"
         update-types:
           - "minor"
           - "patch"
