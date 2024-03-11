@@ -26,7 +26,7 @@ updates:
     schedule:
       interval: weekly
     groups:
-      angular:
+      nest:
         applies-to: version-updates
         patterns:
           - "@nest*"
