@@ -54,7 +54,7 @@
     "@types/canvas-confetti": "^1.6.4",
     "@types/jest": "^29.5.12",
     "@types/js-cookie": "^3.0.6",
-    "@typescript-eslint/eslint-plugin": "6.19.0",
+    "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "6.19.0",
     "autoprefixer": "^10.4.17",
     "eslint": "^8.56.0",
