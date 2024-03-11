@@ -5,7 +5,7 @@
 
 # Installation instructions
 ## Prerequisites
-- Have gcloud installed and a project owner accout
+- Have gcloud installed and a project owner account
 - Be on UNIX
 - Have `bq`, and `jq` installed
 If you do not satisfy the 2 last items you still can deploy the changes using Cloud Shell
