@@ -49,10 +49,10 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'documentationSidebar',
-          position: 'left',
+          to: '/docs/installation',
+          activeBasePath: 'docs',
           label: 'Docs',
+          position: 'left',
         },
         /*{
           to: '/blog',
@@ -71,11 +71,18 @@ const config: Config = {
         },
       ],
     },
+    docs: {
+      sidebar: {
+        hideable: false,
+        autoCollapseCategories: true,
+      },
+    },
     footer: {
       style: 'light',
       copyright: `Copyright © ${new Date().getFullYear()} FeedZback. Built with Docusaurus.`,
     },
     prism: {
+      additionalLanguages: ['bash', 'json'],
       theme: prismThemes.oneLight,
       darkTheme: prismThemes.oneDark,
     },

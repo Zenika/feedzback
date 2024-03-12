@@ -1,9 +1,4 @@
----
-sidebar_position: 2
-title: CircleCI
----
-
-# CI / CD - CircleCI
+# CircleCI
 
 ## Pre-requisites
 

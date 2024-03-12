@@ -16,4 +16,5 @@ This documentation is built with [Docusaurus](https://docusaurus.io/).
   - `./docusaurus.config.ts` file
   - `./sidebars.ts` file
   - `./package.json`
-    - only the build script: `"build": "docusaurus build --out-dir ../docs"`
+    - intall package: `@fontsource/nunito`
+    - modify build script: `"build": "docusaurus build --out-dir ../docs"`

@@ -1,6 +1,11 @@
 /* You can use the following website to generate color palettes: https://coolors.co/ */
 
+@import "@fontsource/nunito/600.css";
+@import "@fontsource/nunito/800.css";
+
 :root {
+  --ifm-font-family-base: 'Nunito', sans-serif;
+
   --ifm-color-primary: #ee2238;
   --ifm-color-primary-dark: #e41126;
   --ifm-color-primary-darker: #d11023;

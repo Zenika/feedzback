@@ -1,9 +1,4 @@
----
-sidebar_position: 1
-title: Quick start
----
-
-# CD / CD - Quick start
+# Quick start
 
 This repository includes a fully integrated CI/CD script that works with CircleCI (see `.circleci/config.yml`).
 A more comprehensive documentation on pre-requisites and mandatory environment variables can be found [there](./circle-ci)
