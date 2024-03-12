@@ -10,6 +10,20 @@ updates:
     schedule:
       interval: weekly
     groups:
+      client-eslint-prettier:
+        applies-to: version-updates
+        patterns:
+          - "eslint*|prettier*"
+        update-types:
+          - "minor"
+          - "patch"
+      client-types:
+        applies-to: version-updates
+        patterns:
+          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
       angular:
         applies-to: version-updates
         patterns:
@@ -26,6 +40,20 @@ updates:
     schedule:
       interval: weekly
     groups:
+      server-eslint-prettier:
+        applies-to: version-updates
+        patterns:
+          - "eslint*|prettier*"
+        update-types:
+          - "minor"
+          - "patch"
+      server-types:
+        applies-to: version-updates
+        patterns:
+          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
       nestjs:
         applies-to: version-updates
         patterns:
