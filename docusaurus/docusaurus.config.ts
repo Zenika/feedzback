@@ -60,6 +60,11 @@ const config: Config = {
           position: 'left'
         },*/
         {
+          href: 'https://feedzback.znk.io',
+          label: 'App',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/Zenika/feedzback',
           label: 'GitHub',
           position: 'right',
@@ -68,11 +73,11 @@ const config: Config = {
     },
     footer: {
       style: 'light',
-      copyright: `Copyright © ${new Date().getFullYear()} FeedZback, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} FeedZback. Built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: prismThemes.oneLight,
+      darkTheme: prismThemes.oneDark,
     },
   } satisfies Preset.ThemeConfig,
 };

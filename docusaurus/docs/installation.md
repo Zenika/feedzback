@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+title: Installation
 ---
 
 # Installation
@@ -24,7 +25,7 @@ https://console.cloud.google.com/?project=feedzback-v2-dev
 
 - Create a `.env` file with the following environment variables:
 
-```txt
+```shell
 PORT=3000
 CLIENT_URL=http://localhost:4200
 

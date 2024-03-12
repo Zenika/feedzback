@@ -91,7 +91,7 @@ echo "content_of_private_key_field_in_json_key" | base64
 - Using Node.js:
 
 ```js
-Buffer.from("content_of_private_key_field_in_json_key").toString("base64");
+Buffer.from('content_of_private_key_field_in_json_key').toString('base64');
 ```
 
 #### FIREBASE_PROJECT_ID / Firebase Project ID
@@ -143,4 +143,4 @@ Should be `production` for production environment, otherwise all mails will be s
 | ENVIRONMENT   | FIREBASE PROJECT                                                                     | GCP PROJECT                                                                                   | CIRCLECI CONTEXT                                                                                                                    |
 | ------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | 🚧 staging    | [Console](https://console.firebase.google.com/project/feedzback-v2-staging/overview) | [Console](https://console.cloud.google.com/home/dashboard?hl=en&project=feedzback-v2-staging) | [Context](https://app.circleci.com/settings/organization/github/Zenika/contexts/489bddb3-fe2e-465e-91f9-b9ba7a155e0d?return-to=%2F) |
-| 🎬 production | [Console](https://console.firebase.google.com/project/feedzback-v2/overview)         | [Console](https://console.cloud.google.com/home/dashboard?hl=en&project=feedzback-v2)         | [Context](https://)                                                                                                                         |
+| 🎬 production | [Console](https://console.firebase.google.com/project/feedzback-v2/overview)         | [Console](https://console.cloud.google.com/home/dashboard?hl=en&project=feedzback-v2)         | [Context](https://)                                                                                                                 |
