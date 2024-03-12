@@ -1,0 +1,29 @@
+/* You can use the following website to generate color palettes: https://coolors.co/ */
+
+@import "@fontsource/nunito/600.css";
+@import "@fontsource/nunito/800.css";
+
+:root {
+  --ifm-font-family-base: 'Nunito', sans-serif;
+
+  --ifm-color-primary: #ee2238;
+  --ifm-color-primary-dark: #e41126;
+  --ifm-color-primary-darker: #d11023;
+  --ifm-color-primary-darkest: #be0e20;
+  --ifm-color-primary-light: #f14153;
+  --ifm-color-primary-lighter: #f25464;
+  --ifm-color-primary-lightest: #f46775;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #ee2238;
+  --ifm-color-primary-dark: #e41126;
+  --ifm-color-primary-darker: #d11023;
+  --ifm-color-primary-darkest: #be0e20;
+  --ifm-color-primary-light: #f14153;
+  --ifm-color-primary-lighter: #f25464;
+  --ifm-color-primary-lightest: #f46775;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
