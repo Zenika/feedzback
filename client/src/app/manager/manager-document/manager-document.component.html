@@ -32,7 +32,7 @@
 
 <app-feedback-body [feedback]="document()" />
 
-@if (hasBeenRequestedAgain()) {
+@if (document().status === 'pending' && hasBeenRequestedAgain()) {
   <ul class="gbl-icon-list">
     <li class="gbl-icon-list__item">
       <mat-icon class="gbl-icon-list__icon">mail</mat-icon>
