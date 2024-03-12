@@ -15,3 +15,5 @@ This documentation is built with [Docusaurus](https://docusaurus.io/).
   - `./.prettier.json` file
   - `./docusaurus.config.ts` file
   - `./sidebars.ts` file
+  - `./package.json`
+    - only the build script: `"build": "docusaurus build --out-dir ../docs"`
