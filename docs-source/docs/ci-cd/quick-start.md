@@ -1,7 +1,6 @@
 # Quick start
 
 This repository includes a fully integrated CI/CD script that works with CircleCI (see `.circleci/config.yml`).
-A more comprehensive documentation on pre-requisites and mandatory environment variables can be found [there](./circle-ci)
 
 ## On every push to any branch
 
@@ -16,19 +15,21 @@ The CI is configured to check that:
 
 Tagging a revision `dev-X.Y.Z` where `X`, `Y`, and `Z` are integers, the full stack is then deployed to dev:
 
-- backend on Google Cloud Run: [Dev Backend Health Check](https://server.dev.feedzback.znk.io/health)
-- frontend on Firebase hosting: [Dev app](https://dev.feedzback.znk.io)
+- Server on Google cloud run: [dev server health check](https://server.dev.feedzback.znk.io/health)
+- Client on Firebase hosting: [dev client app](https://dev.feedzback.znk.io)
 
 ## Staging deployment
 
 Tagging a revision `staging-X.Y.Z` where `X`, `Y`, and `Z` are integers, the full stack is then deployed to staging:
 
-- backend on Google Cloud Run: [Staging Backend Health Check](https://server.staging.feedzback.znk.io/health)
-- frontend on Firebase hosting: [Staging app](https://staging.feedzback.znk.io)
+- Server on Google cloud run: [staging server health check](https://server.staging.feedzback.znk.io/health)
+- Client on Firebase hosting: [staging client app](https://staging.feedzback.znk.io)
+
+The full stack is also deployed in staging when a commit is pushed on the `main` branch (typically when a pull request is merged).
 
 ## Production deployment
 
 On creating a release on [Github](https://github.com/Zenika/feedzback/releases) and tagging a revision `vX.Y.Z` where `X`, `Y`, and `Z` are integers), the full stack is then deployed to production:
 
-- backend on Google Cloud Run: [Production Backend Health Check](https://server.feedzback.znk.io/health)
-- frontend on Firebase hosting: [Production app](https://feedzback.znk.io)
+- Server on Google cloud run: [production server health check](https://server.feedzback.znk.io/health)
+- Client on Firebase hosting: [production client app](https://feedzback.znk.io)
