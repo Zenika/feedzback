@@ -21,7 +21,8 @@ https://console.cloud.google.com/?project=feedzback-v2-dev
 - Create a `.env` file with the following environment variables:
 
 ```shell
-PORT=3000
+SERVER_PORT=3000
+
 CLIENT_URL=http://localhost:4200
 
 FIREBASE_PROJECT_ID=feedzback-v2-dev

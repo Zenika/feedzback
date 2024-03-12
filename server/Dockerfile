@@ -16,22 +16,22 @@ COPY --from=builder /app/package.json .
 
 EXPOSE 3000
 
-# Server port config
 ENV SERVER_PORT=3000
 
-# Client url config
 ENV CLIENT_URL=
 
-# Firebase config
 ENV FIREBASE_PROJECT_ID=
 ENV FIREBASE_PRIVATE_KEY=
 ENV FIREBASE_CLIENT_EMAIL=
 
-# Mailgun config
 ENV MAILGUN_USERNAME=
 ENV MAILGUN_KEY=
+ENV MAILGUN_URL=
+ENV MAILGUN_DOMAIN=
 
-# Node config
-ENV NODE_ENV=staging
+ENV CRYPTO_SECRET_KEY=
+ENV CRYPTO_SECRET_IV=
+
+ENV NODE_ENV=
 
 ENTRYPOINT [ "node", "/app/dist/main.js"]

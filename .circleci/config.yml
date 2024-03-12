@@ -305,7 +305,7 @@ jobs:
             - run:
                 name: Set server version
                 command: |
-                  if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}/<< pipeline.number >>"; fi
+                  if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}-<< pipeline.number >>"; fi
                   echo "export const APP_VERSION = '$APP_VERSION';" > ./server/src/app.version.ts
             - run:
                 name: Submitting Docker image to build and tagging it
@@ -334,15 +334,15 @@ jobs:
             # Building update-env-vars argument
             ZZ="NODE_ENV=${NODE_ENV}"
             ZZ="${ZZ},NO_COLOR=true"
-            ZZ="${ZZ},CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
             ZZ="${ZZ},SERVER_PORT=3000"
-            ZZ="${ZZ},MAILGUN_URL=${MAILGUN_URL}"
+            ZZ="${ZZ},CLIENT_URL=${FEEDZBACK_CLIENT_URL}"
+            ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
+            ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
+            ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
             ZZ="${ZZ},MAILGUN_USERNAME=${MAILGUN_USERNAME}"
             ZZ="${ZZ},MAILGUN_KEY=${MAILGUN_KEY}"
+            ZZ="${ZZ},MAILGUN_URL=${MAILGUN_URL}"
             ZZ="${ZZ},MAILGUN_DOMAIN=${MAILGUN_DOMAIN}"
-            ZZ="${ZZ},FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}"
-            ZZ="${ZZ},FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}"
-            ZZ="${ZZ},FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}"
             ZZ="${ZZ},CRYPTO_SECRET_KEY=${CRYPTO_SECRET_KEY}"
             ZZ="${ZZ},CRYPTO_SECRET_IV=${CRYPTO_SECRET_IV}"
             gcloud run deploy << parameters.service-name >> --image ${GOOGLE_COMPUTE_ZONE}-docker.pkg.dev/${GOOGLE_PROJECT_ID}/builds/feedzback:${CIRCLE_SHA1} --allow-unauthenticated  --platform=managed --region=${GOOGLE_COMPUTE_ZONE} --port=3000 --update-env-vars $ZZ
@@ -359,7 +359,7 @@ jobs:
       - run:
           name: Set client version
           command: |
-            if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}/<< pipeline.number >>"; fi
+            if [[ $CIRCLE_TAG != "" ]]; then APP_VERSION="$CIRCLE_TAG"; else APP_VERSION="${CIRCLE_SHA1:0:7}-<< pipeline.number >>"; fi
             echo "export const APP_VERSION = '$APP_VERSION';" > ./workspace/client/src/app/app.version.ts
       - run:
           working_directory: workspace/client
