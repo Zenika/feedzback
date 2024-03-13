@@ -5,10 +5,7 @@
 
 # Installation instructions
 ## Prerequisites
-- Have gcloud installed and a project owner account
-- Be on UNIX
-- Have `bq`, and `jq` installed
-If you do not satisfy the 2 last items you still can deploy the changes using Cloud Shell
+Be an owner of the project.
 ## Installation
 1. Activate the plugin "[Stream Firestore to BigQuery](https://extensions.dev/extensions/firebase/firestore-bigquery-export)"
     1. This will enable the APIs
@@ -25,39 +22,24 @@ If you do not satisfy the 2 last items you still can deploy the changes using Cl
         7. Existing documents collection : feedback
         8. Leave other parameters as default, do not check `Enable events`
 
-2. In your shell, log in as an owner of the project
+3. In Cloud Shell, tell the shell where is the firestore db
 ```bash
-gcloud config set account <my-owner-account>                                  
-
-```
-3. Cd in the project and setup environment variables
-```bash
-cd feedzback
-
-# Or feedzback-v2-staging or feedzback-v2
-export GCLOUD_PROJECT="feedzback-v2-dev"
-
-# This must be the same as the zone on circle ci (usually europe-west1)
-export GOOGLE_COMPUTE_ZONE="europe-west1"
-
 # The zone of the existing firestore db. Due to a misconfiguration it is in Montreal for the dev environment.
 export FIRESTORE_ZONE="northamerica-northeast1"
-
-gcloud config set project $GCLOUD_PROJECT
 ```   
-4. Allow CircleCI to deploy Cloud functions. Every change in the function will be deployed the same way as the rest of the codebase.
+4. In Cloud Shell, Allow CircleCI to deploy Cloud functions. Every change in the function will be deployed the same way as the rest of the codebase.
 ```bash
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} --member="serviceAccount:circleci@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --role="roles/cloudfunctions.developer"
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} \
 --member="serviceAccount:circleci@${GCLOUD_PROJECT}.iam.gserviceaccount.com" \
 --role="roles/iam.serviceAccountUser"
 ```
-5. Create the tag for your revision and push it. The CI should deploy the cloud function 
+5. On your computer Create the tag for your revision and push it. The CI should deploy the cloud function 
 ```bash
 git tag <your tag e.g. dev-1.2.3>
 git push --tags
 ```
-6. Create the service accounts and the bigquery dataset
+6. In Cloud Shell, create the service accounts and the bigquery dataset
 ```bash
 # Create feedzback_usage that will only store non-personal data
 bq --location=$FIRESTORE_ZONE mk --dataset ${GCLOUD_PROJECT}:feedzback_usage
@@ -85,7 +67,7 @@ jq '.access += [{"role" : "READER", "userByEmail" : "analytics-viewer@'${GCLOUD_
 bq update --source /tmp/feedzback_usage_updated.json feedzback_usage
 ```
 
-7. Configure Cloud Scheduler for a daily export. If it does not work make sure circle-ci has deployed the cloud function
+7. In Cloud Shell, configure Cloud Scheduler for a daily export. If it does not work make sure circle-ci has deployed the cloud function
 ```bash
 gcloud scheduler jobs create http daily_usage_export \
 --location=${GOOGLE_COMPUTE_ZONE} \
@@ -96,13 +78,13 @@ gcloud scheduler jobs create http daily_usage_export \
 --oidc-token-audience="https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create-analytics"
 ``` 
 8. [Wait for the CI](https://app.circleci.com/pipelines/github/Zenika/feedzback) to have deployed the cloud function
-9. Give analytics-editor the rights to invoke cloud function and run it once once to initialize the database
+9. In Cloud Shell, give the analytics-editor service account the rights to invoke cloud function. Then run it once once to initialize the database
 ```bash
 gcloud functions add-invoker-policy-binding create-analytics --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --region="${GOOGLE_COMPUTE_ZONE}"
 
 gcloud functions call create-analytics --gen2 --region=${GOOGLE_COMPUTE_ZONE}
 ```
-10. Grant looker studio the right to use service accounts to retrieve data
+10. In Cloud Shell, grant looker studio the right to use service accounts to retrieve data
 ```bash
 # NB : the value of member can be found here : https://lookerstudio.google.com/serviceAgentHelp
 gcloud projects add-iam-policy-binding ${GCLOUD_PROJECT} --member="serviceAccount:service-org-506755999458@gcp-sa-datastudio.iam.gserviceaccount.com" --role="roles/iam.serviceAccountTokenCreator"
