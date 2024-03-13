@@ -37,7 +37,7 @@
   <ng-container i18n="@@Title.GiveFeedback">Donner du feedZback spontané</ng-container>
 </h1>
 
-<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="send">
+<form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
   <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
 
   <app-give-feedback-details
@@ -46,26 +46,24 @@
     [comment]="form.controls.comment"
   />
 
-  @if (hasManagerFeature) {
-    <div class="gbl-form-field">
-      <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
-        <ng-container i18n="@@Component.GiveFeedback.Share">
-          Partager le feedZback avec le manager de votre collègue
-        </ng-container>
-        <mat-icon
-          class="gbl-link ms-1 align-bottom"
-          appDialogTooltip
-          dialogWidth="600px"
-          dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
-          dialogContent="En partageant votre feedZback, votre collègue et son manager pourront échanger ensemble et ainsi bénéficier au mieux de son contenu."
-          i18n-dialogTitle="@@Component.GiveFeedback.ShareFeedbackMessageTitle"
-          i18n-dialogContent="@@Component.GiveFeedback.ShareFeedbackMessageContent"
-        >
-          help
-        </mat-icon>
-      </mat-slide-toggle>
-    </div>
-  }
+  <div class="gbl-form-field">
+    <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+      <ng-container i18n="@@Component.GiveFeedback.Share">
+        Partager le feedZback avec le manager de votre collègue
+      </ng-container>
+      <mat-icon
+        class="gbl-link ms-1 align-bottom"
+        appDialogTooltip
+        dialogWidth="600px"
+        dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
+        dialogContent="En partageant votre feedZback, votre collègue et son manager pourront échanger ensemble et ainsi bénéficier au mieux de son contenu."
+        i18n-dialogTitle="@@Component.GiveFeedback.ShareFeedbackMessageTitle"
+        i18n-dialogContent="@@Component.GiveFeedback.ShareFeedbackMessageContent"
+      >
+        help
+      </mat-icon>
+    </mat-slide-toggle>
+  </div>
 
   <div class="gbl-form-submit">
     <div>

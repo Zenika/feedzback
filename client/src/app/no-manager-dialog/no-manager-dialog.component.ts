@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, TemplateRef, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import { AfterViewInit, Component, TemplateRef, ViewEncapsulation, inject, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +21,7 @@ export class NoManagerDialogComponent implements AfterViewInit {
 
   private document = inject(DOCUMENT);
 
-  @ViewChild('templateRef') templateRef!: TemplateRef<unknown>;
+  templateRef = viewChild.required<TemplateRef<unknown>>('templateRef');
 
   private readonly delay = 30_000; // 30s
 
@@ -34,17 +34,17 @@ export class NoManagerDialogComponent implements AfterViewInit {
       return;
     }
 
-    this.employeeService.next$
+    this.employeeService.data$
       .pipe(
         delay(this.delay),
-        map(() => !!this.employeeService.data().managerEmail),
+        map(({ managerEmail }) => !!managerEmail),
       )
       .pipe(
         switchMap((hasManager) => {
           if (hasManager) {
             return of(false);
           }
-          return this.dialog.open(this.templateRef, { width: '500px', disableClose: true }).afterClosed();
+          return this.dialog.open(this.templateRef(), { width: '500px', disableClose: true }).afterClosed();
         }),
         first(),
       )

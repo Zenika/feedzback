@@ -15,7 +15,7 @@ export class FeedbackRequestAgainDto {
   @IsString() feedbackId!: string;
 }
 
-export class FeedbackDeleteRequestDto {
+export class FeedbackArchiveRequestDto {
   @IsString() feedbackId!: string;
 }
 
@@ -45,6 +45,10 @@ export class DeleteFeedbackDraftDto {
   @IsIn([FeedbackDraftType, FeedbackRequestDraftType]) type!: FeedbackDraftType | FeedbackRequestDraftType;
 
   @IsString() receiverEmailOrToken!: string;
+}
+
+export class ArchiveFeedbackDto {
+  @IsString() feedbackId!: string;
 }
 
 export class FeedbackListMapDto {

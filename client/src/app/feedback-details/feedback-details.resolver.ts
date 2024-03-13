@@ -12,7 +12,7 @@ export const feedbackDetailsResolver: ResolveFn<FeedbackDetails> = (route) => {
   const router = inject(Router);
 
   return feedbackService.getDocument(route.params['id']).pipe(
-    withLatestFrom(authService.next$),
+    withLatestFrom(authService.user$),
     map(([feedback]) => {
       if (!feedback || !authService.userEmail()) {
         throw new Error();

@@ -12,7 +12,7 @@ import { concatMap, from, toArray } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
-import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../shared/dialogs/confirm-before-submit';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip';
@@ -61,8 +61,6 @@ export class RequestFeedbackComponent {
 
   protected messageMaxLength = 500;
 
-  protected hasManagerFeature = environment.featureFlipping.manager;
-
   protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
   private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
@@ -73,7 +71,7 @@ export class RequestFeedbackComponent {
       [Validators.required, multipleEmailsValidatorFactory(), this.forbiddenValuesValidator],
     ],
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
-    shared: [this.hasManagerFeature ? true : false],
+    shared: [true],
   });
 
   protected requestTemplates = REQUEST_TEMPLATES;

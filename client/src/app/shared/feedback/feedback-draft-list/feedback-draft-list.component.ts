@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -15,7 +15,7 @@ import { FeedbackDraft, FeedbackRequestDraft } from '../feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class FeedbackDraftListComponent<T extends FeedbackDraft | FeedbackRequestDraft> {
-  @Input({ required: true }) draftList!: T[];
+  draftList = input.required<T[]>();
 
   @Output() edit = new EventEmitter<T>();
 

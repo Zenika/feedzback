@@ -1,11 +1,13 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
-import { Observable, ReplaySubject, catchError, concatMap, first, from, map, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, concatMap, filter, first, from, map, of, switchMap, tap } from 'rxjs';
 import { FirebaseService } from '../firebase/firebase.service';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 import { UserState } from './auth.types';
+import { buildUserState } from './auth.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -21,23 +23,16 @@ export class AuthService {
 
   private baseHref = inject(APP_BASE_HREF);
 
-  private _user = signal<User | null>(null);
+  private _user = signal<User | null | undefined>(undefined);
 
   user = this._user.asReadonly();
 
-  userState = computed<UserState>(() => {
-    const user = this.user();
-    return {
-      guest: user === null,
-      anonymous: user?.isAnonymous === true,
-      authenticated: user?.isAnonymous === false,
-    } satisfies UserState;
-  });
+  userState = computed<UserState>(() => buildUserState(this._user()));
 
-  userEmail = computed(() => this.user()?.email ?? '');
+  userEmail = computed(() => this._user()?.email ?? '');
 
   userInfo = computed(() => {
-    const user = this.user();
+    const user = this._user();
     if (!user?.photoURL && !user?.displayName) {
       return undefined;
     }
@@ -47,28 +42,23 @@ export class AuthService {
     };
   });
 
-  private _next$ = new ReplaySubject<true>();
+  user$ = toObservable(this._user).pipe(filter((user): user is User | null => user !== undefined));
 
-  next$ = this._next$.asObservable();
+  guest$ = this.user$.pipe(map((user) => buildUserState(user).guest));
 
-  guest$ = this.next$.pipe(map(() => this.userState().guest));
+  anonymous$ = this.user$.pipe(map((user) => buildUserState(user).anonymous));
 
-  anonymous$ = this.next$.pipe(map(() => this.userState().anonymous));
-
-  authenticated$ = this.next$.pipe(map(() => this.userState().authenticated));
+  authenticated$ = this.user$.pipe(map((user) => buildUserState(user).authenticated));
 
   constructor() {
-    this.firebaseAuth.onAuthStateChanged((user) => {
-      this._user.set(user);
-      this._next$.next(true);
-    });
+    this.firebaseAuth.onAuthStateChanged((user) => this._user.set(user));
   }
 
   signInWithGoogle(): Observable<boolean> {
     return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
       concatMap(() => this.authenticated$),
       first((authenticated) => authenticated),
-      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/home')),
+      tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/')),
       catchError(() => of(false)),
     );
   }
@@ -95,7 +85,7 @@ export class AuthService {
   }
 
   getIdToken(): Observable<string | null> {
-    return from(this.user()?.getIdToken() ?? Promise.resolve(null));
+    return from(this._user()?.getIdToken() ?? Promise.resolve(null));
   }
 
   withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {

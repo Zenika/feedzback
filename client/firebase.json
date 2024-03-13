@@ -36,8 +36,12 @@
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
-          "source": "**",
-          "destination": "/index.html"
+          "source": "/fr/**",
+          "destination": "/fr/index.html"
+        },
+        {
+          "source": "/en/**",
+          "destination": "/en/index.html"
         }
       ]
     }

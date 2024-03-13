@@ -4,8 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import confetti from 'canvas-confetti';
-import { environment } from '../../../environments/environment';
-import { ReviewComponent } from '../../review/review.component';
 import { AuthService } from '../../shared/auth';
 import { GiveFeedbackSuccess } from './give-feedback-success.types';
 
@@ -13,7 +11,7 @@ import { GiveFeedbackSuccess } from './give-feedback-success.types';
   selector: 'app-give-feedback-success',
   host: { class: 'gbl-info' },
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatIconModule, ReviewComponent],
+  imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './give-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,
 })
@@ -23,10 +21,6 @@ export class GiveFeedbackSuccessComponent implements AfterViewInit {
   private authService = inject(AuthService);
 
   private router = inject(Router);
-
-  protected hasReviewFeature = environment.featureFlipping.review;
-
-  protected userState = this.authService.userState;
 
   protected signOut() {
     this.authService.signOut().subscribe();

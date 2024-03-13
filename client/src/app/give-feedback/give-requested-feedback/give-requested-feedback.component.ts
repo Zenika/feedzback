@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,12 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from '../../shared/auth';
-import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../../shared/dialogs/confirm-before-submit';
+import { LeaveForm, LeaveFormService } from '../../shared/dialogs/leave-form';
 import { FeedbackTypeIconPipe } from '../../shared/feedback/feedback-type-icon.pipe';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
-import { LeaveFormService } from '../../shared/leave-form/leave-form.service';
-import { LeaveForm } from '../../shared/leave-form/leave-form.types';
 import { NotificationService } from '../../shared/notification/notification.service';
 import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip';
 import { MessageComponent } from '../../shared/ui/message';
@@ -43,11 +42,11 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm, OnInit {
-  @Input({ required: true }) token!: string;
+  token = input.required<string>();
 
-  @Input({ required: true }) request!: FeedbackRequest;
+  request = input.required<FeedbackRequest>();
 
-  @Input({ required: true }) draft?: Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>;
+  draft = input<Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>>();
 
   private router = inject(Router);
 
@@ -80,8 +79,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   }
 
   ngOnInit(): void {
-    if (this.draft) {
-      this.form.setValue(this.draft);
+    if (this.draft()) {
+      this.form.setValue(this.draft()!);
       this.form.updateValueAndValidity();
       this.leaveFormService.takeSnapshot();
     }
@@ -95,14 +94,14 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequested({ token: this.token, positive, negative, comment }).subscribe((success) => {
+    this.feedbackService.giveRequested({ token: this.token(), positive, negative, comment }).subscribe((success) => {
       if (!success) {
         this.disableForm(false);
         this.notificationService.showError();
       } else {
         this.giveRequestedFeedbackListService.refresh();
         this.leaveFormService.unregisterForm();
-        this.feedbackId = this.anonymous ? undefined : this.request?.id;
+        this.feedbackId = this.anonymous ? undefined : this.request()?.id;
         this.navigateToSuccess();
       }
     });
@@ -113,7 +112,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
     const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequestedDraft({ token: this.token, positive, negative, comment }).subscribe({
+    this.feedbackService.giveRequestedDraft({ token: this.token(), positive, negative, comment }).subscribe({
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);
@@ -130,7 +129,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private navigateToSuccess() {
     const state: GiveFeedbackSuccess = {
-      receiverEmail: this.request.receiverEmail,
+      receiverEmail: this.request().receiverEmail,
       feedbackId: this.anonymous ? undefined : this.feedbackId,
     };
     this.router.navigate(['../../success'], { relativeTo: this.activatedRoute, state });

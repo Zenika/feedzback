@@ -31,3 +31,13 @@
 </ul>
 
 <app-feedback-body [feedback]="document()" />
+
+@if (document().status === 'pending' && hasBeenRequestedAgain()) {
+  <ul class="gbl-icon-list">
+    <li class="gbl-icon-list__item">
+      <mat-icon class="gbl-icon-list__icon">mail</mat-icon>
+      <ng-container i18n="@@Component.ManagerDocument.ReminderSentOn">Une relance a été envoyée le</ng-container>
+      {{ document().updatedAt | date: 'longDate' }}
+    </li>
+  </ul>
+}

@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { DoneFeedbackComponent } from '../shared/feedback/done-feedback/done-feedback.component';
@@ -13,5 +13,5 @@ import { FeedbackDetails } from './feedback-details.types';
   encapsulation: ViewEncapsulation.None,
 })
 export default class FeedbackDetailsComponent {
-  @Input({ required: true }) feedbackDetails!: FeedbackDetails;
+  feedbackDetails = input.required<FeedbackDetails>();
 }

@@ -22,7 +22,14 @@ export class FeedbackStatsService {
         this.allEmailList.add(receiverEmail);
       });
 
-      this.history.push(...feedbacks.map(({ updatedAt, requested }) => ({ updatedAt, requested })));
+      this.history.push(
+        ...feedbacks.map(({ createdAt, updatedAt, requested, status }) => ({
+          createdAt,
+          updatedAt,
+          requested,
+          status,
+        })),
+      );
     });
   }
 

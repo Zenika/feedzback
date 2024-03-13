@@ -26,7 +26,7 @@ describe('DemoContentComponent', () => {
 
   it('should render property', () => {
     expect((fixture.nativeElement as HTMLElement).querySelector('[data-test-id="lorem-ipsum"')?.textContent).toContain(
-      'Lorem ipsum',
+      'Lorem ipsum dolor sit amet',
     );
   });
 });

@@ -1,40 +1,40 @@
 <mat-form-field appearance="outline" class="gbl-form-field">
   <mat-label i18n="@@Feedback.Positive">Points positifs</mat-label>
   <textarea
-    [formControl]="positive"
+    [formControl]="positive()"
     [maxlength]="feedbackMaxLength"
     matInput
     rows="4"
     placeholder="Régulièrement, tes collègues viennent souvent te voir pour te demander de l'aide. Tu prends le temps de bien leur expliquer jusqu'à qu'ils aient bien compris. Je trouve que tu es très à l'écoute de tes collègues et que tu leur permets de monter en compétence. Bravo et merci pour ça."
     i18n-placeholder="@@Component.GiveFeedbackDetails.PositiveFeedbackPlaceholder"
   ></textarea>
-  <mat-hint align="end">{{ positive.value.length }} / {{ feedbackMaxLength }}</mat-hint>
-  <mat-error>{{ positive.errors | validationErrorMessage }}</mat-error>
+  <mat-hint align="end">{{ positive().value.length }} / {{ feedbackMaxLength }}</mat-hint>
+  <mat-error>{{ positive().errors | validationErrorMessage }}</mat-error>
 </mat-form-field>
 
 <mat-form-field appearance="outline" class="gbl-form-field">
   <mat-label i18n="@@Feedback.Negative">Axes d'améliorations</mat-label>
   <textarea
-    [formControl]="negative"
+    [formControl]="negative()"
     [maxlength]="feedbackMaxLength"
     matInput
     rows="4"
     placeholder="La semaine dernière, tu as travaillé sur le même sujet pendant 5 jours sans pour autant demander de l'aide. Il s'est avéré que tu étais bloqué. Cela m'a agacé que tu ne nous demandes pas de l'aide. J'aimerais que tu viennes nous voir la prochaine fois, afin que tu ne restes pas bloqué(e) aussi longtemps."
     i18n-placeholder="@@Component.GiveFeedbackDetails.NegativeFeedbackPlaceholder"
   ></textarea>
-  <mat-hint align="end">{{ negative.value.length }} / {{ feedbackMaxLength }}</mat-hint>
-  <mat-error>{{ negative.errors | validationErrorMessage }}</mat-error>
+  <mat-hint align="end">{{ negative().value.length }} / {{ feedbackMaxLength }}</mat-hint>
+  <mat-error>{{ negative().errors | validationErrorMessage }}</mat-error>
 </mat-form-field>
 
 <mat-form-field appearance="outline" class="gbl-form-field">
   <mat-label i18n="@@Feedback.Comment">Commentaire</mat-label>
   <textarea
-    [formControl]="comment"
+    [formControl]="comment()"
     [maxlength]="commentMaxLength"
     matInput
     rows="3"
     placeholder="Merci pour ta demande de feedZback !"
     i18n-placeholder="@@Component.GiveFeedbackDetails.FeedbackCommentPlaceholder"
   ></textarea>
-  <mat-hint align="end">{{ comment.value.length }} / {{ commentMaxLength }}</mat-hint>
+  <mat-hint align="end">{{ comment().value.length }} / {{ commentMaxLength }}</mat-hint>
 </mat-form-field>

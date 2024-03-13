@@ -1,4 +1,4 @@
-<p i18n="@@Demo.LoremIpsum" data-test-id="lorem-ipsum">{{ loremIpsum }}</p>
+<p i18n="@@Demo.LoremIpsum" data-test-id="lorem-ipsum">{{ loremIpsum }} dolor sit amet</p>
 
 <div class="mat-headline-1">Headline-1. Lorem ipsum</div>
 <div class="mat-headline-2">Headline-2. Lorem ipsum</div>
@@ -138,28 +138,3 @@
   name="Stéphane Francel"
   photoUrl="https://lh3.googleusercontent.com/a/ACg8ocLVPXZX9ZNvQxEorgeocP2akfBpEXbKcfdSeIWi-3izCg=s96-c"
 />
-
-<hr />
-
-<app-sentiment size="sm" /><br /><br />
-<app-sentiment size="md" /><br /><br />
-<app-sentiment size="lg" /><br /><br />
-<app-sentiment size="xl" /><br /><br />
-
-<div>
-  <h3>Using Input/Output</h3>
-  <app-sentiment [(note)]="sentimentNote" />
-  <p>Note: {{ sentimentNote }}</p>
-</div>
-
-<div>
-  <h3>Using FormControl</h3>
-  <app-sentiment [formControl]="sentimentNoteCtrl" />
-  <p>
-    Note: {{ sentimentNoteCtrl.value }}
-
-    @if (sentimentNoteCtrl.hasError('required')) {
-      (field is required)
-    }
-  </p>
-</div>

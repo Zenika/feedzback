@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfeedzback_docs=self.webpackChunkfeedzback_docs||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Starting documentation","permalink":"/feedzback/blog/starting-documentation","unlisted":false}]}')}}]);

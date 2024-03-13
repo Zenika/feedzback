@@ -17,8 +17,9 @@ import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenObject } from './feedback-db';
 import { FeedbackEmailService } from './feedback-email/feedback-email.service';
 import {
+  ArchiveFeedbackDto,
   DeleteFeedbackDraftDto,
-  FeedbackDeleteRequestDto,
+  FeedbackArchiveRequestDto,
   FeedbackListMapDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
@@ -84,13 +85,13 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, token);
   }
 
-  @ApiOperation({ summary: 'Delete a feedback request' })
+  @ApiOperation({ summary: 'Archive a feedback request' })
   @UseGuards(AuthGuard)
-  @Post('delete-request')
-  async deleteRequest(@Body() { feedbackId }: FeedbackDeleteRequestDto) {
-    const receiverEmail = this.authService.userEmail!;
+  @Post('archive-request')
+  async archiveRequest(@Body() { feedbackId }: FeedbackArchiveRequestDto) {
+    const viewerEmail = this.authService.userEmail!;
 
-    const result = await this.feedbackDbService.deleteRequest(feedbackId, receiverEmail);
+    const result = await this.feedbackDbService.archiveRequest(feedbackId, viewerEmail);
     if (result === null) {
       throw new BadRequestException();
     }
@@ -198,6 +199,19 @@ export class FeedbackController {
     return this.feedbackDbService.deleteDraft(giverEmail, type, receiverEmailOrToken);
   }
 
+  // ----- Archive feedback (with status "done") -----
+
+  @ApiOperation({ summary: 'Archive "done" feedback' })
+  @UseGuards(AuthGuard)
+  @Post('archive/:feedbackId')
+  async archive(@Param() { feedbackId }: ArchiveFeedbackDto) {
+    const archivedByEmail = this.authService.userEmail!;
+    const success = await this.feedbackDbService.archive(feedbackId, archivedByEmail);
+    if (!success) {
+      throw new BadRequestException();
+    }
+  }
+
   // ----- View feedbacks (requested and given) -----
 
   @ApiOperation({ summary: 'Get the list of feedback mapped by type' })
@@ -235,7 +249,7 @@ export class FeedbackController {
   @ApiOperation({ summary: 'Get feedback by ID shared with the authenticated user viewed as manager' })
   @UseGuards(AuthGuard)
   @Get('shared/document/:feedbackId')
-  async getManagedFeedbackDocument(@Param() { feedbackId }: SharedFeedbackDocumentDto) {
+  async getSharedFeedbackDocument(@Param() { feedbackId }: SharedFeedbackDocumentDto) {
     const document = await this.feedbackDbService.getSharedFeedbackDocument(feedbackId);
     if (!document) {
       throw new BadRequestException();

@@ -1,43 +1,39 @@
 <h1 class="gbl-page-title">
-  @switch (type) {
-    @case (feedbackType.given) {
-      <mat-icon>{{ 'given' | feedbackTypeIcon }}</mat-icon>
-      <ng-container i18n="@@Title.FeedbackGiven">FeedZback donné</ng-container>
-    }
-    @case (feedbackType.received) {
-      <mat-icon>{{ 'received' | feedbackTypeIcon }}</mat-icon>
-      <ng-container i18n="@@Title.ReceivedFeedback">FeedZback reçu</ng-container>
-    }
-  }
+  <mat-icon>{{ type() | feedbackTypeIcon }}</mat-icon>
+  {{ title() }}
 </h1>
 
 <ul class="gbl-icon-list gbl-icon-list--horizontal-md">
   <li class="gbl-icon-list__item">
     <mat-icon class="gbl-icon-list__icon">email</mat-icon>
-    {{ getColleagueEmail(feedback) }}
+    {{ colleagueEmail() }}
   </li>
 
   <li class="gbl-icon-list__item">
     <mat-icon class="gbl-icon-list__icon">calendar_today</mat-icon>
-    {{ feedback.updatedAt | date: 'longDate' }}
+    {{ feedback().updatedAt | date: 'longDate' }}
   </li>
 </ul>
 
-<app-feedback-body [feedback]="feedback" />
+<app-feedback-body [feedback]="feedback()" />
 
-@if (feedback.shared) {
-  <div class="gbl-icon-list">
-    <div class="gbl-icon-list__item">
-      <mat-icon>share</mat-icon>
-      @if (type === feedbackType.received) {
-        <ng-container i18n="@@Message.FeedbackIsSharedWithYourManager">
-          Ce feedZback est partagé avec votre manager
-        </ng-container>
-      } @else {
-        <ng-container i18n="@@Message.FeedbackIsSharedWithTheManagerOfYourColleague">
-          Ce feedZback est partagé avec le manager de votre collègue
-        </ng-container>
-      }
-    </div>
-  </div>
+@if (feedback().shared) {
+  <ul class="gbl-icon-list">
+    <li class="gbl-icon-list__item">
+      <mat-icon class="gbl-icon-list__icon">share</mat-icon>
+      {{ sharedMessage() }}
+    </li>
+  </ul>
 }
+
+<form
+  class="pt-4"
+  [formGroup]="archiveForm"
+  [appConfirmBeforeSubmit]="archive.bind(this)"
+  appConfirmBeforeSubmitConfig="archiveFeedback"
+>
+  <button mat-stroked-button color="primary" [disabled]="actionsStatus === 'disabled'">
+    <mat-icon>archive</mat-icon>
+    <ng-container i18n="@@Action.Archive">Archiver</ng-container>
+  </button>
+</form>

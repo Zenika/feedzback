@@ -16,6 +16,7 @@ export type Feedback = {
   status: FeedbackStatus;
   createdAt: number;
   updatedAt: number;
+  archived: number;
 };
 
 export const FeedbackStatus = 'done';
@@ -33,6 +34,7 @@ export type FeedbackRequest = {
   status: FeedbackRequestStatus;
   createdAt: number;
   updatedAt: number;
+  archived: number;
 };
 
 export const FeedbackRequestStatus = 'pending';

@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { FieldPath, Filter } from 'firebase-admin/firestore';
+import { FieldPath } from 'firebase-admin/firestore';
 import { CryptoService } from '../../core/crypto/crypto.service';
 import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
   Feedback,
+  FeedbackArchived,
   FeedbackDraft,
   FeedbackDraftType,
   FeedbackEncryptedFields,
@@ -25,7 +26,13 @@ import {
   TokenObject,
   feedbackEncryptedFields,
 } from './feedback-db.types';
-import { isRecentFeedbackRequest, mapToFeedbackListMap } from './feedback-db.utils';
+import {
+  NOT_ARCHIVED_FOR_GIVER,
+  NOT_ARCHIVED_FOR_RECEIVER,
+  isRecentFeedbackRequest,
+  sortFeedbackItemsDesc,
+  sumFeedbackArchived,
+} from './feedback-db.utils';
 
 @Injectable()
 export class FeedbackDbService {
@@ -50,12 +57,12 @@ export class FeedbackDbService {
     return !!(await this.feedbackCollection.get());
   }
 
-  onFeedbackChanges(callback: (feedbacks: FeedbackWithId[]) => unknown) {
-    return this.feedbackCollection.where('status', '==', FeedbackStatus).onSnapshot((snapshot) => {
+  onFeedbackChanges(callback: (feedbacks: (FeedbackWithId | FeedbackRequestWithId)[]) => unknown) {
+    return this.feedbackCollection.onSnapshot((snapshot) => {
       callback(
         snapshot.docChanges().map((docChange) => {
           const { id } = docChange.doc;
-          const feedback = docChange.doc.data() as Feedback;
+          const feedback = docChange.doc.data() as Feedback | FeedbackRequest;
           return { id, ...feedback };
         }),
       );
@@ -75,6 +82,7 @@ export class FeedbackDbService {
       status: FeedbackRequestStatus,
       createdAt: now,
       updatedAt: now,
+      archived: FeedbackArchived.No,
     });
     const feedbackId = (await this.feedbackCollection.add(request)).id;
 
@@ -110,14 +118,14 @@ export class FeedbackDbService {
     return { ...this.decryptFeedback(request), token: tokenId } satisfies FeedbackRequest & TokenObject;
   }
 
-  async deleteRequest(feedbackId: string, receiverEmail: string) {
+  async archiveRequest(feedbackId: string, viewerEmail: string) {
     const requestDoc = await this.feedbackCollection.doc(feedbackId).get();
     if (!requestDoc.exists) {
       return null;
     }
     const request = requestDoc.data() as FeedbackRequest;
 
-    if (request.receiverEmail !== receiverEmail) {
+    if (viewerEmail !== request.giverEmail && viewerEmail !== request.receiverEmail) {
       return null;
     }
 
@@ -130,7 +138,11 @@ export class FeedbackDbService {
       return false;
     }
 
-    await this.feedbackCollection.doc(feedbackId).delete();
+    const partialFeedbackRequest: Partial<FeedbackRequest> = {
+      archived: FeedbackArchived.Both,
+    };
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedbackRequest);
+
     await this.feedbackRequestTokenCollection.doc(tokenId).delete();
     await this.deleteDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
     return true;
@@ -252,6 +264,7 @@ export class FeedbackDbService {
       status: FeedbackStatus,
       createdAt: now,
       updatedAt: now,
+      archived: FeedbackArchived.No,
     });
     const feedbackRef = await this.feedbackCollection.add(feedback);
     const { id } = await feedbackRef.get();
@@ -303,90 +316,148 @@ export class FeedbackDbService {
     ) as FeedbackDraft[] | FeedbackRequestDraft[];
   }
 
+  // ----- Archive feedback (with status "done") -----
+
+  async archive(feedbackId: string, archivedByEmail: string) {
+    const feedbackDoc = await this.feedbackCollection.doc(feedbackId).get();
+    if (!feedbackDoc?.exists) {
+      return false;
+    }
+    const feedback = feedbackDoc.data() as Feedback;
+
+    let extra: FeedbackArchived = FeedbackArchived.No;
+    if (feedback.giverEmail === archivedByEmail) {
+      extra = FeedbackArchived.Giver;
+    } else if (feedback.receiverEmail === archivedByEmail) {
+      extra = FeedbackArchived.Receiver;
+    } else {
+      return false;
+    }
+    const archived = sumFeedbackArchived(feedback.archived, extra);
+    if (archived === null) {
+      return false;
+    }
+
+    const partialFeedback: Partial<Feedback> = {
+      archived,
+    };
+    await this.feedbackCollection.doc(feedbackId).update(partialFeedback);
+    return true;
+  }
+
   // ----- View feedbacks (requested and given) -----
 
   async getListMap(viewerEmail: string, types: FeedbackListType[]): Promise<FeedbackListMap> {
-    const { received, given } = await this.getFeedbackListMap(viewerEmail, types);
-    const { sentRequest, receivedRequest } = await this.getRequestedFeedbackListMap(viewerEmail, types);
-    return {
-      received,
-      given,
-      sentRequest,
-      receivedRequest,
+    const feedbackListMap: FeedbackListMap = {
+      received: [],
+      given: [],
+      sentRequest: [],
+      receivedRequest: [],
     };
-  }
-
-  private async getFeedbackListMap(viewerEmail: string, types: FeedbackListType[]) {
-    const feedbackWhere: Filter[] = [];
     if (types.includes('received')) {
-      feedbackWhere.push(Filter.where('receiverEmail', '==', viewerEmail));
+      feedbackListMap.received = await this.getReceivedList(viewerEmail);
     }
     if (types.includes('given')) {
-      feedbackWhere.push(Filter.where('giverEmail', '==', viewerEmail));
+      feedbackListMap.given = await this.getGivenList(viewerEmail);
     }
-
-    // Query must have a "where" clause
-    if (!feedbackWhere.length) {
-      return { received: [], given: [], sentRequest: [], receivedRequest: [] } satisfies FeedbackListMap;
+    if (types.includes('sentRequest')) {
+      feedbackListMap.sentRequest = await this.getSentRequestList(viewerEmail);
     }
+    if (types.includes('receivedRequest')) {
+      feedbackListMap.receivedRequest = await this.getReceivedRequestList(viewerEmail);
+    }
+    return feedbackListMap;
+  }
 
+  private async getReceivedList(receiverEmail: string) {
     const feedbackQuery = await this.feedbackCollection
       .where('status', '==', FeedbackStatus)
-      .where(Filter.or(...feedbackWhere))
+      .where('receiverEmail', '==', receiverEmail)
+      .where('archived', 'in', NOT_ARCHIVED_FOR_RECEIVER)
       .select(...feedbackItemFields)
       .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return mapToFeedbackListMap(docsWithId<FeedbackItemWithId>(feedbackQuery.docs), viewerEmail);
+    return docsWithId<FeedbackItemWithId>(feedbackQuery.docs);
   }
 
-  private async getRequestedFeedbackListMap(viewerEmail: string, types: FeedbackListType[]) {
-    const feedbackRequestWhere: Filter[] = [];
-    if (types.includes('sentRequest')) {
-      feedbackRequestWhere.push(Filter.where('receiverEmail', '==', viewerEmail));
-    }
-    if (types.includes('receivedRequest')) {
-      feedbackRequestWhere.push(Filter.where('giverEmail', '==', viewerEmail));
-    }
+  private async getGivenList(giverEmail: string) {
+    const feedbackQuery = await this.feedbackCollection
+      .where('status', '==', FeedbackStatus)
+      .where('giverEmail', '==', giverEmail)
+      .where('archived', 'in', NOT_ARCHIVED_FOR_GIVER)
+      .select(...feedbackItemFields)
+      .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
+      .get();
 
-    // Query must have a "where" clause
-    if (!feedbackRequestWhere.length) {
-      return { received: [], given: [], sentRequest: [], receivedRequest: [] } satisfies FeedbackListMap;
-    }
+    return docsWithId<FeedbackItemWithId>(feedbackQuery.docs);
+  }
 
+  private async getSentRequestList(receiverEmail: string) {
     const feedbackRequestQuery = await this.feedbackCollection
       .where('status', '==', FeedbackRequestStatus)
-      .where(Filter.or(...feedbackRequestWhere))
+      .where('receiverEmail', '==', receiverEmail)
+      .where('archived', 'in', NOT_ARCHIVED_FOR_RECEIVER)
       .select(...feedbackItemFields)
       .orderBy('createdAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return mapToFeedbackListMap(docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs), viewerEmail);
+    return docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs);
+  }
+
+  private async getReceivedRequestList(giverEmail: string) {
+    const feedbackRequestQuery = await this.feedbackCollection
+      .where('status', '==', FeedbackRequestStatus)
+      .where('giverEmail', '==', giverEmail)
+      .where('archived', 'in', NOT_ARCHIVED_FOR_GIVER)
+      .select(...feedbackItemFields)
+      .orderBy('createdAt' satisfies keyof Feedback, 'desc')
+      .get();
+
+    return docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs);
   }
 
   async getDocument(viewerEmail: string, id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
-    const feedbackQuery = await this.feedbackCollection
-      .where(FieldPath.documentId(), '==', id)
-      .where(Filter.or(Filter.where('giverEmail', '==', viewerEmail), Filter.where('receiverEmail', '==', viewerEmail)))
-      .get();
+    const feedbackQuery = await this.feedbackCollection.where(FieldPath.documentId(), '==', id).get();
 
     const feedbackDoc = feedbackQuery.docs.at(0);
     if (!feedbackDoc) {
       return null;
     }
 
-    return this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
+    const document = this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
+
+    const isViewerAuthorized =
+      (viewerEmail === document.receiverEmail &&
+        (NOT_ARCHIVED_FOR_RECEIVER as unknown as number[]).includes(document.archived)) ||
+      (viewerEmail === document.giverEmail &&
+        (NOT_ARCHIVED_FOR_GIVER as unknown as number[]).includes(document.archived));
+
+    return isViewerAuthorized ? document : null;
   }
 
   async getSharedFeedbackList(receiverEmail: string) {
+    // Note: the manager can see the "done" feedback, even if it has been archived by the "receiver" or the "giver"
     const feedbackQuery = await this.feedbackCollection
+      .where('status', '==', FeedbackStatus)
       .where('receiverEmail', '==', receiverEmail)
       .where('shared', '==', true)
       .select(...feedbackItemFields)
-      .orderBy('updatedAt' satisfies keyof Feedback, 'desc')
       .get();
 
-    return docsWithId<FeedbackItemWithId | FeedbackRequestItemWithId>(feedbackQuery.docs);
+    // Note: the manager does not need to see a feedback request that has been archived
+    const feedbackRequestQuery = await this.feedbackCollection
+      .where('status', '==', FeedbackRequestStatus)
+      .where('receiverEmail', '==', receiverEmail)
+      .where('archived', 'in', [FeedbackArchived.No]) // archived feedback requests will not be returned by this query
+      .where('shared', '==', true)
+      .select(...feedbackItemFields)
+      .get();
+
+    return sortFeedbackItemsDesc([
+      ...docsWithId<FeedbackItemWithId>(feedbackQuery.docs),
+      ...docsWithId<FeedbackRequestItemWithId>(feedbackRequestQuery.docs),
+    ]);
   }
 
   async getSharedFeedbackDocument(id: string): Promise<FeedbackWithId | FeedbackRequestWithId | null> {
@@ -400,7 +471,14 @@ export class FeedbackDbService {
       return null;
     }
 
-    return this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
+    const document = this.decryptFeedback(docWithId<FeedbackWithId | FeedbackRequestWithId>(feedbackDoc));
+
+    // Note: the manager does not need to see a feedback request that has been archived
+    if (document.status === FeedbackRequestStatus && document.archived === FeedbackArchived.Both) {
+      return null;
+    }
+
+    return document;
   }
 
   // ----- Encrypt and decrypt feedback -----

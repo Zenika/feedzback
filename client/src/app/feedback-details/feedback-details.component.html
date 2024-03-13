@@ -1,20 +1,22 @@
-@switch (feedbackDetails.type) {
-  @case ('receivedRequest') {
-    <button class="gbl-link gbl-link--back" [routerLink]="['/give-requested']">
-      <mat-icon>arrow_back</mat-icon>
-      <ng-container i18n="@@Title.RequestedFeedbackList"> Répondre aux demandes de feedZback </ng-container>
-    </button>
+@if (feedbackDetails(); as feedbackDetails) {
+  @switch (feedbackDetails.type) {
+    @case ('receivedRequest') {
+      <button class="gbl-link gbl-link--back" [routerLink]="['/give-requested']">
+        <mat-icon>arrow_back</mat-icon>
+        <ng-container i18n="@@Title.RequestedFeedbackList"> Répondre aux demandes de feedZback </ng-container>
+      </button>
+    }
+    @default {
+      <button class="gbl-link gbl-link--back" [routerLink]="['/history/type', feedbackDetails.type]">
+        <mat-icon>arrow_back</mat-icon>
+        <ng-container i18n="@@Title.History">Historique de mes feedZbacks</ng-container>
+      </button>
+    }
   }
-  @default {
-    <button class="gbl-link gbl-link--back" [routerLink]="['/history/type', feedbackDetails.type]">
-      <mat-icon>arrow_back</mat-icon>
-      <ng-container i18n="@@Title.History">Historique de mes feedZbacks</ng-container>
-    </button>
-  }
-}
 
-@if (feedbackDetails.feedback.status === 'done') {
-  <app-done-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
-} @else {
-  <app-pending-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+  @if (feedbackDetails.feedback.status === 'done') {
+    <app-done-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+  } @else {
+    <app-pending-feedback [type]="feedbackDetails.type" [feedback]="feedbackDetails.feedback" />
+  }
 }

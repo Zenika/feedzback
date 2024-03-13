@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ViewEncapsulation, input } from '@angular/core';
+import { Component, ViewEncapsulation, computed, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { FeedbackBodyComponent } from '../../shared/feedback/feedback-body/feedback-body.component';
@@ -16,4 +16,6 @@ import { ManagerDocumentData } from './manager-document.types';
 })
 export default class ManagerDocumentComponent implements ManagerDocumentData {
   document = input.required<Feedback | FeedbackRequest>();
+
+  protected hasBeenRequestedAgain = computed(() => this.document().updatedAt > this.document().createdAt);
 }

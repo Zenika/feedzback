@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EMPTY, ReplaySubject, switchMap, tap } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { EMPTY, filter, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData } from './employee.types';
+import { isManager, updateEmployeeData } from './employee.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -17,15 +18,16 @@ export class EmployeeService {
 
   private apiBaseUrl = environment.apiBaseUrl;
 
-  private _data = signal<EmployeeData>({ managerEmail: '', managedEmails: [] });
+  private _data = signal<EmployeeData | undefined>(undefined);
 
   data = this._data.asReadonly();
 
-  isManager = computed(() => this._data().managedEmails.length > 0);
+  isManager = computed(() => {
+    const data = this._data();
+    return data ? isManager(data) : undefined;
+  });
 
-  private _next$ = new ReplaySubject<true>();
-
-  next$ = this._next$.asObservable();
+  data$ = toObservable(this._data).pipe(filter((data): data is EmployeeData => data !== undefined));
 
   constructor() {
     this.authService.authenticated$
@@ -33,10 +35,7 @@ export class EmployeeService {
         takeUntilDestroyed(),
         switchMap((authenticated) => (authenticated ? this.fetchData() : EMPTY)),
       )
-      .subscribe((data) => {
-        this._data.set(data);
-        this._next$.next(true);
-      });
+      .subscribe((data) => this._data.set(data));
   }
 
   private fetchData() {
@@ -49,12 +48,7 @@ export class EmployeeService {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient
         .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
-        .pipe(
-          tap(() => {
-            this._data.update((data) => ({ ...data, managerEmail }));
-            this._next$.next(true);
-          }),
-        ),
+        .pipe(tap(() => this._data.update((data) => updateEmployeeData(data, { managerEmail })))),
     );
   }
 }
