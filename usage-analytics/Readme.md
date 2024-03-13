@@ -90,17 +90,17 @@ bq update --source /tmp/feedzback_usage_updated.json feedzback_usage
 gcloud scheduler jobs create http daily_usage_export \
 --location=${GOOGLE_COMPUTE_ZONE} \
 --schedule='0 0 * * *' \
---uri "https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create_analytics" \
+--uri "https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create-analytics" \
 --http-method=POST \
 --oidc-service-account-email="analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" \
---oidc-token-audience="https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create_analytics"
+--oidc-token-audience="https://${GOOGLE_COMPUTE_ZONE}-${GCLOUD_PROJECT}.cloudfunctions.net/create-analytics"
 ``` 
 8. [Wait for the CI](https://app.circleci.com/pipelines/github/Zenika/feedzback) to have deployed the cloud function
 9. Give analytics-editor the rights to invoke cloud function and run it once once to initialize the database
 ```bash
-gcloud functions add-invoker-policy-binding create_analytics --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --region="${GOOGLE_COMPUTE_ZONE}"
+gcloud functions add-invoker-policy-binding create-analytics --member="serviceAccount:analytics-editor@${GCLOUD_PROJECT}.iam.gserviceaccount.com" --region="${GOOGLE_COMPUTE_ZONE}"
 
-gcloud functions call create_analytics --gen2 --region=${GOOGLE_COMPUTE_ZONE}
+gcloud functions call create-analytics --gen2 --region=${GOOGLE_COMPUTE_ZONE}
 ```
 10. Grant looker studio the right to use service accounts to retrieve data
 ```bash

@@ -421,14 +421,14 @@ jobs:
           version: latest
       - checkout
       - run:
-          working_directory: usage_analytics
+          working_directory: usage-analytics
           name: Running gcloud functions deploy
           command: |
-            gcloud functions deploy create_analytics \
+            gcloud functions deploy create-analytics \
             --gen2 \
             --region=${GOOGLE_COMPUTE_ZONE} \
             --runtime=python312 \
-            --source=create_analytics \
+            --source=create-analytics \
             --entry-point=create_analytics_tables \
             --set-env-vars GCP_PROJECT=${GOOGLE_PROJECT_ID} \
             --trigger-http \

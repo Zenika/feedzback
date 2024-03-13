@@ -124,7 +124,7 @@ In staging set their values to: `feedzback`.
 Should be `production` for production environment, otherwise all mails will be sent to feedzback@zenika.com.
 
 ## Usage analytics
-Usage analytics can be set up using [these instructions](/usage_analytics/Readme.md)
+Usage analytics can be set up using [these instructions](/usage-analytics/Readme.md)
 
 ## LINKS
 
