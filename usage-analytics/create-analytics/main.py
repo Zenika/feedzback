@@ -3,7 +3,7 @@ import functions_framework
 import os
 
 PROJECT_NAME = os.environ["GCP_PROJECT"]
-
+BIGQUERY_ZONE = os.environ["ANALYTICS_GCP_ZONE"]
 
 def get_job_config(target_table):
     return QueryJobConfig(
@@ -13,7 +13,7 @@ def get_job_config(target_table):
     
 @functions_framework.http
 def create_analytics_tables(*_):
-    client = Client()
+    client = Client(location=BIGQUERY_ZONE)
     create_daily_count = (f"""
         WITH feedbacks_creation_time AS (
             SELECT TIMESTAMP_MILLIS(CAST(JSON_EXTRACT_SCALAR(data, "$.createdAt") AS INT)) AS created_time
