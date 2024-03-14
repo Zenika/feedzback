@@ -58,7 +58,7 @@ bq update --source /tmp/firestore_export_updated.json firestore_export
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member="serviceAccount:analytics-editor@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com" --role="roles/bigquery.user"
 
 # Allow analytics-viewer to create queries in BQ
-gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member="serviceAccount:analytics-editor@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com" --role="roles/bigquery.user"
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} --member="serviceAccount:analytics-viewer@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com" --role="roles/bigquery.user"
 
 # Modify feedzback_usage so it is owned by analytics-editor and readable by analytics-viewer
 bq show --format=prettyjson ${GOOGLE_CLOUD_PROJECT}:feedzback_usage > /tmp/feedzback_usage.json
