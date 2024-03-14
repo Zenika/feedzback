@@ -7,8 +7,11 @@
 ## Prerequisites
 Be an owner of the project.
 ## Installation
-1. Find the zone of your Firestore database.
-1. Activate the plugin "[Stream Firestore to BigQuery](https://extensions.dev/extensions/firebase/firestore-bigquery-export)" in your project
+1. In Cloud Shell, find the zone of your Firestore database. 
+```bash
+gcloud firestore databases list
+```
+2. Activate the plugin "[Stream Firestore to BigQuery](https://extensions.dev/extensions/firebase/firestore-bigquery-export)" in your project
     1. This will enable the APIs
         1. BigQuery API
         2. Cloud Tasks API
@@ -23,8 +26,8 @@ Be an owner of the project.
         7. Existing documents collection : feedback
         8. Leave other parameters as default, do not check `Enable events`
 
-2. In Circle CI, go to the Context page of your project and add the environment variable ANALYTICS_GCP_ZONE. 
-3. In Cloud Shell, tell the shell where is your analytics zone
+3. In Circle CI, go to the /Organization settings/Context page of your project and add the environment variable $ANALYTICS_GCP_ZONE . 
+4. In Cloud Shell, tell the shell where is your analytics zone
 ```bash
 # The zone of the existing firestore db. Due to a misconfiguration it is in Montreal for the dev environment.
 export ANALYTICS_GCP_ZONE="<zone found in previous step>"
@@ -36,6 +39,7 @@ gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
 --member="serviceAccount:circleci@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com" \
 --role="roles/iam.serviceAccountUser"
 ```
+5. Ensure the `firestore_export` dataset to be created (by the extension)
 6. In Cloud Shell, create the service accounts and the bigquery dataset
 ```bash
 # Create feedzback_usage that will only store non-personal data

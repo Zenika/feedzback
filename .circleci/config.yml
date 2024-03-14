@@ -426,7 +426,7 @@ jobs:
           command: |
             gcloud functions deploy create-analytics \
             --gen2 \
-            --region=${GOOGLE_COMPUTE_ZONE} \
+            --region=${ANALYTICS_GCP_ZONE} \
             --runtime=python312 \
             --source=create-analytics \
             --entry-point=create_analytics_tables \
