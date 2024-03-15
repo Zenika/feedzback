@@ -11,7 +11,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'CI / CD',
-      items: ['ci-cd/quick-start', 'ci-cd/circle-ci'],
+      items: ['ci-cd/quick-start', 'ci-cd/circle-ci', 'ci-cd/usage-analytics'],
     },
   ],
 };

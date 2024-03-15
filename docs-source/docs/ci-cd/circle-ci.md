@@ -137,6 +137,10 @@ The port on which the server is listening.
 
 This helps the server compose URLs to include in emails.
 
+## Usage analytics
+Usage analytics can be set up using [these instructions](/docs-source/docs/usage-analytics.md)
+
+
 ## Links
 
 ### Development 🚧

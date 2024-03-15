@@ -145,6 +145,13 @@ workflows:
             - deploy-dev-server
           environment: dev
           context: feedzback-dev
+      ### Deploy the cloud functions for analytics purposes.
+      - deploy-functions:
+          name: deploy-dev-functions
+          filters: *filter-dev
+          requires:
+            - prepare-workspace
+          context: feedzback-dev
       # ---------------------------------------------------------------------------
       # This section will only run for staging deployments: either "main" branch or
       # tags that match "staging-X.Y.Z"
@@ -187,6 +194,14 @@ workflows:
             - deploy-staging-server
           environment: staging
           context: feedzback-staging
+      ### Deploy the cloud functions for analytics purposes.
+      - deploy-functions:
+          name: deploy-staging-functions
+          filters: *filter-staging
+          requires:
+            - prepare-workspace
+          context: feedzback-staging
+
       # ---------------------------------------------------------------------------
       # This section will only run for PRODUCTION deployments: tags need to match
       # the following pattern "vX.Y.Z"
@@ -229,6 +244,14 @@ workflows:
             - deploy-production-server
           environment: production
           context: feedzback-production
+      ### Deploy the cloud functions for analytics purposes.
+      - deploy-functions:
+          name: deploy-production-functions
+          filters: *filter-only-production
+          requires:
+            - prepare-workspace
+          context: feedzback-production
+
 
 jobs:
   prepare-workspace:
@@ -391,3 +414,23 @@ jobs:
             export GOOGLE_APPLICATION_CREDENTIALS=./workspace/firebase-service-account.json
             ./firebase_bin --config ./workspace/client/firebase.json use << parameters.environment >>
             ./firebase_bin --config ./workspace/client/firebase.json deploy --only hosting:<< parameters.environment >>
+  deploy-functions:
+    executor: gcp-cli/google
+    steps:
+      - gcp-cli/setup:
+          version: latest
+      - checkout
+      - run:
+          working_directory: usage-analytics
+          name: Running gcloud functions deploy
+          command: |
+            gcloud functions deploy create-analytics \
+            --gen2 \
+            --region=${ANALYTICS_GCP_ZONE} \
+            --runtime=python312 \
+            --source=create-analytics \
+            --entry-point=create_analytics_tables \
+            --set-env-vars GCP_PROJECT=${GOOGLE_PROJECT_ID},ANALYTICS_GCP_ZONE=${ANALYTICS_GCP_ZONE} \
+            --trigger-http \
+            --no-allow-unauthenticated \
+            --run-service-account="analytics-editor@${GOOGLE_PROJECT_ID}.iam.gserviceaccount.com"
