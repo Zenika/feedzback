@@ -145,7 +145,7 @@ workflows:
             - deploy-dev-server
           environment: dev
           context: feedzback-dev
-      ### Finally deploy the cloud functions for analytics purposes.
+      ### Deploy the cloud functions for analytics purposes.
       - deploy-functions:
           name: deploy-dev-functions
           filters: *filter-dev
@@ -194,7 +194,7 @@ workflows:
             - deploy-staging-server
           environment: staging
           context: feedzback-staging
-      ### Finally deploy the cloud functions for analytics purposes.
+      ### Deploy the cloud functions for analytics purposes.
       - deploy-functions:
           name: deploy-staging-functions
           filters: *filter-staging
@@ -244,7 +244,7 @@ workflows:
             - deploy-production-server
           environment: production
           context: feedzback-production
-      ### Finally deploy the cloud functions for analytics purposes.
+      ### Deploy the cloud functions for analytics purposes.
       - deploy-functions:
           name: deploy-production-functions
           filters: *filter-only-production
