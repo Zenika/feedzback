@@ -27,11 +27,11 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docusaurus/',
+          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docs-source/',
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docusaurus/',
+          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docs-source/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -49,7 +49,7 @@ const config: Config = {
       },
       items: [
         {
-          to: '/docs/installation',
+          to: '/docs/audience',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
@@ -79,7 +79,7 @@ const config: Config = {
     },
     footer: {
       style: 'light',
-      copyright: `Copyright © ${new Date().getFullYear()} FeedZback. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} FeedZback.`,
     },
     prism: {
       additionalLanguages: ['bash', 'json'],

@@ -13,6 +13,8 @@ const sidebars: SidebarsConfig = {
       label: 'CI / CD',
       items: ['ci-cd/quick-start', 'ci-cd/circle-ci', 'ci-cd/usage-analytics'],
     },
+    'audience',
+    'technical-stack',
   ],
 };
 
