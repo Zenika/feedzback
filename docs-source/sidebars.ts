@@ -3,7 +3,6 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   default: [
     'installation',
-    'usage-analytics',
     {
       type: 'category',
       label: 'Guide',
@@ -12,7 +11,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'CI / CD',
-      items: ['ci-cd/quick-start', 'ci-cd/circle-ci'],
+      items: ['ci-cd/quick-start', 'ci-cd/circle-ci', 'ci-cd/usage-analytics'],
     },
   ],
 };
