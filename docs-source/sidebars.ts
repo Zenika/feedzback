@@ -3,6 +3,7 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   default: [
     'installation',
+    'usage-analytics',
     {
       type: 'category',
       label: 'Guide',
