@@ -51,7 +51,7 @@ gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
 --role="roles/iam.serviceAccountUser"
 ```
 
-5. Ensure the `firestore_export` dataset to be created (by the extension)
+5. Wait for the `firestore_export` dataset to be created by the extension
 6. In Cloud Shell, create the service accounts and the bigquery dataset
 
 ```bash
@@ -60,7 +60,7 @@ bq --location=$ANALYTICS_GCP_ZONE mk --dataset ${GOOGLE_CLOUD_PROJECT}:feedzback
 
 
 gcloud iam service-accounts create analytics-editor  --display-name="Service account to read or write analytics based on the firestore export"
-gcloud iam service-accounts create analytics-viewer --display-name="Service account dedicated to looker studio to allow it to read"
+gcloud iam service-accounts create analytics-viewer --display-name="Service account dedicated to looker studio to allow it to read only feedzback_usage"
 
 # Allow analytics-editor to read and write on the firestore_export. It can be done in the web console or using the following lines
 bq show --format=prettyjson ${GOOGLE_CLOUD_PROJECT}:firestore_export > /tmp/firestore_export.json
