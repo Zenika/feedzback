@@ -17,8 +17,7 @@ def create_analytics_tables(*_):
     create_daily_count = (f"""
         WITH feedbacks_creation_time AS (
             SELECT TIMESTAMP_MILLIS(CAST(JSON_EXTRACT_SCALAR(data, "$.createdAt") AS INT)) AS created_time
-            FROM `{PROJECT_NAME}.firestore_export.feedback_raw_changelog`
-            WHERE operation IN ("CREATE", "IMPORT")
+            FROM `{PROJECT_NAME}.firestore_export.feedback_raw_latest`
             ),
             creation_dates AS (
             SELECT date_trunc(created_time, MONTH) AS month, DATE_TRUNC(created_time, DAY) AS day 
