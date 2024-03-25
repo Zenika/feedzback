@@ -82,7 +82,7 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} FeedZback.`,
     },
     prism: {
-      additionalLanguages: ['bash', 'json'],
+      additionalLanguages: ['bash', 'json', 'scss'],
       theme: prismThemes.oneLight,
       darkTheme: prismThemes.oneDark,
     },

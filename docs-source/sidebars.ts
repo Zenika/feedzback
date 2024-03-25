@@ -2,19 +2,29 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
   default: [
+    'audience',
+    'technical-stack',
     'installation',
     {
       type: 'category',
-      label: 'Guide',
-      items: ['guide/introduction'],
+      label: 'Technical guides',
+      items: ['technical-guides/introduction'],
     },
     {
       type: 'category',
       label: 'CI / CD',
       items: ['ci-cd/quick-start', 'ci-cd/circle-ci', 'ci-cd/usage-analytics'],
     },
-    'audience',
-    'technical-stack',
+    {
+      type: 'category',
+      label: 'Update guide',
+      items: ['update/client'],
+    },
+    {
+      type: 'category',
+      label: 'Business cases',
+      items: ['business-cases/introduction'],
+    },
   ],
 };
 
