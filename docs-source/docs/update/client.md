@@ -53,7 +53,9 @@ body {
 }
 ```
 
-> `Nunito` font dependency is listed in [other packages](#add-other-packages) below.
+:::note
+`Nunito` font dependency is listed in [other packages](#add-other-packages) below.
+:::
 
 ## Add Tailwind
 
@@ -111,7 +113,9 @@ npm i -D prettier eslint-config-prettier eslint-plugin-prettier prettier-plugin-
 
 Update `.eslintrc.json` file
 
-> Only the lines added are reported here.
+:::note
+Only the lines added are reported here.
+:::
 
 ```json
 {
@@ -142,8 +146,10 @@ Update `.eslintrc.json` file
 }
 ```
 
-> The `"@angular-eslint/no-host-metadata-property"` rule is turned off to reflect the latest Angular best pratices.<br />
-> More info on this [issue](https://github.com/angular/angular/issues/54284).
+:::note
+The `"@angular-eslint/no-host-metadata-property"` rule is turned off to reflect the latest Angular best pratices.<br />
+More info on this [issue](https://github.com/angular/angular/issues/54284).
+:::
 
 Add `.prettierrc.json` file
 

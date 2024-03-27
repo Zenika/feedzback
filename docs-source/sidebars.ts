@@ -7,9 +7,20 @@ const sidebars: SidebarsConfig = {
     'installation',
     {
       type: 'category',
+      label: 'Business cases',
+      items: [
+        //'business-cases/introduction',
+        'business-cases/request-feedback',
+        'business-cases/reply-to-feedback-request',
+        //'business-cases/give-spontaneous-feedback',
+        //'business-cases/shared-feedback',
+      ],
+    },
+    /*{
+      type: 'category',
       label: 'Technical guides',
       items: ['technical-guides/introduction'],
-    },
+    },*/
     {
       type: 'category',
       label: 'CI / CD',
@@ -20,11 +31,8 @@ const sidebars: SidebarsConfig = {
       label: 'Update guide',
       items: ['update/client'],
     },
-    {
-      type: 'category',
-      label: 'Business cases',
-      items: ['business-cases/introduction'],
-    },
+    'documentation',
+    'ubiquitous-language',
   ],
 };
 

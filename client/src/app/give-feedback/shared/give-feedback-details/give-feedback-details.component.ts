@@ -3,6 +3,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationErrorMessagePipe } from '../../../shared/validation/validation-error-message';
+import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from './give-feedback-details.config';
 
 @Component({
   selector: 'app-give-feedback-details',
@@ -12,9 +13,9 @@ import { ValidationErrorMessagePipe } from '../../../shared/validation/validatio
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackDetailsComponent implements OnInit {
-  protected feedbackMaxLength = 2000;
+  protected feedbackMaxLength = LARGE_MAX_LENGTH;
 
-  protected commentMaxLength = 500;
+  protected commentMaxLength = MEDIUM_MAX_LENGTH;
 
   positive = input.required<FormControl<string>>();
 
