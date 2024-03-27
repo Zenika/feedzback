@@ -2,15 +2,13 @@
 
 ## Permissions
 
-To configure and run the application locally, you need to have access to the Firebase project: **feedzback-v2-dev**
+To configure and run the application locally, you need access to the Firebase project [feedzback-v2-dev](https://console.firebase.google.com/project/feedzback-v2-dev).
 
-https://console.firebase.google.com/project/feedzback-v2-dev/
+Once you have gained access, you will also be able to access the [Google Cloud console](https://console.cloud.google.com/?project=feedzback-v2-dev).
 
-> If you don't have permission, please contact **DSI**.
-
-Once you have gained access, you will also be able to access the Google Cloud console:
-
-https://console.cloud.google.com/?project=feedzback-v2-dev
+:::note
+If you don't have permission, please contact **DSI**.
+:::
 
 ## Server
 
@@ -38,9 +36,7 @@ CRYPTO_SECRET_IV=feedzback
 CRYPTO_SECRET_KEY=feedzback
 ```
 
-You can retrieve these secret values from the Google Cloud Run console (tab "Variables and Secrets"):
-
-https://console.cloud.google.com/run/deploy/europe-west1/feedzback-server?project=feedzback-v2-dev
+You can retrieve these secret values from the [Google Cloud Run console](https://console.cloud.google.com/run/deploy/europe-west1/feedzback-server?project=feedzback-v2-dev) (tab "Variables and Secrets"):
 
 ### Installation
 
@@ -52,6 +48,8 @@ npm run start:dev
 ```
 
 ## Client
+
+### Installation
 
 - Open your IDE in `./client` directory
 
