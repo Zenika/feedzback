@@ -8,20 +8,23 @@ BIGQUERY_ZONE = os.environ["ANALYTICS_GCP_ZONE"]
 
 def get_job_config(target_dataset, target_table):
     return QueryJobConfig(
-        destination=f"{PROJECT_NAME}.{target_dataset}.{target_table}",
+        destination=f"{target_dataset}.{target_table}",
         write_disposition="WRITE_TRUNCATE",
     )
 
 
 @functions_framework.http
 def create_analytics_tables(*_):
-    client = Client(location=BIGQUERY_ZONE)
+    client = Client(
+        project=PROJECT_NAME,
+        location=BIGQUERY_ZONE,
+        )
     create_daily_count = (f"""
         WITH feedbacks AS (
             SELECT DATE_TRUNC(TIMESTAMP_MILLIS(CAST(JSON_EXTRACT_SCALAR(DATA, "$.createdAt") AS INT)), DAY) AS day,
             JSON_EXTRACT_SCALAR(DATA, "$.requested") AS requested,
             JSON_EXTRACT_SCALAR(DATA, "$.status") AS status
-            FROM `{PROJECT_NAME}.firestore_export.feedback_raw_latest`)
+            FROM `firestore_export.feedback_raw_latest`)
         SELECT day, COUNTIF(requested="true" AND status="done") AS feedbacks_requested,COUNTIF(requested="false") AS feedbacks_unsolicited
         FROM feedbacks
         GROUP BY day
@@ -32,7 +35,7 @@ def create_analytics_tables(*_):
     query_job.result()
     create_monthly_count = (f"""
         SELECT date_trunc(day, MONTH) AS month, SUM(feedbacks_requested) AS feedbacks_requested, SUM(feedbacks_unsolicited) AS feedbacks_unsolicited
-        FROM `{PROJECT_NAME}.feedzback_usage.daily_usage`
+        FROM `feedzback_usage.daily_usage`
         GROUP BY month
     """)
     query_job = client.query(create_monthly_count,
@@ -45,7 +48,7 @@ def create_analytics_tables(*_):
                 JSON_EXTRACT_SCALAR(DATA, "$.status") AS status,
                 JSON_EXTRACT_SCALAR(DATA, "$.giverEmail") AS giverEmail,
                 JSON_EXTRACT_SCALAR(DATA, "$.receiverEmail") AS receiverEmail,
-            FROM `{PROJECT_NAME}.firestore_export.feedback_raw_latest`
+            FROM `firestore_export.feedback_raw_latest`
             WHERE   JSON_EXTRACT_SCALAR(DATA, "$.status") = "done"
         ),
         feedbacks_given_per_user_per_month AS(
@@ -91,7 +94,7 @@ def create_analytics_tables(*_):
     
     feedbacks_by_receiver_categories = f"""
     SELECT month, receiver_category,  SUM(feedbacks_received) AS feedbacks_received
-    FROM `{PROJECT_NAME}.firestore_export.top_feedzbackers`
+    FROM `firestore_export.top_feedzbackers`
     GROUP BY month, receiver_category
     """
     
@@ -101,7 +104,7 @@ def create_analytics_tables(*_):
 
     feedbacks_by_giver_categories = f"""
     SELECT month, giver_category,  SUM(feedbacks_given) AS feedbacks_given
-    FROM `{PROJECT_NAME}.firestore_export.top_feedzbackers`
+    FROM `firestore_export.top_feedzbackers`
     GROUP BY month, giver_category
     """
 
