@@ -106,7 +106,7 @@ def create_analytics_tables(*_):
     """
 
     query_job = client.query(feedbacks_by_giver_categories,
-                            job_config=get_job_config("feedzback_usage","monthly_repartition_of_feedback_given"))
+                            job_config=get_job_config("feedzback_usage","monthly_repartition_of_feedback_givers"))
     query_job.result()
 
     return 'OK'
