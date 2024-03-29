@@ -49,13 +49,8 @@ def create_analytics_tables(*_):
     execute_query("create_daily_count.sql", "feedzback_usage", "daily_usage")
     execute_query("create_monthly_count.sql", "feedzback_usage", "monthly_usage")
 
-    # These queries answer the question "Are most feedbacks created by a few users or do all users of feedzback give
+    # This query answer the question "Are most feedbacks created by a few users or do all users of feedzback give
     # approximately the same number of feedbacks each month ?"
-    # NB : as the first query outputs personal data (emails and feedback count per user), it outputs data in the
-    # firestore_export dataset. Contrary to the feedzback_usage dataset, firestore_export is not readable by Looker
-    # Studio (which must use the service account analytics-viewer)
-    execute_query("create_top_feedzbacker.sql", "firestore_export", "top_feedzbacker")
-    execute_query("feedback_receiver_repartition.sql", "feedzback_usage", "feedback_receiver_repartition")
-    execute_query("feedback_giver_repartition.sql", "feedzback_usage", "feedback_giver_repartition")
+    execute_query("feedbackers_repartition.sql", "firestore_export", "feedbackers_repartition")
 
     return 'OK'

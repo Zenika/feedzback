@@ -21,24 +21,27 @@ feedbacks_per_user AS (
     SELECT COALESCE(given.month, received.month) AS month, COALESCE(given.email, received.email) AS email, COALESCE(given.feedbacks_given, 0) AS feedbacks_given, COALESCE(received.feedbacks_received, 0) AS feedbacks_received
     FROM feedbacks_given_per_user_per_month given FULL OUTER JOIN feedbacks_received_per_user_per_month received
     ON given.month = received.month AND given.email = received.email
-),
-feedbacker_rank AS(
-    SELECT month, email, feedbacks_given,feedbacks_received,
-        ROW_NUMBER() OVER (PARTITION BY month ORDER BY feedbacks_received DESC) AS receiver_rank ,
-        ROW_NUMBER() OVER (PARTITION BY month ORDER BY feedbacks_given DESC) AS giver_rank,
+), feedbacker_categories AS(
+    SELECT month, email,
+    CASE
+        WHEN feedbacks_given =0 THEN "0. received feedbacks but gave no feedback"
+        WHEN feedbacks_given =1 THEN "1. gave 1 feedback"
+        WHEN feedbacks_given =2 THEN "2. gave 2 feedbacks"
+        ELSE  "3. gave 3 or more feedbacks"
+    END
+    AS category
+    FROM feedbacks_per_user
+    UNION ALL
+    SELECT month, email,
+    CASE
+        WHEN feedbacks_received =0 THEN "0. gave feedbacks but received no feedback"
+        WHEN feedbacks_received =1 THEN "1. received 1 feedback"
+        WHEN feedbacks_received =2 THEN "2. received 2 feedbacks"
+        ELSE  "3. received 3 or more feedbacks"
+    END
+    AS category
     FROM feedbacks_per_user
 )
-SELECT month, email, feedbacks_given, feedbacks_received,
-CASE
-    WHEN receiver_rank <=5 THEN "1. top_five_receiver"
-    WHEN receiver_rank > 5 and receiver_rank <= 10 THEN "2. top_five_to_ten_receiver"
-    ELSE "3. not_top_ten_receiver"
-END
-AS receiver_category,
-CASE
-    WHEN giver_rank <=5 THEN "1. top_five_giver"
-    WHEN giver_rank > 5 and giver_rank <= 10 THEN "2. top_five_to_ten_giver"
-    ELSE "3. not_top_ten_giver"
-END
-AS giver_category
-FROM feedbacker_rank
+SELECT month, category, count(*) as nb_users
+FROM feedbacker_categories
+GROUP BY month, category
