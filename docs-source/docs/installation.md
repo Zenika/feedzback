@@ -7,7 +7,7 @@ To configure and run the application locally, you need access to the Firebase pr
 Once you have gained access, you will also be able to access the [Google Cloud console](https://console.cloud.google.com/?project=feedzback-v2-dev).
 
 :::note
-If you don't have permission, please contact **DSI**.
+If you don't have permission, please contact Pierre Nicoli or Stéphane Francel.
 :::
 
 ## Server
@@ -36,7 +36,7 @@ CRYPTO_SECRET_IV=feedzback
 CRYPTO_SECRET_KEY=feedzback
 ```
 
-You can retrieve these secret values from the [Google Cloud Run console](https://console.cloud.google.com/run/deploy/europe-west1/feedzback-server?project=feedzback-v2-dev) (tab "Variables and Secrets"):
+Retrieve these secret values from the [Google Cloud Run console](https://console.cloud.google.com/run/deploy/europe-west1/feedzback-server?project=feedzback-v2-dev) (tab "Variables and Secrets"):
 
 ### Installation
 
@@ -60,4 +60,4 @@ npm install
 npm start
 ```
 
-Finally, visit the URL http://localhost:4200 and enjoy FeedZback!
+Finally, visit the URL http://localhost:4200 and enjoy FeedZback! 🚀

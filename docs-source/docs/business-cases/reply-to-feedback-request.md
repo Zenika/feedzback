@@ -7,20 +7,54 @@ If I can't complete my feedback in one go, I'd like to be able to save it as a d
 
 ## Technical specifications
 
-To reply to a feedback request, the `giverEmail` must use its secret `tokenId` and visit the page:
+Be sure to read [Request feedback](./request-feedback) first.
+
+To reply to a feedback request, the `giverEmail` must visit the following page, based on its secret `tokenId`:
 
 ```txt
 /give-requested/token/<tokenId>
 ```
 
-This page does not require the `giverEmail` to be authenticated, as the `tokenId` is a secret data.
-A link to this page can be found in the email received by the `giverEmail`.
+As the `giverEmail` may be external to the Zenika organisation, access to this page does not require user authentification.
+Instead, the `tokenId` acts as an access token.
 
-If the `giverEmail` is external to the Zenika organisation, this link is the only way to reply.
-If the `giverEmail` is internal to the Zenika organisation, they can also connect to the application and access the list of feedback requests they have received.
+On client side, the [`giveRequestedFeedbackGuard`](https://github.com/Zenika/feedzback/blob/main/client/src/app/give-feedback/give-requested-feedback/give-requested-feedback.guard.ts) guard ensures that the `tokenId` is valid.
+If the `giverEmail` is already authenticated, it remains authenticated.
+Otherwise, he is silently authenticated as an anonymous user (in other words, a session is created for him).
 
-If the user is not authenticated, the page remains accessible and the `giverEmail` is silently authenticated as an anonymous user.
-In other words, a session is created.
+On server side, the [`FeedbackController.checkRequest`](https://github.com/Zenika/feedzback/blob/main/server/src/feedback/feedback.controller.ts) method returns the feedback request details and possibly a previously saved draft.
+
+Once the feedback is complete, 2 or 3 Firestore documents are affected:
+
+- In the `feedback` collection, the document with ID `feedbackId` is updated:
+
+```ts
+const feedback: Feedback = {
+  giverEmail: 'gimini@zenika.com',
+  receiverEmail: 'pinocchio@zenika.com',
+
+  // -----------------------------------------------------
+  // Added fields (in reality, the contents are encrypted)
+  positive: 'You did great...', // required
+  negative: 'Youd should improve...', // required
+  comment: '', // optional
+  // -----------------------------------------------------
+
+  message: 'Hi Gimini, give me some feedback please.',
+  shared: true,
+  requested: true,
+  status: 'done', // Updated field
+  createdAt: 1711403799463,
+  updatedAt: 1711712182618, // Updated field
+  archived: 0,
+};
+```
+
+- In the `feedbackRequestToken` collection, the document with ID `tokenId` is deleted.
+
+- In the `feedbackDraft` collection, the draft, if it exists, is deleted.
+
+Finally, an email is sent to the `receiverEmail` inviting them to consult the feedback they have just received.
 
 ## Links
 

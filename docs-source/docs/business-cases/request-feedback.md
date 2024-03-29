@@ -4,14 +4,12 @@
 
 As a Zenika employee, I would like to request feedback from colleagues I have worked with, whether they are internal or external to my organisation.
 
-When requesting feedback, I can decide whether or not it will be shared with my manager.
-
 Each colleague then receives an email containing a link enabling them to reply to my feedback request.
 
-For external colleagues, the link contained in the email is the only way for them to reply.
-For internal colleagues, they can also connect to the application and access the list of feedback requests they have received.
+For external colleagues, this link is the only way for them to reply.
+Whereas internal colleagues can also connect to the application and view the list of feedback requests they have received.
 
-Once my request has been sent, I can access the list of my pending feedback requests.
+Once my request has been sent, I would like to view the list of my pending feedback requests.
 
 ## Technical specifications
 
@@ -35,7 +33,7 @@ For example, if Pinocchio sends a feedback request to Gimini, the first added do
 const feedbackRequest: FeedbackRequest = {
   giverEmail: 'gimini@zenika.com',
   receiverEmail: 'pinocchio@zenika.com',
-  message: 'Hi Gimini, give me some feedback please.', // In reality, the message is encrypted.
+  message: 'Hi Gimini, give me some feedback please.', // In reality, the content is encrypted.
   shared: true,
   requested: true, // Indicates that the feedback was initiated by a request.
   status: 'pending',
@@ -67,6 +65,8 @@ The `tokenId`, on the other hand, is a secret value known only to the `giverEmai
 ```txt
 /give-requested/token/<tokenId>
 ```
+
+Each `giverEmail` receives an email with a link to this page, based on their own `tokenId` allowing them to reply.
 
 ## Links
 
