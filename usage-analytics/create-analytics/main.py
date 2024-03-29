@@ -54,8 +54,8 @@ def create_analytics_tables(*_):
     # NB : as the first query outputs personal data (emails and feedback count per user), it outputs data in the
     # firestore_export dataset. Contrary to the feedzback_usage dataset, firestore_export is not readable by Looker
     # Studio (which must use the service account analytics-viewer)
-    execute_query("create_top_feedzbackers.sql", "firestore_export", "top_feedzbackers")
-    execute_query("feedback_receiver_repartition.sql", "feedzback_usage", "monthly_repartition_of_feedback_receivers")
-    execute_query("feedback_giver_repartition.sql", "feedzback_usage", "monthly_repartition_of_feedback_givers")
+    execute_query("create_top_feedzbacker.sql", "firestore_export", "top_feedzbacker")
+    execute_query("feedback_receiver_repartition.sql", "feedzback_usage", "feedback_receiver_repartition")
+    execute_query("feedback_giver_repartition.sql", "feedzback_usage", "feedback_giver_repartition")
 
     return 'OK'
