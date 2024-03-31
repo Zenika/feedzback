@@ -1,4 +1,4 @@
-import { FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from './feedback-db.config';
+import { FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from '../feedback.config';
 import { FeedbackArchived, FeedbackItemWithId, FeedbackRequestItemWithId, FeedbackStatus } from './feedback-db.types';
 
 /**
