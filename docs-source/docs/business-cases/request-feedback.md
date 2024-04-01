@@ -74,4 +74,4 @@ Each `giverEmail` receives an email with a link to this page, based on their own
   - [`RequestFeedbackComponent`](https://github.com/Zenika/feedzback/blob/main/client/src/app/request-feedback/request-feedback.component.ts)
 - **Server**
   - [`FeedbackController`](https://github.com/Zenika/feedzback/blob/main/server/src/feedback/feedback.controller.ts)
-    - request
+    - `request`

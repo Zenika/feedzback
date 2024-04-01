@@ -38,7 +38,7 @@ ng add @angular/material --theme custom --animations --typography
 
 Move generated content (related to Material) from `src/styles.scss` to `src/styles/material.scss`.
 
-Update `src/styles.scss`
+Update `src/styles.scss`:
 
 ```scss
 @import './styles/material.scss';
@@ -63,7 +63,7 @@ body {
 npm install -D tailwindcss postcss autoprefixer
 ```
 
-Add `tailwind.config.ts` file
+Add `tailwind.config.ts` file:
 
 ```ts
 import type { Config } from 'tailwindcss';
@@ -89,7 +89,7 @@ export default {
 } satisfies Config;
 ```
 
-Add `src/styles/tailwind.css` file
+Add `src/styles/tailwind.css` file:
 
 ```css
 @tailwind base;
@@ -97,7 +97,7 @@ Add `src/styles/tailwind.css` file
 @tailwind utilities;
 ```
 
-Update `src/styles.scss`
+Update `src/styles.scss`:
 
 ```scss
 @import './styles/tailwind.css';
@@ -111,11 +111,7 @@ ng add @angular-eslint/schematics
 npm i -D prettier eslint-config-prettier eslint-plugin-prettier prettier-plugin-organize-imports prettier-plugin-tailwindcss
 ```
 
-Update `.eslintrc.json` file
-
-:::note
-Only the lines added are reported here.
-:::
+Update `.eslintrc.json` file:
 
 ```json
 {
@@ -147,11 +143,15 @@ Only the lines added are reported here.
 ```
 
 :::note
+Only the lines added are reported here.
+:::
+
+:::note
 The `"@angular-eslint/no-host-metadata-property"` rule is turned off to reflect the latest Angular best pratices.<br />
 More info on this [issue](https://github.com/angular/angular/issues/54284).
 :::
 
-Add `.prettierrc.json` file
+Add `.prettierrc.json` file:
 
 ```json
 {
@@ -169,7 +169,7 @@ Add `.prettierrc.json` file
 }
 ```
 
-Add `.prettierignore` file
+Add `.prettierignore` file:
 
 ```txt
 /.angular
@@ -177,7 +177,7 @@ Add `.prettierignore` file
 /dist
 ```
 
-Add `package.json` scripts
+Add `package.json` scripts:
 
 ```json
 {
@@ -190,13 +190,13 @@ Add `package.json` scripts
 
 ## Using Jest instead of Karma/Jasmine
 
-Remove all packages related to Karma and Jasmine.
+First, remove all packages related to Karma and Jasmine. Next, install Jest related packages:
 
 ```shell
 npm i -D jest @types/jest @angular-builders/jest ts-node
 ```
 
-Update `tsconfig.spec.json` and `tsconfig.json` files
+Update `tsconfig.spec.json` and `tsconfig.json` files:
 
 ```json
 {
@@ -206,9 +206,11 @@ Update `tsconfig.spec.json` and `tsconfig.json` files
 }
 ```
 
-(do the same for the `tsconfig.json` file, after it is used by your IDE)
+:::note
+You need to make this change even for the `tsconfig.json` file, as it is used by the IDE.
+:::
 
-Update `angular.json` file
+Update `angular.json` file:
 
 ```json
 {
@@ -227,7 +229,7 @@ Update `angular.json` file
 }
 ```
 
-Add `jest.config.ts` file
+Add `jest.config.ts` file:
 
 ```ts
 import type { Config } from 'jest';
@@ -238,7 +240,7 @@ export default {
 } satisfies Config;
 ```
 
-Add `setup-jest.ts` file
+Add `setup-jest.ts` file:
 
 ```ts
 import '@angular/localize/init';

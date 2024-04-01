@@ -8,6 +8,7 @@ If I can't complete my feedback in one go, I'd like to be able to save it as a d
 ## Technical specifications
 
 Be sure to read [Request feedback](./request-feedback) first.
+To learn more about draft, read the [Feedback draft](./feedback-draft) documentation.
 
 To reply to a feedback request, the `giverEmail` must visit the following page, based on its secret `tokenId`:
 
@@ -59,10 +60,9 @@ Finally, an email is sent to the `receiverEmail` inviting them to consult the fe
 ## Links
 
 - **Client**
-  - [giveRequestedFeedbackGuard](https://github.com/Zenika/feedzback/blob/main/client/src/app/give-feedback/give-requested-feedback/give-requested-feedback.guard.ts)
-  - [GiveRequestedFeedbackComponent](https://github.com/Zenika/feedzback/blob/main/client/src/app/give-feedback/give-requested-feedback/give-requested-feedback.component.ts)
+  - [`giveRequestedFeedbackGuard`](https://github.com/Zenika/feedzback/blob/main/client/src/app/give-feedback/give-requested-feedback/give-requested-feedback.guard.ts)
+  - [`GiveRequestedFeedbackComponent`](https://github.com/Zenika/feedzback/blob/main/client/src/app/give-feedback/give-requested-feedback/give-requested-feedback.component.ts)
 - **Server**
-  - [FeedbackController](https://github.com/Zenika/feedzback/blob/main/server/src/feedback/feedback.controller.ts)
+  - [`FeedbackController`](https://github.com/Zenika/feedzback/blob/main/server/src/feedback/feedback.controller.ts)
     - `checkRequest`
-    - `giveRequestedDraft`
     - `giveRequested`

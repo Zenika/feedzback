@@ -36,7 +36,7 @@ CRYPTO_SECRET_IV=feedzback
 CRYPTO_SECRET_KEY=feedzback
 ```
 
-Retrieve these secret values from the [Google Cloud Run console](https://console.cloud.google.com/run/deploy/europe-west1/feedzback-server?project=feedzback-v2-dev) (tab "Variables and Secrets"):
+Retrieve these secret values from the [Google Cloud Run console](https://console.cloud.google.com/run/deploy/europe-west1/feedzback-server?project=feedzback-v2-dev) (tab "Variables and Secrets").
 
 ### Installation
 
