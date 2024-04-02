@@ -8,7 +8,6 @@ import { GiveRequestedFeedbackListService } from './give-requested-feedback-list
 
 @Component({
   selector: 'app-give-requested-feedback-list',
-  host: { class: 'app-give-requested-feedback-list' },
   standalone: true,
   imports: [RouterLink, MatIconModule, FeedbackListComponent, FeedbackTypeIconPipe, MessageComponent],
   templateUrl: './give-requested-feedback-list.component.html',
