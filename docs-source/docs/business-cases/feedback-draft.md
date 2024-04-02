@@ -2,13 +2,13 @@
 
 ## User story
 
-When I reply to a feedback request or give spontaneous feedback, If I can't complete my feedback in one go, I'd like to be able to save it as a draft and continue later.
+When I reply to a feedback request or give spontaneous feedback, if I can't complete my feedback in one go, I'd like to be able to save it as a draft and continue later.
 
 ## Technical specifications
 
 The drafts are stored in the `feedbackDraft` Firestore collection.
 
-The document ID is `giverEmail` (who wrote and saved the draft), whether he is internal or external to the Zenika organisation.
+The document ID is the `giverEmail` (who wrote and saved the draft), whether he is internal or external to the Zenika organisation.
 
 For a given `giverEmail`, there can be 2 nested collections:
 

@@ -10,9 +10,9 @@ If I can't complete my feedback in one go, I'd like to be able to save it as a d
 Be sure to read [Request feedback](./request-feedback) and [Reply to feedback request](./reply-to-feedback-request) first.
 To learn more about draft, read the [Feedback draft](./feedback-draft) documentation.
 
-The requester must be authenticated.
-
 This workflow is much simpler than the feedback request workflow.
+
+The requester must be authenticated.
 
 Once the feedback is complete, only 1 Firestore document is added:
 
