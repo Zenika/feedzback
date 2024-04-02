@@ -15,7 +15,7 @@ const sidebars: SidebarsConfig = {
         'business-cases/give-spontaneous-feedback',
         'business-cases/feedback-draft',
         'business-cases/shared-feedback',
-        //'business-cases/archiving',
+        'business-cases/archiving',
       ],
     },
     /*{
