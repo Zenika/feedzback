@@ -48,6 +48,8 @@ updates:
     directory: "/server"
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "@typescript-eslint/*"
     groups:
       server-eslint-prettier:
         applies-to: version-updates
