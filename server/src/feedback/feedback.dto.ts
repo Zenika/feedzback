@@ -1,12 +1,12 @@
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsEmail, IsIn, IsString, MaxLength } from 'class-validator';
 import { FeedbackDraftType, FeedbackListType, FeedbackRequestDraftType } from './feedback-db';
-import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from './feedback.config';
+import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH, SMALL_MAX_LENGTH } from './feedback.config';
 
 export class FeedbackRequestDto {
   @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) recipient!: string;
 
-  @IsString() @MaxLength(MEDIUM_MAX_LENGTH) message!: string;
+  @IsString() @MaxLength(SMALL_MAX_LENGTH) message!: string;
 
   @IsBoolean() shared!: boolean;
 }

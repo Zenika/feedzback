@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import remarkDefList from 'remark-deflist';
 
 const config: Config = {
   title: 'FeedZback',
@@ -27,11 +28,13 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docusaurus/',
+          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docs-source/',
+          remarkPlugins: [remarkDefList],
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docusaurus/',
+          editUrl: 'https://github.com/Zenika/feedzback/tree/main/docs-source/',
+          remarkPlugins: [remarkDefList],
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -49,7 +52,7 @@ const config: Config = {
       },
       items: [
         {
-          to: '/docs/installation',
+          to: '/docs/audience',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
@@ -79,10 +82,10 @@ const config: Config = {
     },
     footer: {
       style: 'light',
-      copyright: `Copyright © ${new Date().getFullYear()} FeedZback. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} FeedZback.`,
     },
     prism: {
-      additionalLanguages: ['bash', 'json'],
+      additionalLanguages: ['bash', 'json', 'scss'],
       theme: prismThemes.oneLight,
       darkTheme: prismThemes.oneDark,
     },

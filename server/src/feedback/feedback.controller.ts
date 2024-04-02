@@ -265,7 +265,7 @@ export class FeedbackController {
     return document;
   }
 
-  // ----- Shared tasks -----
+  // ----- Common tasks -----
 
   private async sendEmailsOnGiven(giverEmail: string, receiverEmail: string, feedbackId: string, shared: boolean) {
     const success = await this.feedbackEmailService.given(giverEmail, receiverEmail, feedbackId);
