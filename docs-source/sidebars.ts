@@ -18,11 +18,22 @@ const sidebars: SidebarsConfig = {
         'business-cases/archiving',
       ],
     },
-    /*{
+    {
       type: 'category',
       label: 'Technical guides',
-      items: ['technical-guides/introduction'],
-    },*/
+      items: [
+        {
+          type: 'category',
+          label: 'Client',
+          items: ['technical-guides/client/styles'],
+        },
+        {
+          type: 'category',
+          label: 'Server',
+          items: ['technical-guides/server/introduction'],
+        },
+      ],
+    },
     {
       type: 'category',
       label: 'CI / CD',

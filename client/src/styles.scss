@@ -4,10 +4,10 @@
 @import './styles/tailwind.css';
 @import './styles/material';
 @import './styles/base';
+
+// ----- Special `.gbl-*` styles -----
+
 @import './styles/common';
-
-// ----- Special use-cases -----
-
 @import './styles/info';
 @import './styles/landing';
 @import './styles/forms';
