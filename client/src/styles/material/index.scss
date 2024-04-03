@@ -65,7 +65,7 @@ $client-theme: mat.define-light-theme(
 @include mat.fab-theme($client-theme);
 @include mat.snack-bar-theme($client-theme);
 @include mat.table-theme($client-theme);
-//@include mat.progress-spinner-theme($client-theme);
+@include mat.progress-spinner-theme($client-theme);
 @include mat.badge-theme($client-theme);
 //@include mat.bottom-sheet-theme($client-theme);
 //@include mat.button-toggle-theme($client-theme);

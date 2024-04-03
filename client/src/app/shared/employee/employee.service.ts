@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { EMPTY, filter, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
+import { BYPASS_LOADING } from '../loading/loading.config';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData } from './employee.types';
 import { isManager, updateEmployeeData } from './employee.utils';
@@ -40,7 +41,12 @@ export class EmployeeService {
 
   private fetchData() {
     return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { headers }),
+      this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, {
+        headers,
+        // This request is executed when the page is loaded and is used initially to control the display of the
+        // "Manager" link in the header. This should not block the UI because of the loading spinner.
+        context: new HttpContext().set(BYPASS_LOADING, true),
+      }),
     );
   }
 
