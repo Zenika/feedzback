@@ -51,5 +51,5 @@ def create_analytics_tables(*_):
     # approximately the same number of feedbacks each month ?"
     execute_query("feedbackers_repartition.sql", "feedzback_usage", "feedbackers_repartition")
     # This query answer the question "how old are the feedbacks requests today?"
-    execute_query("feedbacks_no_replied_age_repartition.sql", "feedzback_usage", "feedbacks_no_replied_age_repartition")             
+    execute_query("feedbacks_requests_age_repartition.sql", "feedzback_usage", "feedbacks_requests_age_repartition")             
     return 'OK'
