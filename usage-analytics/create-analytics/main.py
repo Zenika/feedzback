@@ -50,6 +50,6 @@ def create_analytics_tables(*_):
     # This query answer the question "Are most feedbacks created by a few users or do all users of feedzback give
     # approximately the same number of feedbacks each month ?"
     execute_query("feedbackers_repartition.sql", "feedzback_usage", "feedbackers_repartition")
-    # This query answer the question "age distribution of requests feedbacks up to day"
-    execute_query("feedbacks_no_replied_age_repartition.sql", "feedzback_usage", "feebacks_no_replied_age_repartition")             
+    # This query answer the question "how old are the feedbacks requests today?"
+    execute_query("feedbacks_no_replied_age_repartition.sql", "feedzback_usage", "feedbacks_no_replied_age_repartition")             
     return 'OK'
