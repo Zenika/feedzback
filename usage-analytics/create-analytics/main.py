@@ -52,5 +52,6 @@ def create_analytics_tables(*_):
     # This query answer the question "Are most feedbacks created by a few users or do all users of feedzback give
     # approximately the same number of feedbacks each month ?"
     execute_query("feedbackers_repartition.sql", "firestore_export", "feedbackers_repartition")
-
+    # This query answer the question ""
+    execute_query("feebacks_no_replied_age_repartition.sql", "firestore_export", "feebacks_no_replied_age_repartition")             
     return 'OK'
