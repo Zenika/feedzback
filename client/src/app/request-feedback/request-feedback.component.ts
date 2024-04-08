@@ -9,7 +9,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { ConfirmBeforeSubmitDirective } from '../shared/dialogs/confirm-before-submit';
@@ -61,8 +60,6 @@ export class RequestFeedbackComponent {
   private recipient: string = this.activatedRoute.snapshot.queryParams['recipient'] ?? '';
 
   protected messageMaxLength = SMALL_MAX_LENGTH;
-
-  protected hasRequestTemplateFeature = environment.featureFlipping.requestTemplate;
 
   private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 
