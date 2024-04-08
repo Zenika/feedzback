@@ -75,7 +75,7 @@
     "Component.RequestFeedback.Error": "An error occurred when sending to:",
     "Component.RequestFeedback.NoTemplate": "No template",
     "Component.RequestFeedback.Share": "Share feedZback with your manager",
-    "Component.RequestFeedback.ShareFeedbackMessageContent": "By sharing the feedZback with your manager, you'll be able to discuss it together and make the most of its content.",
+    "Component.RequestFeedback.ShareFeedbackMessageContent": "By sharing the feedZback with your manager, you'll be able to discuss it together and make the most of its content. Note that the request message is part of the feedZback and will therefore be visible to your manager.",
     "Component.RequestFeedback.ShareFeedbackMessageTitle": "Why is sharing feedZback recommended?",
     "Component.RequestFeedback.Success": "Your request has been sent to:",
     "Component.RequestFeedback.TemplateAnnualReviewContent": "Hello,\nWith my annual review coming up, I'd like your feedback on what I'm doing well and what I could do better.\nThank you in advance.",

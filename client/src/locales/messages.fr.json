@@ -75,7 +75,7 @@
     "Component.RequestFeedback.Error": "Une erreur s'est produite lors de l'envoi à :",
     "Component.RequestFeedback.NoTemplate": " Aucun modèle ",
     "Component.RequestFeedback.Share": "Partager le feedZback avec votre manager",
-    "Component.RequestFeedback.ShareFeedbackMessageContent": "En partageant le feedZback avec votre manager, vous pourrez échanger ensemble et ainsi bénéficier au mieux de son contenu.",
+    "Component.RequestFeedback.ShareFeedbackMessageContent": "En partageant le feedZback avec votre manager, vous pourrez échanger ensemble et ainsi bénéficier au mieux de son contenu. Notez que le message de la demande fait partie du feedZback et sera donc visible par votre manager.",
     "Component.RequestFeedback.ShareFeedbackMessageTitle": "Pourquoi le partage du feedZback est recommandé ?",
     "Component.RequestFeedback.Success": "Votre demande a bien été envoyée à :",
     "Component.RequestFeedback.TemplateAnnualReviewContent": "Bonjour,\nEn vue de mon entretien annuel qui a lieu bientôt, j'aimerais avoir ton feedback sur ce que je fais bien et ce que je pourrais améliorer.\nMerci par avance.",
