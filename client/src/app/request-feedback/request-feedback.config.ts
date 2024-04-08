@@ -1,7 +1,7 @@
 export const REQUEST_TEMPLATES = [
   {
     title: $localize`:@@Component.RequestFeedback.TemplateStartingAtZenikaTitle:Débuts à Zenika`,
-    content: $localize`:@@Component.RequestFeedback.TemplateStartingAtZenikaContent:Bonjour,\nSi tu as quelques minutes, j'aimerais avoir ton feedback sur mes débuts à Zenika. Cela peut être quelque chose de positif que tu as remarqué ou quelque chose que je pourrais améliorer.\nMerci par avance.`,
+    content: $localize`:@@Component.RequestFeedback.TemplateStartingAtZenikaContent:Bonjour,\nSi tu as quelques minutes, j'aimerais avoir ton feedback sur mes débuts à Zenika.\nCela peut être quelque chose de positif que tu as remarqué ou quelque chose que je pourrais améliorer.\nMerci par avance.`,
   },
   {
     title: $localize`:@@Component.RequestFeedback.TemplateStartOfAssignmentTitle:Début de mission`,

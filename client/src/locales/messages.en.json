@@ -86,7 +86,7 @@
     "Component.RequestFeedback.TemplateEndOfAssignmentTitle": "End of assignment",
     "Component.RequestFeedback.TemplateStartOfAssignmentContent": "Hello,\nIt's been a while since I started my assignment and I'd like your feedback on what I'm doing well and what I could do better.\nThank you in advance.",
     "Component.RequestFeedback.TemplateStartOfAssignmentTitle": "Start of assignment",
-    "Component.RequestFeedback.TemplateStartingAtZenikaContent": "Hello,\nIf you have a few minutes, I'd like your feedback on my start at Zenika. It could be something positive you've noticed or something I could do better.\nThank you in advance.",
+    "Component.RequestFeedback.TemplateStartingAtZenikaContent": "Hello,\nIf you have a few minutes, I'd like your feedback on my start at Zenika.\nIt could be something positive you've noticed or something I could do better.\nThank you in advance.",
     "Component.RequestFeedback.TemplateStartingAtZenikaTitle": "Starting at Zenika",
     "Component.RequestFeedback.UseTemplate": "Use a template",
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",

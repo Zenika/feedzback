@@ -86,7 +86,7 @@
     "Component.RequestFeedback.TemplateEndOfAssignmentTitle": "Fin de mission",
     "Component.RequestFeedback.TemplateStartOfAssignmentContent": "Bonjour,\nCela fait un moment que j'ai commencé ma mission et j'aimerais avoir ton feedback sur ce que je fais bien et ce que je pourrais améliorer.\nMerci par avance.",
     "Component.RequestFeedback.TemplateStartOfAssignmentTitle": "Début de mission",
-    "Component.RequestFeedback.TemplateStartingAtZenikaContent": "Bonjour,\nSi tu as quelques minutes, j'aimerais avoir ton feedback sur mes débuts à Zenika. Cela peut être quelque chose de positif que tu as remarqué ou quelque chose que je pourrais améliorer.\nMerci par avance.",
+    "Component.RequestFeedback.TemplateStartingAtZenikaContent": "Bonjour,\nSi tu as quelques minutes, j'aimerais avoir ton feedback sur mes débuts à Zenika.\nCela peut être quelque chose de positif que tu as remarqué ou quelque chose que je pourrais améliorer.\nMerci par avance.",
     "Component.RequestFeedback.TemplateStartingAtZenikaTitle": "Débuts à Zenika",
     "Component.RequestFeedback.UseTemplate": "S'inspirer d'un modèle",
     "Component.RequestFeedbackSuccess.RequestAnother": "Demander un autre feedZback",
