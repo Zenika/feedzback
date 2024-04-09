@@ -9,6 +9,7 @@ BIGQUERY_ZONE = os.environ["ANALYTICS_GCP_ZONE"]
 client = Client(
     project=PROJECT_NAME,
     location=BIGQUERY_ZONE,
+    default_project=PROJECT_NAME
 )
 
 def get_job_config(target_dataset: str, target_table: str) -> QueryJobConfig:
@@ -25,7 +26,7 @@ def load_query(query_filename: str) -> str:
     :return: the SQL query to be used in bigquery
     """
     with open(query_filename, 'r', encoding='utf-8') as f:
-        return f.read().replace("<PROJECT_NAME>", PROJECT_NAME)
+        return f.read()
 
 
 def execute_query(query_filename: str, target_dataset: str, target_table: str) -> None:
