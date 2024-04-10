@@ -9,13 +9,14 @@ BIGQUERY_ZONE = os.environ["ANALYTICS_GCP_ZONE"]
 client = Client(
     project=PROJECT_NAME,
     location=BIGQUERY_ZONE,
-    default_project=PROJECT_NAME
 )
+
 
 def get_job_config(target_dataset: str, target_table: str) -> QueryJobConfig:
     return QueryJobConfig(
         destination=f"{PROJECT_NAME}.{target_dataset}.{target_table}",
         write_disposition="WRITE_TRUNCATE",
+        default_project=f"{PROJECT_NAME}.unexisting_dataset",
     )
 
 
@@ -38,7 +39,7 @@ def execute_query(query_filename: str, target_dataset: str, target_table: str) -
     """
     query_job = client.query(
         load_query(query_filename),
-        job_config=get_job_config(target_dataset,target_table)
+        job_config=get_job_config(target_dataset, target_table)
     )
     query_job.result()
 
