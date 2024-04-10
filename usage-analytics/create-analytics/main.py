@@ -16,6 +16,11 @@ def get_job_config(target_dataset: str, target_table: str) -> QueryJobConfig:
     return QueryJobConfig(
         destination=f"{PROJECT_NAME}.{target_dataset}.{target_table}",
         write_disposition="WRITE_TRUNCATE",
+        # NB : this is a hack to set the defaut_project in which the query should be run
+        # The SDK does not provide a way to set the default_project but provides a way to specify the default_dataset.
+        # This dataset does not exist and we will specify the dataset in each query to avoid creating it, but the SDK
+        # remembers what is the default_project so we do not have to specify it in each query.
+        # see https://stackoverflow.com/questions/78239855/how-to-specify-the-default-project-to-use-with-the-bigquery-python-client for more details
         default_dataset=f"{PROJECT_NAME}.unexisting_dataset",
     )
 
