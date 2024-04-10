@@ -16,7 +16,7 @@ def get_job_config(target_dataset: str, target_table: str) -> QueryJobConfig:
     return QueryJobConfig(
         destination=f"{PROJECT_NAME}.{target_dataset}.{target_table}",
         write_disposition="WRITE_TRUNCATE",
-        default_project=f"{PROJECT_NAME}.unexisting_dataset",
+        default_dataset=f"{PROJECT_NAME}.unexisting_dataset",
     )
 
 
