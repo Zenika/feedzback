@@ -4,7 +4,7 @@ WITH all_feedbacks AS (
         JSON_EXTRACT_SCALAR(DATA, "$.status") AS status,
         JSON_EXTRACT_SCALAR(DATA, "$.giverEmail") AS giverEmail,
         JSON_EXTRACT_SCALAR(DATA, "$.receiverEmail") AS receiverEmail,
-    FROM `<PROJECT_NAME>.firestore_export.feedback_raw_latest`
+    FROM `firestore_export.feedback_raw_latest`
     WHERE   JSON_EXTRACT_SCALAR(DATA, "$.status") = "done"
 ),
 feedbacks_given_per_user_per_month AS(
