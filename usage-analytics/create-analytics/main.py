@@ -10,10 +10,17 @@ client = Client(
     location=BIGQUERY_ZONE,
 )
 
+
 def get_job_config(target_dataset: str, target_table: str) -> QueryJobConfig:
     return QueryJobConfig(
         destination=f"{PROJECT_NAME}.{target_dataset}.{target_table}",
         write_disposition="WRITE_TRUNCATE",
+        # NB : this is a hack to set the defaut_project in which the query should be run
+        # The SDK does not provide a way to set the default_project but provides a way to specify the default_dataset.
+        # This dataset does not exist and we will specify the dataset in each query to avoid creating it, but the SDK
+        # remembers what is the default_project so we do not have to specify it in each query.
+        # see https://stackoverflow.com/questions/78239855/how-to-specify-the-default-project-to-use-with-the-bigquery-python-client for more details
+        default_dataset=f"{PROJECT_NAME}.unexisting_dataset",
     )
 
 
@@ -24,7 +31,7 @@ def load_query(query_filename: str) -> str:
     :return: the SQL query to be used in bigquery
     """
     with open(query_filename, 'r', encoding='utf-8') as f:
-        return f.read().replace("<PROJECT_NAME>", PROJECT_NAME)
+        return f.read()
 
 
 def execute_query(query_filename: str, target_dataset: str, target_table: str) -> None:
@@ -36,7 +43,7 @@ def execute_query(query_filename: str, target_dataset: str, target_table: str) -
     """
     query_job = client.query(
         load_query(query_filename),
-        job_config=get_job_config(target_dataset,target_table)
+        job_config=get_job_config(target_dataset, target_table)
     )
     query_job.result()
 

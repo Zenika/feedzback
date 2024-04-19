@@ -9,6 +9,8 @@ updates:
     directory: "/client"
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "@typescript-eslint/*"
     groups:
       client-eslint-prettier:
         applies-to: version-updates
@@ -31,14 +33,23 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      tailwindcss:
+        applies-to: version-updates
+        patterns:
+          - "tailwindcss"
+          - "postcss"
+          - "autoprefixer"
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 10
-    labels:
-      - dependencies
 
   - package-ecosystem: npm
     directory: "/server"
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "@typescript-eslint/*"
     groups:
       server-eslint-prettier:
         applies-to: version-updates
@@ -62,6 +73,3 @@ updates:
           - "minor"
           - "patch"
     open-pull-requests-limit: 10
-    labels:
-      - dependencies
-
