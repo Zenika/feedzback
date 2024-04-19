@@ -1,5 +1,4 @@
 import os
-
 import functions_framework
 from google.cloud.bigquery import Client, QueryJobConfig
 
@@ -55,9 +54,9 @@ def create_analytics_tables(*_):
     # spontaneous vs how many of them are anwsers to feedback requests ? "
     execute_query("create_daily_count.sql", "feedzback_usage", "daily_usage")
     execute_query("create_monthly_count.sql", "feedzback_usage", "monthly_usage")
-
     # This query answer the question "Are most feedbacks created by a few users or do all users of feedzback give
     # approximately the same number of feedbacks each month ?"
-    execute_query("feedbackers_repartition.sql", "firestore_export", "feedbackers_repartition")
-
+    execute_query("feedbackers_repartition.sql", "feedzback_usage", "feedbackers_repartition")
+    # This query answer the question "how old are the feedbacks requests today?"
+    execute_query("feedbacks_requests_age_repartition.sql", "feedzback_usage", "feedbacks_requests_age_repartition")             
     return 'OK'
