@@ -4,7 +4,7 @@ WITH
     JSON_EXTRACT_SCALAR(DATA, "$.archived") AS archived,
     DATE_TRUNC(TIMESTAMP_MILLIS(CAST(JSON_EXTRACT_SCALAR(DATA, "$.createdAt") AS INT)), DAY) AS day
   FROM
-    'firestore_export.feedback_raw_latest'
+    `firestore_export.feedback_raw_latest`
   WHERE
     JSON_EXTRACT_SCALAR(DATA, "$.archived") != "0" )
 SELECT
