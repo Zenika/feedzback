@@ -62,4 +62,6 @@ def create_analytics_tables(*_):
     # This query answer the question "how many feedbacks are archived each day/month (without counting the feedbacks requests)"
     execute_query("feedbacks_archived_per_day.sql", "feedzback_usage", "feedbacks_archived_per_day")           
     execute_query("feedbacks_archived_per_month.sql", "feedzback_usage", "feedbacks_archived_per_month")       
+    # This query answer the question "how many feedbacks are from externes each day/month"
+    execute_query("externe_feedbacks_per_day.sql", "feedzback_usage", "externe_feedbacks_per_day")  
     return 'OK'
