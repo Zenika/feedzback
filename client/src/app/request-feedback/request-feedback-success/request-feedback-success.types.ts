@@ -1,3 +1,3 @@
-export type RequestFeedbackSuccess = {
+export interface RequestFeedbackSuccess {
   recipients: string[];
-};
+}

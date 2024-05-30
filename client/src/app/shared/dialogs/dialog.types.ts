@@ -1,11 +1,11 @@
-export type DialogData = {
+export interface DialogData {
   title: string;
   content?: string;
   cancel?: DialogAction;
   confirm?: DialogAction;
-};
+}
 
-export type DialogAction = {
+export interface DialogAction {
   label: string;
   icon?: string;
-};
+}

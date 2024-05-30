@@ -1,6 +1,6 @@
 import { InputSignal, TemplateRef } from '@angular/core';
 
-export type DialogTooltipData = {
+export interface DialogTooltipData {
   title: InputSignal<string | undefined>;
   content: InputSignal<string | TemplateRef<unknown>>;
-};
+}

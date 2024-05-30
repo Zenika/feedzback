@@ -3,7 +3,7 @@
 
 // ----- Feedback -----
 
-export type Feedback = {
+export interface Feedback {
   id: string;
   giverEmail: string;
   receiverEmail: string;
@@ -17,14 +17,14 @@ export type Feedback = {
   createdAt: number;
   updatedAt: number;
   archived: number;
-};
+}
 
 export const FeedbackStatus = 'done';
 export type FeedbackStatus = typeof FeedbackStatus;
 
 // ----- FeedbackRequest -----
 
-export type FeedbackRequest = {
+export interface FeedbackRequest {
   id: string;
   giverEmail: string;
   receiverEmail: string;
@@ -35,7 +35,7 @@ export type FeedbackRequest = {
   createdAt: number;
   updatedAt: number;
   archived: number;
-};
+}
 
 export const FeedbackRequestStatus = 'pending';
 export type FeedbackRequestStatus = typeof FeedbackRequestStatus;
@@ -50,12 +50,12 @@ export type FeedbackItem = Pick<Feedback, 'id' | 'giverEmail' | 'receiverEmail' 
 
 export type FeedbackRequestItem = Pick<FeedbackRequest, 'id' | 'giverEmail' | 'receiverEmail' | 'status' | 'createdAt'>;
 
-export type FeedbackListMap = {
+export interface FeedbackListMap {
   received: FeedbackItem[];
   given: FeedbackItem[];
   sentRequest: FeedbackRequestItem[];
   receivedRequest: FeedbackRequestItem[];
-};
+}
 
 export type FeedbackListType = keyof FeedbackListMap;
 
@@ -67,29 +67,33 @@ export type FeedbackDraftType = typeof FeedbackDraftType;
 export const FeedbackRequestDraftType = 'feedbackRequest';
 export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
 
-export type FeedbackDraft = {
+export interface FeedbackDraft {
   receiverEmail: string;
   positive: string;
   negative: string;
   comment: string;
   shared: boolean;
-};
+}
 
-export type FeedbackRequestDraft = {
+export interface FeedbackRequestDraft {
   token: string;
   receiverEmail: string;
   positive: string;
   negative: string;
   comment: string;
-};
+}
 
 // ----- IdObject -----
 
-export type IdObject = { id: string };
+export interface IdObject {
+  id: string;
+}
 
 // ----- TokenObject -----
 
-export type TokenObject = { token: string };
+export interface TokenObject {
+  token: string;
+}
 
 // --------------------------
 // ----- Internal types -----
@@ -103,9 +107,9 @@ export const FeedbackType = {
 
 export type FeedbackType = (typeof FeedbackType)[keyof typeof FeedbackType];
 
-export type NormalizedFeedback = {
+export interface NormalizedFeedback {
   type: FeedbackType;
   id: string;
   email: string;
   date: number;
-};
+}

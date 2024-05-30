@@ -1,28 +1,28 @@
-export type FeedbackRequestDto = {
+export interface FeedbackRequestDto {
   recipient: string;
   message: string;
   shared: boolean;
-};
+}
 
-export type FeedbackRequestAgainDto = {
+export interface FeedbackRequestAgainDto {
   feedbackId: string;
-};
+}
 
-export type FeedbackArchiveRequestDto = {
+export interface FeedbackArchiveRequestDto {
   feedbackId: string;
-};
+}
 
-export type GiveRequestedFeedbackDto = {
+export interface GiveRequestedFeedbackDto {
   token: string;
   positive: string;
   negative: string;
   comment: string;
-};
+}
 
-export type GiveFeedbackDto = {
+export interface GiveFeedbackDto {
   receiverEmail: string;
   positive: string;
   negative: string;
   comment: string;
   shared: boolean;
-};
+}

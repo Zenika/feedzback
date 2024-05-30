@@ -1,4 +1,4 @@
-export type EmployeeData = {
+export interface EmployeeData {
   managerEmail: string;
   managedEmails: string[];
-};
+}
