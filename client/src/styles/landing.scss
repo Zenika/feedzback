@@ -27,7 +27,7 @@
     }
 
     &::before {
-      background-color: v.$background-grey-color;
+      background-color: var(--gbl-background-color);
     }
 
     &::after {
@@ -45,7 +45,7 @@
     @if v.$use-background {
       padding: 1.5rem 3rem;
       border-radius: 0.5rem;
-      background-color: rgb(255 255 255 / 0.65);
+      background-color: var(--gbl-background-color-alpha);
     }
 
     @include m.media-breakpoint-down(sm) {

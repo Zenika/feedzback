@@ -1,5 +1,3 @@
-@use '../../../app.scss' as v;
-
 .app-logo {
   display: inline-flex;
   align-items: center;
@@ -27,10 +25,10 @@
     color: inherit;
   }
   50% {
-    color: v.$dark-primary-text;
+    color: var(--gbl-forground-color);
   }
   96% {
-    color: v.$dark-primary-text;
+    color: var(--gbl-forground-color);
   }
   100% {
     columns: inherit;

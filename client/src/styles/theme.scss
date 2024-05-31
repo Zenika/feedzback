@@ -1,0 +1,20 @@
+@use './variables.scss' as v;
+
+:root {
+  --gbl-primary-color: #{v.$primary-color};
+  --gbl-primary-color-darker: #{v.$primary-color-darker};
+
+  --gbl-background-color: #f2f2f2;
+  --gbl-background-color-alpha: #{rgba($color: #ffffff, $alpha: 0.65)};
+
+  --gbl-forground-color: #1e1e1e;
+  --gbl-forground-color-dim: #666666;
+}
+
+.gbl-theme-dark {
+  --gbl-background-color: #121212;
+  --gbl-background-color-alpha: #{rgba($color: #000000, $alpha: 0.65)};
+
+  --gbl-forground-color: #fafafa;
+  --gbl-forground-color-dim: #888888;
+}

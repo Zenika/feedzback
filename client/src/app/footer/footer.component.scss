@@ -1,5 +1,3 @@
-@use '../app.scss' as app;
-
 .app-footer {
   padding: 1rem 0;
   display: flex;
@@ -7,7 +5,7 @@
   align-items: center;
   line-height: 1.2;
   font-size: 0.875rem;
-  color: app.$forground-grey-color;
+  color: var(--gbl-forground-color-dim);
 
   &__link {
     display: flex;
@@ -22,7 +20,7 @@
     }
 
     &:hover {
-      color: app.$dark-primary-text;
+      color: var(--gbl-forground-color);
     }
   }
 }
