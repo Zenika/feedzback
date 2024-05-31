@@ -12,6 +12,7 @@ import { AuthService } from '../shared/auth';
 import { BreakpointService } from '../shared/breakpoint';
 import { EmployeeService } from '../shared/employee/employee.service';
 import { LanguageService } from '../shared/i18n/language';
+import { ThemeService } from '../shared/theme/theme.service';
 import { AvatarComponent } from '../shared/ui/avatar/avatar.component';
 import { BurgerComponent } from './burger/burger.component';
 import { headerAnimations } from './header.animations';
@@ -46,6 +47,8 @@ export class HeaderComponent {
   private authService = inject(AuthService);
 
   protected languageService = inject(LanguageService);
+
+  protected themeService = inject(ThemeService);
 
   protected userState = this.authService.userState;
 

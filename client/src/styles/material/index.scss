@@ -55,9 +55,9 @@
   @include component-themes(client-theme.$light-theme);
 }
 
-/*.gbl-theme-dark {
+.gbl-theme-dark {
   @include component-themes(client-theme.$dark-theme);
-}*/
+}
 
 // Material 2 typography
 @import './material-typography';

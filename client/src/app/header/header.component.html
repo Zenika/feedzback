@@ -75,7 +75,7 @@
     }
 
     <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
-      <ng-container [ngTemplateOutlet]="languageMenuItem" />
+      <ng-container [ngTemplateOutlet]="commonMenuItems" />
 
       @if (userState().authenticated) {
         <button mat-menu-item routerLink="/settings">
@@ -99,12 +99,12 @@
     </button>
 
     <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
-      <ng-container [ngTemplateOutlet]="languageMenuItem" />
+      <ng-container [ngTemplateOutlet]="commonMenuItems" />
     </mat-menu>
   }
 </div>
 
-<ng-template #languageMenuItem>
+<ng-template #commonMenuItems>
   <button mat-menu-item (click)="languageService.switchLanguage()">
     <mat-icon color="primary">translate</mat-icon>
     @switch (languageService.localeId) {
@@ -114,6 +114,15 @@
       @case ('en') {
         Français
       }
+    }
+  </button>
+
+  <button mat-menu-item (click)="themeService.switch()">
+    <mat-icon color="primary">{{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    @if (themeService.theme() === 'light') {
+      <ng-container i18n="@@Title.ThemeDark">Thème foncé</ng-container>
+    } @else {
+      <ng-container i18n="@@Title.ThemeLight">Thème clair</ng-container>
     }
   </button>
 </ng-template>

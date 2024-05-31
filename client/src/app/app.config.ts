@@ -10,6 +10,7 @@ import { provideLanguage } from './shared/i18n/language';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
 import { provideSvgIcons } from './shared/icons/icons.provider';
 import { loadingInterceptor } from './shared/loading/loading.interceptor';
+import { provideTheme } from './shared/theme/theme.provider';
 import { provideAllowedEmailDomains } from './shared/validation/allowed-email-domains';
 
 export const appConfig: ApplicationConfig = {
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideSvgIcons(),
     provideAuth(),
     provideLanguage(),
+    provideTheme(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
   ],
 };
