@@ -53,13 +53,7 @@
   @switch (type()) {
     @case (feedbackType.sentRequest) {
       @if (!hasBeenRequestedAgain()) {
-        <button
-          class="mb-4 me-5"
-          mat-raised-button
-          color="primary"
-          [disabled]="actionsStatus === 'disabled'"
-          (click)="requestAgain()"
-        >
+        <button class="mb-4 me-5" mat-flat-button [disabled]="actionsStatus === 'disabled'" (click)="requestAgain()">
           <mat-icon>mail</mat-icon>
           <ng-container i18n="@@Component.PendingFeedback.Remind">Envoyer un rappel</ng-container>
         </button>
@@ -68,8 +62,7 @@
     @case (feedbackType.receivedRequest) {
       <button
         class="mb-4 me-5"
-        mat-raised-button
-        color="primary"
+        mat-flat-button
         [disabled]="actionsStatus === 'disabled'"
         [appGiveRequestedFeedback]="feedback().id"
       >

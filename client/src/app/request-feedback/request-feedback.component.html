@@ -66,7 +66,7 @@
         <ng-container i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</ng-container>
       </a>
 
-      <mat-menu #useTemplate="matMenu" xPosition="before" yPosition="above">
+      <mat-menu #useTemplate="matMenu" xPosition="before" yPosition="above" class="gbl-overlay-menu">
         <button
           mat-menu-item
           class="italic opacity-50"
@@ -102,7 +102,7 @@
   </div>
 
   <div class="gbl-form-submit">
-    <button [disabled]="form.invalid || form.disabled" mat-raised-button color="primary">
+    <button [disabled]="form.invalid || form.disabled" mat-flat-button>
       <mat-icon>send</mat-icon>
       <ng-container i18n="@@Action.Send">Envoyer</ng-container>
     </button>

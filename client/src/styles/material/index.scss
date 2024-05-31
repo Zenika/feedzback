@@ -1,74 +1,66 @@
 @use '@angular/material' as mat;
 
+@use './material-theme' as client-theme;
+
 @include mat.core();
 
-$client-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: light,
-      primary: mat.$red-palette,
-      //tertiary: mat.$blue-palette,
-    ),
-    typography: (
-      plain-family: '"Nunito", sans-serif',
-      regular-weight: 400,
-      bold-weight: 600,
-    ),
-    density: (
-      scale: 0,
-    ),
-  )
-);
-
-:root {
+@mixin component-themes($theme) {
   // Option 1)
-  // @include mat.all-component-themes($client-theme);
+  // @include mat.all-component-themes($theme);
 
   // Option 2)
-  @include mat.core-theme($client-theme);
-  //@include mat.card-theme($client-theme);
-  //@include mat.progress-bar-theme($client-theme);
-  @include mat.tooltip-theme($client-theme);
-  @include mat.form-field-theme($client-theme);
-  @include mat.input-theme($client-theme);
-  @include mat.select-theme($client-theme);
-  @include mat.autocomplete-theme($client-theme);
-  @include mat.dialog-theme($client-theme);
-  @include mat.chips-theme($client-theme);
-  @include mat.slide-toggle-theme($client-theme);
-  //@include mat.radio-theme($client-theme);
-  //@include mat.slider-theme($client-theme);
-  @include mat.menu-theme($client-theme);
-  //@include mat.list-theme($client-theme);
-  @include mat.paginator-theme($client-theme);
-  @include mat.tabs-theme($client-theme);
-  //@include mat.checkbox-theme($client-theme);
-  @include mat.button-theme($client-theme);
-  @include mat.icon-button-theme($client-theme);
-  @include mat.fab-theme($client-theme);
-  @include mat.snack-bar-theme($client-theme);
-  @include mat.table-theme($client-theme);
-  @include mat.progress-spinner-theme($client-theme);
-  @include mat.badge-theme($client-theme);
-  //@include mat.bottom-sheet-theme($client-theme);
-  //@include mat.button-toggle-theme($client-theme);
-  //@include mat.datepicker-theme($client-theme);
-  //@include mat.divider-theme($client-theme);
-  //@include mat.expansion-theme($client-theme);
-  //@include mat.grid-list-theme($client-theme);
-  @include mat.icon-theme($client-theme);
-  //@include mat.sidenav-theme($client-theme);
-  //@include mat.stepper-theme($client-theme);
-  //@include mat.sort-theme($client-theme);
-  //@include mat.toolbar-theme($client-theme);
-  //@include mat.tree-theme($client-theme);
+  @include mat.core-theme($theme);
+  //@include mat.card-theme($theme);
+  //@include mat.progress-bar-theme($theme);
+  @include mat.tooltip-theme($theme);
+  @include mat.form-field-theme($theme);
+  @include mat.input-theme($theme);
+  @include mat.select-theme($theme);
+  @include mat.autocomplete-theme($theme);
+  @include mat.dialog-theme($theme);
+  @include mat.chips-theme($theme);
+  @include mat.slide-toggle-theme($theme);
+  //@include mat.radio-theme($theme);
+  //@include mat.slider-theme($theme);
+  @include mat.menu-theme($theme);
+  //@include mat.list-theme($theme);
+  @include mat.paginator-theme($theme);
+  @include mat.tabs-theme($theme);
+  //@include mat.checkbox-theme($theme);
+  @include mat.button-theme($theme);
+  @include mat.icon-button-theme($theme);
+  @include mat.fab-theme($theme);
+  @include mat.snack-bar-theme($theme);
+  @include mat.table-theme($theme);
+  @include mat.progress-spinner-theme($theme);
+  @include mat.badge-theme($theme);
+  //@include mat.bottom-sheet-theme($theme);
+  //@include mat.button-toggle-theme($theme);
+  //@include mat.datepicker-theme($theme);
+  //@include mat.divider-theme($theme);
+  //@include mat.expansion-theme($theme);
+  //@include mat.grid-list-theme($theme);
+  @include mat.icon-theme($theme);
+  //@include mat.sidenav-theme($theme);
+  //@include mat.stepper-theme($theme);
+  //@include mat.sort-theme($theme);
+  //@include mat.toolbar-theme($theme);
+  //@include mat.tree-theme($theme);
 
   // Material 2 backwards compatibility
-  @include mat.color-variants-backwards-compatibility($client-theme);
+  @include mat.color-variants-backwards-compatibility($theme);
 }
+
+:root {
+  @include component-themes(client-theme.$light-theme);
+}
+
+/*.gbl-theme-dark {
+  @include component-themes(client-theme.$dark-theme);
+}*/
 
 // Material 2 typography
 @import './material-typography';
 
-// Angular material customization for this App
+// Material customization for this App
 @import './material-overrides';

@@ -74,7 +74,7 @@
       </button>
     }
 
-    <mat-menu #accountMenu="matMenu" xPosition="before">
+    <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
       <ng-container [ngTemplateOutlet]="languageMenuItem" />
 
       @if (userState().authenticated) {
@@ -98,7 +98,7 @@
       <mat-icon color="primary">more_vert</mat-icon>
     </button>
 
-    <mat-menu #accountMenu="matMenu" xPosition="before">
+    <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
       <ng-container [ngTemplateOutlet]="languageMenuItem" />
     </mat-menu>
   }
