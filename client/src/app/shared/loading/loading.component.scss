@@ -1,5 +1,7 @@
+@use '../../app.scss' as app;
+
 .app-loading__container {
-  position: absolute;
+  position: fixed;
   z-index: 999;
   top: 0;
   right: 0;
@@ -8,5 +10,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--gbl-background-color-alpha);
+  background-color: var(--app-loading);
+}
+
+:root {
+  --app-loading: #{rgba($color: app.get-light-theme-color(surface), $alpha: 0.65)};
+}
+
+.gbl-theme-dark {
+  --app-loading: #{rgba($color: app.get-dark-theme-color(surface), $alpha: 0.65)};
 }

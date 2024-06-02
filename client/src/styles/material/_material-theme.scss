@@ -4,6 +4,8 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+@use '../variables.scss' as v;
+
 // Note: Color palettes are generated from primary: #ee2238
 $_palettes: (
   primary: (
@@ -13,7 +15,10 @@ $_palettes: (
     25: #7d0014,
     30: #930019,
     35: #a9001f,
-    40: #bf0024,
+
+    // Original value: #bf0024
+    40: #ee2238,
+
     50: #e91d35,
     60: #ff5357,
     70: #ff8986,
@@ -144,8 +149,8 @@ $light-theme: mat.define-theme(
     ),
     typography: (
       plain-family: '"Nunito", sans-serif',
-      regular-weight: 400,
-      bold-weight: 600,
+      regular-weight: v.$font-regular-weight,
+      bold-weight: v.$font-bold-weight,
     ),
     density: (
       scale: 0,
@@ -161,8 +166,8 @@ $dark-theme: mat.define-theme(
     ),
     typography: (
       plain-family: '"Nunito", sans-serif',
-      regular-weight: 400,
-      bold-weight: 600,
+      regular-weight: v.$font-regular-weight,
+      bold-weight: v.$font-bold-weight,
     ),
     density: (
       scale: 0,

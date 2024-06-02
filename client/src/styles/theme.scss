@@ -1,20 +1,18 @@
-@use './variables.scss' as v;
+@use './functions.scss' as f;
+
+// Learn more about Material color roles: https://m3.material.io/styles/color/roles
+$roles: primary, on-primary, primary-container, on-primary-container, primary-fixed, primary-fixed-dim, on-primary-fixed,
+  on-primary-fixed-variant, surface-dim, surface, surface-bright, surface-container, surface-container-highest,
+  on-surface, on-surface-variant, outline, outline-variant;
 
 :root {
-  --gbl-primary-color: #{v.$primary-color};
-  --gbl-primary-color-darker: #{v.$primary-color-darker};
-
-  --gbl-background-color: #f2f2f2;
-  --gbl-background-color-alpha: #{rgba($color: #ffffff, $alpha: 0.65)};
-
-  --gbl-forground-color: #1e1e1e;
-  --gbl-forground-color-dim: #666666;
+  @each $role in $roles {
+    --gbl-#{$role}: #{f.get-light-theme-color($role)};
+  }
 }
 
 .gbl-theme-dark {
-  --gbl-background-color: #121212;
-  --gbl-background-color-alpha: #{rgba($color: #000000, $alpha: 0.65)};
-
-  --gbl-forground-color: #fafafa;
-  --gbl-forground-color-dim: #888888;
+  @each $role in $roles {
+    --gbl-#{$role}: #{f.get-dark-theme-color($role)};
+  }
 }

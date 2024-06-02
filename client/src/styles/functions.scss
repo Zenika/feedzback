@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@use './material/material-theme' as theme;
+
+@function get-light-theme-color($role) {
+  @return mat.get-theme-color(theme.$light-theme, $role);
+}
+
+@function get-dark-theme-color($role) {
+  @return mat.get-theme-color(theme.$dark-theme, $role);
+}

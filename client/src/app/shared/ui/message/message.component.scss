@@ -57,7 +57,7 @@
     cursor: pointer;
 
     &:hover {
-      color: app.$primary-color;
+      color: var(--gbl-primary);
     }
   }
 }

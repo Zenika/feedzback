@@ -4,7 +4,7 @@
   font-size: 2rem;
 
   &__icon {
-    color: app.$primary-color;
+    color: var(--gbl-primary);
     transform: scale(6);
   }
 

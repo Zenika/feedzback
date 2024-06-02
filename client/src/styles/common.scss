@@ -1,6 +1,5 @@
 // Note: global styles starts with `.gbl-*`.
 
-@use './variables.scss' as v;
 @use './mixins.scss' as m;
 
 /* ----- Page title ----- */
@@ -10,7 +9,7 @@ h1.gbl-page-title {
   display: flex;
   align-items: center;
   gap: 2rem;
-  color: v.$primary-color;
+  color: var(--gbl-primary);
 
   &--center {
     justify-content: center;
@@ -36,14 +35,14 @@ h1.gbl-page-title {
   &:visited {
     cursor: pointer; // usefull when used like this: `<div class="gbl-link" role="presentation" (click)="onClick()">Link</div>`
     text-decoration: none;
-    transition: color 250ms ease;
-    color: v.$primary-color;
+    color: var(--gbl-primary);
+    transition: opacity 250ms ease;
   }
 
   &:hover,
   &:active {
     text-decoration: underline;
-    color: rgba(v.$primary-color, 0.8);
+    opacity: 0.7;
   }
 
   &--no-underline {
@@ -62,7 +61,7 @@ h1.gbl-page-title {
     background: none;
     font: inherit;
     font-size: smaller;
-    color: rgb(110, 107, 107);
+    color: var(--gbl-on-surface-variant);
     text-decoration: none !important;
 
     mat-icon {
@@ -71,7 +70,7 @@ h1.gbl-page-title {
     }
 
     &:hover {
-      color: v.$primary-color;
+      color: var(--gbl-primary);
 
       mat-icon {
         transform: translateX(-0.25rem);
@@ -95,7 +94,7 @@ ol.gbl-list {
 
 li.gbl-list__item {
   &::marker {
-    color: v.$primary-color;
+    color: var(--gbl-primary);
   }
 }
 

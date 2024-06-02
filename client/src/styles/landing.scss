@@ -27,7 +27,7 @@
     }
 
     &::before {
-      background-color: var(--gbl-background-color);
+      background-color: var(--gbl-surface);
     }
 
     &::after {
@@ -40,12 +40,12 @@
   &__title {
     margin: 0 !important;
     text-wrap: balance;
-    color: v.$primary-color;
+    color: var(--gbl-primary);
 
     @if v.$use-background {
       padding: 1.5rem 3rem;
       border-radius: 0.5rem;
-      background-color: var(--gbl-background-color-alpha);
+      background-color: var(--gbl-surface-container);
     }
 
     @include m.media-breakpoint-down(sm) {
@@ -69,14 +69,15 @@
     &__item {
       cursor: pointer;
       display: inline-flex;
+      justify-content: center;
       align-items: center;
       gap: 1.25rem;
       padding: 1.5rem 4.5rem;
       box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.35);
       border-radius: 0.5rem;
-      border: 1px solid v.$primary-color;
-      background: linear-gradient(135deg, v.$primary-color 0%, v.$primary-color-darker 100%);
-      color: #fff;
+      border: 1px solid var(--gbl-primary-container);
+      background: var(--gbl-primary);
+      color: var(--gbl-on-primary);
       font-size: 1.25rem;
       transition: all 250ms ease;
 

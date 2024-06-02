@@ -33,12 +33,12 @@
     margin-top: 0.75em;
     padding: 0.5em 0.25em 1.25em 0.25em;
     text-decoration: none;
-    color: rgb(0 0 0 / 0.6);
+    color: var(--gbl-on-surface);
     transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
     &:hover,
     &--active {
-      color: app.$primary-color;
+      color: var(--gbl-primary);
     }
 
     &::after {
@@ -50,7 +50,7 @@
       width: 0%;
       opacity: 0;
       border-radius: 4px;
-      background-color: app.$primary-color;
+      background-color: var(--gbl-primary);
       transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     }
 
@@ -103,7 +103,7 @@
       padding: 80px 2em 1em 0;
       box-shadow: 0 0 0px #85888c;
       border-bottom-right-radius: 5px;
-      background-color: #ffffff;
+      background-color: var(--gbl-surface-container);
       transition:
         left 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
         box-shadow 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);

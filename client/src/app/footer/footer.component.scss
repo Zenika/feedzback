@@ -5,14 +5,13 @@
   align-items: center;
   line-height: 1.2;
   font-size: 0.875rem;
-  color: var(--gbl-forground-color-dim);
 
   &__link {
     display: flex;
     align-items: center;
     gap: 0.5em;
     text-decoration: none;
-    color: inherit;
+    color: var(--gbl-on-surface-variant);
     transition: color 250ms ease;
 
     &--right {
@@ -20,7 +19,7 @@
     }
 
     &:hover {
-      color: var(--gbl-forground-color);
+      color: var(--gbl-on-surface);
     }
   }
 }
