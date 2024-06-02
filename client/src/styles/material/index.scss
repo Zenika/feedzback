@@ -1,62 +1,101 @@
 @use '@angular/material' as mat;
 
-@use './material-theme' as client-theme;
+@use './material-theme' as t;
 
 @include mat.core();
 
-@mixin component-themes($theme) {
+:root {
   // Option 1)
-  // @include mat.all-component-themes($theme);
+  // @include mat.all-component-themes(t.$light-theme);
 
   // Option 2)
-  @include mat.core-theme($theme);
-  //@include mat.card-theme($theme);
-  //@include mat.progress-bar-theme($theme);
-  @include mat.tooltip-theme($theme);
-  @include mat.form-field-theme($theme);
-  @include mat.input-theme($theme);
-  @include mat.select-theme($theme);
-  @include mat.autocomplete-theme($theme);
-  @include mat.dialog-theme($theme);
-  @include mat.chips-theme($theme);
-  @include mat.slide-toggle-theme($theme);
-  //@include mat.radio-theme($theme);
-  //@include mat.slider-theme($theme);
-  @include mat.menu-theme($theme);
-  //@include mat.list-theme($theme);
-  @include mat.paginator-theme($theme);
-  @include mat.tabs-theme($theme);
-  //@include mat.checkbox-theme($theme);
-  @include mat.button-theme($theme);
-  @include mat.icon-button-theme($theme);
-  @include mat.fab-theme($theme);
-  @include mat.snack-bar-theme($theme);
-  @include mat.table-theme($theme);
-  @include mat.progress-spinner-theme($theme);
-  @include mat.badge-theme($theme);
-  //@include mat.bottom-sheet-theme($theme);
-  //@include mat.button-toggle-theme($theme);
-  //@include mat.datepicker-theme($theme);
-  //@include mat.divider-theme($theme);
-  //@include mat.expansion-theme($theme);
-  //@include mat.grid-list-theme($theme);
-  @include mat.icon-theme($theme);
-  //@include mat.sidenav-theme($theme);
-  //@include mat.stepper-theme($theme);
-  //@include mat.sort-theme($theme);
-  //@include mat.toolbar-theme($theme);
-  //@include mat.tree-theme($theme);
+  @include mat.core-theme(t.$light-theme);
+  //@include mat.card-theme(t.$light-theme);
+  //@include mat.progress-bar-theme(t.$light-theme);
+  @include mat.tooltip-theme(t.$light-theme);
+  @include mat.form-field-theme(t.$light-theme);
+  @include mat.input-theme(t.$light-theme);
+  @include mat.select-theme(t.$light-theme);
+  @include mat.autocomplete-theme(t.$light-theme);
+  @include mat.dialog-theme(t.$light-theme);
+  @include mat.chips-theme(t.$light-theme);
+  @include mat.slide-toggle-theme(t.$light-theme);
+  //@include mat.radio-theme(t.$light-theme);
+  //@include mat.slider-theme(t.$light-theme);
+  @include mat.menu-theme(t.$light-theme);
+  //@include mat.list-theme(t.$light-theme);
+  @include mat.paginator-theme(t.$light-theme);
+  @include mat.tabs-theme(t.$light-theme);
+  //@include mat.checkbox-theme(t.$light-theme);
+  @include mat.button-theme(t.$light-theme);
+  @include mat.icon-button-theme(t.$light-theme);
+  @include mat.fab-theme(t.$light-theme);
+  @include mat.snack-bar-theme(t.$light-theme);
+  @include mat.table-theme(t.$light-theme);
+  @include mat.progress-spinner-theme(t.$light-theme);
+  @include mat.badge-theme(t.$light-theme);
+  //@include mat.bottom-sheet-theme(t.$light-theme);
+  //@include mat.button-toggle-theme(t.$light-theme);
+  //@include mat.datepicker-theme(t.$light-theme);
+  //@include mat.divider-theme(t.$light-theme);
+  //@include mat.expansion-theme(t.$light-theme);
+  //@include mat.grid-list-theme(t.$light-theme);
+  @include mat.icon-theme(t.$light-theme);
+  //@include mat.sidenav-theme(t.$light-theme);
+  //@include mat.stepper-theme(t.$light-theme);
+  //@include mat.sort-theme(t.$light-theme);
+  //@include mat.toolbar-theme(t.$light-theme);
+  //@include mat.tree-theme(t.$light-theme);
 
   // Material 2 backwards compatibility
-  @include mat.color-variants-backwards-compatibility($theme);
-}
-
-:root {
-  @include component-themes(client-theme.$light-theme);
+  @include mat.color-variants-backwards-compatibility(t.$light-theme);
 }
 
 .gbl-theme-dark {
-  @include component-themes(client-theme.$dark-theme);
+  // Option 1)
+  // @include mat.all-component-colors(t.$dark-theme);
+
+  // Option 2)
+  @include mat.core-color(t.$dark-theme);
+  //@include mat.card-color(t.$dark-theme);
+  //@include mat.progress-bar-color(t.$dark-theme);
+  @include mat.tooltip-color(t.$dark-theme);
+  @include mat.form-field-color(t.$dark-theme);
+  @include mat.input-color(t.$dark-theme);
+  @include mat.select-color(t.$dark-theme);
+  @include mat.autocomplete-color(t.$dark-theme);
+  @include mat.dialog-color(t.$dark-theme);
+  @include mat.chips-color(t.$dark-theme);
+  @include mat.slide-toggle-color(t.$dark-theme);
+  //@include mat.radio-color(t.$dark-theme);
+  //@include mat.slider-color(t.$dark-theme);
+  @include mat.menu-color(t.$dark-theme);
+  //@include mat.list-color(t.$dark-theme);
+  @include mat.paginator-color(t.$dark-theme);
+  @include mat.tabs-color(t.$dark-theme);
+  //@include mat.checkbox-color(t.$dark-theme);
+  @include mat.button-color(t.$dark-theme);
+  @include mat.icon-button-color(t.$dark-theme);
+  @include mat.fab-color(t.$dark-theme);
+  @include mat.snack-bar-color(t.$dark-theme);
+  @include mat.table-color(t.$dark-theme);
+  @include mat.progress-spinner-color(t.$dark-theme);
+  @include mat.badge-color(t.$dark-theme);
+  //@include mat.bottom-sheet-color(t.$dark-theme);
+  //@include mat.button-toggle-color(t.$dark-theme);
+  //@include mat.datepicker-color(t.$dark-theme);
+  //@include mat.divider-color(t.$dark-theme);
+  //@include mat.expansion-color(t.$dark-theme);
+  //@include mat.grid-list-color(t.$dark-theme);
+  @include mat.icon-color(t.$dark-theme);
+  //@include mat.sidenav-color(t.$dark-theme);
+  //@include mat.stepper-color(t.$dark-theme);
+  //@include mat.sort-color(t.$dark-theme);
+  //@include mat.toolbar-color(t.$dark-theme);
+  //@include mat.tree-color(t.$dark-theme);
+
+  // Material 2 backwards compatibility
+  @include mat.color-variants-backwards-compatibility(t.$dark-theme);
 }
 
 // Material 2 typography
