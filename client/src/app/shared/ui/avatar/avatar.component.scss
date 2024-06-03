@@ -1,5 +1,6 @@
 .app-avatar {
   vertical-align: middle;
+  flex-shrink: 0; // as flex item
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -7,6 +8,7 @@
   user-select: none;
   overflow: hidden;
   border-radius: 50%;
+  border: 1px solid var(--gbl-outline-variant);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

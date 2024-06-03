@@ -1,0 +1,20 @@
+.demo-content {
+  &-colors {
+    display: flex;
+
+    &__preview {
+      flex-basis: 50%;
+    }
+
+    &__label {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gbl-outline-variant);
+      border-width: 0 0 1px 1px;
+
+      &--first {
+        border-top-width: 1px;
+      }
+    }
+  }
+}

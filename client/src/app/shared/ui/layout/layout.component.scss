@@ -15,9 +15,9 @@
     position: sticky;
     top: 0;
     z-index: 3;
-    //box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
-    border-bottom: 1px solid var(--gbl-surface-container-highest);
-    background-color: var(--gbl-surface-container);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid var(--gbl-outline-variant);
+    background-color: var(--gbl-surface-dim);
   }
 
   &__main {
@@ -29,7 +29,9 @@
 
   &__footer {
     grid-area: footer;
-    //background-color: rgb(255 255 255 / 0.7); // TODO: restore this background according to the theme
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    border-top: 1px solid var(--gbl-surface-container);
+    background-color: var(--app-layout-footer);
   }
 
   &__container {
@@ -45,7 +47,14 @@
   @include app.media-breakpoint-down(md) {
     &__header {
       box-shadow: none;
-      border-bottom: 1px solid var(--gbl-surface-container-highest);
     }
   }
+}
+
+:root {
+  --app-layout-footer: #{rgba($color: app.get-light-theme-color(surface-container-lowest), $alpha: 0.65)};
+}
+
+.gbl-theme-dark {
+  --app-layout-footer: #{rgba($color: app.get-dark-theme-color(surface-container-lowest), $alpha: 0.65)};
 }

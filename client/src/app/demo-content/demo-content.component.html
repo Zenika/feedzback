@@ -138,3 +138,14 @@
   name="Stéphane Francel"
   photoUrl="https://lh3.googleusercontent.com/a/ACg8ocLVPXZX9ZNvQxEorgeocP2akfBpEXbKcfdSeIWi-3izCg=s96-c"
 />
+
+<hr />
+
+@for (role of materialColorRoles; track $index; let first = $first) {
+  <div class="demo-content-colors">
+    <div class="demo-content-colors__preview" [style.background-color]="'var(--gbl-' + role + ')'"></div>
+    <div class="demo-content-colors__label" [class.demo-content-colors__label--first]="first">
+      {{ role }}
+    </div>
+  </div>
+}

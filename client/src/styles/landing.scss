@@ -2,6 +2,7 @@
 
 @use 'sass:color';
 
+@use './functions' as f;
 @use './variables' as v;
 @use './mixins' as m;
 
@@ -33,7 +34,7 @@
     &::after {
       background: url(../../public/assets/images/landing-bg.svg) center repeat;
       background-size: 480px;
-      opacity: 0.25;
+      opacity: 0.5;
     }
   }
 
@@ -45,7 +46,7 @@
     @if v.$use-background {
       padding: 1.5rem 3rem;
       border-radius: 0.5rem;
-      background-color: var(--gbl-surface-container);
+      background-color: var(--app-landing-title);
     }
 
     @include m.media-breakpoint-down(sm) {
@@ -73,13 +74,13 @@
       align-items: center;
       gap: 1.25rem;
       padding: 1.5rem 4.5rem;
-      box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.35);
-      border-radius: 0.5rem;
-      border: 1px solid var(--gbl-primary-container);
+      box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.2);
+      border-radius: 1rem;
+      border: 1px solid var(--gbl-outline-variant);
       background: var(--gbl-primary);
       color: var(--gbl-on-primary);
       font-size: 1.25rem;
-      transition: all 250ms ease;
+      transition: all 250ms ease-in-out;
 
       @include m.media-breakpoint-down(md) {
         flex-direction: column;
@@ -88,16 +89,15 @@
 
       &:hover,
       &:disabled {
-        box-shadow: 0px -2px 1px -1px rgb(255 255 255 / 0.5);
+        box-shadow: none;
         transform: translateY(3px);
       }
 
       &:disabled {
         opacity: 0.65;
-        border-color: rgba(0, 0, 0, 0.25);
-        background-image: none;
-        background-color: rgba(0, 0, 0, 0.25);
-        color: rgb(0, 0, 0);
+        border-color: var(--gbl-outline-variant);
+        background-color: var(--gbl-surface-container);
+        color: var(--gbl-on-surface);
         cursor: default;
       }
     }
@@ -106,4 +106,12 @@
       transform: scale(1.75);
     }
   }
+}
+
+:root {
+  --app-landing-title: #{rgba($color: f.get-light-theme-color(surface-container-highest), $alpha: 0.65)};
+}
+
+.gbl-theme-dark {
+  --app-landing-title: #{rgba($color: f.get-dark-theme-color(surface-container-highest), $alpha: 0.65)};
 }

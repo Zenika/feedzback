@@ -11,9 +11,67 @@ import { MessageComponent } from '../shared/ui/message';
   standalone: true,
   imports: [MessageComponent, AvatarComponent, ReactiveFormsModule, MatIconModule, DialogTooltipDirective],
   templateUrl: './demo-content.component.html',
+  styleUrl: './demo-content.component.scss',
 })
 export default class DemoContentComponent {
+  protected notificationService = inject(NotificationService);
+
   loremIpsum = 'Lorem ipsum';
 
-  protected notificationService = inject(NotificationService);
+  // Learn more about Material color roles: https://m3.material.io/styles/color/roles
+  materialColorRoles = [
+    /* primary */
+    'primary',
+    'on-primary',
+    'primary-container',
+    'on-primary-container',
+    'primary-fixed',
+    'primary-fixed-dim',
+    'on-primary-fixed',
+    'on-primary-fixed-variant',
+    /* secondary */
+    'secondary',
+    'on-secondary',
+    'secondary-container',
+    'on-secondary-container',
+    'secondary-fixed',
+    'secondary-fixed-dim',
+    'on-secondary-fixed',
+    'on-secondary-fixed-variant',
+    /* tertiary */
+    'tertiary',
+    'on-tertiary',
+    'tertiary-container',
+    'on-tertiary-container',
+    'tertiary-fixed',
+    'tertiary-fixed-dim',
+    'on-tertiary-fixed',
+    'on-tertiary-fixed-variant',
+    /* error */
+    'error',
+    'on-error',
+    'error-container',
+    'on-error-container',
+    /* surface */
+    'surface-dim',
+    'surface',
+    'surface-bright',
+    'surface-container-lowest',
+    'surface-container-low',
+    'surface-container',
+    'surface-container-high',
+    'surface-container-highest',
+    'on-surface',
+    'on-surface-variant',
+    /* outline */
+    'outline',
+    'outline-variant',
+    /* inverse */
+    'inverse-surface',
+    'inverse-on-surface',
+    'inverse-primary',
+    /* others */
+    'scrim',
+    'shadow',
+  ];
 }

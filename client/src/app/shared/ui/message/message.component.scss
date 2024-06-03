@@ -32,9 +32,9 @@
   }
 
   &--light {
-    border-color: rgb(226, 227, 229);
-    background-color: rgb(252, 252, 253);
-    color: rgb(73, 80, 87);
+    border-color: var(--gbl-surface-container-highest);
+    background-color: var(--gbl-surface-container-lowest);
+    color: inherit;
   }
 
   &__icon {
@@ -57,7 +57,7 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--gbl-primary);
+      color: var(--gbl-on-primary-fixed-variant);
     }
   }
 }
