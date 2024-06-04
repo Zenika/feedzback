@@ -120,9 +120,9 @@
   <button mat-menu-item (click)="themeService.switch()">
     <mat-icon color="primary">{{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
     @if (themeService.theme() === 'light') {
-      <ng-container i18n="@@Title.ThemeDark">Thème foncé</ng-container>
+      <ng-container i18n="@@Action.DarkTheme">Thème foncé</ng-container>
     } @else {
-      <ng-container i18n="@@Title.ThemeLight">Thème clair</ng-container>
+      <ng-container i18n="@@Action.LightTheme">Thème clair</ng-container>
     }
   </button>
 </ng-template>
