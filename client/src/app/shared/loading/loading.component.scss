@@ -14,9 +14,9 @@
 }
 
 :root {
-  --app-loading: #{rgba($color: app.get-light-theme-color(surface), $alpha: 0.65)};
+  --app-loading: #{rgba($color: app.get-light-theme-color(background), $alpha: 0.65)};
 }
 
 .gbl-theme-dark {
-  --app-loading: #{rgba($color: app.get-dark-theme-color(surface), $alpha: 0.65)};
+  --app-loading: #{rgba($color: app.get-dark-theme-color(background), $alpha: 0.65)};
 }

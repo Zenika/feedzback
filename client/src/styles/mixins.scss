@@ -1,7 +1,5 @@
 @use 'sass:map';
 
-@use './functions.scss' as f;
-
 $grid-breakpoints: (
   xs: 0,
   sm: 576px,
