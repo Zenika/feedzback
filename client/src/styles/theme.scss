@@ -1,53 +1,15 @@
 @use './functions.scss' as f;
 
 // Learn more about Material color roles: https://m3.material.io/styles/color/roles
-$roles:
-  /* primary */
-  primary,
-  on-primary,
-  primary-container,
-  on-primary-container,
-  primary-fixed,
-  primary-fixed-dim,
-  on-primary-fixed,
-  on-primary-fixed-variant,
-  /* secondary */ secondary,
-  on-secondary,
-  secondary-container,
-  on-secondary-container,
-  secondary-fixed,
-  secondary-fixed-dim,
-  on-secondary-fixed,
-  on-secondary-fixed-variant,
-  /* tertiary */ tertiary,
-  on-tertiary,
-  tertiary-container,
-  on-tertiary-container,
-  tertiary-fixed,
-  tertiary-fixed-dim,
-  on-tertiary-fixed,
-  on-tertiary-fixed-variant,
-  /* error */ error,
-  on-error,
-  error-container,
-  on-error-container,
-  /* surface */ surface-dim,
-  surface,
-  surface-bright,
-  surface-container-lowest,
-  surface-container-low,
-  surface-container,
-  surface-container-high,
-  surface-container-highest,
-  on-surface,
-  on-surface-variant,
-  /* outline */ outline,
-  outline-variant,
-  /* inverse */ inverse-surface,
-  inverse-on-surface,
-  inverse-primary,
-  /* others */ scrim,
-  shadow;
+// Tip: to retrieve the complete list of roles, simply add an unknown role to the following list and consult the error in the console
+$roles: background, error, error-container, inverse-on-surface, inverse-primary, inverse-surface, on-background,
+  on-error, on-error-container, on-primary, on-primary-container, on-primary-fixed, on-primary-fixed-variant,
+  on-secondary, on-secondary-container, on-secondary-fixed, on-secondary-fixed-variant, on-surface, on-surface-variant,
+  on-tertiary, on-tertiary-container, on-tertiary-fixed, on-tertiary-fixed-variant, outline, outline-variant, primary,
+  primary-container, primary-fixed, primary-fixed-dim, scrim, secondary, secondary-container, secondary-fixed,
+  secondary-fixed-dim, shadow, surface, surface-bright, surface-container, surface-container-high,
+  surface-container-highest, surface-container-low, surface-container-lowest, surface-dim, surface-tint, surface-variant,
+  tertiary, tertiary-container, tertiary-fixed, tertiary-fixed-dim;
 
 :root {
   @each $role in $roles {
