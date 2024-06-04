@@ -15,7 +15,7 @@
     position: sticky;
     top: 0;
     z-index: 3;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid var(--gbl-outline-variant);
     background-color: var(--gbl-surface-container-lowest);
   }
@@ -29,7 +29,7 @@
 
   &__footer {
     grid-area: footer;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.03);
     border-top: 1px solid var(--gbl-surface-container);
     background-color: var(--app-layout-footer);
   }
