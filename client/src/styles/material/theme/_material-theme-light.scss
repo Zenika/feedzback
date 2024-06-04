@@ -4,30 +4,29 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-@use '../variables.scss' as v;
+@use '../../variables.scss' as v;
 
-// Note: Color palettes are generated from primary: #ee2238
 $_palettes: (
   primary: (
-    0: #000000,
-    10: #410006,
-    20: #68000f,
-    25: #7d0014,
-    30: #930019,
-    35: #a9001f,
+    0: #130103,
+    10: #39040a,
+    20: #5f0710,
+    25: #850a16,
+    30: #ab0d1d,
+    35: #d11023,
 
-    // Original value: #bf0024
+    // Brand color
     40: #ee2238,
 
-    50: #e91d35,
-    60: #ff5357,
-    70: #ff8986,
-    80: #ffb3b0,
-    90: #ffdad8,
-    95: #ffedeb,
-    98: #fff8f7,
-    99: #fffbff,
-    100: #ffffff,
+    50: #f25464,
+    60: #f46775,
+    70: #f57a86,
+    80: #f68d98,
+    90: #f8a0a9,
+    95: #f9b3ba,
+    98: #fbc6cb,
+    99: #fcd9dd,
+    100: #feecee,
   ),
   secondary: (
     0: #000000,
@@ -67,31 +66,34 @@ $_palettes: (
   ),
   neutral: (
     0: #000000,
-    10: #201a1a,
-    20: #362f2e,
-    25: #413a39,
-    30: #4d4544,
-    35: #595050,
-    40: #655c5c,
-    50: #7f7574,
-    60: #998e8d,
-    70: #b4a9a8,
-    80: #d0c4c3,
-    90: #ede0de,
-    95: #fbeeed,
-    98: #fff8f7,
-    99: #fffbff,
+    4: #0a0a0a,
+    6: #141414,
+    10: #1f1f1f,
+    12: #292929,
+    17: #333333,
+    20: #3d3d3d,
+    22: #444444,
+    24: #525252,
+    25: #5c5c5c,
+    30: #666666,
+    35: #707070,
+    40: #7a7a7a,
+    50: #858585,
+    60: #8f8f8f,
+    70: #999999,
+    80: #a3a3a3,
+    87: #adadad,
+    90: #b8b8b8,
+    92: #c2c2c2,
+
+    // Note: the real value (according to gradient) is #cccccc but this value is used for Material menu's background and we want this to be lighter
+    94: #ffffff,
+
+    95: #d6d6d6,
+    96: #e0e0e0,
+    98: #ebebeb,
+    99: #f5f5f5,
     100: #ffffff,
-    4: #120d0d,
-    6: #181212,
-    12: #251e1e,
-    17: #2f2828,
-    22: #3a3332,
-    24: #3f3737,
-    87: #e4d7d6,
-    92: #f2e5e4,
-    94: #f8ebea,
-    96: #fef1ef,
   ),
   neutral-variant: (
     0: #000000,
@@ -101,7 +103,10 @@ $_palettes: (
     30: #534342,
     35: #5f4f4e,
     40: #6b5a59,
-    50: #857372,
+
+    // Note: it targets the form field border and the real value (according to gradient) is #857372 but we want this lighter
+    50: #a08c8b,
+
     60: #a08c8b,
     70: #bba6a5,
     80: #d7c1c0,
@@ -144,23 +149,6 @@ $light-theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: $_primary,
-      tertiary: $_tertiary,
-    ),
-    typography: (
-      plain-family: '"Nunito", sans-serif',
-      regular-weight: v.$font-regular-weight,
-      bold-weight: v.$font-bold-weight,
-    ),
-    density: (
-      scale: 0,
-    ),
-  )
-);
-$dark-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: dark,
       primary: $_primary,
       tertiary: $_tertiary,
     ),

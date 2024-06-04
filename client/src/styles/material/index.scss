@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-@use './material-theme' as t;
+@use './theme' as t;
 
 @include mat.core();
 

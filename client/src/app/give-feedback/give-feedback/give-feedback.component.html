@@ -28,7 +28,7 @@
     <app-give-feedback-draft />
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
+    <button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
   </div>
 </ng-template>
 
@@ -71,7 +71,6 @@
         type="button"
         [disabled]="form.controls.receiverEmail.invalid || submitInProgress"
         mat-stroked-button
-        color="primary"
         matTooltip="Enregistrer en tant que brouillon"
         i18n-matTooltip="@@Action.SaveAsDraft"
         i18n="@@Action.Save"

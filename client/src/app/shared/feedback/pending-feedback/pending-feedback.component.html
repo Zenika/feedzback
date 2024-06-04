@@ -78,12 +78,7 @@
     [appConfirmBeforeSubmit]="archiveRequest.bind(this)"
     appConfirmBeforeSubmitConfig="archiveFeedbackRequest"
   >
-    <button
-      class="mb-4"
-      mat-stroked-button
-      color="primary"
-      [disabled]="isRecentFeedbackRequest() || actionsStatus === 'disabled'"
-    >
+    <button class="mb-4" mat-stroked-button [disabled]="isRecentFeedbackRequest() || actionsStatus === 'disabled'">
       <mat-icon>archive</mat-icon>
       <ng-container i18n="@@Action.Archive">Archiver</ng-container>
     </button>
