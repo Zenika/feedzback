@@ -109,9 +109,9 @@
 }
 
 :root {
-  --app-landing-title: #{rgba($color: f.get-light-theme-color(surface-container-highest), $alpha: 0.65)};
+  --app-landing-title: #{rgba($color: f.get-light-theme-color(surface-container-lowest), $alpha: 0.7)};
 }
 
 .gbl-theme-dark {
-  --app-landing-title: #{rgba($color: f.get-dark-theme-color(surface-container-highest), $alpha: 0.65)};
+  --app-landing-title: #{rgba($color: f.get-dark-theme-color(surface-container-lowest), $alpha: 0.7)};
 }
