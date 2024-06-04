@@ -1,6 +1,6 @@
 import { Feedback, FeedbackRequest, FeedbackType } from '../shared/feedback/feedback.types';
 
-export interface FeedbackDetails {
+export type FeedbackDetails = {
   feedback: Feedback | FeedbackRequest;
   type: FeedbackType;
-}
+};

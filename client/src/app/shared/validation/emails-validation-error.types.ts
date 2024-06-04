@@ -4,9 +4,9 @@
  *  - `multipleEmailsValidatorFactory`
  *  - `forbiddenValuesValidatorFactory`
  */
-export interface StringArrayError {
+export type StringArrayError = {
   /**
    * Value of the form field for which the validation error was raised.
    */
   fieldValues: string[];
-}
+};

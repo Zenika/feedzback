@@ -1,5 +1,5 @@
-export interface UserState {
+export type UserState = {
   guest: boolean;
   anonymous: boolean;
   authenticated: boolean;
-}
+};

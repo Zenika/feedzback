@@ -1,5 +1,5 @@
-export interface Person {
+export type Person = {
   email: string;
   displayName?: string;
   photoUrl?: string;
-}
+};

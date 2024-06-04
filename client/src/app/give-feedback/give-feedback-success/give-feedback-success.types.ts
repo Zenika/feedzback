@@ -1,4 +1,4 @@
-export interface GiveFeedbackSuccess {
+export type GiveFeedbackSuccess = {
   receiverEmail: string;
   feedbackId?: string;
-}
+};

@@ -1,3 +1,3 @@
-export interface UpdateManagerDto {
+export type UpdateManagerDto = {
   managerEmail: string;
-}
+};

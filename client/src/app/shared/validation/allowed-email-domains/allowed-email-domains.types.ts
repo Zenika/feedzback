@@ -1,3 +1,3 @@
-export interface AllowedEmailDomainsError {
+export type AllowedEmailDomainsError = {
   domains: string[];
-}
+};

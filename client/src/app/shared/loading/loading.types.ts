@@ -1,5 +1,5 @@
-export interface LoadingRequest {
+export type LoadingRequest = {
   url: string;
-}
+};
 
 export type LoadingTimeout = number;

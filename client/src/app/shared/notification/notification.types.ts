@@ -1,9 +1,9 @@
 import { TemplateRef } from '@angular/core';
 
-export interface Notification {
+export type Notification = {
   message: NotificationMessage;
   type: NotificationType;
-}
+};
 
 export type NotificationMessage = string | TemplateRef<unknown>;
 

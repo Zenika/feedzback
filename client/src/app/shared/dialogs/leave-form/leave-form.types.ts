@@ -1,9 +1,9 @@
 import { DialogData } from '../dialog.types';
 import { LeaveFormService } from './leave-form.service';
 
-export interface LeaveForm {
+export type LeaveForm = {
   leaveFormService: LeaveFormService;
-}
+};
 
 export type LeaveFormConfig = LeaveFormType | DialogData;
 
