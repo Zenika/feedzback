@@ -32,7 +32,7 @@ module.exports = tseslint.config(
           style: 'kebab-case',
         },
       ],
-      // Note: By default, type definitions use `interface`, but we prefer to use `type`
+      // Note: the following rule is an addon (by default, type definitions use `interface`, but we prefer to use `type`)
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     },
   },

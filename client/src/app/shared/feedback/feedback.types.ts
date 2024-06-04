@@ -85,15 +85,11 @@ export type FeedbackRequestDraft = {
 
 // ----- IdObject -----
 
-export type IdObject = {
-  id: string;
-};
+export type IdObject = { id: string };
 
 // ----- TokenObject -----
 
-export type TokenObject = {
-  token: string;
-};
+export type TokenObject = { token: string };
 
 // --------------------------
 // ----- Internal types -----
