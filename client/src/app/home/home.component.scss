@@ -7,4 +7,10 @@
     background-color: var(--gbl-surface-container-lowest);
     text-wrap: balance;
   }
+
+  &__analytics {
+    position: absolute !important;
+    right: 1.25rem;
+    bottom: 1rem;
+  }
 }
