@@ -7,15 +7,6 @@
   justify-content: space-between;
   align-items: center;
 
-  > * {
-    flex-grow: 1;
-  }
-
-  &__burger,
-  &__account {
-    width: 1%;
-  }
-
   &__logo {
     line-height: 0;
   }
@@ -77,8 +68,17 @@
       display: none;
     }
 
-    &__logo {
-      width: 1%;
+    &__logo,
+    &__account {
+      flex-basis: 20%;
+    }
+
+    &__account {
+      flex-shrink: 3;
+    }
+
+    &__menu-item {
+      flex-shrink: 0;
     }
   }
 
@@ -87,8 +87,9 @@
       z-index: 99;
     }
 
-    &__logo {
-      text-align: center;
+    &__burger,
+    &__account {
+      flex-basis: 20%;
     }
 
     &__menu {
@@ -106,7 +107,8 @@
       align-items: flex-end;
       gap: 0;
       padding: 80px 2em 1em 0;
-      box-shadow: 0 0 0px #85888c;
+      box-shadow: 0 0 0px transparent;
+      border-bottom: 5px solid var(--gbl-primary);
       background-color: var(--gbl-surface-container);
       transition:
         left 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
