@@ -2,7 +2,7 @@
 
 .app-loading__container {
   position: fixed;
-  z-index: 999;
+  z-index: 2; // Note: the loader should NOT cover the header!
   top: 0;
   right: 0;
   bottom: 0;
