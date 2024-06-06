@@ -1,4 +1,11 @@
+@use '../app.scss' as app;
+
 .app-home {
+  @include app.media-breakpoint-down(md) {
+    // Prevent the usage analytics link to cover the guide link (when viewport height is small)
+    padding-bottom: 2.5rem;
+  }
+
   &__guide {
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
