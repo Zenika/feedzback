@@ -14,7 +14,7 @@ const sidebars: SidebarsConfig = {
         'business-cases/give-spontaneous-feedback',
         'business-cases/feedback-draft',
         'business-cases/shared-feedback',
-        //'business-cases/archiving',
+        'business-cases/archiving',
       ],
     },
     'ubiquitous-language',
@@ -22,11 +22,15 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Technical guides',
       items: [
-        'technical-guides/introduction',
         {
           type: 'category',
           label: 'Client',
-          items: ['technical-guides/client/firebase-hosting'],
+          items: ['technical-guides/client/firebase-hosting', 'technical-guides/client/styles'],
+        },
+        {
+          type: 'category',
+          label: 'Server',
+          items: ['technical-guides/server/introduction'],
         },
       ],
     },
