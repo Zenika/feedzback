@@ -7,7 +7,7 @@ When I send a feedback request, I can choose whether or not to share the expecte
 When I give spontaneous feedback to a colleague, I can choose whether or not to share it with their manager.
 
 Feedbacks are shared with the manager defined in the application settings.
-This means that when I change manager, all my feedbacks are shared with my new manager.
+This means that when I change manager, all my shared feedbacks are shared with my new manager.
 
 ## Technical specifications
 

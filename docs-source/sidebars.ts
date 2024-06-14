@@ -9,7 +9,6 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Business cases',
       items: [
-        //'business-cases/introduction',
         'business-cases/request-feedback',
         'business-cases/reply-to-feedback-request',
         'business-cases/give-spontaneous-feedback',
@@ -18,23 +17,31 @@ const sidebars: SidebarsConfig = {
         //'business-cases/archiving',
       ],
     },
-    /*{
+    'ubiquitous-language',
+    {
       type: 'category',
       label: 'Technical guides',
-      items: ['technical-guides/introduction'],
-    },*/
+      items: [
+        'technical-guides/introduction',
+        {
+          type: 'category',
+          label: 'Client',
+          items: ['technical-guides/client/firebase-hosting'],
+        },
+      ],
+    },
     {
       type: 'category',
       label: 'CI / CD',
-      items: ['ci-cd/quick-start', 'ci-cd/circle-ci', 'ci-cd/usage-analytics'],
+      items: ['ci-cd/quick-start', 'ci-cd/circle-ci'],
     },
+    'usage-analytics',
     {
       type: 'category',
       label: 'Update guide',
       items: ['update/client'],
     },
     'documentation',
-    'ubiquitous-language',
   ],
 };
 
