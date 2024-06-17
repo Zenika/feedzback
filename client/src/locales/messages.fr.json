@@ -130,6 +130,8 @@
     "Message.InvalidEmail": "L'adresse email est invalide.",
     "Message.InvalidEmailPlural": "{VAR_PLURAL, plural, =one {L'adresse email suivante est invalide :} =other {Les adresses emails suivantes sont invalides :}}",
     "Message.NoResultsFor": " Aucun résultat pour \"{$INTERPOLATION}\" ",
+    "PageNotFound.InvalidFeedbackId": "Le lien est erroné ou le feedZback a été archivé.",
+    "PageNotFound.InvalidTokenId": "Le lien est erroné ou la demande de feedZback a été archivée.",
     "PageNotFound.Message": "Oups !{$LINE_BREAK}Cette page est introuvable",
     "PageNotFound.Title": "Page introuvable",
     "Title.AppTagline": " Demandez et donnez du feedback à vos collègues\n",

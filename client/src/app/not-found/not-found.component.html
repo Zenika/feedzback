@@ -1,6 +1,12 @@
 <mat-icon class="gbl-info__icon" color="primary">indeterminate_question_box</mat-icon>
 
-<h1 class="gbl-info__title" i18n="@@PageNotFound.Message">Oups !<br />Cette page est introuvable</h1>
+<div>
+  <h1 class="gbl-info__title" i18n="@@PageNotFound.Message">Oups !<br />Cette page est introuvable</h1>
+
+  @if (navigationState?.details) {
+    <app-message type="danger" icon="" nonclosable>{{ navigationState?.details }}</app-message>
+  }
+</div>
 
 <div class="gbl-info__buttons">
   <button mat-stroked-button routerLink="/">

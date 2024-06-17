@@ -130,6 +130,8 @@
     "Message.InvalidEmail": "The email address is invalid.",
     "Message.InvalidEmailPlural": "{VAR_PLURAL, plural, =one {The following email address is invalid:} =other {The following email addresses are invalid:}}",
     "Message.NoResultsFor": "No results for \"{$INTERPOLATION}\"",
+    "PageNotFound.InvalidFeedbackId": "The link is incorrect or the feedZback has been archived.",
+    "PageNotFound.InvalidTokenId": "The link is incorrect or the feedZback request has been archived.",
     "PageNotFound.Message": "Oops !{$LINE_BREAK}This page cannot be found",
     "PageNotFound.Title": "Page not found",
     "Title.AppTagline": "Request and give feedback to your colleagues",

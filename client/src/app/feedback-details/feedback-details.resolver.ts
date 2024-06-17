@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn, Router } from '@angular/router';
 import { EMPTY, catchError, map, withLatestFrom } from 'rxjs';
+import { NotFoundNavigationState } from '../not-found/not-found.types';
 import { AuthService } from '../shared/auth';
 import { FeedbackService } from '../shared/feedback/feedback.service';
 import { FeedbackDetails } from './feedback-details.types';
@@ -23,7 +24,10 @@ export const feedbackDetailsResolver: ResolveFn<FeedbackDetails> = (route) => {
       };
     }),
     catchError(() => {
-      router.navigate(['/not-found']);
+      const state: NotFoundNavigationState = {
+        details: $localize`:@@PageNotFound.InvalidFeedbackId:Le lien est erroné ou le feedZback a été archivé.`,
+      };
+      router.navigate(['/not-found'], { state });
       return EMPTY;
     }),
   );
