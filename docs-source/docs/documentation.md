@@ -6,7 +6,7 @@ This documentation is powered by the [Docusaurus](https://docusaurus.io/) framew
 
 - Open your IDE in `./docs-source` directory and run the following commands:
 
-```shell
+```bash
 npm install
 npm start
 ```

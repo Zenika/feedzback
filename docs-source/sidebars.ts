@@ -25,7 +25,12 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'Client',
-          items: ['technical-guides/client/firebase-hosting', 'technical-guides/client/styles'],
+          items: [
+            'technical-guides/client/firebase-hosting',
+            'technical-guides/client/styles',
+            'technical-guides/client/i18n',
+            'technical-guides/client/material-icons',
+          ],
         },
         {
           type: 'category',

@@ -76,7 +76,7 @@ And the Sass styles should looks like this:
 ```
 
 :::note
-The `app.scss` file gives you access to the global Sass variables and mixins in the component styles.
+The [`src/app/app.scss`](https://github.com/Zenika/feedzback/blob/main/client/src/app/app.scss) file gives you access to the global Sass variables and mixins in the component styles.
 :::
 
 ## Material

@@ -23,6 +23,12 @@ export class AuthService {
 
   private baseHref = inject(APP_BASE_HREF);
 
+  /**
+   * @returns
+   * `User` when the user is authenticated,
+   * `null` when the user is NOT authenticated and
+   * `undefined` as long as the user's status has not yet been determined.
+   */
   private _user = signal<User | null | undefined>(undefined);
 
   user = this._user.asReadonly();
@@ -42,6 +48,10 @@ export class AuthService {
     };
   });
 
+  /**
+   * @returns
+   * Unlike the `user` signal, the `user$` observable emits only known user states (`User` or `null` and NOT `undefined`).
+   */
   user$ = toObservable(this._user).pipe(filter((user): user is User | null => user !== undefined));
 
   guest$ = this.user$.pipe(map((user) => buildUserState(user).guest));
@@ -88,10 +98,10 @@ export class AuthService {
     return from(this._user()?.getIdToken() ?? Promise.resolve(null));
   }
 
-  withBearerIdToken<T>(request: (headers: { Authorization: string }) => Observable<T>) {
+  withBearerIdToken<T>(requestFactory: (headers: { Authorization: string }) => Observable<T>) {
     return this.getIdToken().pipe(
       map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
-      switchMap(request),
+      switchMap(requestFactory),
     );
   }
 }

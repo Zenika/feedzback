@@ -12,7 +12,7 @@ This is very useful for understanding the links between dependencies.
 
 ## Create Angular app
 
-```shell
+```bash
 npm install -g @angular/cli
 
 ng new client --style scss --view-encapsulation None --ssr false
@@ -20,19 +20,19 @@ ng new client --style scss --view-encapsulation None --ssr false
 
 ## Generate environments
 
-```shell
+```bash
 ng generate environments
 ```
 
 ## Add Localize
 
-```shell
+```bash
 ng add @angular/localize
 ```
 
 ## Add Material
 
-```shell
+```bash
 ng add @angular/material --theme custom --animations --typography
 ```
 
@@ -59,7 +59,7 @@ body {
 
 ## Add Tailwind
 
-```shell
+```bash
 npm install -D tailwindcss postcss autoprefixer
 ```
 
@@ -105,7 +105,7 @@ Update `src/styles.scss`:
 
 ## Add ESLint and Prettier
 
-```shell
+```bash
 ng add @angular-eslint/schematics
 
 npm i -D prettier eslint-config-prettier eslint-plugin-prettier prettier-plugin-organize-imports prettier-plugin-tailwindcss
@@ -192,7 +192,7 @@ Add `package.json` scripts:
 
 First, remove all packages related to Karma and Jasmine. Next, install Jest related packages:
 
-```shell
+```bash
 npm i -D jest @types/jest @angular-builders/jest ts-node
 ```
 
@@ -248,7 +248,7 @@ import '@angular/localize/init';
 
 ## Add other packages
 
-```shell
+```bash
 npm i @fontsource/nunito canvas-confetti firebase js-cookie @material-symbols/font-600
 
 npm i -D @types/canvas-confetti @types/js-cookie
