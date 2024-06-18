@@ -50,49 +50,39 @@
 }
 
 @if (actionsStatus !== 'hidden') {
-  @switch (type()) {
-    @case (feedbackType.sentRequest) {
-      @if (!hasBeenRequestedAgain()) {
+  <div class="pt-4">
+    @switch (type()) {
+      @case (feedbackType.sentRequest) {
+        @if (!hasBeenRequestedAgain()) {
+          <button class="mb-4 me-5" mat-flat-button [disabled]="actionsStatus === 'disabled'" (click)="requestAgain()">
+            <mat-icon>mail</mat-icon>
+            <ng-container i18n="@@Component.PendingFeedback.Remind">Envoyer un rappel</ng-container>
+          </button>
+        }
+      }
+      @case (feedbackType.receivedRequest) {
         <button
           class="mb-4 me-5"
-          mat-raised-button
-          color="primary"
+          mat-flat-button
           [disabled]="actionsStatus === 'disabled'"
-          (click)="requestAgain()"
+          [appGiveRequestedFeedback]="feedback().id"
         >
-          <mat-icon>mail</mat-icon>
-          <ng-container i18n="@@Component.PendingFeedback.Remind">Envoyer un rappel</ng-container>
+          <mat-icon>edit</mat-icon>
+          <ng-container i18n="@@Feedback.Reply"> Répondre </ng-container>
         </button>
       }
     }
-    @case (feedbackType.receivedRequest) {
-      <button
-        class="mb-4 me-5"
-        mat-raised-button
-        color="primary"
-        [disabled]="actionsStatus === 'disabled'"
-        [appGiveRequestedFeedback]="feedback().id"
-      >
-        <mat-icon>edit</mat-icon>
-        <ng-container i18n="@@Feedback.Reply"> Répondre </ng-container>
-      </button>
-    }
-  }
 
-  <form
-    class="inline"
-    [formGroup]="archiveRequestForm"
-    [appConfirmBeforeSubmit]="archiveRequest.bind(this)"
-    appConfirmBeforeSubmitConfig="archiveFeedbackRequest"
-  >
-    <button
-      class="mb-4"
-      mat-stroked-button
-      color="primary"
-      [disabled]="isRecentFeedbackRequest() || actionsStatus === 'disabled'"
+    <form
+      class="inline"
+      [formGroup]="archiveRequestForm"
+      [appConfirmBeforeSubmit]="archiveRequest.bind(this)"
+      appConfirmBeforeSubmitConfig="archiveFeedbackRequest"
     >
-      <mat-icon>archive</mat-icon>
-      <ng-container i18n="@@Action.Archive">Archiver</ng-container>
-    </button>
-  </form>
+      <button class="mb-4" mat-stroked-button [disabled]="isRecentFeedbackRequest() || actionsStatus === 'disabled'">
+        <mat-icon>archive</mat-icon>
+        <ng-container i18n="@@Action.Archive">Archiver</ng-container>
+      </button>
+    </form>
+  </div>
 }

@@ -1,9 +1,31 @@
+@use '../app.scss' as app;
+
+$show-analytics: false;
+
 .app-home {
+  @include app.media-breakpoint-down(md) {
+    @if $show-analytics {
+      // Prevent the usage analytics link to cover the guide link (when viewport height is small)
+      padding-bottom: 2.5rem;
+    }
+  }
+
   &__guide {
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 4px -4px rgba(0 0 0 / 0.15);
-    background-color: rgb(255 255 255 / 0.65);
+    box-shadow: 0 4px 4px -4px rgba(0 0 0 / 0.1);
+    border: 1px solid var(--gbl-surface-container-high);
+    background-color: var(--gbl-surface-container-lowest);
     text-wrap: balance;
+  }
+
+  &__analytics {
+    @if $show-analytics == false {
+      display: none !important;
+    }
+
+    position: absolute !important;
+    right: 1.25rem;
+    bottom: 1rem;
   }
 }

@@ -4,7 +4,9 @@
 2. A Cloud function runs a query that aggregates data into another dataset called `feedzback_usage` every day, removing personal data. Using a service account `analytics-editor` that has access to all data in BQ
 3. A [Looker Studio report](https://lookerstudio.google.com/s/mZFWci2C24Q) query the tables from `feedzback_usage` using a service-account `analytics-viewer` which has access only to `feedzback_usage` and does not have access to personal data.
 
-# Installation instructions
+:::note
+This document describes the installation instructions.
+:::
 
 ## Prerequisites
 

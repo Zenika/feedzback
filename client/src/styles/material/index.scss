@@ -1,84 +1,105 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
 
-@use './material-palette' as client-palette;
-@use './material-typography' as client-typo;
+@use './theme' as t;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$client-primary: mat.define-palette(client-palette.$client-palette);
-$client-accent: mat.define-palette(mat.$blue-palette, A200, A100, A400);
+:root {
+  // Option 1)
+  // @include mat.all-component-themes(t.$light-theme);
 
-// The warn palette is optional (defaults to red).
-$client-warn: mat.define-palette(mat.$red-palette);
+  // Option 2)
+  @include mat.core-theme(t.$light-theme);
+  //@include mat.card-theme(t.$light-theme);
+  //@include mat.progress-bar-theme(t.$light-theme);
+  @include mat.tooltip-theme(t.$light-theme);
+  @include mat.form-field-theme(t.$light-theme);
+  @include mat.input-theme(t.$light-theme);
+  @include mat.select-theme(t.$light-theme);
+  @include mat.autocomplete-theme(t.$light-theme);
+  @include mat.dialog-theme(t.$light-theme);
+  @include mat.chips-theme(t.$light-theme);
+  @include mat.slide-toggle-theme(t.$light-theme);
+  //@include mat.radio-theme(t.$light-theme);
+  //@include mat.slider-theme(t.$light-theme);
+  @include mat.menu-theme(t.$light-theme);
+  //@include mat.list-theme(t.$light-theme);
+  @include mat.paginator-theme(t.$light-theme);
+  @include mat.tabs-theme(t.$light-theme);
+  //@include mat.checkbox-theme(t.$light-theme);
+  @include mat.button-theme(t.$light-theme);
+  @include mat.icon-button-theme(t.$light-theme);
+  @include mat.fab-theme(t.$light-theme);
+  @include mat.snack-bar-theme(t.$light-theme);
+  @include mat.table-theme(t.$light-theme);
+  @include mat.progress-spinner-theme(t.$light-theme);
+  @include mat.badge-theme(t.$light-theme);
+  //@include mat.bottom-sheet-theme(t.$light-theme);
+  //@include mat.button-toggle-theme(t.$light-theme);
+  //@include mat.datepicker-theme(t.$light-theme);
+  //@include mat.divider-theme(t.$light-theme);
+  //@include mat.expansion-theme(t.$light-theme);
+  //@include mat.grid-list-theme(t.$light-theme);
+  @include mat.icon-theme(t.$light-theme);
+  //@include mat.sidenav-theme(t.$light-theme);
+  //@include mat.stepper-theme(t.$light-theme);
+  //@include mat.sort-theme(t.$light-theme);
+  //@include mat.toolbar-theme(t.$light-theme);
+  //@include mat.tree-theme(t.$light-theme);
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$client-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $client-primary,
-      accent: $client-accent,
-      warn: $client-warn,
-    ),
-    typography: client-typo.$client-typography,
-    density: 0,
-  )
-);
+  // Material 2 backwards compatibility
+  @include mat.color-variants-backwards-compatibility(t.$light-theme);
+}
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component that you are using.
-// For the list of components, see: `node_modules/@angular/material/core/theming/_all-theme.scss`
+.gbl-theme-dark {
+  // Option 1)
+  // @include mat.all-component-colors(t.$dark-theme);
 
-// Option 1)
-// @include mat.all-component-themes($client-theme);
+  // Option 2)
+  @include mat.core-color(t.$dark-theme);
+  //@include mat.card-color(t.$dark-theme);
+  //@include mat.progress-bar-color(t.$dark-theme);
+  @include mat.tooltip-color(t.$dark-theme);
+  @include mat.form-field-color(t.$dark-theme);
+  @include mat.input-color(t.$dark-theme);
+  @include mat.select-color(t.$dark-theme);
+  @include mat.autocomplete-color(t.$dark-theme);
+  @include mat.dialog-color(t.$dark-theme);
+  @include mat.chips-color(t.$dark-theme);
+  @include mat.slide-toggle-color(t.$dark-theme);
+  //@include mat.radio-color(t.$dark-theme);
+  //@include mat.slider-color(t.$dark-theme);
+  @include mat.menu-color(t.$dark-theme);
+  //@include mat.list-color(t.$dark-theme);
+  @include mat.paginator-color(t.$dark-theme);
+  @include mat.tabs-color(t.$dark-theme);
+  //@include mat.checkbox-color(t.$dark-theme);
+  @include mat.button-color(t.$dark-theme);
+  @include mat.icon-button-color(t.$dark-theme);
+  @include mat.fab-color(t.$dark-theme);
+  @include mat.snack-bar-color(t.$dark-theme);
+  @include mat.table-color(t.$dark-theme);
+  @include mat.progress-spinner-color(t.$dark-theme);
+  @include mat.badge-color(t.$dark-theme);
+  //@include mat.bottom-sheet-color(t.$dark-theme);
+  //@include mat.button-toggle-color(t.$dark-theme);
+  //@include mat.datepicker-color(t.$dark-theme);
+  //@include mat.divider-color(t.$dark-theme);
+  //@include mat.expansion-color(t.$dark-theme);
+  //@include mat.grid-list-color(t.$dark-theme);
+  @include mat.icon-color(t.$dark-theme);
+  //@include mat.sidenav-color(t.$dark-theme);
+  //@include mat.stepper-color(t.$dark-theme);
+  //@include mat.sort-color(t.$dark-theme);
+  //@include mat.toolbar-color(t.$dark-theme);
+  //@include mat.tree-color(t.$dark-theme);
 
-// Option 2)
-@include mat.core-theme($client-theme);
-//@include mat.card-theme($client-theme);
-//@include mat.progress-bar-theme($client-theme);
-@include mat.tooltip-theme($client-theme);
-@include mat.form-field-theme($client-theme);
-@include mat.input-theme($client-theme);
-@include mat.select-theme($client-theme);
-@include mat.autocomplete-theme($client-theme);
-@include mat.dialog-theme($client-theme);
-@include mat.chips-theme($client-theme);
-@include mat.slide-toggle-theme($client-theme);
-//@include mat.radio-theme($client-theme);
-//@include mat.slider-theme($client-theme);
-@include mat.menu-theme($client-theme);
-//@include mat.list-theme($client-theme);
-@include mat.paginator-theme($client-theme);
-@include mat.tabs-theme($client-theme);
-//@include mat.checkbox-theme($client-theme);
-@include mat.button-theme($client-theme);
-@include mat.icon-button-theme($client-theme);
-@include mat.fab-theme($client-theme);
-@include mat.snack-bar-theme($client-theme);
-@include mat.table-theme($client-theme);
-@include mat.progress-spinner-theme($client-theme);
-@include mat.badge-theme($client-theme);
-//@include mat.bottom-sheet-theme($client-theme);
-//@include mat.button-toggle-theme($client-theme);
-//@include mat.datepicker-theme($client-theme);
-//@include mat.divider-theme($client-theme);
-//@include mat.expansion-theme($client-theme);
-//@include mat.grid-list-theme($client-theme);
-@include mat.icon-theme($client-theme);
-//@include mat.sidenav-theme($client-theme);
-//@include mat.stepper-theme($client-theme);
-//@include mat.sort-theme($client-theme);
-//@include mat.toolbar-theme($client-theme);
-//@include mat.tree-theme($client-theme);
+  // Material 2 backwards compatibility
+  @include mat.color-variants-backwards-compatibility(t.$dark-theme);
+}
 
-// Angular material customization for this App
+// Material 2 typography
+@import './material-typography';
+
+// Material customization for this App
 @import './material-overrides';

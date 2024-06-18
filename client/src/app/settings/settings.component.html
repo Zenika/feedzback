@@ -6,7 +6,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-autocomplete-email forManager [email]="form.controls.managerEmail" class="gbl-form-field" />
 
-  <button [disabled]="submitButtonDisabled" mat-raised-button color="primary" i18n="@@Action.Update">
-    Mettre à jour
-  </button>
+  <button [disabled]="submitButtonDisabled" mat-flat-button i18n="@@Action.Update">Mettre à jour</button>
 </form>

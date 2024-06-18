@@ -1,6 +1,6 @@
 @if (hasDraft()) {
   @if (device() !== 'mobile') {
-    <button mat-raised-button color="primary" class="float-right ms-4" (click)="openDraftDialog()">
+    <button mat-flat-button class="float-right ms-4" (click)="openDraftDialog()">
       <mat-icon>edit_note</mat-icon>
       <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
     </button>
@@ -20,15 +20,15 @@
 }
 
 <ng-template #draftDialogTmpl>
-  <h1 mat-dialog-title>
+  <div mat-dialog-title>
     <mat-icon class="me-2 scale-125 align-middle">edit_note</mat-icon>
     <ng-container i18n="@@Title.Drafts">Brouillons</ng-container>
-  </h1>
+  </div>
   <div mat-dialog-content>
     <app-give-feedback-draft />
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
+    <button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
   </div>
 </ng-template>
 
@@ -71,7 +71,6 @@
         type="button"
         [disabled]="form.controls.receiverEmail.invalid || submitInProgress"
         mat-stroked-button
-        color="primary"
         matTooltip="Enregistrer en tant que brouillon"
         i18n-matTooltip="@@Action.SaveAsDraft"
         i18n="@@Action.Save"
@@ -80,7 +79,7 @@
         Sauvegarder
       </button>
 
-      <button [disabled]="form.invalid || submitInProgress" mat-raised-button color="primary" class="ms-6">
+      <button [disabled]="form.invalid || submitInProgress" mat-flat-button class="ms-6">
         <mat-icon>send</mat-icon>
         <ng-container i18n="@@Action.Send">Envoyer</ng-container>
       </button>

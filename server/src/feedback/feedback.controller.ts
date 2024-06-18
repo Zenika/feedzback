@@ -49,7 +49,7 @@ export class FeedbackController {
 
   // ----- Request feedback and give requested feedback -----
 
-  @ApiOperation({ summary: 'Request feedback from one or more people' })
+  @ApiOperation({ summary: 'Request feedback from one recipient' })
   @UseGuards(AuthGuard)
   @Post('request')
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {

@@ -8,7 +8,7 @@ When I reply to a feedback request or give spontaneous feedback, if I can't comp
 
 The drafts are stored in the `feedbackDraft` Firestore collection.
 
-The document ID is the `giverEmail` (who wrote and saved the draft), whether he is internal or external to the Zenika organisation.
+In this collection, the document ID is the `giverEmail` (who wrote and saved the draft), whether he is internal or external to the Zenika organisation.
 
 For a given `giverEmail`, there can be 2 nested collections:
 

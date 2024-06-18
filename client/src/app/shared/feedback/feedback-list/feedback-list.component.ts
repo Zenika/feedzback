@@ -79,7 +79,7 @@ export class FeedbackListComponent implements AfterViewInit {
       this.init();
     });
 
-    effect(() => this.applyFilter(this.filter()));
+    effect(() => this.applyFilter(this.filter()), { allowSignalWrites: true });
 
     inject(BreakpointService)
       .device$.pipe(takeUntilDestroyed())

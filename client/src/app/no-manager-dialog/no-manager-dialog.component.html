@@ -1,5 +1,5 @@
 <ng-template #templateRef>
-  <h2 mat-dialog-title i18n="@@Component.NoManagerDialog.Title">Bienvenue sur FeedZback</h2>
+  <div mat-dialog-title i18n="@@Component.NoManagerDialog.Title">Bienvenue sur FeedZback</div>
 
   <mat-dialog-content i18n="@@Component.NoManagerDialog.Message">
     Pour profiter au mieux de l'application, merci de
@@ -7,9 +7,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false" i18n="@@Word.Later">Plus tard</button>
+    <button mat-button [mat-dialog-close]="false" color="accent" i18n="@@Word.Later">Plus tard</button>
 
-    <button mat-button [mat-dialog-close]="true" color="primary" cdkFocusInitial routerLink="/settings">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial routerLink="/settings">
       <mat-icon>settings</mat-icon>
       <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
     </button>

@@ -18,7 +18,7 @@ If you don't have permission, please contact Pierre Nicoli or Stéphane Francel.
 
 - Create a `.env` file with the following environment variables:
 
-```shell
+```bash
 SERVER_PORT=3000
 
 CLIENT_URL=http://localhost:4200
@@ -42,7 +42,7 @@ Retrieve these secret values from the [Google Cloud Run console](https://console
 
 - Run the following commands:
 
-```shell
+```bash
 npm install
 npm run start:dev
 ```
@@ -55,7 +55,7 @@ npm run start:dev
 
 - Run the following commands:
 
-```shell
+```bash
 npm install
 npm start
 ```

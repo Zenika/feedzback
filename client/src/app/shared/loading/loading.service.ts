@@ -41,11 +41,25 @@ export class LoadingService {
   }
 
   unqueue(req: LoadingRequest) {
+    if (!this.loadingMap.has(req)) {
+      return;
+    }
+
     clearTimeout(this.loadingMap.get(req));
     this.loadingMap.delete(req);
 
     if (this.loadingMap.size === 0) {
       this._loading.set(false);
     }
+  }
+
+  flush() {
+    if (this.loadingMap.size === 0) {
+      return;
+    }
+
+    this.loadingMap.forEach((timeout) => clearTimeout(timeout));
+    this.loadingMap.clear();
+    this._loading.set(false);
   }
 }

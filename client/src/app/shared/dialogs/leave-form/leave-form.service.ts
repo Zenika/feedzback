@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map, of } from 'rxjs';
+import { LoadingService } from '../../loading/loading.service';
 import { DialogComponent } from '../dialog.component';
 import { DialogData } from '../dialog.types';
 import { leaveFormMap } from './leave-form.config';
@@ -14,6 +15,8 @@ export class LeaveFormService {
   private snapshot?: string;
 
   private matDialog = inject(MatDialog);
+
+  private loadingService = inject(LoadingService);
 
   registerForm(form: AbstractControl) {
     this.form = form;
@@ -37,6 +40,10 @@ export class LeaveFormService {
     if (!this.hasChanged()) {
       return of(true);
     }
+
+    // Note: we don't want 2 popups displayed at the same time!
+    // So, let's skip the loading overlay in favor of the leave-form dialog
+    this.loadingService.flush();
 
     const data: DialogData = typeof config === 'string' ? leaveFormMap[config] : config;
 

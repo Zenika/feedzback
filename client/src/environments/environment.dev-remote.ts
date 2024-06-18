@@ -15,6 +15,6 @@ export const environment = {
   production: false,
   appVersion: APP_VERSION,
   firebaseOptions,
-  apiBaseUrl: 'https://server.dev.feedzback.znk.io',
+  apiBaseUrl: 'https://server.dev.feedzback.znk.io', // `dev-local` and `dev-remote` environments differ only here
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
 };

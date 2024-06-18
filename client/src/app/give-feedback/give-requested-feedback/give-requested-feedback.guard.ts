@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EMPTY, Observable, catchError, first, of, switchMap, tap } from 'rxjs';
+import { NotFoundNavigationState } from '../../not-found/not-found.types';
 import { AuthService } from '../../shared/auth';
 import { FeedbackService } from '../../shared/feedback/feedback.service';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
@@ -31,7 +32,10 @@ export const giveRequestedFeedbackGuard = (route: ActivatedRouteSnapshot): Obser
           return authService.signInAnonymously();
         }),
         catchError(() => {
-          router.navigate(['/not-found']);
+          const state: NotFoundNavigationState = {
+            details: $localize`:@@PageNotFound.InvalidTokenId:Le lien est erroné ou la demande de feedZback a été archivée.`,
+          };
+          router.navigate(['/not-found'], { state });
           return EMPTY;
         }),
       );

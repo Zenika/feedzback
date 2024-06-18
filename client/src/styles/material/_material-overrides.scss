@@ -1,8 +1,18 @@
-@use '../variables.scss' as v;
+:root {
+  --mdc-dialog-subhead-weight: 600;
 
-/* ----- Icon ----- */
+  --mdc-dialog-supporting-text-size: 1rem;
+  --mdc-dialog-supporting-text-line-height: 1.5rem;
+}
 
 mat-icon {
   // Useful when the parent tag has a `display: flex` property
   flex-shrink: 0;
+}
+
+.gbl-theme-dark {
+  .cdk-overlay-dark-backdrop {
+    // In dark theme, there isn't enough separation between the backdrop and dialog colors.
+    background: rgba(0, 0, 0, 0.64); // Default value is `rgba(0, 0, 0, 0.32)`
+  }
 }

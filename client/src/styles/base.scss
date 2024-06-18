@@ -1,5 +1,3 @@
-@use './variables' as v;
-
 * {
   box-sizing: border-box;
 }
@@ -11,9 +9,6 @@ body {
 
 body {
   margin: 0;
-  background-color: v.$background-grey-color;
-  color: v.$dark-primary-text;
-  font-family: 'Nunito', sans-serif;
 
   // Angular material components use the following font-smoothing properties (so, we want the other contents to have the same render)
   // More infos: https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth
@@ -24,5 +19,5 @@ body {
 hr {
   margin: 1.5rem 0;
   border: none;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid var(--gbl-outline-variant);
 }

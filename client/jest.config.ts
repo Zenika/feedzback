@@ -4,5 +4,7 @@ import type { Config } from 'jest';
 
 export default {
   passWithNoTests: true,
-  setupFiles: ['./setup-jest.ts'],
+  preset: 'jest-preset-angular',
+  setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+  //globalSetup: 'jest-preset-angular/global-setup',
 } satisfies Config;

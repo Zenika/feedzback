@@ -7,17 +7,18 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    font-size: 1.125rem;
 
     &--info {
-      color: rgb(158, 197, 254);
+      color: var(--app-notification-info);
     }
 
     &--success {
-      color: rgb(163, 207, 187);
+      color: var(--app-notification-success);
     }
 
     &--danger {
-      color: rgb(241, 174, 181);
+      color: var(--app-notification-danger);
     }
   }
 
@@ -38,4 +39,16 @@
       vertical-align: text-bottom;
     }
   }
+}
+
+:root {
+  --app-notification-info: rgb(158, 197, 254);
+  --app-notification-success: rgb(163, 207, 187);
+  --app-notification-danger: rgb(241, 174, 181);
+}
+
+.gbl-theme-dark {
+  --app-notification-info: rgb(13, 110, 253);
+  --app-notification-success: rgb(25, 135, 84);
+  --app-notification-danger: rgb(220, 53, 69);
 }

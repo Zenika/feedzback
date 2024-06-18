@@ -139,7 +139,7 @@ This helps the server compose URLs to include in emails.
 
 ## Usage analytics
 
-Usage analytics can be set up using [these instructions](/docs/ci-cd/usage-analytics)
+Usage analytics can be set up using [these instructions](/docs/usage-analytics)
 
 ## Links
 

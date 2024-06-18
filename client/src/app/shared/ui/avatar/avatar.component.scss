@@ -1,5 +1,6 @@
 .app-avatar {
   vertical-align: middle;
+  flex-shrink: 0; // as flex item
   display: inline-flex;
   justify-content: center;
   align-items: center;

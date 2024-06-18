@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { AUTH_REDIRECT_PARAM } from './auth.config';
+import { AUTH_REDIRECT_BYPASS_URL, AUTH_REDIRECT_PARAM } from './auth.config';
 import { AuthService } from './auth.service';
 
 export const authGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
@@ -13,7 +13,7 @@ export const authGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnaps
       if (authenticated) {
         return;
       }
-      const redirectUrlAfterSignIn = state.url;
+      const redirectUrlAfterSignIn = state.url !== AUTH_REDIRECT_BYPASS_URL ? state.url : undefined;
       router.navigate(['/sign-in'], { queryParams: { [AUTH_REDIRECT_PARAM]: redirectUrlAfterSignIn } });
     }),
   );

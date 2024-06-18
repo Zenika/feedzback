@@ -25,7 +25,9 @@ Tagging a revision `staging-X.Y.Z` where `X`, `Y`, and `Z` are integers, the ful
 - Server on Google cloud run: [staging server health check](https://server.staging.feedzback.znk.io/health)
 - Client on Firebase hosting: [staging client app](https://staging.feedzback.znk.io)
 
+:::info
 The full stack is also deployed in staging when a commit is pushed on the `main` branch (typically when a pull request is merged).
+:::
 
 ## Production deployment
 

@@ -15,6 +15,6 @@ export const environment = {
   production: false,
   appVersion: APP_VERSION,
   firebaseOptions,
-  apiBaseUrl: 'http://localhost:3000',
+  apiBaseUrl: 'http://localhost:3000', // `dev-local` and `dev-remote` environments differ only here
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
 };

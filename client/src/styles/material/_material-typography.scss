@@ -1,3 +1,5 @@
+// TODO: switch to Material 3 typography
+
 // Read very carefully: https://material.angular.io/guide/typography
 // But the official document doesn't seems to be entirely accurate.
 // So I tried to clarify all that...
@@ -21,35 +23,42 @@
 
 @use '@angular/material' as mat;
 
+@use '../variables.scss' as v;
+
 $client-font-family: '"Nunito", sans-serif';
 
-$client-typography-level-default: mat.define-typography-level(
+$client-typography-level-default: mat.m2-define-typography-level(
   $font-size: 1rem,
   $line-height: 1.5,
-  $font-weight: 400,
+  $font-weight: v.$font-regular-weight,
   $font-family: $client-font-family,
   $letter-spacing: normal,
 );
 
-$client-typography: mat.define-typography-config(
+$client-typography: mat.m2-define-typography-config(
   $font-family: $client-font-family,
 
-  $headline-1: mat.define-typography-level(min(1.525rem + 3.3vw, 4rem), 1.2, 500, $client-font-family, normal),
-  $headline-2: mat.define-typography-level(min(1.475rem + 2.7vw, 3.5rem), 1.2, 500, $client-font-family, normal),
-  $headline-3: mat.define-typography-level(min(1.425rem + 2.1vw, 3rem), 1.2, 500, $client-font-family, normal),
-  $headline-4: mat.define-typography-level(min(1.375rem + 1.5vw, 2.5rem), 1.2, 500, $client-font-family, normal),
+  $headline-1:
+    mat.m2-define-typography-level(min(1.525rem + 3.3vw, 4rem), 1.2, v.$font-bold-weight, $client-font-family, normal),
+  $headline-2:
+    mat.m2-define-typography-level(min(1.475rem + 2.7vw, 3.5rem), 1.2, v.$font-bold-weight, $client-font-family, normal),
+  $headline-3:
+    mat.m2-define-typography-level(min(1.425rem + 2.1vw, 3rem), 1.2, v.$font-bold-weight, $client-font-family, normal),
+  $headline-4:
+    mat.m2-define-typography-level(min(1.375rem + 1.5vw, 2.5rem), 1.2, v.$font-bold-weight, $client-font-family, normal),
   /* <h1> */ $headline-5:
-    mat.define-typography-level(min(1.375rem + 1.5vw, 2.5rem), 1.2, 500, $client-font-family, normal),
+    mat.m2-define-typography-level(min(1.375rem + 1.5vw, 2.5rem), 1.2, v.$font-bold-weight, $client-font-family, normal),
   /* <h2> */ $headline-6:
-    mat.define-typography-level(min(1.3rem + 0.6vw, 1.75rem), 1.2, 500, $client-font-family, normal),
-  /* <h3> */ $subtitle-1: mat.define-typography-level(1.25rem, 1.2, 500, $client-font-family, normal),
-  /* Form fields */ $body-1: mat.define-typography-level(1rem, 1.5, 400, $client-font-family, normal),
+    mat.m2-define-typography-level(min(1.3rem + 0.6vw, 1.75rem), 1.2, v.$font-bold-weight, $client-font-family, normal),
+  /* <h3> */ $subtitle-1: mat.m2-define-typography-level(1.25rem, 1.2, v.$font-bold-weight, $client-font-family, normal),
+  /* Form fields */ $body-1: mat.m2-define-typography-level(1rem, 1.5, 400, $client-font-family, normal),
   /* Body text */ $body-2: $client-typography-level-default,
-  /* Body strong */ $subtitle-2: mat.define-typography-level(1rem, 1.5, 500, $client-font-family, normal),
-  $caption: mat.define-typography-level(0.85rem, 1.5, 400, $client-font-family, normal),
+  /* Body strong */ $subtitle-2:
+    mat.m2-define-typography-level(1rem, 1.5, v.$font-bold-weight, $client-font-family, normal),
+  $caption: mat.m2-define-typography-level(0.85rem, 1.5, 400, $client-font-family, normal),
   $overline: $client-typography-level-default,
 
-  $button: mat.define-typography-level(1rem, 1.5, 500, $client-font-family, normal),
+  $button: mat.m2-define-typography-level(1rem, 1.5, v.$font-bold-weight, $client-font-family, normal),
 );
 
 @include mat.typography-hierarchy($client-typography);
