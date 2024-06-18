@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.3",
-    "@angular/cli": "^18.0.3",
+    "@angular/cli": "^18.0.4",
     "@angular/compiler-cli": "^18.0.2",
     "@angular/localize": "^18.0.2",
     "@types/canvas-confetti": "^1.6.4",
