@@ -1,6 +1,6 @@
 @use '../app.scss' as app;
 
-$show-analytics: true;
+$show-analytics: false;
 
 .app-home {
   @include app.media-breakpoint-down(md) {
