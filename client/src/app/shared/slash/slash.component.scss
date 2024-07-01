@@ -1,0 +1,15 @@
+.app-slash {
+  display: inline-block;
+
+  &__super {
+    vertical-align: super;
+  }
+
+  &__middle {
+    vertical-align: middle;
+  }
+
+  &__sub {
+    vertical-align: sub;
+  }
+}
