@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth';
-import { ZenikaLogoComponent } from '../shared/ui/zenika-logo';
+import { ZenikaLogoComponent } from '../shared/zenika-logo';
 
 @Component({
   selector: 'app-sign-in',

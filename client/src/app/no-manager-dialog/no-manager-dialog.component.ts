@@ -5,7 +5,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { delay, first, map, of, switchMap } from 'rxjs';
-import { EmployeeService } from '../shared/employee/employee.service';
+import { EmployeeService } from '../shared/employee';
 
 @Component({
   selector: 'app-no-manager-dialog',

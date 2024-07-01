@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline" class="app-autocomplete-email__field">
-  @if (forManager) {
+  @if (forManager()) {
     <mat-label i18n="@@Field.EmailOfYourManager">Email de votre manager</mat-label>
   } @else {
     <mat-label i18n="@@Field.EmailOfYourColleague">Email de votre collègue</mat-label>
@@ -7,7 +7,7 @@
 
   <input
     #inputRef
-    [formControl]="email"
+    [formControl]="email()"
     type="email"
     matInput
     placeholder="jean.dupont@zenika.com"
@@ -31,5 +31,5 @@
     }
   </mat-autocomplete>
 
-  <mat-error>{{ email.errors | validationErrorMessage }}</mat-error>
+  <mat-error>{{ email().errors | validationErrorMessage }}</mat-error>
 </mat-form-field>

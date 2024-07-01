@@ -1,4 +1,4 @@
-import { DialogData } from '../dialog.types';
+import { DialogData } from '..';
 import { LeaveFormType } from './leave-form.types';
 
 export const leaveFormMap: Record<LeaveFormType, DialogData> = {

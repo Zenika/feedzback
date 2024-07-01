@@ -11,12 +11,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
 import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
-import { ConfirmBeforeSubmitDirective } from '../shared/dialogs/confirm-before-submit';
+import { DialogTooltipDirective } from '../shared/dialog-tooltip';
+import { ConfirmBeforeSubmitDirective } from '../shared/dialog/confirm-before-submit';
+import { FeedbackService } from '../shared/feedback';
 import { SMALL_MAX_LENGTH } from '../shared/feedback/feedback.config';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
-import { FeedbackService } from '../shared/feedback/feedback.service';
-import { DialogTooltipDirective } from '../shared/ui/dialog-tooltip';
-import { MessageComponent } from '../shared/ui/message';
+import { MessageComponent } from '../shared/message';
 import { StringArrayError } from '../shared/validation';
 import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import {

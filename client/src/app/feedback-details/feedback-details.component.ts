@@ -1,8 +1,7 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { DoneFeedbackComponent } from '../shared/feedback/done-feedback/done-feedback.component';
-import { PendingFeedbackComponent } from '../shared/feedback/pending-feedback/pending-feedback.component';
+import { DoneFeedbackComponent, PendingFeedbackComponent } from '../shared/feedback';
 import { FeedbackDetails } from './feedback-details.types';
 
 @Component({

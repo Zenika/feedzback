@@ -1,4 +1,4 @@
-import { DialogData } from '../dialog.types';
+import { DialogData } from '..';
 import { ConfirmBeforeSubmitType } from './confirm-before-submit.types';
 
 export const confirmBeforeSubmitMap: Record<ConfirmBeforeSubmitType, DialogData> = {

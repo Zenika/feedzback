@@ -1,8 +1,7 @@
 import { Directive, inject, input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs';
-import { DialogComponent } from '../dialog.component';
-import { DialogData } from '../dialog.types';
+import { DialogComponent, DialogData } from '..';
 import { confirmBeforeSubmitMap } from './confirm-before-submit.config';
 import { ConfirmBeforeSubmitConfig } from './confirm-before-submit.types';
 

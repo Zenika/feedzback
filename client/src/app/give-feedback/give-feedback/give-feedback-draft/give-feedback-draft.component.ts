@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { FeedbackDraftListComponent } from '../../../shared/feedback/feedback-draft-list/feedback-draft-list.component';
+import { FeedbackDraftListComponent } from '../../../shared/feedback';
 import { FeedbackDraft } from '../../../shared/feedback/feedback.types';
 import { GiveFeedbackDraftService } from './give-feedback-draft.service';
 

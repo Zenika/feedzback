@@ -1,4 +1,4 @@
-import { DialogData } from '../dialog.types';
+import { DialogData } from '..';
 
 export type ConfirmBeforeSubmitConfig = ConfirmBeforeSubmitType | DialogData;
 

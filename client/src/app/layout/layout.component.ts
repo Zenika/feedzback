@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { LoadingComponent } from '../../loading/loading.component';
+import { LoadingComponent } from '../shared/loading';
 
 @Component({
   selector: 'app-layout',

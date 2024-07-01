@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, combineLatest, map, switchMap } from 'rxjs';
 import { AuthService } from '../../shared/auth';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackService } from '../../shared/feedback';
 import { NormalizedFeedback } from '../../shared/feedback/feedback.types';
 import { normalizeReceivedRequestList } from '../../shared/feedback/feedback.utils';
 

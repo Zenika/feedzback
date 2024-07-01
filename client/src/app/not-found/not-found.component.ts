@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { MessageComponent } from '../shared/ui/message';
+import { MessageComponent } from '../shared/message';
 import { NotFoundNavigationState } from './not-found.types';
 
 @Component({

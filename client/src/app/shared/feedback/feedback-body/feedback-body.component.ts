@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, input } from '@angular/core';
-import { MultiLineComponent } from '../../ui/multi-line';
 import { Feedback, FeedbackRequest, FeedbackType } from '../feedback.types';
+import { MultiLineComponent } from './multi-line';
 
 @Component({
   selector: 'app-feedback-body',

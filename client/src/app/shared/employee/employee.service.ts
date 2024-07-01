@@ -4,7 +4,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { EMPTY, filter, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
-import { BYPASS_LOADING } from '../loading/loading.config';
+import { BYPASS_LOADING } from '../loading';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData } from './employee.types';
 import { isManager, updateEmployeeData } from './employee.utils';

@@ -2,9 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map, of } from 'rxjs';
-import { LoadingService } from '../../loading/loading.service';
-import { DialogComponent } from '../dialog.component';
-import { DialogData } from '../dialog.types';
+import { DialogComponent, DialogData } from '..';
+import { LoadingService } from '../../loading';
 import { leaveFormMap } from './leave-form.config';
 import { LeaveFormConfig } from './leave-form.types';
 

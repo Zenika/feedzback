@@ -5,12 +5,12 @@ import { provideRouter, withComponentInputBinding, withViewTransitions } from '@
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { provideAuth } from './shared/auth';
-import { provideBaseHref } from './shared/base-href/base-href.provider';
+import { provideBaseHref } from './shared/base-href';
 import { provideLanguage } from './shared/i18n/language';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
-import { provideSvgIcons } from './shared/icons/icons.provider';
-import { loadingInterceptor } from './shared/loading/loading.interceptor';
-import { provideTheme } from './shared/theme/theme.provider';
+import { provideSvgIcons } from './shared/icons';
+import { loadingInterceptor } from './shared/loading';
+import { provideTheme } from './shared/theme';
 import { provideAllowedEmailDomains } from './shared/validation/allowed-email-domains';
 
 export const appConfig: ApplicationConfig = {

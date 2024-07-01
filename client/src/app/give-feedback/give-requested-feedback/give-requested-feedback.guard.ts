@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { EMPTY, Observable, catchError, first, of, switchMap, tap } from 'rxjs';
 import { NotFoundNavigationState } from '../../not-found/not-found.types';
 import { AuthService } from '../../shared/auth';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackService } from '../../shared/feedback';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
 export const giveRequestedFeedbackGuard = (route: ActivatedRouteSnapshot): Observable<boolean> => {
