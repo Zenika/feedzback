@@ -8,7 +8,7 @@ import { provideAuth } from './shared/auth';
 import { provideBaseHref } from './shared/base-href';
 import { provideLanguage } from './shared/i18n/language';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
-import { provideSvgIcons } from './shared/icons';
+import { provideSvgIcons } from './shared/icon';
 import { loadingInterceptor } from './shared/loading';
 import { provideTheme } from './shared/theme';
 import { provideAllowedEmailDomains } from './shared/validation/allowed-email-domains';

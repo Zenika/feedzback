@@ -2,7 +2,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { svgIconNames } from './icons.constants';
+import { svgIconNames } from './icon.constants';
 
 export const provideSvgIcons = (): FactoryProvider => ({
   provide: APP_INITIALIZER,

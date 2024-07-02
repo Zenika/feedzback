@@ -1,23 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { AvatarComponent } from '../shared/avatar';
-import { DialogTooltipDirective } from '../shared/dialog-tooltip';
-import { MessageComponent } from '../shared/message';
-import { NotificationService } from '../shared/notification';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-demo-content',
+  selector: 'app-color-demo',
   standalone: true,
-  imports: [MessageComponent, AvatarComponent, ReactiveFormsModule, MatIconModule, DialogTooltipDirective],
-  templateUrl: './demo-content.component.html',
-  styleUrl: './demo-content.component.scss',
+  imports: [],
+  templateUrl: './color-demo.component.html',
+  styleUrl: './color-demo.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
-export default class DemoContentComponent {
-  protected notificationService = inject(NotificationService);
-
-  loremIpsum = 'Lorem ipsum';
-
+export class ColorDemoComponent {
   // Learn more about Material color roles: https://m3.material.io/styles/color/roles
   materialColorRoles = [
     'background',

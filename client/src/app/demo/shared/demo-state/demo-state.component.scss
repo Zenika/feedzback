@@ -1,0 +1,17 @@
+.app-demo-state {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &__field {
+    width: 10rem;
+  }
+
+  // Hack: remove large space below `<mat-form-field>`
+  .mat-mdc-form-field-bottom-align {
+    display: none !important;
+  }
+}

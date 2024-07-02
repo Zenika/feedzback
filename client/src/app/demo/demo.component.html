@@ -1,0 +1,13 @@
+<mat-chip-listbox aria-label="Demo selection">
+  @for (path of paths; track $index) {
+    <mat-chip-option [routerLink]="path" [selected]="path === currentPath()" [selectable]="path !== currentPath()">
+      {{ path | titlecase }}
+    </mat-chip-option>
+  }
+</mat-chip-listbox>
+
+<hr />
+
+<h1>{{ currentPath() | titlecase }}</h1>
+
+<router-outlet />

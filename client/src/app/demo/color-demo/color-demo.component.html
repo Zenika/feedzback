@@ -1,0 +1,8 @@
+@for (role of materialColorRoles; track $index; let first = $first) {
+  <div class="color-demo">
+    <div class="color-demo__preview" [style.background-color]="'var(--gbl-' + role + ')'"></div>
+    <div class="color-demo__label" [class.demo-content-colors__label--first]="first">
+      {{ role }}
+    </div>
+  </div>
+}
