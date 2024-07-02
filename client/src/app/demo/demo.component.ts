@@ -4,6 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatChipsModule } from '@angular/material/chips';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { demoPaths } from './demo.config';
 
 @Component({
   selector: 'app-demo',
@@ -15,7 +16,7 @@ import { filter, map } from 'rxjs';
 export class DemoComponent {
   private router = inject(Router);
 
-  protected paths = ['avatar', 'color', 'content', 'dialog-tooltip', 'icon', 'message', 'notification'];
+  protected paths = demoPaths;
 
   protected currentPath = toSignal(
     this.router.events.pipe(
