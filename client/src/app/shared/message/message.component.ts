@@ -1,13 +1,13 @@
 import { NgClass } from '@angular/common';
 import { Component, ViewEncapsulation, booleanAttribute, computed, input, model } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../icon';
 import { MessageType } from './message.types';
 
 @Component({
   selector: 'app-message',
   host: { '[class]': 'hostClass()' },
   standalone: true,
-  imports: [NgClass, MatIconModule],
+  imports: [NgClass, IconModule],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
   encapsulation: ViewEncapsulation.None,

@@ -12,8 +12,8 @@ import { DemoModule, demoProp } from '../shared';
 export class IconDemoComponent {
   protected demoState = {
     size: demoProp<IconSize>(
-      ['none', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x', '2xs', 'xs', 'sm', 'lg', 'xl', '2xl'],
-      { defaultValue: 'xl' },
+      ['none', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      { defaultValue: 'lg' },
     ),
     pull: demoProp<IconPull>(['none', 'left', 'right']),
     animation: demoProp<IconAnimation>(['none', 'beat', 'bounce', 'fade', 'flip', 'shake', 'spin']),

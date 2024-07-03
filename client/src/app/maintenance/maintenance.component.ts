@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { IconModule } from '../shared/icon';
 import { LogoComponent } from '../shared/logo';
 
 @Component({
@@ -11,7 +11,7 @@ import { LogoComponent } from '../shared/logo';
   templateUrl: './maintenance.component.html',
   styleUrl: './maintenance.component.scss',
   encapsulation: ViewEncapsulation.None,
-  imports: [MatButtonModule, MatIconModule, LogoComponent],
+  imports: [MatButtonModule, IconModule, LogoComponent],
 })
 export class MaintenanceComponent {
   private document = inject(DOCUMENT);

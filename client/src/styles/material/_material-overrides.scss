@@ -8,6 +8,11 @@
 mat-icon {
   // Useful when the parent tag has a `display: flex` property
   flex-shrink: 0;
+
+  // When using mat-icon component with svg icon, be sure that svg element fits 100% on both width and height
+  svg {
+    display: block;
+  }
 }
 
 .gbl-theme-dark {

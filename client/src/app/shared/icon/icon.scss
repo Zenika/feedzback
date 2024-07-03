@@ -1,8 +1,8 @@
 // Note: this file is imported globally in `src/styles.scss`.
 
 mat-icon.app-icon {
-  width: auto;
-  height: auto;
+  width: 1em;
+  height: 1em;
 
   /* ----- size ----- */
   &--1x {
@@ -48,13 +48,17 @@ mat-icon.app-icon {
     font-size: 0.875em;
     vertical-align: -0.07143em;
   }
-  &--lg {
+  &--md {
     font-size: 1.25em;
     vertical-align: -0.2em;
   }
-  &--xl {
+  &--lg {
     font-size: 1.5em;
     vertical-align: -0.25em;
+  }
+  &--xl {
+    font-size: 1.75em;
+    vertical-align: -0.28125em;
   }
   &--2xl {
     font-size: 2em;

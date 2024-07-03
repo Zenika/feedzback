@@ -5,5 +5,5 @@ export * from './icon.directive';
 export * from './icon.provider';
 export * from './icon.types';
 
-// Make easier import of `MatIconModule` alongside `IconDirective`
+// Make easier the import of `MatIconModule` alongside `IconDirective`
 export const IconModule = [MatIconModule, IconDirective] as const;
