@@ -28,8 +28,9 @@ const sidebars: SidebarsConfig = {
           items: [
             'technical-guides/client/firebase-hosting',
             'technical-guides/client/styles',
-            'technical-guides/client/i18n',
             'technical-guides/client/icons',
+            'technical-guides/client/demo',
+            'technical-guides/client/i18n',
           ],
         },
         {
