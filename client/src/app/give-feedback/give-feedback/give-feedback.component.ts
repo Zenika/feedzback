@@ -3,6 +3,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +15,8 @@ import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
 import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
 import { LeaveForm, LeaveFormService } from '../../shared/dialog/leave-form';
 import { FeedbackService } from '../../shared/feedback';
-import { IconModule } from '../../shared/icon';
+import { IconDirective } from '../../shared/icon';
+
 import { NotificationService } from '../../shared/notification';
 import {
   ALLOWED_EMAIL_DOMAINS,
@@ -34,9 +36,10 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
+    MatIconModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    IconModule,
+    IconDirective,
     AutocompleteEmailComponent,
     ConfirmBeforeSubmitDirective,
     ValidationErrorMessagePipe,

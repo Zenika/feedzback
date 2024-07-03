@@ -29,7 +29,7 @@ const sidebars: SidebarsConfig = {
             'technical-guides/client/firebase-hosting',
             'technical-guides/client/styles',
             'technical-guides/client/i18n',
-            'technical-guides/client/material-icons',
+            'technical-guides/client/icons',
           ],
         },
         {
