@@ -115,7 +115,9 @@ export class RequestFeedbackComponent {
       )
       .subscribe((results) => {
         this.sentEmails = [...this.sentEmails, ...recipients.filter((_, index) => !results[index].error)];
-        this.remainingUnsentEmails = recipients.filter((_, index) => results[index].error && !results[index].message);
+        this.remainingUnsentEmails = recipients.filter(
+          (_, index) => results[index].error && results[index].message !== 'invalid_email',
+        );
         this.remainingInvalidEmails = recipients.filter(
           (_, index) => results[index].error && results[index].message === 'invalid_email',
         );

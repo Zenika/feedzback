@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from '../core/auth';
+import { ContextService } from '../core/context';
 import { EmailService } from '../core/email';
 import { EmployeeDbService } from '../employee/employee-db';
 import { FeedbackDbService, FeedbackDraftType, FeedbackRequestDraftType, TokenObject } from './feedback-db';
@@ -35,6 +36,7 @@ import {
 export class FeedbackController {
   constructor(
     private authService: AuthService,
+    private contextService: ContextService,
     private emailService: EmailService,
     private feedbackDbService: FeedbackDbService,
     private feedbackEmailService: FeedbackEmailService,
@@ -53,15 +55,23 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('request')
   async request(@Body() { recipient: giverEmail, message, shared }: FeedbackRequestDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
     const isGiverEmailValid = await this.emailService.validate(giverEmail);
     if (!isGiverEmailValid) {
       throw new BadRequestException('invalid_email');
     }
+
     const receiverEmail = this.authService.userEmail!;
     if (receiverEmail === giverEmail) {
       throw new BadRequestException();
     }
+
     const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
+
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 
@@ -69,6 +79,11 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('request-again')
   async requestAgain(@Body() { feedbackId }: FeedbackRequestAgainDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
     const receiverEmail = this.authService.userEmail!;
 
     const requestWithToken = await this.feedbackDbService.requestAgain(feedbackId, receiverEmail);
@@ -110,6 +125,7 @@ export class FeedbackController {
     if (!request) {
       throw new BadRequestException();
     }
+
     const draft = await this.feedbackDbService.getDraft(request.giverEmail, FeedbackRequestDraftType, tokenId);
 
     return { request, draft };
@@ -124,6 +140,7 @@ export class FeedbackController {
     if (!tokenId) {
       throw new BadRequestException();
     }
+
     return { token: tokenId } as TokenObject;
   }
 
@@ -147,10 +164,16 @@ export class FeedbackController {
   @ApiOperation({ summary: 'Give requested feedback' })
   @Post('give-requested')
   async giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
     const infos = await this.feedbackDbService.giveRequested(token, { positive, negative, comment });
     if (!infos) {
       throw new BadRequestException();
     }
+
     await this.sendEmailsOnGiven(infos.giverEmail, infos.receiverEmail, infos.feedbackId, infos.shared);
   }
 
@@ -176,14 +199,21 @@ export class FeedbackController {
   @UseGuards(AuthGuard)
   @Post('give')
   async give(@Body() dto: GiveFeedbackDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
     const isReceiverEmailValid = await this.emailService.validate(dto.receiverEmail);
     if (!isReceiverEmailValid) {
       throw new BadRequestException('invalid_email');
     }
+
     const giverEmail = this.authService.userEmail!;
     if (giverEmail === dto.receiverEmail) {
       throw new BadRequestException();
     }
+
     const idObject = await this.feedbackDbService.give({ giverEmail, ...dto });
     await this.sendEmailsOnGiven(giverEmail, dto.receiverEmail, idObject.id, dto.shared);
     return idObject;
