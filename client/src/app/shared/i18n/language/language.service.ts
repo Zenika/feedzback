@@ -1,6 +1,7 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import Cookies from 'js-cookie';
+import { environment } from '../../../../environments/environment';
 import { LOCALE_ID_COOKIE_KEY } from './language.config';
 import { AppBaseHref, LocaleId } from './language.types';
 
@@ -34,7 +35,7 @@ export class LanguageService {
   }
 
   private setCookie(localeId: LocaleId) {
-    Cookies.set(LOCALE_ID_COOKIE_KEY, localeId, { expires: 365 });
+    Cookies.set(LOCALE_ID_COOKIE_KEY, localeId, { expires: 365, domain: environment.appDomain });
   }
 
   private switchApp(newAppBaseHref: AppBaseHref) {
