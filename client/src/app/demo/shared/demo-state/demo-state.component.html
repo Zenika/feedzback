@@ -1,0 +1,22 @@
+@for (prop of props(); track prop) {
+  @if (state()[prop].values | ofTypeBoolean) {
+    <mat-checkbox [checked]="state()[prop]()" (change)="state()[prop].next()">{{ prop }}</mat-checkbox>
+  } @else {
+    <mat-form-field appearance="outline" class="app-demo-state__field">
+      <mat-label>{{ prop }}</mat-label>
+      <mat-select [value]="state()[prop]()" (valueChange)="state()[prop].set($event)">
+        @for (value of state()[prop].values; track $index) {
+          <mat-option [value]="value">
+            @if (value === undefined || value === null) {
+              <i>{{ value + '' }}</i>
+            } @else if (value === '') {
+              <i>empty string</i>
+            } @else {
+              {{ value }}
+            }
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+}

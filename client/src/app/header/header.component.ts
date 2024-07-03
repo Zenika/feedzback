@@ -9,11 +9,11 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterLinkWithHref
 import { delay, filter } from 'rxjs';
 import { GiveRequestedFeedbackListService } from '../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { AuthService } from '../shared/auth';
+import { AvatarComponent } from '../shared/avatar';
 import { BreakpointService } from '../shared/breakpoint';
-import { EmployeeService } from '../shared/employee/employee.service';
+import { EmployeeService } from '../shared/employee';
 import { LanguageService } from '../shared/i18n/language';
-import { ThemeService } from '../shared/theme/theme.service';
-import { AvatarComponent } from '../shared/ui/avatar/avatar.component';
+import { ThemeService } from '../shared/theme';
 import { BurgerComponent } from './burger/burger.component';
 import { headerAnimations } from './header.animations';
 

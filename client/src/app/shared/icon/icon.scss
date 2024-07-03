@@ -1,0 +1,188 @@
+// Note: this file is imported globally in `src/styles.scss`.
+
+mat-icon.app-icon {
+  width: 1em;
+  height: 1em;
+
+  /* ----- size ----- */
+  &--1x {
+    font-size: 1em;
+  }
+  &--2x {
+    font-size: 2em;
+  }
+  &--3x {
+    font-size: 3em;
+  }
+  &--4x {
+    font-size: 4em;
+  }
+  &--5x {
+    font-size: 5em;
+  }
+  &--6x {
+    font-size: 6em;
+  }
+  &--7x {
+    font-size: 7em;
+  }
+  &--8x {
+    font-size: 8em;
+  }
+  &--9x {
+    font-size: 9em;
+  }
+  &--10x {
+    font-size: 10em;
+  }
+
+  &--2xs {
+    font-size: 0.625em;
+    vertical-align: 0.1em;
+  }
+  &--xs {
+    font-size: 0.75em;
+    vertical-align: 0em;
+  }
+  &--sm {
+    font-size: 0.875em;
+    vertical-align: -0.07143em;
+  }
+  &--md {
+    font-size: 1.25em;
+    vertical-align: -0.2em;
+  }
+  &--lg {
+    font-size: 1.5em;
+    vertical-align: -0.25em;
+  }
+  &--xl {
+    font-size: 1.75em;
+    vertical-align: -0.28125em;
+  }
+  &--2xl {
+    font-size: 2em;
+    vertical-align: -0.3125em;
+  }
+
+  /* ----- pull ----- */
+  &--left {
+    margin-right: var(--app-icon-pull, 0.3em);
+  }
+  &--right {
+    margin-left: var(--app-icon-pull, 0.3em);
+  }
+
+  /* ----- animation ----- */
+  &--beat {
+    animation: appIconBeat var(--app-icon-duration, 1s) ease-in-out infinite;
+  }
+  &--bounce {
+    animation: appIconBounce var(--app-icon-duration, 1s) cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+  }
+  &--fade {
+    animation: appIconFade var(--app-icon-duration, 1s) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  &--flip {
+    animation: appIconFlip var(--app-icon-duration, 1s) ease-in-out infinite;
+  }
+  &--shake {
+    animation: appIconShake var(--app-icon-duration, 1s) ease-in-out infinite;
+  }
+  &--spin {
+    animation: appIconSpin var(--app-icon-duration, 2s) linear infinite;
+  }
+}
+
+@keyframes appIconBeat {
+  0%,
+  90% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(var(--app-icon-scale, 1.25));
+  }
+}
+
+@keyframes appIconBounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-0.5em);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-0.125em);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+
+@keyframes appIconFade {
+  50% {
+    opacity: var(--app-icon-opacity, 0.4);
+  }
+}
+
+@keyframes appIconFlip {
+  50% {
+    transform: rotate3d(
+      var(--app-icon-flip-x, 0),
+      var(--app-icon-flip-y, 1),
+      var(--app-icon-flip-z, 0),
+      var(--app-icon-flip-angle, -180deg)
+    );
+  }
+}
+
+@keyframes appIconShake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  4% {
+    transform: rotate(15deg);
+  }
+  8%,
+  24% {
+    transform: rotate(-18deg);
+  }
+  12%,
+  28% {
+    transform: rotate(18deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  20% {
+    transform: rotate(22deg);
+  }
+  32% {
+    transform: rotate(-12deg);
+  }
+  36% {
+    transform: rotate(12deg);
+  }
+  40%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes appIconSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

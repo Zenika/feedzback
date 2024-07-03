@@ -1,12 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, ViewEncapsulation, booleanAttribute, inject } from '@angular/core';
+import { Component, ViewEncapsulation, booleanAttribute, inject, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
-import { PeopleService } from '../../people/people.service';
-import { AvatarComponent } from '../../ui/avatar/avatar.component';
+import { AvatarComponent } from '../../avatar';
+import { PeopleService } from '../../people';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../../validation/allowed-email-domains';
 import { ValidationErrorMessagePipe } from '../../validation/validation-error-message';
 
@@ -28,14 +28,16 @@ import { ValidationErrorMessagePipe } from '../../validation/validation-error-me
   encapsulation: ViewEncapsulation.None,
 })
 export class AutocompleteEmailComponent {
-  @Input({ transform: booleanAttribute }) forManager = false;
+  forManager = input(false, { transform: booleanAttribute });
 
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
-  @Input() email = new FormControl<string>('', {
-    nonNullable: true,
-    validators: [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
-  });
+  email = input(
+    new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email, this.allowedEmailDomainsValidator],
+    }),
+  );
 
   private peopleService = inject(PeopleService);
 
@@ -59,8 +61,8 @@ export class AutocompleteEmailComponent {
   }
 
   protected selectEmail(email: string) {
-    this.email.setValue(email);
-    this.email.updateValueAndValidity();
+    this.email().setValue(email);
+    this.email().updateValueAndValidity();
     this.query$.next('');
   }
 }

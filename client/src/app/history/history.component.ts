@@ -1,14 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FeedbackListComponent } from '../shared/feedback/feedback-list/feedback-list.component';
-import { FeedbackTypeIconPipe } from '../shared/feedback/feedback-type-icon.pipe';
-import { FeedbackService } from '../shared/feedback/feedback.service';
+import { FeedbackListComponent, FeedbackService, FeedbackTypeIconPipe } from '../shared/feedback';
 import { FeedbackType, NormalizedFeedback } from '../shared/feedback/feedback.types';
 import {
   getFeedbackType,
@@ -37,13 +35,12 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export default class HistoryComponent implements OnInit {
-  @Input({
+  type = input(FeedbackType.received, {
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
-  })
-  type: FeedbackType = FeedbackType.received;
+  });
 
   protected get tabIndex() {
-    return this.feedbackTypeToTabIndex(this.type);
+    return this.feedbackTypeToTabIndex(this.type());
   }
 
   protected filter = '';
@@ -97,7 +94,7 @@ export default class HistoryComponent implements OnInit {
       [FeedbackType.sentRequest]: 2,
 
       // Note: The `receivedRequest` are not displayed in this page.
-      // In this case, we display the first tab, as if the `@Input() type, coming from the URL, had any random value.
+      // In this case, we display the first tab, as if the `type` input, coming from the URL, had any random value.
       [FeedbackType.receivedRequest]: 0,
     };
     return tabIndexMap[type];

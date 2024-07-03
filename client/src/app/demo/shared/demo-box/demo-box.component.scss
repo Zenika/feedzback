@@ -1,0 +1,32 @@
+.app-demo-box {
+  display: block;
+  margin: 0 0 2rem 0;
+  padding: 0;
+  box-shadow: 0 0 1.5rem rgba(0 0 0 / 0.125);
+  border-radius: 0.5rem;
+  border: none;
+  background-color: transparent;
+
+  .gbl-theme-dark & {
+    box-shadow: 0 0 1.5rem rgba(0 0 0 / 0.4);
+  }
+
+  &__heading {
+    margin: 0;
+    padding: 1.5rem 2rem 0 2rem;
+  }
+
+  &__main {
+    margin: 0;
+    padding: 1.5rem 2rem;
+
+    h3,
+    p {
+      margin: 0 0 1rem 0;
+    }
+
+    > p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

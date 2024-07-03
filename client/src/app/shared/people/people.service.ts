@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { BYPASS_LOADING } from '../loading/loading.config';
+import { BYPASS_LOADING } from '../loading';
 import { Person } from './people.types';
 
 @Injectable({

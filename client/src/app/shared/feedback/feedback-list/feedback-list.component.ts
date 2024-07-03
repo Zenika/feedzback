@@ -19,7 +19,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../breakpoint';
-import { DivisionComponent } from '../../ui/division';
+import { SlashModule } from '../../slash';
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { NormalizedFeedback } from '../feedback.types';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
@@ -38,7 +38,7 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
-    DivisionComponent,
+    SlashModule,
     FeedbackTypeIconPipe,
     GiveRequestedFeedbackDirective,
   ],

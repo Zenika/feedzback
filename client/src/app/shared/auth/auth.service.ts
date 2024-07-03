@@ -4,7 +4,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
 import { Observable, catchError, concatMap, filter, first, from, map, of, switchMap, tap } from 'rxjs';
-import { FirebaseService } from '../firebase/firebase.service';
+import { FirebaseService } from '../firebase';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 import { UserState } from './auth.types';
 import { buildUserState } from './auth.utils';

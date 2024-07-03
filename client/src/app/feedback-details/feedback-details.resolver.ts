@@ -3,7 +3,7 @@ import { ResolveFn, Router } from '@angular/router';
 import { EMPTY, catchError, map, withLatestFrom } from 'rxjs';
 import { NotFoundNavigationState } from '../not-found/not-found.types';
 import { AuthService } from '../shared/auth';
-import { FeedbackService } from '../shared/feedback/feedback.service';
+import { FeedbackService } from '../shared/feedback';
 import { FeedbackDetails } from './feedback-details.types';
 import { inferFeedbackType } from './feedback-details.utils';
 

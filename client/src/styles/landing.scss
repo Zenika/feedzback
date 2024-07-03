@@ -72,8 +72,8 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      gap: 1.25rem;
-      padding: 1.5rem 4.5rem;
+      gap: 0.75em;
+      padding: 1em 4em;
       box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.2);
       border-radius: 1rem;
       border: 1px solid var(--gbl-outline-variant);
@@ -84,7 +84,11 @@
 
       @include m.media-breakpoint-down(md) {
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 0.5em;
+      }
+
+      @include m.media-breakpoint-down(sm) {
+        padding: 1em 2em;
       }
 
       &:hover,
@@ -103,7 +107,9 @@
     }
 
     &__icon {
-      transform: scale(1.75);
+      width: 1em !important;
+      height: 1em !important;
+      font-size: 2.5em;
     }
   }
 }

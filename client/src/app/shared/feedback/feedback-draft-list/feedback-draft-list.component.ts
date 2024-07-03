@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewEncapsulation, input } from '@angular/core';
+import { Component, ViewEncapsulation, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -17,9 +17,9 @@ import { FeedbackDraft, FeedbackRequestDraft } from '../feedback.types';
 export class FeedbackDraftListComponent<T extends FeedbackDraft | FeedbackRequestDraft> {
   draftList = input.required<T[]>();
 
-  @Output() edit = new EventEmitter<T>();
+  edit = output<T>();
 
-  @Output() delete = new EventEmitter<T>();
+  delete = output<T>();
 
   protected columns = ['receiverEmail', 'actions'];
 

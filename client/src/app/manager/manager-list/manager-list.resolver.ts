@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn, Router } from '@angular/router';
 import { EMPTY, catchError } from 'rxjs';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { FeedbackService } from '../../shared/feedback';
 import { FeedbackItem, FeedbackRequestItem } from '../../shared/feedback/feedback.types';
 import { MANAGER_LIST_ROOT } from './manager-list.config';
 

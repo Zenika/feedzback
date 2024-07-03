@@ -1,0 +1,88 @@
+.app-message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  border: none;
+  border-left: 0.5rem solid transparent;
+
+  &--hidden {
+    display: none;
+  }
+
+  &--info {
+    border-color: var(--app-message-info-border-color);
+    background-color: var(--app-message-info-background-color);
+    color: var(--app-message-info-color);
+  }
+
+  &--success {
+    border-color: var(--app-message-success-border-color);
+    background-color: var(--app-message-success-background-color);
+    color: var(--app-message-success-color);
+  }
+
+  &--danger {
+    border-color: var(--app-message-danger-border-color);
+    background-color: var(--app-message-danger-background-color);
+    color: var(--app-message-danger-color);
+  }
+
+  &--light {
+    border-color: var(--gbl-surface-container-highest);
+    background-color: var(--gbl-surface-container-lowest);
+    color: inherit;
+  }
+
+  &__icon {
+    margin-left: 1.25rem;
+  }
+
+  &__content {
+    margin: 1.25rem;
+    flex-grow: 1;
+  }
+
+  &__close {
+    align-self: flex-start;
+    box-sizing: content-box;
+    border-width: 0.5rem 0.5rem 0 0;
+    border-style: solid;
+    border-color: transparent;
+    transition: color 250ms ease;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--gbl-on-primary-fixed-variant);
+    }
+  }
+}
+
+:root {
+  --app-message-info-border-color: rgb(158, 197, 254);
+  --app-message-info-background-color: rgb(207, 226, 255);
+  --app-message-info-color: rgb(5, 44, 101);
+
+  --app-message-success-border-color: rgb(163, 207, 187);
+  --app-message-success-background-color: rgb(209, 231, 221);
+  --app-message-success-color: rgb(10, 54, 34);
+
+  --app-message-danger-border-color: rgb(241, 174, 181);
+  --app-message-danger-background-color: rgb(248, 215, 218);
+  --app-message-danger-color: rgb(88, 21, 28);
+}
+
+.gbl-theme-dark {
+  --app-message-info-border-color: rgb(14, 137, 203);
+  --app-message-info-background-color: rgb(5, 44, 101);
+  --app-message-info-color: rgb(207, 226, 255);
+
+  --app-message-success-border-color: rgb(14, 148, 160);
+  --app-message-success-background-color: rgb(10, 54, 34);
+  --app-message-success-color: rgb(209, 231, 221);
+
+  --app-message-danger-border-color: rgb(171, 66, 10);
+  --app-message-danger-background-color: rgb(88, 21, 28);
+  --app-message-danger-color: rgb(248, 215, 218);
+}

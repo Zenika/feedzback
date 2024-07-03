@@ -25,7 +25,7 @@ export class FeedbackEmailBuilderService {
   ) {}
 
   async requested(receiverEmail: string, message: string, tokenId: string) {
-    const content: RequestedContent = requestedContentMap[this.contextService.clientLocalId];
+    const content: RequestedContent = requestedContentMap[this.contextService.clientLocaleId];
     const data: RequestedData = {
       receiverEmail: uglifyEmail(receiverEmail),
       message: mapTextToHtml(message),
@@ -39,7 +39,7 @@ export class FeedbackEmailBuilderService {
   }
 
   async given(giverEmail: string, feedbackId: string) {
-    const content: GivenContent = givenContentMap[this.contextService.clientLocalId];
+    const content: GivenContent = givenContentMap[this.contextService.clientLocaleId];
     const data: GivenData = {
       giverEmail: uglifyEmail(giverEmail),
       cta: `${this.configService.get('clientUrl')}/history/id/${feedbackId}`,
@@ -52,7 +52,7 @@ export class FeedbackEmailBuilderService {
   }
 
   async shared(managedEmail: string, feedbackId: string) {
-    const content: SharedContent = sharedContentMap[this.contextService.clientLocalId];
+    const content: SharedContent = sharedContentMap[this.contextService.clientLocaleId];
     const data: SharedData = {
       managedEmail: uglifyEmail(managedEmail),
       cta: `${this.configService.get('clientUrl')}/manager/document/${feedbackId}`,

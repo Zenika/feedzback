@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../shared/auth';
-import { leaveFormGuardFactory } from '../shared/dialogs/leave-form';
+import { leaveFormGuardFactory } from '../shared/dialog/leave-form';
 import { GiveFeedbackSuccessComponent } from './give-feedback-success/give-feedback-success.component';
 import { GiveFeedbackComponent } from './give-feedback/give-feedback.component';
 

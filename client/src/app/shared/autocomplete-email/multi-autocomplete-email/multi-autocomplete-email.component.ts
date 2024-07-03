@@ -1,6 +1,6 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, Component, Input, OnDestroy, ViewEncapsulation, inject, viewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewEncapsulation, inject, input, viewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
@@ -18,8 +18,8 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
-import { PeopleService } from '../../people/people.service';
-import { AvatarComponent } from '../../ui/avatar/avatar.component';
+import { AvatarComponent } from '../../avatar';
+import { PeopleService } from '../../people';
 import {
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
@@ -47,12 +47,14 @@ import { ValidationErrorMessagePipe } from '../../validation/validation-error-me
   encapsulation: ViewEncapsulation.None,
 })
 export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy {
-  @Input() emails = new FormControl<string[]>([], {
-    nonNullable: true,
-    validators: [Validators.required, multipleEmailsValidatorFactory()],
-  });
+  emails = input(
+    new FormControl<string[]>([], {
+      nonNullable: true,
+      validators: [Validators.required, multipleEmailsValidatorFactory()],
+    }),
+  );
 
-  @Input() isInvalidEmail?: (email: string) => boolean;
+  isInvalidEmail = input<((email: string) => boolean) | undefined>(undefined);
 
   matChipInput = viewChild.required(MatChipInput);
 
@@ -114,16 +116,16 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
   protected add(email: string): void {
     const emails = getMultipleEmails(email);
     if (emails.length) {
-      this.updateEmailsValue([...this.emails.value, ...emails]);
+      this.updateEmailsValue([...this.emails().value, ...emails]);
     }
     this.matChipInput().clear();
     this.query$.next('');
   }
 
   protected remove(email: string): void {
-    const index = this.emails.value.indexOf(email);
+    const index = this.emails().value.indexOf(email);
     if (index !== -1) {
-      const emails = [...this.emails.value];
+      const emails = [...this.emails().value];
       emails.splice(index, 1);
       this.updateEmailsValue(emails);
     }
@@ -135,17 +137,17 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
       this.remove(prevEmail);
       return;
     }
-    const index = this.emails.value.indexOf(prevEmail);
+    const index = this.emails().value.indexOf(prevEmail);
     if (index !== -1) {
-      const emails = [...this.emails.value];
+      const emails = [...this.emails().value];
       emails.splice(index, 1, ...currEmails);
       this.updateEmailsValue(emails);
     }
   }
 
   private updateEmailsValue(emails: string[]) {
-    this.emails.setValue(emails);
-    this.emails.updateValueAndValidity();
+    this.emails().setValue(emails);
+    this.emails().updateValueAndValidity();
   }
 
   protected updateQuery(query: string) {

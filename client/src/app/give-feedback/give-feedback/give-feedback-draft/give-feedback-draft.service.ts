@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Subject, tap } from 'rxjs';
-import { FeedbackService } from '../../../shared/feedback/feedback.service';
+import { FeedbackService } from '../../../shared/feedback';
 import { FeedbackDraft, FeedbackDraftType } from '../../../shared/feedback/feedback.types';
 
 @Injectable({

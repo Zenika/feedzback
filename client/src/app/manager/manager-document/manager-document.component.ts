@@ -2,8 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, ViewEncapsulation, computed, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { FeedbackBodyComponent } from '../../shared/feedback/feedback-body/feedback-body.component';
-import { FeedbackTypeIconPipe } from '../../shared/feedback/feedback-type-icon.pipe';
+import { FeedbackBodyComponent, FeedbackTypeIconPipe } from '../../shared/feedback';
 import { Feedback, FeedbackRequest } from '../../shared/feedback/feedback.types';
 import { ManagerDocumentData } from './manager-document.types';
 

@@ -11,11 +11,13 @@ import { filter, map, switchMap } from 'rxjs';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { BreakpointService } from '../../shared/breakpoint';
-import { ConfirmBeforeSubmitDirective } from '../../shared/dialogs/confirm-before-submit';
-import { LeaveForm, LeaveFormService } from '../../shared/dialogs/leave-form';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { NotificationService } from '../../shared/notification/notification.service';
-import { DialogTooltipDirective } from '../../shared/ui/dialog-tooltip';
+import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
+import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
+import { LeaveForm, LeaveFormService } from '../../shared/dialog/leave-form';
+import { FeedbackService } from '../../shared/feedback';
+import { IconDirective } from '../../shared/icon';
+
+import { NotificationService } from '../../shared/notification';
 import {
   ALLOWED_EMAIL_DOMAINS,
   allowedEmailDomainsValidatorFactory,
@@ -37,6 +39,7 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     MatIconModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    IconDirective,
     AutocompleteEmailComponent,
     ConfirmBeforeSubmitDirective,
     ValidationErrorMessagePipe,

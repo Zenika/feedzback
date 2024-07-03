@@ -15,7 +15,10 @@
 
   <ng-container matColumnDef="mixed">
     <th mat-header-cell *matHeaderCellDef>
-      <app-division a="Email" b="Date" i18n-a="@@Field.Email" i18n-b="@@Field.Date"></app-division>
+      <app-slash>
+        <ng-container appSlashSuper i18n="@@Field.Email">Email</ng-container>
+        <ng-container appSlashSub i18n="@@Field.Date">Date</ng-container>
+      </app-slash>
     </th>
     <td
       mat-cell
