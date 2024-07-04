@@ -12,10 +12,10 @@ import { mapToIconClass } from './icon.utils';
  */
 @Directive({
   selector: '[appIcon]',
-  standalone: true,
   host: {
     '[class]': 'hostClass()',
   },
+  standalone: true,
 })
 export class IconDirective {
   size = input('', { transform: mapToIconClass<IconSize> });
