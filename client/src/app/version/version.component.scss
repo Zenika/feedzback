@@ -16,12 +16,12 @@
     }
 
     &--mismatch {
-      animation: AppVersionMismatch 1s ease infinite;
+      animation: appVersionMismatch 1s ease infinite;
     }
   }
 }
 
-@keyframes AppVersionMismatch {
+@keyframes appVersionMismatch {
   0% {
     opacity: 0.2;
     color: inherit;

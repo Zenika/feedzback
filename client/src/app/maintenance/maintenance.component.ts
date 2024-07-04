@@ -3,12 +3,14 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IconDirective } from '../shared/icon';
+import { LandingDirective } from '../shared/landing';
 import { LogoComponent } from '../shared/logo';
 
 @Component({
   selector: 'app-maintenance',
-  host: { class: 'app-maintenance gbl-landing' },
+  host: { class: 'app-maintenance' },
   standalone: true,
+  hostDirectives: [LandingDirective],
   templateUrl: './maintenance.component.html',
   styleUrl: './maintenance.component.scss',
   encapsulation: ViewEncapsulation.None,

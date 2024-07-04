@@ -6,6 +6,9 @@
 @use './variables' as v;
 @use './mixins' as m;
 
+// Note: to apply this global CSS class on an Angular component, you can use the dedicated `LandingDirective` directive
+// (more infos: src/app/shared/landing/landing.directive.ts)
+
 .gbl-landing {
   height: 100%;
   display: flex;
@@ -35,6 +38,14 @@
       background: url(../../public/assets/images/landing-bg.svg) center repeat;
       background-size: 480px;
       opacity: 0.5;
+      will-change: background-position-y, transform, opacity;
+    }
+
+    &--anim-1::after {
+      animation: gblLandingAnim1 60s linear infinite;
+    }
+    &--anim-2::after {
+      animation: gblLandingAnim2 60s linear infinite;
     }
   }
 
@@ -111,6 +122,33 @@
       height: 1em !important;
       font-size: 2.5em;
     }
+  }
+}
+
+@keyframes gblLandingAnim1 {
+  0% {
+    background-position-y: 0px;
+  }
+  100% {
+    background-position-y: 270px;
+  }
+}
+
+@keyframes gblLandingAnim2 {
+  0% {
+    background-position-y: 0px;
+    transform: scale(1);
+    opacity: 0;
+  }
+  10% {
+    background-position-y: 27px;
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
+  100% {
+    background-position-y: 270px;
+    transform: scale(2);
+    opacity: 0;
   }
 }
 

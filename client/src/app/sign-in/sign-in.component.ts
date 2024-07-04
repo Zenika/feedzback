@@ -2,12 +2,13 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth';
+import { LandingDirective } from '../shared/landing';
 import { ZenikaLogoComponent } from '../shared/zenika-logo';
 
 @Component({
   selector: 'app-sign-in',
-  host: { class: 'gbl-landing' },
   standalone: true,
+  hostDirectives: [LandingDirective],
   imports: [RouterLink, MatIconModule, ZenikaLogoComponent],
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,
