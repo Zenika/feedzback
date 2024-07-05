@@ -37,8 +37,8 @@ export class FeedbackService {
 
   // ----- Request feedback and give requested feedback -----
 
-  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
-  // This is achieved by adding the configuration `withCredentials: true`.
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
   request(dto: FeedbackRequestDto): Observable<{ error: boolean; message?: 'invalid_email' }> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/request`, dto, { headers, withCredentials: true }).pipe(
@@ -48,8 +48,8 @@ export class FeedbackService {
     );
   }
 
-  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
-  // This is achieved by adding the configuration `withCredentials: true`.
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
   requestAgain(feedbackId: string) {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<void>(
@@ -92,8 +92,8 @@ export class FeedbackService {
     return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/give-requested/draft`, dto);
   }
 
-  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
-  // This is achieved by adding the configuration `withCredentials: true`.
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
   giveRequested(dto: GiveRequestedFeedbackDto) {
     return this.httpClient
       .post<void>(`${this.apiBaseUrl}/feedback/give-requested`, dto, { withCredentials: true })
@@ -119,8 +119,8 @@ export class FeedbackService {
     );
   }
 
-  // The cookies must be sent with the request so that the backend can determine the language to be used in the emails.
-  // This is achieved by adding the configuration `withCredentials: true`.
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
   give(dto: GiveFeedbackDto): Observable<IdObject | { id: undefined; error: true; message?: 'invalid_email' }> {
     return this.authService.withBearerIdToken((headers) =>
       this.httpClient.post<IdObject>(`${this.apiBaseUrl}/feedback/give`, dto, { headers, withCredentials: true }).pipe(

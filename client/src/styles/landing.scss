@@ -42,10 +42,10 @@
     }
 
     &--anim-1::after {
-      animation: gblLandingAnim1 60s linear infinite;
+      animation: gblLandingAnim1 45s linear infinite;
     }
     &--anim-2::after {
-      animation: gblLandingAnim2 60s linear infinite;
+      animation: gblLandingAnim2 45s linear infinite;
     }
   }
 
@@ -136,17 +136,14 @@
 
 @keyframes gblLandingAnim2 {
   0% {
-    background-position-y: 0px;
     transform: scale(1);
     opacity: 0;
   }
   10% {
-    background-position-y: 27px;
     transform: scale(1.1);
     opacity: 0.5;
   }
   100% {
-    background-position-y: 270px;
     transform: scale(2);
     opacity: 0;
   }

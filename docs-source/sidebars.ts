@@ -30,6 +30,7 @@ const sidebars: SidebarsConfig = {
             'technical-guides/client/styles',
             'technical-guides/client/icons',
             'technical-guides/client/demo',
+            'technical-guides/client/cookies',
             'technical-guides/client/i18n',
           ],
         },
