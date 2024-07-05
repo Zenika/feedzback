@@ -2,7 +2,7 @@
 
 ## Global styles
 
-The entry point of the global styles is as usual for an Angular application: [client/src/styles.scss](https://github.com/Zenika/feedzback/tree/main/client/src/styles.scss)
+The entry point of the global styles is as usual for an Angular application: [client/src/styles.scss](https://github.com/Zenika/feedzback/blob/main/client/src/styles.scss)
 
 ```scss
 // ----- Base -----
@@ -100,7 +100,7 @@ Material design is enabled for the entire HTML page using the `.mat-typography` 
 ```
 
 Only the styles of the Material components that are used in the application are included.
-See [here](https://github.com/Zenika/feedzback/tree/main/client/src/styles/material/index.scss) for more infos.
+See [here](https://github.com/Zenika/feedzback/blob/main/client/src/styles/material/index.scss) for more infos.
 
 ## Tailwindcss
 
