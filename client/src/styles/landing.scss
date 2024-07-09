@@ -38,7 +38,6 @@
       background: url(../../public/assets/images/landing-bg.svg) center repeat;
       background-size: 480px;
       opacity: 0.5;
-      will-change: background-position-y, transform, opacity;
     }
 
     &--anim-1::after {
