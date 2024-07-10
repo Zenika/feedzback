@@ -5,9 +5,11 @@
   "overrides": [
     {
       "files": "*.html",
-      "options": {
-        "parser": "angular"
-      }
+      "options": { "parser": "html" }
+    },
+    {
+      "files": "*.component.html",
+      "options": { "parser": "angular" }
     }
   ]
 }
