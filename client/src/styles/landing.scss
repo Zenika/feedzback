@@ -38,13 +38,7 @@
       background: url(../../public/assets/images/landing-bg.svg) center repeat;
       background-size: 480px;
       opacity: 0.5;
-    }
-
-    &--anim-1::after {
-      animation: gblLandingAnim1 45s linear infinite;
-    }
-    &--anim-2::after {
-      animation: gblLandingAnim2 45s linear infinite;
+      animation: gblLandingAnim 45s linear infinite;
     }
   }
 
@@ -124,16 +118,7 @@
   }
 }
 
-@keyframes gblLandingAnim1 {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    transform: translateY(270px);
-  }
-}
-
-@keyframes gblLandingAnim2 {
+@keyframes gblLandingAnim {
   0% {
     transform: scale(1);
     opacity: 0;
