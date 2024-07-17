@@ -9,7 +9,7 @@ h1.gbl-page-title {
   display: flex;
   align-items: center;
   gap: 0.3em;
-  color: var(--gbl-primary);
+  color: var(--sys-primary);
 
   &--center {
     justify-content: center;
@@ -39,7 +39,7 @@ h1.gbl-page-title {
   &:visited {
     cursor: pointer; // usefull when used like this: `<div class="gbl-link" role="presentation" (click)="onClick()">Link</div>`
     text-decoration: none;
-    color: var(--gbl-primary);
+    color: var(--sys-primary);
     transition: opacity 250ms ease;
   }
 
@@ -65,7 +65,7 @@ h1.gbl-page-title {
     background: none;
     font: inherit;
     font-size: smaller;
-    color: var(--gbl-on-surface-variant);
+    color: var(--sys-on-surface-variant);
     text-decoration: none !important;
 
     mat-icon {
@@ -76,7 +76,7 @@ h1.gbl-page-title {
     }
 
     &:hover {
-      color: var(--gbl-primary);
+      color: var(--sys-primary);
 
       mat-icon {
         transform: translateX(-0.25rem) scale(1.25);
@@ -100,7 +100,7 @@ ol.gbl-list {
 
 li.gbl-list__item {
   &::marker {
-    color: var(--gbl-primary);
+    color: var(--sys-primary);
   }
 }
 

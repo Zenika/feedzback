@@ -51,6 +51,8 @@
   //@include mat.toolbar-theme(t.$light-theme);
   //@include mat.tree-theme(t.$light-theme);
 
+  @include mat.system-level-colors(t.$light-theme);
+
   // TODO: Remove this Material 2 backwards compatibility
   @include mat.color-variants-backwards-compatibility(t.$light-theme);
 }
@@ -97,6 +99,8 @@
   //@include mat.sort-color(t.$dark-theme);
   //@include mat.toolbar-color(t.$dark-theme);
   //@include mat.tree-color(t.$dark-theme);
+
+  @include mat.system-level-colors(t.$dark-theme);
 
   // TODO: Remove this Material 2 backwards compatibility
   @include mat.color-variants-backwards-compatibility(t.$dark-theme);
