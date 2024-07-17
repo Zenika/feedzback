@@ -156,9 +156,10 @@ $dark-theme: mat.define-theme(
       tertiary: $_tertiary,
     ),
     typography: (
-      plain-family: '"Nunito", sans-serif',
+      plain-family: '"Nunito"',
       regular-weight: v.$font-regular-weight,
       bold-weight: v.$font-bold-weight,
+      use-system-variables: true,
     ),
     density: (
       scale: 0,
