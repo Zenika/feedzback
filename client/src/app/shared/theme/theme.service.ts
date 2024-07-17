@@ -25,7 +25,7 @@ export class ThemeService {
   }
 
   switch(theme?: Theme) {
-    this.#theme.update((_theme) => (theme ?? _theme === 'light' ? 'dark' : 'light'));
+    this.#theme.update((_theme) => ((theme ?? _theme === 'light') ? 'dark' : 'light'));
   }
 
   #applyTheme(theme: Theme) {

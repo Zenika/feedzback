@@ -26,5 +26,5 @@ export class AvatarComponent {
 
   bgImage = computed(() => (this.photoUrl() ? `url(${this.photoUrl()})` : undefined));
 
-  bgColor = computed(() => (this.photoUrl() ? undefined : this.initial()?.color ?? DEFAULT_COLOR));
+  bgColor = computed(() => (this.photoUrl() ? undefined : (this.initial()?.color ?? DEFAULT_COLOR)));
 }
