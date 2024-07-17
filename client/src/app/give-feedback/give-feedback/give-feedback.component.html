@@ -7,7 +7,6 @@
   } @else {
     <button
       mat-mini-fab
-      color="primary"
       class="!absolute right-5 top-5"
       matTooltipPosition="left"
       matTooltip="Brouillons"
@@ -47,7 +46,7 @@
   />
 
   <div class="gbl-form-field">
-    <mat-slide-toggle [formControl]="form.controls.shared" color="primary">
+    <mat-slide-toggle [formControl]="form.controls.shared">
       <ng-container i18n="@@Component.GiveFeedback.Share">
         Partager le feedZback avec le manager de votre collègue
       </ng-container>

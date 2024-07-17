@@ -5,7 +5,7 @@
 }
 
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="false" color="accent">
+  <button mat-button [mat-dialog-close]="false">
     @if (data.cancel?.icon) {
       <mat-icon>{{ data.cancel!.icon }}</mat-icon>
     }
@@ -16,7 +16,7 @@
     }
   </button>
 
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+  <button mat-flat-button [mat-dialog-close]="true" cdkFocusInitial>
     @if (data.confirm?.icon) {
       <mat-icon>{{ data.confirm!.icon }}</mat-icon>
     }

@@ -74,7 +74,7 @@
       />
     } @else {
       <button mat-icon-button [matMenuTriggerFor]="accountMenu">
-        <mat-icon color="primary">more_vert</mat-icon>
+        <mat-icon class="gbl-sys-primary">more_vert</mat-icon>
       </button>
     }
 
@@ -83,13 +83,13 @@
 
       @if (userState().authenticated) {
         <button mat-menu-item routerLink="/settings">
-          <mat-icon color="primary">settings</mat-icon>
+          <mat-icon class="gbl-sys-primary">settings</mat-icon>
           <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
         </button>
       }
 
       <button mat-menu-item (click)="signOut()">
-        <mat-icon color="primary">logout</mat-icon>
+        <mat-icon class="gbl-sys-primary">logout</mat-icon>
         @if (userState().authenticated) {
           <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
         } @else {
@@ -99,7 +99,7 @@
     </mat-menu>
   } @else {
     <button mat-icon-button [matMenuTriggerFor]="accountMenu">
-      <mat-icon color="primary">more_vert</mat-icon>
+      <mat-icon class="gbl-sys-primary">more_vert</mat-icon>
     </button>
 
     <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
@@ -110,7 +110,7 @@
 
 <ng-template #commonMenuItems>
   <button mat-menu-item (click)="languageService.switchLanguage()">
-    <mat-icon color="primary">translate</mat-icon>
+    <mat-icon class="gbl-sys-primary">translate</mat-icon>
     @switch (languageService.localeId) {
       @case ('fr') {
         English
@@ -122,7 +122,7 @@
   </button>
 
   <button mat-menu-item (click)="themeService.switch()">
-    <mat-icon color="primary">{{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    <mat-icon class="gbl-sys-primary">{{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
     @if (themeService.theme() === 'light') {
       <ng-container i18n="@@Action.DarkTheme">Thème foncé</ng-container>
     } @else {

@@ -79,7 +79,9 @@
       (keyup)="filter = input.value"
     />
     @if (filter) {
-      <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">close</mat-icon>
+      <mat-icon class="gbl-sys-primary" mat-icon-button matIconSuffix role="button" (click)="filter = ''">
+        close
+      </mat-icon>
     }
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>
