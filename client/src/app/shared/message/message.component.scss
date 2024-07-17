@@ -30,8 +30,8 @@
   }
 
   &--light {
-    border-color: var(--gbl-surface-container-highest);
-    background-color: var(--gbl-surface-container-lowest);
+    border-color: var(--sys-surface-container-highest);
+    background-color: var(--sys-surface-container-lowest);
     color: inherit;
   }
 
@@ -54,7 +54,7 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--gbl-on-primary-fixed-variant);
+      color: var(--sys-on-primary-fixed-variant);
     }
   }
 }

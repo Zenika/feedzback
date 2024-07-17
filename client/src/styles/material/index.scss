@@ -4,6 +4,10 @@
 
 @include mat.core();
 
+// Note:
+// for `:root {}` selector, we use the `mat.*-theme();` which includes core styles and light theme colors
+// while for `.gbl-theme-dark {}` selector, we use the `mat.*-color();` which only includes dark colors
+
 :root {
   // Option 1)
   // @include mat.all-component-themes(t.$light-theme);
@@ -47,8 +51,7 @@
   //@include mat.toolbar-theme(t.$light-theme);
   //@include mat.tree-theme(t.$light-theme);
 
-  // Material 2 backwards compatibility
-  @include mat.color-variants-backwards-compatibility(t.$light-theme);
+  @include mat.system-level-colors(t.$light-theme);
 }
 
 .gbl-theme-dark {
@@ -94,11 +97,10 @@
   //@include mat.toolbar-color(t.$dark-theme);
   //@include mat.tree-color(t.$dark-theme);
 
-  // Material 2 backwards compatibility
-  @include mat.color-variants-backwards-compatibility(t.$dark-theme);
+  @include mat.system-level-colors(t.$dark-theme);
 }
 
-// Material 2 typography
+// Material typography
 @import './material-typography';
 
 // Material customization for this App

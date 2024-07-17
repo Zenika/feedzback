@@ -36,8 +36,8 @@
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element" class="app-feedback-list__actions">
       <button
+        class="gbl-sys-primary-hover"
         mat-icon-button
-        color="primary"
         matTooltipPosition="left"
         [matTooltip]="
           nf(element).type === 'received' || nf(element).type === 'given'
@@ -51,8 +51,8 @@
 
       @if (!asManager() && nf(element).type === 'receivedRequest') {
         <button
+          class="gbl-sys-primary-hover"
           mat-icon-button
-          color="primary"
           matTooltipPosition="right"
           matTooltip=" Répondre "
           i18n-matTooltip="@@Feedback.Reply"

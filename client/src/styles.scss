@@ -3,11 +3,11 @@
 @import './styles/fonts';
 @import './styles/tailwind.css';
 @import './styles/material';
-@import './styles/theme';
 @import './styles/base';
 
 // ----- Special use-cases -----
 
+@import './styles/colors';
 @import './styles/common';
 @import './styles/info';
 @import './styles/landing';

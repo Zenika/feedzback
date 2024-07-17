@@ -1,4 +1,4 @@
-<h1 class="gbl-page-title">
+<h1 class="gbl-page-title mat-headline-large">
   <mat-icon>forum</mat-icon>
   <ng-container i18n="@@Title.History">Historique de mes feedZbacks</ng-container>
 </h1>
@@ -79,7 +79,9 @@
       (keyup)="filter = input.value"
     />
     @if (filter) {
-      <mat-icon mat-icon-button color="warn" matIconSuffix role="button" (click)="filter = ''">close</mat-icon>
+      <mat-icon class="gbl-sys-primary" mat-icon-button matIconSuffix role="button" (click)="filter = ''">
+        close
+      </mat-icon>
     }
     <mat-icon matIconSuffix>search</mat-icon>
   </mat-form-field>
