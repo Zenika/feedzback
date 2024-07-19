@@ -11,7 +11,7 @@
     "post-build": "cp src/404.html dist/client/browser/404.html",
     "watch": "ng build --watch --configuration development",
     "extract-i18n": "ng extract-i18n --format json --output-path src/locales/ --out-file messages.fr.json",
-    "postextract-i18n": "node src/locales/sort-messages-fr-translations.js",
+    "postextract-i18n": "node src/locales/check-messages-translations.js",
     "test": "jest",
     "lint": "ng lint --fix",
     "lint:ci": "ng lint",
