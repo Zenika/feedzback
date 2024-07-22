@@ -109,7 +109,7 @@
     "Field.EmailOfYourManager": "Email of your manager",
     "Field.EmailsOfYourColleagues": "Emails of your colleagues",
     "Field.SearchByEmail": "Search by email",
-    "Field.YourEmail": "VoYourtre email",
+    "Field.YourEmail": "Your email",
     "FieldError.AllowedEmailDomains": "The email must end with: ",
     "FieldError.Email": "Invalid email",
     "FieldError.ForbiddenValue": "Forbidden value : ",

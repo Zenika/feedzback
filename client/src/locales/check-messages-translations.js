@@ -1,42 +1,47 @@
 const { readFile, writeFile } = require('node:fs/promises');
 const { join } = require('node:path');
 
-const consolidateMessagesTranslations = async (fileName, addKeys = [], removeKeys = []) => {
-  const messagesPath = join(__dirname, fileName);
-  const messages = JSON.parse(await readFile(messagesPath, 'utf8'));
+const FRENCH_FILE_NAME = 'messages.fr.json';
+const ENGLISH_FILE_NAME = 'messages.en.json';
 
-  addKeys.forEach((key) => (messages.translations[key] = ''));
-  removeKeys.forEach((key) => delete messages.translations[key]);
-
-  const sortedTranslationEntries = Object.entries(messages.translations).sort(([a], [b]) =>
-    a > b ? 1 : a < b ? -1 : 0,
-  );
-  messages.translations = sortedTranslationEntries.reduce((translations, [sortedKey, value]) => {
-    translations[sortedKey] = value;
-    return translations;
-  }, {});
-
-  await writeFile(messagesPath, JSON.stringify(messages, undefined, 2) + '\n', 'utf8');
+const readMessages = async (fileName) => {
+  const filePath = join(__dirname, fileName);
+  try {
+    const messages = JSON.parse(await readFile(filePath, 'utf8'));
+    return { filePath, messages };
+  } catch {
+    console.error(`A file is missing: ${filePath}`);
+    process.exit(1);
+  }
 };
 
-const compareMessagesTranslations = async () => {
-  const frenchMessages = new Set(
-    Object.keys(JSON.parse(await readFile(join(__dirname, 'messages.fr.json'), 'utf8')).translations),
+const consolidateTranslations = async (fileName, addTranslationsKeys = [], removeTranslationsKeys = []) => {
+  const { filePath, messages } = await readMessages(fileName);
+
+  addTranslationsKeys.forEach((key) => (messages.translations[key] = '[ MISSING TRANSLATION ]'));
+  removeTranslationsKeys.forEach((key) => delete messages.translations[key]);
+
+  messages.translations = Object.fromEntries(
+    Object.entries(messages.translations).sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0)),
   );
-  const englishMessages = new Set(
-    Object.keys(JSON.parse(await readFile(join(__dirname, 'messages.en.json'), 'utf8')).translations),
-  );
+
+  await writeFile(filePath, JSON.stringify(messages, undefined, 2) + '\n', 'utf8');
+};
+
+const compareEnglishAndFrenchTranslationsKeys = async () => {
+  const frenchTranslations = new Set(Object.keys((await readMessages(FRENCH_FILE_NAME)).messages.translations));
+  const englishTranslations = new Set(Object.keys((await readMessages(ENGLISH_FILE_NAME)).messages.translations));
 
   const englishMissingKeys = [];
-  frenchMessages.forEach((key) => englishMessages.has(key) || englishMissingKeys.push(key));
+  frenchTranslations.forEach((key) => englishTranslations.has(key) || englishMissingKeys.push(key));
 
   const englishUselessKeys = [];
-  englishMessages.forEach((key) => frenchMessages.has(key) || englishUselessKeys.push(key));
+  englishTranslations.forEach((key) => frenchTranslations.has(key) || englishUselessKeys.push(key));
 
   if (englishMissingKeys.length || englishUselessKeys.length) {
-    console.warn(
-      '\nWarning:\n\tEnglish messages (messages.en.json) not aligned with French messages (messages.fr.json):',
-    );
+    console.warn(`
+Warning:
+\tEnglish translation keys (${ENGLISH_FILE_NAME}) do not match French ones (${FRENCH_FILE_NAME}):`);
     if (englishMissingKeys.length) {
       console.warn('Missing keys:', englishMissingKeys);
     }
@@ -45,13 +50,13 @@ const compareMessagesTranslations = async () => {
     }
   }
 
-  await consolidateMessagesTranslations('messages.en.json', englishMissingKeys, englishUselessKeys);
+  await consolidateTranslations(ENGLISH_FILE_NAME, englishMissingKeys, englishUselessKeys);
 };
 
 const run = async () => {
-  await consolidateMessagesTranslations('messages.fr.json');
+  await consolidateTranslations(FRENCH_FILE_NAME);
 
-  await compareMessagesTranslations();
+  await compareEnglishAndFrenchTranslationsKeys();
 };
 
 run();
