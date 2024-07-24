@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH } from '../../../shared/feedback/feedback.config';
+import { isNotBlankValidator } from '../../../shared/validation/is-not-blank';
 import { ValidationErrorMessagePipe } from '../../../shared/validation/validation-error-message';
 
 @Component({
@@ -25,10 +26,10 @@ export class GiveFeedbackDetailsComponent implements OnInit {
   comment = input.required<FormControl<string>>();
 
   ngOnInit(): void {
-    this.positive().addValidators([Validators.required, Validators.maxLength(this.feedbackMaxLength)]);
+    this.positive().addValidators([isNotBlankValidator, Validators.maxLength(this.feedbackMaxLength)]);
     this.positive().updateValueAndValidity();
 
-    this.negative().addValidators([Validators.required, Validators.maxLength(this.feedbackMaxLength)]);
+    this.negative().addValidators([isNotBlankValidator, Validators.maxLength(this.feedbackMaxLength)]);
     this.negative().updateValueAndValidity();
 
     this.comment().addValidators([Validators.maxLength(this.commentMaxLength)]);
