@@ -1,5 +1,6 @@
 import { FirebaseOptions } from 'firebase/app';
 import { APP_VERSION } from '../app/app.version';
+import { AppEnv } from './environment.types';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: 'AIzaSyBY-HULaNWkEPCoQWCIy3vOB2KB98z4HGs',
@@ -11,11 +12,12 @@ const firebaseOptions: FirebaseOptions = {
   measurementId: 'G-29CT4FJL84',
 };
 
-export const environment = {
+export const environment: AppEnv = {
   production: false,
   appVersion: APP_VERSION,
   appDomain: '.znk.io',
   firebaseOptions,
   apiBaseUrl: 'https://server.dev.feedzback.znk.io', // `dev-local` and `dev-remote` environments differ only here
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
+  alias: 'dev-remote',
 };

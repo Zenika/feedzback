@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, ViewEncapsulation, computed, inject } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { environment } from '../../environments/environment';
 import { VersionService } from './version.service';
 
 @Component({
@@ -22,6 +23,8 @@ export class VersionComponent {
   protected tooltip = computed(() =>
     this.versionsMismatch() ? `🚨 Server version: ${this.versionService.serverAppVersion}` : '',
   );
+
+  protected envAlias = environment.alias;
 
   private document = inject(DOCUMENT);
 

@@ -6,4 +6,8 @@
   (click)="toClipboard()"
 >
   {{ clientAppVersion }}
+
+  @if (envAlias) {
+    ({{ envAlias }})
+  }
 </span>
