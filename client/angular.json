@@ -111,6 +111,9 @@
                   "with": "src/environments/environment.dev-local.ts"
                 }
               ]
+            },
+            "en": {
+              "localize": ["en"]
             }
           },
           "defaultConfiguration": "production"
@@ -126,6 +129,9 @@
             },
             "development": {
               "buildTarget": "client:build:development"
+            },
+            "development-en": {
+              "buildTarget": "client:build:development,en"
             }
           },
           "defaultConfiguration": "development"

@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:en": "ng serve -c development-en",
     "build": "ng build",
     "build:dev": "ng build --configuration dev-remote && npm run post-build",
     "build:staging": "ng build --configuration staging && npm run post-build",

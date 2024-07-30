@@ -1,5 +1,6 @@
 import { FirebaseOptions } from 'firebase/app';
 import { APP_VERSION } from '../app/app.version';
+import { AppEnv } from './environment.types';
 
 const firebaseOptions: FirebaseOptions = {
   apiKey: 'AIzaSyAZ_4GHJ6mMUBYxMVTYjIENvUla5uIY6C4',
@@ -11,11 +12,12 @@ const firebaseOptions: FirebaseOptions = {
   measurementId: 'G-YVGZP6LZ26',
 };
 
-export const environment = {
+export const environment: AppEnv = {
   production: false,
   appVersion: APP_VERSION,
   appDomain: '.znk.io',
   firebaseOptions,
   apiBaseUrl: 'https://server.staging.feedzback.znk.io',
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
+  alias: 'staging',
 };
