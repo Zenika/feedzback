@@ -53,7 +53,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private formBuilder = inject(NonNullableFormBuilder);
 
-  protected anonymous = inject(AuthService).userState().anonymous;
+  protected anonymous = inject(AuthService).userStatus().anonymous;
 
   private feedbackService = inject(FeedbackService);
 

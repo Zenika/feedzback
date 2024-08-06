@@ -6,8 +6,8 @@ import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'fi
 import { Observable, catchError, concatMap, filter, first, from, map, of, switchMap, tap } from 'rxjs';
 import { FirebaseService } from '../firebase';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
-import { UserState } from './auth.types';
-import { buildUserState } from './auth.utils';
+import { UserStatus } from './auth.types';
+import { buildUserStatus } from './auth.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class AuthService {
 
   user = this._user.asReadonly();
 
-  userState = computed<UserState>(() => buildUserState(this._user()));
+  userStatus = computed<UserStatus>(() => buildUserStatus(this._user()));
 
   userEmail = computed(() => this._user()?.email ?? '');
 
@@ -54,11 +54,11 @@ export class AuthService {
    */
   user$ = toObservable(this._user).pipe(filter((user): user is User | null => user !== undefined));
 
-  guest$ = this.user$.pipe(map((user) => buildUserState(user).guest));
+  guest$ = this.user$.pipe(map((user) => buildUserStatus(user).guest));
 
-  anonymous$ = this.user$.pipe(map((user) => buildUserState(user).anonymous));
+  anonymous$ = this.user$.pipe(map((user) => buildUserStatus(user).anonymous));
 
-  authenticated$ = this.user$.pipe(map((user) => buildUserState(user).authenticated));
+  authenticated$ = this.user$.pipe(map((user) => buildUserStatus(user).authenticated));
 
   constructor() {
     this.firebaseAuth.onAuthStateChanged((user) => this._user.set(user));
