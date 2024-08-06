@@ -1,9 +1,10 @@
 import { User } from 'firebase/auth';
-import { UserState } from './auth.types';
+import { UserStatus } from './auth.types';
 
-export const buildUserState = (user: User | null | undefined) =>
+export const buildUserStatus = (user: User | null | undefined) =>
   ({
     guest: user === null,
     anonymous: user?.isAnonymous === true,
     authenticated: user?.isAnonymous === false,
-  }) satisfies UserState;
+    status: user === null ? 'guest' : user?.isAnonymous === true ? 'anonymous' : 'authenticated',
+  }) satisfies UserStatus;

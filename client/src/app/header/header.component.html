@@ -1,5 +1,5 @@
 <div class="app-header__burger">
-  @if (userState().authenticated) {
+  @if (userStatus().authenticated) {
     <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
   }
 </div>
@@ -11,7 +11,7 @@
 </div>
 
 <nav class="app-header__menu app-header-menu-target mat-title-medium" [class.app-header__menu--visible]="isMenuOpen">
-  @if (userState().authenticated) {
+  @if (userStatus().authenticated) {
     <a
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
@@ -64,76 +64,54 @@
 }
 
 <div class="app-header__account">
-  @if (!userState().guest) {
-    @if (userInfo(); as userInfo) {
-      <button class="gbl-button-less" [matMenuTriggerFor]="accountMenu">
-        <app-avatar class="app-header__account-photo" [photoUrl]="userInfo.photoURL" [name]="userInfo.displayName" />
-      </button>
-    } @else {
-      <button mat-icon-button [matMenuTriggerFor]="accountMenu">
-        <mat-icon class="gbl-sys-primary">more_vert</mat-icon>
+  @if (userInfo(); as _userInfo) {
+    <button class="gbl-button-less" [matMenuTriggerFor]="accountMenu">
+      <app-avatar class="app-header__account-photo" [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" />
+    </button>
+  } @else {
+    <button mat-icon-button [matMenuTriggerFor]="accountMenu">
+      <mat-icon class="gbl-sys-primary">more_vert</mat-icon>
+    </button>
+  }
+
+  <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
+    <button mat-menu-item (click)="languageService.switchLanguage()">
+      <mat-icon class="gbl-sys-primary">translate</mat-icon>
+      @switch (languageService.localeId) {
+        @case ('fr') {
+          English
+        }
+        @case ('en') {
+          Français
+        }
+      }
+    </button>
+
+    <button mat-menu-item (click)="themeService.switch()">
+      <mat-icon class="gbl-sys-primary">{{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+      @if (themeService.theme() === 'light') {
+        <ng-container i18n="@@Action.DarkTheme">Thème foncé</ng-container>
+      } @else {
+        <ng-container i18n="@@Action.LightTheme">Thème clair</ng-container>
+      }
+    </button>
+
+    @if (userStatus().authenticated) {
+      <button mat-menu-item routerLink="/settings">
+        <mat-icon class="gbl-sys-primary">settings</mat-icon>
+        <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
       </button>
     }
 
-    <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
-      <button mat-menu-item (click)="languageService.switchLanguage()">
-        <ng-container [ngTemplateOutlet]="languageMenuItem" />
-      </button>
-
-      <button mat-menu-item (click)="themeService.switch()">
-        <ng-container [ngTemplateOutlet]="themeMenuItem" />
-      </button>
-
-      @if (userState().authenticated) {
-        <button mat-menu-item routerLink="/settings">
-          <mat-icon class="gbl-sys-primary">settings</mat-icon>
-          <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
-        </button>
-      }
-
+    @if (!userStatus().guest) {
       <button mat-menu-item (click)="signOut()">
         <mat-icon class="gbl-sys-primary">logout</mat-icon>
-        @if (userState().authenticated) {
+        @if (userStatus().authenticated) {
           <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
         } @else {
           <ng-container i18n="@@Action.CloseSession">Fermer la session</ng-container>
         }
       </button>
-    </mat-menu>
-  } @else {
-    <button mat-icon-button [matMenuTriggerFor]="guestMenu">
-      <mat-icon class="gbl-sys-primary">more_vert</mat-icon>
-    </button>
-
-    <mat-menu #guestMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
-      <button mat-menu-item (click)="languageService.switchLanguage()">
-        <ng-container [ngTemplateOutlet]="languageMenuItem" />
-      </button>
-
-      <button mat-menu-item (click)="themeService.switch()">
-        <ng-container [ngTemplateOutlet]="themeMenuItem" />
-      </button>
-    </mat-menu>
-  }
+    }
+  </mat-menu>
 </div>
-
-<ng-template #languageMenuItem>
-  <mat-icon class="gbl-sys-primary">translate</mat-icon>
-  @switch (languageService.localeId) {
-    @case ('fr') {
-      English
-    }
-    @case ('en') {
-      Français
-    }
-  }
-</ng-template>
-
-<ng-template #themeMenuItem>
-  <mat-icon class="gbl-sys-primary">{{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
-  @if (themeService.theme() === 'light') {
-    <ng-container i18n="@@Action.DarkTheme">Thème foncé</ng-container>
-  } @else {
-    <ng-container i18n="@@Action.LightTheme">Thème clair</ng-container>
-  }
-</ng-template>

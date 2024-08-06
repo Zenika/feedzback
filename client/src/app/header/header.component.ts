@@ -1,4 +1,3 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -25,7 +24,6 @@ import { headerAnimations } from './header.animations';
   },
   standalone: true,
   imports: [
-    NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
     RouterLinkWithHref,
@@ -50,7 +48,7 @@ export class HeaderComponent {
 
   protected themeService = inject(ThemeService);
 
-  protected userState = this.authService.userState;
+  protected userStatus = this.authService.userStatus;
 
   protected userInfo = this.authService.userInfo;
 
