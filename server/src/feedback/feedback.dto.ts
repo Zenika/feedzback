@@ -34,7 +34,10 @@ export class GiveRequestedFeedbackDto {
   @MaxLength(LARGE_MAX_LENGTH)
   negative!: string;
 
-  @IsString() @MaxLength(MEDIUM_MAX_LENGTH) comment!: string;
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  comment!: string;
 }
 
 export class GiveFeedbackDto {
@@ -52,7 +55,10 @@ export class GiveFeedbackDto {
   @MaxLength(LARGE_MAX_LENGTH)
   negative!: string;
 
-  @IsString() @MaxLength(MEDIUM_MAX_LENGTH) comment!: string;
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  comment!: string;
 
   @IsBoolean() shared!: boolean;
 }
