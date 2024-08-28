@@ -1,10 +1,12 @@
+<app-skip-to-main-content />
+
 <header class="app-layout__header">
   <div class="app-layout__container">
     <ng-content select="[appLayoutHeader]" />
   </div>
 </header>
 
-<main class="app-layout__main app-layout__container">
+<main class="app-layout__main app-layout__container" appSkipToMainContent>
   <ng-content select="[appLayoutMain]" />
 
   <app-loading />
