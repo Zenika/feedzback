@@ -26,10 +26,18 @@ export class GiveFeedbackDetailsComponent implements OnInit {
   comment = input.required<FormControl<string>>();
 
   ngOnInit(): void {
-    this.positive().addValidators([isNotBlankValidator, Validators.maxLength(this.feedbackMaxLength)]);
+    this.positive().addValidators([
+      Validators.required,
+      isNotBlankValidator,
+      Validators.maxLength(this.feedbackMaxLength),
+    ]);
     this.positive().updateValueAndValidity();
 
-    this.negative().addValidators([isNotBlankValidator, Validators.maxLength(this.feedbackMaxLength)]);
+    this.negative().addValidators([
+      Validators.required,
+      isNotBlankValidator,
+      Validators.maxLength(this.feedbackMaxLength),
+    ]);
     this.negative().updateValueAndValidity();
 
     this.comment().addValidators([Validators.maxLength(this.commentMaxLength)]);
