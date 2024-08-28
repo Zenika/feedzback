@@ -1,13 +1,15 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { IconAnimation, IconDirective, IconPull, IconSize } from '../../shared/icon';
+import { MessageComponent } from '../../shared/message';
 import { DemoModule, demoProp } from '../shared';
 
 @Component({
   selector: 'app-icon-demo',
   standalone: true,
-  imports: [DemoModule, MatIconModule, IconDirective],
+  imports: [DemoModule, MatIconModule, IconDirective, MessageComponent],
   templateUrl: './icon-demo.component.html',
+  styleUrl: './icon-demo.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class IconDemoComponent {

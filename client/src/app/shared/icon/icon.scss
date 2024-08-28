@@ -92,6 +92,10 @@ mat-icon.app-icon {
   &--spin {
     animation: appIconSpin var(--app-icon-duration, 2s) linear infinite;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 @keyframes appIconBeat {
