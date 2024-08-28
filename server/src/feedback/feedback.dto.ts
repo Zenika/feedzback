@@ -6,7 +6,7 @@ import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH, SMALL_MAX_LENGTH } from './feedbac
 export class FeedbackRequestDto {
   @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) recipient!: string;
 
-  @IsString() @MaxLength(SMALL_MAX_LENGTH) message!: string;
+  @IsString() @Transform((params) => (params.value as string)?.trim()) @MaxLength(SMALL_MAX_LENGTH) message!: string;
 
   @IsBoolean() shared!: boolean;
 }
