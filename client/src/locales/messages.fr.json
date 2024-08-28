@@ -95,6 +95,7 @@
     "Component.RequestFeedbackSuccess.RequestAnother": "Demander un autre feedZback",
     "Component.RequestFeedbackSuccess.Title": "FeedZback demandé à :",
     "Component.Settings.UpdateSuccess": "Vos paramètres ont bien été mis à jour.",
+    "Component.SkipToMainContent.Title": "Accéder au contenu principal",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",
     "Feedback.Comment": "Commentaire",
     "Feedback.Give": " Donner ",
