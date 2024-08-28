@@ -39,6 +39,10 @@
       background-size: 480px;
       opacity: 0.5;
       animation: gblLandingAnim 45s linear infinite;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
   }
 

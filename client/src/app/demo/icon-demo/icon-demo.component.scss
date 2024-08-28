@@ -1,0 +1,9 @@
+.app-icon-demo {
+  &__reduced-motion {
+    display: none;
+
+    @media (prefers-reduced-motion: reduce) {
+      display: block;
+    }
+  }
+}
