@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { LoadingComponent } from '../shared/loading';
-import { SkipToMainContentComponent, SkipToMainContentDirective } from './skip-to-main-content';
+import { SkipLinksComponent, SkipLinksTargetDirective } from './skip-links';
 
 @Component({
   selector: 'app-layout',
   host: { class: 'app-layout' },
   standalone: true,
-  imports: [LoadingComponent, SkipToMainContentComponent, SkipToMainContentDirective],
+  imports: [LoadingComponent, SkipLinksComponent, SkipLinksTargetDirective],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
   encapsulation: ViewEncapsulation.None,
