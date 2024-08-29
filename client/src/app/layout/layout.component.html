@@ -1,4 +1,4 @@
-<app-skip-links />
+<app-skip-links [target]="skipLinksTarget" />
 
 <header class="app-layout__header">
   <div class="app-layout__container">
@@ -6,7 +6,7 @@
   </div>
 </header>
 
-<main class="app-layout__main app-layout__container" appSkipLinksTarget>
+<main class="app-layout__main app-layout__container" appSkipLinksTarget #skipLinksTarget="appSkipLinksTarget">
   <ng-content select="[appLayoutMain]" />
 
   <app-loading />

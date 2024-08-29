@@ -1,7 +1,6 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { SKIP_LINKS_TARGET_ID } from './skip-links.constants';
+import { SkipLinksTargetDirective } from './skip-links-target.directive';
 
 @Component({
   selector: 'app-skip-links',
@@ -12,9 +11,9 @@ import { SKIP_LINKS_TARGET_ID } from './skip-links.constants';
   encapsulation: ViewEncapsulation.None,
 })
 export class SkipLinksComponent {
-  #document = inject(DOCUMENT);
+  target = input<SkipLinksTargetDirective>();
 
-  focusTarget() {
-    this.#document.getElementById(SKIP_LINKS_TARGET_ID)!.focus({ preventScroll: true });
+  protected focusTarget() {
+    this.target()?.focus();
   }
 }
