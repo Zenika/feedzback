@@ -52,6 +52,8 @@
     "Component.GiveRequestedFeedback.YourColleague": "Votre collègue",
     "Component.GiveRequestedFeedbackListEmpty1": " Vous n'avez pas reçu de demandes de feedZback... ",
     "Component.GiveRequestedFeedbackListEmpty2": " Profitez-en pour demander ou donner du feedZback à vos collègues ! ",
+    "Component.Header.HomeLink": "Accueil",
+    "Component.Header.UserMenu": "Menu utilisateur",
     "Component.Home.LinkToGuide": "Comment écrire un ",
     "Component.Home.UsageAnalytics": "Statistiques d'usage",
     "Component.LeaveForm.ApplyFeedbackDraftContent": "Si vous appliquez le brouillon, le feedZback que vous avez commencé à rédiger sera perdu.",

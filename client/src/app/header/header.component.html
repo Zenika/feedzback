@@ -5,7 +5,7 @@
 </div>
 
 <div class="app-header__logo">
-  <a routerLink="/home">
+  <a routerLink="/home" aria-label="Accueil" i18n-aria-label="@@Component.Header.HomeLink">
     <img src="assets/images/logo-feedzback.svg" width="106" height="56" alt="" />
   </a>
 </div>
@@ -63,18 +63,28 @@
   <div class="app-header__menu-backdrop" @fadeInOut></div>
 }
 
-<div class="app-header__account">
+<div class="app-header__user-menu">
   @if (userInfo(); as _userInfo) {
-    <button class="gbl-button-less" [matMenuTriggerFor]="accountMenu">
-      <app-avatar class="app-header__account-photo" [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" />
+    <button
+      aria-label="Menu utilisateur"
+      i18n-aria-label="@@Component.Header.UserMenu"
+      class="gbl-button-less"
+      [matMenuTriggerFor]="userMenu"
+    >
+      <app-avatar class="app-header__user-menu-photo" [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" />
     </button>
   } @else {
-    <button mat-icon-button [matMenuTriggerFor]="accountMenu">
+    <button
+      aria-label="Menu utilisateur"
+      i18n-aria-label="@@Component.Header.UserMenu"
+      mat-icon-button
+      [matMenuTriggerFor]="userMenu"
+    >
       <mat-icon class="gbl-sys-primary">more_vert</mat-icon>
     </button>
   }
 
-  <mat-menu #accountMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
+  <mat-menu #userMenu="matMenu" xPosition="before" class="gbl-overlay-menu">
     <button mat-menu-item (click)="languageService.switchLanguage()">
       <mat-icon class="gbl-sys-primary">translate</mat-icon>
       @switch (languageService.localeId) {

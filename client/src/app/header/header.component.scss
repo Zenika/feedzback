@@ -53,13 +53,13 @@
     }
   }
 
-  &__account {
+  &__user-menu {
     position: relative;
     display: flex;
     justify-content: flex-end;
   }
 
-  &__account-photo {
+  &__user-menu-photo {
     cursor: pointer;
   }
 
@@ -69,11 +69,11 @@
     }
 
     &__logo,
-    &__account {
+    &__user-menu {
       flex-basis: 20%;
     }
 
-    &__account {
+    &__user-menu {
       flex-shrink: 3;
     }
 
@@ -88,7 +88,7 @@
     }
 
     &__burger,
-    &__account {
+    &__user-menu {
       flex-basis: 20%;
     }
 
