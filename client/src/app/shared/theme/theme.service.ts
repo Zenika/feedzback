@@ -12,7 +12,7 @@ export class ThemeService {
 
   #document = inject(DOCUMENT);
 
-  #theme = signal<Theme>(this.#getStorage() ?? 'light');
+  #theme = signal<Theme>(this.#getStorage() ?? this.#getDefault());
 
   theme = this.#theme.asReadonly();
 
@@ -38,5 +38,9 @@ export class ThemeService {
 
   #setStorage(theme: Theme) {
     Cookies.set(THEME_COOKIE_KEY, theme);
+  }
+
+  #getDefault(): Theme {
+    return this.#document.defaultView?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 }
