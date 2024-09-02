@@ -96,6 +96,7 @@
     "Component.RequestFeedback.UseTemplate": "S'inspirer d'un modèle",
     "Component.RequestFeedbackSuccess.RequestAnother": "Demander un autre feedZback",
     "Component.RequestFeedbackSuccess.Title": "FeedZback demandé à :",
+    "Component.RequestFeedbackSuccess.ViewRequests": " Consulter la liste des demandes ",
     "Component.Settings.UpdateSuccess": "Vos paramètres ont bien été mis à jour.",
     "Component.SkipLinks.Link": "Accéder au contenu principal",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",

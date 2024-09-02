@@ -96,6 +96,7 @@
     "Component.RequestFeedback.UseTemplate": "Use a template",
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",
     "Component.RequestFeedbackSuccess.Title": "FeedZback requested from:",
+    "Component.RequestFeedbackSuccess.ViewRequests": "View list of requests",
     "Component.Settings.UpdateSuccess": "Your settings have been updated.",
     "Component.SkipLinks.Link": "Skip to main content",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",
