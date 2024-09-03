@@ -23,6 +23,7 @@
     "Action.Send": "Envoyer",
     "Action.SignInWithGoogle": "Se connecter avec Google",
     "Action.SignOut": "Se déconnecter",
+    "Action.Sort": "Trier",
     "Action.Update": "Mettre à jour",
     "Action.ViewFeedback": "Consulter le feedZback",
     "Action.ViewFeedbackRequest": "Consulter la demande",

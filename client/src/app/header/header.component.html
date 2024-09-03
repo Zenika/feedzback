@@ -5,7 +5,13 @@
 </div>
 
 <div class="app-header__logo">
-  <a routerLink="/home" aria-label="Accueil" i18n-aria-label="@@Component.Header.HomeLink">
+  <a
+    routerLink="/home"
+    routerLinkActive
+    ariaCurrentWhenActive="page"
+    aria-label="Accueil"
+    i18n-aria-label="@@Component.Header.HomeLink"
+  >
     <img src="assets/images/logo-feedzback.svg" width="106" height="56" alt="" />
   </a>
 </div>
@@ -16,6 +22,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/request"
+      ariaCurrentWhenActive="page"
       i18n="@@Feedback.Request"
     >
       Demander
@@ -24,6 +31,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/give"
+      ariaCurrentWhenActive="page"
       i18n="@@Feedback.Give"
     >
       Donner
@@ -32,6 +40,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/give-requested"
+      ariaCurrentWhenActive="page"
       [matBadge]="receivedRequestLength()"
       i18n="@@Feedback.Reply"
     >
@@ -41,6 +50,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/history"
+      ariaCurrentWhenActive="page"
       i18n="@@Action.History"
       >Mes feedZbacks</a
     >
@@ -51,6 +61,7 @@
         class="app-header__menu-item"
         routerLinkActive="app-header__menu-item--active"
         routerLink="/manager"
+        ariaCurrentWhenActive="page"
         i18n="@@Action.Manager"
       >
         Manager
@@ -89,10 +100,10 @@
       <mat-icon class="gbl-sys-primary">translate</mat-icon>
       @switch (languageService.localeId) {
         @case ('fr') {
-          English
+          <span lang="en">English</span>
         }
         @case ('en') {
-          Français
+          <span lang="fr">Français</span>
         }
       }
     </button>
