@@ -1,13 +1,29 @@
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Field.Email">Email</th>
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Trier"
+      i18n-sortActionDescription="@@Action.Sort"
+    >
+      <ng-container i18n="@@Field.Email">Email</ng-container>
+    </th>
     <td mat-cell *matCellDef="let element" [class.app-feedback-list__pending]="nf(element).type === 'sentRequest'">
       {{ nf(element).email }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@Field.Date">Date</th>
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Trier"
+      i18n-sortActionDescription="@@Action.Sort"
+    >
+      <ng-container i18n="@@Field.Date">Date</ng-container>
+    </th>
     <td mat-cell *matCellDef="let element" [class.app-feedback-list__pending]="nf(element).type === 'sentRequest'">
       {{ nf(element).date | date: 'shortDate' }}
     </td>

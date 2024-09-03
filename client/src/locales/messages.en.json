@@ -23,6 +23,7 @@
     "Action.Send": "Send",
     "Action.SignInWithGoogle": "Sign in with Google",
     "Action.SignOut": "Sign out",
+    "Action.Sort": "Sort",
     "Action.Update": "Update",
     "Action.ViewFeedback": "View feedZback",
     "Action.ViewFeedbackRequest": "View request",
