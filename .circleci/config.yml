@@ -9,7 +9,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: cimg/node:20.9
+      - image: cimg/node:20.17
     resource_class: small
 
 # ---------------------------------------------------------------------------------
@@ -251,7 +251,6 @@ workflows:
           requires:
             - prepare-workspace
           context: feedzback-production
-
 
 jobs:
   prepare-workspace:
