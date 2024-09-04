@@ -61,10 +61,10 @@
     ></textarea>
 
     <mat-hint align="start">
-      <a [matMenuTriggerFor]="useTemplate" class="gbl-link gbl-link--no-underline">
+      <button type="button" [matMenuTriggerFor]="useTemplate" class="gbl-button-less gbl-link gbl-link--no-underline">
         <mat-icon class="align-text-bottom" style="font-size: 1.125rem">edit_note</mat-icon>
         <ng-container i18n="@@Component.RequestFeedback.UseTemplate">S'inspirer d'un modèle</ng-container>
-      </a>
+      </button>
 
       <mat-menu #useTemplate="matMenu" xPosition="before" yPosition="above" class="gbl-overlay-menu">
         <button

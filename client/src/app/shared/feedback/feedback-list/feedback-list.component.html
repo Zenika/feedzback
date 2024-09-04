@@ -55,11 +55,8 @@
         class="gbl-sys-primary-hover"
         mat-icon-button
         matTooltipPosition="left"
-        [matTooltip]="
-          nf(element).type === 'received' || nf(element).type === 'given'
-            ? viewFeedbackTooltip
-            : viewFeedbackRequestTooltip
-        "
+        [matTooltip]="getActionLabel(nf(element).type)"
+        [attr.aria-label]="getActionLabel(nf(element).type)"
         [routerLink]="[asManager() ? '/manager/document' : '/history/id', nf(element).id]"
       >
         <mat-icon>visibility</mat-icon>
@@ -72,6 +69,8 @@
           matTooltipPosition="right"
           matTooltip=" Répondre "
           i18n-matTooltip="@@Feedback.Reply"
+          aria-label=" Répondre "
+          i18n-aria-label="@@Feedback.Reply"
           [appGiveRequestedFeedback]="nf(element).id"
         >
           <mat-icon>edit</mat-icon>
