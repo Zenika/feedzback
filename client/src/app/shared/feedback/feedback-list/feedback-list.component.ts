@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../breakpoint';
 import { SlashModule } from '../../slash';
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
-import { NormalizedFeedback } from '../feedback.types';
+import { FeedbackType, NormalizedFeedback } from '../feedback.types';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
 @Component({
@@ -67,10 +67,6 @@ export class FeedbackListComponent implements AfterViewInit {
     return this.dataSource.data.length > this.pageSizeOptions[0];
   }
 
-  readonly viewFeedbackTooltip = $localize`:@@Action.ViewFeedback:Consulter le feedZback`;
-
-  readonly viewFeedbackRequestTooltip = $localize`:@@Action.ViewFeedbackRequest:Consulter la demande`;
-
   private isMobile = false;
 
   constructor() {
@@ -96,6 +92,12 @@ export class FeedbackListComponent implements AfterViewInit {
   // "nf" means "normalized feedback"
   protected nf(value: unknown) {
     return value as NormalizedFeedback;
+  }
+
+  protected getActionLabel(type: FeedbackType) {
+    return type === 'received' || type === 'given'
+      ? $localize`:@@Action.ViewFeedback:Consulter le feedZback`
+      : $localize`:@@Action.ViewFeedbackRequest:Consulter la demande`;
   }
 
   private init() {

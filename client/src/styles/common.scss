@@ -31,6 +31,17 @@ h1.gbl-page-title {
   }
 }
 
+/* ----- button less ----- */
+
+.gbl-button-less {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  line-height: inherit;
+  font: inherit;
+}
+
 /* ----- Link ----- */
 
 .gbl-link {
@@ -160,17 +171,6 @@ ul.gbl-list {
       gap: 1.25rem;
     }
   }
-}
-
-/* ----- button less ----- */
-
-.gbl-button-less {
-  padding: 0;
-  border: none;
-  background: none;
-  color: inherit;
-  line-height: inherit;
-  font: inherit;
 }
 
 /* ----- Overlay menu ----- */
