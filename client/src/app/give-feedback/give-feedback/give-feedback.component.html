@@ -52,17 +52,20 @@
       <ng-container i18n="@@Component.GiveFeedback.Share">
         Partager le feedZback avec le manager de votre collègue
       </ng-container>
-      <mat-icon
-        class="gbl-link ms-1 align-bottom"
+
+      <button
+        type="button"
+        class="gbl-button-less gbl-link ms-1 align-middle"
         appDialogTooltip
-        dialogWidth="600px"
+        ariaLabelFromDialogTitle
         dialogTitle="Pourquoi le partage du feedZback est recommandé ?"
         dialogContent="En partageant votre feedZback, votre collègue et son manager pourront échanger ensemble et ainsi bénéficier au mieux de son contenu."
+        dialogWidth="600px"
         i18n-dialogTitle="@@Component.GiveFeedback.ShareFeedbackMessageTitle"
         i18n-dialogContent="@@Component.GiveFeedback.ShareFeedbackMessageContent"
       >
-        help
-      </mat-icon>
+        <mat-icon>help</mat-icon>
+      </button>
     </mat-slide-toggle>
   </div>
 

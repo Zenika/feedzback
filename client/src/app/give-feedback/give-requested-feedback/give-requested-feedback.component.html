@@ -15,17 +15,19 @@
     <strong i18n="@@Component.GiveRequestedFeedback.Message2">
       Notez que votre réponse sera partagée avec son manager.
     </strong>
-    <mat-icon
-      class="gbl-link ms-1 align-bottom"
+    <button
+      type="button"
+      class="gbl-button-less gbl-link align-middle"
       appDialogTooltip
-      dialogWidth="600px"
+      ariaLabelFromDialogTitle
       dialogTitle="FeedZback partagé"
       dialogContent="Le destinataire du feedZback et son manager pourront échanger ensemble et ainsi bénéficier au mieux de son contenu."
+      dialogWidth="600px"
       i18n-dialogTitle="@@Component.GiveRequestedFeedback.ShareFeedbackMessageTitle"
       i18n-dialogContent="@@Component.GiveRequestedFeedback.ShareFeedbackMessageContent"
     >
-      help
-    </mat-icon>
+      <mat-icon>help</mat-icon>
+    </button>
   }
 </app-message>
 

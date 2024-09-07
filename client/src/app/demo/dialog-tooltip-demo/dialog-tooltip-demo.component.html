@@ -1,21 +1,34 @@
 <p>
-  Open dialog tooltip with content as string
-  <mat-icon
-    style="vertical-align: bottom"
+  Open dialog tooltip using content as string
+
+  <button
+    type="button"
+    class="gbl-button-less gbl-link align-middle"
     appDialogTooltip
+    ariaLabelFromDialogTitle
     dialogTitle="Dialog tooltip"
     dialogContent="Dialog content as string."
   >
-    lightbulb
-  </mat-icon>
+    <mat-icon>lightbulb</mat-icon>
+  </button>
 </p>
 
 <p>
-  Open dialog tooltip with content as template
-  <mat-icon appDialogTooltip dialogTitle="Dialog tooltip" [dialogContent]="dialogTooltipTemplate">lightbulb</mat-icon>
+  Open dialog tooltip using content as template
+
+  <button
+    type="button"
+    class="gbl-button-less gbl-link align-middle"
+    appDialogTooltip
+    ariaLabelFromDialogTitle
+    dialogTitle="Dialog tooltip"
+    [dialogContent]="dialogTooltipTemplate"
+  >
+    <mat-icon>lightbulb</mat-icon>
+  </button>
 
   <ng-template #dialogTooltipTemplate>
-    <mat-icon>beach_access</mat-icon>
+    <mat-icon class="me-1 align-middle">beach_access</mat-icon>
     Dialog content as template.
   </ng-template>
 </p>
