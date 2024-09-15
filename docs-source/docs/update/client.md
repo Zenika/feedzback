@@ -7,6 +7,12 @@ title: Client app
 You can update the Angular framework dependencies by following the [instructions provided by Angular](https://angular.dev/update).
 Other dependencies can be updated manually.
 
+But to make it short, just run the following command:
+
+```bash
+ng update @angular/core @angular/cli @angular/localize @angular/material
+```
+
 The rest of the document describes how to recreate all the dependencies from scratch.
 This is very useful for understanding the links between dependencies.
 
@@ -111,35 +117,20 @@ ng add @angular-eslint/schematics
 npm i -D prettier eslint-config-prettier eslint-plugin-prettier prettier-plugin-organize-imports prettier-plugin-tailwindcss
 ```
 
-Update `.eslintrc.json` file:
+Update `eslint.config.js` file:
 
-```json
-{
-  "extends": ["prettier"],
-  "plugins": ["prettier"],
-  "rules": {
-    "prettier/prettier": "warn",
-    "arrow-body-style": "off",
-    "prefer-arrow-callback": "off"
-  },
-  "overrides": [
-    {
-      "files": ["*.ts"], // <-- existing line
-      "extends": ["plugin:prettier/recommended"],
-      "rules": {
-        "@angular-eslint/no-host-metadata-property": ["off"],
-        "prettier/prettier": "warn"
-      }
+```js
+const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+
+module.exports = tseslint.config(
+  {
+    rules: {
+      // Note: the following rule is an addon (by default, type definitions use `interface`, but we prefer to use `type`)
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     },
-    {
-      "files": ["*.html"], // <-- existing line
-      "extends": ["plugin:prettier/recommended"],
-      "rules": {
-        "prettier/prettier": "warn"
-      }
-    }
-  ]
-}
+  },
+  eslintPluginPrettierRecommended
+);
 ```
 
 :::note
