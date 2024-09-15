@@ -137,11 +137,6 @@ module.exports = tseslint.config(
 Only the lines added are reported here.
 :::
 
-:::note
-The `"@angular-eslint/no-host-metadata-property"` rule is turned off to reflect the latest Angular best pratices.<br />
-More info on this [issue](https://github.com/angular/angular/issues/54284).
-:::
-
 Add `.prettierrc.json` file:
 
 ```json

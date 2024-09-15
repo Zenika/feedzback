@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkfeedzback_docs=self.webpackChunkfeedzback_docs||[]).push([[903],{1912:e=>{e.exports=JSON.parse('{"blogBasePath":"/feedzback/blog","blogTitle":"Blog"}')}}]);

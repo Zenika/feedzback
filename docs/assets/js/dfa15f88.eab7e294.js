@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfeedzback_docs=self.webpackChunkfeedzback_docs||[]).push([[314],{2062:e=>{e.exports=JSON.parse('{"authors":[{"name":"St\xe9phane Francel","title":"Tech lead of FeedZback","url":"https://github.com/avine","imageURL":"https://avatars.githubusercontent.com/u/1133214?v=4","key":"stephane.francel","page":null,"count":1}]}')}}]);
