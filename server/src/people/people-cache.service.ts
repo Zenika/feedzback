@@ -53,7 +53,7 @@ export class PeopleCacheService {
 
       const cachingDuration = Math.round((Date.now() - cachingStartDate) / 100) / 10;
       this.logger.log(`Cache refreshed with ${allPersons.length} persons in ${cachingDuration}s`);
-    } catch (err) {
+    } catch {
       this.searchablePersonsExpiryDate = Date.now() + PEOPLE_CACHE_RETRY_DURATION;
 
       this.logger.error(`Unable to cache people. Retry in ${Math.round(PEOPLE_CACHE_RETRY_DURATION / 60_000)}mn...`);
