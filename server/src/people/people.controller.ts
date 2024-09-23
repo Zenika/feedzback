@@ -16,7 +16,7 @@ export class PeopleController {
   searchPersons(@Query() { query }: SearchPersonsDto) {
     try {
       return this.peopleService.searchPersons(query);
-    } catch (err) {
+    } catch {
       throw new ServiceUnavailableException();
     }
   }
