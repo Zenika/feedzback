@@ -1,8 +1,24 @@
-@for (role of materialColorRoles; track $index; let first = $first) {
-  <div class="color-demo">
-    <div class="color-demo__preview" [style.background-color]="'var(--sys-' + role + ')'"></div>
-    <div class="color-demo__label" [class.demo-content-colors__label--first]="first">
+<mat-slide-toggle [checked]="displayHexColor" (toggleChange)="displayHexColor = !displayHexColor">
+  display color in hexadecimal
+</mat-slide-toggle>
+
+<div class="color-demo">
+  @for (role of materialColorRoles; track $index; let first = $first) {
+    <div [style.background-color]="'var(--sys-' + role + ')'" #element></div>
+
+    <div class="color-demo__label" [class.color-demo__label--first]="first">
       {{ role }}
+
+      @if (element | elementToBgColor: displayHexColor; as bgColor) {
+        <button
+          class="gbl-button-less color-demo__code"
+          (click)="toClipboard(bgColor)"
+          matTooltip="Copy to clipboard"
+          matTooltipPosition="left"
+        >
+          {{ bgColor }}
+        </button>
+      }
     </div>
-  </div>
-}
+  }
+</div>

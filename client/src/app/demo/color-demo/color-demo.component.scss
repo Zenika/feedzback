@@ -1,18 +1,37 @@
 .color-demo {
-  display: flex;
+  margin-top: 1.5rem;
 
-  &__preview {
-    flex-basis: 50%;
-  }
+  display: grid;
+  grid-template-columns: minmax(4rem, 50%) minmax(max-content, 50%);
 
   &__label {
-    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     padding: 0.5rem 1rem;
     border: 1px solid var(--sys-outline-variant);
     border-width: 0 0 1px 1px;
 
     &--first {
       border-top-width: 1px;
+    }
+  }
+
+  &__code {
+    padding: 0.25rem 0.5rem;
+
+    border-radius: 0.5rem;
+    background-color: var(--sys-surface-container);
+
+    font-size: 0.75rem;
+    font-family: 'Courier New', Courier, monospace;
+
+    cursor: pointer;
+    transition: background-color 250ms ease;
+
+    &:active {
+      background-color: var(--sys-surface-container-highest);
     }
   }
 }
