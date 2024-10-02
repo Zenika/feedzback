@@ -1,16 +1,24 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ElementToBgColorPipe } from './element-to-bg-color.pipe';
 
 @Component({
   selector: 'app-color-demo',
   standalone: true,
-  imports: [],
+  imports: [MatSlideToggleModule, MatTooltipModule, ElementToBgColorPipe],
   templateUrl: './color-demo.component.html',
   styleUrl: './color-demo.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class ColorDemoComponent {
+  #document = inject(DOCUMENT);
+
+  protected displayHexColor = true;
+
   // Learn more about Material color roles: https://m3.material.io/styles/color/roles
-  materialColorRoles = [
+  protected materialColorRoles = [
     'background',
     'error',
     'error-container',
@@ -61,4 +69,8 @@ export class ColorDemoComponent {
     'tertiary-fixed',
     'tertiary-fixed-dim',
   ];
+
+  protected toClipboard(color: string) {
+    this.#document.defaultView?.navigator.clipboard.writeText(color);
+  }
 }
