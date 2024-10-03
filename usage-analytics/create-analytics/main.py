@@ -67,7 +67,8 @@ def create_analytics_tables(*_):
     execute_query("externe_feedbacks_per_month.sql", "feedzback_usage", "externe_feedbacks_per_month") 
     # This query answer the question "how many feedbacks are shared with managers each month"
     execute_query("shared_feedbacks_per_month.sql", "feedzback_usage", "shared_feedbacks_per_month") 
-    # This query answers the question: "What is the number of givers, the number of receivers, and the total number of feedbackers?"
+    # This query answers the question: "What is the number of givers and  the number of receivers"
     execute_query("feedbackers_giver_receiver_repartition.sql", "feedzback_usage", "feedbackers_giver_receiver_repartition") 
-
+    # This query answers the question: "What is the total number of feedbackers?"
+    execute_query("all_feedbackers.sql", "feedzback_usage", "all_feedbackers") 
     return 'OK'
