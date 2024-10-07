@@ -67,4 +67,6 @@ def create_analytics_tables(*_):
     execute_query("externe_feedbacks_per_month.sql", "feedzback_usage", "externe_feedbacks_per_month") 
     # This query answer the question "how many feedbacks are shared with managers each month"
     execute_query("shared_feedbacks_per_month.sql", "feedzback_usage", "shared_feedbacks_per_month") 
+    # This query answer the question "how many users on feedzback"
+    execute_query("users_daily_count.sql", "feedzback_usage", "users_daily_count") 
     return 'OK'
