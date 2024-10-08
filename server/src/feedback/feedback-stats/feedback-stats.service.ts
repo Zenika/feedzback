@@ -23,6 +23,13 @@ export class FeedbackStatsService {
     return {
       summary: buildHistoryStats(history),
       details: buildHistoryByMonthStats(buildHistoryByMonth(history)),
+      history: history.map(({ createdAt, updatedAt, requested, status, shared }) => ({
+        createdAt,
+        updatedAt,
+        requested,
+        status,
+        shared,
+      })),
     };
   }
 }

@@ -8,6 +8,7 @@ import { settingsGuard } from './settings/settings.guard';
 import { authGuard } from './shared/auth';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { signInGuard } from './sign-in/sign-in.guard';
+import { statsResolver } from './stats/stats.resolver';
 
 export const routes: Routes = [
   {
@@ -73,6 +74,12 @@ export const routes: Routes = [
     path: 'guide',
     component: GuideComponent,
     title: 'FeedZback - ' + $localize`:@@Title.Guide:Guide du feedZback`,
+  },
+  {
+    path: 'stats',
+    loadComponent: () => import('./stats/stats.component'),
+    resolve: { stats: statsResolver },
+    title: 'FeedZback - Stats',
   },
   {
     path: 'demo',

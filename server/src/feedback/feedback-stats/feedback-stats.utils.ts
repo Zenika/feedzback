@@ -1,13 +1,16 @@
 import { FeedbackHistory, FeedbackHistoryStats, FeedbackMonthHistoryStats } from './feedback-stats.types';
 
 export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistoryStats => {
-  // List of unique users who have given at least 1 feedback
+  // List of unique users who have given at least 1 feedback (spontaneous or requested).
   const giverEmailList = new Set<string>();
 
-  // List of unique users who have received at least 1 feedback (including users with pending feedback requests)
+  // List of unique users who have received at least 1 feedback (spontaneous or requested).
   const receiverEmailList = new Set<string>();
 
-  // List of unique users who have given, received or requested at least 1 feedback
+  // List of unique users who have requested at least 1 feedback but have not yet received a reply (pending request only)
+  const requesterEmailList = new Set<string>();
+
+  // List of unique users who have given, received or requested at least 1 feedback.
   const allEmailList = new Set<string>();
 
   let spontaneousFeedback = 0;
@@ -16,14 +19,16 @@ export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistorySt
   let sharedFeedback = 0;
 
   history.forEach(({ giverEmail, receiverEmail, requested, status, shared }) => {
-    // For feedback requests, the `giverEmail` is not to be taken into account until he has replied.
-    if (!requested || status === 'done') {
-      giverEmailList.add(giverEmail);
-      allEmailList.add(giverEmail);
-    }
+    if (requested && status === 'pending') {
+      requesterEmailList.add(receiverEmail);
+      allEmailList.add(receiverEmail);
+    } else {
+      receiverEmailList.add(receiverEmail);
+      allEmailList.add(receiverEmail);
 
-    receiverEmailList.add(receiverEmail);
-    allEmailList.add(receiverEmail);
+      giverEmailList.add(giverEmail);
+      allEmailList.add(receiverEmail);
+    }
 
     if (!requested) {
       spontaneousFeedback += 1;
@@ -41,6 +46,7 @@ export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistorySt
   return {
     uniqueGivers: giverEmailList.size,
     uniqueReceivers: receiverEmailList.size,
+    uniqueRequesters: requesterEmailList.size,
     uniqueUsers: allEmailList.size,
 
     spontaneousFeedback,

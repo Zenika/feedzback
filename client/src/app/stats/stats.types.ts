@@ -1,13 +1,3 @@
-export type FeedbackHistory = {
-  giverEmail: string;
-  receiverEmail: string;
-  shared: boolean;
-  requested: boolean;
-  status: 'pending' | 'done';
-  createdAt: number;
-  updatedAt: number;
-};
-
 export type FeedbackHistoryStats = {
   // User stats
   uniqueGivers: number;
@@ -23,3 +13,8 @@ export type FeedbackHistoryStats = {
 };
 
 export type FeedbackMonthHistoryStats = { month: string } & FeedbackHistoryStats;
+
+export type FeedbackStats = {
+  summary: FeedbackHistoryStats;
+  details: FeedbackMonthHistoryStats[];
+};

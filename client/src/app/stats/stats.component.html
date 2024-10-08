@@ -1,0 +1,55 @@
+<h1 class="gbl-page-title mat-headline-large">
+  <mat-icon>monitoring</mat-icon>
+  Stats
+</h1>
+
+<mat-tab-group animationDuration="0ms">
+  <mat-tab label="Summary">
+    @let summary = stats().summary;
+
+    <h2 class="mat-title-large !mt-6">Users</h2>
+    <ul class="gbl-list">
+      <li class="gbl-list__item">
+        <strong>{{ summary.uniqueUsers }}</strong> unique users
+      </li>
+      <li class="gbl-list__item">
+        <strong>{{ summary.uniqueGivers }}</strong> unique givers
+      </li>
+      <li class="gbl-list__item">
+        <strong>{{ summary.uniqueReceivers }}</strong> unique receivers
+      </li>
+      <li class="gbl-list__item">
+        <strong>{{ summary.uniqueRequesters }}</strong> unique requesters
+      </li>
+    </ul>
+
+    <h2 class="mat-title-large">FeedZbacks</h2>
+    <ul class="gbl-list">
+      <li class="gbl-list__item">
+        <strong>{{ summary.spontaneousFeedback }}</strong> spontaneous feedZbacks
+      </li>
+      <li class="gbl-list__item">
+        <strong>{{ summary.requestedFeedbackDone }}</strong> requested feedZbacks (done)
+      </li>
+      <li class="gbl-list__item">
+        <strong>{{ summary.requestedFeedbackPending }}</strong> requested feedZbacks (pending)
+      </li>
+    </ul>
+
+    <h2 class="mat-title-large">Period</h2>
+    <ul class="gbl-list">
+      <li class="gbl-list__item">
+        @let p = period();
+        Between <strong>{{ p.from }}</strong> and <strong>{{ p.to }}</strong>
+      </li>
+    </ul>
+  </mat-tab>
+
+  <mat-tab label="Details">
+    <h2 class="mat-title-large !mt-6 text-center">Users</h2>
+    <div echarts [theme]="chartTheme()" [options]="usersChartOptions()" style="height: 350px"></div>
+
+    <h2 class="mat-title-large text-center">FeedZbacks</h2>
+    <div echarts [theme]="chartTheme()" [options]="feedbacksChartOptions()" style="height: 350px"></div>
+  </mat-tab>
+</mat-tab-group>
