@@ -1,18 +1,18 @@
-import { FeedbackStats } from './stats.types';
+import { FeedbackMonthHistoryStats } from './stats.types';
 
-export const pluckStatsDetails = ({ details }: FeedbackStats) => ({
-  month: details.map(({ month }) => month),
+export const pluckMonthHistoryStats = (data: FeedbackMonthHistoryStats[]) => ({
+  month: data.map(({ month }) => month),
 
   // User stats
-  uniqueGivers: details.map(({ uniqueGivers }) => uniqueGivers),
-  uniqueReceivers: details.map(({ uniqueReceivers }) => uniqueReceivers),
-  uniqueGiversOrReceivers: details.map(({ uniqueGiversOrReceivers }) => uniqueGiversOrReceivers),
-  uniqueRequesters: details.map(({ uniqueRequesters }) => uniqueRequesters),
-  uniqueUsers: details.map(({ uniqueUsers }) => uniqueUsers),
+  uniqueGivers: data.map(({ uniqueGivers }) => uniqueGivers),
+  uniqueReceivers: data.map(({ uniqueReceivers }) => uniqueReceivers),
+  uniqueGiversOrReceivers: data.map(({ uniqueGiversOrReceivers }) => uniqueGiversOrReceivers),
+  uniqueRequesters: data.map(({ uniqueRequesters }) => uniqueRequesters),
+  uniqueUsers: data.map(({ uniqueUsers }) => uniqueUsers),
 
   // Feedback stats
-  spontaneousFeedback: details.map(({ spontaneousFeedback }) => spontaneousFeedback),
-  requestedFeedbackDone: details.map(({ requestedFeedbackDone }) => requestedFeedbackDone),
-  requestedFeedbackPending: details.map(({ requestedFeedbackPending }) => requestedFeedbackPending),
-  sharedFeedback: details.map(({ sharedFeedback }) => sharedFeedback),
+  spontaneousFeedback: data.map(({ spontaneousFeedback }) => spontaneousFeedback),
+  requestedFeedbackDone: data.map(({ requestedFeedbackDone }) => requestedFeedbackDone),
+  requestedFeedbackPending: data.map(({ requestedFeedbackPending }) => requestedFeedbackPending),
+  sharedFeedback: data.map(({ sharedFeedback }) => sharedFeedback),
 });

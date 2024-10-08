@@ -25,7 +25,7 @@
   @include mat.chips-theme(t.$light-theme);
   @include mat.slide-toggle-theme(t.$light-theme);
   //@include mat.radio-theme(t.$light-theme);
-  //@include mat.slider-theme(t.$light-theme);
+  @include mat.slider-theme(t.$light-theme);
   @include mat.menu-theme(t.$light-theme);
   //@include mat.list-theme(t.$light-theme);
   @include mat.paginator-theme(t.$light-theme);
@@ -71,7 +71,7 @@
   @include mat.chips-color(t.$dark-theme);
   @include mat.slide-toggle-color(t.$dark-theme);
   //@include mat.radio-color(t.$dark-theme);
-  //@include mat.slider-color(t.$dark-theme);
+  @include mat.slider-color(t.$dark-theme);
   @include mat.menu-color(t.$dark-theme);
   //@include mat.list-color(t.$dark-theme);
   @include mat.paginator-color(t.$dark-theme);

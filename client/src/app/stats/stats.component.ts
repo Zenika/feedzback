@@ -1,31 +1,41 @@
-import { Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, input, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
 import { ThemeService } from '../shared/theme';
 import { FeedbackStats } from './stats.types';
-import { pluckStatsDetails } from './stats.utils';
+import { pluckMonthHistoryStats } from './stats.utils';
 
 @Component({
   selector: 'app-stats',
+  host: { class: 'app-stats' },
   standalone: true,
   providers: [provideEcharts()],
-  imports: [MatIconModule, MatTableModule, MatTabsModule, NgxEchartsDirective],
+  imports: [MatIconModule, MatSlideToggleModule, MatSliderModule, MatTableModule, MatTabsModule, NgxEchartsDirective],
   templateUrl: './stats.component.html',
+  styleUrl: './stats.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export default class StatsComponent {
   stats = input.required<FeedbackStats>();
 
-  private detailsPlucked = computed(() => pluckStatsDetails(this.stats()));
+  protected start = signal(0);
 
-  period = computed(() => {
+  protected endFactory = computed(() => signal(this.stats().details.length));
+
+  private detailsPlucked = computed(() =>
+    pluckMonthHistoryStats(this.stats().details.slice(this.start(), this.endFactory()())),
+  );
+
+  protected period = computed(() => {
     const { month } = this.detailsPlucked();
     return {
-      from: month[0],
-      to: month[month.length - 1],
+      start: month[0],
+      end: month[month.length - 1],
     };
   });
 
@@ -120,4 +130,10 @@ export default class StatsComponent {
   private theme = inject(ThemeService).theme;
 
   protected chartTheme = computed((): ThemeOption | string | null => (this.theme() === 'dark' ? 'dark' : null));
+
+  protected showLegend = signal(false);
+
+  protected toggleLegend() {
+    this.showLegend.update((show) => !show);
+  }
 }

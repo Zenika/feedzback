@@ -5,24 +5,58 @@
 
 <mat-tab-group animationDuration="0ms">
   <mat-tab label="Summary">
+    <p class="!mt-6">
+      <mat-slide-toggle [checked]="showLegend()" (toggleChange)="toggleLegend()">Show legend</mat-slide-toggle>
+    </p>
+
     @let summary = stats().summary;
 
     <h2 class="mat-title-large !mt-6">Users</h2>
     <ul class="gbl-list">
       <li class="gbl-list__item">
         <strong>{{ summary.uniqueUsers }}</strong> unique users
+        @if (showLegend()) {
+          <div class="app-stats__legend">
+            Number of unique users who have given, received or requested at least 1 feedback.
+          </div>
+        }
       </li>
+
       <li class="gbl-list__item">
         <strong>{{ summary.uniqueGiversOrReceivers }}</strong> unique givers or receivers
+        @if (showLegend()) {
+          <div class="app-stats__legend">
+            Number of unique users who have given or received at least 1 feedback (spontaneous or requested).
+          </div>
+        }
       </li>
+
       <li class="gbl-list__item">
         <strong>{{ summary.uniqueGivers }}</strong> unique givers
+        @if (showLegend()) {
+          <div class="app-stats__legend">
+            Number of unique users who have given at least 1 feedback (spontaneous or requested).
+          </div>
+        }
       </li>
+
       <li class="gbl-list__item">
         <strong>{{ summary.uniqueReceivers }}</strong> unique receivers
+        @if (showLegend()) {
+          <div class="app-stats__legend">
+            Number of unique users who have received at least 1 feedback (spontaneous or requested).
+          </div>
+        }
       </li>
+
       <li class="gbl-list__item">
         <strong>{{ summary.uniqueRequesters }}</strong> unique requesters
+        @if (showLegend()) {
+          <div class="app-stats__legend">
+            Number of unique users who have requested at least 1 feedback but have not yet received a reply (pending
+            request only).
+          </div>
+        }
       </li>
     </ul>
 
@@ -30,12 +64,23 @@
     <ul class="gbl-list">
       <li class="gbl-list__item">
         <strong>{{ summary.spontaneousFeedback }}</strong> spontaneous feedZbacks
+        @if (showLegend()) {
+          <div class="app-stats__legend">Number of spontaneous feedZbacks over the period.</div>
+        }
       </li>
+
       <li class="gbl-list__item">
         <strong>{{ summary.requestedFeedbackDone }}</strong> requested feedZbacks (done)
+        @if (showLegend()) {
+          <div class="app-stats__legend">Number of feedZback requests replied over the period.</div>
+        }
       </li>
+
       <li class="gbl-list__item">
         <strong>{{ summary.requestedFeedbackPending }}</strong> requested feedZbacks (pending)
+        @if (showLegend()) {
+          <div class="app-stats__legend">Number of feedZback requests awaiting response over the period.</div>
+        }
       </li>
     </ul>
 
@@ -43,16 +88,26 @@
     <ul class="gbl-list">
       <li class="gbl-list__item">
         @let p = period();
-        Between <strong>{{ p.from }}</strong> and <strong>{{ p.to }}</strong>
+        Between <strong>{{ p.start || '...' }}</strong> and <strong>{{ p.end || '...' }}</strong>
       </li>
     </ul>
   </mat-tab>
 
   <mat-tab label="Details">
-    <h2 class="mat-title-large !mt-6 text-center">Users</h2>
-    <div echarts [theme]="chartTheme()" [options]="usersChartOptions()" style="height: 350px"></div>
+    @defer (on viewport) {
+      <mat-slider [min]="0" [max]="stats().details.length" step="1" class="app-stats__slider" showTickMarks>
+        @let end = endFactory();
+        <input matSliderStartThumb [(value)]="start" />
+        <input matSliderEndThumb [(value)]="end" />
+      </mat-slider>
 
-    <h2 class="mat-title-large text-center">FeedZbacks</h2>
-    <div echarts [theme]="chartTheme()" [options]="feedbacksChartOptions()" style="height: 350px"></div>
+      <h2 class="mat-title-large !mt-6 text-center">Users</h2>
+      <div echarts [theme]="chartTheme()" [options]="usersChartOptions()" class="app-stats__chart"></div>
+
+      <h2 class="mat-title-large text-center">FeedZbacks</h2>
+      <div echarts [theme]="chartTheme()" [options]="feedbacksChartOptions()" class="app-stats__chart"></div>
+    } @placeholder {
+      <div></div>
+    }
   </mat-tab>
 </mat-tab-group>

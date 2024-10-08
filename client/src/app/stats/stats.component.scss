@@ -1,0 +1,17 @@
+.app-stats {
+  &__legend {
+    margin-bottom: 0.75rem;
+    font: var(--sys-label-large);
+    color: var(--sys-tertiary);
+  }
+
+  &__slider {
+    display: block !important;
+    width: max(50%, 220px) !important;
+    margin: 1rem auto 0 auto !important;
+  }
+
+  &__chart {
+    height: max(33vh, 320px);
+  }
+}
