@@ -12,6 +12,7 @@ export type FeedbackHistoryStats = {
   // User stats
   uniqueGivers: number;
   uniqueReceivers: number;
+  uniqueGiversOrReceivers: number;
   uniqueRequesters: number;
   uniqueUsers: number;
 

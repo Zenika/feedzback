@@ -47,8 +47,13 @@ export default class StatsComponent {
       },
       series: [
         {
-          name: 'All users',
+          name: 'All',
           data: plucked.uniqueUsers,
+          type: 'bar',
+        },
+        {
+          name: 'Givers or receivers',
+          data: plucked.uniqueGiversOrReceivers,
           type: 'bar',
         },
         {

@@ -7,7 +7,10 @@ export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistorySt
   // List of unique users who have received at least 1 feedback (spontaneous or requested).
   const receiverEmailList = new Set<string>();
 
-  // List of unique users who have requested at least 1 feedback but have not yet received a reply (pending request only)
+  // List of unique users who have given or received at least 1 feedback (spontaneous or requested).
+  const giverOrReceiverEmailList = new Set<string>();
+
+  // List of unique users who have requested at least 1 feedback but have not yet received a reply (pending request only).
   const requesterEmailList = new Set<string>();
 
   // List of unique users who have given, received or requested at least 1 feedback.
@@ -24,9 +27,11 @@ export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistorySt
       allEmailList.add(receiverEmail);
     } else {
       receiverEmailList.add(receiverEmail);
+      giverOrReceiverEmailList.add(receiverEmail);
       allEmailList.add(receiverEmail);
 
       giverEmailList.add(giverEmail);
+      giverOrReceiverEmailList.add(giverEmail);
       allEmailList.add(giverEmail);
     }
 
@@ -46,6 +51,7 @@ export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistorySt
   return {
     uniqueGivers: giverEmailList.size,
     uniqueReceivers: receiverEmailList.size,
+    uniqueGiversOrReceivers: giverOrReceiverEmailList.size,
     uniqueRequesters: requesterEmailList.size,
     uniqueUsers: allEmailList.size,
 
