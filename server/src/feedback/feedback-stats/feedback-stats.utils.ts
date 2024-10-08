@@ -27,7 +27,7 @@ export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistorySt
       allEmailList.add(receiverEmail);
 
       giverEmailList.add(giverEmail);
-      allEmailList.add(receiverEmail);
+      allEmailList.add(giverEmail);
     }
 
     if (!requested) {
