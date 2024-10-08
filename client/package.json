@@ -36,8 +36,10 @@
     "@fontsource/nunito": "^5.1.0",
     "@material-symbols/font-600": "^0.23.0",
     "canvas-confetti": "^1.9.3",
+    "echarts": "^5.5.1",
     "firebase": "^10.13.2",
     "js-cookie": "^3.0.5",
+    "ngx-echarts": "^18.0.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.7.0",
     "zone.js": "~0.14.10"
