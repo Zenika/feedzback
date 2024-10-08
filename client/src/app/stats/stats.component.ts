@@ -33,6 +33,7 @@ export default class StatsComponent {
     const plucked = this.detailsPlucked();
 
     return {
+      backgroundColor: 'transparent',
       legend: {
         itemGap: 24,
       },
@@ -76,6 +77,7 @@ export default class StatsComponent {
     const plucked = this.detailsPlucked();
 
     return {
+      backgroundColor: 'transparent',
       legend: {
         itemGap: 24,
       },
