@@ -1,8 +1,10 @@
-@if (icon() ?? iconMap[type()]; as iconValue) {
+@let iconValue = icon() ?? iconMap[type()];
+
+@if (iconValue) {
   <mat-icon appIcon size="xl" class="app-message__icon">{{ iconValue }}</mat-icon>
 }
 
-<div class="app-message__content">
+<div class="app-message__content" [class.app-message__content--with-icon]="!!iconValue">
   <ng-content />
 </div>
 

@@ -12,9 +12,15 @@ import { ThemeService } from '../shared/theme';
 import { FeedbackStats } from './stats.types';
 import { pluckMonthHistoryStats } from './stats.utils';
 
+// Note: the different chart colors are taken from:
+//    https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors
+
 @Component({
   selector: 'app-stats',
-  host: { class: 'app-stats' },
+  host: {
+    class: 'app-stats',
+    '[attr.lang]': "'en'", // NOTE: this page is only available in english
+  },
   standalone: true,
   providers: [provideEcharts()],
   imports: [
@@ -57,7 +63,7 @@ export default class StatsComponent {
     return {
       backgroundColor: 'transparent',
       legend: {
-        itemGap: 24,
+        itemGap: 36,
       },
       tooltip: {},
       xAxis: {
@@ -72,16 +78,19 @@ export default class StatsComponent {
           name: 'All',
           data: plucked.uniqueUsers,
           type: 'line',
+          color: '#80DEEA', // Cyan
         },
         {
           name: 'Givers or receivers',
           data: plucked.uniqueGiversOrReceivers,
           type: 'bar',
+          color: '#BA68C8', // Purple
         },
         {
           name: 'Requesters',
           data: plucked.uniqueRequesters,
           type: 'bar',
+          color: '#FFA72680', // Orange 80%
         },
       ],
     };
@@ -93,7 +102,7 @@ export default class StatsComponent {
     return {
       backgroundColor: 'transparent',
       legend: {
-        itemGap: 24,
+        itemGap: 36,
       },
       tooltip: {},
       xAxis: {
@@ -108,16 +117,19 @@ export default class StatsComponent {
           name: 'Givers or receivers',
           data: plucked.uniqueGiversOrReceivers,
           type: 'line',
+          color: '#BA68C8', // Purple
         },
         {
           name: 'Givers',
           data: plucked.uniqueGivers,
           type: 'bar',
+          color: '#64B5F6', // Blue
         },
         {
           name: 'Receivers',
           data: plucked.uniqueReceivers,
           type: 'bar',
+          color: '#F06292', // Pink
         },
       ],
     };
@@ -129,7 +141,7 @@ export default class StatsComponent {
     return {
       backgroundColor: 'transparent',
       legend: {
-        itemGap: 24,
+        itemGap: 36,
       },
       tooltip: {},
       xAxis: {
@@ -145,18 +157,21 @@ export default class StatsComponent {
           data: plucked.spontaneousFeedback,
           type: 'bar',
           stack: 'counts',
+          color: '#81C784', // Green
         },
         {
           name: 'Replied',
           data: plucked.requestedFeedbackDone,
           type: 'bar',
           stack: 'counts',
+          color: '#FFA726', // Orange
         },
         {
           name: 'Requested',
           data: plucked.requestedFeedbackPending,
           type: 'bar',
           stack: 'counts',
+          color: '#FFA72685', // Orange 80%
         },
       ],
     };
