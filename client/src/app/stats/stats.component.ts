@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, computed, inject, input, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -6,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
+import { MessageComponent } from '../shared/message';
 import { ThemeService } from '../shared/theme';
 import { FeedbackStats } from './stats.types';
 import { pluckMonthHistoryStats } from './stats.utils';
@@ -15,13 +17,23 @@ import { pluckMonthHistoryStats } from './stats.utils';
   host: { class: 'app-stats' },
   standalone: true,
   providers: [provideEcharts()],
-  imports: [MatIconModule, MatSlideToggleModule, MatSliderModule, MatTableModule, MatTabsModule, NgxEchartsDirective],
+  imports: [
+    MatIconModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatTableModule,
+    MatTabsModule,
+    NgxEchartsDirective,
+    MessageComponent,
+  ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export default class StatsComponent {
   stats = input.required<FeedbackStats>();
+
+  protected dataNotYetAvailable = computed(() => this.stats().details.length === 0);
 
   protected start = signal(0);
 
@@ -39,7 +51,7 @@ export default class StatsComponent {
     };
   });
 
-  protected usersChartOptions = computed((): EChartsOption => {
+  protected usersOverviewChartOptions = computed((): EChartsOption => {
     const plucked = this.detailsPlucked();
 
     return {
@@ -59,7 +71,7 @@ export default class StatsComponent {
         {
           name: 'All',
           data: plucked.uniqueUsers,
-          type: 'bar',
+          type: 'line',
         },
         {
           name: 'Givers or receivers',
@@ -67,22 +79,45 @@ export default class StatsComponent {
           type: 'bar',
         },
         {
+          name: 'Requesters',
+          data: plucked.uniqueRequesters,
+          type: 'bar',
+        },
+      ],
+    };
+  });
+
+  protected giversAndReceiversChartOptions = computed((): EChartsOption => {
+    const plucked = this.detailsPlucked();
+
+    return {
+      backgroundColor: 'transparent',
+      legend: {
+        itemGap: 24,
+      },
+      tooltip: {},
+      xAxis: {
+        type: 'category',
+        data: plucked.month,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: 'Givers or receivers',
+          data: plucked.uniqueGiversOrReceivers,
+          type: 'line',
+        },
+        {
           name: 'Givers',
           data: plucked.uniqueGivers,
           type: 'bar',
-          stack: 'counts',
         },
         {
           name: 'Receivers',
           data: plucked.uniqueReceivers,
           type: 'bar',
-          stack: 'counts',
-        },
-        {
-          name: 'Requeters',
-          data: plucked.uniqueRequesters,
-          type: 'bar',
-          stack: 'counts',
         },
       ],
     };
@@ -112,13 +147,13 @@ export default class StatsComponent {
           stack: 'counts',
         },
         {
-          name: 'Requested (done)',
+          name: 'Replied',
           data: plucked.requestedFeedbackDone,
           type: 'bar',
           stack: 'counts',
         },
         {
-          name: 'Requested (pending)',
+          name: 'Requested',
           data: plucked.requestedFeedbackPending,
           type: 'bar',
           stack: 'counts',
@@ -135,5 +170,11 @@ export default class StatsComponent {
 
   protected toggleLegend() {
     this.showLegend.update((show) => !show);
+  }
+
+  private document = inject(DOCUMENT);
+
+  protected reloadPage() {
+    this.document.location.reload();
   }
 }

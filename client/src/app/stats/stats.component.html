@@ -1,3 +1,10 @@
+@if (dataNotYetAvailable()) {
+  <app-message type="danger" nonclosable>
+    Data are not yet available. Please
+    <button class="gbl-button-less gbl-link" (click)="reloadPage()">reload the page</button> in a few seconds.
+  </app-message>
+}
+
 <h1 class="gbl-page-title mat-headline-large">
   <mat-icon>monitoring</mat-icon>
   Stats
@@ -52,10 +59,7 @@
       <li class="gbl-list__item">
         <strong>{{ summary.uniqueRequesters }}</strong> unique requesters
         @if (showLegend()) {
-          <div class="app-stats__legend">
-            Number of unique users who have requested at least 1 feedback but have not yet received a reply (pending
-            request only).
-          </div>
+          <div class="app-stats__legend">Number of unique users who have at least 1 pending feedback request.</div>
         }
       </li>
     </ul>
@@ -70,16 +74,16 @@
       </li>
 
       <li class="gbl-list__item">
-        <strong>{{ summary.requestedFeedbackDone }}</strong> requested feedZbacks (done)
+        <strong>{{ summary.requestedFeedbackDone }}</strong> replies to feedback requests
         @if (showLegend()) {
           <div class="app-stats__legend">Number of feedZback requests replied over the period.</div>
         }
       </li>
 
       <li class="gbl-list__item">
-        <strong>{{ summary.requestedFeedbackPending }}</strong> requested feedZbacks (pending)
+        <strong>{{ summary.requestedFeedbackPending }}</strong> pending feedback requests
         @if (showLegend()) {
-          <div class="app-stats__legend">Number of feedZback requests awaiting response over the period.</div>
+          <div class="app-stats__legend">Number of requested feedZback awaiting reply over the period.</div>
         }
       </li>
     </ul>
@@ -101,8 +105,11 @@
         <input matSliderEndThumb [(value)]="end" />
       </mat-slider>
 
-      <h2 class="mat-title-large !mt-6 text-center">Users</h2>
-      <div echarts [theme]="chartTheme()" [options]="usersChartOptions()" class="app-stats__chart"></div>
+      <h2 class="mat-title-large !mt-6 text-center">Users overview</h2>
+      <div echarts [theme]="chartTheme()" [options]="usersOverviewChartOptions()" class="app-stats__chart"></div>
+
+      <h2 class="mat-title-large text-center">Givers and receivers</h2>
+      <div echarts [theme]="chartTheme()" [options]="giversAndReceiversChartOptions()" class="app-stats__chart"></div>
 
       <h2 class="mat-title-large text-center">FeedZbacks</h2>
       <div echarts [theme]="chartTheme()" [options]="feedbacksChartOptions()" class="app-stats__chart"></div>
