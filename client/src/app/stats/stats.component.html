@@ -99,8 +99,7 @@
     <h2 class="mat-title-large">Period</h2>
     <ul class="gbl-list">
       <li class="gbl-list__item">
-        Between <strong>{{ period().start || '...' }}</strong> and
-        <strong>{{ period().end || '...' }}</strong>
+        Between <strong>{{ period().start || '...' }}</strong> and <strong>{{ period().end || '...' }}</strong>
       </li>
     </ul>
   </mat-tab>
@@ -108,8 +107,14 @@
   <mat-tab label="Details">
     @defer (on viewport) {
       <div class="!mt-6 text-center">
-        Between <strong>{{ periodPluked().start || '...' }}</strong> and
-        <strong>{{ periodPluked().end || '...' }}</strong>
+        @let p = periodPluked();
+        @if (p.start === null) {
+          <strong>{{ '...' }}</strong>
+        } @else if (p.start === p.end) {
+          In <strong>{{ p.start }}</strong>
+        } @else {
+          Between <strong>{{ p.start }}</strong> and <strong>{{ p.end }}</strong>
+        }
       </div>
 
       <mat-slider [min]="0" [max]="stats().details.length" step="1" class="app-stats__slider" showTickMarks>
