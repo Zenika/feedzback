@@ -6,7 +6,11 @@
 }
 
 <app-message type="light" icon="troubleshoot">
-  This page is intended for internal use only and therefore is only available in English.
+  @if (isFrenchLocale) {
+    This page is intended for internal use and available in English only.
+  } @else {
+    This page is intended for internal use only.
+  }
 </app-message>
 
 <h1 class="gbl-page-title mat-headline-large">

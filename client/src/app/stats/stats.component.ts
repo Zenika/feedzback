@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
+import { LanguageService } from '../shared/i18n/language';
 import { MessageComponent } from '../shared/message';
 import { ThemeService } from '../shared/theme';
 import { FeedbackStats } from './stats.types';
@@ -186,6 +187,8 @@ export default class StatsComponent {
   protected toggleLegend() {
     this.showLegend.update((show) => !show);
   }
+
+  protected isFrenchLocale = inject(LanguageService).localeId === 'fr';
 
   private document = inject(DOCUMENT);
 
