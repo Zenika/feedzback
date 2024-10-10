@@ -60,6 +60,12 @@ h1.gbl-page-title {
     opacity: 0.7;
   }
 
+  // In case the markup is `<button class="gbl-button-less gbl-link" disabled>`
+  &:disabled {
+    text-decoration: none !important;
+    opacity: 0.5;
+  }
+
   &--no-underline {
     text-decoration: none !important;
   }

@@ -1,16 +1,19 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, computed, inject, input, signal, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, computed, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
+import { environment } from '../../environments/environment';
 import { LanguageService } from '../shared/i18n/language';
 import { MessageComponent } from '../shared/message';
 import { ThemeService } from '../shared/theme';
-import { FeedbackStats } from './stats.types';
+import { FeedbackHistoryStats, FeedbackStats } from './stats.types';
 import { pluckMonthHistoryStats } from './stats.utils';
 
 // Note: the different chart colors are taken from:
@@ -26,6 +29,7 @@ import { pluckMonthHistoryStats } from './stats.utils';
   providers: [provideEcharts()],
   imports: [
     MatIconModule,
+    MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSliderModule,
     MatTableModule,
@@ -37,10 +41,32 @@ import { pluckMonthHistoryStats } from './stats.utils';
   styleUrl: './stats.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export default class StatsComponent {
-  stats = input.required<FeedbackStats>();
+export default class StatsComponent implements OnInit {
+  protected status = signal<undefined | 'fetching' | 'noDataYet' | 'fetched'>(undefined);
 
-  protected dataNotYetAvailable = computed(() => this.stats().details.length === 0);
+  protected stats = signal<FeedbackStats>({
+    summary: {} as FeedbackHistoryStats,
+    details: [],
+  });
+
+  private httpClient = inject(HttpClient);
+
+  protected fetch() {
+    if (this.status() !== undefined) {
+      this.status.set('fetching');
+    }
+    this.httpClient.get<FeedbackStats>(`${environment.apiBaseUrl}/feedback-stats`).subscribe((stats) => {
+      const hasData = stats.details.length > 0;
+      this.status.set(hasData ? 'fetched' : 'noDataYet');
+      if (hasData) {
+        this.stats.set(stats);
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.fetch();
+  }
 
   protected period = computed(() => {
     const { details } = this.stats();
