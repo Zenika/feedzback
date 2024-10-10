@@ -42,6 +42,14 @@ export default class StatsComponent {
 
   protected dataNotYetAvailable = computed(() => this.stats().details.length === 0);
 
+  protected period = computed(() => {
+    const { details } = this.stats();
+    return {
+      start: details[0]?.month || null,
+      end: details[details.length - 1]?.month || null,
+    };
+  });
+
   protected start = signal(0);
 
   protected endFactory = computed(() => signal(this.stats().details.length));
@@ -50,11 +58,11 @@ export default class StatsComponent {
     pluckMonthHistoryStats(this.stats().details.slice(this.start(), this.endFactory()())),
   );
 
-  protected period = computed(() => {
+  protected periodPluked = computed(() => {
     const { month } = this.detailsPlucked();
     return {
-      start: month[0],
-      end: month[month.length - 1],
+      start: month[0] || null,
+      end: month[month.length - 1] || null,
     };
   });
 

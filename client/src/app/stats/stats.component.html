@@ -1,10 +1,3 @@
-@if (dataNotYetAvailable()) {
-  <app-message type="danger" nonclosable>
-    Data are not yet available. Please
-    <button class="gbl-button-less gbl-link" (click)="reloadPage()">reload the page</button> in a few seconds.
-  </app-message>
-}
-
 <app-message type="light" icon="troubleshoot">
   @if (isFrenchLocale) {
     This page is intended for internal use and available in English only.
@@ -12,6 +5,13 @@
     This page is intended for internal use only.
   }
 </app-message>
+
+@if (dataNotYetAvailable()) {
+  <app-message type="danger" nonclosable>
+    Data are not yet available. Please
+    <button class="gbl-button-less gbl-link" (click)="reloadPage()">reload the page</button> in a few seconds.
+  </app-message>
+}
 
 <h1 class="gbl-page-title mat-headline-large">
   <mat-icon>monitoring</mat-icon>
@@ -99,14 +99,19 @@
     <h2 class="mat-title-large">Period</h2>
     <ul class="gbl-list">
       <li class="gbl-list__item">
-        @let p = period();
-        Between <strong>{{ p.start || '...' }}</strong> and <strong>{{ p.end || '...' }}</strong>
+        Between <strong>{{ period().start || '...' }}</strong> and
+        <strong>{{ period().end || '...' }}</strong>
       </li>
     </ul>
   </mat-tab>
 
   <mat-tab label="Details">
     @defer (on viewport) {
+      <div class="!mt-6 text-center">
+        Between <strong>{{ periodPluked().start || '...' }}</strong> and
+        <strong>{{ periodPluked().end || '...' }}</strong>
+      </div>
+
       <mat-slider [min]="0" [max]="stats().details.length" step="1" class="app-stats__slider" showTickMarks>
         @let end = endFactory();
         <input matSliderStartThumb [(value)]="start" />
