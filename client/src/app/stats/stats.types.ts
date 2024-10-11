@@ -1,4 +1,4 @@
-export type FeedbackHistoryStats = {
+export type FeedbackStats = {
   // User stats
   uniqueGivers: number;
   uniqueReceivers: number;
@@ -13,9 +13,32 @@ export type FeedbackHistoryStats = {
   sharedFeedback: number;
 };
 
-export type FeedbackMonthHistoryStats = { month: string } & FeedbackHistoryStats;
+export type FeedbackMonthStats = { month: string } & FeedbackStats;
 
-export type FeedbackStats = {
-  summary: FeedbackHistoryStats;
-  details: FeedbackMonthHistoryStats[];
+export type FeedbackStatsData = {
+  summary: FeedbackStats;
+  details: FeedbackMonthStats[];
+};
+
+// Map the array of objects (`FeedbackMonthHistoryStats[]`) to an object of arrays to feed echarts.
+export type FeedbackDetailsPlucked = {
+  month: string[];
+
+  // User stats
+  uniqueGivers: number[];
+  uniqueReceivers: number[];
+  uniqueGiversOrReceivers: number[];
+  uniqueRequesters: number[];
+  uniqueUsers: number[];
+
+  // Feedback stats
+  spontaneousFeedback: number[];
+  requestedFeedbackDone: number[];
+  requestedFeedbackPending: number[];
+  sharedFeedback: number[];
+};
+
+export type FeedbackPeriod = {
+  start: string | null;
+  end: string | null;
 };

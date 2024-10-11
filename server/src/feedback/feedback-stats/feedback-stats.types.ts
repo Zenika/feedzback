@@ -8,7 +8,7 @@ export type FeedbackHistory = {
   updatedAt: number;
 };
 
-export type FeedbackHistoryStats = {
+export type FeedbackStats = {
   // User stats
   uniqueGivers: number;
   uniqueReceivers: number;
@@ -23,4 +23,4 @@ export type FeedbackHistoryStats = {
   sharedFeedback: number;
 };
 
-export type FeedbackMonthHistoryStats = { month: string } & FeedbackHistoryStats;
+export type FeedbackMonthStats = { month: string } & FeedbackStats;

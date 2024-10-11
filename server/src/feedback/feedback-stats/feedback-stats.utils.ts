@@ -1,6 +1,6 @@
-import { FeedbackHistory, FeedbackHistoryStats, FeedbackMonthHistoryStats } from './feedback-stats.types';
+import { FeedbackHistory, FeedbackMonthStats, FeedbackStats } from './feedback-stats.types';
 
-export const buildHistoryStats = (history: FeedbackHistory[]): FeedbackHistoryStats => {
+export const buildFeedbackStats = (history: FeedbackHistory[]): FeedbackStats => {
   // List of unique users who have given at least 1 feedback (spontaneous or requested).
   const giverEmailList = new Set<string>();
 
@@ -81,9 +81,7 @@ export const buildHistoryByMonth = (history: FeedbackHistory[]): Record<string, 
     {} as Record<string, FeedbackHistory[]>,
   );
 
-export const buildHistoryByMonthStats = (
-  historyByMonth: Record<string, FeedbackHistory[]>,
-): FeedbackMonthHistoryStats[] =>
+export const buildFeedbackMonthStats = (historyByMonth: Record<string, FeedbackHistory[]>): FeedbackMonthStats[] =>
   Object.entries(historyByMonth)
-    .map(([month, history]) => ({ month, ...buildHistoryStats(history) }))
+    .map(([month, history]) => ({ month, ...buildFeedbackStats(history) }))
     .sort(({ month: a }, { month: b }) => (a < b ? -1 : a > b ? 1 : 0));

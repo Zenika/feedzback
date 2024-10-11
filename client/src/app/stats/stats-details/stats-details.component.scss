@@ -1,10 +1,4 @@
-.app-stats {
-  &__legend {
-    margin-bottom: 0.75rem;
-    font: var(--sys-label-large);
-    color: var(--sys-tertiary);
-  }
-
+.app-stats-details {
   &__slider {
     display: block !important;
     width: max(50%, 220px) !important;

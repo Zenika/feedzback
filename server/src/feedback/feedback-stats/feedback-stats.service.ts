@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FeedbackDbService } from '../feedback-db/feedback-db.service';
 import { FeedbackHistory } from './feedback-stats.types';
-import { buildHistoryByMonth, buildHistoryByMonthStats, buildHistoryStats } from './feedback-stats.utils';
+import { buildFeedbackMonthStats, buildFeedbackStats, buildHistoryByMonth } from './feedback-stats.utils';
 
 @Injectable()
 export class FeedbackStatsService {
@@ -21,8 +21,8 @@ export class FeedbackStatsService {
     const history = Array.from(this.history.values());
 
     return {
-      summary: buildHistoryStats(history),
-      details: buildHistoryByMonthStats(buildHistoryByMonth(history)),
+      summary: buildFeedbackStats(history),
+      details: buildFeedbackMonthStats(buildHistoryByMonth(history)),
       history: history.map(({ createdAt, updatedAt, requested, status, shared }) => ({
         createdAt,
         updatedAt,

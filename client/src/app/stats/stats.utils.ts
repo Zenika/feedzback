@@ -1,6 +1,6 @@
-import { FeedbackMonthHistoryStats } from './stats.types';
+import { FeedbackDetailsPlucked, FeedbackMonthStats } from './stats.types';
 
-export const pluckMonthHistoryStats = (data: FeedbackMonthHistoryStats[]) => ({
+export const pluckFeedbackMonthStats = (data: FeedbackMonthStats[]): FeedbackDetailsPlucked => ({
   month: data.map(({ month }) => month),
 
   // User stats

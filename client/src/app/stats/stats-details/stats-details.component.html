@@ -1,0 +1,24 @@
+<div class="!mt-6 text-center">
+  @let p = period();
+  @if (p.start === null) {
+    <strong>{{ '...' }}</strong>
+  } @else if (p.start === p.end) {
+    In <strong>{{ p.start }}</strong>
+  } @else {
+    Between <strong>{{ p.start }}</strong> and <strong>{{ p.end }}</strong>
+  }
+</div>
+
+<mat-slider [min]="0" [max]="length()" step="1" class="app-stats-details__slider" showTickMarks>
+  <input matSliderStartThumb [(value)]="start" />
+  <input matSliderEndThumb [(value)]="end" />
+</mat-slider>
+
+<h2 class="mat-title-large !mt-6 text-center">Users overview</h2>
+<div echarts [theme]="chartTheme()" [options]="usersOverviewChartOptions()" class="app-stats-details__chart"></div>
+
+<h2 class="mat-title-large text-center">Givers and receivers</h2>
+<div echarts [theme]="chartTheme()" [options]="giversAndReceiversChartOptions()" class="app-stats-details__chart"></div>
+
+<h2 class="mat-title-large text-center">FeedZbacks</h2>
+<div echarts [theme]="chartTheme()" [options]="feedbacksChartOptions()" class="app-stats-details__chart"></div>
