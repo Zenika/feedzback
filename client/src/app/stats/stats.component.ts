@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { environment } from '../../environments/environment';
 import { LanguageService } from '../shared/i18n/language';
@@ -8,15 +9,25 @@ import { MessageComponent } from '../shared/message';
 import { StatsDetailsComponent } from './stats-details/stats-details.component';
 import { StatsSummaryComponent } from './stats-summary/stats-summary.component';
 import { FeedbackPeriod, FeedbackStats, FeedbackStatsData } from './stats.types';
+import { formatMonth } from './stats.utils';
 
 @Component({
   selector: 'app-stats',
   host: {
+    class: 'app-stats',
     '[attr.lang]': "'en'", // NOTE: this page is only available in english
   },
   standalone: true,
-  imports: [MatIconModule, MatTabsModule, MessageComponent, StatsDetailsComponent, StatsSummaryComponent],
+  imports: [
+    MatIconModule,
+    MatSliderModule,
+    MatTabsModule,
+    MessageComponent,
+    StatsDetailsComponent,
+    StatsSummaryComponent,
+  ],
   templateUrl: './stats.component.html',
+  styleUrl: './stats.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export default class StatsComponent implements OnInit {
@@ -63,33 +74,46 @@ export default class StatsComponent implements OnInit {
     this.fetch();
   }
 
+  private formattedMonths = computed(() =>
+    this.data()
+      .details.map(({ month }) => month)
+      .map((value) => formatMonth(value)),
+  );
+
   // ----- Summary -----
 
   protected summary = computed(() => this.data().summary);
 
   protected summaryPeriod = computed<FeedbackPeriod>(() => {
-    const { details } = this.data();
+    const formattedMonths = this.formattedMonths();
     return {
-      start: details[0]?.month || null,
-      end: details[details.length - 1]?.month || null,
+      start: formattedMonths[0].long,
+      end: formattedMonths[formattedMonths.length - 1].long,
     };
   });
 
+  // ----- Slider (filtering details) -----
+
+  protected sliderValue = (index: number) => this.formattedMonths()[index].short;
+
+  protected sliderMax = computed(() => {
+    const { length } = this.data().details;
+    return length ? length - 1 : 0;
+  });
+
+  protected sliderStart = signal(0);
+
+  protected sliderEndBuilder = computed(() => signal(this.sliderMax()));
+
   // ----- Details -----
 
-  protected detailsLength = computed(() => this.data().details.length);
-
-  protected detailsStart = signal(0);
-
-  protected detailsEndFactory = computed(() => signal(this.detailsLength()));
-
-  protected details = computed(() => this.data().details.slice(this.detailsStart(), this.detailsEndFactory()()));
+  protected details = computed(() => this.data().details.slice(this.sliderStart(), this.sliderEndBuilder()() + 1));
 
   protected detailsPeriod = computed<FeedbackPeriod>(() => {
-    const details = this.details();
+    const formattedMonths = this.formattedMonths();
     return {
-      start: details[0]?.month || null,
-      end: details[details.length - 1]?.month || null,
+      start: formattedMonths[this.sliderStart()].long,
+      end: formattedMonths[this.sliderEndBuilder()()].long,
     };
   });
 }

@@ -39,6 +39,11 @@ export type FeedbackDetailsPlucked = {
 };
 
 export type FeedbackPeriod = {
-  start: string | null;
-  end: string | null;
+  start: string;
+  end: string;
+};
+
+export type FormattedMonth = {
+  short: string;
+  long: string;
 };

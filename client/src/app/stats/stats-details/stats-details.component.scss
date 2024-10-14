@@ -1,10 +1,4 @@
 .app-stats-details {
-  &__slider {
-    display: block !important;
-    width: max(50%, 220px) !important;
-    margin: 0 auto !important;
-  }
-
   &__chart {
     height: max(33vh, 320px);
   }

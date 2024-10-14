@@ -1,9 +1,7 @@
-import { Component, computed, inject, input, model, ViewEncapsulation } from '@angular/core';
-import { MatSliderModule } from '@angular/material/slider';
+import { Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
 import { ThemeService } from '../../shared/theme';
-import { FeedbackPeriod } from '../stats.types';
 import { pluckFeedbackMonthStats } from '../stats.utils';
 
 // Note: the different chart colors are taken from:
@@ -14,21 +12,13 @@ import { pluckFeedbackMonthStats } from '../stats.utils';
   host: { class: 'app-stats-details' },
   standalone: true,
   providers: [provideEcharts()],
-  imports: [MatSliderModule, NgxEchartsDirective],
+  imports: [NgxEchartsDirective],
   templateUrl: './stats-details.component.html',
   styleUrl: './stats-details.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class StatsDetailsComponent {
   detailsPlucked = input.required({ alias: 'details', transform: pluckFeedbackMonthStats });
-
-  period = input.required<FeedbackPeriod>();
-
-  length = input.required<number>();
-
-  start = model.required<number>();
-
-  end = model.required<number>();
 
   private theme = inject(ThemeService).theme;
 
@@ -149,6 +139,12 @@ export class StatsDetailsComponent {
           type: 'bar',
           stack: 'counts',
           color: '#FFA72685', // Orange 80%
+        },
+        {
+          name: 'Shared',
+          data: plucked.sharedFeedback,
+          type: 'line',
+          color: '#7986CB', // Indigo
         },
       ],
     };

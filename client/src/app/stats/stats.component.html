@@ -16,14 +16,30 @@
 
     <mat-tab label="Details">
       @defer (on viewport) {
-        @let detailsEnd = detailsEndFactory();
-        <app-stats-details
-          [length]="detailsLength()"
-          [(start)]="detailsStart"
-          [(end)]="detailsEnd"
-          [details]="details()"
-          [period]="detailsPeriod()"
-        />
+        <div class="!mt-6 text-center">
+          @let dp = detailsPeriod();
+          @if (dp.start === dp.end) {
+            In <strong>{{ dp.start }}</strong>
+          } @else {
+            From <strong>{{ dp.start }}</strong> to <strong>{{ dp.end }}</strong>
+          }
+        </div>
+
+        <mat-slider
+          class="app-stats__slider"
+          showTickMarks
+          discrete
+          [displayWith]="sliderValue"
+          [min]="0"
+          [max]="sliderMax()"
+          step="1"
+        >
+          @let sliderEnd = sliderEndBuilder();
+          <input matSliderStartThumb [(value)]="sliderStart" />
+          <input matSliderEndThumb [(value)]="sliderEnd" />
+        </mat-slider>
+
+        <app-stats-details [details]="details()" />
       } @placeholder {
         <div></div>
       }

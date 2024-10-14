@@ -1,0 +1,10 @@
+.app-stats {
+  &__slider {
+    --mdc-slider-label-label-text-size: 0.625rem; // 10px
+    --mdc-slider-label-label-text-line-height: 1.2em; // 12px
+
+    display: block !important;
+    width: max(50%, 220px) !important;
+    margin: 0 auto !important;
+  }
+}

@@ -8,7 +8,7 @@
     <strong>{{ summary().uniqueUsers }}</strong> unique users
     @if (showLegend()) {
       <div class="app-stats-summary__legend">
-        Number of unique users who have given, received or requested at least 1 feedback.
+        Number of unique users who have given, received or requested (replied or not) at least 1 feedback.
       </div>
     }
   </li>
@@ -17,7 +17,7 @@
     <strong>{{ summary().uniqueGiversOrReceivers }}</strong> unique givers or receivers
     @if (showLegend()) {
       <div class="app-stats-summary__legend">
-        Number of unique users who have given or received at least 1 feedback (spontaneous or requested).
+        Number of unique users who have given or received at least 1 spontaneous or requested feedback.
       </div>
     }
   </li>
@@ -26,7 +26,7 @@
     <strong>{{ summary().uniqueGivers }}</strong> unique givers
     @if (showLegend()) {
       <div class="app-stats-summary__legend">
-        Number of unique users who have given at least 1 feedback (spontaneous or requested).
+        Number of unique users who have given at least 1 spontaneous or requested feedback.
       </div>
     }
   </li>
@@ -35,7 +35,7 @@
     <strong>{{ summary().uniqueReceivers }}</strong> unique receivers
     @if (showLegend()) {
       <div class="app-stats-summary__legend">
-        Number of unique users who have received at least 1 feedback (spontaneous or requested).
+        Number of unique users who have received at least 1 spontaneous or requested feedback.
       </div>
     }
   </li>
@@ -70,11 +70,25 @@
       <div class="app-stats-summary__legend">Number of requested feedZback awaiting reply over the period.</div>
     }
   </li>
+
+  <li class="gbl-list__item">
+    <strong>{{ summary().sharedFeedback }}</strong> shared feedback
+    @if (showLegend()) {
+      <div class="app-stats-summary__legend">
+        Number of shared feedZbacks (spontaneous, replied or awaiting reply) over the period.
+      </div>
+    }
+  </li>
 </ul>
 
 <h2 class="mat-title-large">Period</h2>
 <ul class="gbl-list">
   <li class="gbl-list__item">
-    Between <strong>{{ period().start ?? '...' }}</strong> and <strong>{{ period().end ?? '...' }}</strong>
+    From <strong>{{ period().start }}</strong> to <strong>{{ period().end }}</strong>
+    @if (showLegend()) {
+      <div class="app-stats-summary__legend">
+        Statistics are based on events occurring between the start date and the end date inclusive.
+      </div>
+    }
   </li>
 </ul>
