@@ -19,18 +19,17 @@ export class FeedbackArchiveRequestDto {
   @IsString() feedbackId!: string;
 }
 
-export class GiveRequestedFeedbackDto {
+// Same as `GiveRequestedFeedbackDto` but without `IsNotEmpty` additions
+export class GiveRequestedFeedbackDraftDto {
   @IsString() token!: string;
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
-  @IsNotEmpty()
   @MaxLength(LARGE_MAX_LENGTH)
   positive!: string;
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
-  @IsNotEmpty()
   @MaxLength(LARGE_MAX_LENGTH)
   negative!: string;
 
@@ -40,18 +39,63 @@ export class GiveRequestedFeedbackDto {
   comment!: string;
 }
 
-export class GiveFeedbackDto {
-  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) receiverEmail!: string;
+// Same as `GiveRequestedFeedbackDraftDto` but with `IsNotEmpty` additions
+export class GiveRequestedFeedbackDto {
+  @IsString() token!: string;
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
-  @IsNotEmpty()
+  @IsNotEmpty() // Addition
   @MaxLength(LARGE_MAX_LENGTH)
   positive!: string;
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
-  @IsNotEmpty()
+  @IsNotEmpty() // Addition
+  @MaxLength(LARGE_MAX_LENGTH)
+  negative!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  comment!: string;
+}
+
+// Same as `GiveFeedbackDto` but without `IsNotEmpty` additions
+export class GiveFeedbackDraftDto {
+  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) receiverEmail!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(LARGE_MAX_LENGTH)
+  positive!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(LARGE_MAX_LENGTH)
+  negative!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  comment!: string;
+
+  @IsBoolean() shared!: boolean;
+}
+
+// Same as `GiveFeedbackDraftDto` but with `IsNotEmpty` additions
+export class GiveFeedbackDto {
+  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) receiverEmail!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @IsNotEmpty() // Addition
+  @MaxLength(LARGE_MAX_LENGTH)
+  positive!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @IsNotEmpty() // Addition
   @MaxLength(LARGE_MAX_LENGTH)
   negative!: string;
 

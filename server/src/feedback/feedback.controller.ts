@@ -24,7 +24,9 @@ import {
   FeedbackListMapDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
+  GiveFeedbackDraftDto,
   GiveFeedbackDto,
+  GiveRequestedFeedbackDraftDto,
   GiveRequestedFeedbackDto,
   SharedFeedbackDocumentDto,
   SharedFeedbackListDto,
@@ -154,7 +156,7 @@ export class FeedbackController {
 
   @ApiOperation({ summary: 'Save the response to a requested feedback as a draft' })
   @Post('give-requested/draft')
-  async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+  async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDraftDto) {
     const success = await this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
     if (!success) {
       throw new BadRequestException();
@@ -190,7 +192,7 @@ export class FeedbackController {
   @ApiOperation({ summary: 'Save a spontaneous feedback as a draft' })
   @UseGuards(AuthGuard)
   @Post('give/draft')
-  giveDraft(@Body() dto: GiveFeedbackDto) {
+  giveDraft(@Body() dto: GiveFeedbackDraftDto) {
     const giverEmail = this.authService.userEmail!;
     return this.feedbackDbService.giveDraft({ giverEmail, ...dto });
   }
