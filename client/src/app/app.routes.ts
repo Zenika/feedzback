@@ -76,8 +76,7 @@ export const routes: Routes = [
   },
   {
     path: 'stats',
-    loadComponent: () => import('./stats/stats.component'),
-    title: 'FeedZback - Stats',
+    loadChildren: () => import('./stats/stats.routes'),
   },
   {
     path: 'demo',

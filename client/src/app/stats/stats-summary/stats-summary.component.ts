@@ -1,6 +1,6 @@
 import { Component, input, signal, ViewEncapsulation } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FeedbackPeriod, FeedbackStats } from '../stats.types';
+import { FeedbackStats, FeedbackStatsPeriod } from '../stats.types';
 
 @Component({
   selector: 'app-stats-summary',
@@ -14,7 +14,7 @@ import { FeedbackPeriod, FeedbackStats } from '../stats.types';
 export class StatsSummaryComponent {
   summary = input.required<FeedbackStats>();
 
-  period = input.required<FeedbackPeriod>();
+  period = input.required<FeedbackStatsPeriod>();
 
   protected showLegend = signal(false);
 

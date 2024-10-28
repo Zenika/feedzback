@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { LanguageService } from '../shared/i18n/language';
 import { MessageComponent } from '../shared/message';
 import { StatsDetailsComponent } from './stats-details/stats-details.component';
 import { StatsSummaryComponent } from './stats-summary/stats-summary.component';
-import { FeedbackPeriod, FeedbackStats, FeedbackStatsData } from './stats.types';
+import { ORDERED_STATS_TABS, SelectedStatsTab, StatsTabData } from './stats-tab';
+import { FeedbackStats, FeedbackStatsData, FeedbackStatsPeriod } from './stats.types';
 import { formatMonth } from './stats.utils';
 
 @Component({
@@ -30,7 +32,9 @@ import { formatMonth } from './stats.utils';
   styleUrl: './stats.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export default class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, StatsTabData {
+  protected router = inject(Router);
+
   protected isFrenchLocale = inject(LanguageService).localeId === 'fr';
 
   protected status = signal<undefined | 'fetching' | 'noDataYet' | 'fetched'>(undefined);
@@ -46,6 +50,14 @@ export default class StatsComponent implements OnInit {
 
   protected increaseSentiment() {
     this.sentimentIconsIndex.update((index) => (index + 1) % this.sentimentIcons.length);
+  }
+
+  tab = input.required<SelectedStatsTab>();
+
+  protected tabIndex = computed(() => ORDERED_STATS_TABS.indexOf(this.tab()));
+
+  protected tabIndexChange(index: number) {
+    this.router.navigate(['/stats', ORDERED_STATS_TABS[index]]); // `index` values are: 0 or 1
   }
 
   protected data = signal<FeedbackStatsData>({
@@ -84,7 +96,7 @@ export default class StatsComponent implements OnInit {
 
   protected summary = computed(() => this.data().summary);
 
-  protected summaryPeriod = computed<FeedbackPeriod>(() => {
+  protected summaryPeriod = computed<FeedbackStatsPeriod>(() => {
     const formattedMonths = this.formattedMonths();
     return {
       start: formattedMonths[0].long,
@@ -109,7 +121,7 @@ export default class StatsComponent implements OnInit {
 
   protected details = computed(() => this.data().details.slice(this.sliderStart(), this.sliderEndBuilder()() + 1));
 
-  protected detailsPeriod = computed<FeedbackPeriod>(() => {
+  protected detailsPeriod = computed<FeedbackStatsPeriod>(() => {
     const formattedMonths = this.formattedMonths();
     return {
       start: formattedMonths[this.sliderStart()].long,

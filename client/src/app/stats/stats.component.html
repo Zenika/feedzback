@@ -9,7 +9,7 @@
 <h1 class="gbl-page-title mat-headline-large"><mat-icon>monitoring</mat-icon> Stats</h1>
 
 @if (status() === 'fetched') {
-  <mat-tab-group animationDuration="0ms">
+  <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex()" (selectedIndexChange)="tabIndexChange($event)">
     <mat-tab label="Summary">
       <app-stats-summary [summary]="summary()" [period]="summaryPeriod()" />
     </mat-tab>

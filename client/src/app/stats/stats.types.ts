@@ -38,7 +38,7 @@ export type FeedbackDetailsPlucked = {
   sharedFeedback: number[];
 };
 
-export type FeedbackPeriod = {
+export type FeedbackStatsPeriod = {
   start: string;
   end: string;
 };
