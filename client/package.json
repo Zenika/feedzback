@@ -19,7 +19,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "bundle-visualizer": "ng build --localize false --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -",
-    "server": "npm --prefix ../server start"
+    "server": "npm --prefix ../server start",
+    "firebase-emulators:dev": "firebase emulators:start --only auth:dev,firestore:dev"
   },
   "private": true,
   "dependencies": {

@@ -17,7 +17,7 @@ export const environment: AppEnv = {
   appVersion: APP_VERSION,
   appDomain: 'localhost',
   firebaseOptions,
-  apiBaseUrl: 'http://localhost:3000', // `dev-local` and `dev-remote` environments differ only here
+  apiBaseUrl: 'http://localhost:3000', // `dev-local` and `dev-remote` environments mainly differ here.
   allowedEmailDomains: ['zenika.com', 'zenika.ch'],
-  alias: 'dev-local',
+  alias: 'dev-local', // Another minor difference between `dev-local` and `dev-remote` environments is the alias.
 };

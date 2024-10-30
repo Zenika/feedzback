@@ -25,4 +25,13 @@ export class SignInComponent {
       }
     });
   }
+
+  signInWithEmailAndPassword() {
+    this.disabled = true;
+    this.authService.signInWithEmailAndPassword('demo@zenika.com', '123456').subscribe((success) => {
+      if (!success) {
+        this.disabled = false;
+      }
+    });
+  }
 }
