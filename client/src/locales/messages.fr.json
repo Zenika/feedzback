@@ -99,6 +99,9 @@
     "Component.RequestFeedbackSuccess.Title": "FeedZback demandé à :",
     "Component.RequestFeedbackSuccess.ViewRequests": " Consulter la liste des demandes ",
     "Component.Settings.UpdateSuccess": "Vos paramètres ont bien été mis à jour.",
+    "Component.SignIn.Email": "Email",
+    "Component.SignIn.ErrorMessage": "L'identification a échoué",
+    "Component.SignIn.Password": "Mot de passe",
     "Component.SkipLinks.Link": "Accéder au contenu principal",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",
     "Feedback.Comment": "Commentaire",
@@ -154,7 +157,7 @@
     "Title.RequestedFeedbackList": " Répondre aux demandes de feedZback ",
     "Title.Settings": "Paramètres",
     "Title.SharedFeedZbacks": "FeedZbacks partagés",
-    "Title.SignIn": "Connexion",
+    "Title.SignIn": "Se connecter",
     "Word.Later": "Plus tard",
     "Word.Or": "ou"
   }

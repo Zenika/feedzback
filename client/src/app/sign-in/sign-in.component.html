@@ -2,16 +2,42 @@
   Demandez et donnez du feedback à vos collègues
 </h1>
 
-<div class="gbl-landing-links">
-  <button
-    class="gbl-landing-links__item mat-title-medium"
-    type="button"
-    [disabled]="disabled"
-    (click)="signInWithEmailAndPassword()"
-  >
-    <mat-icon class="gbl-landing-links__icon rounded-full bg-white" svgIcon="app-icon-google"></mat-icon>
-    <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
-  </button>
-</div>
+@switch (method) {
+  @case ('google') {
+    <div class="gbl-landing-links">
+      <button
+        class="gbl-landing-links__item mat-title-medium"
+        type="button"
+        [disabled]="disabled"
+        (click)="signInWithGoogle()"
+      >
+        <mat-icon class="gbl-landing-links__icon rounded-full bg-white" svgIcon="app-icon-google"></mat-icon>
+        <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
+      </button>
+    </div>
+  }
+
+  @case ('emailAndPassword') {
+    <form class="app-sign-in__form" [formGroup]="form" (ngSubmit)="signInWithEmailAndPassword()">
+      <h2 class="mat-title-large !mb-0" i18n="@@Title.SignIn">Se connecter</h2>
+
+      <mat-form-field class="w-full">
+        <mat-label i18n="@@Component.SignIn.Email">Email</mat-label>
+        <input matInput [formControl]="form.controls.email" />
+        <mat-icon matTextSuffix>alternate_email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label i18n="@@Component.SignIn.Password">Mot de passe</mat-label>
+        <input matInput [formControl]="form.controls.password" />
+        <mat-icon matTextSuffix>key</mat-icon>
+      </mat-form-field>
+
+      <button class="w-full" mat-flat-button [disabled]="form.invalid || disabled">
+        <ng-container i18n="@@Title.SignIn">Se connecter</ng-container>
+      </button>
+    </form>
+  }
+}
 
 <app-zenika-logo />

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
-import { connectAuthEmulator, getAuth } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -19,8 +19,4 @@ export class FirebaseService {
    * ```
    */
   readonly analytics = getAnalytics(this.app);
-
-  constructor() {
-    connectAuthEmulator(this.auth, 'http://127.0.0.1:9099');
-  }
 }

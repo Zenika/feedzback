@@ -100,6 +100,18 @@
                 }
               ]
             },
+            "dev-emulators": {
+              "localize": ["fr"],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-emulators.ts"
+                }
+              ]
+            },
             "development": {
               "localize": ["fr"],
               "optimization": false,
@@ -126,6 +138,9 @@
             },
             "staging": {
               "buildTarget": "client:build:staging"
+            },
+            "dev-emulators": {
+              "buildTarget": "client:build:dev-emulators"
             },
             "development": {
               "buildTarget": "client:build:development"
