@@ -6,7 +6,7 @@ import { FirebaseService } from './firebase.service';
 export class FirebaseEmulatorsService extends FirebaseService {
   constructor() {
     super();
-    connectAuthEmulator(this.auth, 'http://127.0.0.1:9099');
+    connectAuthEmulator(this.auth, 'http://localhost:9099');
   }
 }
 

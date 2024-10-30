@@ -100,18 +100,6 @@
                 }
               ]
             },
-            "dev-emulators": {
-              "localize": ["fr"],
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev-emulators.ts"
-                }
-              ]
-            },
             "development": {
               "localize": ["fr"],
               "optimization": false,
@@ -126,6 +114,18 @@
             },
             "en": {
               "localize": ["en"]
+            },
+            "dev-local-emulators": {
+              "localize": ["fr"],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-local-emulators.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -139,14 +139,14 @@
             "staging": {
               "buildTarget": "client:build:staging"
             },
-            "dev-emulators": {
-              "buildTarget": "client:build:dev-emulators"
-            },
             "development": {
               "buildTarget": "client:build:development"
             },
             "development-en": {
               "buildTarget": "client:build:development,en"
+            },
+            "dev-local-emulators": {
+              "buildTarget": "client:build:dev-local-emulators"
             }
           },
           "defaultConfiguration": "development"

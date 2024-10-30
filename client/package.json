@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:emulators": "ng serve -c dev-emulators",
     "start:en": "ng serve -c development-en",
     "build": "ng build",
     "build:dev": "ng build --configuration dev-remote && npm run post-build",
@@ -21,7 +20,10 @@
     "format:check": "prettier --check .",
     "bundle-visualizer": "ng build --localize false --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -",
     "server": "npm --prefix ../server start",
-    "firebase-emulators:dev": "firebase emulators:start --only auth:dev,firestore:dev"
+    "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev",
+    "server:emulators": "npm --prefix ../server run start:emulators",
+    "client:emulators": "ng serve -c dev-local-emulators",
+    "emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run client:emulators\""
   },
   "private": true,
   "dependencies": {
@@ -56,6 +58,7 @@
     "@types/js-cookie": "^3.0.6",
     "angular-eslint": "18.3.1",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
