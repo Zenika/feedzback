@@ -20,7 +20,7 @@
     "format:check": "prettier --check .",
     "bundle-visualizer": "ng build --localize false --named-chunks && cd ./dist/client/browser && npx vite-bundle-visualizer && cd -",
     "server": "npm --prefix ../server start",
-    "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev",
+    "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev --import ./firebase-emulators-data",
     "server:emulators": "npm --prefix ../server run start:emulators",
     "client:emulators": "ng serve -c dev-local-emulators",
     "emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run client:emulators\""

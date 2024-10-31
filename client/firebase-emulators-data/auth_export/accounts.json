@@ -1,0 +1,77 @@
+{
+  "kind": "identitytoolkit#DownloadAccountResponse",
+  "users": [
+    {
+      "localId": "1AojfVxHQKtUiKhHpbxvZOdd10qo",
+      "lastLoginAt": "1730333479801",
+      "displayName": "James Doe",
+      "photoUrl": "",
+      "emailVerified": true,
+      "email": "james.doe@zenika.com",
+      "salt": "fakeSaltxFcn1IHT13QdqzRKnpox",
+      "passwordHash": "fakeHash:salt=fakeSaltxFcn1IHT13QdqzRKnpox:password=123456",
+      "passwordUpdatedAt": 1730333479802,
+      "validSince": "1730333479",
+      "mfaInfo": [],
+      "createdAt": "1730333479801",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "james.doe@zenika.com",
+          "federatedId": "james.doe@zenika.com",
+          "rawId": "james.doe@zenika.com",
+          "displayName": "James Doe",
+          "photoUrl": ""
+        }
+      ]
+    },
+    {
+      "localId": "8Fss79u8L6zVQaESY8oUX7caLvAW",
+      "createdAt": "1730332780347",
+      "lastLoginAt": "1730332780347",
+      "displayName": "John Doe",
+      "photoUrl": "",
+      "passwordHash": "fakeHash:salt=fakeSaltNGf75jxOh8LPTD1QuHqH:password=123456",
+      "salt": "fakeSaltNGf75jxOh8LPTD1QuHqH",
+      "passwordUpdatedAt": 1730333453612,
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "john.doe@zenika.com",
+          "federatedId": "john.doe@zenika.com",
+          "rawId": "john.doe@zenika.com",
+          "displayName": "John Doe",
+          "photoUrl": ""
+        }
+      ],
+      "validSince": "1730333453",
+      "email": "john.doe@zenika.com",
+      "emailVerified": true,
+      "disabled": false
+    },
+    {
+      "localId": "ltWa0149LZJcrAa7OeOYLOsNkJya",
+      "createdAt": "1730332799209",
+      "lastLoginAt": "1730332799209",
+      "displayName": "Jane Doe",
+      "photoUrl": "",
+      "passwordHash": "fakeHash:salt=fakeSaltnnZx4qmnXpDLoBPxycSX:password=123456",
+      "salt": "fakeSaltnnZx4qmnXpDLoBPxycSX",
+      "passwordUpdatedAt": 1730333453613,
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "jane.doe@zenika.com",
+          "federatedId": "jane.doe@zenika.com",
+          "rawId": "jane.doe@zenika.com",
+          "displayName": "Jane Doe",
+          "photoUrl": ""
+        }
+      ],
+      "validSince": "1730333453",
+      "email": "jane.doe@zenika.com",
+      "emailVerified": true,
+      "disabled": false
+    }
+  ]
+}
