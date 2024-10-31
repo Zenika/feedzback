@@ -9,6 +9,11 @@ import { Person } from './google-apis.types';
 export class GoogleApisService {
   private logger = new Logger('GoogleApisService');
 
+  // In reality, this service could be enabled even when Firebase is running in emulator mode (as it does not depend on Firebase).
+  // But when using Firebase emulators, the aim is to run the application in isolation from the network.
+  // And this service depends on the network to retrieve its data.
+  private readonly featureDisabled = this.configService.get('firebaseEmulatorMode', { infer: true })!;
+
   private serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
   private jwt = new auth.JWT(
@@ -23,9 +28,17 @@ export class GoogleApisService {
 
   private accessTokenExpiryDate = 0;
 
-  constructor(private configService: ConfigService<AppConfig>) {}
+  constructor(private configService: ConfigService<AppConfig>) {
+    if (this.featureDisabled) {
+      this.logger.warn(`Feature disabled (when Firebase running in emulator mode)`);
+    }
+  }
 
   async searchPersons(query: string, pageToken?: string): Promise<{ persons: Person[]; nextPageToken?: string }> {
+    if (this.featureDisabled) {
+      return { persons: [] };
+    }
+
     try {
       const accessToken = await this.getAccessToken();
 

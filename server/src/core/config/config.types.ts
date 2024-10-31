@@ -10,6 +10,8 @@ export type AppConfig = {
 
   clientUrl: string;
 
+  firebaseEmulatorMode: boolean;
+
   firebaseServiceAccount: Required<ServiceAccount>;
 
   mailgunClientOptions: MailgunClientOptions;

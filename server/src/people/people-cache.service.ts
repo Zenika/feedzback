@@ -1,4 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AppConfig } from '../core/config';
 import { GoogleApisService, Person } from '../core/google-apis';
 import { PEOPLE_CACHE_RETRY_DURATION, PEOPLE_CACHE_VALIDITY_DURATION } from './people-cache.config';
 import { SearchablePerson } from './people-cache.types';
@@ -7,6 +9,11 @@ import { mapToSearchablePerson } from './people-cache.utils';
 @Injectable()
 export class PeopleCacheService {
   private logger = new Logger('PeopleCacheService');
+
+  // In reality, this service could be enabled even when Firebase is running in emulator mode (as it does not depend on Firebase).
+  // But when using Firebase emulators, the aim is to run the application in isolation from the network.
+  // And this service depends on the network to retrieve its data.
+  private readonly featureDisabled = this.configService.get('firebaseEmulatorMode', { infer: true })!;
 
   private state: 'notAvailable' | 'ready' = 'notAvailable';
 
@@ -20,7 +27,14 @@ export class PeopleCacheService {
     return this.state === 'ready';
   }
 
-  constructor(private googleApis: GoogleApisService) {
+  constructor(
+    private configService: ConfigService<AppConfig>,
+    private googleApis: GoogleApisService,
+  ) {
+    if (this.featureDisabled) {
+      this.logger.warn(`Feature disabled (when Firebase running in emulator mode)`);
+    }
+
     this.refreshPeople();
   }
 
@@ -32,6 +46,10 @@ export class PeopleCacheService {
   }
 
   private async refreshPeople() {
+    if (this.featureDisabled) {
+      return;
+    }
+
     if (this.cachingInProgress) {
       return;
     }
