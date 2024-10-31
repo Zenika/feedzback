@@ -102,6 +102,7 @@
             },
             "development": {
               "localize": ["fr"],
+              "baseHref": "/fr/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
@@ -113,10 +114,12 @@
               ]
             },
             "en": {
-              "localize": ["en"]
+              "localize": ["en"],
+              "baseHref": "/en/"
             },
             "dev-local-emulators": {
               "localize": ["fr"],
+              "baseHref": "/fr/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
