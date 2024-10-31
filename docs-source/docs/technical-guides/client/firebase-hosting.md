@@ -74,7 +74,7 @@ This task is done be the `post-build` NPM script:
 ```json
 {
   "scripts": {
-    "build:dev": "ng build --configuration dev-remote && npm run post-build",
+    "build:dev": "ng build -c development-remote && npm run post-build",
     "post-build": "cp src/404.html dist/client/browser/404.html"
   }
 }
