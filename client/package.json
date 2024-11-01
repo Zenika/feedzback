@@ -8,6 +8,7 @@
     "start:emulators": "ng serve -c development-emulators",
     "build": "ng build",
     "build:dev": "ng build -c development-remote && npm run post-build",
+    "build:e2e": "ng build -c development,emulators --localize --base-href=\"/\" && npm run post-build",
     "build:staging": "ng build -c staging && npm run post-build",
     "build:production": "ng build -c production && npm run post-build",
     "post-build": "cp src/404.html dist/client/browser/404.html",
@@ -23,7 +24,11 @@
     "server": "npm --prefix ../server start",
     "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev --import ./firebase-emulators-data",
     "server:emulators": "npm --prefix ../server run start:emulators",
-    "emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run start:emulators\""
+    "emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run start:emulators\"",
+    "firebase:e2e": "firebase emulators:start --only auth:dev,firestore:dev,hosting:dev --import ./firebase-emulators-data",
+    "server:e2e": "npm --prefix ../server run start:e2e",
+    "pree2e": "npm run build:e2e",
+    "e2e": "concurrently \"npm run firebase:e2e\" \"npm run server:e2e\""
   },
   "private": true,
   "dependencies": {
