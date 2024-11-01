@@ -13,4 +13,6 @@ export class PeopleCacheStubService implements Partial<PeopleCacheService> {
   constructor() {
     this.logger.warn(`Feature disabled (when Firebase running in emulator mode)`);
   }
+
+  checkExpiryDateAndRefreshPeople() {}
 }
