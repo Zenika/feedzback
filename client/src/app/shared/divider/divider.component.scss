@@ -1,0 +1,28 @@
+.app-divider {
+  margin: 1.5rem 0;
+  width: 100%;
+  display: block;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: calc(50% - 1px);
+    right: 0;
+    left: 0;
+    border-top: 1px solid var(--sys-outline-variant);
+  }
+
+  > * {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    padding: 0.5rem;
+    border-radius: 999px;
+    background-color: var(--sys-outline-variant);
+    color: var(--sys-on-surface-variant);
+  }
+}

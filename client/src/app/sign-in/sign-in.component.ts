@@ -1,30 +1,19 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
+import { DividerComponent } from '../shared/divider';
 import { NotificationService } from '../shared/notification';
 import { ZenikaLogoComponent } from '../shared/zenika-logo';
+import { CredentialsComponent } from './credentials/credentials.component';
 
 @Component({
   selector: 'app-sign-in',
-  host: { class: 'app-sign-in gbl-landing' },
+  host: { class: 'gbl-landing' },
   standalone: true,
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    ZenikaLogoComponent,
-  ],
+  imports: [RouterLink, MatIconModule, DividerComponent, ZenikaLogoComponent, CredentialsComponent],
   templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class SignInComponent {
@@ -32,35 +21,28 @@ export class SignInComponent {
 
   private notificationService = inject(NotificationService);
 
-  protected method: 'emailAndPassword' | 'google' = environment.FIREBASE_EMULATORS ? 'emailAndPassword' : 'google';
+  protected readonly withGoogleEnabled = !environment.FIREBASE_EMULATORS;
 
-  protected form = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-  });
+  protected readonly withEmailAndPasswordEnabled =
+    environment.FIREBASE_EMULATORS || environment.alias === 'dev-local' || environment.alias === 'dev-remote';
 
-  protected disabled = false;
+  protected disabled = signal(false);
 
   protected signInWithGoogle() {
-    this.disabled = true;
+    this.disabled.set(true);
     this.authService.signInWithGoogle().subscribe((success) => {
       if (!success) {
-        this.disabled = false;
+        this.disabled.set(false);
         this.showError();
       }
     });
   }
 
-  protected signInWithEmailAndPassword() {
-    if (this.form.invalid) {
-      return;
-    }
-    const { email, password } = this.form.value;
-
-    this.disabled = true;
+  protected signInWithEmailAndPassword(email: string, password: string) {
+    this.disabled.set(true);
     this.authService.signInWithEmailAndPassword(email!, password!).subscribe((success) => {
       if (!success) {
-        this.disabled = false;
+        this.disabled.set(false);
         this.showError();
       }
     });
