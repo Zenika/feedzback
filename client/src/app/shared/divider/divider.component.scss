@@ -1,27 +1,30 @@
 .app-divider {
   margin: 1.5rem 0;
   width: 100%;
-  display: block;
   position: relative;
+  display: flex;
   text-align: center;
   text-transform: uppercase;
 
   &::before {
     content: '';
     position: absolute;
-    z-index: 1;
-    top: calc(50% - 1px);
+    top: calc(50% - 2px); // 2px is the total border's height
     right: 0;
     left: 0;
-    border-top: 1px solid var(--sys-outline-variant);
+    border-radius: 1px;
+    border: 1px solid var(--sys-outline-variant);
   }
 
-  > * {
-    position: relative;
-    z-index: 2;
-    display: inline-block;
+  &__content {
+    margin: auto; // As centered flex item
+    position: relative; // Required just to be on top of the `::before` element
+    max-width: 80%;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
     padding: 0.5rem;
-    border-radius: 999px;
+    border-radius: 99px;
     background-color: var(--sys-outline-variant);
     color: var(--sys-on-surface-variant);
   }
