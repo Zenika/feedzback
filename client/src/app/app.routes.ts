@@ -67,7 +67,7 @@ export const routes: Routes = [
     path: 'sign-in',
     component: SignInComponent,
     canActivate: [signInGuard],
-    title: 'FeedZback - ' + $localize`:@@Title.SignIn:Connexion`,
+    title: 'FeedZback - ' + $localize`:@@Title.SignIn:Se connecter`,
   },
   {
     path: 'guide',

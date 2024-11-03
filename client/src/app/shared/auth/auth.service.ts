@@ -2,7 +2,14 @@ import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GoogleAuthProvider, User, signInAnonymously, signInWithPopup } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  User,
+  UserCredential,
+  signInAnonymously,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import { Observable, catchError, concatMap, filter, first, from, map, of, switchMap, tap } from 'rxjs';
 import { FirebaseService } from '../firebase';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
@@ -65,7 +72,15 @@ export class AuthService {
   }
 
   signInWithGoogle(): Observable<boolean> {
-    return from(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider())).pipe(
+    return this.signIn(signInWithPopup(this.firebaseAuth, new GoogleAuthProvider()));
+  }
+
+  signInWithEmailAndPassword(email: string, password: string): Observable<boolean> {
+    return this.signIn(signInWithEmailAndPassword(this.firebaseAuth, email, password));
+  }
+
+  private signIn(signInMethod: Promise<UserCredential>): Observable<boolean> {
+    return from(signInMethod).pipe(
       concatMap(() => this.authenticated$),
       first((authenticated) => authenticated),
       tap(() => this.router.navigateByUrl(this.activatedRoute.snapshot.queryParams[AUTH_REDIRECT_PARAM] ?? '/')),

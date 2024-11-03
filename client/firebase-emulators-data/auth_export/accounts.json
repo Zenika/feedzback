@@ -1,0 +1,101 @@
+{
+  "kind": "identitytoolkit#DownloadAccountResponse",
+  "users": [
+    {
+      "localId": "F2j9mQnrAdtkQPL8GuJoyQ40PBgq",
+      "lastLoginAt": "1730667777625",
+      "displayName": "Alfred Demo",
+      "photoUrl": "",
+      "emailVerified": true,
+      "email": "alfred.demo@zenika.com",
+      "salt": "fakeSaltzySiSCOjzXrq5l6t7dh9",
+      "passwordHash": "fakeHash:salt=fakeSaltzySiSCOjzXrq5l6t7dh9:password=zenika",
+      "passwordUpdatedAt": 1730667777625,
+      "validSince": "1730667777",
+      "mfaInfo": [],
+      "createdAt": "1730667777625",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "alfred.demo@zenika.com",
+          "federatedId": "alfred.demo@zenika.com",
+          "rawId": "alfred.demo@zenika.com",
+          "displayName": "Alfred Demo",
+          "photoUrl": ""
+        }
+      ]
+    },
+    {
+      "localId": "QjAXQCvvS8nU9mXLV1iQnNcJbHQM",
+      "lastLoginAt": "1730667799128",
+      "displayName": "Bernard Demo",
+      "photoUrl": "",
+      "emailVerified": true,
+      "email": "bernard.demo@zenika.com",
+      "salt": "fakeSalt97CBP46sN9gT2xbqXpO9",
+      "passwordHash": "fakeHash:salt=fakeSalt97CBP46sN9gT2xbqXpO9:password=zenika",
+      "passwordUpdatedAt": 1730667799128,
+      "validSince": "1730667799",
+      "mfaInfo": [],
+      "createdAt": "1730667799128",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "bernard.demo@zenika.com",
+          "federatedId": "bernard.demo@zenika.com",
+          "rawId": "bernard.demo@zenika.com",
+          "displayName": "Bernard Demo",
+          "photoUrl": ""
+        }
+      ]
+    },
+    {
+      "localId": "ZNfdOGjuhMfeiFgX1JXarCpFAPOU",
+      "lastLoginAt": "1730667857240",
+      "displayName": "Charles Demo",
+      "photoUrl": "",
+      "emailVerified": true,
+      "email": "charles.demo@zenika.com",
+      "salt": "fakeSalt9eh7ILfsgPFYjzFVY8vz",
+      "passwordHash": "fakeHash:salt=fakeSalt9eh7ILfsgPFYjzFVY8vz:password=zenika",
+      "passwordUpdatedAt": 1730667857240,
+      "validSince": "1730667857",
+      "mfaInfo": [],
+      "createdAt": "1730667857240",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "charles.demo@zenika.com",
+          "federatedId": "charles.demo@zenika.com",
+          "rawId": "charles.demo@zenika.com",
+          "displayName": "Charles Demo",
+          "photoUrl": ""
+        }
+      ]
+    },
+    {
+      "localId": "h9VNo4qt5UbD7AZge0Vf3Wr32LfJ",
+      "lastLoginAt": "1730667882229",
+      "displayName": "Daniel Demo",
+      "photoUrl": "",
+      "emailVerified": true,
+      "email": "daniel.demo@zenika.com",
+      "salt": "fakeSaltkGY3xxjiQODqGU4Cqmp8",
+      "passwordHash": "fakeHash:salt=fakeSaltkGY3xxjiQODqGU4Cqmp8:password=zenika",
+      "passwordUpdatedAt": 1730667882229,
+      "validSince": "1730667882",
+      "mfaInfo": [],
+      "createdAt": "1730667882229",
+      "providerUserInfo": [
+        {
+          "providerId": "password",
+          "email": "daniel.demo@zenika.com",
+          "federatedId": "daniel.demo@zenika.com",
+          "rawId": "daniel.demo@zenika.com",
+          "displayName": "Daniel Demo",
+          "photoUrl": ""
+        }
+      ]
+    }
+  ]
+}

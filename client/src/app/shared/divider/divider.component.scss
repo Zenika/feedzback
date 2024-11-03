@@ -1,0 +1,35 @@
+.app-divider {
+  margin: 1.5rem 0;
+  width: 100%;
+  position: relative;
+  display: flex;
+  text-align: center;
+  text-transform: uppercase;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 2px); // 2px is the total border's height
+    right: 0;
+    left: 0;
+    border-radius: 1px;
+    border: 1px solid var(--sys-outline-variant);
+  }
+
+  &__content {
+    margin: auto; // As centered flex item
+    position: relative; // Required just to be on top of the `::before` element
+    max-width: 80%;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.5rem;
+    border-radius: 99px;
+    background-color: var(--sys-outline-variant);
+    color: var(--sys-on-surface-variant);
+
+    &:empty {
+      display: none;
+    }
+  }
+}

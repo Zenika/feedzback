@@ -79,7 +79,7 @@
                 }
               ]
             },
-            "dev-remote": {
+            "development-remote": {
               "budgets": [
                 {
                   "type": "initial",
@@ -102,6 +102,7 @@
             },
             "development": {
               "localize": ["fr"],
+              "baseHref": "/fr/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
@@ -113,7 +114,16 @@
               ]
             },
             "en": {
-              "localize": ["en"]
+              "localize": ["en"],
+              "baseHref": "/en/"
+            },
+            "emulators": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-local-emulators.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -132,6 +142,9 @@
             },
             "development-en": {
               "buildTarget": "client:build:development,en"
+            },
+            "development-emulators": {
+              "buildTarget": "client:build:development,emulators"
             }
           },
           "defaultConfiguration": "development"

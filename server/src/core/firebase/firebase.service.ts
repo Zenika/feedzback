@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { cert, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
@@ -10,6 +10,10 @@ import { AppConfig } from '../config';
 
 @Injectable()
 export class FirebaseService {
+  private logger = new Logger('FirebaseService');
+
+  private readonly firebaseEmulatorMode = this.configService.get('firebaseEmulatorMode', { infer: true })!;
+
   private serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
   private app = initializeApp({ credential: cert(this.serviceAccount) });
@@ -18,5 +22,9 @@ export class FirebaseService {
 
   db = getFirestore(this.app);
 
-  constructor(private configService: ConfigService<AppConfig>) {}
+  constructor(private configService: ConfigService<AppConfig>) {
+    if (this.firebaseEmulatorMode) {
+      this.logger.warn('Running in emulator mode. Do not use with production credentials.');
+    }
+  }
 }

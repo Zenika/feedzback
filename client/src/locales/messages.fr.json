@@ -21,6 +21,7 @@
     "Action.Save": " Sauvegarder ",
     "Action.SaveAsDraft": "Enregistrer en tant que brouillon",
     "Action.Send": "Envoyer",
+    "Action.SignInWithCredentials": "Se connecter avec identifiants",
     "Action.SignInWithGoogle": "Se connecter avec Google",
     "Action.SignOut": "Se déconnecter",
     "Action.Sort": "Trier",
@@ -35,6 +36,8 @@
     "Component.ConfirmBeforeSubmit.SendFeedbackRequestContent": "Notez qu'une fois envoyée, votre demande de feedZback ne sera plus modifiable.",
     "Component.ConfirmBeforeSubmit.SendFeedbackRequestTitle": "Confirmer l'envoi",
     "Component.ConfirmBeforeSubmit.SendFeedbackTitle": "Confirmer l'envoi",
+    "Component.Credentials.Email": "Email",
+    "Component.Credentials.Password": "Mot de passe",
     "Component.DoneFeedback.Archived": "Le feedZback a bien été archivé.",
     "Component.EmailsField.Hint": "Séparez les emails par des virgules",
     "Component.GiveFeedback.Share": " Partager le feedZback avec le manager de votre collègue ",
@@ -99,6 +102,7 @@
     "Component.RequestFeedbackSuccess.Title": "FeedZback demandé à :",
     "Component.RequestFeedbackSuccess.ViewRequests": " Consulter la liste des demandes ",
     "Component.Settings.UpdateSuccess": "Vos paramètres ont bien été mis à jour.",
+    "Component.SignIn.ErrorMessage": "L'identification a échoué",
     "Component.SkipLinks.Link": "Accéder au contenu principal",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",
     "Feedback.Comment": "Commentaire",
@@ -154,7 +158,7 @@
     "Title.RequestedFeedbackList": " Répondre aux demandes de feedZback ",
     "Title.Settings": "Paramètres",
     "Title.SharedFeedZbacks": "FeedZbacks partagés",
-    "Title.SignIn": "Connexion",
+    "Title.SignIn": "Se connecter",
     "Word.Later": "Plus tard",
     "Word.Or": "ou"
   }

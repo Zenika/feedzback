@@ -8,6 +8,8 @@ export const appConfigLoader = (): AppConfig => ({
 
   clientUrl: process.env.CLIENT_URL!,
 
+  firebaseEmulatorMode: !!process.env['FIREBASE_AUTH_EMULATOR_HOST'] || !!process.env['FIRESTORE_EMULATOR_HOST'],
+
   firebaseServiceAccount: {
     projectId: process.env.FIREBASE_PROJECT_ID!,
     privateKey: Buffer.from(process.env.FIREBASE_PRIVATE_KEY!, 'base64').toString('ascii'),
