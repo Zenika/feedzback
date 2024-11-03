@@ -13,5 +13,5 @@ export type AppEnv = {
   alias?: 'dev-local' | 'dev-remote' | 'staging';
 
   // Firebase emulators are used for integration and e2e testing
-  FIREBASE_EMULATORS?: true;
+  firebaseEmulatorMode?: true;
 };

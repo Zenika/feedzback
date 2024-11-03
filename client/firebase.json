@@ -51,13 +51,13 @@
       "host": "localhost",
       "port": 9099
     },
-    "hosting": {
-      "host": "localhost",
-      "port": 4200
-    },
     "firestore": {
       "host": "localhost",
       "port": 8080
+    },
+    "hosting": {
+      "host": "localhost",
+      "port": 4200
     },
     "ui": {
       "enabled": true

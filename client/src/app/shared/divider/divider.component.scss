@@ -27,5 +27,9 @@
     border-radius: 99px;
     background-color: var(--sys-outline-variant);
     color: var(--sys-on-surface-variant);
+
+    &:empty {
+      display: none;
+    }
   }
 }

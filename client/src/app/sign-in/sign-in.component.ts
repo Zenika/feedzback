@@ -21,10 +21,10 @@ export class SignInComponent {
 
   private notificationService = inject(NotificationService);
 
-  protected readonly withGoogleEnabled = !environment.FIREBASE_EMULATORS;
+  protected readonly withGoogleEnabled = !environment.firebaseEmulatorMode;
 
   protected readonly withEmailAndPasswordEnabled =
-    environment.FIREBASE_EMULATORS || environment.alias === 'dev-local' || environment.alias === 'dev-remote';
+    environment.firebaseEmulatorMode || environment.alias === 'dev-local' || environment.alias === 'dev-remote';
 
   protected disabled = signal(false);
 

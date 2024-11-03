@@ -6,7 +6,7 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { provideAuth } from './shared/auth';
 import { provideBaseHref } from './shared/base-href';
-import { provideFirebaseEmulators } from './shared/firebase';
+import { provideFirebaseEmulator } from './shared/firebase';
 import { provideLanguage } from './shared/i18n/language';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
 import { provideSvgIcons } from './shared/icon';
@@ -28,6 +28,6 @@ export const appConfig: ApplicationConfig = {
     provideTheme(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
 
-    environment.FIREBASE_EMULATORS ? provideFirebaseEmulators() : [],
+    environment.firebaseEmulatorMode ? provideFirebaseEmulator() : [],
   ],
 };
