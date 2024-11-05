@@ -1,7 +1,7 @@
 import { ServiceAccount } from 'firebase-admin/app';
 import { MailgunClientOptions } from 'mailgun.js';
 
-export type AppEnv = 'developement' | 'production';
+export type AppEnv = 'development' | 'production';
 
 export type AppConfig = {
   appEnv: AppEnv;
@@ -10,11 +10,11 @@ export type AppConfig = {
 
   clientUrl: string;
 
-  firebaseEmulatorMode: boolean;
-
   firebaseServiceAccount: Required<ServiceAccount>;
 
-  mailgunClientOptions: MailgunClientOptions;
+  firebaseEmulatorMode: boolean;
+
+  mailgunClientOptions: Required<Pick<MailgunClientOptions, 'username' | 'key' | 'url'>>;
 
   mailgunDomain: string;
 

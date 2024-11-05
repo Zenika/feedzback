@@ -1,35 +1,21 @@
+import { Logger } from '@nestjs/common';
+import { ZodError } from 'zod';
+import { processEnvVarsSchema } from './config.schema';
 import { AppConfig } from './config.types';
-import { getAppEnvironment } from './config.utils';
+import { mapProcessEnvVarsToAppConfig } from './config.utils';
 
-export const appConfigLoader = (): AppConfig => ({
-  appEnv: getAppEnvironment(process.env.NODE_ENV),
+export const appConfigLoader = (): AppConfig => {
+  const logger = new Logger('AppConfig');
 
-  serverPort: Number(process.env.SERVER_PORT!),
+  try {
+    const processEnvVars = processEnvVarsSchema.parse(process.env);
 
-  clientUrl: process.env.CLIENT_URL!,
+    logger.log('Validation succeeded');
 
-  firebaseEmulatorMode: !!process.env['FIREBASE_AUTH_EMULATOR_HOST'] || !!process.env['FIRESTORE_EMULATOR_HOST'],
+    return mapProcessEnvVarsToAppConfig(processEnvVars);
+  } catch (zodError) {
+    logger.fatal(`Validation failed ${(zodError as ZodError).message}`);
 
-  firebaseServiceAccount: {
-    projectId: process.env.FIREBASE_PROJECT_ID!,
-    privateKey: Buffer.from(process.env.FIREBASE_PRIVATE_KEY!, 'base64').toString('ascii'),
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
-  },
-
-  mailgunClientOptions: {
-    username: process.env.MAILGUN_USERNAME!,
-    key: process.env.MAILGUN_KEY!,
-    url: process.env.MAILGUN_URL!,
-  },
-
-  mailgunDomain: process.env.MAILGUN_DOMAIN!,
-
-  cryptoSecrets: {
-    key: process.env.CRYPTO_SECRET_KEY!,
-    iv: process.env.CRYPTO_SECRET_IV!,
-  },
-
-  featureFlipping: {
-    emailValidation: process.env.FEATURE_FLIPPING_EMAIL_VALIDATION === 'true',
-  },
-});
+    throw new Error('[AppConfig] Validation failed');
+  }
+};
