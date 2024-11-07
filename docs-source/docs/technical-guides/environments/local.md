@@ -18,7 +18,7 @@ Only the Email/Password provider is enabled.
 
 In this execution context, the _client_ and _server_ apps are running in "dev" mode (with hot-reloading).
 
-Only Firebase _Auth_ and _Firestore_ emulators are started (_Hosting_ emulator is not used in this context).
+Only the Firebase _Auth_ and _Firestore_ emulators are started. The _Hosting_ emulator is not used in this context.
 
 Here are the NPM scripts for this execution context:
 
@@ -39,7 +39,9 @@ Here are the NPM scripts for this execution context:
 
 In this execution context, the _client_ and _server_ apps are running in "build" mode (no hot-reloading).
 
-Firebase _Auth_, _Firestore_ and _Hosting_ emulators are started.
+This time, not only are the Firebase _Auth_ and _Firestore_ emulators started, but so is the _Hosting_ emulator that serves the client application.
+
+This environment is the closest to the production environment (with the exception of the authentication method) and is therefore ideal for e2e testing.
 
 ```json title="/client/package.json"
 {
