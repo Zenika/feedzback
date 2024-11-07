@@ -24,6 +24,11 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: 'category',
+          label: 'Environments',
+          items: ['technical-guides/environments/overview', 'technical-guides/environments/local'],
+        },
+        {
+          type: 'category',
           label: 'Client',
           items: [
             'technical-guides/client/firebase-hosting',
@@ -37,7 +42,7 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'Server',
-          items: ['technical-guides/server/introduction'],
+          items: ['technical-guides/server/swagger'],
         },
       ],
     },

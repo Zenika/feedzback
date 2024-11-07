@@ -143,19 +143,19 @@ Usage analytics can be set up using [these instructions](/docs/usage-analytics)
 
 ## Links
 
-### Development 🚧
+### Development (feedzback-v2-dev) 🚧
 
 - [Firebase console](https://console.firebase.google.com/project/feedzback-v2-dev)
 - [GCP console](https://console.cloud.google.com/home/dashboard?hl=en&project=feedzback-v2-dev)
 - [CircleCI context](https://app.circleci.com/settings/organization/github/Zenika/contexts/686ad410-3bba-4c59-a904-da3fe737eaa3?return-to=%2F)
 
-### Staging 🚀
+### Staging (feedzback-v2-staging) 🚀
 
 - [Firebase console](https://console.firebase.google.com/project/feedzback-v2-staging)
 - [GCP console](https://console.cloud.google.com/home/dashboard?hl=en&project=feedzback-v2-staging)
 - [CircleCI context](https://app.circleci.com/settings/organization/github/Zenika/contexts/489bddb3-fe2e-465e-91f9-b9ba7a155e0d?return-to=%2F)
 
-### Production 🎬
+### Production (feedzback-v2) 🎬
 
 - [Firebase console](https://console.firebase.google.com/project/feedzback-v2)
 - [GCP console](https://console.cloud.google.com/home/dashboard?hl=en&project=feedzback-v2)

@@ -81,7 +81,7 @@ The [`src/app/app.scss`](https://github.com/Zenika/feedzback/blob/main/client/sr
 
 ## Material
 
-Material design is enabled for the entire HTML page using the `.mat-typography` css class on the body tag:
+Material design typography is enabled for the entire HTML page using the `.mat-typography` css class on the body tag:
 
 ```html title="client/src/index.html"
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ Material design is enabled for the entire HTML page using the `.mat-typography` 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   </head>
-  <body class="mat-typography">
+  <body class="mat-app-background mat-typography">
     <app-root></app-root>
   </body>
 </html>
