@@ -27,8 +27,8 @@ const feedbackRequestDraft: FeedbackRequestDraft = {
   // ----------------------------
   // The relevant data start here
   positive: 'You did great...', // Might be empty because its just a draft
-  negative: '', // Might be empty because its just a draft
-  comment: '',
+  negative: '', // Might be empty...
+  comment: '', // Might be empty...
 };
 ```
 
@@ -47,8 +47,8 @@ const feedbackDraft: FeedbackDraft = {
   // ----------------------------
   // The relevant data start here
   positive: 'You did great...', // Might be empty because its just a draft
-  negative: '', // Might be empty because its just a draft
-  comment: '',
+  negative: '', // Might be empty...
+  comment: '', // Might be empty...
   shared: true,
 };
 ```

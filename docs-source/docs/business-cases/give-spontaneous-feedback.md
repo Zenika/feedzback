@@ -12,7 +12,7 @@ To learn more about draft, read the [Feedback draft](./feedback-draft) documenta
 
 This workflow is much simpler than the feedback request workflow.
 
-The requester must be authenticated.
+The `giverEmail` must be authenticated.
 
 Once the feedback is complete, only 1 Firestore document is added:
 

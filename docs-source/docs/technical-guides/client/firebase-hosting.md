@@ -7,7 +7,7 @@ The client app is deployed on Firebase Hosting which uses 2 configuration files.
 
 The deployment is handled by Circle-CI, but let's understand how it actually works.
 
-Assuming the client app has been built with the `ng build` command.
+Assuming the client app has been built with the `npm run build:dev` command (equivalent to the `ng build` command with some options).
 The built artefact is then available in the `dist/client/browser` directory.
 
 ## `.firebaserc`
@@ -80,7 +80,7 @@ This task is done be the `post-build` NPM script:
 }
 ```
 
-The HTML page [`src/404.html`](https://github.com/Zenika/feedzback/blob/main/client/src/404.html) simply redirects the user to "localized" page.
+The HTML page [`src/404.html`](https://github.com/Zenika/feedzback/blob/main/client/src/404.html) simply redirects the user to "localized" page (`/fr` or `/en`).
 
 For example :
 

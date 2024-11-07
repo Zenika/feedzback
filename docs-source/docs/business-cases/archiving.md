@@ -10,7 +10,7 @@ I'd like to be able to archive the feedbacks I've received or sent after reading
 ## Technical specifications
 
 Archived feedback should not simply be deleted from the database, as they are used for statistical purposes.
-Instead, there is an `archived` field in the feedback documents.
+Instead, there is an `archived` field in the each feedback.
 
 The difficulty is that the feedback document is shared between the `giverEmail` and the `receiverEmail`.
 As a result, the `archived` field cannot be a simple boolean.
