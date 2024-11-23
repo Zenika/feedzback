@@ -5,6 +5,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { delay, first, map, of, switchMap } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { EmployeeService } from '../shared/employee';
 
 @Component({
@@ -23,13 +24,19 @@ export class NoManagerDialogComponent implements AfterViewInit {
 
   templateRef = viewChild.required<TemplateRef<unknown>>('templateRef');
 
-  private readonly delay = 30_000; // 30s
+  private readonly delay = 60_000; // 1 minute
 
   private readonly expiryDuration = 604_800_000; // 7 days
 
   private readonly expiryDateKey = 'no-manager-dialog-expiry-date';
 
   ngAfterViewInit(): void {
+    if (environment.firebaseEmulatorMode) {
+      // Firebase emulator mode is used for e2e tests.
+      // Therefore, we need to prevent the dialog from opening unexpectedly in this environment.
+      return;
+    }
+
     if (!this.shouldOpenDialog()) {
       return;
     }
