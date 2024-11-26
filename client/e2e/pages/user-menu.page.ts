@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 
-export class UserMenuPartial {
+export class UserMenuPage {
   constructor(private page: Page) {}
 
   async logout() {
