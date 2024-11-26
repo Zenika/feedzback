@@ -2,7 +2,7 @@ import { Page, expect } from '@playwright/test';
 import { Persona } from './sign-in.page';
 
 type Details = {
-  message: string;
+  message?: string; // note: there's no message for spontaneous feedback
   positive: string;
   negative: string;
   comment: string;
@@ -35,7 +35,9 @@ export class FeedbackHistoryDetailsPage {
 
     await expect(this.page.getByText(persona)).toBeVisible();
 
-    await expect(this.page.getByText(details.message)).toBeVisible();
+    if (details.message) {
+      await expect(this.page.getByText(details.message)).toBeVisible();
+    }
     await expect(this.page.getByText(details.positive)).toBeVisible();
     await expect(this.page.getByText(details.negative)).toBeVisible();
     await expect(this.page.getByText(details.comment)).toBeVisible();

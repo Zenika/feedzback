@@ -16,7 +16,7 @@ const feedbackDetails = {
 
 test.beforeEach(({ page }) => new FirestorePage(page).reset());
 
-test('Request feedback', async ({ page }) => {
+test('Requested feedback', async ({ page }) => {
   // ====== Alfred request feedback from Bernard and Charles ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Alfred);
