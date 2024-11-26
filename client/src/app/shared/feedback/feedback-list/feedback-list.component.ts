@@ -20,7 +20,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { BreakpointService } from '../../breakpoint';
 import { SlashModule } from '../../slash';
-import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { FeedbackType, NormalizedFeedback } from '../feedback.types';
 import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.directive';
 
@@ -39,7 +38,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     MatTableModule,
     MatTooltipModule,
     SlashModule,
-    FeedbackTypeIconPipe,
     GiveRequestedFeedbackDirective,
   ],
   templateUrl: './feedback-list.component.html',

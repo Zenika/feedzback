@@ -17,6 +17,12 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # IDEs and editors
 .idea/
 .project

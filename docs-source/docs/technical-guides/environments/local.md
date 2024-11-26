@@ -30,7 +30,7 @@ Here are the NPM scripts for this execution context:
     "server:emulators": "npm --prefix ../server run start:emulators",
 
     // To launch the stack with a single command:
-    "emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run start:emulators\""
+    "stack:emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run start:emulators\""
   }
 }
 ```
@@ -50,8 +50,8 @@ This environment is the closest to the production environment (with the exceptio
     "server:e2e": "npm --prefix ../server run start:e2e",
 
     // To launch the stack with a single command:
-    "pree2e": "npm run build:e2e",
-    "e2e": "concurrently \"npm run firebase:e2e\" \"npm run server:e2e\""
+    "prestack:e2e": "npm run build:e2e",
+    "stack:e2e": "concurrently \"npm run firebase:e2e\" \"npm run server:e2e\""
   }
 }
 ```
