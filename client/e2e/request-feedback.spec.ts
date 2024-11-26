@@ -30,6 +30,7 @@ test('Request feedback', async ({ page }) => {
   await bernardDetailsLink.click();
   await page.waitForURL('/fr/history/id/**');
 
+  await expect(page.getByRole('heading', { name: 'FeedZback demandé' })).toBeVisible();
   await expect(page.getByText(Persona.Bernard)).toBeVisible();
   await expect(page.getByText('Quel est votre feedback ?')).toBeVisible();
 
@@ -45,9 +46,11 @@ test('Request feedback', async ({ page }) => {
   const alfredDetailsLink = await bernardHistoryPage.findDetailsLink(Persona.Alfred);
   await expect(alfredDetailsLink).toBeVisible();
   await alfredDetailsLink.click();
-  await page.waitForURL('/fr/history/id/**');
 
+  await page.waitForURL('/fr/history/id/**');
+  await expect(page.getByRole('heading', { name: 'FeedZback à donner' })).toBeVisible();
   await expect(page.getByText(Persona.Alfred)).toBeVisible();
+  await expect(page.getByText('Quel est votre feedback ?')).toBeVisible();
   await page.getByRole('button', { name: 'Répondre', exact: true }).click();
 
   await page.getByText('Points positifs').fill('Ok');
@@ -62,6 +65,8 @@ test('Request feedback', async ({ page }) => {
   await page.getByRole('button', { name: 'Consulter le feedZback' }).click();
 
   await page.waitForURL('/fr/history/id/**');
+  await expect(page.getByRole('heading', { name: 'FeedZback donné' })).toBeVisible();
+  await expect(page.getByText('Quel est votre feedback ?')).toBeVisible();
   await expect(page.getByText('Ok')).toBeVisible();
   await expect(page.getByText('Ko')).toBeVisible();
   await expect(page.getByText('R.A.S')).toBeVisible();
@@ -80,6 +85,8 @@ test('Request feedback', async ({ page }) => {
   await bernardDetailsLink2.click();
 
   await page.waitForURL('/fr/history/id/**');
+  await expect(page.getByRole('heading', { name: 'FeedZback reçu' })).toBeVisible();
+  await expect(page.getByText('Quel est votre feedback ?')).toBeVisible();
   await expect(page.getByText('Ok')).toBeVisible();
   await expect(page.getByText('Ko')).toBeVisible();
   await expect(page.getByText('R.A.S')).toBeVisible();
