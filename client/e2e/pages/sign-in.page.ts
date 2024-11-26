@@ -24,7 +24,7 @@ export class SignInPage {
 export const Persona = {
   Alfred: 'alfred.demo@zenika.com',
   Bernard: 'bernard.demo@zenika.com',
-  Claude: 'claude.demo@zenika.com',
+  Charles: 'charles.demo@zenika.com',
   Daniel: 'daniel.demo@zenika.com',
 } as const;
 

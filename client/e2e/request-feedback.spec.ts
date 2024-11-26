@@ -8,37 +8,46 @@ import { UserMenuPartial } from './partials/user-menu.partial';
 test.beforeEach(({ page }) => new FirestorePage(page).reset());
 
 test('Request feedback', async ({ page }) => {
+  // ====== Alfred request feedback from Bernard and Charles ======
+
   await new SignInPage(page).gotoAndSignIn(Persona.Alfred);
 
-  await new RequestFeedbackPage(page).gotoAndRequest([Persona.Bernard, Persona.Claude], 'Quel est votre feedback ?');
+  await new RequestFeedbackPage(page).gotoAndRequest([Persona.Bernard, Persona.Charles], 'Quel est votre feedback ?');
 
   // See the personas in the success page
-  await page.getByText(Persona.Bernard).waitFor();
-  await page.getByText(Persona.Claude).waitFor();
+  await expect(page.getByText(Persona.Bernard)).toBeVisible();
+  await expect(page.getByText(Persona.Charles)).toBeVisible();
 
   const alfredHistoryPage = new FeedbackHistoryPage(page);
   await alfredHistoryPage.goto('sentRequest');
-  const [bernardDetailsLink] = await alfredHistoryPage.findAll(Persona.Bernard);
-  const [claudeDetailsLink] = await alfredHistoryPage.findAll(Persona.Claude);
 
-  expect(bernardDetailsLink).toBeDefined();
-  expect(claudeDetailsLink).toBeDefined();
+  const bernardDetailsLink = await alfredHistoryPage.findDetailsLink(Persona.Bernard);
+  const charlesDetailsLink = await alfredHistoryPage.findDetailsLink(Persona.Charles);
 
-  await bernardDetailsLink();
-  await page.getByText(Persona.Bernard).waitFor();
-  await page.getByText('Quel est votre feedback ?').waitFor();
+  await expect(bernardDetailsLink).toBeVisible();
+  await expect(charlesDetailsLink).toBeVisible();
+
+  await bernardDetailsLink.click();
+  await page.waitForURL('/fr/history/id/**');
+
+  await expect(page.getByText(Persona.Bernard)).toBeVisible();
+  await expect(page.getByText('Quel est votre feedback ?')).toBeVisible();
 
   await new UserMenuPartial(page).logout();
+
+  // ====== Bernard replies to Alfred ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Bernard);
 
   const bernardHistoryPage = new FeedbackHistoryPage(page);
   await bernardHistoryPage.goto('receivedRequest');
-  const [alfredDetailsLink] = await bernardHistoryPage.findAll(Persona.Alfred);
 
-  expect(alfredDetailsLink).toBeDefined();
-  await alfredDetailsLink();
-  await page.getByText(Persona.Alfred).waitFor();
+  const alfredDetailsLink = await bernardHistoryPage.findDetailsLink(Persona.Alfred);
+  await expect(alfredDetailsLink).toBeVisible();
+  await alfredDetailsLink.click();
+  await page.waitForURL('/fr/history/id/**');
+
+  await expect(page.getByText(Persona.Alfred)).toBeVisible();
   await page.getByRole('button', { name: 'Répondre', exact: true }).click();
 
   await page.getByText('Points positifs').fill('Ok');
@@ -49,4 +58,29 @@ test('Request feedback', async ({ page }) => {
   await page.getByRole('button', { name: 'Confirmer' }).click();
 
   await page.waitForURL('/fr/give-requested/success');
+  await expect(page.getByText(Persona.Alfred)).toBeVisible();
+  await page.getByRole('button', { name: 'Consulter le feedZback' }).click();
+
+  await page.waitForURL('/fr/history/id/**');
+  await expect(page.getByText('Ok')).toBeVisible();
+  await expect(page.getByText('Ko')).toBeVisible();
+  await expect(page.getByText('R.A.S')).toBeVisible();
+
+  await new UserMenuPartial(page).logout();
+
+  // ====== Alfred has received feedback from Bernard ======
+
+  await new SignInPage(page).gotoAndSignIn(Persona.Alfred);
+
+  const alfredHistoryPage2 = new FeedbackHistoryPage(page);
+  await alfredHistoryPage2.goto('received');
+
+  const bernardDetailsLink2 = await alfredHistoryPage2.findDetailsLink(Persona.Bernard);
+  await expect(bernardDetailsLink2).toBeVisible();
+  await bernardDetailsLink2.click();
+
+  await page.waitForURL('/fr/history/id/**');
+  await expect(page.getByText('Ok')).toBeVisible();
+  await expect(page.getByText('Ko')).toBeVisible();
+  await expect(page.getByText('R.A.S')).toBeVisible();
 });

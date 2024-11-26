@@ -12,23 +12,12 @@ export class FeedbackHistoryPage {
     }
   }
 
-  async findAll(persona: Persona) {
+  async findDetailsLink(persona: Persona) {
+    // Wait until the the `<table>` is rendered
     await this.page.locator('tbody').waitFor();
 
-    const rows = await this.page.locator('tbody > tr').all();
-
-    const detailsLinks: (() => Promise<void>)[] = [];
-
-    for (const row of rows) {
-      const matchPersona = (await row.getByRole('cell', { name: persona }).count()) === 1;
-      if (!matchPersona) {
-        continue;
-      }
-      detailsLinks.push(() => row.getByLabel('Consulter').click());
-    }
-
-    return detailsLinks;
+    return this.page
+      .locator('tbody > tr', { has: this.page.getByRole('cell', { name: persona }) })
+      .getByLabel('Consulter');
   }
 }
-
-// TODO: il manque le bouton répondre avec : row.getByLabel('Répondre').click()
