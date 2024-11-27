@@ -3,7 +3,9 @@ import { FeedbackHistoryDetailsPage } from './pages/feedback-history-details.pag
 import { FeedbackHistoryPage } from './pages/feedback-history.page';
 import { FirestorePage } from './pages/firestore.page';
 import { GiveRequestedFeedbackPage } from './pages/give-requested-feedback.page';
+import { ManagerPage } from './pages/manager.page';
 import { RequestFeedbackPage } from './pages/request-feedback.page';
+import { SettingsPage } from './pages/settings.page';
 import { Persona, SignInPage } from './pages/sign-in.page';
 import { UserMenuPage } from './pages/user-menu.page';
 
@@ -81,4 +83,35 @@ test('Requested feedback', async ({ page }) => {
   await bernardDetailsLink2.click();
 
   await new FeedbackHistoryDetailsPage(page).matchDone('received', Persona.Bernard, feedbackDetails);
+
+  // ====== Alfred sets Daniel as its manager ======
+
+  await new SettingsPage(page).gotoAndSetManager(Persona.Daniel);
+  await new UserMenuPage(page).logout();
+
+  // ====== Daniel can now view the feedbacks that Alfred has shared with him ======
+
+  await new SignInPage(page).gotoAndSignIn(Persona.Daniel);
+
+  await expect(page.getByRole('link', { name: 'Manager' })).toBeVisible();
+
+  const managerPage = new ManagerPage(page);
+  managerPage.goto();
+  managerPage.selectManaged(Persona.Alfred);
+
+  // View the feedback sent by Bernard
+  const bernardDetailsLink3 = await managerPage.findGiverDetailsLink(Persona.Bernard);
+  await expect(bernardDetailsLink3).toBeVisible();
+  await bernardDetailsLink3.click();
+  await managerPage.matchDoneFeedback(Persona.Bernard, Persona.Alfred, feedbackDetails);
+
+  // Go back to the list of shared feedbacks
+  await page.getByRole('button', { name: 'FeedZbacks partagés' }).click();
+  await page.waitForURL('/fr/manager/list/**');
+
+  // View the feedback expected from Charles
+  const charlesDetailsLink2 = await managerPage.findGiverDetailsLink(Persona.Charles);
+  await expect(charlesDetailsLink2).toBeVisible();
+  await charlesDetailsLink2.click();
+  await managerPage.matchPendingFeedback(Persona.Charles, Persona.Alfred, feedbackDetails.message);
 });
