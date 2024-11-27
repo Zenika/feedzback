@@ -6,13 +6,13 @@ To configure and run the application locally, you need access to the Firebase pr
 
 Once you have gained access, you will also be able to access the [Google Cloud console](https://console.cloud.google.com/?project=feedzback-v2-dev).
 
-:::note
+:::info
 If you don't have permission, please contact Pierre Nicoli or Stéphane Francel.
 :::
 
 ## Server
 
-- Open your IDE in `./server` directory
+- Open your IDE in `<rootDir>/server` directory
 
 ### Configuration
 
@@ -49,17 +49,17 @@ npm run start:dev # Start the server in "watch" mode
 
 Visit the URL http://localhost:3000 to check that the server is running properly.
 
-:::note
-If you just need to start the server once (without "watch" mode), run the command `npm start` from the `./server` directory.
+:::tip
+If you just need to start the server once (without "watch" mode), run the command `npm start` from the `<rootDir>/server` directory.
 
-Running the command `npm run server` from the `./client` directory will have the same effect.
+Running the command `npm run server` from the `<rootDir>/client` directory will have the same effect.
 :::
 
 ## Client
 
 ### Installation
 
-- Open your IDE in `./client` directory
+- Open your IDE in `<rootDir>/client` directory
 
 - Run the following commands:
 
@@ -70,6 +70,6 @@ npm start # Start the client in "watch" mode
 
 Finally, visit the URL http://localhost:4200 and enjoy FeedZback! 🚀
 
-:::note
-Please refer to [Local dev environment](/docs/technical-guides/environments/local) for other ways to launch the application.
+:::info
+Please refer to [Local dev environment](/docs/technical-guides/environments/local-dev) for other ways to launch the application.
 :::

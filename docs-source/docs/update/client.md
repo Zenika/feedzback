@@ -192,7 +192,7 @@ Update `tsconfig.spec.json` and `tsconfig.json` files:
 }
 ```
 
-:::note
+:::info
 You need to make this change even for the `tsconfig.json` file, as it is used by the IDE.
 :::
 
