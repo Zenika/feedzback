@@ -6,6 +6,7 @@ export class FeedbackHistoryPage {
 
   async goto(type: 'received' | 'given' | 'sentRequest' | 'receivedRequest') {
     if (type === 'receivedRequest') {
+      // Dedicated page to list the received requests
       await this.page.goto(`/fr/give-requested`);
     } else {
       await this.page.goto(`/fr/history/type/${type}`);

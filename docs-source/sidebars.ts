@@ -25,7 +25,7 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'Environments',
-          items: ['technical-guides/environments/overview', 'technical-guides/environments/local'],
+          items: ['technical-guides/environments/overview', 'technical-guides/environments/local-dev'],
         },
         {
           type: 'category',
@@ -44,6 +44,7 @@ const sidebars: SidebarsConfig = {
           label: 'Server',
           items: ['technical-guides/server/swagger'],
         },
+        'technical-guides/e2e-testing',
       ],
     },
     {

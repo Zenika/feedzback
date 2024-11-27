@@ -78,10 +78,10 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run e2e:app',
+    command: 'npm run stack:e2e',
     reuseExistingServer: !process.env['CI'],
     port: 4200,
-    timeout: 30 * 1000,
+    timeout: 60_000,
     stdout: 'pipe',
   },
 });

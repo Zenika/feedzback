@@ -12,6 +12,8 @@ export class GiveRequestedFeedbackPage {
   constructor(private page: Page) {}
 
   async give(persona: Persona, details: Details) {
+    await this.page.waitForURL('/fr/give-requested/token/**');
+
     await expect(this.page.getByLabel('Email de votre collègue')).toHaveValue(persona);
 
     await this.page.getByText('Points positifs').fill(details.positive);
