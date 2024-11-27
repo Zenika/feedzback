@@ -44,6 +44,7 @@ const sidebars: SidebarsConfig = {
           label: 'Server',
           items: ['technical-guides/server/swagger'],
         },
+        'technical-guides/e2e-testing',
       ],
     },
     {

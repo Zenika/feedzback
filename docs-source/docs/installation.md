@@ -44,8 +44,16 @@ Retrieve these secret values from the [Google Cloud Run console](https://console
 
 ```bash
 npm install
-npm run start:dev
+npm run start:dev # Start the server in "watch" mode
 ```
+
+Visit the URL http://localhost:3000 to check that the server is running properly.
+
+:::note
+If you just need to start the server once (without "watch" mode), run the command `npm start` from the `./server` directory.
+
+Running the command `npm run server` from the `./client` directory will have the same effect.
+:::
 
 ## Client
 
@@ -57,7 +65,11 @@ npm run start:dev
 
 ```bash
 npm install
-npm start
+npm start # Start the client in "watch" mode
 ```
 
 Finally, visit the URL http://localhost:4200 and enjoy FeedZback! 🚀
+
+:::note
+Please refer to [Local dev environment](/docs/technical-guides/environments/local) for other ways to launch the application.
+:::
