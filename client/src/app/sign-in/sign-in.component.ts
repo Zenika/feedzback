@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { DividerComponent } from '../shared/divider';
@@ -11,7 +10,7 @@ import { CredentialsComponent } from './credentials/credentials.component';
 @Component({
   selector: 'app-sign-in',
   host: { class: 'gbl-landing' },
-  imports: [RouterLink, MatIconModule, DividerComponent, ZenikaLogoComponent, CredentialsComponent],
+  imports: [MatIconModule, DividerComponent, ZenikaLogoComponent, CredentialsComponent],
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,
 })

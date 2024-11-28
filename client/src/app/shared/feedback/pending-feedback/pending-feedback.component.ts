@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { GiveRequestedFeedbackListService } from '../../../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { ConfirmBeforeSubmitDirective } from '../../dialog/confirm-before-submit';
 import { NotificationService } from '../../notification';
-import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from '../feedback.config';
@@ -23,7 +22,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    AllowedEmailDomainsPipe,
     ConfirmBeforeSubmitDirective,
     FeedbackBodyComponent,
     FeedbackTypeIconPipe,

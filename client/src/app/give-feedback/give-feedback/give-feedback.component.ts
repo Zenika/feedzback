@@ -23,7 +23,6 @@ import {
   allowedEmailDomainsValidatorFactory,
 } from '../../shared/validation/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../../shared/validation/forbidden-values';
-import { ValidationErrorMessagePipe } from '../../shared/validation/validation-error-message';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
@@ -41,7 +40,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     IconDirective,
     AutocompleteEmailComponent,
     ConfirmBeforeSubmitDirective,
-    ValidationErrorMessagePipe,
     DialogTooltipDirective,
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
