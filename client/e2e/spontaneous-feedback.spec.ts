@@ -23,13 +23,12 @@ test('Spontaneous feedback', async ({ page }) => {
 
   await new GiveSpontaneousFeedbackPage(page).gotoAndGive(Persona.Alfred, feedbackDetails);
 
-  // See the persona in the success page
-  await expect(page.getByText(Persona.Alfred)).toBeVisible();
+  await expect(page.getByText(Persona.Alfred), 'Feedback receiver should be visible in the success page').toBeVisible();
   await page.getByRole('button', { name: 'Consulter le feedZback' }).click();
 
   await new FeedbackHistoryDetailsPage(page).matchDone('given', Persona.Alfred, feedbackDetails);
 
-  await new UserMenuPage(page).logout();
+  await new UserMenuPage(page).signOut();
 
   // ====== Alfred has received feedback from Bernard ======
 
@@ -39,7 +38,7 @@ test('Spontaneous feedback', async ({ page }) => {
   await alfredHistoryPage.goto('received');
 
   const bernardDetailsLink = await alfredHistoryPage.findDetailsLink(Persona.Bernard);
-  await expect(bernardDetailsLink).toBeVisible();
+  await expect(bernardDetailsLink, 'Feedback giver should be visible in the history page').toBeVisible();
   await bernardDetailsLink.click();
 
   await new FeedbackHistoryDetailsPage(page).matchDone('received', Persona.Bernard, feedbackDetails);
@@ -47,20 +46,20 @@ test('Spontaneous feedback', async ({ page }) => {
   // ====== Alfred sets Daniel as its manager ======
 
   await new SettingsPage(page).gotoAndSetManager(Persona.Daniel);
-  await new UserMenuPage(page).logout();
+  await new UserMenuPage(page).signOut();
 
   // ====== Daniel can now view the feedback that Alfred has shared with him ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Daniel);
 
-  await expect(page.getByRole('link', { name: 'Manager' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Manager' }), 'Manager link should be visible').toBeVisible();
 
   const managerPage = new ManagerPage(page);
   managerPage.goto();
   managerPage.selectManaged(Persona.Alfred);
 
   const managerDetailsLink = await managerPage.findGiverDetailsLink(Persona.Bernard);
-  await expect(managerDetailsLink).toBeVisible();
+  await expect(managerDetailsLink, 'Shared feedback link should be visible').toBeVisible();
   await managerDetailsLink.click();
 
   await managerPage.matchDoneFeedback(Persona.Bernard, Persona.Alfred, feedbackDetails);

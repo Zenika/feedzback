@@ -32,29 +32,35 @@ export class ManagerPage {
   async matchPendingFeedback(giver: Persona, receiver: Persona, message: string) {
     await this.page.waitForURL('/fr/manager/document/**');
 
-    await expect(this.page.getByRole('heading', { name: 'Demande de feedZback partagé' })).toBeVisible();
+    await expect(
+      this.page.getByRole('heading', { name: 'Demande de feedZback partagé' }),
+      'Page heading should be correct',
+    ).toBeVisible();
 
-    await expect(this.page.getByText(giver)).toBeVisible();
-    await expect(this.page.getByText(receiver)).toBeVisible();
+    await expect(this.page.getByText(giver), `Feedback giver should be "${giver}"`).toBeVisible();
+    await expect(this.page.getByText(receiver), `Feedback receiver should be "${receiver}"`).toBeVisible();
 
     if (message) {
-      await expect(this.page.getByText(message)).toBeVisible();
+      await expect(this.page.getByText(message), 'Feedback "message" should be visible').toBeVisible();
     }
   }
 
   async matchDoneFeedback(giver: Persona, receiver: Persona, details: Details) {
     await this.page.waitForURL('/fr/manager/document/**');
 
-    await expect(this.page.getByRole('heading', { name: 'FeedZback partagé' })).toBeVisible();
+    await expect(
+      this.page.getByRole('heading', { name: 'FeedZback partagé' }),
+      'Page heading should be correct',
+    ).toBeVisible();
 
-    await expect(this.page.getByText(giver)).toBeVisible();
-    await expect(this.page.getByText(receiver)).toBeVisible();
+    await expect(this.page.getByText(giver), `Feedback giver should be "${giver}"`).toBeVisible();
+    await expect(this.page.getByText(receiver), `Feedback receiver should be "${receiver}"`).toBeVisible();
 
     if (details.message) {
-      await expect(this.page.getByText(details.message)).toBeVisible();
+      await expect(this.page.getByText(details.message), 'Feedback "message" should be visible').toBeVisible();
     }
-    await expect(this.page.getByText(details.positive)).toBeVisible();
-    await expect(this.page.getByText(details.negative)).toBeVisible();
-    await expect(this.page.getByText(details.comment)).toBeVisible();
+    await expect(this.page.getByText(details.positive), 'Feedback "positive" should be visible').toBeVisible();
+    await expect(this.page.getByText(details.negative), 'Feedback "negative" should be visible').toBeVisible();
+    await expect(this.page.getByText(details.comment), 'Feedback "comment" should be visible').toBeVisible();
   }
 }
