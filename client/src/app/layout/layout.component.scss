@@ -16,8 +16,8 @@
     top: 0;
     z-index: 3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid var(--sys-outline-variant);
-    background-color: var(--sys-surface-container-lowest);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    background-color: var(--mat-sys-surface-container-lowest);
   }
 
   &__main {
@@ -30,7 +30,7 @@
   &__footer {
     grid-area: footer;
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.03);
-    border-top: 1px solid var(--sys-surface-container);
+    border-top: 1px solid var(--mat-sys-surface-container);
     background-color: var(--app-layout-footer);
   }
 

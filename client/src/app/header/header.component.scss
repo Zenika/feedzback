@@ -25,12 +25,12 @@
     padding: 0.5em 0.25em 1.25em 0.25em;
     text-align: right;
     text-decoration: none;
-    color: var(--sys-on-surface-variant);
+    color: var(--mat-sys-on-surface-variant);
     transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
     &:hover,
     &--active {
-      color: var(--sys-primary);
+      color: var(--mat-sys-primary);
     }
 
     &::after {
@@ -42,7 +42,7 @@
       width: 0%;
       opacity: 0;
       border-radius: 4px;
-      background-color: var(--sys-primary);
+      background-color: var(--mat-sys-primary);
       transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     }
 
@@ -108,8 +108,8 @@
       gap: 0;
       padding: 80px 2em 1em 0;
       box-shadow: 0 0 0px transparent;
-      border-bottom: 5px solid var(--sys-primary);
-      background-color: var(--sys-surface-container);
+      border-bottom: 5px solid var(--mat-sys-primary);
+      background-color: var(--mat-sys-surface-container);
       transition:
         left 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
         box-shadow 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);

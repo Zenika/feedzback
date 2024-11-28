@@ -30,8 +30,8 @@
   }
 
   &--light {
-    border-color: var(--sys-surface-container-highest);
-    background-color: var(--sys-surface-container-lowest);
+    border-color: var(--mat-sys-surface-container-highest);
+    background-color: var(--mat-sys-surface-container-lowest);
     color: inherit;
   }
 
@@ -58,7 +58,7 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--sys-on-primary-fixed-variant);
+      color: var(--mat-sys-on-primary-fixed-variant);
     }
   }
 }

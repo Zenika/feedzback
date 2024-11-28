@@ -4,7 +4,7 @@
 
 <div class="color-demo">
   @for (role of materialColorRoles; track $index; let first = $first) {
-    <div [style.background-color]="'var(--sys-' + role + ')'" #element></div>
+    <div [style.background-color]="'var(--mat-sys-' + role + ')'" #element></div>
 
     <div class="color-demo__label" [class.color-demo__label--first]="first">
       {{ role }}
