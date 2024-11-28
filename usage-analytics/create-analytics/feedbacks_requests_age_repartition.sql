@@ -1,7 +1,7 @@
 WITH requests_feedbacks AS (
     SELECT DATE_TRUNC(TIMESTAMP_MILLIS(CAST(JSON_EXTRACT_SCALAR(DATA, "$.createdAt") AS INT)), DAY) AS creation_day
     FROM `firestore_export.feedback_raw_latest`
-    WHERE   JSON_EXTRACT_SCALAR(DATA, "$.status") = "pending" and JSON_EXTRACT_SCALAR(DATA, "$.archived")= "0"
+    WHERE   JSON_EXTRACT_SCALAR(DATA, "$.status") = "pending"
 )
 
 SELECT count(*) as nb_feedbacks,creation_day,
