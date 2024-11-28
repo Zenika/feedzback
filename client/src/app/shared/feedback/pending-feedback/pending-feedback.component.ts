@@ -18,7 +18,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
 
 @Component({
   selector: 'app-pending-feedback',
-  standalone: true,
   imports: [
     DatePipe,
     ReactiveFormsModule,

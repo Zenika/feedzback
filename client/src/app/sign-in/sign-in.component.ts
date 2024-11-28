@@ -11,7 +11,6 @@ import { CredentialsComponent } from './credentials/credentials.component';
 @Component({
   selector: 'app-sign-in',
   host: { class: 'gbl-landing' },
-  standalone: true,
   imports: [RouterLink, MatIconModule, DividerComponent, ZenikaLogoComponent, CredentialsComponent],
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,

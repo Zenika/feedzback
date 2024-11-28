@@ -5,7 +5,6 @@ import { SkipLinksComponent, SkipLinksTargetDirective } from './skip-links';
 @Component({
   selector: 'app-layout',
   host: { class: 'app-layout' },
-  standalone: true,
   imports: [LoadingComponent, SkipLinksComponent, SkipLinksTargetDirective],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',

@@ -18,7 +18,6 @@ import {
 @Component({
   selector: 'app-history',
   host: { class: 'app-history' },
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     RouterLink,

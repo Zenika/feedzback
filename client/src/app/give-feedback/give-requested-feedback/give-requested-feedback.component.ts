@@ -21,7 +21,6 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
 @Component({
   selector: 'app-give-requested-feedback',
-  standalone: true,
   imports: [
     RouterLinkWithHref,
     ReactiveFormsModule,

@@ -17,7 +17,6 @@ import { buildFeedbackSharedMessage, buildFeedbackTitle } from '../feedback.util
 
 @Component({
   selector: 'app-done-feedback',
-  standalone: true,
   imports: [
     DatePipe,
     ReactiveFormsModule,

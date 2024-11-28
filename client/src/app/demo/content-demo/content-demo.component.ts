@@ -4,7 +4,6 @@ import { IconDirective } from '../../shared/icon';
 
 @Component({
   selector: 'app-content-demo',
-  standalone: true,
   imports: [MatIconModule, IconDirective],
   templateUrl: './content-demo.component.html',
   styleUrl: './content-demo.component.scss',

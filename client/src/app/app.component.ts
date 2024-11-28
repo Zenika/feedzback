@@ -8,7 +8,6 @@ import { VersionComponent } from './version/version.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterOutlet, FooterComponent, HeaderComponent, NoManagerDialogComponent, LayoutModule, VersionComponent],
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,

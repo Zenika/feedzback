@@ -6,7 +6,6 @@ import { ElementToBgColorPipe } from './element-to-bg-color.pipe';
 
 @Component({
   selector: 'app-color-demo',
-  standalone: true,
   imports: [MatSlideToggleModule, MatTooltipModule, ElementToBgColorPipe],
   templateUrl: './color-demo.component.html',
   styleUrl: './color-demo.component.scss',

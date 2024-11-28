@@ -19,7 +19,6 @@ import { formatMonth } from './stats.utils';
     class: 'app-stats',
     '[attr.lang]': "'en'", // NOTE: this page is only available in english
   },
-  standalone: true,
   imports: [
     MatIconModule,
     MatSliderModule,

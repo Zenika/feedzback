@@ -160,6 +160,7 @@ $dark-theme: mat.define-theme(
       regular-weight: v.$font-regular-weight,
       bold-weight: v.$font-bold-weight,
       use-system-variables: true,
+      system-variables-prefix: sys,
     ),
     density: (
       scale: 0,

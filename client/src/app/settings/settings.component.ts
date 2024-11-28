@@ -13,7 +13,6 @@ import { ValidationErrorMessagePipe } from '../shared/validation/validation-erro
 
 @Component({
   selector: 'app-settings',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatButtonModule,

@@ -24,7 +24,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "localize": true,
             "outputPath": "dist/client",
@@ -129,7 +129,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "client:build:production"
@@ -150,7 +150,7 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular/build:extract-i18n"
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

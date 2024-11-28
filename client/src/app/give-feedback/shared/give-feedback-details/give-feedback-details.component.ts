@@ -9,7 +9,6 @@ import { ValidationErrorMessagePipe } from '../../../shared/validation/validatio
 
 @Component({
   selector: 'app-give-feedback-details',
-  standalone: true,
   imports: [TextFieldModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, ValidationErrorMessagePipe],
   templateUrl: './give-feedback-details.component.html',
   encapsulation: ViewEncapsulation.None,

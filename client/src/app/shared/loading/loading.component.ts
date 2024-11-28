@@ -5,7 +5,6 @@ import { LoadingService } from './loading.service';
 
 @Component({
   selector: 'app-loading',
-  standalone: true,
   imports: [MatProgressSpinnerModule],
   templateUrl: './loading.component.html',
   styleUrl: './loading.component.scss',

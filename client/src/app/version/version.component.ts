@@ -7,7 +7,6 @@ import { VersionService } from './version.service';
 @Component({
   selector: 'app-version',
   host: { class: 'app-version' },
-  standalone: true,
   imports: [MatTooltipModule],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',

@@ -13,7 +13,6 @@ import { ManagerListData } from './manager-list.types';
 
 @Component({
   selector: 'app-manager-list',
-  standalone: true,
   imports: [ReactiveFormsModule, RouterLink, MatFormFieldModule, MatIconModule, MatSelectModule, FeedbackListComponent],
   templateUrl: './manager-list.component.html',
   encapsulation: ViewEncapsulation.None,

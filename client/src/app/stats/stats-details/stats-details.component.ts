@@ -10,7 +10,6 @@ import { pluckFeedbackMonthStats } from '../stats.utils';
 @Component({
   selector: 'app-stats-details',
   host: { class: 'app-stats-details' },
-  standalone: true,
   providers: [provideEcharts()],
   imports: [NgxEchartsDirective],
   templateUrl: './stats-details.component.html',

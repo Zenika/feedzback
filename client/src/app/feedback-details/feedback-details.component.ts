@@ -6,7 +6,6 @@ import { FeedbackDetails } from './feedback-details.types';
 
 @Component({
   selector: 'app-feedback-details',
-  standalone: true,
   imports: [RouterLink, MatIconModule, DoneFeedbackComponent, PendingFeedbackComponent],
   templateUrl: './feedback-details.component.html',
   encapsulation: ViewEncapsulation.None,

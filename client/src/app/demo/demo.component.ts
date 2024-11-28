@@ -8,7 +8,6 @@ import { demoPaths } from './demo.config';
 
 @Component({
   selector: 'app-demo',
-  standalone: true,
   imports: [RouterOutlet, RouterLink, TitleCasePipe, MatChipsModule],
   templateUrl: './demo.component.html',
   encapsulation: ViewEncapsulation.None,

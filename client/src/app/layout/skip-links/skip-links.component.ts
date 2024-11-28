@@ -4,7 +4,6 @@ import { SkipLinksTargetDirective } from './skip-links-target.directive';
 
 @Component({
   selector: 'app-skip-links',
-  standalone: true,
   imports: [MatIconModule],
   templateUrl: './skip-links.component.html',
   styleUrls: ['./skip-links.component.scss'],

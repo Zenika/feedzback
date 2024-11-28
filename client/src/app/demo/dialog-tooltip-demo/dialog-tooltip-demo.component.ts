@@ -5,7 +5,6 @@ import { IconDirective } from '../../shared/icon';
 
 @Component({
   selector: 'app-dialog-tooltip-demo',
-  standalone: true,
   imports: [DialogTooltipDirective, MatIconModule, IconDirective],
   templateUrl: './dialog-tooltip-demo.component.html',
   encapsulation: ViewEncapsulation.None,

@@ -22,7 +22,6 @@ import { headerAnimations } from './header.animations';
     class: 'app-header',
     '(document:click)': 'onDocumentClick($event.target)',
   },
-  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,

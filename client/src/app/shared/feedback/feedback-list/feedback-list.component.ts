@@ -26,7 +26,6 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
 @Component({
   selector: 'app-feedback-list',
   host: { class: 'app-feedback-list' },
-  standalone: true,
   imports: [
     DatePipe,
     RouterLink,

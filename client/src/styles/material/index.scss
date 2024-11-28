@@ -2,7 +2,8 @@
 
 @use './theme' as t;
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Note:
 // for `:root {}` selector, we use the `mat.*-theme();` which includes core styles and light theme colors
@@ -13,7 +14,8 @@
   // @include mat.all-component-themes(t.$light-theme);
 
   // Option 2)
-  @include mat.core-theme(t.$light-theme);
+  @include mat.elevation-classes();
+  @include mat.app-background();
   //@include mat.card-theme(t.$light-theme);
   //@include mat.progress-bar-theme(t.$light-theme);
   @include mat.tooltip-theme(t.$light-theme);
@@ -59,7 +61,8 @@
   // @include mat.all-component-colors(t.$dark-theme);
 
   // Option 2)
-  @include mat.core-color(t.$dark-theme);
+  @include mat.elevation-classes();
+  @include mat.app-background();
   //@include mat.card-color(t.$dark-theme);
   //@include mat.progress-bar-color(t.$dark-theme);
   @include mat.tooltip-color(t.$dark-theme);

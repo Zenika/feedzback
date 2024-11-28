@@ -31,7 +31,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
 
 @Component({
   selector: 'app-give-feedback',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatButtonModule,

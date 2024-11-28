@@ -7,7 +7,6 @@ import { MessageType } from './message.types';
 @Component({
   selector: 'app-message',
   host: { '[class]': 'hostClass()' },
-  standalone: true,
   imports: [NgClass, MatIconModule, IconDirective],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',

@@ -6,7 +6,6 @@ import { DialogData } from './dialog.types';
 
 @Component({
   selector: 'app-dialog',
-  standalone: true,
   imports: [MatButtonModule, MatDialogModule, MatIconModule],
   templateUrl: './dialog.component.html',
   encapsulation: ViewEncapsulation.None,

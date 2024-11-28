@@ -30,7 +30,6 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
 
 @Component({
   selector: 'app-request-feedback',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatButtonModule,

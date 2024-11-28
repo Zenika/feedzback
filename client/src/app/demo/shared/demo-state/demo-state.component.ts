@@ -9,7 +9,6 @@ import { DemoState } from './demo-state.types';
 @Component({
   selector: 'app-demo-state',
   host: { class: 'app-demo-state' },
-  standalone: true,
   imports: [MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule, OfTypeBooleanPipe],
   templateUrl: './demo-state.component.html',
   styleUrls: ['./demo-state.component.scss'],

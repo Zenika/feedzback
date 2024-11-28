@@ -11,7 +11,6 @@ import { buildInitial } from './avatar.utils';
     '[style.background-image]': 'bgImage()',
     '[style.background-color]': 'bgColor()',
   },
-  standalone: true,
   imports: [MatIconModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],

@@ -8,7 +8,6 @@ import { NotFoundNavigationState } from './not-found.types';
 @Component({
   selector: 'app-not-found',
   host: { class: 'gbl-info' },
-  standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule, MessageComponent],
   templateUrl: './not-found.component.html',
   encapsulation: ViewEncapsulation.None,

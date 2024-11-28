@@ -8,7 +8,6 @@ import { RequestFeedbackSuccess } from './request-feedback-success.types';
 @Component({
   selector: 'app-request-feedback-success',
   host: { class: 'gbl-info' },
-  standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './request-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,
