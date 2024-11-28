@@ -1,3 +1,5 @@
+@use 'sass:meta' as meta;
+
 @use '@angular/material' as mat;
 
 @use './theme' as t;
@@ -14,8 +16,6 @@
   // @include mat.all-component-themes(t.$light-theme);
 
   // Option 2)
-  @include mat.elevation-classes();
-  @include mat.app-background();
   //@include mat.card-theme(t.$light-theme);
   //@include mat.progress-bar-theme(t.$light-theme);
   @include mat.tooltip-theme(t.$light-theme);
@@ -61,8 +61,6 @@
   // @include mat.all-component-colors(t.$dark-theme);
 
   // Option 2)
-  @include mat.elevation-classes();
-  @include mat.app-background();
   //@include mat.card-color(t.$dark-theme);
   //@include mat.progress-bar-color(t.$dark-theme);
   @include mat.tooltip-color(t.$dark-theme);
@@ -104,7 +102,7 @@
 }
 
 // Material typography
-@import './material-typography';
+@include meta.load-css('./material-typography');
 
 // Material customization for this App
-@import './material-overrides';
+@include meta.load-css('./material-overrides');
