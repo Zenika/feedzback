@@ -4,8 +4,10 @@ import { Component, ViewEncapsulation, model } from '@angular/core';
   selector: 'app-burger',
   host: {
     class: 'app-burger',
+    '[tabIndex]': '0',
     '[class.app-burger--active]': 'active()',
-    '(click)': 'onClick()',
+    '(click)': 'toggle()',
+    '(keyup.enter)': 'toggle()',
   },
   standalone: true,
   templateUrl: './burger.component.html',
@@ -15,7 +17,7 @@ import { Component, ViewEncapsulation, model } from '@angular/core';
 export class BurgerComponent {
   active = model(false);
 
-  onClick() {
+  toggle() {
     this.active.update((active) => !active);
   }
 }

@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { FocusContentSkipLinksComponent, FocusContentTargetDirective } from '../shared/focus-content';
 import { LoadingComponent } from '../shared/loading';
-import { SkipLinksComponent, SkipLinksTargetDirective } from './skip-links';
 
 @Component({
   selector: 'app-layout',
   host: { class: 'app-layout' },
-  imports: [LoadingComponent, SkipLinksComponent, SkipLinksTargetDirective],
+  imports: [FocusContentSkipLinksComponent, FocusContentTargetDirective, LoadingComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
   encapsulation: ViewEncapsulation.None,

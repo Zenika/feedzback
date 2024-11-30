@@ -11,6 +11,7 @@ import { AuthService } from '../shared/auth';
 import { AvatarComponent } from '../shared/avatar';
 import { BreakpointService } from '../shared/breakpoint';
 import { EmployeeService } from '../shared/employee';
+import { FocusContentOnRoutingDirective } from '../shared/focus-content';
 import { LanguageService } from '../shared/i18n/language';
 import { ThemeService } from '../shared/theme';
 import { BurgerComponent } from './burger/burger.component';
@@ -31,6 +32,7 @@ import { headerAnimations } from './header.animations';
     MatIconModule,
     MatMenuModule,
     AvatarComponent,
+    FocusContentOnRoutingDirective,
     BurgerComponent,
   ],
   animations: [headerAnimations],

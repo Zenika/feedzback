@@ -8,6 +8,7 @@
   <a
     routerLink="/home"
     routerLinkActive
+    appFocusContentOnRouting
     ariaCurrentWhenActive="page"
     aria-label="Accueil"
     i18n-aria-label="@@Component.Header.HomeLink"
@@ -22,6 +23,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/request"
+      appFocusContentOnRouting
       ariaCurrentWhenActive="page"
       i18n="@@Feedback.Request"
     >
@@ -31,6 +33,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/give"
+      appFocusContentOnRouting
       ariaCurrentWhenActive="page"
       i18n="@@Feedback.Give"
     >
@@ -40,6 +43,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/give-requested"
+      appFocusContentOnRouting
       ariaCurrentWhenActive="page"
       [matBadge]="receivedRequestLength()"
       i18n="@@Feedback.Reply"
@@ -50,6 +54,7 @@
       class="app-header__menu-item"
       routerLinkActive="app-header__menu-item--active"
       routerLink="/history"
+      appFocusContentOnRouting
       ariaCurrentWhenActive="page"
       i18n="@@Action.History"
       >Mes feedZbacks</a
@@ -61,6 +66,7 @@
         class="app-header__menu-item"
         routerLinkActive="app-header__menu-item--active"
         routerLink="/manager"
+        appFocusContentOnRouting
         ariaCurrentWhenActive="page"
         i18n="@@Action.Manager"
       >
@@ -118,7 +124,7 @@
     </button>
 
     @if (userStatus().authenticated) {
-      <button mat-menu-item routerLink="/settings">
+      <button mat-menu-item routerLink="/settings" appFocusContentOnRouting>
         <mat-icon class="gbl-sys-primary">settings</mat-icon>
         <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
       </button>
