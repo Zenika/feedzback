@@ -8,5 +8,6 @@ import { buildTextMatrix } from './multi-line.utils';
   encapsulation: ViewEncapsulation.None,
 })
 export class MultiLineComponent {
-  textMatrix = input([], { alias: 'text', transform: (text?: string) => buildTextMatrix(text) });
+  // note: property `text` represents a "text matrix"
+  text = input([], { transform: (text?: string) => buildTextMatrix(text) });
 }

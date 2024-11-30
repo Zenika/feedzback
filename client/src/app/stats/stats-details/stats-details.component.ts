@@ -2,6 +2,7 @@ import { Component, computed, inject, input, ViewEncapsulation } from '@angular/
 import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
 import { ThemeService } from '../../shared/theme';
+import { FeedbackMonthStats } from '../stats.types';
 import { pluckFeedbackMonthStats } from '../stats.utils';
 
 // Note: the different chart colors are taken from:
@@ -17,7 +18,9 @@ import { pluckFeedbackMonthStats } from '../stats.utils';
   encapsulation: ViewEncapsulation.None,
 })
 export class StatsDetailsComponent {
-  detailsPlucked = input.required({ alias: 'details', transform: pluckFeedbackMonthStats });
+  details = input.required<FeedbackMonthStats[]>();
+
+  private detailsPlucked = computed(() => pluckFeedbackMonthStats(this.details()));
 
   private theme = inject(ThemeService).theme;
 
