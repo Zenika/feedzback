@@ -1,12 +1,15 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-@use './material/theme' as t;
+@use './material/material-theme-light' as theme-light;
+@use './material/material-theme-dark' as theme-dark;
 
 @function get-light-theme-color($role) {
-  @return mat.get-theme-color(t.$light-theme, $role);
+  // FXME: do not depend on legacy code
+  @return mat.get-theme-color(theme-light.$legacy-light-theme, $role);
 }
 
 @function get-dark-theme-color($role) {
-  @return mat.get-theme-color(t.$dark-theme, $role);
+  // FXME: do not depend on legacy code
+  @return mat.get-theme-color(theme-dark.$legacy-dark-theme, $role);
 }

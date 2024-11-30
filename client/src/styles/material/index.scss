@@ -2,107 +2,55 @@
 
 @use '@angular/material' as mat;
 
-@use './theme' as t;
+@use './material-theme-light' as theme-light;
+@use './material-theme-dark' as theme-dark;
 
-@include mat.elevation-classes();
-@include mat.app-background();
+@use './material-typography' as typography;
+
+@use '../variables.scss' as v;
 
 // Note:
 // for `:root {}` selector, we use the `mat.*-theme();` which includes core styles and light theme colors
 // while for `.gbl-theme-dark {}` selector, we use the `mat.*-color();` which only includes dark colors
 
 :root {
-  // Option 1)
-  // @include mat.all-component-themes(t.$light-theme);
-
-  // Option 2)
-  //@include mat.card-theme(t.$light-theme);
-  //@include mat.progress-bar-theme(t.$light-theme);
-  @include mat.tooltip-theme(t.$light-theme);
-  @include mat.form-field-theme(t.$light-theme);
-  @include mat.input-theme(t.$light-theme);
-  @include mat.select-theme(t.$light-theme);
-  @include mat.autocomplete-theme(t.$light-theme);
-  @include mat.dialog-theme(t.$light-theme);
-  @include mat.chips-theme(t.$light-theme);
-  @include mat.slide-toggle-theme(t.$light-theme);
-  //@include mat.radio-theme(t.$light-theme);
-  @include mat.slider-theme(t.$light-theme);
-  @include mat.menu-theme(t.$light-theme);
-  //@include mat.list-theme(t.$light-theme);
-  @include mat.paginator-theme(t.$light-theme);
-  @include mat.tabs-theme(t.$light-theme);
-  //@include mat.checkbox-theme(t.$light-theme);
-  @include mat.button-theme(t.$light-theme);
-  @include mat.icon-button-theme(t.$light-theme);
-  @include mat.fab-theme(t.$light-theme);
-  @include mat.snack-bar-theme(t.$light-theme);
-  @include mat.table-theme(t.$light-theme);
-  @include mat.progress-spinner-theme(t.$light-theme);
-  @include mat.badge-theme(t.$light-theme);
-  //@include mat.bottom-sheet-theme(t.$light-theme);
-  //@include mat.button-toggle-theme(t.$light-theme);
-  //@include mat.datepicker-theme(t.$light-theme);
-  //@include mat.divider-theme(t.$light-theme);
-  //@include mat.expansion-theme(t.$light-theme);
-  //@include mat.grid-list-theme(t.$light-theme);
-  @include mat.icon-theme(t.$light-theme);
-  //@include mat.sidenav-theme(t.$light-theme);
-  //@include mat.stepper-theme(t.$light-theme);
-  //@include mat.sort-theme(t.$light-theme);
-  //@include mat.toolbar-theme(t.$light-theme);
-  //@include mat.tree-theme(t.$light-theme);
-
-  @include mat.system-level-colors(t.$light-theme);
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: (
+        primary: theme-light.$primary-palette,
+        tertiary: theme-light.$tertiary-palette,
+      ),
+      typography: (
+        plain-family: '"Nunito"',
+        regular-weight: v.$font-regular-weight,
+        bold-weight: v.$font-bold-weight,
+      ),
+      density: 0,
+    ),
+    $overrides: typography.$typography
+  );
 }
 
 .gbl-theme-dark {
-  // Option 1)
-  // @include mat.all-component-colors(t.$dark-theme);
-
-  // Option 2)
-  //@include mat.card-color(t.$dark-theme);
-  //@include mat.progress-bar-color(t.$dark-theme);
-  @include mat.tooltip-color(t.$dark-theme);
-  @include mat.form-field-color(t.$dark-theme);
-  @include mat.input-color(t.$dark-theme);
-  @include mat.select-color(t.$dark-theme);
-  @include mat.autocomplete-color(t.$dark-theme);
-  @include mat.dialog-color(t.$dark-theme);
-  @include mat.chips-color(t.$dark-theme);
-  @include mat.slide-toggle-color(t.$dark-theme);
-  //@include mat.radio-color(t.$dark-theme);
-  @include mat.slider-color(t.$dark-theme);
-  @include mat.menu-color(t.$dark-theme);
-  //@include mat.list-color(t.$dark-theme);
-  @include mat.paginator-color(t.$dark-theme);
-  @include mat.tabs-color(t.$dark-theme);
-  //@include mat.checkbox-color(t.$dark-theme);
-  @include mat.button-color(t.$dark-theme);
-  @include mat.icon-button-color(t.$dark-theme);
-  @include mat.fab-color(t.$dark-theme);
-  @include mat.snack-bar-color(t.$dark-theme);
-  @include mat.table-color(t.$dark-theme);
-  @include mat.progress-spinner-color(t.$dark-theme);
-  @include mat.badge-color(t.$dark-theme);
-  //@include mat.bottom-sheet-color(t.$dark-theme);
-  //@include mat.button-toggle-color(t.$dark-theme);
-  //@include mat.datepicker-color(t.$dark-theme);
-  //@include mat.divider-color(t.$dark-theme);
-  //@include mat.expansion-color(t.$dark-theme);
-  //@include mat.grid-list-color(t.$dark-theme);
-  @include mat.icon-color(t.$dark-theme);
-  //@include mat.sidenav-color(t.$dark-theme);
-  //@include mat.stepper-color(t.$dark-theme);
-  //@include mat.sort-color(t.$dark-theme);
-  //@include mat.toolbar-color(t.$dark-theme);
-  //@include mat.tree-color(t.$dark-theme);
-
-  @include mat.system-level-colors(t.$dark-theme);
+  color-scheme: dark;
+  @include mat.theme(
+    (
+      color: (
+        primary: theme-dark.$primary-palette,
+        tertiary: theme-dark.$tertiary-palette,
+      ),
+      typography: (
+        plain-family: '"Nunito"',
+        regular-weight: v.$font-regular-weight,
+        bold-weight: v.$font-bold-weight,
+      ),
+      density: 0,
+    ),
+    $overrides: typography.$typography
+  );
 }
 
-// Material typography
 @include meta.load-css('./material-typography');
 
-// Material customization for this App
 @include meta.load-css('./material-overrides');

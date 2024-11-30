@@ -10,6 +10,12 @@ body {
 body {
   margin: 0;
 
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+
+  font: var(--mat-sys-body-large);
+  letter-spacing: var(--mat-sys-body-large-tracking);
+
   // Angular material components use the following font-smoothing properties (so, we want the other contents to have the same render)
   // More infos: https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth
   -webkit-font-smoothing: antialiased;
