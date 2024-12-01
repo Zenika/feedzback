@@ -1,9 +1,3 @@
-<div class="app-header__burger">
-  @if (userStatus().authenticated) {
-    <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
-  }
-</div>
-
 <div class="app-header__logo">
   <a
     routerLink="/home"
@@ -17,7 +11,20 @@
   </a>
 </div>
 
-<nav class="app-header__menu app-header-menu-target mat-title-medium" [class.app-header__menu--visible]="isMenuOpen">
+<div class="app-header__burger">
+  @if (userStatus().authenticated) {
+    <app-burger class="app-header-menu-target" [(active)]="isMenuOpen"></app-burger>
+  }
+</div>
+
+<nav
+  class="app-header__menu app-header-menu-target mat-title-medium"
+  [class.app-header__menu--open]="isMenuOpen"
+  [class.app-header__menu--content-hidden]="isMenuContentHidden()"
+  (transitionstart)="$event.target === navElement && onMenuTransition('start')"
+  (transitionend)="$event.target === navElement && onMenuTransition('end')"
+  #navElement
+>
   @if (userStatus().authenticated) {
     <a
       class="app-header__menu-item"

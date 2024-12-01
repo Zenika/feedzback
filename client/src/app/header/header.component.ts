@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -61,6 +61,8 @@ export class HeaderComponent {
 
   protected isMenuOpen = false;
 
+  protected isMenuContentHidden = signal(false);
+
   constructor() {
     this.router.events
       .pipe(
@@ -74,6 +76,14 @@ export class HeaderComponent {
   onDocumentClick(target: HTMLElement) {
     if (!target.closest('.app-header-menu-target')) {
       this.isMenuOpen = false;
+    }
+  }
+
+  protected onMenuTransition(type: 'start' | 'end') {
+    if (type === 'start' && this.isMenuOpen) {
+      this.isMenuContentHidden.set(false);
+    } else if (type === 'end' && !this.isMenuOpen) {
+      this.isMenuContentHidden.set(true);
     }
   }
 
