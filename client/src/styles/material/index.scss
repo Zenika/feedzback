@@ -18,6 +18,7 @@
   @include mat.theme(
     (
       color: (
+        theme-type: light,
         primary: theme-light.$primary-palette,
         tertiary: theme-light.$tertiary-palette,
       ),
@@ -37,6 +38,7 @@
   @include mat.theme(
     (
       color: (
+        theme-type: dark,
         primary: theme-dark.$primary-palette,
         tertiary: theme-dark.$tertiary-palette,
       ),

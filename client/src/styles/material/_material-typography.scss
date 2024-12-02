@@ -1,8 +1,5 @@
 @use '../variables' as v;
 
-// Note: Material typography mixins are color-independent.
-// We can therefore use the `light` or `dark` theme.
-
 $typography: (
   display-large: #{v.$font-bold-weight} min(1.525rem + 3.3vw, 4rem) / 1.2 'Nunito',
   display-large-font: 'Nunito',
