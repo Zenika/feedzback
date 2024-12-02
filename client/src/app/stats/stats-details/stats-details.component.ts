@@ -1,6 +1,7 @@
 import { Component, computed, inject, input, ViewEncapsulation } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { NgxEchartsDirective, provideEcharts, ThemeOption } from 'ngx-echarts';
+import { NgxEchartsDirective, ThemeOption } from 'ngx-echarts';
+import { provideEcharts } from '../../shared/echarts';
 import { ThemeService } from '../../shared/theme';
 import { FeedbackMonthStats } from '../stats.types';
 import { pluckFeedbackMonthStats } from '../stats.utils';
