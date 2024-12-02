@@ -1,5 +1,7 @@
 @use '../app.scss' as app;
 
+$anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
 .app-header {
   position: relative;
   padding: 0.25rem 0;
@@ -11,127 +13,70 @@
     line-height: 0;
   }
 
+  &__burger {
+    z-index: 99;
+  }
+
   &__menu {
-    display: flex;
-    justify-content: center;
-    gap: 1.25em;
-    padding: 0 1.25em;
-  }
-
-  &__menu-item {
-    position: relative;
-    // Note: 0.75em (margin-top) + 0.5em (padding-top) == 1.25em (padding-bottom)
-    margin-top: 0.75em;
-    padding: 0.5em 0.25em 1.25em 0.25em;
-    text-align: right;
-    text-decoration: none;
-    color: var(--mat-sys-on-surface-variant);
-    transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-
-    &:hover,
-    &--active {
-      color: var(--mat-sys-primary);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0.75em;
-      height: 4px;
-      left: 50%;
-      width: 0%;
-      opacity: 0;
-      border-radius: 4px;
-      background-color: var(--mat-sys-primary);
-      transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-    }
-
-    &--active::after {
-      left: 0%;
-      width: 100%;
-      opacity: 1;
-    }
-  }
-
-  &__user-menu {
     position: relative;
     display: flex;
     justify-content: flex-end;
   }
 
-  &__user-menu-photo {
-    cursor: pointer;
-  }
-
   @include app.media-breakpoint-up(md) {
-    &__burger {
+    &__burger,
+    &__nav-backdrop,
+    &__logo--mobile {
       display: none;
     }
 
-    &__logo,
-    &__user-menu {
-      flex-basis: 20%;
-    }
-
-    &__user-menu {
-      flex-shrink: 3;
-    }
-
-    &__menu-item {
-      flex-shrink: 0;
-    }
-  }
-
-  @include app.media-breakpoint-down(md) {
-    &__burger {
-      z-index: 99;
-
-      // Note: in the HTML markup, the "burger" is positioned just between the "logo" and the "menu links".
-      // This makes keyboard navigation (almost) natural (focusing on "menu links" just after focusing the "burger").
-      // The only drawback is on mobile, where the "logo" will be the first to receive focus (even before the "burger").
-      // But in the end, it's not a big deal, because keyboard navigation on mobile remains a marginal use case.
-      order: -1;
-    }
-
-    &__burger,
-    &__user-menu {
+    &__logo--desktop,
+    &__menu {
       flex-basis: 20%;
     }
 
     &__menu {
+      // When device width become smaller, allow the `&__menu` width to be smaller than the `&__logo` width
+      flex-shrink: 3;
+    }
+  }
+
+  @include app.media-breakpoint-down(md) {
+    &__logo--desktop {
+      display: none;
+    }
+
+    &__burger,
+    &__menu {
+      flex-basis: 20%;
+    }
+
+    &__nav {
       position: fixed;
       z-index: 98;
       overflow: auto;
       box-sizing: border-box;
-      top: 0em;
+      top: 0;
       bottom: 0;
       max-width: 100%;
       width: 250px;
       left: -250px;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-end;
-      gap: 0;
-      padding: 80px 2em 1em 0;
+      padding: 80px 1.25rem 1.25rem 1.25rem;
       box-shadow: 0 0 0px transparent;
       border-bottom: 5px solid var(--mat-sys-primary);
       background-color: var(--mat-sys-surface-container);
       transition:
-        left 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-        box-shadow 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        left $anim-duration-timing-function,
+        box-shadow $anim-duration-timing-function;
 
       &--open {
         left: 0px;
-        // The following shadow is a copy/past from "Material menu" (to match the `signOutMenu`)
-        box-shadow:
-          0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-          0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-          0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+        box-shadow: var(--mat-sys-level4);
       }
 
       &--content-hidden > * {
         // This is the easiest way to prevent keyboard navigation on hidden elements.
-        display: none;
+        display: none !important;
       }
 
       &-backdrop {
@@ -142,7 +87,31 @@
         bottom: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.5);
+
+        animation: fadeInBackdrop $anim-duration-timing-function;
+
+        &--closing {
+          animation: fadeOutBackdrop $anim-duration-timing-function;
+        }
       }
     }
+  }
+}
+
+@keyframes fadeInBackdrop {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutBackdrop {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
