@@ -11,7 +11,6 @@ import { GiveFeedbackSuccess } from './give-feedback-success.types';
 @Component({
   selector: 'app-give-feedback-success',
   host: { class: 'gbl-info' },
-  standalone: true,
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './give-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,

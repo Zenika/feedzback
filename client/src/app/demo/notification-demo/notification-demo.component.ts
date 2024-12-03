@@ -3,7 +3,6 @@ import { NotificationService } from '../../shared/notification';
 
 @Component({
   selector: 'app-notification-demo',
-  standalone: true,
   imports: [],
   templateUrl: './notification-demo.component.html',
   encapsulation: ViewEncapsulation.None,

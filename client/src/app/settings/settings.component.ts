@@ -5,23 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../shared/auth';
 import { AutocompleteEmailComponent } from '../shared/autocomplete-email';
 import { EmployeeService } from '../shared/employee';
-import { MessageComponent } from '../shared/message';
 import { NotificationService } from '../shared/notification';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
-import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message';
 
 @Component({
   selector: 'app-settings',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    AutocompleteEmailComponent,
-    ValidationErrorMessagePipe,
-    MessageComponent,
-  ],
+  imports: [ReactiveFormsModule, MatButtonModule, MatIconModule, AutocompleteEmailComponent],
   templateUrl: './settings.component.html',
   encapsulation: ViewEncapsulation.None,
 })

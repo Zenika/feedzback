@@ -1,4 +1,4 @@
-<h1 class="gbl-page-title mat-headline-large">
+<h1 class="gbl-page-title">
   <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
   <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à une demande de feedZback </ng-container>
 </h1>
@@ -33,7 +33,7 @@
 
 <form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
   @if (anonymous) {
-    <h3 class="mat-title-large">
+    <h3 class="gbl-title-large">
       <mat-icon>voice_selection</mat-icon>
       <ng-container i18n="@@Component.GiveRequestedFeedback.You">Vous</ng-container>
     </h3>
@@ -51,7 +51,7 @@
       <mat-icon matSuffix class="opacity-50">edit_off</mat-icon>
     </mat-form-field>
 
-    <h3 class="mat-title-large">
+    <h3 class="gbl-title-large">
       <mat-icon>hearing</mat-icon>
       <ng-container i18n="@@Component.GiveRequestedFeedback.YourColleague">Votre collègue</ng-container>
     </h3>

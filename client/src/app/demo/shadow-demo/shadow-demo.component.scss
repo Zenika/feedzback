@@ -1,0 +1,17 @@
+.app-shadow-demo {
+  &__container {
+    margin-top: 2rem;
+    border-radius: 1rem;
+    padding: 6rem 1rem;
+    border: 1px solid var(--mat-sys-surface-container-high);
+    background-color: var(--mat-sys-surface-container-low);
+    color: var(--mat-sys-on-surface);
+    text-align: center;
+    text-wrap: balance;
+    transition: box-shadow 250ms ease;
+
+    &--no-border {
+      border-color: transparent;
+    }
+  }
+}

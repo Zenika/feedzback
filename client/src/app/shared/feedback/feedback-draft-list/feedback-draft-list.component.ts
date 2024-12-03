@@ -8,7 +8,6 @@ import { FeedbackDraft, FeedbackRequestDraft } from '../feedback.types';
 @Component({
   selector: 'app-feedback-draft-list',
   host: { class: 'app-feedback-draft-list' },
-  standalone: true,
   imports: [MatButtonModule, MatIconModule, MatTableModule, MatTooltipModule],
   templateUrl: './feedback-draft-list.component.html',
   styleUrl: './feedback-draft-list.component.scss',

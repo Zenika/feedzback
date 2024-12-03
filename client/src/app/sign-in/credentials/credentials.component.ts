@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-credentials',
   host: { class: 'app-credentials' },
-  standalone: true,
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
   templateUrl: './credentials.component.html',
   styleUrl: './credentials.component.scss',

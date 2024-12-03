@@ -5,9 +5,9 @@
   &__image {
     padding: 2rem;
     max-width: 100%;
-    box-shadow: 7px 7px 1px var(--sys-surface-dim);
+    box-shadow: 7px 7px 1px var(--mat-sys-surface-dim);
     border-radius: 0.5rem;
-    border: 1px solid var(--sys-outline-variant);
+    border: 1px solid var(--mat-sys-outline-variant);
     background-color: #ffffff;
   }
 }

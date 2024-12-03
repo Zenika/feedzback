@@ -5,7 +5,6 @@ import { GiveFeedbackDraftService } from './give-feedback-draft.service';
 
 @Component({
   selector: 'app-give-feedback-draft',
-  standalone: true,
   imports: [FeedbackDraftListComponent],
   templateUrl: './give-feedback-draft.component.html',
   encapsulation: ViewEncapsulation.None,

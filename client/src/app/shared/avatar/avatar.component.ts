@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation, booleanAttribute, computed, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DEFAULT_COLOR } from './avatar.config';
-import { buildInitial } from './avatar.utils';
+import { Avatar } from './avatar.types';
+import { buildAvatarBgColor, buildAvatarInitial } from './avatar.utils';
 
 @Component({
   selector: 'app-avatar',
@@ -9,9 +10,8 @@ import { buildInitial } from './avatar.utils';
     class: 'app-avatar',
     '[class.app-avatar--small]': 'small()',
     '[style.background-image]': 'bgImage()',
-    '[style.background-color]': 'bgColor()',
+    '[style.background-color]': 'avatar()?.bgColor',
   },
-  standalone: true,
   imports: [MatIconModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
@@ -20,11 +20,28 @@ import { buildInitial } from './avatar.utils';
 export class AvatarComponent {
   photoUrl = input<string>();
 
-  initial = input(undefined, { alias: 'name', transform: (name?: string) => (name ? buildInitial(name) : undefined) });
+  name = input<string>();
 
   small = input(false, { transform: booleanAttribute });
 
-  bgImage = computed(() => (this.photoUrl() ? `url(${this.photoUrl()})` : undefined));
+  bgImage = computed(() => {
+    if (!this.photoUrl()) {
+      return undefined;
+    }
+    return `url(${this.photoUrl()})`;
+  });
 
-  bgColor = computed(() => (this.photoUrl() ? undefined : (this.initial()?.color ?? DEFAULT_COLOR)));
+  avatar = computed<Avatar | undefined>(() => {
+    if (this.photoUrl()) {
+      return undefined;
+    }
+    const name = this.name();
+    if (!name) {
+      return { bgColor: DEFAULT_COLOR };
+    }
+    return {
+      bgColor: buildAvatarBgColor(name),
+      initial: buildAvatarInitial(name),
+    };
+  });
 }

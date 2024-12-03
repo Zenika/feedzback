@@ -5,7 +5,6 @@ import { MultiLineComponent } from './multi-line';
 @Component({
   selector: 'app-feedback-body',
   host: { class: 'app-feedback-body' },
-  standalone: true,
   imports: [MultiLineComponent],
   templateUrl: './feedback-body.component.html',
   styleUrl: './feedback-body.component.scss',

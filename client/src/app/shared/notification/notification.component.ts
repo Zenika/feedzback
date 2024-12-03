@@ -8,7 +8,6 @@ import { Notification, NotificationMessage, NotificationType } from './notificat
 @Component({
   selector: 'app-notification',
   host: { class: 'app-notification' },
-  standalone: true,
   imports: [NgTemplateOutlet, MatButtonModule, MatIconModule],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',

@@ -1,18 +1,18 @@
 @if (feedback(); as feedback) {
   @if (feedback.message) {
-    <h2 class="app-feedback-body__title mat-title-large" i18n="@@Feedback.Message">Message</h2>
+    <h2 class="app-feedback-body__title" i18n="@@Feedback.Message">Message</h2>
     <app-multi-line class="app-feedback-body__content" [text]="feedback.message" />
   }
 
   @if (feedback.status === 'done') {
-    <h2 class="app-feedback-body__title mat-title-large" i18n="@@Feedback.Positive">Points positifs</h2>
+    <h2 class="app-feedback-body__title" i18n="@@Feedback.Positive">Points positifs</h2>
     <app-multi-line class="app-feedback-body__content" [text]="feedback.positive" />
 
-    <h2 class="app-feedback-body__title mat-title-large" i18n="@@Feedback.Negative">Axes d'améliorations</h2>
+    <h2 class="app-feedback-body__title" i18n="@@Feedback.Negative">Axes d'améliorations</h2>
     <app-multi-line class="app-feedback-body__content" [text]="feedback.negative" />
 
     @if (feedback.comment) {
-      <h2 class="app-feedback-body__title mat-title-large" i18n="@@Feedback.Comment">Commentaire</h2>
+      <h2 class="app-feedback-body__title" i18n="@@Feedback.Comment">Commentaire</h2>
       <app-multi-line class="app-feedback-body__content" [text]="feedback.comment" />
     }
   }

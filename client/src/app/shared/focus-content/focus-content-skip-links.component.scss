@@ -1,13 +1,11 @@
-.app-skip-links {
+.app-focus-content-skip-links {
   &__link {
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 9999;
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: var(--sys-secondary);
-    color: var(--sys-on-secondary);
+    background-color: var(--mat-sys-secondary);
+    color: var(--mat-sys-on-secondary);
     text-decoration: none;
     font-size: 1.125rem;
     cursor: pointer;
@@ -17,7 +15,7 @@
     transition: ease 300ms opacity;
 
     &:focus-visible {
-      top: 4rem;
+      top: 1rem;
       opacity: 1;
     }
   }

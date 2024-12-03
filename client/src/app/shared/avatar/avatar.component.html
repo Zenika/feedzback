@@ -1,6 +1,6 @@
 @if (!photoUrl()) {
-  @if (initial()?.value; as value) {
-    {{ value }}
+  @if (avatar()?.initial; as initial) {
+    {{ initial }}
   } @else {
     <mat-icon class="app-avatar__icon" [class.app-avatar__icon--bigger]="!small()">person</mat-icon>
   }

@@ -1,4 +1,4 @@
-export type AvatarInitial = {
-  color: string;
-  value: string;
+export type Avatar = {
+  bgColor: string;
+  initial?: string;
 };

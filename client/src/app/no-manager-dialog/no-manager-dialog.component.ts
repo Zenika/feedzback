@@ -10,7 +10,6 @@ import { EmployeeService } from '../shared/employee';
 
 @Component({
   selector: 'app-no-manager-dialog',
-  standalone: true,
   imports: [RouterLink, MatButtonModule, MatDialogModule, MatIconModule],
   templateUrl: './no-manager-dialog.component.html',
   encapsulation: ViewEncapsulation.None,

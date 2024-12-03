@@ -11,7 +11,7 @@
     align-items: center;
     gap: 0.5em;
     text-decoration: none;
-    color: var(--sys-on-surface-variant);
+    color: var(--mat-sys-on-surface-variant);
     transition: color 250ms ease;
 
     &--right {
@@ -19,7 +19,7 @@
     }
 
     &:hover {
-      color: var(--sys-on-surface);
+      color: var(--mat-sys-on-surface);
     }
   }
 }

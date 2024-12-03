@@ -5,7 +5,6 @@ import { FeedbackStats, FeedbackStatsPeriod } from '../stats.types';
 @Component({
   selector: 'app-stats-summary',
   host: { class: 'app-stats-summary' },
-  standalone: true,
   imports: [MatSlideToggleModule],
   templateUrl: './stats-summary.component.html',
   styleUrl: './stats-summary.component.scss',

@@ -10,19 +10,29 @@ body {
 body {
   margin: 0;
 
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+
+  font: var(--mat-sys-body-large);
+  letter-spacing: var(--mat-sys-body-large-tracking);
+
   // Angular material components use the following font-smoothing properties (so, we want the other contents to have the same render)
   // More infos: https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+p {
+  margin: 0 0 0.75em 0;
+}
+
 hr {
   margin: 1.5rem 0;
   border: none;
-  border-top: 1px solid var(--sys-outline-variant);
+  border-top: 1px solid var(--mat-sys-outline-variant);
 }
 
 *:focus-visible {
-  outline: 3px dashed var(--sys-outline);
+  outline: 3px dashed var(--mat-sys-outline);
   outline-offset: 0.25em;
 }

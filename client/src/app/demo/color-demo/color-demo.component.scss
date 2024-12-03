@@ -1,20 +1,41 @@
-.color-demo {
-  margin-top: 1.5rem;
+.app-color-demo {
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
 
-  display: grid;
-  grid-template-columns: minmax(4rem, 50%) minmax(max-content, 50%);
+    mat-slide-toggle {
+      margin-bottom: 20px; // Same as <mat-form-field> bottom space
+    }
+  }
 
-  &__label {
+  &__heading {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+  }
+
+  &__content {
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-width: 1px 0;
+
+    display: grid;
+    grid-template-columns: minmax(4rem, 50%) minmax(max-content, 50%);
+  }
+
+  &__role {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     padding: 0.5rem 1rem;
-    border: 1px solid var(--sys-outline-variant);
+    border: 1px solid var(--mat-sys-outline-variant);
     border-width: 0 0 1px 1px;
 
-    &--first {
-      border-top-width: 1px;
+    &--last {
+      border-bottom-width: 0;
     }
   }
 
@@ -22,7 +43,7 @@
     padding: 0.25rem 0.5rem;
 
     border-radius: 0.5rem;
-    background-color: var(--sys-surface-container);
+    background-color: var(--mat-sys-surface-container);
 
     font-size: 0.75rem;
     font-family: 'Courier New', Courier, monospace;
@@ -31,7 +52,17 @@
     transition: background-color 250ms ease;
 
     &:active {
-      background-color: var(--sys-surface-container-highest);
+      background-color: var(--mat-sys-surface-container-highest);
     }
+  }
+
+  &__empty {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font: var(--mat-sys-title-medium);
+    opacity: 0.5;
   }
 }

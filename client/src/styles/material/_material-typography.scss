@@ -1,122 +1,110 @@
-@use '@angular/material' as mat;
-
 @use '../variables' as v;
-@use './theme' as t;
 
-// Note: Material typography mixins are color-independent.
-// We can therefore use the `light` or `dark` theme.
+$typography: (
+  display-large: #{v.$font-bold-weight} min(1.525rem + 3.3vw, 4rem) / 1.2 'Nunito',
+  display-large-font: 'Nunito',
+  display-large-line-height: 1.2,
+  display-large-size: min(1.525rem + 3.3vw, 4rem),
+  display-large-tracking: -0.016rem,
+  display-large-weight: #{v.$font-bold-weight},
 
-:root {
-  @include mat.typography-hierarchy(t.$light-theme);
+  display-medium: #{v.$font-bold-weight} min(1.475rem + 2.7vw, 3.5rem) / 1.2 'Nunito',
+  display-medium-font: 'Nunito',
+  display-medium-line-height: 1.2,
+  display-medium-size: min(1.475rem + 2.7vw, 3.5rem),
+  display-medium-tracking: 0rem,
+  display-medium-weight: #{v.$font-bold-weight},
 
-  // Option 1) Use default variables
-  // @include mat.system-level-typography(t.$light-theme);
+  display-small: #{v.$font-bold-weight} min(1.425rem + 2.1vw, 3rem) / 1.2 'Nunito',
+  display-small-font: 'Nunito',
+  display-small-line-height: 1.2,
+  display-small-size: min(1.425rem + 2.1vw, 3rem),
+  display-small-tracking: 0rem,
+  display-small-weight: #{v.$font-bold-weight},
 
-  // Option 2) Use customized variables
-  --sys-display-large: #{v.$font-bold-weight} min(1.525rem + 3.3vw, 4rem) / 1.2 'Nunito';
-  --sys-display-large-font: 'Nunito';
-  --sys-display-large-line-height: 1.2;
-  --sys-display-large-size: min(1.525rem + 3.3vw, 4rem);
-  --sys-display-large-tracking: -0.016rem;
-  --sys-display-large-weight: #{v.$font-bold-weight};
+  headline-large: #{v.$font-bold-weight} min(1.375rem + 1.5vw, 2.5rem) / 1.2 'Nunito',
+  headline-large-font: 'Nunito',
+  headline-large-line-height: 1.2,
+  headline-large-size: min(1.375rem + 1.5vw, 2.5rem),
+  headline-large-tracking: 0rem,
+  headline-large-weight: #{v.$font-bold-weight},
 
-  --sys-display-medium: #{v.$font-bold-weight} min(1.475rem + 2.7vw, 3.5rem) / 1.2 'Nunito';
-  --sys-display-medium-font: 'Nunito';
-  --sys-display-medium-line-height: 1.2;
-  --sys-display-medium-size: min(1.475rem + 2.7vw, 3.5rem);
-  --sys-display-medium-tracking: 0rem;
-  --sys-display-medium-weight: #{v.$font-bold-weight};
+  headline-medium: #{v.$font-regular-weight} min(1.375rem + 1.5vw, 2.5rem) / 1.2 'Nunito',
+  headline-medium-font: 'Nunito',
+  headline-medium-line-height: 1.2,
+  headline-medium-size: min(1.375rem + 1.5vw, 2.5rem),
+  headline-medium-tracking: 0rem,
+  headline-medium-weight: #{v.$font-regular-weight},
 
-  --sys-display-small: #{v.$font-bold-weight} min(1.425rem + 2.1vw, 3rem) / 1.2 'Nunito';
-  --sys-display-small-font: 'Nunito';
-  --sys-display-small-line-height: 1.2;
-  --sys-display-small-size: min(1.425rem + 2.1vw, 3rem);
-  --sys-display-small-tracking: 0rem;
-  --sys-display-small-weight: #{v.$font-bold-weight};
+  headline-small: #{v.$font-regular-weight} min(1.3rem + 0.6vw, 1.75rem) / 1.2 'Nunito',
+  headline-small-font: 'Nunito',
+  headline-small-line-height: 1.2,
+  headline-small-size: min(1.3rem + 0.6vw, 1.75rem),
+  headline-small-tracking: 0rem,
+  headline-small-weight: #{v.$font-regular-weight},
 
-  --sys-headline-large: #{v.$font-bold-weight} min(1.375rem + 1.5vw, 2.5rem) / 1.2 'Nunito';
-  --sys-headline-large-font: 'Nunito';
-  --sys-headline-large-line-height: 1.2;
-  --sys-headline-large-size: min(1.375rem + 1.5vw, 2.5rem);
-  --sys-headline-large-tracking: 0rem;
-  --sys-headline-large-weight: #{v.$font-bold-weight};
+  title-large: #{v.$font-bold-weight} 1.375rem / 1.75rem 'Nunito',
+  title-large-font: 'Nunito',
+  title-large-line-height: 1.75rem,
+  title-large-size: 1.375rem,
+  title-large-tracking: 0rem,
+  title-large-weight: #{v.$font-bold-weight},
 
-  --sys-headline-medium: #{v.$font-regular-weight} min(1.375rem + 1.5vw, 2.5rem) / 1.2 'Nunito';
-  --sys-headline-medium-font: 'Nunito';
-  --sys-headline-medium-line-height: 1.2;
-  --sys-headline-medium-size: min(1.375rem + 1.5vw, 2.5rem);
-  --sys-headline-medium-tracking: 0rem;
-  --sys-headline-medium-weight: #{v.$font-regular-weight};
+  title-medium: #{v.$font-bold-weight} 1rem / 1.5rem 'Nunito',
+  title-medium-font: 'Nunito',
+  title-medium-line-height: 1.5rem,
+  title-medium-size: 1rem,
+  title-medium-tracking: 0.009rem,
+  title-medium-weight: #{v.$font-bold-weight},
 
-  --sys-headline-small: #{v.$font-regular-weight} min(1.3rem + 0.6vw, 1.75rem) / 1.2 'Nunito';
-  --sys-headline-small-font: 'Nunito';
-  --sys-headline-small-line-height: 1.2;
-  --sys-headline-small-size: min(1.3rem + 0.6vw, 1.75rem);
-  --sys-headline-small-tracking: 0rem;
-  --sys-headline-small-weight: #{v.$font-regular-weight};
+  title-small: #{v.$font-bold-weight} 0.875rem / 1.25rem 'Nunito',
+  title-small-font: 'Nunito',
+  title-small-line-height: 1.25rem,
+  title-small-size: 0.875rem,
+  title-small-tracking: 0.006rem,
+  title-small-weight: #{v.$font-bold-weight},
 
-  --sys-title-large: #{v.$font-bold-weight} 1.375rem / 1.75rem 'Nunito';
-  --sys-title-large-font: 'Nunito';
-  --sys-title-large-line-height: 1.75rem;
-  --sys-title-large-size: 1.375rem;
-  --sys-title-large-tracking: 0rem;
-  --sys-title-large-weight: #{v.$font-bold-weight};
+  body-large: #{v.$font-regular-weight} 1rem / 1.5rem 'Nunito',
+  body-large-font: 'Nunito',
+  body-large-line-height: 1.5rem,
+  body-large-size: 1rem,
+  body-large-tracking: 0.031rem,
+  body-large-weight: #{v.$font-regular-weight},
 
-  --sys-title-medium: #{v.$font-bold-weight} 1rem / 1.5rem 'Nunito';
-  --sys-title-medium-font: 'Nunito';
-  --sys-title-medium-line-height: 1.5rem;
-  --sys-title-medium-size: 1rem;
-  --sys-title-medium-tracking: 0.009rem;
-  --sys-title-medium-weight: #{v.$font-bold-weight};
+  body-medium: #{v.$font-regular-weight} 0.875rem / 1.25rem 'Nunito',
+  body-medium-font: 'Nunito',
+  body-medium-line-height: 1.25rem,
+  body-medium-size: 0.875rem,
+  body-medium-tracking: 0.016rem,
+  body-medium-weight: #{v.$font-regular-weight},
 
-  --sys-title-small: #{v.$font-bold-weight} 0.875rem / 1.25rem 'Nunito';
-  --sys-title-small-font: 'Nunito';
-  --sys-title-small-line-height: 1.25rem;
-  --sys-title-small-size: 0.875rem;
-  --sys-title-small-tracking: 0.006rem;
-  --sys-title-small-weight: #{v.$font-bold-weight};
+  body-small: #{v.$font-regular-weight} 0.75rem / 1rem 'Nunito',
+  body-small-font: 'Nunito',
+  body-small-line-height: 1rem,
+  body-small-size: 0.75rem,
+  body-small-tracking: 0.025rem,
+  body-small-weight: #{v.$font-regular-weight},
 
-  --sys-body-large: #{v.$font-regular-weight} 1rem / 1.5rem 'Nunito';
-  --sys-body-large-font: 'Nunito';
-  --sys-body-large-line-height: 1.5rem;
-  --sys-body-large-size: 1rem;
-  --sys-body-large-tracking: 0.031rem;
-  --sys-body-large-weight: #{v.$font-regular-weight};
+  label-large: #{v.$font-bold-weight} 0.875rem / 1.25rem 'Nunito',
+  label-large-font: 'Nunito',
+  label-large-line-height: 1.25rem,
+  label-large-size: 0.875rem,
+  label-large-tracking: 0.006rem,
+  label-large-weight: #{v.$font-bold-weight},
+  label-large-weight-prominent: 600,
 
-  --sys-body-medium: #{v.$font-regular-weight} 0.875rem / 1.25rem 'Nunito';
-  --sys-body-medium-font: 'Nunito';
-  --sys-body-medium-line-height: 1.25rem;
-  --sys-body-medium-size: 0.875rem;
-  --sys-body-medium-tracking: 0.016rem;
-  --sys-body-medium-weight: #{v.$font-regular-weight};
+  label-medium: #{v.$font-bold-weight} 0.75rem / 1rem 'Nunito',
+  label-medium-font: 'Nunito',
+  label-medium-line-height: 1rem,
+  label-medium-size: 0.75rem,
+  label-medium-tracking: 0.031rem,
+  label-medium-weight: #{v.$font-bold-weight},
+  label-medium-weight-prominent: 600,
 
-  --sys-body-small: #{v.$font-regular-weight} 0.75rem / 1rem 'Nunito';
-  --sys-body-small-font: 'Nunito';
-  --sys-body-small-line-height: 1rem;
-  --sys-body-small-size: 0.75rem;
-  --sys-body-small-tracking: 0.025rem;
-  --sys-body-small-weight: #{v.$font-regular-weight};
-
-  --sys-label-large: #{v.$font-bold-weight} 0.875rem / 1.25rem 'Nunito';
-  --sys-label-large-font: 'Nunito';
-  --sys-label-large-line-height: 1.25rem;
-  --sys-label-large-size: 0.875rem;
-  --sys-label-large-tracking: 0.006rem;
-  --sys-label-large-weight: #{v.$font-bold-weight};
-  --sys-label-large-weight-prominent: 600;
-
-  --sys-label-medium: #{v.$font-bold-weight} 0.75rem / 1rem 'Nunito';
-  --sys-label-medium-font: 'Nunito';
-  --sys-label-medium-line-height: 1rem;
-  --sys-label-medium-size: 0.75rem;
-  --sys-label-medium-tracking: 0.031rem;
-  --sys-label-medium-weight: #{v.$font-bold-weight};
-  --sys-label-medium-weight-prominent: 600;
-
-  --sys-label-small: #{v.$font-bold-weight} 0.688rem / 1rem 'Nunito';
-  --sys-label-small-font: 'Nunito';
-  --sys-label-small-line-height: 1rem;
-  --sys-label-small-size: 0.688rem;
-  --sys-label-small-tracking: 0.031rem;
-  --sys-label-small-weight: #{v.$font-bold-weight};
-}
+  label-small: #{v.$font-bold-weight} 0.688rem / 1rem 'Nunito',
+  label-small-font: 'Nunito',
+  label-small-line-height: 1rem,
+  label-small-size: 0.688rem,
+  label-small-tracking: 0.031rem,
+  label-small-weight: #{v.$font-bold-weight},
+);

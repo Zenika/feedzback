@@ -1,4 +1,4 @@
-@use '../app.scss' as app;
+@use '../app' as app;
 
 $show-analytics: false;
 
@@ -13,9 +13,9 @@ $show-analytics: false;
   &__guide {
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 4px -4px rgba(0 0 0 / 0.1);
-    border: 1px solid var(--sys-surface-container-high);
-    background-color: var(--sys-surface-container-lowest);
+    box-shadow: 0 4px 4px -4px rgba(0 0 0 / 0.2);
+    border: 1px solid var(--mat-sys-surface-container-high);
+    background-color: var(--mat-sys-surface-container-lowest);
     text-wrap: balance;
   }
 

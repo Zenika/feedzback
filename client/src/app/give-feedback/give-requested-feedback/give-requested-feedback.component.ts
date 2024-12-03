@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../shared/auth';
 import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
 import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
@@ -21,9 +21,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
 @Component({
   selector: 'app-give-requested-feedback',
-  standalone: true,
   imports: [
-    RouterLinkWithHref,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,

@@ -3,31 +3,32 @@
 // Tip: to generate colors, use the following tool https://colordesigner.io/gradient-generator
 
 @use 'sass:map';
+
 @use '@angular/material' as mat;
 
-@use '../../variables.scss' as v;
+@use '../variables' as v;
 
 $_palettes: (
   primary: (
-    0: #130103,
-    10: #39040a,
-    20: #5f0710,
-    25: #850a16,
-    30: #ab0d1d,
-    35: #d11023,
+    0: #feecee,
+    10: #fcd9dd,
+    20: #fbc6cb,
+    25: #f9b3ba,
+    30: #f8a0a9,
+    35: #f68d98,
+    40: #f57a86,
+    50: #f46775,
+    60: #f25464,
+    70: #f14153,
 
-    // Brand color
-    40: #ee2238,
+    // Brand
+    80: #ee2238,
 
-    50: #f25464,
-    60: #f46775,
-    70: #f57a86,
-    80: #f68d98,
-    90: #f8a0a9,
-    95: #f9b3ba,
-    98: #fbc6cb,
-    99: #fcd9dd,
-    100: #feecee,
+    90: #ee1b30,
+    95: #be0e20,
+    98: #850a16,
+    99: #4c060d,
+    100: #130103,
   ),
   secondary: (
     0: #000000,
@@ -70,7 +71,11 @@ $_palettes: (
     4: #0a0a0a,
     6: #141414,
     10: #1f1f1f,
-    12: #292929,
+
+    // Note: targets the `background-color`of the Material menu
+    // The original value was #292929 but we want this to be lighter
+    12: #333333,
+
     17: #333333,
     20: #3d3d3d,
     22: #444444,
@@ -86,11 +91,7 @@ $_palettes: (
     87: #adadad,
     90: #b8b8b8,
     92: #c2c2c2,
-
-    // Note: targets the `background-color`of the Material menu
-    // The original value was #cccccc but we want this to be lighter
-    94: #ffffff,
-
+    94: #cccccc,
     95: #d6d6d6,
     96: #e0e0e0,
     98: #ebebeb,
@@ -105,12 +106,12 @@ $_palettes: (
     30: #534342,
     35: #5f4f4e,
     40: #6b5a59,
+    50: #857372,
 
     // Note: targets the `border-color` of Material form field
-    // The original value was #857372 but we want this to be lighter
-    50: #a08c8b,
+    // The original value was #a08c8b but we want this to be darker
+    60: #857372,
 
-    60: #a08c8b,
     70: #bba6a5,
     80: #d7c1c0,
     90: #f4dddc,
@@ -145,24 +146,5 @@ $_rest: (
   neutral-variant: map.get($_palettes, neutral-variant),
   error: map.get($_palettes, error),
 );
-$_primary: map.merge(map.get($_palettes, primary), $_rest);
-$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
-
-$light-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: light,
-      primary: $_primary,
-      tertiary: $_tertiary,
-    ),
-    typography: (
-      plain-family: '"Nunito"',
-      regular-weight: v.$font-regular-weight,
-      bold-weight: v.$font-bold-weight,
-      use-system-variables: true,
-    ),
-    density: (
-      scale: 0,
-    ),
-  )
-);
+$primary-palette: map.merge(map.get($_palettes, primary), $_rest);
+$tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);

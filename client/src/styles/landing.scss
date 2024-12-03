@@ -2,7 +2,6 @@
 
 @use 'sass:color';
 
-@use './functions' as f;
 @use './variables' as v;
 @use './mixins' as m;
 
@@ -31,7 +30,7 @@
     }
 
     &::before {
-      background-color: var(--sys-surface);
+      background-color: var(--mat-sys-surface);
     }
 
     &::after {
@@ -47,9 +46,11 @@
   }
 
   &__title {
-    margin: 0 !important;
+    margin: 0;
+    font: var(--mat-sys-display-small);
+    letter-spacing: var(--mat-sys-display-small-tracking);
     text-wrap: balance;
-    color: var(--sys-primary);
+    color: var(--mat-sys-primary);
 
     @if v.$use-background {
       padding: 1.5rem 3rem;
@@ -82,13 +83,12 @@
       align-items: center;
       gap: 0.75em;
       padding: 1em 4em;
-      box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.2);
+      box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.22);
       border-radius: 1rem;
-      border: 1px solid var(--sys-outline-variant);
-      background: var(--sys-primary);
-      color: var(--sys-on-primary);
-      font-size: 1.25rem;
-      transition: all 250ms ease-in-out;
+      border: 1px solid var(--mat-sys-outline-variant);
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      transition: all 150ms ease-in-out;
 
       @include m.media-breakpoint-down(md) {
         flex-direction: column;
@@ -107,9 +107,9 @@
 
       &:disabled {
         opacity: 0.65;
-        border-color: var(--sys-outline-variant);
-        background-color: var(--sys-surface-container);
-        color: var(--sys-on-surface);
+        border-color: var(--mat-sys-outline-variant);
+        background-color: var(--mat-sys-surface-container);
+        color: var(--mat-sys-on-surface);
         cursor: default;
       }
     }
@@ -142,9 +142,9 @@
 }
 
 :root {
-  --app-landing-title: #{rgba($color: f.get-light-theme-color(surface-container-lowest), $alpha: 0.7)};
+  --app-landing-title: #{rgba($color: #ffffff, $alpha: 0.7)}; // based on `surface-container-lowest`
 }
 
 .gbl-theme-dark {
-  --app-landing-title: #{rgba($color: f.get-dark-theme-color(surface-container-lowest), $alpha: 0.7)};
+  --app-landing-title: #{rgba($color: #0a0a0a, $alpha: 0.7)}; // based on `surface-container-lowest`
 }

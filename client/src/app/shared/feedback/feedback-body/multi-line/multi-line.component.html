@@ -1,4 +1,4 @@
-@for (paragraph of textMatrix(); track $index) {
+@for (paragraph of text(); track $index) {
   <p>
     @for (line of paragraph; track $index; let isLast = $last) {
       {{ line }}

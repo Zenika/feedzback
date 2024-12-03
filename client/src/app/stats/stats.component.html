@@ -6,7 +6,10 @@
   }
 </app-message>
 
-<h1 class="gbl-page-title mat-headline-large"><mat-icon>monitoring</mat-icon> Stats</h1>
+<h1 class="gbl-page-title">
+  <mat-icon>monitoring</mat-icon>
+  Stats
+</h1>
 
 @if (status() === 'fetched') {
   <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex()" (selectedIndexChange)="tabIndexChange($event)">
@@ -34,7 +37,6 @@
           [max]="sliderMax()"
           step="1"
         >
-          @let sliderEnd = sliderEndBuilder();
           <input matSliderStartThumb [(value)]="sliderStart" />
           <input matSliderEndThumb [(value)]="sliderEnd" />
         </mat-slider>

@@ -12,7 +12,6 @@ import { DialogTooltipData } from './dialog-tooltip.types';
 
 @Component({
   selector: 'app-dialog-tooltip',
-  standalone: true,
   imports: [NgTemplateOutlet, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle],
   templateUrl: './dialog-tooltip.component.html',
   encapsulation: ViewEncapsulation.None,

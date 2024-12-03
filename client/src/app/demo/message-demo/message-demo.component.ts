@@ -5,7 +5,6 @@ import { DemoModule, demoProp } from '../shared';
 
 @Component({
   selector: 'app-message-demo',
-  standalone: true,
   imports: [DemoModule, MessageComponent],
   templateUrl: './message-demo.component.html',
   encapsulation: ViewEncapsulation.None,

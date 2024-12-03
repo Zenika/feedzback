@@ -1,0 +1,54 @@
+<a
+  class="app-nav__item"
+  routerLinkActive="app-nav__item--active"
+  routerLink="/request"
+  appFocusContentOnRouting
+  ariaCurrentWhenActive="page"
+>
+  <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
+</a>
+
+<a
+  class="app-nav__item"
+  routerLinkActive="app-nav__item--active"
+  routerLink="/give"
+  appFocusContentOnRouting
+  ariaCurrentWhenActive="page"
+>
+  <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
+</a>
+
+<a
+  class="app-nav__item"
+  routerLinkActive="app-nav__item--active"
+  routerLink="/give-requested"
+  appFocusContentOnRouting
+  ariaCurrentWhenActive="page"
+  [matBadge]="receivedRequestLength()"
+>
+  <ng-container i18n="@@Feedback.Reply"> Répondre </ng-container>
+</a>
+
+<a
+  class="app-nav__item"
+  routerLinkActive="app-nav__item--active"
+  routerLink="/history"
+  appFocusContentOnRouting
+  ariaCurrentWhenActive="page"
+  i18n="@@Action.History"
+  >Mes feedZbacks</a
+>
+
+@if (isManager()) {
+  <a
+    [@smoothWidth]="device() !== 'mobile'"
+    class="app-nav__item"
+    routerLinkActive="app-nav__item--active"
+    routerLink="/manager"
+    appFocusContentOnRouting
+    ariaCurrentWhenActive="page"
+    i18n="@@Action.Manager"
+  >
+    Manager
+  </a>
+}

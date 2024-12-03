@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, input, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -19,7 +19,6 @@ import { formatMonth } from './stats.utils';
     class: 'app-stats',
     '[attr.lang]': "'en'", // NOTE: this page is only available in english
   },
-  standalone: true,
   imports: [
     MatIconModule,
     MatSliderModule,
@@ -115,17 +114,17 @@ export class StatsComponent implements OnInit, StatsTabData {
 
   protected sliderStart = signal(0);
 
-  protected sliderEndBuilder = computed(() => signal(this.sliderMax()));
+  protected sliderEnd = linkedSignal(() => this.sliderMax());
 
   // ----- Details -----
 
-  protected details = computed(() => this.data().details.slice(this.sliderStart(), this.sliderEndBuilder()() + 1));
+  protected details = computed(() => this.data().details.slice(this.sliderStart(), this.sliderEnd() + 1));
 
   protected detailsPeriod = computed<FeedbackStatsPeriod>(() => {
     const formattedMonths = this.formattedMonths();
     return {
       start: formattedMonths[this.sliderStart()].long,
-      end: formattedMonths[this.sliderEndBuilder()()].long,
+      end: formattedMonths[this.sliderEnd()].long,
     };
   });
 }

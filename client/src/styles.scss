@@ -1,18 +1,19 @@
 // ----- Base -----
 
-@import './styles/fonts';
-@import './styles/tailwind.css';
-@import './styles/material';
-@import './styles/base';
+@use './styles/fonts';
+@use './styles/tailwind.css';
+@use './styles/material';
+@use './styles/base';
 
 // ----- Special use-cases -----
 
-@import './styles/colors';
-@import './styles/common';
-@import './styles/info';
-@import './styles/landing';
-@import './styles/forms';
+@use './styles/typography';
+@use './styles/colors';
+@use './styles/common';
+@use './styles/info';
+@use './styles/landing';
+@use './styles/forms';
 
 // ----- Special directives -----
 
-@import './app/shared/icon/icon';
+@use './app/shared/icon/icon';

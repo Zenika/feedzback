@@ -6,11 +6,13 @@ import { DialogTooltipDemoComponent } from './dialog-tooltip-demo/dialog-tooltip
 import { IconDemoComponent } from './icon-demo/icon-demo.component';
 import { MessageDemoComponent } from './message-demo/message-demo.component';
 import { NotificationDemoComponent } from './notification-demo/notification-demo.component';
+import { ShadowDemoComponent } from './shadow-demo/shadow-demo.component';
 
 export const demoRoutes: Routes = [
   { path: 'avatar', component: AvatarDemoComponent },
   { path: 'color', component: ColorDemoComponent },
   { path: 'content', component: ContentDemoComponent },
+  { path: 'shadow', component: ShadowDemoComponent },
   { path: 'dialog-tooltip', component: DialogTooltipDemoComponent },
   { path: 'icon', component: IconDemoComponent },
   { path: 'message', component: MessageDemoComponent },

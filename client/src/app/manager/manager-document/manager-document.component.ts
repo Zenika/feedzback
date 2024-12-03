@@ -8,7 +8,6 @@ import { ManagerDocumentData } from './manager-document.types';
 
 @Component({
   selector: 'app-manager-document',
-  standalone: true,
   imports: [DatePipe, RouterLink, MatIconModule, FeedbackBodyComponent, FeedbackTypeIconPipe],
   templateUrl: './manager-document.component.html',
   encapsulation: ViewEncapsulation.None,

@@ -1,0 +1,82 @@
+// Typography is based on Material typography variables
+
+// ----- Display (h1 - h3) -----
+
+.gbl-display-large {
+  font: var(--mat-sys-display-large);
+  letter-spacing: var(--mat-sys-display-large-tracking);
+  margin: 0 0 0.5em;
+}
+.gbl-display-medium {
+  font: var(--mat-sys-display-medium);
+  letter-spacing: var(--mat-sys-display-medium-tracking);
+  margin: 0 0 0.5em;
+}
+.gbl-display-small {
+  font: var(--mat-sys-display-small);
+  letter-spacing: var(--mat-sys-display-small-tracking);
+  margin: 0 0 0.5em;
+}
+
+// ----- Headline (h4 - h5) -----
+
+.gbl-headline-large {
+  font: var(--mat-sys-headline-large);
+  letter-spacing: var(--mat-sys-headline-large-tracking);
+  margin: 0 0 0.5em;
+}
+.gbl-headline-medium {
+  font: var(--mat-sys-headline-medium);
+  letter-spacing: var(--mat-sys-headline-medium-tracking);
+  margin: 0 0 0.5em;
+}
+.gbl-headline-small {
+  font: var(--mat-sys-headline-small);
+  letter-spacing: var(--mat-sys-headline-small-tracking);
+  margin: 0 0 0.5em;
+}
+
+// ----- Title -----
+
+.gbl-title-large {
+  font: var(--mat-sys-title-large);
+  letter-spacing: var(--mat-sys-title-large-tracking);
+}
+.gbl-title-medium {
+  font: var(--mat-sys-title-medium);
+  letter-spacing: var(--mat-sys-title-medium-tracking);
+}
+.gbl-title-small {
+  font: var(--mat-sys-title-small);
+  letter-spacing: var(--mat-sys-title-small-tracking);
+}
+
+// ----- Body -----
+
+.gbl-body-large {
+  font: var(--mat-sys-body-large); // Note: this is the default font-size (1rem)
+  letter-spacing: var(--mat-sys-body-large-tracking);
+}
+.gbl-body-medium {
+  font: var(--mat-sys-body-medium);
+  letter-spacing: var(--mat-sys-body-medium-tracking);
+}
+.gbl-body-small {
+  font: var(--mat-sys-body-small);
+  letter-spacing: var(--mat-sys-body-small-tracking);
+}
+
+// ----- Label -----
+
+.gbl-label-large {
+  font: var(--mat-sys-label-large);
+  letter-spacing: var(--mat-sys-label-large-tracking);
+}
+.gbl-label-medium {
+  font: var(--mat-sys-label-medium);
+  letter-spacing: var(--mat-sys-label-medium-tracking);
+}
+.gbl-label-small {
+  font: var(--mat-sys-label-small);
+  letter-spacing: var(--mat-sys-label-small-tracking);
+}

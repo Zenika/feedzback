@@ -2,7 +2,7 @@
 //
 // Example:
 // --------
-// @use '../app.scss' as app;
+// @use '../app' as app;
 //
 // .app-some-component {
 //   @include app.media-breakpoint-up(md) {
@@ -10,6 +10,6 @@
 //   }
 // }
 
-@forward '../styles/variables.scss';
-@forward '../styles/mixins.scss';
-@forward '../styles/functions.scss';
+@forward '../styles/variables';
+@forward '../styles/mixins';
+@forward '../styles/functions';

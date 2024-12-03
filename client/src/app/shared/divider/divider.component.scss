@@ -13,7 +13,7 @@
     right: 0;
     left: 0;
     border-radius: 1px;
-    border: 1px solid var(--sys-outline-variant);
+    border: 1px solid var(--mat-sys-outline-variant);
   }
 
   &__content {
@@ -25,8 +25,8 @@
     text-overflow: ellipsis;
     padding: 0.5rem;
     border-radius: 99px;
-    background-color: var(--sys-outline-variant);
-    color: var(--sys-on-surface-variant);
+    background-color: var(--mat-sys-outline-variant);
+    color: var(--mat-sys-on-surface-variant);
 
     &:empty {
       display: none;

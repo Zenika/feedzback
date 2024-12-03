@@ -15,7 +15,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
-      color: var(--sys-on-surface);
+      color: var(--mat-sys-on-surface);
     }
   }
 
@@ -35,10 +35,10 @@
     color: inherit;
   }
   50% {
-    color: var(--sys-on-surface);
+    color: var(--mat-sys-on-surface);
   }
   96% {
-    color: var(--sys-on-surface);
+    color: var(--mat-sys-on-surface);
   }
   100% {
     columns: inherit;

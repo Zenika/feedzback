@@ -1,12 +1,15 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { APP_INITIALIZER, FactoryProvider } from '@angular/core';
+import { inject, provideAppInitializer } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { svgIconNames } from './icon.constants';
 
-export const provideSvgIcons = (): FactoryProvider => ({
-  provide: APP_INITIALIZER,
-  useFactory: (iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, baseHref: string) => (): Promise<void> => {
+export const provideSvgIcons = () =>
+  provideAppInitializer(() => {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+    const baseHref = inject(APP_BASE_HREF);
+
     // Set font class according to the NPM package installed: "@material-symbols/font-600"
     // Values: 'material-symbols-outlined', 'material-symbols-rounded' or 'material-symbols-sharp'.
     // For more infos: https://fonts.google.com/icons
@@ -19,8 +22,4 @@ export const provideSvgIcons = (): FactoryProvider => ({
         sanitizer.bypassSecurityTrustResourceUrl(`${baseHref}assets/svg-icons/${svgIconName}.svg`),
       ),
     );
-    return Promise.resolve();
-  },
-  deps: [MatIconRegistry, DomSanitizer, APP_BASE_HREF],
-  multi: true,
-});
+  });

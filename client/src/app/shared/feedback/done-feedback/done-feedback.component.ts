@@ -4,11 +4,9 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ConfirmBeforeSubmitDirective } from '../../dialog/confirm-before-submit';
-import { MessageComponent } from '../../message';
 import { NotificationService } from '../../notification';
-import { AllowedEmailDomainsPipe } from '../../validation/allowed-email-domains';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';
 import { FeedbackService } from '../feedback.service';
@@ -17,17 +15,13 @@ import { buildFeedbackSharedMessage, buildFeedbackTitle } from '../feedback.util
 
 @Component({
   selector: 'app-done-feedback',
-  standalone: true,
   imports: [
     DatePipe,
     ReactiveFormsModule,
-    RouterLink,
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
     ConfirmBeforeSubmitDirective,
-    MessageComponent,
-    AllowedEmailDomainsPipe,
     FeedbackBodyComponent,
     FeedbackTypeIconPipe,
   ],

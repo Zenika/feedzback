@@ -30,7 +30,6 @@ import { ValidationErrorMessagePipe } from '../../validation/validation-error-me
 @Component({
   selector: 'app-multi-autocomplete-email',
   host: { class: 'app-multi-autocomplete-email' },
-  standalone: true,
   imports: [
     AsyncPipe,
     ReactiveFormsModule,
