@@ -14,6 +14,8 @@
   &__heading {
     margin: 0;
     padding: 1.5rem 2rem 0 2rem;
+    font: var(--sys-display-medium);
+    letter-spacing: var(--sys-display-medium-tracking);
   }
 
   &__main {

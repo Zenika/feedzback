@@ -1,11 +1,9 @@
-<h1 class="gbl-landing__title mat-display-small" i18n="@@Title.AppTagline">
-  Demandez et donnez du feedback à vos collègues
-</h1>
+<h1 class="gbl-landing__title" i18n="@@Title.AppTagline">Demandez et donnez du feedback à vos collègues</h1>
 
 @if (withGoogleEnabled) {
   <div class="gbl-landing-links">
     <button
-      class="gbl-landing-links__item mat-title-medium"
+      class="gbl-landing-links__item gbl-title-medium"
       type="button"
       [disabled]="disabled()"
       (click)="signInWithGoogle()"

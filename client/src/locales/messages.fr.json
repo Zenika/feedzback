@@ -143,7 +143,7 @@
     "PageNotFound.InvalidTokenId": "Le lien est erroné ou la demande de feedZback a été archivée.",
     "PageNotFound.Message": "Oups !{$LINE_BREAK}Cette page est introuvable",
     "PageNotFound.Title": "Page introuvable",
-    "Title.AppTagline": " Demandez et donnez du feedback à vos collègues\n",
+    "Title.AppTagline": "Demandez et donnez du feedback à vos collègues",
     "Title.Confirmation": "Confirmation",
     "Title.Drafts": "Brouillons",
     "Title.FeedbackGiven": "FeedZback donné",

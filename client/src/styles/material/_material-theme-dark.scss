@@ -6,7 +6,7 @@
 
 @use '@angular/material' as mat;
 
-@use '../variables.scss' as v;
+@use '../variables' as v;
 
 $_palettes: (
   primary: (
@@ -148,23 +148,3 @@ $_rest: (
 );
 $primary-palette: map.merge(map.get($_palettes, primary), $_rest);
 $tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
-
-$legacy-dark-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: dark,
-      primary: $primary-palette,
-      tertiary: $tertiary-palette,
-    ),
-    typography: (
-      plain-family: '"Nunito"',
-      regular-weight: v.$font-regular-weight,
-      bold-weight: v.$font-bold-weight,
-      use-system-variables: true,
-      system-variables-prefix: sys,
-    ),
-    density: (
-      scale: 0,
-    ),
-  )
-);

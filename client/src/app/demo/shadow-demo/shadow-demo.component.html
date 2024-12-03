@@ -1,0 +1,11 @@
+<app-demo-state [state]="demoState" />
+
+@let level = 'var(--mat-sys-level' + demoState.level() + ')';
+
+<div
+  class="app-shadow-demo__container"
+  [class.app-shadow-demo__container--no-border]="demoState.border()"
+  [style.box-shadow]="level"
+>
+  box-shadow: <span class="whitespace-nowrap">{{ level }};</span>
+</div>

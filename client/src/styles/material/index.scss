@@ -7,7 +7,8 @@
 
 @use './material-typography' as typography;
 
-@use '../variables.scss' as v;
+@use '../variables' as v;
+@use '../functions' as f;
 
 // Note:
 // for `:root {}` selector, we use the `mat.*-theme();` which includes core styles and light theme colors
@@ -25,11 +26,12 @@
       typography: (
         plain-family: '"Nunito"',
         regular-weight: v.$font-regular-weight,
+        medium-weight: v.$font-medium-weight,
         bold-weight: v.$font-bold-weight,
       ),
       density: 0,
     ),
-    $overrides: typography.$typography
+    $overrides: f.map-merge-all(typography.$typography) // Add more maps if needed (separated by comma)...
   );
 }
 
@@ -45,14 +47,13 @@
       typography: (
         plain-family: '"Nunito"',
         regular-weight: v.$font-regular-weight,
+        medium-weight: v.$font-medium-weight,
         bold-weight: v.$font-bold-weight,
       ),
       density: 0,
     ),
-    $overrides: typography.$typography
+    $overrides: f.map-merge-all(typography.$typography) // Add more maps if needed (separated by comma)...
   );
 }
-
-@include meta.load-css('./material-typography');
 
 @include meta.load-css('./material-overrides');

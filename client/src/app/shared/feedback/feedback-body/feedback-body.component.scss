@@ -1,6 +1,8 @@
 .app-feedback-body {
   &__title {
-    margin: 0 0 0.25rem 0 !important;
+    margin: 0 0 0.25rem 0;
+    font: var(--mat-sys-title-large);
+    letter-spacing: var(--mat-sys-title-large-tracking);
   }
 
   &__content {

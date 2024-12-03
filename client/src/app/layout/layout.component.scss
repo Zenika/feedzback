@@ -1,4 +1,4 @@
-@use '../app.scss' as app;
+@use '../app' as app;
 
 .app-layout {
   min-height: 100dvh;
@@ -52,9 +52,9 @@
 }
 
 :root {
-  --app-layout-footer: #{rgba($color: app.get-light-theme-color(surface-container-lowest), $alpha: 0.65)};
+  --app-layout-footer: #{rgba($color: #ffffff, $alpha: 0.65)}; // based on `surface-container-lowest`
 }
 
 .gbl-theme-dark {
-  --app-layout-footer: #{rgba($color: app.get-dark-theme-color(surface-container-lowest), $alpha: 0.65)};
+  --app-layout-footer: #{rgba($color: #0a0a0a, $alpha: 0.65)}; // based on `surface-container-lowest`
 }

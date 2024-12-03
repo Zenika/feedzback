@@ -1,5 +1,3 @@
-@use '../../app.scss' as app;
-
 .app-loading__container {
   position: fixed;
   z-index: 2; // Note: the loader should NOT cover the header!
@@ -14,9 +12,9 @@
 }
 
 :root {
-  --app-loading: #{rgba($color: app.get-light-theme-color(background), $alpha: 0.65)};
+  --app-loading: #{rgba($color: #ebebeb, $alpha: 0.65)}; // based on `surface`
 }
 
 .gbl-theme-dark {
-  --app-loading: #{rgba($color: app.get-dark-theme-color(background), $alpha: 0.65)};
+  --app-loading: #{rgba($color: #141414, $alpha: 0.65)}; // based on `surface`
 }

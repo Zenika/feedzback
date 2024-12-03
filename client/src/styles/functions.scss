@@ -1,15 +1,9 @@
 @use 'sass:map';
-@use '@angular/material' as mat;
 
-@use './material/material-theme-light' as theme-light;
-@use './material/material-theme-dark' as theme-dark;
-
-@function get-light-theme-color($role) {
-  // FXME: do not depend on legacy code
-  @return mat.get-theme-color(theme-light.$legacy-light-theme, $role);
-}
-
-@function get-dark-theme-color($role) {
-  // FXME: do not depend on legacy code
-  @return mat.get-theme-color(theme-dark.$legacy-dark-theme, $role);
+@function map-merge-all($maps...) {
+  $merged-maps: ();
+  @each $map in $maps {
+    $merged-maps: map.merge($merged-maps, $map);
+  }
+  @return $merged-maps;
 }
