@@ -1,24 +1,41 @@
-<mat-slide-toggle [checked]="displayHexColor" (toggleChange)="displayHexColor = !displayHexColor">
-  Display color in hexadecimal
-</mat-slide-toggle>
+<div class="app-color-demo__controls">
+  <mat-form-field appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input matInput placeholder="Enter a role" (input)="roleFilter.set(roleFilterInput.value)" #roleFilterInput />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 
-<div class="color-demo">
-  @for (role of materialColorRoles; track $index; let first = $first) {
-    <div [style.background-color]="'var(--mat-sys-' + role + ')'" #element></div>
-
-    <div class="color-demo__label" [class.color-demo__label--first]="first">
-      {{ role }}
-
-      @if (element | elementToBgColor: displayHexColor; as bgColor) {
-        <button
-          class="gbl-button-less color-demo__code"
-          (click)="toClipboard(bgColor)"
-          matTooltip="Copy to clipboard"
-          matTooltipPosition="left"
-        >
-          {{ bgColor }}
-        </button>
-      }
-    </div>
-  }
+  <mat-slide-toggle [checked]="displayHexColor" (toggleChange)="displayHexColor = !displayHexColor">
+    Display color in hexadecimal
+  </mat-slide-toggle>
 </div>
+
+@for (colors of materialColorsMapFiltered(); track colors.heading) {
+  <h3 class="app-color-demo__heading">{{ colors.heading }}</h3>
+
+  <div class="app-color-demo__content">
+    @for (role of colors.roles; track role; let last = $last) {
+      <div [style.background-color]="'var(--mat-sys-' + role + ')'" #element></div>
+
+      <div class="app-color-demo__role" [class.app-color-demo__role--last]="last">
+        {{ role }}
+
+        @if (element | elementToBgColor: displayHexColor; as bgColor) {
+          <button
+            class="gbl-button-less app-color-demo__code"
+            (click)="toClipboard(bgColor)"
+            matTooltip="Copy to clipboard"
+            matTooltipPosition="left"
+          >
+            {{ bgColor }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+} @empty {
+  <div class="app-color-demo__empty">
+    <mat-icon>sentiment_dissatisfied</mat-icon>
+    No color
+  </div>
+}

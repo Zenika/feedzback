@@ -1,10 +1,31 @@
-.color-demo {
-  margin-top: 1.5rem;
+.app-color-demo {
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
 
-  display: grid;
-  grid-template-columns: minmax(4rem, 50%) minmax(max-content, 50%);
+    mat-slide-toggle {
+      margin-bottom: 20px; // Same as <mat-form-field> bottom space
+    }
+  }
 
-  &__label {
+  &__heading {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+  }
+
+  &__content {
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-width: 1px 0;
+
+    display: grid;
+    grid-template-columns: minmax(4rem, 50%) minmax(max-content, 50%);
+  }
+
+  &__role {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,8 +34,8 @@
     border: 1px solid var(--mat-sys-outline-variant);
     border-width: 0 0 1px 1px;
 
-    &--first {
-      border-top-width: 1px;
+    &--last {
+      border-bottom-width: 0;
     }
   }
 
@@ -33,5 +54,15 @@
     &:active {
       background-color: var(--mat-sys-surface-container-highest);
     }
+  }
+
+  &__empty {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    font: var(--mat-sys-title-medium);
+    color: var(--mat-sys-tertiary);
   }
 }
