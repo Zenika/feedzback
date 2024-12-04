@@ -1,6 +1,7 @@
 @use '../../app' as app;
 
 .app-notification {
+  margin: 0.5rem; // Increase spacing around notification to make it more visible.
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

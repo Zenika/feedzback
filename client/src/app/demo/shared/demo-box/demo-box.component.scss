@@ -2,32 +2,25 @@
   display: block;
   margin: 0 0 2rem 0;
   padding: 0;
-  box-shadow: 0 0 1.5rem rgba(0 0 0 / 0.125);
+  box-shadow: 0 0.25rem 0.75rem rgba(0 0 0 / 0.125);
   border-radius: 0.5rem;
-  border: none;
-  background-color: transparent;
+  border: 1px solid var(--mat-sys-surface-container-high);
 
   .gbl-theme-dark & {
-    box-shadow: 0 0 1.5rem rgba(0 0 0 / 0.4);
+    box-shadow: 0 0.25rem 0.75rem rgba(0 0 0 / 0.4);
   }
 
   &__heading {
     margin: 0;
-    padding: 1.5rem 2rem 0 2rem;
-    font: var(--sys-display-medium);
-    letter-spacing: var(--sys-display-medium-tracking);
+    padding: 1.25rem 2rem 0 2rem;
+    font: var(--mat-sys-title-large);
+    letter-spacing: var(--mat-sys-title-large-tracking);
   }
 
   &__main {
-    margin: 0;
     padding: 1.5rem 2rem;
 
-    h3,
-    p {
-      margin: 0 0 1rem 0;
-    }
-
-    > p:last-child {
+    > :last-child {
       margin-bottom: 0;
     }
   }

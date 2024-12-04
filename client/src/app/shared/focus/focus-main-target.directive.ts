@@ -5,7 +5,7 @@ import { FocusService } from './focus.service';
   selector: '[appFocusMainTarget]',
   host: { '[tabIndex]': '-1' },
 })
-export class FocusMainDirective {
+export class FocusMainTargetDirective {
   constructor() {
     inject(FocusService).mainTarget = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   }
