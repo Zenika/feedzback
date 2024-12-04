@@ -12,11 +12,20 @@ export class NotificationService {
   readonly DURATION = 7000;
 
   show(message: NotificationMessage, type: NotificationType = 'info') {
-    const data: Notification = { message, type };
-    return this.matSnackBar.openFromComponent(NotificationComponent, { data, duration: this.DURATION });
+    return this.matSnackBar.openFromComponent(NotificationComponent, {
+      data: { message, type } satisfies Notification,
+      panelClass: this.panelClass(type),
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      duration: this.DURATION,
+    });
   }
 
   showError() {
     return this.show($localize`:@@Message.ErrorOccured:Une erreur s'est produite.`, 'danger');
+  }
+
+  private panelClass(type: NotificationType) {
+    return ['app-notification-snackbar', `app-notification-snackbar--${type}`];
   }
 }
