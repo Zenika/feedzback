@@ -88,6 +88,8 @@
       border: 1px solid var(--mat-sys-outline-variant);
       background: var(--mat-sys-primary);
       color: var(--mat-sys-on-primary);
+      font: var(--mat-sys-title-medium);
+      letter-spacing: var(--mat-sys-title-medium-tracking);
       transition: all 150ms ease-in-out;
 
       @include m.media-breakpoint-down(md) {

@@ -33,7 +33,7 @@
 
 <form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
   @if (anonymous) {
-    <h3 class="gbl-title-large">
+    <h3 class="app-give-requested-feedback__anonymous-heading">
       <mat-icon>voice_selection</mat-icon>
       <ng-container i18n="@@Component.GiveRequestedFeedback.You">Vous</ng-container>
     </h3>
@@ -51,7 +51,7 @@
       <mat-icon matSuffix class="opacity-50">edit_off</mat-icon>
     </mat-form-field>
 
-    <h3 class="gbl-title-large">
+    <h3 class="app-give-requested-feedback__anonymous-heading">
       <mat-icon>hearing</mat-icon>
       <ng-container i18n="@@Component.GiveRequestedFeedback.YourColleague">Votre collègue</ng-container>
     </h3>

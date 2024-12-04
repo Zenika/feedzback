@@ -1,4 +1,10 @@
 .app-stats-summary {
+  &__heading {
+    margin: 0 0 0.5em 0;
+    font: var(--mat-sys-title-large);
+    letter-spacing: var(--mat-sys-title-large-tracking);
+  }
+
   &__legend {
     margin-bottom: 0.75rem;
     font: var(--mat-sys-label-large);

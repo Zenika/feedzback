@@ -36,6 +36,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   ],
   providers: [LeaveFormService],
   templateUrl: './give-requested-feedback.component.html',
+  styleUrl: './give-requested-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm, OnInit {
