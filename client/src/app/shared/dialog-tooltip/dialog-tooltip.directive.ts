@@ -8,7 +8,6 @@ import { DialogTooltipData } from './dialog-tooltip.types';
   host: {
     '(click)': 'open($event)',
   },
-  standalone: true,
 })
 export class DialogTooltipDirective {
   dialogTitle = input<string>();

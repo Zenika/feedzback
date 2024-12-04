@@ -7,7 +7,6 @@ import { FeedbackService } from './feedback.service';
   host: {
     '(click)': 'giveNow()',
   },
-  standalone: true,
 })
 export class GiveRequestedFeedbackDirective {
   private feedbackService = inject(FeedbackService);

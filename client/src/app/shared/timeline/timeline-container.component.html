@@ -1,0 +1,25 @@
+<div
+  *ngFor="let item of _items; let index = index; let first = first; let last = last; trackBy: trackByItem"
+  class="av-timeline__item"
+  [class.av-timeline__item--pending]="index >= (_pendingFromIndex ?? 999999)"
+>
+  <div class="av-timeline__line" [class.av-timeline__line--first]="first" [class.av-timeline__line--last]="last"></div>
+
+  <div
+    [attr.role]="item.iconTemplate ? 'img' : null"
+    [attr.aria-hidden]="item.iconTemplate ? true : null"
+    class="av-timeline__bullet {{ item.iconTemplate ?? '' }}"
+  >
+    <ng-container *ngIf="!_bulletPoints">
+      <ng-container *ngIf="item.iconTemplate; else countTemplate" [ngTemplateOutlet]="item.iconTemplate"></ng-container>
+
+      <ng-template #countTemplate>{{ index + 1 }}</ng-template>
+    </ng-container>
+  </div>
+
+  <div class="av-timeline__content">
+    {{ item.content }}
+
+    <ng-container *ngIf="item.contentTemplate" [ngTemplateOutlet]="item.contentTemplate"></ng-container>
+  </div>
+</div>

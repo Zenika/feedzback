@@ -1,0 +1,1 @@
+export const TIMELINE_BREAKPOINT_DEFAULT = '1024px';
