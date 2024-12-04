@@ -1,0 +1,51 @@
+<app-timeline-container
+  [style.margin-top]="direction() === 'vertical' ? '-0.5rem' : null"
+  [lineSize]="{ vertical: 2, horizontal: 15 }"
+  [vertical]="vertical()"
+  [breakpoint]="!vertical()"
+  (direction)="direction.set($event)"
+>
+  <app-timeline-item>
+    @if (!showExample()) {
+      <ng-container i18n="@@Component.NegativeFeedbackGuide.Step1_Definition">
+        Décrire <strong>les faits</strong> d'une manière la plus neutre possible.
+      </ng-container>
+    } @else {
+      <i i18n="@@Component.NegativeFeedbackGuide.Step1_Example">
+        Tu peux rester plusieurs jours bloqué sur une tâche sans en informer tes collègues.
+      </i>
+    }
+  </app-timeline-item>
+
+  <app-timeline-item>
+    @if (!showExample()) {
+      <ng-container i18n="@@Component.NegativeFeedbackGuide.Step2_Definition">
+        Identifiez <strong>les effets négatifs</strong> produits dans le concret et tels que vous les avez perçus.
+      </ng-container>
+    } @else {
+      <i i18n="@@Component.NegativeFeedbackGuide.Step2_Example">
+        Cela retarde le projet et crée des tensions dans l'équipe.
+      </i>
+    }
+  </app-timeline-item>
+
+  <app-timeline-item>
+    @if (!showExample()) {
+      <ng-container i18n="@@Component.NegativeFeedbackGuide.Step3_Definition">
+        Proposer <strong>des axes d'améliorations</strong> profitables à votre collègue.
+      </ng-container>
+    } @else {
+      <i i18n="@@Component.NegativeFeedbackGuide.Step3_Example">
+        N'ai pas peur de demander de l'aide à tes collègues car cela n'enlève rien à tes qualités.
+      </i>
+    }
+  </app-timeline-item>
+</app-timeline-container>
+
+@if (!hideSlideToggle()) {
+  <p class="!my-2">
+    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
+      Donner un exemple
+    </mat-slide-toggle>
+  </p>
+}

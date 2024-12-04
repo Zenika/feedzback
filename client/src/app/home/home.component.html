@@ -13,7 +13,10 @@
 </div>
 
 <a routerLink="/guide" class="gbl-link gbl-link--no-underline app-home__guide">
-  <ng-container i18n="@@Component.Home.LinkToGuide">Comment écrire un </ng-container> <app-logo lowercase /> ?
+  <mat-icon appIcon animation="bounce">map</mat-icon>
+  <span>
+    <ng-container i18n="@@Component.Home.LinkToGuide">Comment écrire un </ng-container> <app-logo lowercase /> ?
+  </span>
 </a>
 
 <a mat-raised-button [href]="analyticsUsageUrl" class="app-home__analytics" target="_blank">

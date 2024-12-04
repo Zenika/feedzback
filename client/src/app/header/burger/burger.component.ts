@@ -9,7 +9,6 @@ import { Component, ViewEncapsulation, model } from '@angular/core';
     '(click)': 'toggle()',
     '(keyup.enter)': 'toggle()',
   },
-  standalone: true,
   templateUrl: './burger.component.html',
   styleUrl: './burger.component.scss',
   encapsulation: ViewEncapsulation.None,
