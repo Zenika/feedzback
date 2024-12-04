@@ -1,54 +1,83 @@
+@use '../../app' as app;
+
 .app-notification {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 
   &__content {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 1.125rem;
-
-    &--info {
-      color: var(--app-notification-info);
-    }
-
-    &--success {
-      color: var(--app-notification-success);
-    }
-
-    &--danger {
-      color: var(--app-notification-danger);
-    }
   }
 
   &__icon {
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
   }
 
   &__close {
     cursor: pointer;
-    padding-left: 0.5rem;
+    padding-left: 0.75rem;
+    line-height: 0;
     transition: opacity 250ms ease;
 
     &:hover {
       opacity: 0.8;
     }
+  }
+}
 
-    mat-icon {
-      vertical-align: text-bottom;
-    }
+.app-notification-snackbar {
+  --mdc-snackbar-supporting-text-font: var(--mat-sys-title-medium-font);
+  --mdc-snackbar-supporting-text-size: var(--mat-sys-title-medium-size);
+  --mdc-snackbar-supporting-text-line-height: var(--mat-sys-title-medium-line-height);
+  --mdc-snackbar-supporting-text-weight: var(--mat-sys-title-medium-weight);
+
+  &--info {
+    --mdc-snackbar-container-color: var(--app-notification-info-background-color);
+    --mdc-snackbar-supporting-text-color: var(--app-notification-info-color);
+  }
+
+  &--success {
+    --mdc-snackbar-container-color: var(--app-notification-success-background-color);
+    --mdc-snackbar-supporting-text-color: var(--app-notification-success-color);
+  }
+
+  &--danger {
+    --mdc-snackbar-container-color: var(--app-notification-danger-background-color);
+    --mdc-snackbar-supporting-text-color: var(--app-notification-danger-color);
+  }
+}
+
+// Hack:
+// Fine adjustment to position snackbar just below header.
+// Note that any change in header height must be reported here.
+.cdk-overlay-pane:has(.app-notification-snackbar) {
+  margin-top: 65px !important; // on mobile
+
+  @include app.media-breakpoint-up(md) {
+    margin-top: 73px !important; // on desktop
   }
 }
 
 :root {
-  --app-notification-info: rgb(158, 197, 254);
-  --app-notification-success: rgb(163, 207, 187);
-  --app-notification-danger: rgb(241, 174, 181);
+  --app-notification-info-background-color: rgb(207, 226, 255);
+  --app-notification-info-color: rgb(5, 44, 101);
+
+  --app-notification-success-background-color: rgb(209, 231, 221);
+  --app-notification-success-color: rgb(10, 54, 34);
+
+  --app-notification-danger-background-color: rgb(248, 215, 218);
+  --app-notification-danger-color: rgb(88, 21, 28);
 }
 
 .gbl-theme-dark {
-  --app-notification-info: rgb(13, 110, 253);
-  --app-notification-success: rgb(25, 135, 84);
-  --app-notification-danger: rgb(220, 53, 69);
+  --app-notification-info-background-color: rgb(5, 44, 101);
+  --app-notification-info-color: rgb(207, 226, 255);
+
+  --app-notification-success-background-color: rgb(10, 54, 34);
+  --app-notification-success-color: rgb(209, 231, 221);
+
+  --app-notification-danger-background-color: rgb(88, 21, 28);
+  --app-notification-danger-color: rgb(248, 215, 218);
 }
