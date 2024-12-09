@@ -11,11 +11,14 @@ $show-analytics: false;
   }
 
   &__guide {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 4px -4px rgba(0 0 0 / 0.2);
-    border: 1px solid var(--mat-sys-surface-container-high);
-    background-color: var(--mat-sys-surface-container-lowest);
+    border: 1px solid var(--mat-sys-tertiary-fixed-dim);
+    background-color: var(--mat-sys-tertiary-fixed);
     text-wrap: balance;
   }
 
