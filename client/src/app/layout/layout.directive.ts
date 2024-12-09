@@ -1,10 +1,10 @@
 import { Directive } from '@angular/core';
 
-@Directive({ selector: '[appLayoutHeader]', standalone: true })
+@Directive({ selector: '[appLayoutHeader]' })
 export class LayoutHeaderDirective {}
 
-@Directive({ selector: '[appLayoutMain]', standalone: true })
+@Directive({ selector: '[appLayoutMain]' })
 export class LayoutMainDirective {}
 
-@Directive({ selector: '[appLayoutFooter]', standalone: true })
+@Directive({ selector: '[appLayoutFooter]' })
 export class LayoutFooterDirective {}

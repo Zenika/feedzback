@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
-@Directive({ selector: '[appSlashSuper]', standalone: true })
+@Directive({ selector: '[appSlashSuper]' })
 export class SlashSuperDirective {}
 
-@Directive({ selector: '[appSlashSub]', standalone: true })
+@Directive({ selector: '[appSlashSub]' })
 export class SlashSubDirective {}

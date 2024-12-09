@@ -12,7 +12,7 @@
             } @else if (value === '') {
               <i>empty string</i>
             } @else {
-              {{ value }}
+              <span class="app-demo-state__value">{{ value | stateValue }}</span>
             }
           </mat-option>
         }

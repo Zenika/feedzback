@@ -1,0 +1,37 @@
+@for (
+  item of computedItems();
+  track trackByItem(index, item);
+  let index = $index;
+  let first = $first;
+  let last = $last
+) {
+  <div class="app-timeline__item" [class.app-timeline__item--pending]="index >= (pendingFromIndex() ?? 999999)">
+    <div
+      class="app-timeline__line"
+      [class.app-timeline__line--first]="first"
+      [class.app-timeline__line--last]="last"
+    ></div>
+
+    <div
+      [attr.role]="item.iconTemplate ? 'img' : null"
+      [attr.aria-hidden]="item.iconTemplate ? true : null"
+      class="app-timeline__bullet {{ item.iconTemplate ?? '' }}"
+    >
+      @if (!bulletPoints()) {
+        @if (item.iconTemplate) {
+          <ng-container [ngTemplateOutlet]="item.iconTemplate"></ng-container>
+        } @else {
+          {{ index + 1 }}
+        }
+      }
+    </div>
+
+    <div class="app-timeline__content">
+      {{ item.content }}
+
+      @if (item.contentTemplate) {
+        <ng-container [ngTemplateOutlet]="item.contentTemplate"></ng-container>
+      }
+    </div>
+  </div>
+}
