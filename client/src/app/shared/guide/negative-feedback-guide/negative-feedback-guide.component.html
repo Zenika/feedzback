@@ -42,8 +42,10 @@
   </app-timeline-item>
 </app-timeline-container>
 
-<p class="!my-2">
-  <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
-    Donner un exemple
-  </mat-slide-toggle>
-</p>
+@if (!hideSlideToggle()) {
+  <p class="!my-2">
+    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
+      Donner un exemple
+    </mat-slide-toggle>
+  </p>
+}

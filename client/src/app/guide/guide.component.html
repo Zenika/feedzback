@@ -8,10 +8,18 @@
   viser sa personnalité.
 </app-message>
 
-<h2 class="gbl-title-large" i18n="@@Feedback.Positive">Points forts</h2>
-<app-positive-feedback-guide />
+<mat-tab-group animationDuration="0ms">
+  <mat-tab label="Points forts" i18n-label="@@Feedback.Positive">
+    <app-positive-feedback-guide hideSlideToggle [showExample]="showExample()" class="mt-4 block" />
+  </mat-tab>
 
-<hr />
+  <mat-tab label="Axes d'améliorations" i18n-label="@@Feedback.Negative">
+    <app-negative-feedback-guide hideSlideToggle [showExample]="showExample()" class="mt-4 block" />
+  </mat-tab>
+</mat-tab-group>
 
-<h2 class="gbl-title-large" i18n="@@Feedback.Negative">Axes d'améliorations</h2>
-<app-negative-feedback-guide />
+<p class="!my-2">
+  <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
+    Donner un exemple
+  </mat-slide-toggle>
+</p>

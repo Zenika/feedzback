@@ -1,18 +1,19 @@
-import { booleanAttribute, Component, input, signal, ViewEncapsulation } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { booleanAttribute, Component, input, model, signal, ViewEncapsulation } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TimelineDirection, TimelineModule } from '../../timeline';
 
 @Component({
   selector: 'app-positive-feedback-guide',
-  imports: [MatSlideToggleModule, MatCheckboxModule, TimelineModule],
+  imports: [MatSlideToggleModule, TimelineModule],
   templateUrl: './positive-feedback-guide.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class PositiveFeedbackGuideComponent {
   vertical = input(false, { transform: booleanAttribute });
 
-  protected showExample = signal(false);
+  hideSlideToggle = input(false, { transform: booleanAttribute });
+
+  showExample = model(false);
 
   protected toggleExample() {
     this.showExample.update((show) => !show);
