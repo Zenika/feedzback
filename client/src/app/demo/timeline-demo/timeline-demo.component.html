@@ -1,12 +1,7 @@
-<div [style.font-size]="demoState.fontSize()">
-  <h1>Timeline</h1>
+<app-demo-state [state]="demoState" />
 
-  <app-demo-state [state]="demoState" />
-
-  <hr />
-  <h3>Default</h3>
-
-  <div>
+<app-demo-box [heading]="'Component input (' + directionDemo1() + ')'">
+  <div [style.font-size]="demoState.fontSize()">
     <app-timeline-container
       [items]="items"
       [pendingFromIndex]="demoState.pendingFromIndex()"
@@ -16,13 +11,13 @@
       [vertical]="demoState.vertical()"
       [verticalContentSize]="demoState.verticalContentSize()"
       [breakpoint]="demoState.breakpoint()"
+      (direction)="directionDemo1.set($event)"
     ></app-timeline-container>
   </div>
+</app-demo-box>
 
-  <hr />
-  <h3>Using HTML items</h3>
-
-  <div>
+<app-demo-box [heading]="'Content projection (' + directionDemo1() + ')'">
+  <div [style.font-size]="demoState.fontSize()">
     <app-timeline-container
       [pendingFromIndex]="demoState.pendingFromIndex()"
       [bulletPoints]="demoState.bulletPoints()"
@@ -31,6 +26,7 @@
       [vertical]="demoState.vertical()"
       [verticalContentSize]="demoState.verticalContentSize()"
       [breakpoint]="demoState.breakpoint()"
+      (direction)="directionDemo2.set($event)"
     >
       <app-timeline-item>
         First step<br />
@@ -38,13 +34,12 @@
       </app-timeline-item>
 
       <app-timeline-item>
-        <ng-template timelineIcon>
+        <ng-template appTimelineIcon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
             fill="currentColor"
-            class="bi bi-flag"
             viewBox="0 0 16 16"
             style="display: inline-block"
             [style.width]="demoState.fontSize()"
@@ -60,18 +55,26 @@
         <small>Let's do this...</small>
       </app-timeline-item>
 
-      <app-timeline-item *ngIf="updateHtml">
-        Added step<br />
-        <small>Let's do this...</small>
-      </app-timeline-item>
+      @if (updateContent()) {
+        <app-timeline-item>
+          Added step<br />
+          <small>Let's do this...</small>
+        </app-timeline-item>
+      }
 
       <app-timeline-item>
         Final step<br />
-        <small [class]="updateHtml ? 'corail_mh_brand' : 'bleu_light'">And that's it!</small>
+        <small>And that's it!</small>
       </app-timeline-item>
     </app-timeline-container>
   </div>
 
   <br />
-  <button (click)="updateHtml = !updateHtml">Change content</button>
-</div>
+  <button mat-button (click)="toggleUpdateContent()">
+    @if (updateContent()) {
+      Remove content
+    } @else {
+      Add content
+    }
+  </button>
+</app-demo-box>

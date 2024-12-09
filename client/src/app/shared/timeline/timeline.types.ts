@@ -10,3 +10,5 @@ export type TimelineLineSize = {
   horizontal?: number;
   vertical?: number;
 };
+
+export type TimelineDirection = 'vertical' | 'horizontal';

@@ -7,7 +7,11 @@
   margin-bottom: 1.5rem;
 
   &__field {
-    width: 10rem;
+    width: 12rem;
+  }
+
+  &__value {
+    word-break: break-word;
   }
 
   // Hack: remove large space below `<mat-form-field>`

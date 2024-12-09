@@ -1,4 +1,4 @@
-import { Component, ContentChild, TemplateRef, ViewChild } from '@angular/core';
+import { Component, contentChild, TemplateRef, viewChild } from '@angular/core';
 import { TimelineIconDirective } from './timeline-icon.directive';
 
 @Component({
@@ -6,11 +6,11 @@ import { TimelineIconDirective } from './timeline-icon.directive';
   template: '<ng-template><div><ng-content></ng-content></div></ng-template>',
 })
 export class TimelineItemComponent {
-  @ViewChild(TemplateRef, { static: true }) contentTemplate!: TemplateRef<void>;
+  contentTemplate = viewChild.required(TemplateRef);
 
-  @ContentChild(TimelineIconDirective, { static: true, descendants: true }) iconDirective?: TimelineIconDirective;
+  iconDirective = contentChild(TimelineIconDirective);
 
   get iconTemplate(): TemplateRef<void> | undefined {
-    return this.iconDirective?.template;
+    return this.iconDirective()?.template;
   }
 }

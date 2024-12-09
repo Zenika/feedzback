@@ -1,6 +1,17 @@
-<h1 class="gbl-page-title gbl-page-title--center">
+<h1 class="gbl-page-title">
   <mat-icon>map</mat-icon>
   <ng-container i18n="@@Title.Guide">Guide du feedZback</ng-container>
 </h1>
 
-<img src="assets/images/feedback-guide.png" alt="Feedback guide" class="app-guide__image" />
+<app-message icon="lightbulb" nonclosable i18n="@@Component.Guide.Tip">
+  Pour être constructif, le feedback doit porter sur le travail et les comportements de votre collègue, et ne doit pas
+  viser sa personnalité.
+</app-message>
+
+<h2 class="gbl-title-large" i18n="@@Feedback.Positive">Points forts</h2>
+<app-positive-feedback-guide />
+
+<hr />
+
+<h2 class="gbl-title-large" i18n="@@Feedback.Negative">Axes d'améliorations</h2>
+<app-negative-feedback-guide />

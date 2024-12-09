@@ -3,13 +3,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { OfTypeBooleanPipe } from './demo-state.pipe';
+import { OfTypeBooleanPipe, StateValuePipe } from './demo-state.pipe';
 import { DemoState } from './demo-state.types';
 
 @Component({
   selector: 'app-demo-state',
   host: { class: 'app-demo-state' },
-  imports: [MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule, OfTypeBooleanPipe],
+  imports: [MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule, StateValuePipe, OfTypeBooleanPipe],
   templateUrl: './demo-state.component.html',
   styleUrls: ['./demo-state.component.scss'],
   encapsulation: ViewEncapsulation.None,

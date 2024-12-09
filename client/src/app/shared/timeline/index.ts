@@ -1,7 +1,6 @@
 export * from './timeline-container.component';
 export * from './timeline-icon.directive';
 export * from './timeline-item.component';
-export * from './timeline.config';
 export * from './timeline.token';
 export * from './timeline.types';
 
