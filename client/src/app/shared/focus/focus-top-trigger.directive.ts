@@ -1,27 +1,27 @@
 import { Directive, inject } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationSkipped, Router } from '@angular/router';
-import { FocusContentService } from './focus-content.service';
+import { FocusService } from './focus.service';
 
 @Directive({
-  selector: '[appFocusContentOnRouting]',
+  selector: '[appFocusTopTrigger]',
   host: {
-    '(click)': 'focus()',
+    '(click)': 'focusTop()',
   },
 })
-export class FocusContentOnRoutingDirective {
+export class FocusTopTriggerDirective {
   private router = inject(Router);
 
   private navigationEndLikeEvents = [NavigationCancel, NavigationEnd, NavigationError, NavigationSkipped];
 
-  private focusContentService = inject(FocusContentService);
+  private focusService = inject(FocusService);
 
-  focus() {
+  focusTop() {
     const subscription = this.router.events.subscribe((event) => {
       if (this.navigationEndLikeEvents.some((navigationEndLikeEvent) => event instanceof navigationEndLikeEvent)) {
         subscription.unsubscribe();
       }
       if (event instanceof NavigationEnd) {
-        this.focusContentService.focusTarget();
+        this.focusService.focusTop();
       }
     });
   }

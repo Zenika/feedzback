@@ -5,13 +5,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../shared/auth/auth.service';
 import { AvatarComponent } from '../../shared/avatar';
-import { FocusContentOnRoutingDirective } from '../../shared/focus-content';
+import { FocusTopTriggerDirective } from '../../shared/focus';
 import { LanguageService } from '../../shared/i18n/language';
 import { ThemeService } from '../../shared/theme';
 
 @Component({
   selector: 'app-menu',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatMenuModule, AvatarComponent, FocusContentOnRoutingDirective],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatMenuModule, AvatarComponent, FocusTopTriggerDirective],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   encapsulation: ViewEncapsulation.None,
