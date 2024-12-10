@@ -1,5 +1,5 @@
-.app-focus-content-skip-links {
-  &__link {
+.app-focus {
+  &__skip-links {
     position: fixed;
     z-index: 9999;
     padding: 1rem;
@@ -20,7 +20,7 @@
     }
   }
 
-  &__icon {
+  &__skip-links-icon {
     margin-left: 0.5rem;
     vertical-align: bottom;
   }

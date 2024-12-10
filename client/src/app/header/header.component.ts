@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
-import { FocusContentOnRoutingDirective } from '../shared/focus-content';
+import { FocusTopTriggerDirective } from '../shared/focus';
 import { BurgerComponent } from './burger/burger.component';
 import { MenuComponent } from './menu/menu.component';
 import { NavComponent } from './nav/nav.component';
@@ -16,7 +16,7 @@ import { NavComponent } from './nav/nav.component';
     NgTemplateOutlet,
     RouterLinkActive,
     RouterLinkWithHref,
-    FocusContentOnRoutingDirective,
+    FocusTopTriggerDirective,
     BurgerComponent,
     MenuComponent,
     NavComponent,
