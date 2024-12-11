@@ -4,7 +4,6 @@ import { isAllowedEmailDomain } from './allowed-email-domains';
 
 @Pipe({
   name: 'allowedEmailDomains',
-  standalone: true,
 })
 export class AllowedEmailDomainsPipe implements PipeTransform {
   private allowedEmailDomains = inject(ALLOWED_EMAIL_DOMAINS);

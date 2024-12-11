@@ -10,7 +10,6 @@ import { ConfirmBeforeSubmitConfig } from './confirm-before-submit.types';
   host: {
     '(ngSubmit)': 'confirmBeforeSubmit()',
   },
-  standalone: true,
 })
 export class ConfirmBeforeSubmitDirective {
   private matDialog = inject(MatDialog);

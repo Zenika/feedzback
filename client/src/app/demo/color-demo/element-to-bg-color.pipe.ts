@@ -4,7 +4,6 @@ import { extractRgb, rgbToHex } from './element-to-bg-color.utils';
 
 @Pipe({
   name: 'elementToBgColor',
-  standalone: true,
 })
 export class ElementToBgColorPipe implements PipeTransform {
   #document = inject(DOCUMENT);

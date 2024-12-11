@@ -1,0 +1,80 @@
+<app-demo-state [state]="demoState" />
+
+<app-demo-box [heading]="'Component input (' + directionDemo1() + ')'">
+  <div [style.font-size]="demoState.fontSize()">
+    <app-timeline-container
+      [items]="items"
+      [pendingFromIndex]="demoState.pendingFromIndex()"
+      [bulletPoints]="demoState.bulletPoints()"
+      [lineSize]="demoState.lineSize()"
+      [reverse]="demoState.reverse()"
+      [vertical]="demoState.vertical()"
+      [verticalContentSize]="demoState.verticalContentSize()"
+      [breakpoint]="demoState.breakpoint()"
+      (direction)="directionDemo1.set($event)"
+    ></app-timeline-container>
+  </div>
+</app-demo-box>
+
+<app-demo-box [heading]="'Content projection (' + directionDemo1() + ')'">
+  <div [style.font-size]="demoState.fontSize()">
+    <app-timeline-container
+      [pendingFromIndex]="demoState.pendingFromIndex()"
+      [bulletPoints]="demoState.bulletPoints()"
+      [lineSize]="demoState.lineSize()"
+      [reverse]="demoState.reverse()"
+      [vertical]="demoState.vertical()"
+      [verticalContentSize]="demoState.verticalContentSize()"
+      [breakpoint]="demoState.breakpoint()"
+      (direction)="directionDemo2.set($event)"
+    >
+      <app-timeline-item>
+        First step<br />
+        <small>Let's do this...</small>
+      </app-timeline-item>
+
+      <app-timeline-item>
+        <ng-template appTimelineIcon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            style="display: inline-block"
+            [style.width]="demoState.fontSize()"
+            [style.height]="demoState.fontSize()"
+          >
+            <path
+              d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"
+            />
+          </svg>
+        </ng-template>
+
+        Second step with <strong>ICON</strong><br />
+        <small>Let's do this...</small>
+      </app-timeline-item>
+
+      @if (updateContent()) {
+        <app-timeline-item>
+          Added step<br />
+          <small>Let's do this...</small>
+        </app-timeline-item>
+      }
+
+      <app-timeline-item>
+        Final step<br />
+        <small>And that's it!</small>
+      </app-timeline-item>
+    </app-timeline-container>
+  </div>
+
+  <br />
+  <button mat-button (click)="toggleUpdateContent()">
+    @if (updateContent()) {
+      Remove content
+    } @else {
+      Add content
+    }
+  </button>
+</app-demo-box>

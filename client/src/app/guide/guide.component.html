@@ -1,6 +1,25 @@
-<h1 class="gbl-page-title gbl-page-title--center">
+<h1 class="gbl-page-title">
   <mat-icon>map</mat-icon>
   <ng-container i18n="@@Title.Guide">Guide du feedZback</ng-container>
 </h1>
 
-<img src="assets/images/feedback-guide.png" alt="Feedback guide" class="app-guide__image" />
+<app-message icon="lightbulb" nonclosable i18n="@@Component.Guide.Tip">
+  Pour être constructif, le feedback doit porter sur le travail et les comportements de votre collègue, et ne doit pas
+  viser sa personnalité.
+</app-message>
+
+<mat-tab-group animationDuration="0ms">
+  <mat-tab label="Points forts" i18n-label="@@Feedback.Positive">
+    <app-positive-feedback-guide hideSlideToggle [showExample]="showExample()" class="mt-6 block" />
+  </mat-tab>
+
+  <mat-tab label="Axes d'améliorations" i18n-label="@@Feedback.Negative">
+    <app-negative-feedback-guide hideSlideToggle [showExample]="showExample()" class="mt-6 block" />
+  </mat-tab>
+</mat-tab-group>
+
+<p class="!my-2">
+  <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
+    Donner un exemple
+  </mat-slide-toggle>
+</p>

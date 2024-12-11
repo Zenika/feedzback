@@ -3,7 +3,6 @@ import { FeedbackType } from './feedback.types';
 
 @Pipe({
   name: 'feedbackTypeIcon',
-  standalone: true,
 })
 export class FeedbackTypeIconPipe implements PipeTransform {
   transform(type: FeedbackType): string {

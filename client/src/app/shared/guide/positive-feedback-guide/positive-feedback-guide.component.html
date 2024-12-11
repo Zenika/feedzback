@@ -1,0 +1,51 @@
+<app-timeline-container
+  [style.margin-top]="direction() === 'vertical' ? '-0.5rem' : null"
+  [lineSize]="{ vertical: 2, horizontal: 15 }"
+  [vertical]="vertical()"
+  [breakpoint]="!vertical()"
+  (direction)="direction.set($event)"
+>
+  <app-timeline-item>
+    @if (!showExample()) {
+      <ng-container i18n="@@Component.PositiveFeedbackGuide.Step1_Definition">
+        Décrire <strong>les faits</strong> d'une manière la plus neutre possible.
+      </ng-container>
+    } @else {
+      <i i18n="@@Component.PositiveFeedbackGuide.Step1_Example">
+        Tes collègues te posent régulièrement des questions et tu prends de ton temps pour leur répondre.
+      </i>
+    }
+  </app-timeline-item>
+
+  <app-timeline-item>
+    @if (!showExample()) {
+      <ng-container i18n="@@Component.PositiveFeedbackGuide.Step2_Definition">
+        Identifiez <strong>les effets positifs</strong> produits dans le concret et tels que vous les avez perçus.
+      </ng-container>
+    } @else {
+      <i i18n="@@Component.PositiveFeedbackGuide.Step2_Example">
+        L'équipe ne reste jamais bloquée très longtemps et est plus confiante.
+      </i>
+    }
+  </app-timeline-item>
+
+  <app-timeline-item>
+    @if (!showExample()) {
+      <ng-container i18n="@@Component.PositiveFeedbackGuide.Step3_Definition">
+        Mettez en lumière <strong>les points forts</strong> de votre collègue, son comportement et ses réalisations.
+      </ng-container>
+    } @else {
+      <i i18n="@@Component.PositiveFeedbackGuide.Step3_Example">
+        Ta capacité d'écoute permet à l'équipe d'être plus soudée.
+      </i>
+    }
+  </app-timeline-item>
+</app-timeline-container>
+
+@if (!hideSlideToggle()) {
+  <p class="!my-2">
+    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
+      Donner un exemple
+    </mat-slide-toggle>
+  </p>
+}

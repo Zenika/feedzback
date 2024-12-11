@@ -1,11 +1,11 @@
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { FocusTopDirective } from './focus-top-target.directive';
+import { FocusTopTargetDirective } from './focus-top-target.directive';
 import { FocusService } from './focus.service';
 
 @Component({
   selector: 'app-focus',
-  imports: [MatIconModule, FocusTopDirective],
+  imports: [MatIconModule, FocusTopTargetDirective],
   templateUrl: './focus.component.html',
   styleUrl: './focus.component.scss',
   encapsulation: ViewEncapsulation.None,

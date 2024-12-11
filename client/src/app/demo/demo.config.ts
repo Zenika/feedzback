@@ -7,6 +7,7 @@ import { IconDemoComponent } from './icon-demo/icon-demo.component';
 import { MessageDemoComponent } from './message-demo/message-demo.component';
 import { NotificationDemoComponent } from './notification-demo/notification-demo.component';
 import { ShadowDemoComponent } from './shadow-demo/shadow-demo.component';
+import { TimelineDemoComponent } from './timeline-demo/timeline-demo.component';
 
 export const demoRoutes: Routes = [
   { path: 'avatar', component: AvatarDemoComponent },
@@ -17,6 +18,7 @@ export const demoRoutes: Routes = [
   { path: 'icon', component: IconDemoComponent },
   { path: 'message', component: MessageDemoComponent },
   { path: 'notification', component: NotificationDemoComponent },
+  { path: 'timeline', component: TimelineDemoComponent },
 ];
 
 export const demoPaths = demoRoutes.map(({ path }) => path as string);
