@@ -32,7 +32,9 @@ export class GiveFeedbackDetailsComponent implements OnInit {
 
   protected feedbackMaxLength = LARGE_MAX_LENGTH;
 
-  protected commentMaxLength = MEDIUM_MAX_LENGTH;
+  protected commentMaxLength = MEDIUM_MAX_LENGTH; // FIXME: rename this because now we have the new "context" field!
+
+  context = input.required<FormControl<string>>();
 
   positive = input.required<FormControl<string>>();
 
@@ -41,6 +43,9 @@ export class GiveFeedbackDetailsComponent implements OnInit {
   comment = input.required<FormControl<string>>();
 
   ngOnInit(): void {
+    this.context().addValidators([Validators.maxLength(this.commentMaxLength)]);
+    this.context().updateValueAndValidity();
+
     this.positive().addValidators([
       Validators.required,
       isNotBlankValidator,

@@ -5,6 +5,11 @@
   }
 
   @if (feedback.status === 'done') {
+    @if (feedback.context) {
+      <h2 class="app-feedback-body__title" i18n="@@Feedback.Context">Contexte</h2>
+      <app-multi-line class="app-feedback-body__content" [text]="feedback.context" />
+    }
+
     <h2 class="app-feedback-body__title" i18n="@@Feedback.Positive">Points forts</h2>
     <app-multi-line class="app-feedback-body__content" [text]="feedback.positive" />
 
