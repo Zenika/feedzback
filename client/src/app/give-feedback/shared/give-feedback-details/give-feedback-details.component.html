@@ -8,6 +8,8 @@
     rows="3"
     cdkTextareaAutosize
     cdkAutosizeMaxRows="10"
+    placeholder="Dans quel contexte avez-vous travaillé avec votre collègue ?"
+    i18n-placeholder="@@Component.GiveFeedbackDetails.ContextPlaceholder"
   ></textarea>
 
   <mat-hint align="end">{{ context().value.length }} / {{ commentMaxLength }}</mat-hint>
