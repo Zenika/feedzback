@@ -3,7 +3,6 @@ import { buildTextMatrix } from './multi-line.utils';
 
 @Component({
   selector: 'app-multi-line',
-  standalone: true,
   templateUrl: './multi-line.component.html',
   encapsulation: ViewEncapsulation.None,
 })

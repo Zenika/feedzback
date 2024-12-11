@@ -15,7 +15,6 @@ import { mapToIconClass } from './icon.utils';
   host: {
     '[class]': 'hostClass()',
   },
-  standalone: true,
 })
 export class IconDirective {
   size = input('', { transform: mapToIconClass<IconSize> });
