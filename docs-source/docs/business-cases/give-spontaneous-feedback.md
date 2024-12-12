@@ -23,9 +23,10 @@ const feedback: Feedback = {
 
   // --------------------------------------
   // In reality, the contents are encrypted
-  positive: 'You did great...',
-  negative: 'Youd should improve...',
-  comment: 'See you...',
+  context: 'Working together...', // optional
+  positive: 'You did great...', // required
+  negative: 'Youd should improve...', // required
+  comment: 'See you...', // optional
   // --------------------------------------
 
   message: '',
