@@ -3,7 +3,7 @@
 
   <textarea
     [formControl]="context()"
-    [maxlength]="commentMaxLength"
+    [maxlength]="contextMaxLength"
     matInput
     rows="3"
     cdkTextareaAutosize
@@ -12,7 +12,7 @@
     i18n-placeholder="@@Component.GiveFeedbackDetails.ContextPlaceholder"
   ></textarea>
 
-  <mat-hint align="end">{{ context().value.length }} / {{ commentMaxLength }}</mat-hint>
+  <mat-hint align="end">{{ context().value.length }} / {{ contextMaxLength }}</mat-hint>
 </mat-form-field>
 
 <mat-form-field appearance="outline" class="gbl-form-field">

@@ -30,9 +30,11 @@ import { ValidationErrorMessagePipe } from '../../../shared/validation/validatio
 export class GiveFeedbackDetailsComponent implements OnInit {
   protected matDialog = inject(MatDialog);
 
+  protected contextMaxLength = MEDIUM_MAX_LENGTH;
+
   protected feedbackMaxLength = LARGE_MAX_LENGTH;
 
-  protected commentMaxLength = MEDIUM_MAX_LENGTH; // FIXME: rename this because now we have the new "context" field!
+  protected commentMaxLength = MEDIUM_MAX_LENGTH;
 
   context = input.required<FormControl<string>>();
 
@@ -43,7 +45,7 @@ export class GiveFeedbackDetailsComponent implements OnInit {
   comment = input.required<FormControl<string>>();
 
   ngOnInit(): void {
-    this.context().addValidators([Validators.maxLength(this.commentMaxLength)]);
+    this.context().addValidators([Validators.maxLength(this.contextMaxLength)]);
     this.context().updateValueAndValidity();
 
     this.positive().addValidators([

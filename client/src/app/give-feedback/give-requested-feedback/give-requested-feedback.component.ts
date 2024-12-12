@@ -17,6 +17,7 @@ import { NotificationService } from '../../shared/notification';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
+import { applyFeedbackContextHack } from '../shared/hack/give-feedback.hack';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
 @Component({
@@ -78,8 +79,10 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   }
 
   ngOnInit(): void {
-    if (this.draft()) {
-      this.form.setValue(this.draft()!);
+    const draft = this.draft();
+    if (draft) {
+      applyFeedbackContextHack(draft);
+      this.form.setValue(draft);
       this.form.updateValueAndValidity();
       this.leaveFormService.takeSnapshot();
     }
