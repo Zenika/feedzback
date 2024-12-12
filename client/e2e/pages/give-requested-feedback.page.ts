@@ -3,6 +3,7 @@ import { Persona } from './sign-in.page';
 
 type Details = {
   message: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -19,6 +20,7 @@ export class GiveRequestedFeedbackPage {
       'Feedback receiver should be filled in correctly',
     ).toHaveValue(persona);
 
+    await this.page.getByText('Contexte').fill(details.context);
     await this.page.getByText('Points forts').fill(details.positive);
     await this.page.getByText("Axes d'améliorations").fill(details.negative);
     await this.page.getByText('Commentaire').fill(details.comment);

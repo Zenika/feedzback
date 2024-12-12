@@ -36,6 +36,7 @@ const feedback: Feedback = {
 
   // -----------------------------------------------------
   // Added fields (in reality, the contents are encrypted)
+  context: 'Working together...', // optional
   positive: 'You did great...', // required
   negative: 'Youd should improve...', // required
   comment: '', // optional

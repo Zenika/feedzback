@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { Persona } from './sign-in.page';
 
 type Details = {
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -17,6 +18,7 @@ export class GiveSpontaneousFeedbackPage {
   async give(persona: Persona, details: Details) {
     await this.page.getByLabel('Email de votre collègue').fill(persona);
 
+    await this.page.getByText('Contexte').fill(details.context);
     await this.page.getByText('Points forts').fill(details.positive);
     await this.page.getByText("Axes d'améliorations").fill(details.negative);
     await this.page.getByText('Commentaire').fill(details.comment);

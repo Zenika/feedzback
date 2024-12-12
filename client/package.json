@@ -29,6 +29,7 @@
     "server:e2e": "npm --prefix ../server run start:e2e",
     "prestack:e2e": "npm run build:e2e",
     "stack:e2e": "concurrently \"npm run firebase:e2e\" \"npm run server:e2e\"",
+    "e2e:install": "playwright install",
     "e2e:test": "playwright test",
     "e2e:report": "playwright show-report",
     "e2e:ui": "playwright test --ui",

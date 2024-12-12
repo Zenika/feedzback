@@ -11,6 +11,7 @@ import { UserMenuPage } from './pages/user-menu.page';
 
 const feedbackDetails = {
   message: 'Quel est votre feedback ?',
+  context: 'On a travaillé ensemble',
   positive: 'Ok',
   negative: 'Ko',
   comment: 'R.A.S',
