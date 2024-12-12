@@ -9,6 +9,7 @@ import { Persona, SignInPage } from './pages/sign-in.page';
 import { UserMenuPage } from './pages/user-menu.page';
 
 const feedbackDetails = {
+  context: 'On a travaillé ensemble',
   positive: 'Ok',
   negative: 'Ko',
   comment: 'R.A.S',
