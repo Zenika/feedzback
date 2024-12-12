@@ -71,6 +71,7 @@
   </mat-form-field>
 
   <app-give-feedback-details
+    [context]="form.controls.context"
     [positive]="form.controls.positive"
     [negative]="form.controls.negative"
     [comment]="form.controls.comment"

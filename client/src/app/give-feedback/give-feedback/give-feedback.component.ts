@@ -84,6 +84,7 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
       this.getQueryParam('receiverEmail'),
       [Validators.required, Validators.email, this.allowedEmailDomainsValidator, this.forbiddenValuesValidator],
     ],
+    context: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     negative: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -111,7 +112,10 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
         }),
       )
       .subscribe((draft) => {
-        this.form.setValue(draft);
+        // WARNING:
+        // The `context` field may not be present in the `draft` object, because it was added to the feedback type later.
+        // Therefore DO NOT use `.setValue()` instead of `.patchValue()`, otherwise it will fail for old draft objects.
+        this.form.patchValue(draft);
         this.form.updateValueAndValidity();
         this.leaveFormService.takeSnapshot();
       });
@@ -142,9 +146,11 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
     }
     this.disableForm(true);
 
-    const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
+    const { receiverEmail, context, positive, negative, comment, shared } = this.form.value as Required<
+      typeof this.form.value
+    >;
 
-    this.feedbackService.give({ receiverEmail, positive, negative, comment, shared }).subscribe((result) => {
+    this.feedbackService.give({ receiverEmail, context, positive, negative, comment, shared }).subscribe((result) => {
       if (result.id === undefined) {
         this.disableForm(false);
         if (result.message === 'invalid_email') {
@@ -164,9 +170,11 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
   protected onDraft() {
     this.disableForm(true);
 
-    const { receiverEmail, positive, negative, comment, shared } = this.form.value as Required<typeof this.form.value>;
+    const { receiverEmail, context, positive, negative, comment, shared } = this.form.value as Required<
+      typeof this.form.value
+    >;
 
-    this.giveFeedbackDraftService.give({ receiverEmail, positive, negative, comment, shared }).subscribe({
+    this.giveFeedbackDraftService.give({ receiverEmail, context, positive, negative, comment, shared }).subscribe({
       error: () => {
         this.disableForm(false);
         this.notificationService.showError();
