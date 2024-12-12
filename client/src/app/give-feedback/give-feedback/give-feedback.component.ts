@@ -25,7 +25,6 @@ import {
 import { forbiddenValuesValidatorFactory } from '../../shared/validation/forbidden-values';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
-import { applyFeedbackContextHack } from '../shared/hack/give-feedback.hack';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
 import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-draft.service';
 
@@ -113,8 +112,10 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
         }),
       )
       .subscribe((draft) => {
-        applyFeedbackContextHack(draft);
-        this.form.setValue(draft);
+        // WARNING:
+        // The `context` field may not be present in the `draft` object, because it was added to the feedback type later.
+        // Therefore DO NOT use `.setValue()` instead of `.patchValue()`, otherwise it will fail for old draft objects.
+        this.form.patchValue(draft);
         this.form.updateValueAndValidity();
         this.leaveFormService.takeSnapshot();
       });
