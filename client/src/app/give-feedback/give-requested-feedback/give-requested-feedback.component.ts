@@ -17,6 +17,7 @@ import { NotificationService } from '../../shared/notification';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
+import { applyFeedbackContextHack } from '../shared/hack/give-feedback.hack';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
 @Component({
@@ -44,7 +45,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   request = input.required<FeedbackRequest>();
 
-  draft = input<Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>>();
+  draft = input<Pick<FeedbackRequestDraft, 'context' | 'positive' | 'negative' | 'comment'>>();
 
   private router = inject(Router);
 
@@ -63,6 +64,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   leaveFormService = inject(LeaveFormService);
 
   form = this.formBuilder.group({
+    context: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     positive: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     negative: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
     comment: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -77,8 +79,10 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   }
 
   ngOnInit(): void {
-    if (this.draft()) {
-      this.form.setValue(this.draft()!);
+    const draft = this.draft();
+    if (draft) {
+      applyFeedbackContextHack(draft);
+      this.form.setValue(draft);
       this.form.updateValueAndValidity();
       this.leaveFormService.takeSnapshot();
     }
@@ -90,27 +94,29 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
     }
     this.disableForm(true);
 
-    const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
+    const { context, positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequested({ token: this.token(), positive, negative, comment }).subscribe((success) => {
-      if (!success) {
-        this.disableForm(false);
-        this.notificationService.showError();
-      } else {
-        this.giveRequestedFeedbackListService.refresh();
-        this.leaveFormService.unregisterForm();
-        this.feedbackId = this.anonymous ? undefined : this.request()?.id;
-        this.navigateToSuccess();
-      }
-    });
+    this.feedbackService
+      .giveRequested({ token: this.token(), context, positive, negative, comment })
+      .subscribe((success) => {
+        if (!success) {
+          this.disableForm(false);
+          this.notificationService.showError();
+        } else {
+          this.giveRequestedFeedbackListService.refresh();
+          this.leaveFormService.unregisterForm();
+          this.feedbackId = this.anonymous ? undefined : this.request()?.id;
+          this.navigateToSuccess();
+        }
+      });
   }
 
   protected onDraft() {
     this.disableForm(true);
 
-    const { positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
+    const { context, positive, negative, comment } = this.form.value as Required<typeof this.form.value>;
 
-    this.feedbackService.giveRequestedDraft({ token: this.token(), positive, negative, comment }).subscribe({
+    this.feedbackService.giveRequestedDraft({ token: this.token(), context, positive, negative, comment }).subscribe({
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);

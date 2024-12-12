@@ -14,6 +14,7 @@ export type FeedbackArchiveRequestDto = {
 
 export type GiveRequestedFeedbackDto = {
   token: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -21,6 +22,7 @@ export type GiveRequestedFeedbackDto = {
 
 export type GiveFeedbackDto = {
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;

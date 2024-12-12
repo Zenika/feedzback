@@ -25,6 +25,11 @@ export class GiveRequestedFeedbackDraftDto {
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  context!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
   @MaxLength(LARGE_MAX_LENGTH)
   positive!: string;
 
@@ -42,6 +47,11 @@ export class GiveRequestedFeedbackDraftDto {
 // Same as `GiveRequestedFeedbackDraftDto` but with `IsNotEmpty` additions
 export class GiveRequestedFeedbackDto {
   @IsString() token!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  context!: string;
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
@@ -67,6 +77,11 @@ export class GiveFeedbackDraftDto {
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  context!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
   @MaxLength(LARGE_MAX_LENGTH)
   positive!: string;
 
@@ -86,6 +101,11 @@ export class GiveFeedbackDraftDto {
 // Same as `GiveFeedbackDraftDto` but with `IsNotEmpty` additions
 export class GiveFeedbackDto {
   @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) receiverEmail!: string;
+
+  @IsString()
+  @Transform((params) => (params.value as string)?.trim())
+  @MaxLength(MEDIUM_MAX_LENGTH)
+  context!: string;
 
   @IsString()
   @Transform((params) => (params.value as string)?.trim())

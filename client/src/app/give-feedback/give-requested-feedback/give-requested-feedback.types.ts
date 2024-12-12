@@ -5,7 +5,7 @@ export type GiveRequestedFeedbackData = {
   token: string | Signal<string>;
   request: FeedbackRequest | Signal<FeedbackRequest>;
   draft:
-    | Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'>
+    | Pick<FeedbackRequestDraft, 'context' | 'positive' | 'negative' | 'comment'>
     | undefined
-    | Signal<Pick<FeedbackRequestDraft, 'positive' | 'negative' | 'comment'> | undefined>;
+    | Signal<Pick<FeedbackRequestDraft, 'context' | 'positive' | 'negative' | 'comment'> | undefined>;
 };

@@ -19,8 +19,8 @@ export const giveRequestedFeedbackGuard = (route: ActivatedRouteSnapshot): Obser
         tap(({ request, draft }) => {
           let _draft: GiveRequestedFeedbackData['draft'] = undefined;
           if (draft) {
-            const { positive, negative, comment } = draft;
-            _draft = { positive, negative, comment };
+            const { context, positive, negative, comment } = draft;
+            _draft = { context, positive, negative, comment };
           }
           // Note: this guard has more than one responsibility (it also provides data to the routed component)
           route.data = { token, request, draft: _draft } satisfies GiveRequestedFeedbackData;

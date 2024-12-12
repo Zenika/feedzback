@@ -189,7 +189,7 @@ export class FeedbackDbService {
     return tokenDoc.id;
   }
 
-  async giveRequestedDraft(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
+  async giveRequestedDraft(tokenId: string, { context, positive, negative, comment }: GiveRequestedFeedbackParams) {
     const request = await this.checkRequest(tokenId);
     if (!request) {
       return false;
@@ -198,6 +198,7 @@ export class FeedbackDbService {
     const feedbackRequestDraft = this.encryptFeedback<FeedbackRequestDraft>({
       token: tokenId,
       receiverEmail: request.receiverEmail,
+      context,
       positive,
       negative,
       comment,
@@ -210,7 +211,7 @@ export class FeedbackDbService {
     return true;
   }
 
-  async giveRequested(tokenId: string, { positive, negative, comment }: GiveRequestedFeedbackParams) {
+  async giveRequested(tokenId: string, { context, positive, negative, comment }: GiveRequestedFeedbackParams) {
     const request = await this.checkRequest(tokenId);
     if (!request) {
       return false;
@@ -218,6 +219,7 @@ export class FeedbackDbService {
 
     const feedbackId = request.id;
     const partialFeedback: Partial<Feedback> = this.encryptFeedback({
+      context,
       positive,
       negative,
       comment,
@@ -235,9 +237,10 @@ export class FeedbackDbService {
 
   // ----- Give spontaneous feedback -----
 
-  async giveDraft({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+  async giveDraft({ giverEmail, receiverEmail, context, positive, negative, comment, shared }: GiveFeedbackParams) {
     const feedbackDraft = this.encryptFeedback<FeedbackDraft>({
       receiverEmail,
+      context,
       positive,
       negative,
       comment,
@@ -250,11 +253,12 @@ export class FeedbackDbService {
       .set(feedbackDraft, { merge: true });
   }
 
-  async give({ giverEmail, receiverEmail, positive, negative, comment, shared }: GiveFeedbackParams) {
+  async give({ giverEmail, receiverEmail, context, positive, negative, comment, shared }: GiveFeedbackParams) {
     const now = Date.now();
     const feedback: Feedback = this.encryptFeedback({
       giverEmail,
       receiverEmail,
+      context,
       positive,
       negative,
       comment,

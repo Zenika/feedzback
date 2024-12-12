@@ -3,6 +3,7 @@
 export type Feedback = {
   giverEmail: string;
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -103,6 +104,7 @@ export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
 
 export type FeedbackDraft = {
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -112,6 +114,7 @@ export type FeedbackDraft = {
 export type FeedbackRequestDraft = {
   token: string;
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -119,10 +122,11 @@ export type FeedbackRequestDraft = {
 
 // ----- FeedbackEncryptedFields -----
 
-export type FeedbackEncryptedFields = Pick<Feedback, 'message' | 'positive' | 'negative' | 'comment'>;
+export type FeedbackEncryptedFields = Pick<Feedback, 'message' | 'context' | 'positive' | 'negative' | 'comment'>;
 
 export const feedbackEncryptedFields: (keyof FeedbackEncryptedFields)[] = [
   'message',
+  'context',
   'positive',
   'negative',
   'comment',

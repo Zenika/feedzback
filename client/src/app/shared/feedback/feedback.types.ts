@@ -7,6 +7,7 @@ export type Feedback = {
   id: string;
   giverEmail: string;
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -69,6 +70,7 @@ export type FeedbackRequestDraftType = typeof FeedbackRequestDraftType;
 
 export type FeedbackDraft = {
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;
@@ -78,6 +80,7 @@ export type FeedbackDraft = {
 export type FeedbackRequestDraft = {
   token: string;
   receiverEmail: string;
+  context: string;
   positive: string;
   negative: string;
   comment: string;

@@ -156,8 +156,8 @@ export class FeedbackController {
 
   @ApiOperation({ summary: 'Save the response to a requested feedback as a draft' })
   @Post('give-requested/draft')
-  async giveRequestedDraft(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDraftDto) {
-    const success = await this.feedbackDbService.giveRequestedDraft(token, { positive, negative, comment });
+  async giveRequestedDraft(@Body() { token, context, positive, negative, comment }: GiveRequestedFeedbackDraftDto) {
+    const success = await this.feedbackDbService.giveRequestedDraft(token, { context, positive, negative, comment });
     if (!success) {
       throw new BadRequestException();
     }
@@ -165,13 +165,13 @@ export class FeedbackController {
 
   @ApiOperation({ summary: 'Give requested feedback' })
   @Post('give-requested')
-  async giveRequested(@Body() { token, positive, negative, comment }: GiveRequestedFeedbackDto) {
+  async giveRequested(@Body() { token, context, positive, negative, comment }: GiveRequestedFeedbackDto) {
     if (!this.contextService.hasValidClientLocaleIdCookie) {
       // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
       throw new BadRequestException('locale_id_cookie_missing');
     }
 
-    const infos = await this.feedbackDbService.giveRequested(token, { positive, negative, comment });
+    const infos = await this.feedbackDbService.giveRequested(token, { context, positive, negative, comment });
     if (!infos) {
       throw new BadRequestException();
     }
