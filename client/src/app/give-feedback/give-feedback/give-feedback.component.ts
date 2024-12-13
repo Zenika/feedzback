@@ -112,9 +112,6 @@ export class GiveFeedbackComponent implements LeaveForm, OnDestroy {
         }),
       )
       .subscribe((draft) => {
-        // WARNING:
-        // The `context` field may not be present in the `draft` object, because it was added to the feedback type later.
-        // Therefore DO NOT use `.setValue()` instead of `.patchValue()`, otherwise it will fail for old draft objects.
         this.form.patchValue(draft);
         this.form.updateValueAndValidity();
         this.leaveFormService.takeSnapshot();
