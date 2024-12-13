@@ -12,7 +12,7 @@
     i18n-placeholder="@@Component.GiveFeedbackDetails.ContextPlaceholder"
   ></textarea>
 
-  <mat-hint align="end">{{ context().value.length }} / {{ contextMaxLength }}</mat-hint>
+  <mat-hint align="end">{{ context().value?.length ?? 0 }} / {{ contextMaxLength }}</mat-hint>
 </mat-form-field>
 
 <mat-form-field appearance="outline" class="gbl-form-field">

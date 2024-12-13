@@ -36,7 +36,9 @@ export class GiveFeedbackDetailsComponent implements OnInit {
 
   protected commentMaxLength = MEDIUM_MAX_LENGTH;
 
-  context = input.required<FormControl<string>>();
+  // WARNING:
+  // The `context` field may not be present in the `draft` object, because it was added to the feedback type later.
+  context = input.required<FormControl<string | undefined>>();
 
   positive = input.required<FormControl<string>>();
 
