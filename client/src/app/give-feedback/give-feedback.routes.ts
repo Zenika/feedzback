@@ -10,7 +10,7 @@ const giveFeedbackRoutes: Routes = [
     component: GiveFeedbackComponent,
     canActivate: [authGuard],
     canDeactivate: [leaveFormGuardFactory('quitFeedback')],
-    title: 'FeedZback - ' + $localize`:@@Feedback.Give: Donner `,
+    title: 'FeedZback - ' + $localize`:@@Title.GiveFeedback:Donner du feedZback spontané`,
   },
   {
     path: 'success',

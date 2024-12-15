@@ -49,7 +49,7 @@ export const routes: Routes = [
     loadComponent: () => import('./feedback-details/feedback-details.component'),
     canActivate: [authGuard],
     resolve: { feedbackDetails: feedbackDetailsResolver },
-    title: 'FeedZback - FeedZback',
+    title: 'FeedZback - ' + $localize`:@@Title.FeedbackDetails:Détails du feedZback`,
   },
   {
     path: 'settings',
