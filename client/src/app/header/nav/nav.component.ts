@@ -5,13 +5,12 @@ import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { GiveRequestedFeedbackListService } from '../../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { BreakpointService } from '../../shared/breakpoint';
 import { EmployeeService } from '../../shared/employee';
-import { FocusTopTriggerDirective } from '../../shared/focus';
 import { navAnimation } from './nav.animation';
 
 @Component({
   selector: 'app-nav',
   host: { class: 'app-nav' },
-  imports: [RouterLinkActive, RouterLinkWithHref, MatBadgeModule, FocusTopTriggerDirective],
+  imports: [RouterLinkActive, RouterLinkWithHref, MatBadgeModule],
   animations: [navAnimation],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss',
