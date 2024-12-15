@@ -1,20 +1,8 @@
-<a
-  class="app-nav__item"
-  routerLinkActive="app-nav__item--active"
-  routerLink="/request"
-  appFocusTopTrigger
-  ariaCurrentWhenActive="page"
->
+<a class="app-nav__item" routerLinkActive="app-nav__item--active" routerLink="/request" ariaCurrentWhenActive="page">
   <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
 </a>
 
-<a
-  class="app-nav__item"
-  routerLinkActive="app-nav__item--active"
-  routerLink="/give"
-  appFocusTopTrigger
-  ariaCurrentWhenActive="page"
->
+<a class="app-nav__item" routerLinkActive="app-nav__item--active" routerLink="/give" ariaCurrentWhenActive="page">
   <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
 </a>
 
@@ -22,7 +10,6 @@
   class="app-nav__item"
   routerLinkActive="app-nav__item--active"
   routerLink="/give-requested"
-  appFocusTopTrigger
   ariaCurrentWhenActive="page"
   [matBadge]="receivedRequestLength()"
 >
@@ -33,7 +20,6 @@
   class="app-nav__item"
   routerLinkActive="app-nav__item--active"
   routerLink="/history"
-  appFocusTopTrigger
   ariaCurrentWhenActive="page"
   i18n="@@Action.History"
   >Mes feedZbacks</a
@@ -45,7 +31,6 @@
     class="app-nav__item"
     routerLinkActive="app-nav__item--active"
     routerLink="/manager"
-    appFocusTopTrigger
     ariaCurrentWhenActive="page"
     i18n="@@Action.Manager"
   >
