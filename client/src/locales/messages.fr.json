@@ -172,7 +172,8 @@
     "Title.RequestedFeedback": "FeedZback demandé",
     "Title.RequestedFeedbackList": " Répondre aux demandes de feedZback ",
     "Title.Settings": "Paramètres",
-    "Title.SharedFeedZbacks": "FeedZbacks partagés",
+    "Title.SharedFeedbackDetails": "Détails du FeedZback partagé",
+    "Title.SharedFeedbackList": "Liste des feedZbacks partagés",
     "Title.SignIn": "Se connecter",
     "Word.Later": "Plus tard",
     "Word.Or": "ou"

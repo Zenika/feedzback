@@ -160,7 +160,7 @@
     "Title.AppTagline": "Request and give feedback to your colleagues",
     "Title.Confirmation": "Confirmation",
     "Title.Drafts": "Draft",
-    "Title.FeedbackDetails": "Feedback details",
+    "Title.FeedbackDetails": "FeedZback details",
     "Title.FeedbackGiven": "FeedZback given",
     "Title.FeedbackToGive": "FeedZback to give",
     "Title.GiveFeedback": "Give spontaneous feedZback",
@@ -172,7 +172,8 @@
     "Title.RequestedFeedback": "FeedZback requested",
     "Title.RequestedFeedbackList": "Reply to feedZback requests",
     "Title.Settings": "Settings",
-    "Title.SharedFeedZbacks": "Shared feedZbacks",
+    "Title.SharedFeedbackDetails": "Shared feedZback details",
+    "Title.SharedFeedbackList": "Shared feedZback list",
     "Title.SignIn": "Sign in",
     "Word.Later": "Later",
     "Word.Or": "or"

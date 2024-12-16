@@ -108,7 +108,7 @@ test('Requested feedback', async ({ page }) => {
   await managerPage.matchDoneFeedback(Persona.Bernard, Persona.Alfred, feedbackDetails);
 
   // Go back to the list of shared feedbacks
-  await page.getByRole('button', { name: 'FeedZbacks partagés' }).click();
+  await page.getByRole('button', { name: 'Liste des feedZbacks partagés' }).click();
   await page.waitForURL('/fr/manager/list/**');
 
   // View the feedback expected from Charles

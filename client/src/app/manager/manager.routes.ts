@@ -13,11 +13,13 @@ export const managerRoutes: Routes = [
     path: 'list/:managedEmail',
     loadComponent: () => import('./manager-list/manager-list.component'),
     resolve: { list: managerListResolver },
+    title: 'FeedZback - ' + $localize`:@@Title.SharedFeedbackList:Liste des feedZbacks partagés`,
   },
   {
     path: 'document/:feedbackId',
     loadComponent: () => import('./manager-document/manager-document.component'),
     resolve: { document: managerDocumentResolver },
+    title: 'FeedZback - ' + $localize`:@@Title.SharedFeedbackDetails:Détails du FeedZback partagé`,
   },
 ];
 
