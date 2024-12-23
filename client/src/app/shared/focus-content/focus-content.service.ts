@@ -6,7 +6,7 @@ import { distinctUntilChanged, filter, map, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class FocusService {
+export class FocusContentService {
   private router = inject(Router);
 
   private routeTitle$ = this.router.events.pipe(
@@ -28,15 +28,15 @@ export class FocusService {
 
   routeTitle = toSignal(this.routeTitle$);
 
-  topTarget?: HTMLElement;
+  topElement?: HTMLElement;
 
-  mainTarget?: HTMLElement;
+  mainElement?: HTMLElement;
 
   focusTop() {
-    this.topTarget?.focus();
+    this.topElement?.focus();
   }
 
   focusMain() {
-    this.mainTarget?.focus();
+    this.mainElement?.focus();
   }
 }

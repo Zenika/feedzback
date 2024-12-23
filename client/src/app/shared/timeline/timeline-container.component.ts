@@ -1,5 +1,5 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { BreakpointObserver, LayoutModule } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
@@ -31,7 +31,7 @@ import { TimelineDirection, TimelineItem, TimelineLineSize } from './timeline.ty
     '[style.--app-timeline-line-size-vertical]': 'lineSize().vertical',
     '[style.--app-timeline-background-color]': 'bgColor()',
   },
-  imports: [NgTemplateOutlet, LayoutModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './timeline-container.component.html',
   styleUrl: './timeline-container.component.scss',
   encapsulation: ViewEncapsulation.None,
