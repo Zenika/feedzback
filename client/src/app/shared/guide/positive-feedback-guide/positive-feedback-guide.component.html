@@ -24,7 +24,7 @@
       </ng-container>
     } @else {
       <i i18n="@@Component.PositiveFeedbackGuide.Step2_Example">
-        L'équipe ne reste jamais bloquée très longtemps et est plus confiante.
+        L'équipe ne reste jamais bloquée très longtemps et a gagné en assurance.
       </i>
     }
   </app-timeline-item>
@@ -36,7 +36,7 @@
       </ng-container>
     } @else {
       <i i18n="@@Component.PositiveFeedbackGuide.Step3_Example">
-        Ta capacité d'écoute permet à l'équipe d'être plus soudée.
+        Ta patience et ta capacité d'écoute participent à la cohésion de l'équipe.
       </i>
     }
   </app-timeline-item>
@@ -44,8 +44,8 @@
 
 @if (!hideSlideToggle()) {
   <p class="!my-2">
-    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
-      Donner un exemple
+    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.ShowAnExample">
+      Montrer un exemple
     </mat-slide-toggle>
   </p>
 }
