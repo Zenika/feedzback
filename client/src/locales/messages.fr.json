@@ -75,7 +75,7 @@
     "Component.MyFeedbacks.Received": "reçus",
     "Component.MyFeedbacks.Requested": "demandés",
     "Component.NegativeFeedbackGuide.Step1_Definition": " Décrire {$START_TAG_STRONG}les faits{$CLOSE_TAG_STRONG} d'une manière la plus neutre possible. ",
-    "Component.NegativeFeedbackGuide.Step1_Example": " Tu peux rester plusieurs jours bloqué(e) sur une tâche sans en informer tes collègues. ",
+    "Component.NegativeFeedbackGuide.Step1_Example": " Tu peux rester bloqué(e) sur une tâche plusieurs jours sans en informer tes collègues. ",
     "Component.NegativeFeedbackGuide.Step2_Definition": " Identifiez {$START_TAG_STRONG}les effets négatifs{$CLOSE_TAG_STRONG} produits dans le concret et tels que vous les avez perçus. ",
     "Component.NegativeFeedbackGuide.Step2_Example": " Cela retarde le projet et crée des tensions dans l'équipe. ",
     "Component.NegativeFeedbackGuide.Step3_Definition": " Proposer {$START_TAG_STRONG}des axes d'améliorations{$CLOSE_TAG_STRONG} profitables à votre collègue. ",
