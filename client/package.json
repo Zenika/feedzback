@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:en": "ng serve -c development-en",
-    "start:emulators": "ng serve -c development-emulators",
+    "start": "ng serve --no-hmr",
+    "start:en": "ng serve --no-hmr -c development-en",
+    "start:emulators": "ng serve --no-hmr -c development-emulators",
     "build": "ng build",
     "build:dev": "ng build -c development-remote && npm run post-build",
     "build:e2e": "ng build -c development,emulators --localize --base-href=\"/\" && npm run post-build",
