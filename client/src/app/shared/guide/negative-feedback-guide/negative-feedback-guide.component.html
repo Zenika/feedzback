@@ -12,7 +12,7 @@
       </ng-container>
     } @else {
       <i i18n="@@Component.NegativeFeedbackGuide.Step1_Example">
-        Tu peux rester plusieurs jours bloqué sur une tâche sans en informer tes collègues.
+        Tu peux rester bloqué(e) sur une tâche plusieurs jours sans en informer tes collègues.
       </i>
     }
   </app-timeline-item>
@@ -24,7 +24,7 @@
       </ng-container>
     } @else {
       <i i18n="@@Component.NegativeFeedbackGuide.Step2_Example">
-        Cela retarde le projet et crée des tensions dans l'équipe.
+        Cela peut retarder l'avancement du projet et créer des tensions dans l'équipe.
       </i>
     }
   </app-timeline-item>
@@ -36,7 +36,7 @@
       </ng-container>
     } @else {
       <i i18n="@@Component.NegativeFeedbackGuide.Step3_Example">
-        N'ai pas peur de demander de l'aide à tes collègues car cela n'enlève rien à tes qualités.
+        N'aie pas peur de demander de l'aide à tes collègues car cela n'enlève rien à tes qualités.
       </i>
     }
   </app-timeline-item>
@@ -44,8 +44,8 @@
 
 @if (!hideSlideToggle()) {
   <p class="!my-2">
-    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.GiveAnExample">
-      Donner un exemple
+    <mat-slide-toggle [checked]="showExample()" (change)="toggleExample()" i18n="@@Action.ShowAnExample">
+      Montrer un exemple
     </mat-slide-toggle>
   </p>
 }
