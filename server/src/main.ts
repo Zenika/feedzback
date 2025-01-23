@@ -15,8 +15,8 @@ async function bootstrap() {
   //  - https://docs.nestjs.com/security/cors
   //  - https://github.com/expressjs/cors#configuration-options
   const cors: CorsOptionsDelegate<Request> = (req, corsOptionsCallback) => {
-    const origin = configService.get('clientUrl');
-    corsOptionsCallback(null as any, { origin, credentials: true });
+    const origin = configService.get<string>('clientUrl');
+    corsOptionsCallback(null, { origin, credentials: true });
   };
 
   const app = await NestFactory.create(AppModule, { cors });
@@ -36,4 +36,5 @@ async function bootstrap() {
   await app.listen(port);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

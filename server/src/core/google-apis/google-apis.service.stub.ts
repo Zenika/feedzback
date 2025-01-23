@@ -10,6 +10,7 @@ export class GoogleApisStubService implements Partial<GoogleApisService> {
     this.logger.warn(`Feature disabled (when Firebase running in emulator mode)`);
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async searchPersons(): Promise<{ persons: Person[]; nextPageToken?: string }> {
     return { persons: [] };
   }

@@ -24,14 +24,17 @@ export class ContextService {
   }
 
   private setClientLocaleId(req: Request) {
-    const clientLocaleIdCookie = req.cookies['app-locale-id'];
-
-    this.hasValidClientLocaleIdCookie = isLocaleId(clientLocaleIdCookie);
-
     // Warning:
     //   When the Angular client execute http requests, the cookies are included ONLY if `withCredentials` is set to `true`
     // Example:
     //   `this.httpClient.get('http://localhost:3000/', { withCredentials: true });`
-    this.clientLocaleId = this.hasValidClientLocaleIdCookie ? clientLocaleIdCookie : DEFAULT_LOCALE_ID;
+    const clientLocaleIdCookie = req.cookies['app-locale-id'] as string | undefined;
+    if (isLocaleId(clientLocaleIdCookie)) {
+      this.clientLocaleId = clientLocaleIdCookie;
+      this.hasValidClientLocaleIdCookie = true;
+    } else {
+      this.clientLocaleId = DEFAULT_LOCALE_ID;
+      this.hasValidClientLocaleIdCookie = false;
+    }
   }
 }
