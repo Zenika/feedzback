@@ -9,10 +9,12 @@ export class EmailStubService implements Partial<EmailService> {
     this.logger.warn(`Feature disabled (when Firebase running in emulator mode)`);
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async validate() {
     return true;
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async send() {
     return true;
   }

@@ -21,6 +21,7 @@ export class PeopleCacheService {
   }
 
   constructor(private googleApis: GoogleApisService) {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.refreshPeople();
   }
 
@@ -28,6 +29,7 @@ export class PeopleCacheService {
     if (Date.now() <= this.searchablePersonsExpiryDate) {
       return;
     }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.refreshPeople();
   }
 

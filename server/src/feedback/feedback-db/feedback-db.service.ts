@@ -501,7 +501,7 @@ export class FeedbackDbService {
       if (!output[field]) {
         return;
       }
-      output[field] = this.cryptoService[operation](output[field]!);
+      output[field] = this.cryptoService[operation](output[field]);
     });
     return output;
   }

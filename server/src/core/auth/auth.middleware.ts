@@ -8,6 +8,7 @@ export class AuthMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     const idToken = req.headers.authorization?.substring('Bearer '.length);
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.authService.authenticateUser(idToken).then(next);
   }
 }
