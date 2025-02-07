@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, input, linkedSignal, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -31,7 +31,7 @@ import { formatMonth } from './stats.utils';
   styleUrl: './stats.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class StatsComponent implements OnInit, StatsTabData {
+export class StatsComponent implements StatsTabData {
   protected router = inject(Router);
 
   protected isFrenchLocale = inject(LanguageService).localeId === 'fr';
@@ -81,7 +81,7 @@ export class StatsComponent implements OnInit, StatsTabData {
     });
   }
 
-  ngOnInit() {
+  constructor() {
     this.fetch();
   }
 

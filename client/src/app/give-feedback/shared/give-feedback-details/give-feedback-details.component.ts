@@ -1,5 +1,5 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { Component, OnInit, ViewEncapsulation, inject, input } from '@angular/core';
+import { Component, ViewEncapsulation, effect, inject, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -27,7 +27,7 @@ import { ValidationErrorMessagePipe } from '../../../shared/validation/validatio
   templateUrl: './give-feedback-details.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackDetailsComponent implements OnInit {
+export class GiveFeedbackDetailsComponent {
   protected matDialog = inject(MatDialog);
 
   protected contextMaxLength = MEDIUM_MAX_LENGTH;
@@ -44,25 +44,32 @@ export class GiveFeedbackDetailsComponent implements OnInit {
 
   comment = input.required<FormControl<string>>();
 
-  ngOnInit(): void {
-    this.context().addValidators([Validators.maxLength(this.contextMaxLength)]);
-    this.context().updateValueAndValidity();
+  constructor() {
+    const effectRef = effect(
+      () => {
+        this.context().addValidators([Validators.maxLength(this.contextMaxLength)]);
+        this.context().updateValueAndValidity();
 
-    this.positive().addValidators([
-      Validators.required,
-      isNotBlankValidator,
-      Validators.maxLength(this.feedbackMaxLength),
-    ]);
-    this.positive().updateValueAndValidity();
+        this.positive().addValidators([
+          Validators.required,
+          isNotBlankValidator,
+          Validators.maxLength(this.feedbackMaxLength),
+        ]);
+        this.positive().updateValueAndValidity();
 
-    this.negative().addValidators([
-      Validators.required,
-      isNotBlankValidator,
-      Validators.maxLength(this.feedbackMaxLength),
-    ]);
-    this.negative().updateValueAndValidity();
+        this.negative().addValidators([
+          Validators.required,
+          isNotBlankValidator,
+          Validators.maxLength(this.feedbackMaxLength),
+        ]);
+        this.negative().updateValueAndValidity();
 
-    this.comment().addValidators([Validators.maxLength(this.commentMaxLength)]);
-    this.comment().updateValueAndValidity();
+        this.comment().addValidators([Validators.maxLength(this.commentMaxLength)]);
+        this.comment().updateValueAndValidity();
+
+        effectRef.destroy();
+      },
+      { manualCleanup: true },
+    );
   }
 }

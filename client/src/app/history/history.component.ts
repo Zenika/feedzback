@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation, inject, input } from '@angular/core';
+import { Component, ViewEncapsulation, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,7 +33,7 @@ import {
   styleUrl: './history.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export default class HistoryComponent implements OnInit {
+export default class HistoryComponent {
   type = input(FeedbackType.received, {
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
   });
@@ -60,7 +60,7 @@ export default class HistoryComponent implements OnInit {
 
   protected fetched = false;
 
-  ngOnInit() {
+  constructor() {
     this.feedbackService
       .getListMap(['received', 'given', 'sentRequest'])
       .subscribe(({ received, given, sentRequest }) => {

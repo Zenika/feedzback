@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, inject, input } from '@angular/core';
+import { Component, ViewEncapsulation, effect, inject, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -39,7 +39,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   styleUrl: './give-requested-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm, OnInit {
+export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm {
   token = input.required<string>();
 
   request = input.required<FeedbackRequest>();
@@ -75,15 +75,19 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   constructor() {
     this.leaveFormService.registerForm(this.form);
-  }
 
-  ngOnInit(): void {
-    const draft = this.draft();
-    if (draft) {
-      this.form.patchValue(draft);
-      this.form.updateValueAndValidity();
-      this.leaveFormService.takeSnapshot();
-    }
+    const effectRef = effect(
+      () => {
+        const draft = this.draft();
+        if (draft) {
+          this.form.patchValue(draft);
+          this.form.updateValueAndValidity();
+          this.leaveFormService.takeSnapshot();
+        }
+        effectRef.destroy();
+      },
+      { manualCleanup: true },
+    );
   }
 
   protected onSubmit() {

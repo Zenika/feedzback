@@ -1,6 +1,6 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, ViewEncapsulation, inject, input, viewChild } from '@angular/core';
+import { Component, DestroyRef, ViewEncapsulation, afterNextRender, inject, input, viewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
@@ -45,7 +45,7 @@ import { ValidationErrorMessagePipe } from '../../validation/validation-error-me
   styleUrl: './multi-autocomplete-email.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy {
+export class MultiAutocompleteEmailComponent {
   emails = input(
     new FormControl<string[]>([], {
       nonNullable: true,
@@ -96,20 +96,20 @@ export class MultiAutocompleteEmailComponent implements AfterViewInit, OnDestroy
 
   private subscription?: Subscription;
 
-  ngAfterViewInit(): void {
-    this.subscription = this.matAutocomplete()
-      .closed.pipe(
-        withLatestFrom(this.queryInputFocused$),
-        filter(([, queryInputFocused]) => !queryInputFocused),
-      )
-      .subscribe(() => {
-        this.matChipInput().clear();
-        this.query$.next('');
-      });
-  }
+  constructor() {
+    afterNextRender(() => {
+      this.subscription = this.matAutocomplete()
+        .closed.pipe(
+          withLatestFrom(this.queryInputFocused$),
+          filter(([, queryInputFocused]) => !queryInputFocused),
+        )
+        .subscribe(() => {
+          this.matChipInput().clear();
+          this.query$.next('');
+        });
+    });
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    inject(DestroyRef).onDestroy(() => this.subscription?.unsubscribe());
   }
 
   protected add(email: string): void {
