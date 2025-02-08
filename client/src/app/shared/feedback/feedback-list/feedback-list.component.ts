@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
   effect,
   inject,
@@ -43,7 +43,7 @@ import { GiveRequestedFeedbackDirective } from '../give-requested-feedback.direc
   styleUrl: './feedback-list.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class FeedbackListComponent implements AfterViewInit {
+export class FeedbackListComponent {
   feedbacks = input.required<NormalizedFeedback[]>();
 
   filter = input(undefined, { transform: (value?: string) => value?.trim().toLowerCase() });
@@ -80,10 +80,8 @@ export class FeedbackListComponent implements AfterViewInit {
         this.isMobile = device === 'mobile';
         this.columns = this.isMobile ? ['mixed', 'actions'] : ['email', 'date', 'actions'];
       });
-  }
 
-  ngAfterViewInit() {
-    this.init();
+    afterNextRender(() => this.init());
   }
 
   // "nf" means "normalized feedback"

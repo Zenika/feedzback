@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, TemplateRef, ViewEncapsulation, inject, viewChild } from '@angular/core';
+import { Component, TemplateRef, ViewEncapsulation, afterNextRender, inject, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,7 @@ import { EmployeeService } from '../shared/employee';
   templateUrl: './no-manager-dialog.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class NoManagerDialogComponent implements AfterViewInit {
+export class NoManagerDialogComponent {
   private employeeService = inject(EmployeeService);
 
   private dialog = inject(MatDialog);
@@ -29,32 +29,34 @@ export class NoManagerDialogComponent implements AfterViewInit {
 
   private readonly expiryDateKey = 'no-manager-dialog-expiry-date';
 
-  ngAfterViewInit(): void {
-    if (environment.firebaseEmulatorMode) {
-      // Firebase emulator mode is used for e2e tests.
-      // Therefore, we need to prevent the dialog from opening unexpectedly in this environment.
-      return;
-    }
+  constructor() {
+    afterNextRender(() => {
+      if (environment.firebaseEmulatorMode) {
+        // Firebase emulator mode is used for e2e tests.
+        // Therefore, we need to prevent the dialog from opening unexpectedly in this environment.
+        return;
+      }
 
-    if (!this.shouldOpenDialog()) {
-      return;
-    }
+      if (!this.shouldOpenDialog()) {
+        return;
+      }
 
-    this.employeeService.data$
-      .pipe(
-        delay(this.delay),
-        map(({ managerEmail }) => !!managerEmail),
-      )
-      .pipe(
-        switchMap((hasManager) => {
-          if (hasManager) {
-            return of(false);
-          }
-          return this.dialog.open(this.templateRef(), { width: '500px', disableClose: true }).afterClosed();
-        }),
-        first(),
-      )
-      .subscribe(() => this.storeDialogExpiryDate());
+      this.employeeService.data$
+        .pipe(
+          delay(this.delay),
+          map(({ managerEmail }) => !!managerEmail),
+        )
+        .pipe(
+          switchMap((hasManager) => {
+            if (hasManager) {
+              return of(false);
+            }
+            return this.dialog.open(this.templateRef(), { width: '500px', disableClose: true }).afterClosed();
+          }),
+          first(),
+        )
+        .subscribe(() => this.storeDialogExpiryDate());
+    });
   }
 
   private shouldOpenDialog() {

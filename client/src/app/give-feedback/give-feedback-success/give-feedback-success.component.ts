@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, afterNextRender, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
@@ -15,7 +15,7 @@ import { GiveFeedbackSuccess } from './give-feedback-success.types';
   templateUrl: './give-feedback-success.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackSuccessComponent implements AfterViewInit {
+export class GiveFeedbackSuccessComponent {
   protected state: GiveFeedbackSuccess = inject(DOCUMENT).defaultView?.history.state;
 
   private authService = inject(AuthService);
@@ -26,11 +26,15 @@ export class GiveFeedbackSuccessComponent implements AfterViewInit {
   // Therefore, we want to disable the confetti in this environment because it degrades Playwright screenshots.
   private hasConfetti = !environment.firebaseEmulatorMode;
 
+  constructor() {
+    afterNextRender(() => this.checkState());
+  }
+
   protected signOut() {
     this.authService.signOut().subscribe();
   }
 
-  ngAfterViewInit(): void {
+  private checkState() {
     if (!this.state.receiverEmail) {
       this.router.navigate(['/']);
     } else if (this.hasConfetti) {
