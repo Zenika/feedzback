@@ -1,0 +1,29 @@
+@layer theme, utilities;
+
+/*
+  Warning:
+  Tailwind "Preflight" breaks some Angular material components and has therefore been disabled.
+
+  Learn more about this issue:
+    https://github.com/tailwindlabs/tailwindcss/discussions/9993
+
+  More infos:
+    https://tailwindcss.com/docs/preflight
+*/
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@theme {
+  /*
+    Note:
+    In this application, Tailwind should be used ONLY for utility classes.
+    Therefore, the default theme has been completly disabled.
+
+    More infos:
+      https://tailwindcss.com/docs/theme
+  */
+  --*: initial;
+
+  --spacing: 4px;
+}

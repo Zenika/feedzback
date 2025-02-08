@@ -19,7 +19,7 @@
 
     <mat-tab label="Details">
       @defer (on viewport) {
-        <div class="!mt-6 text-center">
+        <div class="mt-6! text-center">
           @let dp = detailsPeriod();
           @if (dp.start === dp.end) {
             In <strong>{{ dp.start }}</strong>
