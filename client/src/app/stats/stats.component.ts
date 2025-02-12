@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, input, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -10,6 +11,7 @@ import { MessageComponent } from '../shared/message';
 import { StatsDetailsComponent } from './stats-details/stats-details.component';
 import { StatsSummaryComponent } from './stats-summary/stats-summary.component';
 import { ORDERED_STATS_TABS, SelectedStatsTab, StatsTabData } from './stats-tab';
+import { ANALYTICS_USAGE_URL } from './stats.constants';
 import { FeedbackStats, FeedbackStatsData, FeedbackStatsPeriod } from './stats.types';
 import { formatMonth } from './stats.utils';
 
@@ -20,6 +22,7 @@ import { formatMonth } from './stats.utils';
     '[attr.lang]': "'en'", // NOTE: this page is only available in english
   },
   imports: [
+    MatButtonModule,
     MatIconModule,
     MatSliderModule,
     MatTabsModule,
@@ -33,6 +36,8 @@ import { formatMonth } from './stats.utils';
 })
 export class StatsComponent implements StatsTabData {
   protected router = inject(Router);
+
+  private httpClient = inject(HttpClient);
 
   protected isFrenchLocale = inject(LanguageService).localeId === 'fr';
 
@@ -64,7 +69,11 @@ export class StatsComponent implements StatsTabData {
     details: [],
   });
 
-  private httpClient = inject(HttpClient);
+  protected analyticsUsageUrl = ANALYTICS_USAGE_URL;
+
+  constructor() {
+    this.fetch();
+  }
 
   protected fetch() {
     if (this.status() !== undefined) {
@@ -79,10 +88,6 @@ export class StatsComponent implements StatsTabData {
         this.increaseSentiment();
       }
     });
-  }
-
-  constructor() {
-    this.fetch();
   }
 
   private formattedMonths = computed(() =>

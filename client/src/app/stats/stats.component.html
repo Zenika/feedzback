@@ -47,6 +47,12 @@
       }
     </mat-tab>
   </mat-tab-group>
+
+  <p class="mt-6! text-center">
+    <a mat-stroked-button [href]="analyticsUsageUrl" target="_blank">
+      Full analytics report <mat-icon iconPositionEnd>bar_chart</mat-icon>
+    </a>
+  </p>
 }
 
 @if (status() === 'noDataYet' || status() === 'fetching') {
