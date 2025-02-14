@@ -1,5 +1,5 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { Component, ViewEncapsulation, effect, inject, input } from '@angular/core';
+import { Component, ViewEncapsulation, afterNextRender, inject, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -45,31 +45,26 @@ export class GiveFeedbackDetailsComponent {
   comment = input.required<FormControl<string>>();
 
   constructor() {
-    const effectRef = effect(
-      () => {
-        this.context().addValidators([Validators.maxLength(this.contextMaxLength)]);
-        this.context().updateValueAndValidity();
+    afterNextRender(() => {
+      this.context().addValidators([Validators.maxLength(this.contextMaxLength)]);
+      this.context().updateValueAndValidity();
 
-        this.positive().addValidators([
-          Validators.required,
-          isNotBlankValidator,
-          Validators.maxLength(this.feedbackMaxLength),
-        ]);
-        this.positive().updateValueAndValidity();
+      this.positive().addValidators([
+        Validators.required,
+        isNotBlankValidator,
+        Validators.maxLength(this.feedbackMaxLength),
+      ]);
+      this.positive().updateValueAndValidity();
 
-        this.negative().addValidators([
-          Validators.required,
-          isNotBlankValidator,
-          Validators.maxLength(this.feedbackMaxLength),
-        ]);
-        this.negative().updateValueAndValidity();
+      this.negative().addValidators([
+        Validators.required,
+        isNotBlankValidator,
+        Validators.maxLength(this.feedbackMaxLength),
+      ]);
+      this.negative().updateValueAndValidity();
 
-        this.comment().addValidators([Validators.maxLength(this.commentMaxLength)]);
-        this.comment().updateValueAndValidity();
-
-        effectRef.destroy();
-      },
-      { manualCleanup: true },
-    );
+      this.comment().addValidators([Validators.maxLength(this.commentMaxLength)]);
+      this.comment().updateValueAndValidity();
+    });
   }
 }

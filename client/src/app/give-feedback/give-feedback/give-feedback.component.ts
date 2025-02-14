@@ -97,7 +97,7 @@ export class GiveFeedbackComponent implements LeaveForm {
   protected hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   constructor() {
-    this.leaveFormService.registerForm(this.form);
+    this.leaveFormService.register(this.form, 'giveFeedback').restoreFromLocalStorage();
 
     this.giveFeedbackDraftService.applyDraft$
       .pipe(
@@ -113,7 +113,7 @@ export class GiveFeedbackComponent implements LeaveForm {
       .subscribe((draft) => {
         this.form.patchValue(draft);
         this.form.updateValueAndValidity();
-        this.leaveFormService.takeSnapshot();
+        this.leaveFormService.markAsPristine();
       });
 
     effect(() => {
@@ -155,7 +155,6 @@ export class GiveFeedbackComponent implements LeaveForm {
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
-        this.leaveFormService.unregisterForm();
         this.navigateToSuccess();
       }
     });
@@ -175,7 +174,7 @@ export class GiveFeedbackComponent implements LeaveForm {
       },
       complete: () => {
         this.disableForm(false);
-        this.leaveFormService.takeSnapshot();
+        this.leaveFormService.markAsPristine();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });

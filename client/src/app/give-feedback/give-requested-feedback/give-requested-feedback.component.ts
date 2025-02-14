@@ -1,12 +1,15 @@
 import { Component, ViewEncapsulation, effect, inject, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { AuthService } from '../../shared/auth';
+import { DialogComponent, DialogData } from '../../shared/dialog';
 import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
 import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
 import { LeaveForm, LeaveFormService } from '../../shared/dialog/leave-form';
@@ -50,6 +53,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private activatedRoute = inject(ActivatedRoute);
 
+  private matDialog = inject(MatDialog);
+
   private formBuilder = inject(NonNullableFormBuilder);
 
   protected anonymous = inject(AuthService).userStatus().anonymous;
@@ -74,16 +79,40 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   feedbackId?: string;
 
   constructor() {
-    this.leaveFormService.registerForm(this.form);
+    this.leaveFormService.register(this.form, 'giveRequestedFeedback');
 
     const effectRef = effect(
       () => {
         const draft = this.draft();
-        if (draft) {
-          this.form.patchValue(draft);
-          this.form.updateValueAndValidity();
-          this.leaveFormService.takeSnapshot();
+
+        if (!draft) {
+          this.leaveFormService.restoreFromLocalStorage(); // restore from local storage if any...
+        } else {
+          const applyDraft = () => {
+            this.form.patchValue(draft);
+            this.form.updateValueAndValidity();
+            this.leaveFormService.markAsPristine();
+          };
+
+          if (this.leaveFormService.hasLocalStorage()) {
+            const data: DialogData = { title: 'Do you want to restore the draft from your local storage?' };
+
+            this.matDialog
+              .open(DialogComponent, { data, width: '480px' })
+              .afterClosed()
+              .pipe(map((useStorage?: boolean) => (useStorage === undefined ? false : useStorage)))
+              .subscribe((useStorage) => {
+                if (useStorage) {
+                  this.leaveFormService.restoreFromLocalStorage();
+                } else {
+                  applyDraft();
+                }
+              });
+          } else {
+            applyDraft();
+          }
         }
+
         effectRef.destroy();
       },
       { manualCleanup: true },
@@ -106,7 +135,6 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
           this.notificationService.showError();
         } else {
           this.giveRequestedFeedbackListService.refresh();
-          this.leaveFormService.unregisterForm();
           this.feedbackId = this.anonymous ? undefined : this.request()?.id;
           this.navigateToSuccess();
         }
@@ -122,7 +150,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);
-        this.leaveFormService.takeSnapshot();
+        this.leaveFormService.markAsPristine();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });
