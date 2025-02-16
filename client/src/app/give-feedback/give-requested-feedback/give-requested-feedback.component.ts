@@ -1,3 +1,4 @@
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, ViewEncapsulation, effect, inject, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -105,7 +106,14 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
             };
 
             this.matDialog
-              .open(DialogComponent, { data, width: '480px' })
+              .open(DialogComponent, {
+                data,
+                width: '480px',
+
+                // WARNING: using the default `BlockScrollStrategy` crashes the entire UI!
+                //  - more infos: https://github.com/angular/components/issues/28066#issuecomment-2188088705
+                scrollStrategy: new NoopScrollStrategy(),
+              })
               .afterClosed()
               .pipe(map((useStorage?: boolean) => (useStorage === undefined ? false : useStorage)))
               .subscribe((useStorage) => {
