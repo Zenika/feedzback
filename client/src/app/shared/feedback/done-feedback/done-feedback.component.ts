@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { ConfirmBeforeSubmitDirective } from '../../dialog/confirm-before-submit';
+import { ConfirmBeforeSubmitDirective } from '../../confirm-before-submit';
 import { NotificationService } from '../../notification';
 import { FeedbackBodyComponent } from '../feedback-body/feedback-body.component';
 import { FeedbackTypeIconPipe } from '../feedback-type-icon.pipe';

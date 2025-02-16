@@ -4,12 +4,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, fromEvent, map, Observable, of } from 'rxjs';
-import { DialogComponent, DialogData } from '..';
-import { LoadingService } from '../../loading';
+import { DialogComponent, DialogData } from '../dialog';
+import { LoadingService } from '../loading';
 import { leaveFormMap } from './leave-form.config';
 import { LeaveFormConfig } from './leave-form.types';
 
 // TODO: rename to UnsavedFormService
+// TODO: add E2E tests
 
 @Injectable()
 export class LeaveFormService {

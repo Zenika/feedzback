@@ -1,4 +1,4 @@
-import { DialogData } from '..';
+import { DialogData } from '../dialog';
 import { LeaveFormService } from './leave-form.service';
 
 export type LeaveForm = {

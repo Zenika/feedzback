@@ -11,12 +11,12 @@ import { filter, map, switchMap } from 'rxjs';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { BreakpointService } from '../../shared/breakpoint';
+import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
 import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
-import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
-import { LeaveForm, LeaveFormService } from '../../shared/dialog/leave-form';
 import { FeedbackService } from '../../shared/feedback';
 import { IconDirective } from '../../shared/icon';
 import { NotificationService } from '../../shared/notification';
+import { LeaveForm, LeaveFormService } from '../../shared/unsaved-form';
 import {
   ALLOWED_EMAIL_DOMAINS,
   allowedEmailDomainsValidatorFactory,
