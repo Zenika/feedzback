@@ -22,6 +22,8 @@ import { GiveRequestedFeedbackListService } from '../give-requested-feedback-lis
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
 
+// FIXME: et si la personne a des changements local storage qui correspondent à un autre feedzback ?
+
 @Component({
   selector: 'app-give-requested-feedback',
   imports: [
@@ -95,7 +97,12 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
           };
 
           if (this.unsavedFormService.hasLocalStorage()) {
-            const data: DialogData = { title: 'Do you want to restore the draft from your local storage?' };
+            const data: DialogData = {
+              title: $localize`:@@Component.GiveRequestedFeedback.RestoreTitle:Restaurer ?`,
+              content: $localize`:@@Component.GiveRequestedFeedback.RestoreContent:Nous avons trouvé des modifications non sauvegardées dans votre stockage local.`,
+              cancel: { label: $localize`:@@Action.Discard:Abandonner` },
+              confirm: { label: $localize`:@@Action.Restore:Restaurer`, icon: 'restore_page' },
+            };
 
             this.matDialog
               .open(DialogComponent, { data, width: '480px' })

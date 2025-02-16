@@ -28,7 +28,7 @@ export class UnsavedFormService {
 
   private readonly storageKeyPrefix = 'unsavedForm.';
 
-  private pristineFormValue?: string;
+  private initialFormValue?: string;
 
   // ----- Core -----
 
@@ -36,7 +36,7 @@ export class UnsavedFormService {
     this.form = form;
     this.storageKey = storageKey;
 
-    this.pristineFormValue = this.stringifyFormValue();
+    this.initialFormValue = this.stringifyFormValue();
 
     this.saveWhenLeaving();
     return this; // allow chaining
@@ -83,7 +83,7 @@ export class UnsavedFormService {
       return;
     }
 
-    if (storageValue === this.pristineFormValue) {
+    if (storageValue === this.initialFormValue) {
       this.storage(null);
     } else {
       this.storage(storageValue);
