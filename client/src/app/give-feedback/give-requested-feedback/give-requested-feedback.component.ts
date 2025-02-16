@@ -16,7 +16,7 @@ import { FeedbackService, FeedbackTypeIconPipe } from '../../shared/feedback';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { MessageComponent } from '../../shared/message';
 import { NotificationService } from '../../shared/notification';
-import { LeaveForm, LeaveFormService } from '../../shared/unsaved-form';
+import { UnsavedForm, UnsavedFormService } from '../../shared/unsaved-form';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
@@ -37,12 +37,12 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     MessageComponent,
     GiveFeedbackDetailsComponent,
   ],
-  providers: [LeaveFormService],
+  providers: [UnsavedFormService],
   templateUrl: './give-requested-feedback.component.html',
   styleUrl: './give-requested-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm {
+export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, UnsavedForm {
   token = input.required<string>();
 
   request = input.required<FeedbackRequest>();
@@ -65,7 +65,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private notificationService = inject(NotificationService);
 
-  leaveFormService = inject(LeaveFormService);
+  unsavedFormService = inject(UnsavedFormService);
 
   form = this.formBuilder.group({
     context: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -79,22 +79,22 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   feedbackId?: string;
 
   constructor() {
-    this.leaveFormService.register(this.form, 'giveRequestedFeedback');
+    this.unsavedFormService.register(this.form, 'giveRequestedFeedback');
 
     const effectRef = effect(
       () => {
         const draft = this.draft();
 
         if (!draft) {
-          this.leaveFormService.restoreFromLocalStorage(); // restore from local storage if any...
+          this.unsavedFormService.restoreFromLocalStorage(); // restore from local storage if any...
         } else {
           const applyDraft = () => {
             this.form.patchValue(draft);
             this.form.updateValueAndValidity();
-            this.leaveFormService.markAsPristine();
+            this.unsavedFormService.markAsPristine();
           };
 
-          if (this.leaveFormService.hasLocalStorage()) {
+          if (this.unsavedFormService.hasLocalStorage()) {
             const data: DialogData = { title: 'Do you want to restore the draft from your local storage?' };
 
             this.matDialog
@@ -103,7 +103,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
               .pipe(map((useStorage?: boolean) => (useStorage === undefined ? false : useStorage)))
               .subscribe((useStorage) => {
                 if (useStorage) {
-                  this.leaveFormService.restoreFromLocalStorage();
+                  this.unsavedFormService.restoreFromLocalStorage();
                 } else {
                   applyDraft();
                 }
@@ -150,7 +150,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);
-        this.leaveFormService.markAsPristine();
+        this.unsavedFormService.markAsPristine();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });

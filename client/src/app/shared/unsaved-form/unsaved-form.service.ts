@@ -6,14 +6,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { filter, fromEvent, map, Observable, of } from 'rxjs';
 import { DialogComponent, DialogData } from '../dialog';
 import { LoadingService } from '../loading';
-import { leaveFormMap } from './leave-form.config';
-import { LeaveFormConfig } from './leave-form.types';
+import { unsavedFormMap } from './unsaved-form.config';
+import { UnsavedFormConfig } from './unsaved-form.types';
 
 // TODO: rename to UnsavedFormService
 // TODO: add E2E tests
 
 @Injectable()
-export class LeaveFormService {
+export class UnsavedFormService {
   private document = inject(DOCUMENT);
 
   private destroyRef = inject(DestroyRef);
@@ -26,7 +26,7 @@ export class LeaveFormService {
 
   private storageKey?: string;
 
-  private readonly storageKeyPrefix = 'leaveForm.';
+  private readonly storageKeyPrefix = 'unsavedForm.';
 
   private pristineFormValue?: string;
 
@@ -67,7 +67,7 @@ export class LeaveFormService {
         this.form?.markAsDirty();
         return true;
       } catch {
-        console.error('LeaveFormService: unable to restore form value.');
+        console.error('UnsavedFormService: unable to restore form value.');
       }
     }
     return false;
@@ -131,16 +131,16 @@ export class LeaveFormService {
 
   // ----- Dialog -----
 
-  canLeave(config: LeaveFormConfig): Observable<boolean> {
+  canLeave(config: UnsavedFormConfig): Observable<boolean> {
     if (this.isPristine()) {
       return of(true);
     }
 
     // Note: we don't want 2 popups displayed at the same time!
-    // So, let's skip the loading overlay in favor of the leave-form dialog
+    // So, let's skip the loading overlay in favor of the unsaved-form dialog
     this.loadingService.flush();
 
-    const data: DialogData = typeof config === 'string' ? leaveFormMap[config] : config;
+    const data: DialogData = typeof config === 'string' ? unsavedFormMap[config] : config;
 
     return this.matDialog
       .open(DialogComponent, { data, width: '480px' })
@@ -159,6 +159,6 @@ export class LeaveFormService {
   }
 
   private logError() {
-    console.error('LeaveFormService: you first need to register a form and a storageKey.');
+    console.error('UnsavedFormService: you first need to register a form and a storageKey.');
   }
 }

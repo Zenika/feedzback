@@ -16,7 +16,7 @@ import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
 import { FeedbackService } from '../../shared/feedback';
 import { IconDirective } from '../../shared/icon';
 import { NotificationService } from '../../shared/notification';
-import { LeaveForm, LeaveFormService } from '../../shared/unsaved-form';
+import { UnsavedForm, UnsavedFormService } from '../../shared/unsaved-form';
 import {
   ALLOWED_EMAIL_DOMAINS,
   allowedEmailDomainsValidatorFactory,
@@ -43,11 +43,11 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
   ],
-  providers: [LeaveFormService],
+  providers: [UnsavedFormService],
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements LeaveForm {
+export class GiveFeedbackComponent implements UnsavedForm {
   draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
 
   private router = inject(Router);
@@ -64,7 +64,7 @@ export class GiveFeedbackComponent implements LeaveForm {
 
   private notificationService = inject(NotificationService);
 
-  leaveFormService = inject(LeaveFormService);
+  unsavedFormService = inject(UnsavedFormService);
 
   protected device = toSignal(inject(BreakpointService).device$);
 
@@ -97,14 +97,14 @@ export class GiveFeedbackComponent implements LeaveForm {
   protected hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   constructor() {
-    this.leaveFormService.register(this.form, 'giveFeedback').restoreFromLocalStorage();
+    this.unsavedFormService.register(this.form, 'giveFeedback').restoreFromLocalStorage();
 
     this.giveFeedbackDraftService.applyDraft$
       .pipe(
         takeUntilDestroyed(),
         switchMap((draft) => {
           this.closeDraftDialog();
-          return this.leaveFormService.canLeave('applyFeedbackDraft').pipe(
+          return this.unsavedFormService.canLeave('applyFeedbackDraft').pipe(
             filter((canLeave) => canLeave),
             map(() => draft),
           );
@@ -113,7 +113,7 @@ export class GiveFeedbackComponent implements LeaveForm {
       .subscribe((draft) => {
         this.form.patchValue(draft);
         this.form.updateValueAndValidity();
-        this.leaveFormService.markAsPristine();
+        this.unsavedFormService.markAsPristine();
       });
 
     effect(() => {
@@ -174,7 +174,7 @@ export class GiveFeedbackComponent implements LeaveForm {
       },
       complete: () => {
         this.disableForm(false);
-        this.leaveFormService.markAsPristine();
+        this.unsavedFormService.markAsPristine();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });
