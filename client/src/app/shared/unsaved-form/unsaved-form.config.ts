@@ -1,7 +1,7 @@
 import { DialogData } from '../dialog';
-import { UnsavedFormType } from './unsaved-form.types';
+import { UnsavedFormDialogType } from './unsaved-form.types';
 
-export const unsavedFormMap: Record<UnsavedFormType, DialogData> = {
+export const unsavedFormDialogMap: Record<UnsavedFormDialogType, DialogData> = {
   /** @deprecated */
   quitFeedback: {
     title: $localize`:@@Component.UnsavedForm.QuitFeedbackTitle:Quitter la page ?`,

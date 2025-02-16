@@ -6,10 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { filter, fromEvent, map, Observable, of } from 'rxjs';
 import { DialogComponent, DialogData } from '../dialog';
 import { LoadingService } from '../loading';
-import { unsavedFormMap } from './unsaved-form.config';
-import { UnsavedFormConfig } from './unsaved-form.types';
+import { unsavedFormDialogMap } from './unsaved-form.config';
+import { UnsavedFormConfig, UnsavedFormDialogConfig } from './unsaved-form.types';
 
-// TODO: rename to UnsavedFormService
 // TODO: add E2E tests
 
 @Injectable()
@@ -32,14 +31,15 @@ export class UnsavedFormService {
 
   // ----- Core -----
 
-  register(form: AbstractControl, storageKey: string) {
+  register({ form, storageKey, saveWhenLeaving }: UnsavedFormConfig) {
     this.form = form;
     this.storageKey = storageKey;
 
     this.initialFormValue = this.stringifyFormValue();
 
-    this.saveWhenLeaving();
-    return this; // allow chaining
+    if (saveWhenLeaving) {
+      this.saveWhenLeaving();
+    }
   }
 
   markAsPristine() {
@@ -131,7 +131,7 @@ export class UnsavedFormService {
 
   // ----- Dialog -----
 
-  canLeave(config: UnsavedFormConfig): Observable<boolean> {
+  canLeave(config: UnsavedFormDialogConfig): Observable<boolean> {
     if (this.isPristine()) {
       return of(true);
     }
@@ -140,7 +140,7 @@ export class UnsavedFormService {
     // So, let's skip the loading overlay in favor of the unsaved-form dialog
     this.loadingService.flush();
 
-    const data: DialogData = typeof config === 'string' ? unsavedFormMap[config] : config;
+    const data: DialogData = typeof config === 'string' ? unsavedFormDialogMap[config] : config;
 
     return this.matDialog
       .open(DialogComponent, { data, width: '480px' })

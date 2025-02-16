@@ -16,7 +16,7 @@ import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
 import { FeedbackService } from '../../shared/feedback';
 import { IconDirective } from '../../shared/icon';
 import { NotificationService } from '../../shared/notification';
-import { UnsavedForm, UnsavedFormService } from '../../shared/unsaved-form';
+import { UnsavedFormGuard, UnsavedFormService } from '../../shared/unsaved-form';
 import {
   ALLOWED_EMAIL_DOMAINS,
   allowedEmailDomainsValidatorFactory,
@@ -47,7 +47,7 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements UnsavedForm {
+export class GiveFeedbackComponent implements UnsavedFormGuard {
   draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
 
   private router = inject(Router);
@@ -97,7 +97,12 @@ export class GiveFeedbackComponent implements UnsavedForm {
   protected hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   constructor() {
-    this.unsavedFormService.register(this.form, 'giveFeedback').restoreFromLocalStorage();
+    this.unsavedFormService.register({
+      form: this.form,
+      storageKey: 'giveFeedback',
+      saveWhenLeaving: true,
+    });
+    this.unsavedFormService.restoreFromLocalStorage();
 
     this.giveFeedbackDraftService.applyDraft$
       .pipe(

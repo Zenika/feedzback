@@ -17,13 +17,11 @@ import { FeedbackService, FeedbackTypeIconPipe } from '../../shared/feedback';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { MessageComponent } from '../../shared/message';
 import { NotificationService } from '../../shared/notification';
-import { UnsavedForm, UnsavedFormService } from '../../shared/unsaved-form';
+import { UnsavedFormGuard, UnsavedFormService } from '../../shared/unsaved-form';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
-
-// FIXME: et si la personne a des changements local storage qui correspondent à un autre feedzback ?
 
 @Component({
   selector: 'app-give-requested-feedback',
@@ -45,7 +43,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
   styleUrl: './give-requested-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, UnsavedForm {
+export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, UnsavedFormGuard {
   token = input.required<string>();
 
   request = input.required<FeedbackRequest>();
@@ -82,7 +80,11 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   feedbackId?: string;
 
   constructor() {
-    this.unsavedFormService.register(this.form, 'giveRequestedFeedback');
+    this.unsavedFormService.register({
+      form: this.form,
+      storageKey: 'giveRequestedFeedback',
+      saveWhenLeaving: true,
+    });
 
     const effectRef = effect(
       () => {

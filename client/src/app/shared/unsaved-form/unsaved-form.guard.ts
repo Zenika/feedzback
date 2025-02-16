@@ -1,9 +1,8 @@
 import { CanDeactivateFn } from '@angular/router';
-import { UnsavedForm, UnsavedFormConfig } from './unsaved-form.types';
+import { UnsavedFormDialogConfig, UnsavedFormGuard } from './unsaved-form.types';
 
-/** @deprecated TODO confirm deprecation? */
 export const unsavedFormGuardFactory =
-  (config: UnsavedFormConfig): CanDeactivateFn<UnsavedForm> =>
+  (config: UnsavedFormDialogConfig): CanDeactivateFn<UnsavedFormGuard> =>
   (component) => {
     return component.unsavedFormService.canLeave(config);
   };
