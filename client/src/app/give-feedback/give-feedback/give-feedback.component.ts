@@ -26,6 +26,7 @@ import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-succ
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
 import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-draft.service';
+import { giveFeedbackDraftDialogData } from './give-feedback.constants';
 
 @Component({
   selector: 'app-give-feedback',
@@ -109,7 +110,7 @@ export class GiveFeedbackComponent implements UnsavedFormGuard {
         takeUntilDestroyed(),
         switchMap((draft) => {
           this.closeDraftDialog();
-          return this.unsavedFormService.canLeave('applyFeedbackDraft').pipe(
+          return this.unsavedFormService.canLeave(giveFeedbackDraftDialogData).pipe(
             filter((canLeave) => canLeave),
             map(() => draft),
           );

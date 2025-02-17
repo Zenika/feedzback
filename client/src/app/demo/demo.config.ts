@@ -9,7 +9,7 @@ import { MessageDemoComponent } from './message-demo/message-demo.component';
 import { NotificationDemoComponent } from './notification-demo/notification-demo.component';
 import { ShadowDemoComponent } from './shadow-demo/shadow-demo.component';
 import { TimelineDemoComponent } from './timeline-demo/timeline-demo.component';
-import { UnsavedFormGuardDemoComponent } from './unsaved-form-guard-demo/unsaved-form-guard-demo.component';
+import { UnsavedFormGuardDemoComponent, unsavedFormGuardDemoDialogData } from './unsaved-form-guard-demo';
 import { UnsavedFormStorageDemoComponent } from './unsaved-form-storage-demo/unsaved-form-storage-demo.component';
 
 export const demoRoutes: Routes = [
@@ -25,7 +25,7 @@ export const demoRoutes: Routes = [
   {
     path: 'unsaved-form-guard',
     component: UnsavedFormGuardDemoComponent,
-    canDeactivate: [unsavedFormGuardFactory('quitFeedback')],
+    canDeactivate: [unsavedFormGuardFactory(unsavedFormGuardDemoDialogData)],
   },
   { path: 'unsaved-form-storage', component: UnsavedFormStorageDemoComponent },
 ];

@@ -6,8 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { filter, fromEvent, map, Observable, of } from 'rxjs';
 import { DialogComponent, DialogData } from '../dialog';
 import { LoadingService } from '../loading';
-import { unsavedFormDialogMap } from './unsaved-form.config';
-import { UnsavedFormConfig, UnsavedFormDialogConfig } from './unsaved-form.types';
+import { UnsavedFormConfig } from './unsaved-form.types';
 
 // TODO: add E2E tests
 
@@ -131,7 +130,7 @@ export class UnsavedFormService {
 
   // ----- Dialog -----
 
-  canLeave(config: UnsavedFormDialogConfig): Observable<boolean> {
+  canLeave(data: DialogData): Observable<boolean> {
     if (this.isPristine()) {
       return of(true);
     }
@@ -139,8 +138,6 @@ export class UnsavedFormService {
     // Note: we don't want 2 popups displayed at the same time!
     // So, let's skip the loading overlay in favor of the unsaved-form dialog
     this.loadingService.flush();
-
-    const data: DialogData = typeof config === 'string' ? unsavedFormDialogMap[config] : config;
 
     return this.matDialog
       .open(DialogComponent, { data, width: '480px' })

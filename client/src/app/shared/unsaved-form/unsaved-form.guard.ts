@@ -1,8 +1,9 @@
 import { CanDeactivateFn } from '@angular/router';
-import { UnsavedFormDialogConfig, UnsavedFormGuard } from './unsaved-form.types';
+import { DialogData } from '../dialog';
+import { UnsavedFormGuard } from './unsaved-form.types';
 
 export const unsavedFormGuardFactory =
-  (config: UnsavedFormDialogConfig): CanDeactivateFn<UnsavedFormGuard> =>
+  (data: DialogData): CanDeactivateFn<UnsavedFormGuard> =>
   (component) => {
-    return component.unsavedFormService.canLeave(config);
+    return component.unsavedFormService.canLeave(data);
   };
