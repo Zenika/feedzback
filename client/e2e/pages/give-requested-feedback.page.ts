@@ -2,7 +2,6 @@ import { Page, expect } from '@playwright/test';
 import { Persona } from './sign-in.page';
 
 type Details = {
-  message: string;
   context: string;
   positive: string;
   negative: string;
@@ -12,22 +11,76 @@ type Details = {
 export class GiveRequestedFeedbackPage {
   constructor(private page: Page) {}
 
-  async give(persona: Persona, details: Details) {
+  async fill(details: Partial<Details>) {
+    await this.page.waitForURL('/fr/give-requested/token/**');
+
+    if (details.context !== undefined) {
+      await this.page.getByRole('textbox', { name: 'Contexte' }).fill(details.context);
+    }
+
+    if (details.positive !== undefined) {
+      await this.page.getByRole('textbox', { name: 'Points forts' }).fill(details.positive);
+    }
+
+    if (details.negative !== undefined) {
+      await this.page.getByRole('textbox', { name: "Axes d'améliorations" }).fill(details.negative);
+    }
+
+    if (details.comment !== undefined) {
+      await this.page.getByRole('textbox', { name: 'Commentaire' }).fill(details.comment);
+    }
+  }
+
+  async expect(persona: Persona, details: Partial<Details>) {
     await this.page.waitForURL('/fr/give-requested/token/**');
 
     await expect(
-      this.page.getByLabel('Email de votre collègue'),
-      'Feedback receiver should be filled in correctly',
+      this.page.getByRole('textbox', { name: 'Email de votre collègue' }),
+      `Feedback receiver should be ${persona ? persona : 'empty'}`,
     ).toHaveValue(persona);
 
-    await this.page.getByText('Contexte').fill(details.context);
-    await this.page.getByText('Points forts').fill(details.positive);
-    await this.page.getByText("Axes d'améliorations").fill(details.negative);
-    await this.page.getByText('Commentaire').fill(details.comment);
+    if (details.context !== undefined) {
+      await expect(
+        this.page.getByRole('textbox', { name: 'Contexte' }),
+        'Feedback "context" should be visible',
+      ).toHaveValue(details.context);
+    }
 
+    if (details.positive !== undefined) {
+      await expect(
+        this.page.getByRole('textbox', { name: 'Points forts' }),
+        'Feedback "positive" should be visible',
+      ).toHaveValue(details.positive);
+    }
+
+    if (details.negative !== undefined) {
+      await expect(
+        this.page.getByRole('textbox', { name: "Axes d'améliorations" }),
+        'Feedback "negative" should be visible',
+      ).toHaveValue(details.negative);
+    }
+
+    if (details.comment !== undefined) {
+      await expect(
+        this.page.getByRole('textbox', { name: 'Commentaire' }),
+        'Feedback "comment" should be visible',
+      ).toHaveValue(details.comment);
+    }
+  }
+
+  async save() {
+    await this.page.getByRole('button', { name: 'Sauvegarder' }).click();
+  }
+
+  async submit() {
     await this.page.getByRole('button', { name: 'Envoyer' }).click();
     await this.page.getByRole('button', { name: 'Confirmer' }).click();
 
     await this.page.waitForURL('/fr/give-requested/success');
+  }
+
+  async fillAndSubmit(details: Details) {
+    await this.fill(details);
+    await this.submit();
   }
 }

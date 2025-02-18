@@ -17,12 +17,12 @@ const feedbackDetails = {
 
 test.beforeEach(({ page }) => new FirestorePage(page).reset());
 
-test('Spontaneous feedback', async ({ page }) => {
+test('Submit spontaneous feedback', async ({ page }) => {
   // ====== Bernard give feedback to Alfred ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Bernard);
 
-  await new GiveSpontaneousFeedbackPage(page).gotoAndGive(Persona.Alfred, feedbackDetails);
+  await new GiveSpontaneousFeedbackPage(page).gotoFillAndSubmit(Persona.Alfred, feedbackDetails);
 
   await expect(page.getByText(Persona.Alfred), 'Feedback receiver should be visible in the success page').toBeVisible();
   await page.getByRole('button', { name: 'Consulter le feedZback' }).click();
