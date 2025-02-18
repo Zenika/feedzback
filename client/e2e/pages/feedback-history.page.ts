@@ -13,12 +13,18 @@ export class FeedbackHistoryPage {
     }
   }
 
-  async findDetailsLink(persona: Persona) {
+  findDetailsLink(persona: Persona) {
+    return this.findLink(persona, 'Consulter');
+  }
+
+  findReplyLink(persona: Persona) {
+    return this.findLink(persona, 'Répondre');
+  }
+
+  private async findLink(persona: Persona, label: 'Consulter' | 'Répondre') {
     // Wait until the the `<table>` is rendered
     await this.page.locator('tbody').waitFor();
 
-    return this.page
-      .locator('tbody > tr', { has: this.page.getByRole('cell', { name: persona }) })
-      .getByLabel('Consulter');
+    return this.page.locator('tbody > tr', { has: this.page.getByRole('cell', { name: persona }) }).getByLabel(label);
   }
 }

@@ -1,19 +1,23 @@
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, ViewEncapsulation, effect, inject, input } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { AuthService } from '../../shared/auth';
+import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
+import { DialogComponent, DialogData } from '../../shared/dialog';
 import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
-import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
-import { LeaveForm, LeaveFormService } from '../../shared/dialog/leave-form';
 import { FeedbackService, FeedbackTypeIconPipe } from '../../shared/feedback';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { MessageComponent } from '../../shared/message';
 import { NotificationService } from '../../shared/notification';
+import { UnsavedFormGuard, UnsavedFormService } from '../../shared/unsaved-form';
 import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-success.types';
 import { GiveRequestedFeedbackListService } from '../give-requested-feedback-list/give-requested-feedback-list.service';
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
@@ -34,12 +38,12 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     MessageComponent,
     GiveFeedbackDetailsComponent,
   ],
-  providers: [LeaveFormService],
+  providers: [UnsavedFormService],
   templateUrl: './give-requested-feedback.component.html',
   styleUrl: './give-requested-feedback.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, LeaveForm {
+export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData, UnsavedFormGuard {
   token = input.required<string>();
 
   request = input.required<FeedbackRequest>();
@@ -49,6 +53,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
+
+  private matDialog = inject(MatDialog);
 
   private formBuilder = inject(NonNullableFormBuilder);
 
@@ -60,7 +66,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
 
   private notificationService = inject(NotificationService);
 
-  leaveFormService = inject(LeaveFormService);
+  unsavedFormService = inject(UnsavedFormService);
 
   form = this.formBuilder.group({
     context: [''], // Note: validators are defined in `GiveFeedbackDetailsComponent`
@@ -74,16 +80,56 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   feedbackId?: string;
 
   constructor() {
-    this.leaveFormService.registerForm(this.form);
+    this.unsavedFormService.register({
+      form: this.form,
+      storageKey: 'giveRequestedFeedback',
+      saveWhenLeaving: true,
+    });
 
     const effectRef = effect(
       () => {
         const draft = this.draft();
-        if (draft) {
-          this.form.patchValue(draft);
-          this.form.updateValueAndValidity();
-          this.leaveFormService.takeSnapshot();
+
+        if (!draft) {
+          this.unsavedFormService.restoreFromLocalStorage(); // restore from local storage if any...
+        } else {
+          const applyDraft = () => {
+            this.form.patchValue(draft);
+            this.form.updateValueAndValidity();
+            this.unsavedFormService.markAsPristine();
+          };
+
+          if (this.unsavedFormService.hasLocalStorage()) {
+            const data: DialogData = {
+              title: $localize`:@@Component.GiveRequestedFeedback.RestoreTitle:Restaurer ?`,
+              content: $localize`:@@Component.GiveRequestedFeedback.RestoreContent:Nous avons trouvé des modifications non sauvegardées dans votre stockage local.`,
+              cancel: { label: $localize`:@@Action.Discard:Abandonner` },
+              confirm: { label: $localize`:@@Action.Restore:Restaurer`, icon: 'restore_page' },
+            };
+
+            this.matDialog
+              .open(DialogComponent, {
+                data,
+                width: '480px',
+
+                // WARNING: using the default `BlockScrollStrategy` crashes the entire UI!
+                //  - more infos: https://github.com/angular/components/issues/28066#issuecomment-2188088705
+                scrollStrategy: new NoopScrollStrategy(),
+              })
+              .afterClosed()
+              .pipe(map((useStorage?: boolean) => (useStorage === undefined ? false : useStorage)))
+              .subscribe((useStorage) => {
+                if (useStorage) {
+                  this.unsavedFormService.restoreFromLocalStorage();
+                } else {
+                  applyDraft();
+                }
+              });
+          } else {
+            applyDraft();
+          }
         }
+
         effectRef.destroy();
       },
       { manualCleanup: true },
@@ -106,7 +152,6 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
           this.notificationService.showError();
         } else {
           this.giveRequestedFeedbackListService.refresh();
-          this.leaveFormService.unregisterForm();
           this.feedbackId = this.anonymous ? undefined : this.request()?.id;
           this.navigateToSuccess();
         }
@@ -122,7 +167,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);
-        this.leaveFormService.takeSnapshot();
+        this.unsavedFormService.markAsPristine();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });

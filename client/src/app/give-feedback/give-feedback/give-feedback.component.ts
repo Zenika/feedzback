@@ -11,12 +11,12 @@ import { filter, map, switchMap } from 'rxjs';
 import { AuthService } from '../../shared/auth';
 import { AutocompleteEmailComponent } from '../../shared/autocomplete-email';
 import { BreakpointService } from '../../shared/breakpoint';
+import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
 import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
-import { ConfirmBeforeSubmitDirective } from '../../shared/dialog/confirm-before-submit';
-import { LeaveForm, LeaveFormService } from '../../shared/dialog/leave-form';
 import { FeedbackService } from '../../shared/feedback';
 import { IconDirective } from '../../shared/icon';
 import { NotificationService } from '../../shared/notification';
+import { UnsavedFormGuard, UnsavedFormService } from '../../shared/unsaved-form';
 import {
   ALLOWED_EMAIL_DOMAINS,
   allowedEmailDomainsValidatorFactory,
@@ -26,6 +26,7 @@ import { GiveFeedbackSuccess } from '../give-feedback-success/give-feedback-succ
 import { GiveFeedbackDetailsComponent } from '../shared/give-feedback-details/give-feedback-details.component';
 import { GiveFeedbackDraftComponent } from './give-feedback-draft/give-feedback-draft.component';
 import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-draft.service';
+import { giveFeedbackDraftDialogData } from './give-feedback.constants';
 
 @Component({
   selector: 'app-give-feedback',
@@ -43,11 +44,11 @@ import { GiveFeedbackDraftService } from './give-feedback-draft/give-feedback-dr
     GiveFeedbackDetailsComponent,
     GiveFeedbackDraftComponent,
   ],
-  providers: [LeaveFormService],
+  providers: [UnsavedFormService],
   templateUrl: './give-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class GiveFeedbackComponent implements LeaveForm {
+export class GiveFeedbackComponent implements UnsavedFormGuard {
   draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
 
   private router = inject(Router);
@@ -64,7 +65,7 @@ export class GiveFeedbackComponent implements LeaveForm {
 
   private notificationService = inject(NotificationService);
 
-  leaveFormService = inject(LeaveFormService);
+  unsavedFormService = inject(UnsavedFormService);
 
   protected device = toSignal(inject(BreakpointService).device$);
 
@@ -97,14 +98,19 @@ export class GiveFeedbackComponent implements LeaveForm {
   protected hasDraft = this.giveFeedbackDraftService.hasDraft;
 
   constructor() {
-    this.leaveFormService.registerForm(this.form);
+    this.unsavedFormService.register({
+      form: this.form,
+      storageKey: 'giveFeedback',
+      saveWhenLeaving: true,
+    });
+    this.unsavedFormService.restoreFromLocalStorage();
 
     this.giveFeedbackDraftService.applyDraft$
       .pipe(
         takeUntilDestroyed(),
         switchMap((draft) => {
           this.closeDraftDialog();
-          return this.leaveFormService.canLeave('applyFeedbackDraft').pipe(
+          return this.unsavedFormService.canLeave(giveFeedbackDraftDialogData).pipe(
             filter((canLeave) => canLeave),
             map(() => draft),
           );
@@ -113,7 +119,7 @@ export class GiveFeedbackComponent implements LeaveForm {
       .subscribe((draft) => {
         this.form.patchValue(draft);
         this.form.updateValueAndValidity();
-        this.leaveFormService.takeSnapshot();
+        this.unsavedFormService.markAsPristine();
       });
 
     effect(() => {
@@ -155,7 +161,6 @@ export class GiveFeedbackComponent implements LeaveForm {
       } else {
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
-        this.leaveFormService.unregisterForm();
         this.navigateToSuccess();
       }
     });
@@ -175,7 +180,7 @@ export class GiveFeedbackComponent implements LeaveForm {
       },
       complete: () => {
         this.disableForm(false);
-        this.leaveFormService.takeSnapshot();
+        this.unsavedFormService.markAsPristine();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });

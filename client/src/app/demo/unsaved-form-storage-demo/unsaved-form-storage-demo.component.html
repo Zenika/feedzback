@@ -1,0 +1,21 @@
+<p class="mb-6!">Tip: fill in the form and navigate to another page (or even reload the page)...</p>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="outline">
+    <mat-label>First name</mat-label>
+    <input matInput [formControl]="form.controls.firstName" />
+  </mat-form-field>
+
+  <br />
+
+  <mat-form-field appearance="outline">
+    <mat-label>Last name</mat-label>
+    <input matInput [formControl]="form.controls.lastName" />
+  </mat-form-field>
+
+  <br />
+
+  <button mat-flat-button>Click on submit and navigate to another page (or even reload the page)...</button>
+</form>
+
+<p class="mt-6!">Form is {{ form.pristine ? 'pristine' : 'dirty' }}.</p>

@@ -9,8 +9,9 @@ import { SettingsPage } from './pages/settings.page';
 import { Persona, SignInPage } from './pages/sign-in.page';
 import { UserMenuPage } from './pages/user-menu.page';
 
+const feedbackMessage = 'Quel est votre feedback ?';
+
 const feedbackDetails = {
-  message: 'Quel est votre feedback ?',
   context: 'On a travaillé ensemble',
   positive: 'Ok',
   negative: 'Ko',
@@ -19,12 +20,12 @@ const feedbackDetails = {
 
 test.beforeEach(({ page }) => new FirestorePage(page).reset());
 
-test('Requested feedback', async ({ page }) => {
+test('Submit requested feedback', async ({ page }) => {
   // ====== Alfred request feedback from Bernard and Charles ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Alfred);
 
-  await new RequestFeedbackPage(page).gotoAndRequest([Persona.Bernard, Persona.Charles], feedbackDetails.message);
+  await new RequestFeedbackPage(page).gotoAndRequest([Persona.Bernard, Persona.Charles], feedbackMessage);
 
   await expect(page.getByText(Persona.Bernard), 'Recipient should be visible in the success page').toBeVisible();
   await expect(page.getByText(Persona.Charles), 'Recipient should be visible in the success page').toBeVisible();
@@ -42,11 +43,11 @@ test('Requested feedback', async ({ page }) => {
   // Let's focus on Bernard
   await bernardDetailsLink.click();
 
-  await new FeedbackHistoryDetailsPage(page).matchPending('sentRequest', Persona.Bernard, feedbackDetails.message);
+  await new FeedbackHistoryDetailsPage(page).matchPending('sentRequest', Persona.Bernard, feedbackMessage);
 
   await new UserMenuPage(page).signOut();
 
-  // ====== Bernard replies to Alfred request ======
+  // ====== Bernard replies to Alfred's request ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Bernard);
 
@@ -60,11 +61,13 @@ test('Requested feedback', async ({ page }) => {
   ).toBeVisible();
   await alfredDetailsLink.click();
 
-  await new FeedbackHistoryDetailsPage(page).matchPending('receivedRequest', Persona.Alfred, feedbackDetails.message);
+  await new FeedbackHistoryDetailsPage(page).matchPending('receivedRequest', Persona.Alfred, feedbackMessage);
 
   await page.getByRole('button', { name: 'Répondre', exact: true }).click();
 
-  await new GiveRequestedFeedbackPage(page).give(Persona.Alfred, feedbackDetails);
+  const feedbackPage = new GiveRequestedFeedbackPage(page);
+  await feedbackPage.expect(Persona.Alfred, {});
+  await feedbackPage.fillAndSubmit(feedbackDetails);
 
   await expect(page.getByText(Persona.Alfred), 'Feedback receiver should be visible in the success page').toBeVisible();
   await page.getByRole('button', { name: 'Consulter le feedZback' }).click();
@@ -115,5 +118,5 @@ test('Requested feedback', async ({ page }) => {
   const charlesDetailsLink2 = await managerPage.findGiverDetailsLink(Persona.Charles);
   await expect(charlesDetailsLink2, 'Shared feedback (pending) link should be visible').toBeVisible();
   await charlesDetailsLink2.click();
-  await managerPage.matchPendingFeedback(Persona.Charles, Persona.Alfred, feedbackDetails.message);
+  await managerPage.matchPendingFeedback(Persona.Charles, Persona.Alfred, feedbackMessage);
 });

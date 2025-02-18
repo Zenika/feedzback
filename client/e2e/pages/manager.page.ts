@@ -2,7 +2,7 @@ import { Page, expect } from '@playwright/test';
 import { Persona } from './sign-in.page';
 
 type Details = {
-  message?: string; // note: there's no message for spontaneous feedback
+  message?: string; // note: optional because there's no "message" for spontaneous feedback
   context: string;
   positive: string;
   negative: string;

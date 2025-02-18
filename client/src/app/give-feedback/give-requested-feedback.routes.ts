@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../shared/auth';
-import { leaveFormGuardFactory } from '../shared/dialog/leave-form';
 import { GiveFeedbackSuccessComponent } from './give-feedback-success/give-feedback-success.component';
 import { GiveRequestedFeedbackListComponent } from './give-requested-feedback-list/give-requested-feedback-list.component';
 import { GiveRequestedFeedbackComponent } from './give-requested-feedback/give-requested-feedback.component';
@@ -17,7 +16,6 @@ const giveRequestedFeedbackRoutes: Routes = [
     path: 'token/:token',
     component: GiveRequestedFeedbackComponent,
     canActivate: [giveRequestedFeedbackGuard],
-    canDeactivate: [leaveFormGuardFactory('quitFeedback')],
     title: 'FeedZback - ' + $localize`:@@Title.GiveRequestedFeedback: Répondre à une demande de feedZback `,
   },
   {
