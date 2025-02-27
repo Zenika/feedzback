@@ -1,25 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { Injectable, computed } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Versions } from './versions.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VersionService {
-  private httpClient = inject(HttpClient);
+  private serverAppVersionResource = httpResource<{ appVersion: string }>(`${environment.apiBaseUrl}/version`);
 
-  readonly clientAppVersion = environment.appVersion;
+  versions = computed<Versions>(() => {
+    const client = environment.appVersion;
 
-  serverAppVersion?: string;
+    const server = this.serverAppVersionResource.value()?.appVersion;
+    if (server === undefined) {
+      return { client };
+    }
 
-  private _versionsMismatch = signal<boolean | undefined>(undefined);
-
-  versionsMismatch = this._versionsMismatch.asReadonly();
-
-  constructor() {
-    this.httpClient.get<{ appVersion: string }>(`${environment.apiBaseUrl}/version`).subscribe((server) => {
-      this.serverAppVersion = server.appVersion;
-      this._versionsMismatch.set(this.serverAppVersion !== this.clientAppVersion);
-    });
-  }
+    return { client, server, mismatch: client !== server };
+  });
 }

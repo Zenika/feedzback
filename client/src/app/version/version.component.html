@@ -1,11 +1,11 @@
 <span
   role="presentation"
   class="app-version__value"
-  [class.app-version__value--mismatch]="versionsMismatch()"
-  [matTooltip]="tooltip()"
+  [class.app-version__value--mismatch]="versions().mismatch"
+  [matTooltip]="serverVersionMismatchTooltip()"
   (click)="toClipboard()"
 >
-  {{ clientAppVersion }}
+  {{ versions().client }}
 
   @if (envAlias) {
     ({{ envAlias }})

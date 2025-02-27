@@ -13,14 +13,10 @@ import { VersionService } from './version.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class VersionComponent {
-  private versionService = inject(VersionService);
+  protected versions = inject(VersionService).versions;
 
-  protected readonly clientAppVersion = this.versionService.clientAppVersion;
-
-  protected versionsMismatch = this.versionService.versionsMismatch;
-
-  protected tooltip = computed(() =>
-    this.versionsMismatch() ? `🚨 Server version: ${this.versionService.serverAppVersion}` : '',
+  protected serverVersionMismatchTooltip = computed(() =>
+    this.versions().mismatch ? `🚨 Server version mismatch: ${this.versions().server}` : '',
   );
 
   protected envAlias = environment.alias;
@@ -28,6 +24,6 @@ export class VersionComponent {
   private document = inject(DOCUMENT);
 
   toClipboard() {
-    this.document.defaultView?.navigator.clipboard.writeText(this.clientAppVersion);
+    this.document.defaultView?.navigator.clipboard.writeText(this.versions().client);
   }
 }
