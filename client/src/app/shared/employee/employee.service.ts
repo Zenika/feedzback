@@ -40,21 +40,16 @@ export class EmployeeService {
   }
 
   private fetchData() {
-    return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, {
-        headers,
-        // This request is executed when the page is loaded and is used initially to control the display of the
-        // "Manager" link in the header. This should not block the UI because of the loading spinner.
-        context: new HttpContext().set(BYPASS_LOADING, true),
-      }),
-    );
+    return this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, {
+      // This request is executed when the page is loaded and is used initially to control the display of the
+      // "Manager" link in the header. This should not block the UI because of the loading spinner.
+      context: new HttpContext().set(BYPASS_LOADING, true),
+    });
   }
 
   updateManager(managerEmail: string) {
-    return this.authService.withBearerIdToken((headers) =>
-      this.httpClient
-        .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
-        .pipe(tap(() => this._data.update((data) => updateEmployeeData(data, { managerEmail })))),
-    );
+    return this.httpClient
+      .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto)
+      .pipe(tap(() => this._data.update((data) => updateEmployeeData(data, { managerEmail }))));
   }
 }

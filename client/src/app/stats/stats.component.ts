@@ -6,6 +6,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { BYPASS_AUTHORIZATION_CONTEXT } from '../shared/auth';
 import { LanguageService } from '../shared/i18n/language';
 import { MessageComponent } from '../shared/message';
 import { StatsDetailsComponent } from './stats-details/stats-details.component';
@@ -79,15 +80,17 @@ export class StatsComponent implements StatsTabData {
     if (this.status() !== undefined) {
       this.status.set('fetching');
     }
-    this.httpClient.get<FeedbackStatsData>(`${environment.apiBaseUrl}/feedback-stats`).subscribe((data) => {
-      const hasData = data.details.length > 0;
-      this.status.set(hasData ? 'fetched' : 'noDataYet');
-      if (hasData) {
-        this.data.set(data);
-      } else {
-        this.increaseSentiment();
-      }
-    });
+    this.httpClient
+      .get<FeedbackStatsData>(`${environment.apiBaseUrl}/feedback-stats`, { context: BYPASS_AUTHORIZATION_CONTEXT })
+      .subscribe((data) => {
+        const hasData = data.details.length > 0;
+        this.status.set(hasData ? 'fetched' : 'noDataYet');
+        if (hasData) {
+          this.data.set(data);
+        } else {
+          this.increaseSentiment();
+        }
+      });
   }
 
   private formattedMonths = computed(() =>

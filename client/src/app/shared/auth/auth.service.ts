@@ -10,7 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
-import { Observable, catchError, concatMap, filter, first, from, map, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, concatMap, filter, first, from, map, of, tap } from 'rxjs';
 import { FirebaseService } from '../firebase';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 import { UserStatus } from './auth.types';
@@ -111,12 +111,5 @@ export class AuthService {
 
   getIdToken(): Observable<string | null> {
     return from(this._user()?.getIdToken() ?? Promise.resolve(null));
-  }
-
-  withBearerIdToken<T>(requestFactory: (headers: { Authorization: string }) => Observable<T>) {
-    return this.getIdToken().pipe(
-      map((idToken) => ({ Authorization: `Bearer ${idToken}` })),
-      switchMap(requestFactory),
-    );
   }
 }
