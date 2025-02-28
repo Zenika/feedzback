@@ -1,9 +1,8 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../auth/auth.service';
-import { BYPASS_LOADING } from '../loading';
+import { BYPASS_LOADING_CONTEXT } from '../loading';
 import { Person } from './people.types';
 
 @Injectable({
@@ -12,19 +11,14 @@ import { Person } from './people.types';
 export class PeopleService {
   private httpClient = inject(HttpClient);
 
-  private authService = inject(AuthService);
-
   private apiBaseUrl = environment.apiBaseUrl;
 
   search(query: string): Observable<Person[]> {
-    return this.authService
-      .withBearerIdToken((headers) =>
-        this.httpClient.get<Person[]>(`${this.apiBaseUrl}/people/search`, {
-          headers,
-          params: { query },
-          context: new HttpContext().set(BYPASS_LOADING, true),
-        }),
-      )
+    return this.httpClient
+      .get<Person[]>(`${this.apiBaseUrl}/people/search`, {
+        params: { query },
+        context: BYPASS_LOADING_CONTEXT,
+      })
       .pipe(catchError(() => of([])));
   }
 }

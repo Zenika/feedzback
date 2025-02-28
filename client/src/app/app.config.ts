@@ -5,6 +5,7 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withVi
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { provideAuth } from './shared/auth';
+import { authInterceptor } from './shared/auth/auth.interceptor';
 import { provideBaseHref } from './shared/base-href';
 import { provideFirebaseEmulator } from './shared/firebase';
 import { provideLanguage } from './shared/i18n/language';
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions(),
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
-    provideHttpClient(withFetch(), withInterceptors([loadingInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor, loadingInterceptor])),
     provideAnimationsAsync(),
     provideMatPaginatorIntl(),
     provideBaseHref(),

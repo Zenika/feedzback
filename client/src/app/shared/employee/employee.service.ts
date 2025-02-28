@@ -1,10 +1,10 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { EMPTY, filter, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
-import { BYPASS_LOADING } from '../loading';
+import { BYPASS_LOADING_CONTEXT } from '../loading';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData } from './employee.types';
 import { isManager, updateEmployeeData } from './employee.utils';
@@ -40,21 +40,14 @@ export class EmployeeService {
   }
 
   private fetchData() {
-    return this.authService.withBearerIdToken((headers) =>
-      this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, {
-        headers,
-        // This request is executed when the page is loaded and is used initially to control the display of the
-        // "Manager" link in the header. This should not block the UI because of the loading spinner.
-        context: new HttpContext().set(BYPASS_LOADING, true),
-      }),
-    );
+    // This request is executed when the page is loaded and is used initially to control the display of the
+    // "Manager" link in the header. This should not block the UI because of the loading spinner.
+    return this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { context: BYPASS_LOADING_CONTEXT });
   }
 
   updateManager(managerEmail: string) {
-    return this.authService.withBearerIdToken((headers) =>
-      this.httpClient
-        .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto, { headers })
-        .pipe(tap(() => this._data.update((data) => updateEmployeeData(data, { managerEmail })))),
-    );
+    return this.httpClient
+      .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto)
+      .pipe(tap(() => this._data.update((data) => updateEmployeeData(data, { managerEmail }))));
   }
 }
