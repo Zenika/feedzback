@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
+import { LogoBrandComponent } from '../shared/logo-brand';
 import { BurgerComponent } from './burger/burger.component';
 import { MenuComponent } from './menu/menu.component';
 import { NavComponent } from './nav/nav.component';
@@ -11,7 +12,15 @@ import { NavComponent } from './nav/nav.component';
 @Component({
   selector: 'app-header',
   host: { class: 'app-header' },
-  imports: [NgTemplateOutlet, RouterLinkActive, RouterLinkWithHref, BurgerComponent, MenuComponent, NavComponent],
+  imports: [
+    NgTemplateOutlet,
+    RouterLinkActive,
+    RouterLinkWithHref,
+    LogoBrandComponent,
+    BurgerComponent,
+    MenuComponent,
+    NavComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   encapsulation: ViewEncapsulation.None,

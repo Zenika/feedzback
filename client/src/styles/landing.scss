@@ -29,12 +29,13 @@
       left: 0;
     }
 
-    &::before {
-      background-color: var(--mat-sys-surface);
+    &::after {
+      background: radial-gradient(rgb(235, 235, 235, 0) 0%, rgba(235, 235, 235, 1) 75%);
     }
 
-    &::after {
-      background: url(../../public/assets/images/landing-bg.svg) center repeat;
+    &::before {
+      background: url(../../public/assets/images/landing-bg-v2.svg) center repeat;
+
       background-size: 480px;
       opacity: 0.5;
       animation: gblLandingAnim 45s linear infinite;
