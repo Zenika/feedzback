@@ -10,7 +10,7 @@ export const provideSvgIcons = () =>
     const sanitizer = inject(DomSanitizer);
     const baseHref = inject(APP_BASE_HREF);
 
-    // Set font class according to the NPM package installed: "@material-symbols/font-600"
+    // Set font class according to the NPM package installed: "@material-symbols/font-400"
     // Values: 'material-symbols-outlined', 'material-symbols-rounded' or 'material-symbols-sharp'.
     // For more infos: https://fonts.google.com/icons
     iconRegistry.setDefaultFontSetClass('material-symbols-rounded');
