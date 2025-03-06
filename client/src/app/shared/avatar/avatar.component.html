@@ -1,4 +1,4 @@
-@if (!photoUrl()) {
+@if (!hasPhoto()) {
   @if (avatar()?.initial; as initial) {
     {{ initial }}
   } @else {

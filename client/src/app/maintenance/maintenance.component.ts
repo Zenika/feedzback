@@ -3,7 +3,7 @@ import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IconDirective } from '../shared/icon';
-import { LogoComponent } from '../shared/logo';
+import { LogoBrandTextComponent } from '../shared/logo-brand-text';
 
 @Component({
   selector: 'app-maintenance',
@@ -11,7 +11,7 @@ import { LogoComponent } from '../shared/logo';
   templateUrl: './maintenance.component.html',
   styleUrl: './maintenance.component.scss',
   encapsulation: ViewEncapsulation.None,
-  imports: [MatButtonModule, MatIconModule, IconDirective, LogoComponent],
+  imports: [MatButtonModule, MatIconModule, IconDirective, LogoBrandTextComponent],
 })
 export class MaintenanceComponent {
   private document = inject(DOCUMENT);

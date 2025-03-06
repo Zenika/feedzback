@@ -3,7 +3,11 @@
 @if (withGoogleEnabled) {
   <div class="gbl-landing-links">
     <button class="gbl-landing-links__item" type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
-      <mat-icon class="gbl-landing-links__icon rounded-full bg-white" svgIcon="app-icon-google"></mat-icon>
+      <mat-icon
+        class="gbl-landing-links__icon"
+        style="border-radius: 99px; background-color: white"
+        svgIcon="app-icon-google"
+      />
       <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
     </button>
   </div>
@@ -17,4 +21,4 @@
   <app-credentials [disabled]="disabled()" (signIn)="signInWithEmailAndPassword($event.email, $event.password)" />
 }
 
-<app-zenika-logo />
+<app-logo-zenika />

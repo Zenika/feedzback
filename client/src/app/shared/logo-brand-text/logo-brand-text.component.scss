@@ -1,4 +1,4 @@
-.app-logo {
+.app-logo-brand-text {
   display: inline-flex;
   align-items: center;
   font-weight: bold;
@@ -20,12 +20,18 @@
   }
 
   &__z {
+    // Hack: Slightly modify the icon's baseline
+    position: relative;
+    top: 0.5px;
+    // End of Hack
+
     width: 0em;
     animation: appLogoImageAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
 
     @media (prefers-reduced-motion: reduce) {
+      margin-inline: 0.125em;
+      width: 1.5em;
       animation: none;
-      width: 1em;
     }
   }
 }
@@ -47,18 +53,22 @@
 
 @keyframes appLogoImageAnim {
   45% {
+    margin-inline: 0;
     width: 0em;
     opacity: 0;
   }
   50% {
-    width: 1em;
+    margin-inline: 0.125em;
+    width: 1.5em;
     opacity: 1;
   }
   95% {
-    width: 1em;
+    margin-inline: 0.125em;
+    width: 1.5em;
     opacity: 1;
   }
   100% {
+    margin-inline: 0;
     width: 0em;
     opacity: 0;
   }

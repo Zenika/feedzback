@@ -13,6 +13,10 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     line-height: 0;
   }
 
+  &__logo-img {
+    width: 160px;
+  }
+
   &__burger {
     z-index: 99;
   }
