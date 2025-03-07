@@ -10,15 +10,17 @@ $show-analytics: false;
     }
   }
 
+  @include app.media-breakpoint-up(sm) {
+    &__link {
+      flex-basis: 200px;
+    }
+  }
+
   &__guide {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--mat-sys-level1);
-    border: 1px solid var(--mat-sys-tertiary-container);
-    background-color: var(--mat-sys-on-tertiary);
+
     text-wrap: balance;
 
     @include app.media-breakpoint-down(sm) {

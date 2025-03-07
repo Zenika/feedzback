@@ -24,12 +24,14 @@
   }
 
   &__title {
+    font: var(--mat-sys-headline-small);
+    letter-spacing: var(--mat-sys-headline-small-tracking);
     text-wrap: balance;
   }
 
   &__buttons {
-    width: 100%;
-    display: flex;
+    align-self: normal; // as flex item
+    display: flex; // as flex box
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 1.5rem;

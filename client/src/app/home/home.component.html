@@ -1,13 +1,13 @@
 <h1 class="gbl-landing__title" i18n="@@Title.AppTagline">Demandez et donnez du feedback à vos collègues</h1>
 
 <div class="gbl-landing-links">
-  <button class="gbl-landing-links__item" style="flex-basis: 28%" routerLink="/request">
-    <mat-icon class="gbl-landing-links__icon">contact_support</mat-icon>
+  <button mat-flat-button class="app-home__link" routerLink="/request">
+    <mat-icon>contact_support</mat-icon>
     <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
   </button>
 
-  <button class="gbl-landing-links__item" style="flex-basis: 28%" routerLink="/give">
-    <mat-icon class="gbl-landing-links__icon">chat</mat-icon>
+  <button mat-flat-button class="app-home__link" routerLink="/give">
+    <mat-icon>chat</mat-icon>
     <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
   </button>
 </div>

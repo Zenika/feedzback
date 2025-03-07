@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatDividerModule } from '@angular/material/divider';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
@@ -14,7 +13,6 @@ import { NavComponent } from './nav/nav.component';
   selector: 'app-header',
   host: { class: 'app-header' },
   imports: [
-    MatDividerModule,
     RouterLinkActive,
     RouterLinkWithHref,
     LogoBrandComponent,

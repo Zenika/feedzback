@@ -2,12 +2,8 @@
 
 @if (withGoogleEnabled) {
   <div class="gbl-landing-links">
-    <button class="gbl-landing-links__item" type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
-      <mat-icon
-        class="gbl-landing-links__icon"
-        style="border-radius: 99px; background-color: white"
-        svgIcon="app-icon-google"
-      />
+    <button mat-flat-button type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
+      <mat-icon svgIcon="app-icon-google" style="border-radius: 99px; background-color: white" />
       <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
     </button>
   </div>
