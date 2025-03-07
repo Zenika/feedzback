@@ -18,7 +18,7 @@
   </button>
 }
 
-<mat-menu #menu="matMenu" xPosition="before" class="gbl-overlay-menu">
+<mat-menu #menu="matMenu" xPosition="before" class="app-menu__hidden-on-mobile gbl-overlay-menu">
   <button mat-menu-item (click)="languageService.switchLanguage()">
     <mat-icon class="gbl-sys-primary">translate</mat-icon>
     @switch (languageService.localeId) {

@@ -1,10 +1,12 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, viewChild, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../shared/auth/auth.service';
 import { AvatarComponent } from '../../shared/avatar';
+import { BreakpointService } from '../../shared/breakpoint';
 import { LanguageService } from '../../shared/i18n/language';
 import { ThemeService } from '../../shared/theme';
 
@@ -25,6 +27,18 @@ export class MenuComponent {
   protected languageService = inject(LanguageService);
 
   protected themeService = inject(ThemeService);
+
+  private matMenuTrigger = viewChild.required(MatMenuTrigger);
+
+  constructor() {
+    inject(BreakpointService)
+      .device$.pipe(takeUntilDestroyed())
+      .subscribe((device) => {
+        if (device === 'mobile') {
+          this.matMenuTrigger().closeMenu();
+        }
+      });
+  }
 
   protected signOut() {
     this.authService.signOut().subscribe();
