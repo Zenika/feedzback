@@ -1,0 +1,9 @@
+.app-menu-list {
+  &__user {
+    padding-inline: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+}

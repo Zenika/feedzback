@@ -1,11 +1,17 @@
-<div class="app-header__logo app-header__logo--desktop">
-  <ng-container [ngTemplateOutlet]="logo" />
+<div class="app-header__logo">
+  <a
+    routerLink="/home"
+    routerLinkActive
+    ariaCurrentWhenActive="page"
+    aria-label="Accueil"
+    i18n-aria-label="@@Component.Header.HomeLink"
+  >
+    <app-logo-brand class="app-header__logo-img" />
+  </a>
 </div>
 
 <div class="app-header__burger">
-  @if (userStatus().authenticated) {
-    <app-burger class="app-header-nav-target" [(active)]="isNavOpen" />
-  }
+  <app-burger class="app-header-nav-target" [(active)]="isNavOpen" />
 </div>
 
 <nav
@@ -17,8 +23,10 @@
   #navElement
 >
   @if (userStatus().authenticated) {
-    <app-nav />
+    <app-nav class="app-header__nav-items" />
   }
+
+  <app-menu-list class="app-header__menu-list" />
 </nav>
 
 @if (isNavVisible()) {
@@ -30,22 +38,6 @@
   ></div>
 }
 
-<div class="app-header__logo app-header__logo--mobile">
-  <ng-container [ngTemplateOutlet]="logo" />
-</div>
-
 <div class="app-header__menu">
   <app-menu />
 </div>
-
-<ng-template #logo>
-  <a
-    routerLink="/home"
-    routerLinkActive
-    ariaCurrentWhenActive="page"
-    aria-label="Accueil"
-    i18n-aria-label="@@Component.Header.HomeLink"
-  >
-    <app-logo-brand class="app-header__logo-img" />
-  </a>
-</ng-template>

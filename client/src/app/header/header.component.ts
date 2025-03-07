@@ -1,11 +1,12 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDividerModule } from '@angular/material/divider';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
 import { LogoBrandComponent } from '../shared/logo-brand';
 import { BurgerComponent } from './burger/burger.component';
+import { MenuListComponent } from './menu-list/menu-list.component';
 import { MenuComponent } from './menu/menu.component';
 import { NavComponent } from './nav/nav.component';
 
@@ -13,11 +14,12 @@ import { NavComponent } from './nav/nav.component';
   selector: 'app-header',
   host: { class: 'app-header' },
   imports: [
-    NgTemplateOutlet,
+    MatDividerModule,
     RouterLinkActive,
     RouterLinkWithHref,
     LogoBrandComponent,
     BurgerComponent,
+    MenuListComponent,
     MenuComponent,
     NavComponent,
   ],

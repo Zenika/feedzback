@@ -8,6 +8,7 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 72px; // FIXME: should be better...
 
   &__logo {
     line-height: 0;
@@ -29,12 +30,12 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
   @include app.media-breakpoint-up(md) {
     &__burger,
-    &__nav-backdrop,
-    &__logo--mobile {
+    &__menu-list,
+    &__nav-backdrop {
       display: none;
     }
 
-    &__logo--desktop,
+    &__logo,
     &__menu {
       flex-basis: 20%;
     }
@@ -46,16 +47,16 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   }
 
   @include app.media-breakpoint-down(md) {
-    &__logo--desktop {
+    &__menu {
       display: none;
     }
 
-    &__burger,
-    &__menu {
-      flex-basis: 20%;
-    }
-
     &__nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 3rem;
+
       position: fixed;
       z-index: 98;
       overflow: auto;
@@ -64,17 +65,17 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       bottom: 0;
       max-width: 100%;
       width: 250px;
-      left: -250px;
-      padding: 80px 1.25rem 1.25rem 1.25rem;
+      right: -250px;
+      padding: 80px 0.5rem 0.5rem 0.5rem;
       box-shadow: 0 0 0px transparent;
       border-bottom: 5px solid var(--mat-sys-primary);
       background-color: var(--mat-sys-surface-container);
       transition:
-        left $anim-duration-timing-function,
+        right $anim-duration-timing-function,
         box-shadow $anim-duration-timing-function;
 
       &--open {
-        left: 0px;
+        right: 0px;
         box-shadow: var(--mat-sys-level4);
       }
 
@@ -98,6 +99,10 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
           animation: fadeOutBackdrop $anim-duration-timing-function;
         }
       }
+    }
+
+    &__nav-items {
+      padding-inline: 1rem;
     }
   }
 }
