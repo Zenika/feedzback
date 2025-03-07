@@ -11,6 +11,7 @@ import { ThemeService } from '../../shared/theme';
 
 @Component({
   selector: 'app-menu-list',
+  host: { class: 'app-menu-list' },
   imports: [RouterLink, MatButtonModule, MatIconModule, MatListModule, MatMenuModule, AvatarComponent],
   templateUrl: './menu-list.component.html',
   styleUrl: './menu-list.component.scss',
