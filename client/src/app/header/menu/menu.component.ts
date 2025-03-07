@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
+import { filter, skip } from 'rxjs';
 import { AuthService } from '../../shared/auth/auth.service';
 import { AvatarComponent } from '../../shared/avatar';
 import { BreakpointService } from '../../shared/breakpoint';
@@ -32,12 +33,12 @@ export class MenuComponent {
 
   constructor() {
     inject(BreakpointService)
-      .device$.pipe(takeUntilDestroyed())
-      .subscribe((device) => {
-        if (device === 'mobile') {
-          this.matMenuTrigger().closeMenu();
-        }
-      });
+      .device$.pipe(
+        takeUntilDestroyed(),
+        skip(1),
+        filter((device) => device === 'mobile'),
+      )
+      .subscribe(() => this.matMenuTrigger().closeMenu());
   }
 
   protected signOut() {
