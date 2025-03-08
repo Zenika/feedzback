@@ -11,6 +11,8 @@ import { BreakpointService } from '../../shared/breakpoint';
 import { LanguageService } from '../../shared/i18n/language';
 import { ThemeService } from '../../shared/theme';
 
+// TODO: Rename "menu-desktop"
+
 @Component({
   selector: 'app-menu',
   imports: [RouterLink, MatButtonModule, MatIconModule, MatMenuModule, AvatarComponent],

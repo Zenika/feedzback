@@ -9,6 +9,9 @@ import { AvatarComponent } from '../../shared/avatar';
 import { LanguageService } from '../../shared/i18n/language';
 import { ThemeService } from '../../shared/theme';
 
+// TODO: Rename "menu-mobile"
+// TODO: Change "@@Component.Menu.Title" to be more relevant...
+
 @Component({
   selector: 'app-menu-list',
   host: { class: 'app-menu-list' },

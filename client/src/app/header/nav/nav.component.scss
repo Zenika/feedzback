@@ -9,19 +9,19 @@
   @include app.media-breakpoint-up(md) {
     flex-direction: row;
     justify-content: center;
-    gap: 1.25em;
-    padding: 0 1.25em;
+    align-items: center;
+    gap: 1em;
+    padding: 0 1em;
   }
 
   &__item {
     position: relative;
 
-    // Note: 0.75em (margin-top) + 0.5em (padding-top) == 1.25em (padding-bottom)
-    margin-top: 0.75em;
-    padding: 0.5em 0.25em 1.25em 0.25em;
+    // Note: 0.5em (margin-top) + 0.5em (padding-top) == 1em (padding-bottom)
+    margin-top: 0.5em;
+    padding: 0.5em 0.25em 1em 0.25em;
 
     flex-shrink: 0; // Has an effect on desktop only
-    text-align: right; // Has an effect on mobile only
     text-decoration: none;
 
     color: var(--mat-sys-on-surface-variant);
