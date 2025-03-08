@@ -1,6 +1,6 @@
-@use '../../app' as app;
+@use '../../../app' as app;
 
-.app-menu {
+.app-menu-desktop {
   &__avatar {
     cursor: pointer;
   }

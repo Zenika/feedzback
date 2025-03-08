@@ -1,4 +1,4 @@
-.app-menu-list {
+.app-menu-mobile {
   --mat-list-active-indicator-shape: 0.25rem;
 
   --mat-list-list-item-leading-icon-start-space: 0.75rem;
@@ -12,7 +12,7 @@
 
   // Note:
   // This part consists of the user's avatar and a title.
-  // These two elements must be well aligned with the `<mat-list-item>` icon and text.
+  // These two elements should be well aligned with the `<mat-list-item>` icon and text.
   &__user {
     display: flex;
     align-items: center;

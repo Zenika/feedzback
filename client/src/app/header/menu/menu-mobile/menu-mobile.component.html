@@ -1,5 +1,5 @@
-@if (userInfo(); as _userInfo) {
-  <div class="app-menu-list__user">
+@if (menuService.userInfo(); as _userInfo) {
+  <div class="app-menu-mobile__user">
     <app-avatar [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" small />
     <span class="gbl-title-medium" i18n="@@Component.Menu.Title">Menu utilisateur</span>
   </div>
@@ -9,11 +9,11 @@
   <mat-list-item
     role="listitem"
     tabindex="0"
-    (click)="languageService.switchLanguage()"
-    (keyup.enter)="languageService.switchLanguage()"
+    (click)="menuService.languageService.switchLanguage()"
+    (keyup.enter)="menuService.languageService.switchLanguage()"
   >
     <mat-icon matListItemIcon class="gbl-sys-primary">translate</mat-icon>
-    @switch (languageService.localeId) {
+    @switch (menuService.languageService.localeId) {
       @case ('fr') {
         <span lang="en">English</span>
       }
@@ -23,28 +23,33 @@
     }
   </mat-list-item>
 
-  <mat-list-item role="listitem" tabindex="0" (click)="themeService.switch()" (keyup.enter)="themeService.switch()">
+  <mat-list-item
+    role="listitem"
+    tabindex="0"
+    (click)="menuService.themeService.switch()"
+    (keyup.enter)="menuService.themeService.switch()"
+  >
     <mat-icon matListItemIcon class="gbl-sys-primary">
-      {{ themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}
+      {{ menuService.themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}
     </mat-icon>
-    @if (themeService.theme() === 'light') {
+    @if (menuService.themeService.theme() === 'light') {
       <ng-container i18n="@@Action.DarkTheme">Thème foncé</ng-container>
     } @else {
       <ng-container i18n="@@Action.LightTheme">Thème clair</ng-container>
     }
   </mat-list-item>
 
-  @if (userStatus().authenticated) {
+  @if (menuService.userStatus().authenticated) {
     <mat-list-item role="listitem" tabindex="0" routerLink="/settings" (keyup.enter)="router.navigate(['/settings'])">
       <mat-icon matListItemIcon class="gbl-sys-primary">settings</mat-icon>
       <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
     </mat-list-item>
   }
 
-  @if (!userStatus().guest) {
-    <mat-list-item role="listitem" tabindex="0" (click)="signOut()" (keyup.enter)="signOut()">
+  @if (!menuService.userStatus().guest) {
+    <mat-list-item role="listitem" tabindex="0" (click)="menuService.signOut()" (keyup.enter)="menuService.signOut()">
       <mat-icon matListItemIcon class="gbl-sys-primary">logout</mat-icon>
-      @if (userStatus().authenticated) {
+      @if (menuService.userStatus().authenticated) {
         <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
       } @else {
         <ng-container i18n="@@Action.CloseSession">Fermer la session</ng-container>

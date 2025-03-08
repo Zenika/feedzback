@@ -5,31 +5,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { filter, skip } from 'rxjs';
-import { AuthService } from '../../shared/auth/auth.service';
-import { AvatarComponent } from '../../shared/avatar';
-import { BreakpointService } from '../../shared/breakpoint';
-import { LanguageService } from '../../shared/i18n/language';
-import { ThemeService } from '../../shared/theme';
-
-// TODO: Rename "menu-desktop"
+import { AvatarComponent } from '../../../shared/avatar';
+import { BreakpointService } from '../../../shared/breakpoint';
+import { MenuService } from '../menu.service';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'app-menu-desktop',
   imports: [RouterLink, MatButtonModule, MatIconModule, MatMenuModule, AvatarComponent],
-  templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss',
+  templateUrl: './menu-desktop.component.html',
+  styleUrl: './menu-desktop.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class MenuComponent {
-  private authService = inject(AuthService);
-
-  protected userStatus = this.authService.userStatus;
-
-  protected userInfo = this.authService.userInfo;
-
-  protected languageService = inject(LanguageService);
-
-  protected themeService = inject(ThemeService);
+export class MenuDesktopComponent {
+  protected menuService = inject(MenuService);
 
   private matMenuTrigger = viewChild.required(MatMenuTrigger);
 
@@ -41,9 +29,5 @@ export class MenuComponent {
         filter((device) => device === 'mobile'),
       )
       .subscribe(() => this.matMenuTrigger().closeMenu());
-  }
-
-  protected signOut() {
-    this.authService.signOut().subscribe();
   }
 }

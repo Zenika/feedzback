@@ -5,8 +5,7 @@ import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
 import { LogoBrandComponent } from '../shared/logo-brand';
 import { BurgerComponent } from './burger/burger.component';
-import { MenuListComponent } from './menu-list/menu-list.component';
-import { MenuComponent } from './menu/menu.component';
+import { MenuDesktopComponent, MenuMobileComponent } from './menu';
 import { NavComponent } from './nav/nav.component';
 
 @Component({
@@ -17,8 +16,8 @@ import { NavComponent } from './nav/nav.component';
     RouterLinkWithHref,
     LogoBrandComponent,
     BurgerComponent,
-    MenuListComponent,
-    MenuComponent,
+    MenuDesktopComponent,
+    MenuMobileComponent,
     NavComponent,
   ],
   templateUrl: './header.component.html',
