@@ -1,9 +1,10 @@
 import { Component, ViewEncapsulation, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
-import { LogoBrandComponent } from '../shared/logo-brand';
+import { IconDirective } from '../shared/icon';
 import { BurgerComponent } from './burger/burger.component';
 import { MenuDesktopComponent, MenuMobileComponent } from './menu';
 import { NavComponent } from './nav/nav.component';
@@ -12,9 +13,10 @@ import { NavComponent } from './nav/nav.component';
   selector: 'app-header',
   host: { class: 'app-header' },
   imports: [
+    MatIconModule,
     RouterLinkActive,
     RouterLinkWithHref,
-    LogoBrandComponent,
+    IconDirective,
     BurgerComponent,
     MenuDesktopComponent,
     MenuMobileComponent,

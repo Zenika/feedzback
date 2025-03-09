@@ -1,14 +1,14 @@
-<div class="app-header__logo">
-  <a
-    routerLink="/home"
-    routerLinkActive
-    ariaCurrentWhenActive="page"
-    aria-label="Accueil"
-    i18n-aria-label="@@Component.Header.HomeLink"
-  >
-    <app-logo-brand class="app-header__logo-img" />
-  </a>
-</div>
+<a
+  routerLink="/home"
+  routerLinkActive
+  ariaCurrentWhenActive="page"
+  aria-label="Accueil"
+  i18n-aria-label="@@Component.Header.HomeLink"
+  class="app-header__home gbl-title-large"
+>
+  <mat-icon svgIcon="app-icon-brand" appIcon class="app-header__home-logo" />
+  <span>feed<span class="app-header__home-z">z</span>back</span>
+</a>
 
 <div class="app-header__burger">
   <app-burger class="app-header-nav-target" [(active)]="isNavOpen" />

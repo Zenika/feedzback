@@ -17,12 +17,24 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   justify-content: space-between;
   align-items: center;
 
-  &__logo {
-    line-height: 0;
-  }
+  &__home {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
-  &__logo-img {
-    width: 160px;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--app-header-home);
+
+    &-logo {
+      font-size: 1.5em;
+    }
+
+    &-z {
+      background: linear-gradient(to right, #e5293b, #be1e67);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
   &__burger {
@@ -102,6 +114,14 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       padding-inline: 1rem;
     }
   }
+}
+
+:root {
+  --app-header-home: #121212;
+}
+
+.gbl-theme-dark {
+  --app-header-home: #f2f2f2;
 }
 
 @keyframes fadeInBackdrop {
