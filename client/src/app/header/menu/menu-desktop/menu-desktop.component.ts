@@ -9,6 +9,10 @@ import { AvatarComponent } from '../../../shared/avatar';
 import { BreakpointService } from '../../../shared/breakpoint';
 import { MenuService } from '../menu.service';
 
+// Important note:
+// `MenuDesktopComponent` and `MenuMobileComponent` are 2 implementations of the same menu.
+// They must therefore display the same items!
+
 @Component({
   selector: 'app-menu-desktop',
   imports: [RouterLink, MatButtonModule, MatIconModule, MatMenuModule, AvatarComponent],

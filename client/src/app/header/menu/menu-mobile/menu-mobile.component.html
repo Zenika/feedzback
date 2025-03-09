@@ -6,12 +6,7 @@
 }
 
 <mat-nav-list role="list">
-  <mat-list-item
-    role="listitem"
-    tabindex="0"
-    (click)="menuService.languageService.switchLanguage()"
-    (keyup.enter)="menuService.languageService.switchLanguage()"
-  >
+  <button mat-list-item role="listitem" class="gbl-button-less" (click)="menuService.languageService.switchLanguage()">
     <mat-icon matListItemIcon class="gbl-sys-primary">translate</mat-icon>
     @switch (menuService.languageService.localeId) {
       @case ('fr') {
@@ -21,14 +16,9 @@
         <span lang="fr">Français</span>
       }
     }
-  </mat-list-item>
+  </button>
 
-  <mat-list-item
-    role="listitem"
-    tabindex="0"
-    (click)="menuService.themeService.switch()"
-    (keyup.enter)="menuService.themeService.switch()"
-  >
+  <button mat-list-item role="listitem" class="gbl-button-less" (click)="menuService.themeService.switch()">
     <mat-icon matListItemIcon class="gbl-sys-primary">
       {{ menuService.themeService.theme() === 'light' ? 'dark_mode' : 'light_mode' }}
     </mat-icon>
@@ -37,23 +27,23 @@
     } @else {
       <ng-container i18n="@@Action.LightTheme">Thème clair</ng-container>
     }
-  </mat-list-item>
+  </button>
 
   @if (menuService.userStatus().authenticated) {
-    <mat-list-item role="listitem" tabindex="0" routerLink="/settings" (keyup.enter)="router.navigate(['/settings'])">
+    <button mat-list-item role="listitem" class="gbl-button-less" routerLink="/settings">
       <mat-icon matListItemIcon class="gbl-sys-primary">settings</mat-icon>
       <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
-    </mat-list-item>
+    </button>
   }
 
   @if (!menuService.userStatus().guest) {
-    <mat-list-item role="listitem" tabindex="0" (click)="menuService.signOut()" (keyup.enter)="menuService.signOut()">
+    <button mat-list-item role="listitem" class="gbl-button-less" (click)="menuService.signOut()">
       <mat-icon matListItemIcon class="gbl-sys-primary">logout</mat-icon>
       @if (menuService.userStatus().authenticated) {
         <ng-container i18n="@@Action.SignOut">Se déconnecter</ng-container>
       } @else {
         <ng-container i18n="@@Action.CloseSession">Fermer la session</ng-container>
       }
-    </mat-list-item>
+    </button>
   }
 </mat-nav-list>
