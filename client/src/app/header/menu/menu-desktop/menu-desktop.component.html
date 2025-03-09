@@ -1,6 +1,6 @@
 @if (menuService.userInfo(); as _userInfo) {
   <button
-    aria-label="Menu utilisateur"
+    aria-label="Préférences & paramètres"
     i18n-aria-label="@@Component.Menu.Title"
     class="gbl-button-less"
     [matMenuTriggerFor]="menu"
@@ -9,7 +9,7 @@
   </button>
 } @else {
   <button
-    aria-label="Menu utilisateur"
+    aria-label="Préférences & paramètres"
     i18n-aria-label="@@Component.Menu.Title"
     mat-icon-button
     [matMenuTriggerFor]="menu"

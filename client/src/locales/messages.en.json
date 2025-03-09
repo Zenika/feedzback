@@ -70,7 +70,7 @@
     "Component.ManagerDocument.SharedFeedbackRequest": "Request for shared feedZback",
     "Component.ManagerList.Collaborator": "Collaborator",
     "Component.ManagerList.NoData": "No shared feedZback...",
-    "Component.Menu.Title": "User menu",
+    "Component.Menu.Title": "Preferences & settings",
     "Component.MyFeedbacks.Given": "given",
     "Component.MyFeedbacks.NoData": "No feedZback...",
     "Component.MyFeedbacks.Received": "received",
