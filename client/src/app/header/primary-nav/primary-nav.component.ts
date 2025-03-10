@@ -5,18 +5,18 @@ import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { GiveRequestedFeedbackListService } from '../../give-feedback/give-requested-feedback-list/give-requested-feedback-list.service';
 import { BreakpointService } from '../../shared/breakpoint';
 import { EmployeeService } from '../../shared/employee';
-import { navAnimation } from './nav.animation';
+import { primaryNavAnimation } from './primary-nav.animation';
 
 @Component({
-  selector: 'app-nav',
-  host: { class: 'app-nav' },
+  selector: 'app-primary-nav',
+  host: { class: 'app-primary-nav' },
   imports: [RouterLinkActive, RouterLinkWithHref, MatBadgeModule],
-  animations: [navAnimation],
-  templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss',
+  animations: [primaryNavAnimation],
+  templateUrl: './primary-nav.component.html',
+  styleUrl: './primary-nav.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class NavComponent {
+export class PrimaryNavComponent {
   protected receivedRequestLength = inject(GiveRequestedFeedbackListService).listLength;
 
   protected isManager = inject(EmployeeService).isManager;

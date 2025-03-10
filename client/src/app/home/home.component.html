@@ -1,15 +1,15 @@
 <h1 class="gbl-landing__title" i18n="@@Title.AppTagline">Demandez et donnez du feedback à vos collègues</h1>
 
 <div class="gbl-landing-links">
-  <button mat-flat-button class="app-home__link" routerLink="/request">
+  <a routerLink="/request" mat-flat-button class="app-home__link">
     <mat-icon>contact_support</mat-icon>
     <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
-  </button>
+  </a>
 
-  <button mat-flat-button class="app-home__link" routerLink="/give">
+  <a routerLink="/give" mat-flat-button class="app-home__link">
     <mat-icon>chat</mat-icon>
     <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
-  </button>
+  </a>
 </div>
 
 <a routerLink="/guide" class="gbl-link gbl-link--no-underline app-home__guide">
@@ -20,7 +20,7 @@
   </span>
 </a>
 
-<a mat-raised-button [href]="analyticsUsageUrl" class="app-home__analytics" target="_blank">
+<a [href]="analyticsUsageUrl" target="_blank" mat-raised-button class="app-home__analytics">
   <ng-container i18n="@@Component.Home.UsageAnalytics">Statistiques d'usage</ng-container>
   <mat-icon iconPositionEnd>bar_chart</mat-icon>
 </a>

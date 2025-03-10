@@ -7,7 +7,7 @@ import { AuthService } from '../shared/auth';
 import { IconDirective } from '../shared/icon';
 import { BurgerComponent } from './burger/burger.component';
 import { MenuDesktopComponent, MenuMobileComponent } from './menu';
-import { NavComponent } from './nav/nav.component';
+import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,7 @@ import { NavComponent } from './nav/nav.component';
     BurgerComponent,
     MenuDesktopComponent,
     MenuMobileComponent,
-    NavComponent,
+    PrimaryNavComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

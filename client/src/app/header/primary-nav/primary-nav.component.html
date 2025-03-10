@@ -1,14 +1,24 @@
-<a class="app-nav__item" routerLinkActive="app-nav__item--active" routerLink="/request" ariaCurrentWhenActive="page">
+<a
+  class="app-primary-nav__item"
+  routerLinkActive="app-primary-nav__item--active"
+  routerLink="/request"
+  ariaCurrentWhenActive="page"
+>
   <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
 </a>
 
-<a class="app-nav__item" routerLinkActive="app-nav__item--active" routerLink="/give" ariaCurrentWhenActive="page">
+<a
+  class="app-primary-nav__item"
+  routerLinkActive="app-primary-nav__item--active"
+  routerLink="/give"
+  ariaCurrentWhenActive="page"
+>
   <ng-container i18n="@@Feedback.Give"> Donner </ng-container>
 </a>
 
 <a
-  class="app-nav__item"
-  routerLinkActive="app-nav__item--active"
+  class="app-primary-nav__item"
+  routerLinkActive="app-primary-nav__item--active"
   routerLink="/give-requested"
   ariaCurrentWhenActive="page"
   [matBadge]="receivedRequestLength()"
@@ -17,8 +27,8 @@
 </a>
 
 <a
-  class="app-nav__item"
-  routerLinkActive="app-nav__item--active"
+  class="app-primary-nav__item"
+  routerLinkActive="app-primary-nav__item--active"
   routerLink="/history"
   ariaCurrentWhenActive="page"
   i18n="@@Action.History"
@@ -28,8 +38,8 @@
 @if (isManager()) {
   <a
     [@smoothWidth]="device() !== 'mobile'"
-    class="app-nav__item"
-    routerLinkActive="app-nav__item--active"
+    class="app-primary-nav__item"
+    routerLinkActive="app-primary-nav__item--active"
     routerLink="/manager"
     ariaCurrentWhenActive="page"
     i18n="@@Action.Manager"

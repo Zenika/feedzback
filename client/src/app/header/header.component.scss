@@ -1,7 +1,7 @@
 @use '../app' as app;
 
 //   0.5rem (the vertical padding of `.app-header`)
-// + 3.5rem (the height of the `<app-nav>`, on desktop)
+// + 3.5rem (the height of the `<app-primary-nav>`, on desktop)
 // = 4rem
 $header-height: 4rem;
 
@@ -26,12 +26,16 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     white-space: nowrap;
     color: var(--app-header-home);
 
+    @include app.media-breakpoint-down(sm) {
+      z-index: 99;
+    }
+
     &-logo {
       font-size: 1.5em;
     }
 
     &-z {
-      background: linear-gradient(to right, #e5293b, #be1e67);
+      background: linear-gradient(to right, #e5293b 20%, #be1e67 80%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -44,6 +48,10 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   &__nav {
     display: flex;
     align-items: center;
+  }
+
+  &__menu-mobile {
+    margin: 0.5rem;
   }
 
   @include app.media-breakpoint-up(md) {
@@ -63,7 +71,7 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       flex-direction: column;
       justify-content: space-between;
       align-items: stretch;
-      gap: 3rem;
+      gap: 2rem;
 
       position: fixed;
       z-index: 98;
@@ -72,16 +80,23 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       top: 0;
       bottom: 0;
       max-width: 100%;
-      width: 250px;
-      right: -250px;
 
-      padding: $header-height 0.5rem 0.5rem 0.5rem;
-      box-shadow: 0 0 0px transparent;
       border-bottom: 5px solid var(--mat-sys-primary);
       background-color: var(--mat-sys-surface-container);
+
+      width: 250px;
+      right: -250px;
+      box-shadow: 0 0 0px transparent;
+
       transition:
+        width $anim-duration-timing-function,
         right $anim-duration-timing-function,
         box-shadow $anim-duration-timing-function;
+
+      @include app.media-breakpoint-down(sm) {
+        width: 100%;
+        right: -100%;
+      }
 
       &--open {
         right: 0px;
@@ -92,26 +107,51 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
         // This is the easiest way to prevent keyboard navigation on hidden elements.
         display: none !important;
       }
+    }
 
-      &-backdrop {
-        position: fixed;
-        z-index: 97;
+    &__primary-nav {
+      padding-inline: 1.25rem;
+
+      &::before {
+        content: ' ';
+        position: sticky;
         top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
 
-        animation: fadeInBackdrop $anim-duration-timing-function;
+        margin-left: -1.25rem;
+        width: calc(100% + 2.5rem);
+        height: $header-height;
+        flex-shrink: 0; // Important, otherwise the `height` will not be applied
 
-        &--closing {
-          animation: fadeOutBackdrop $anim-duration-timing-function;
+        background-color: transparent;
+        box-shadow: 0px 0px 0px var(--mat-sys-surface-container);
+
+        transition:
+          background-color $anim-duration-timing-function,
+          box-shadow $anim-duration-timing-function;
+
+        @include app.media-breakpoint-down(sm) {
+          z-index: 1;
+
+          background-color: var(--mat-sys-surface-container);
+          box-shadow: 0px 10px 4px -4px var(--mat-sys-surface-container);
         }
       }
     }
 
-    &__nav-items {
-      padding-inline: 1rem;
+    &__nav-backdrop {
+      position: fixed;
+      z-index: 97;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+
+      animation: fadeInBackdrop $anim-duration-timing-function;
+
+      &--closing {
+        animation: fadeOutBackdrop $anim-duration-timing-function;
+      }
     }
   }
 }
