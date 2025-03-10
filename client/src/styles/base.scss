@@ -20,6 +20,9 @@ body {
   // More infos: https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-tap-highlight-color
+  -webkit-tap-highlight-color: transparent;
 }
 
 p {
@@ -35,4 +38,8 @@ hr {
 *:focus-visible {
   outline: 3px dashed var(--mat-sys-outline);
   outline-offset: 0.25em;
+}
+
+::selection {
+  background: var(--mat-sys-outline-variant);
 }
