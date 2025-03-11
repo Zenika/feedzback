@@ -8,14 +8,21 @@
 .gbl-landing {
   height: 100%;
   display: flex;
+
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
-  gap: 6rem;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1.5rem;
 
   @include m.media-breakpoint-down(sm) {
-    gap: 3rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  &--centered {
+    align-items: center;
+    text-align: center;
   }
 
   &::before,
@@ -46,22 +53,32 @@
 
   &__title {
     margin: 0;
-    font: var(--mat-sys-headline-large);
-    letter-spacing: var(--mat-sys-headline-large-tracking);
+    font: var(--mat-sys-headline-medium);
+    letter-spacing: var(--mat-sys-headline-medium-tracking);
     text-wrap: balance;
     color: var(--app-landing-title);
   }
 
-  &-links {
+  &__paragraph {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+    letter-spacing: var(--mat-sys-title-medium-tracking);
+    text-wrap: balance;
+  }
+
+  &__links {
     align-self: normal; // as flex item
     display: flex; // as flex box
     flex-wrap: wrap;
-    justify-content: space-evenly;
     gap: 1.5rem;
 
     @include m.media-breakpoint-down(sm) {
       flex-direction: column;
     }
+  }
+
+  &--centered &__links {
+    justify-content: center;
   }
 }
 

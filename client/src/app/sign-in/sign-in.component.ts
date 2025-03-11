@@ -10,7 +10,10 @@ import { CredentialsComponent } from './credentials/credentials.component';
 
 @Component({
   selector: 'app-sign-in',
-  host: { class: 'gbl-landing' },
+  host: {
+    class: 'gbl-landing',
+    '[class.gbl-landing--centered]': 'withEmailAndPasswordEnabled',
+  },
   imports: [MatButtonModule, MatIconModule, DividerComponent, LogoZenikaComponent, CredentialsComponent],
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,

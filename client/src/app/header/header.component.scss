@@ -89,35 +89,22 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       @include app.media-breakpoint-down(sm) {
         width: 100%;
         right: -100%;
+
+        /*&::before {
+          content: '';
+          position: absolute;
+          z-index: 1;
+          top: 0;
+          right: 0;
+          left: 0;
+          height: $header-height;
+          box-shadow: 0px 10px 4px -4px var(--mat-sys-surface-container);
+        }*/
       }
 
       &--open {
         right: 0px;
         box-shadow: var(--mat-sys-level4);
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        height: $header-height;
-        top: 0;
-        left: 0;
-
-        // Important:
-        // This area must not cover the `.app-header__nav-inner` scrollbar.
-        // According to the resource below, the scrollbar's width varies between 12 and 17 pixels (depending on the browser).
-        //   - https://codepen.io/sambible/post/browser-scrollbar-widths
-        right: 18px;
-
-        background-color: transparent;
-        box-shadow: 0px 0px 0px var(--mat-sys-surface-container);
-
-        @include app.media-breakpoint-down(sm) {
-          z-index: 1;
-
-          background-color: var(--mat-sys-surface-container);
-          box-shadow: 0px 10px 4px -4px var(--mat-sys-surface-container);
-        }
       }
     }
 
@@ -127,11 +114,18 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       align-items: stretch;
       gap: 2rem;
 
+      overflow: auto;
+      overscroll-behavior: contain;
+
       box-sizing: border-box;
       padding-top: $header-height;
       height: 100%;
-      overflow: auto;
-      overscroll-behavior: contain;
+
+      @include app.media-breakpoint-down(sm) {
+        padding-top: 0;
+        margin-top: $header-height;
+        height: calc(100% - #{$header-height});
+      }
 
       &--hidden {
         // This is the easiest way to prevent keyboard navigation on hidden elements.

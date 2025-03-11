@@ -1,7 +1,11 @@
-<h1 class="gbl-landing__title" i18n="@@Title.AppTagline">Demandez et donnez du feedback à vos collègues</h1>
+<h1 class="gbl-landing__title" i18n="@@Title.AppTitle">Demandez et donnez du feedback à vos collègues</h1>
+
+<p class="gbl-landing__paragraph mb-5!" i18n="@@Title.AppTagline">
+  Communiquez avec bienveillance pour valoriser, progresser et grandir ensemble.
+</p>
 
 @if (withGoogleEnabled) {
-  <div class="gbl-landing-links">
+  <div class="gbl-landing__links">
     <button mat-flat-button type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
       <mat-icon svgIcon="app-icon-google" style="border-radius: 99px; background-color: white" />
       <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
@@ -10,11 +14,11 @@
 }
 
 @if (withGoogleEnabled && withEmailAndPasswordEnabled) {
-  <app-divider class="m-0!"><ng-container i18n="@@Word.Or">ou</ng-container></app-divider>
+  <app-divider class="my-5!"><ng-container i18n="@@Word.Or">ou</ng-container></app-divider>
 }
 
 @if (withEmailAndPasswordEnabled) {
   <app-credentials [disabled]="disabled()" (signIn)="signInWithEmailAndPassword($event.email, $event.password)" />
 }
 
-<app-logo-zenika />
+<app-logo-zenika class="mt-6" />
