@@ -8,7 +8,7 @@ import { ANALYTICS_USAGE_URL } from '../stats/stats.constants';
 
 @Component({
   selector: 'app-home',
-  host: { class: 'app-home gbl-landing' },
+  host: { class: 'app-home' },
   imports: [RouterLink, MatButtonModule, MatIconModule, IconDirective, LogoBrandTextComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

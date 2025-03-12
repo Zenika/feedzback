@@ -3,9 +3,40 @@
 $show-analytics: false;
 
 .app-home {
+  display: flex;
+  height: 100%;
+  gap: 1.25rem;
+
+  &__content {
+    flex-basis: 50%;
+  }
+
+  &__picture {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @include app.media-breakpoint-down(md) {
+    flex-direction: column;
+
+    &__picture {
+      align-items: center;
+
+      img {
+        width: 60%;
+      }
+    }
+  }
+
   @include app.media-breakpoint-down(md) {
     @if $show-analytics {
-      // Prevent the usage analytics link to cover the guide link (when viewport height is small)
+      // Prevent the usage analytics link to cover the main content (when viewport height is small)
       padding-bottom: 2.5rem;
     }
   }
