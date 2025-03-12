@@ -12,7 +12,7 @@ $show-analytics: false;
 
   @include app.media-breakpoint-up(sm) {
     &__link {
-      flex-basis: 140px; // Make both links the same width
+      flex-basis: 150px; // Make both links the same width
     }
   }
 
