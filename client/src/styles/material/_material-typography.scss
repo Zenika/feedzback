@@ -29,19 +29,19 @@ $typography: (
   headline-large-tracking: 0rem,
   headline-large-weight: #{v.$font-bold-weight},
 
-  headline-medium: #{v.$font-regular-weight} min(1.375rem + 1.5vw, 2.5rem) / 1.2 'Nunito',
+  headline-medium: #{v.$font-bold-weight} min(1.375rem + 1.5vw, 2.5rem) / 1.2 'Nunito',
   headline-medium-font: 'Nunito',
   headline-medium-line-height: 1.2,
   headline-medium-size: min(1.375rem + 1.5vw, 2.5rem),
   headline-medium-tracking: 0rem,
-  headline-medium-weight: #{v.$font-regular-weight},
+  headline-medium-weight: #{v.$font-bold-weight},
 
-  headline-small: #{v.$font-regular-weight} min(1.3rem + 0.6vw, 1.75rem) / 1.2 'Nunito',
+  headline-small: #{v.$font-bold-weight} min(1.3rem + 0.6vw, 1.75rem) / 1.2 'Nunito',
   headline-small-font: 'Nunito',
   headline-small-line-height: 1.2,
   headline-small-size: min(1.3rem + 0.6vw, 1.75rem),
   headline-small-tracking: 0rem,
-  headline-small-weight: #{v.$font-regular-weight},
+  headline-small-weight: #{v.$font-bold-weight},
 
   title-large: #{v.$font-bold-weight} 1.375rem / 1.75rem 'Nunito',
   title-large-font: 'Nunito',
