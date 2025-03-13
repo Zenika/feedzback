@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { DividerComponent } from '../shared/divider';
+import { LandingComponent } from '../shared/landing/landing.component';
 import { LogoZenikaComponent } from '../shared/logo-zenika';
 import { NotificationService } from '../shared/notification';
 import { CredentialsComponent } from './credentials/credentials.component';
@@ -14,7 +15,14 @@ import { CredentialsComponent } from './credentials/credentials.component';
     class: 'gbl-landing',
     '[class.gbl-landing--centered]': 'withEmailAndPasswordEnabled',
   },
-  imports: [MatButtonModule, MatIconModule, DividerComponent, LogoZenikaComponent, CredentialsComponent],
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    DividerComponent,
+    LandingComponent,
+    LogoZenikaComponent,
+    CredentialsComponent,
+  ],
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,
 })

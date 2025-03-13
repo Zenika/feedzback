@@ -1,11 +1,11 @@
-<div class="app-home__content gbl-landing">
-  <h1 class="gbl-landing__title" i18n="@@Title.AppTitle">Demandez et donnez du feedback à vos collègues</h1>
+<app-landing class="app-home__landing">
+  <h1 class="app-landing__title" i18n="@@Title.AppTitle">Demandez et donnez du feedback à vos collègues</h1>
 
-  <p class="gbl-landing__paragraph mb-10!" i18n="@@Title.AppTagline">
+  <p class="app-landing__subtitle" i18n="@@Title.AppTagline">
     Échanger avec bienveillance pour valoriser, progresser et grandir ensemble.
   </p>
 
-  <div class="gbl-landing__links mb-5!">
+  <div class="app-landing__links">
     <a routerLink="/request" mat-flat-button class="app-home__link">
       <mat-icon>contact_support</mat-icon>
       <ng-container i18n="@@Feedback.Request"> Demander </ng-container>
@@ -25,12 +25,10 @@
     </span>
   </a>
 
-  <a [href]="analyticsUsageUrl" target="_blank" mat-raised-button class="app-home__analytics">
-    <ng-container i18n="@@Component.Home.UsageAnalytics">Statistiques d'usage</ng-container>
-    <mat-icon iconPositionEnd>bar_chart</mat-icon>
-  </a>
-</div>
+  <img src="assets/images/landing-good-team-pana.png" alt="" role="presentation" appLandingPicture />
+</app-landing>
 
-<div class="app-home__picture">
-  <img src="/assets/images/landing-good-team-pana.png" alt="" role="presentation" />
-</div>
+<a [href]="analyticsUsageUrl" target="_blank" mat-raised-button class="app-home__analytics">
+  <ng-container i18n="@@Component.Home.UsageAnalytics">Statistiques d'usage</ng-container>
+  <mat-icon iconPositionEnd>bar_chart</mat-icon>
+</a>

@@ -1,24 +1,28 @@
-<h1 class="gbl-landing__title" i18n="@@Title.AppTitle">Demandez et donnez du feedback à vos collègues</h1>
+<app-landing class="app-home__landing">
+  <h1 class="app-landing__title" i18n="@@Title.AppTitle">Demandez et donnez du feedback à vos collègues</h1>
 
-<p class="gbl-landing__paragraph mb-10!" i18n="@@Title.AppTagline">
-  Échanger avec bienveillance pour valoriser, progresser et grandir ensemble.
-</p>
+  <p class="app-landing__subtitle" i18n="@@Title.AppTagline">
+    Échanger avec bienveillance pour valoriser, progresser et grandir ensemble.
+  </p>
 
-@if (withGoogleEnabled) {
-  <div class="gbl-landing__links">
-    <button mat-flat-button type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
-      <mat-icon svgIcon="app-icon-google" style="border-radius: 99px; background-color: white" />
-      <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
-    </button>
-  </div>
-}
+  @if (withGoogleEnabled) {
+    <div class="app-landing__links">
+      <button mat-flat-button type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
+        <mat-icon svgIcon="app-icon-google" style="border-radius: 99px; background-color: white" />
+        <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
+      </button>
+    </div>
+  }
 
-@if (withGoogleEnabled && withEmailAndPasswordEnabled) {
-  <app-divider class="my-5!"><ng-container i18n="@@Word.Or">ou</ng-container></app-divider>
-}
+  @if (withGoogleEnabled && withEmailAndPasswordEnabled) {
+    <app-divider><ng-container i18n="@@Word.Or">ou</ng-container></app-divider>
+  }
 
-@if (withEmailAndPasswordEnabled) {
-  <app-credentials [disabled]="disabled()" (signIn)="signInWithEmailAndPassword($event.email, $event.password)" />
-}
+  @if (withEmailAndPasswordEnabled) {
+    <app-credentials [disabled]="disabled()" (signIn)="signInWithEmailAndPassword($event.email, $event.password)" />
+  }
 
-<app-logo-zenika class="mt-10" />
+  <app-logo-zenika class="mt-10" />
+
+  <img src="assets/images/landing-good-team-pana.png" alt="" role="presentation" appLandingPicture />
+</app-landing>
