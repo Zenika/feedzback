@@ -7,60 +7,67 @@
 
 .gbl-landing {
   height: 100%;
-  display: flex;
 
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  text-align: left;
-  gap: 1.25rem;
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: minmax(0, 0.55fr) minmax(0, 0.45fr);
+  grid-template-rows: auto;
+  grid-template-areas: 'content picture';
 
-  @include m.media-breakpoint-down(md) {
-    align-items: center;
-    text-align: center;
+  &__content,
+  &__picture {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  &--centered {
-    align-items: center;
-    text-align: center;
+  &__content {
+    grid-area: content;
+    align-items: flex-start;
+    text-align: start;
   }
 
-  /*&::before,
-  &::after {
-    content: '';
-    position: fixed;
-    z-index: -1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+  &__picture {
+    grid-area: picture;
+    align-items: flex-end;
+    text-align: end;
 
-  &::before {
-    background: url(../../public/assets/images/landing-bg.svg) center repeat;
-    background-size: 480px;
-    opacity: 0.5;
-    animation: gblLandingAnim 45s linear infinite;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
+    img {
+      width: 100%;
     }
   }
 
-  &::after {
-    background: radial-gradient(var(--app-landing-circle-from) 35%, var(--app-landing-circle-to) 70%);
-  }*/
+  @include m.media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content max-content;
+    grid-template-areas:
+      'content'
+      'picture';
+
+    &__content,
+    &__picture {
+      align-items: center;
+      text-align: center;
+    }
+
+    &__picture {
+      img {
+        width: 60%;
+        min-width: 300px;
+      }
+    }
+  }
 
   &__title {
-    margin: 0;
+    margin: 0 0 1.25rem 0;
     font: var(--mat-sys-headline-medium);
     letter-spacing: var(--mat-sys-headline-medium-tracking);
     text-wrap: balance;
-    color: var(--app-landing-title);
+    color: var(--gbl-landing-title);
   }
 
-  &__paragraph {
-    margin: 0;
+  &__subtitle {
+    margin: 0 0 3.75rem 0;
     font-size: 1.25rem;
     text-wrap: balance;
   }
@@ -80,18 +87,55 @@
     }
   }
 
-  &--centered &__links {
+  &:not(:has(.gbl-landing__picture)) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 'content';
+
+    &::before,
+    &::after {
+      content: '';
+      position: fixed;
+      z-index: -1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    &::before {
+      background: url(../../public/assets/images/landing-bg.svg) center repeat;
+      background-size: 480px;
+      opacity: 0.5;
+      animation: gblLandingAnim 45s linear infinite;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+    }
+
+    &::after {
+      background: radial-gradient(var(--gbl-landing-circle-from) 35%, var(--gbl-landing-circle-to) 70%);
+    }
+  }
+
+  &:not(:has(.gbl-landing__picture)) &__content {
+    align-items: center;
+    text-align: center;
+  }
+
+  &:not(:has(.gbl-landing__picture)) &__links {
     justify-content: center;
   }
 }
 
-/*@keyframes gblLandingAnim {
+@keyframes gblLandingAnim {
   0% {
     transform: scale(1);
     opacity: 0;
   }
   10% {
-    opacity: 0.5;
+    opacity: 0.35;
   }
   90% {
     opacity: 0.15;
@@ -100,16 +144,16 @@
     transform: scale(1.5);
     opacity: 0;
   }
-}*/
+}
 
 :root {
-  //--app-landing-circle-from: #{rgba($color: #ebebeb, $alpha: 0)}; // based on `surface`
-  //--app-landing-circle-to: #{rgba($color: #ebebeb, $alpha: 1)}; // based on `surface`
-  --app-landing-title: #121212;
+  --gbl-landing-title: #121212;
+  --gbl-landing-circle-from: #{rgba($color: #ebebeb, $alpha: 0)}; // based on `surface`
+  --gbl-landing-circle-to: #{rgba($color: #ebebeb, $alpha: 1)}; // based on `surface`
 }
 
 .gbl-theme-dark {
-  //--app-landing-circle-from: #{rgba($color: #141414, $alpha: 0)}; // based on `surface`
-  //--app-landing-circle-to: #{rgba($color: #141414, $alpha: 1)}; // based on `surface`
-  --app-landing-title: #f2f2f2;
+  --gbl-landing-title: #f2f2f2;
+  --gbl-landing-circle-from: #{rgba($color: #141414, $alpha: 0)}; // based on `surface`
+  --gbl-landing-circle-to: #{rgba($color: #141414, $alpha: 1)}; // based on `surface`
 }
