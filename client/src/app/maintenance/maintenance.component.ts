@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { IconDirective } from '../shared/icon';
 import { LogoBrandTextComponent } from '../shared/logo-brand-text';
 
+// TODO: update to match the new `.gbl-landing`...
+
 @Component({
   selector: 'app-maintenance',
   host: { class: 'app-maintenance gbl-landing' },

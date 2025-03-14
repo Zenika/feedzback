@@ -6,22 +6,28 @@
       Échanger avec bienveillance pour valoriser, progresser et grandir ensemble.
     </p>
 
-    @if (withGoogleEnabled) {
-      <div class="gbl-landing__links">
+    <div class="gbl-landing__links">
+      @if (withGoogleEnabled) {
         <button mat-flat-button type="button" [disabled]="disabled()" (click)="signInWithGoogle()">
           <mat-icon svgIcon="app-icon-google" style="border-radius: 99px; background-color: white" />
           <ng-container i18n="@@Action.SignInWithGoogle">Se connecter avec Google</ng-container>
         </button>
-      </div>
-    }
+      }
 
-    @if (withGoogleEnabled && withEmailAndPasswordEnabled) {
-      <app-divider><ng-container i18n="@@Word.Or">ou</ng-container></app-divider>
-    }
+      @if (withEmailAndPasswordEnabled) {
+        <button mat-flat-button type="button" [disabled]="disabled()" (click)="openCredentialsDialog()">
+          <mat-icon>account_circle</mat-icon>
+          <ng-container i18n="@@Action.SignInWithCredentials">Se connecter avec identifiants</ng-container>
+        </button>
 
-    @if (withEmailAndPasswordEnabled) {
-      <app-credentials [disabled]="disabled()" (signIn)="signInWithEmailAndPassword($event.email, $event.password)" />
-    }
+        <ng-template #credentialsDialogTemplate>
+          <app-credentials-dialog
+            [disabled]="disabled()"
+            (signIn)="signInWithEmailAndPassword($event.email, $event.password)"
+          />
+        </ng-template>
+      }
+    </div>
 
     <app-logo-zenika class="mt-10" />
   </div>

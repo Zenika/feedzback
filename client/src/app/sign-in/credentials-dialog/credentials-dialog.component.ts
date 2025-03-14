@@ -1,19 +1,18 @@
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-credentials',
-  host: { class: 'app-credentials' },
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
-  templateUrl: './credentials.component.html',
-  styleUrl: './credentials.component.scss',
+  selector: 'app-credentials-dialog',
+  imports: [ReactiveFormsModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule],
+  templateUrl: './credentials-dialog.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class CredentialsComponent {
+export class CredentialsDialogComponent {
   disabled = input(false);
 
   signIn = output<{ email: string; password: string }>();
