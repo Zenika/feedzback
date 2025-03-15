@@ -37,7 +37,7 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   }
 
   &__brand-gradient {
-    background: linear-gradient(to right, #e5293b 20%, #be1e67 80%);
+    background: linear-gradient(to right, #e5293b 25%, #be1e67 75%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
