@@ -63,7 +63,7 @@ export class SignInComponent {
   protected openCredentialsDialog() {
     const credentialsDialogTemplate = this.credentialsDialogTemplate();
     if (credentialsDialogTemplate) {
-      this.credentialsDialogRef = this.dialog.open(credentialsDialogTemplate, { width: '360px' });
+      this.credentialsDialogRef = this.dialog.open(credentialsDialogTemplate, { width: '480px' });
     }
   }
 }
