@@ -1,5 +1,5 @@
-import { Component, input, output, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, effect, inject, input, output, signal, ViewEncapsulation } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,22 +13,46 @@ import { MatInputModule } from '@angular/material/input';
   encapsulation: ViewEncapsulation.None,
 })
 export class CredentialsDialogComponent {
+  protected form = inject(NonNullableFormBuilder).group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
+
+  private passwordVisible = signal(false);
+
+  protected passwordConfig = computed(() => {
+    if (this.passwordVisible()) {
+      return {
+        inputType: 'text',
+        buttonLabel: $localize`:@@Component.CredentialsDialog.HidePassword:Masquer le mot de passe`,
+        buttonIcon: 'visibility_off',
+      };
+    } else {
+      return {
+        inputType: 'password',
+        buttonLabel: $localize`:@@Component.CredentialsDialog.ShowPassword:Afficher le mot de passe`,
+        buttonIcon: 'visibility',
+      };
+    }
+  });
+
   disabled = input(false);
 
-  signIn = output<{ email: string; password: string }>();
+  signIn = output<Required<typeof this.form.value>>();
 
-  protected form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
-  });
+  constructor() {
+    effect(() => this.form[this.disabled() ? 'disable' : 'enable']());
+  }
+
+  protected togglePasswordVisible(visible?: boolean) {
+    this.passwordVisible.update((passwordVisible) => visible ?? !passwordVisible);
+  }
 
   protected submit() {
     if (this.form.invalid) {
       return;
     }
-    this.signIn.emit({
-      email: this.form.value.email!,
-      password: this.form.value.password!,
-    });
+    this.togglePasswordVisible(false);
+    this.signIn.emit(this.form.value as Required<typeof this.form.value>);
   }
 }
