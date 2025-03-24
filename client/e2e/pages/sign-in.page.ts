@@ -10,7 +10,7 @@ export class SignInPage {
   async signIn(persona: Persona) {
     await this.page.getByRole('button', { name: 'Se connecter avec identifiants' }).click();
     await this.page.getByLabel('Email').fill(persona);
-    await this.page.getByLabel('Mot de passe').fill('zenika');
+    await this.page.getByLabel('Mot de passe', { exact: true }).fill('zenika');
     await this.page.getByRole('button', { name: 'Se connecter' }).click();
 
     await this.page.waitForURL('/fr/home');
