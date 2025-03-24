@@ -64,6 +64,7 @@
     "Component.GiveRequestedFeedbackListEmpty1": " Vous n'avez pas reçu de demandes de feedZback... ",
     "Component.GiveRequestedFeedbackListEmpty2": " Profitez-en pour demander ou donner du feedZback à vos collègues ! ",
     "Component.Guide.Tip": " Pour être constructif, le feedback doit porter sur le travail et les comportements de votre collègue, et ne doit pas viser sa personnalité.\n",
+    "Component.Header.BurgerLink": "Menu",
     "Component.Header.HomeLink": "Accueil",
     "Component.Home.LinkToGuide": "Comment écrire un ",
     "Component.Home.UsageAnalytics": "Statistiques d'usage",

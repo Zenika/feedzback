@@ -64,6 +64,7 @@
     "Component.GiveRequestedFeedbackListEmpty1": "You haven't received any feedZback requests...",
     "Component.GiveRequestedFeedbackListEmpty2": "Take this opportunity to request or give feedZback to your colleagues!",
     "Component.Guide.Tip": "To be constructive, feedback should focus on your colleague's work and behavior, not on his or her personality.",
+    "Component.Header.BurgerLink": "Menu",
     "Component.Header.HomeLink": "Home",
     "Component.Home.LinkToGuide": "How to write a ",
     "Component.Home.UsageAnalytics": "Usage analytics",

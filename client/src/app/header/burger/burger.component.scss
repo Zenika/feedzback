@@ -8,6 +8,11 @@
   height: 30px;
   width: 30px;
 
+  // Add spacing without altering the defined `height` and `width` (30px).
+  box-sizing: content-box;
+  padding: 0.375rem;
+  border-radius: 99px;
+
   &__line {
     height: 2px;
     border-radius: 3px;
@@ -23,7 +28,7 @@
     }
 
     &:nth-child(2) {
-      transform-origin: right;
+      transform-origin: left;
     }
 
     &:nth-child(3) {
@@ -37,7 +42,7 @@
   }
 
   &--active &__line:nth-child(1) {
-    transform: translateX(4.5px) rotate(45deg);
+    transform: translateX(4px) rotate(45deg);
   }
 
   &--active &__line:nth-child(2) {
@@ -46,6 +51,6 @@
   }
 
   &--active &__line:nth-child(3) {
-    transform: translateX(4.5px) rotate(-45deg);
+    transform: translateX(4px) rotate(-45deg);
   }
 }

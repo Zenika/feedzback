@@ -1,9 +1,9 @@
-@if (menuService.userInfo(); as _userInfo) {
-  <div class="app-menu-mobile__user">
+<div class="app-menu-mobile__user">
+  @if (menuService.userInfo(); as _userInfo) {
     <app-avatar [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" small />
-    <span class="gbl-title-small" i18n="@@Component.Menu.Title">Préférences & paramètres</span>
-  </div>
-}
+  }
+  <span class="gbl-title-small" i18n="@@Component.Menu.Title">Préférences & paramètres</span>
+</div>
 
 <mat-nav-list role="list">
   <button mat-list-item role="listitem" class="gbl-button-less" (click)="menuService.languageService.switchLanguage()">

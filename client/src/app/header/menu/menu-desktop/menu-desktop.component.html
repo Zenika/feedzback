@@ -2,10 +2,10 @@
   <button
     aria-label="Préférences & paramètres"
     i18n-aria-label="@@Component.Menu.Title"
-    class="gbl-button-less"
+    class="gbl-button-less app-menu-desktop__avatar"
     [matMenuTriggerFor]="menu"
   >
-    <app-avatar class="app-menu-desktop__avatar" [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" />
+    <app-avatar [photoUrl]="_userInfo.photoURL" [name]="_userInfo.displayName" />
   </button>
 } @else {
   <button

@@ -9,5 +9,15 @@
 </div>
 
 @if (!nonclosable()) {
-  <mat-icon class="app-message__close" (click)="close()">close</mat-icon>
+  <mat-icon
+    class="app-message__close"
+    aria-label="Fermer"
+    i18n-aria-label="@@Action.Close"
+    role="button"
+    tabindex="0"
+    (click)="close()"
+    (keyup.enter)="close()"
+  >
+    close
+  </mat-icon>
 }
