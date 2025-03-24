@@ -20,21 +20,19 @@ export class CredentialsDialogComponent {
 
   private passwordVisible = signal(false);
 
-  protected passwordConfig = computed(() => {
-    if (this.passwordVisible()) {
-      return {
-        inputType: 'text',
-        buttonLabel: $localize`:@@Component.CredentialsDialog.HidePassword:Masquer le mot de passe`,
-        buttonIcon: 'visibility_off',
-      };
-    } else {
-      return {
-        inputType: 'password',
-        buttonLabel: $localize`:@@Component.CredentialsDialog.ShowPassword:Afficher le mot de passe`,
-        buttonIcon: 'visibility',
-      };
-    }
-  });
+  protected passwordConfig = computed(() =>
+    this.passwordVisible()
+      ? {
+          inputType: 'text',
+          buttonLabel: $localize`:@@Component.CredentialsDialog.HidePassword:Masquer le mot de passe`,
+          buttonIcon: 'visibility_off',
+        }
+      : {
+          inputType: 'password',
+          buttonLabel: $localize`:@@Component.CredentialsDialog.ShowPassword:Afficher le mot de passe`,
+          buttonIcon: 'visibility',
+        },
+  );
 
   disabled = input(false);
 
