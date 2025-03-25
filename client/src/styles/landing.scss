@@ -32,6 +32,8 @@
     align-items: flex-end;
     text-align: end;
 
+    background: radial-gradient(closest-side, var(--gbl-landing-picture-highlight), var(--gbl-landing-circle-to));
+
     img {
       width: 100%;
     }
@@ -148,12 +150,14 @@
 
 :root {
   --gbl-landing-title: #121212;
+  --gbl-landing-picture-highlight: #ffffff;
   --gbl-landing-circle-from: #{rgba($color: #ebebeb, $alpha: 0)}; // based on `surface`
   --gbl-landing-circle-to: #{rgba($color: #ebebeb, $alpha: 1)}; // based on `surface`
 }
 
 .gbl-theme-dark {
   --gbl-landing-title: #f2f2f2;
+  --gbl-landing-picture-highlight: #000000;
   --gbl-landing-circle-from: #{rgba($color: #141414, $alpha: 0)}; // based on `surface`
   --gbl-landing-circle-to: #{rgba($color: #141414, $alpha: 1)}; // based on `surface`
 }
