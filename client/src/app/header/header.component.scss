@@ -51,6 +51,10 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     align-items: center;
   }
 
+  &__menu-desktop {
+    position: relative; // Required to render `<app-menu-desktop>` above `<app-primary-nav>`.
+  }
+
   &__menu-mobile {
     margin: 0.5rem;
   }
