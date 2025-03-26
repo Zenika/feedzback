@@ -17,22 +17,19 @@
     height: 2px;
     border-radius: 3px;
     background-color: var(--mat-sys-on-surface-variant);
+    transform-origin: left;
     transition:
       transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
       background-color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
       opacity 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
     &:nth-child(1) {
-      transform-origin: left;
       transform: translateY(3px);
     }
 
-    &:nth-child(2) {
-      transform-origin: left;
-    }
+    // &:nth-child(2) {}
 
     &:nth-child(3) {
-      transform-origin: left;
       transform: translateY(-3px);
     }
   }
