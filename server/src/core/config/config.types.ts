@@ -1,5 +1,5 @@
 import { ServiceAccount } from 'firebase-admin/app';
-import { MailgunClientOptions } from 'mailgun.js';
+import { MailgunClientOptions } from 'mailgun.js/definitions';
 
 export type AppEnv = 'development' | 'production';
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
 import { createCipheriv, createDecipheriv, createHash } from 'node:crypto';
 import { AppConfig } from '../config';
 
