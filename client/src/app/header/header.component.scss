@@ -23,8 +23,8 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     gap: 0.5rem;
 
     text-decoration: none;
-    white-space: nowrap;
-    color: var(--app-header-home);
+    text-wrap-mode: nowrap;
+    color: var(--gbl-color-on-surface-accent);
 
     @include app.media-breakpoint-down(sm) {
       // On mobile, the app logo should be visible even when the nav is open.
@@ -52,7 +52,8 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   }
 
   &__menu-desktop {
-    position: relative; // Required to render `<app-menu-desktop>` above `<app-primary-nav>`.
+    // Required to render `<app-menu-desktop>` above `<app-primary-nav>`.
+    position: relative;
   }
 
   &__menu-mobile {
@@ -93,17 +94,6 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       @include app.media-breakpoint-down(sm) {
         width: 100%;
         right: -100%;
-
-        /*&::before {
-          content: '';
-          position: absolute;
-          z-index: 1;
-          top: 0;
-          right: 0;
-          left: 0;
-          height: $header-height;
-          box-shadow: 0px 10px 4px -4px var(--mat-sys-surface-container);
-        }*/
       }
 
       &--open {
@@ -157,14 +147,6 @@ $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
       }
     }
   }
-}
-
-:root {
-  --app-header-home: #121212;
-}
-
-.gbl-theme-dark {
-  --app-header-home: #f2f2f2;
 }
 
 @keyframes fadeInBackdrop {

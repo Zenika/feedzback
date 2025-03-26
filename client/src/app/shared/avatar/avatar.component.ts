@@ -26,12 +26,13 @@ export class AvatarComponent {
 
   protected photoBlob = resource({
     request: () => this.photoUrl(),
-    loader: async ({ request }) => {
+    loader: async ({ request, abortSignal }) => {
       if (!request) {
         return undefined;
       }
+
       try {
-        const photo = await fetch(request);
+        const photo = await fetch(request, { signal: abortSignal });
         if (!photo.ok) {
           throw new Error(); // Note: Google might respond "429 (Too Many Requests)"
         }

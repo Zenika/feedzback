@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
+let uid = 1;
+
 @Component({
   selector: 'app-logo-zenika',
   host: { class: 'app-logo-zenika' },
@@ -7,4 +9,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrl: './zenika-logo.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class LogoZenikaComponent {}
+export class LogoZenikaComponent {
+  protected linearGradientId = `app-logo-zenika-${uid++}`;
+}

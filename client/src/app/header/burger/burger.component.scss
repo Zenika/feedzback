@@ -14,7 +14,7 @@
   border-radius: 99px;
 
   &__line {
-    height: 2px;
+    height: 3px;
     border-radius: 3px;
     background-color: var(--mat-sys-on-surface-variant);
     transform-origin: left;
@@ -39,7 +39,7 @@
   }
 
   &--active &__line:nth-child(1) {
-    transform: translateX(4px) rotate(45deg);
+    transform: translateX(4.25px) rotate(45deg);
   }
 
   &--active &__line:nth-child(2) {
@@ -48,6 +48,6 @@
   }
 
   &--active &__line:nth-child(3) {
-    transform: translateX(4px) rotate(-45deg);
+    transform: translateX(4.25px) rotate(-45deg);
   }
 }

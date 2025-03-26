@@ -1,17 +1,16 @@
-.app-logo-brand-text {
+$icon-size: 1.125em;
+
+.app-brand-name {
   display: inline-flex;
   align-items: center;
   font-weight: bold;
   font-size: inherit;
   line-height: 1em;
-
-  &--lowercase {
-    text-transform: lowercase;
-  }
+  text-wrap-mode: nowrap;
 
   &__feed,
   &__back {
-    animation: appLogoTextAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+    animation: appBrandNameTextAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
@@ -26,17 +25,19 @@
     // End of Hack
 
     width: 0em;
-    animation: appLogoImageAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+    height: 0em;
+    animation: appBrandNameIconAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
 
     @media (prefers-reduced-motion: reduce) {
       margin-inline: 0.125em;
-      width: 1.5em;
+      width: $icon-size;
+      height: $icon-size;
       animation: none;
     }
   }
 }
 
-@keyframes appLogoTextAnim {
+@keyframes appBrandNameTextAnim {
   46% {
     color: inherit;
   }
@@ -51,25 +52,29 @@
   }
 }
 
-@keyframes appLogoImageAnim {
+@keyframes appBrandNameIconAnim {
   45% {
     margin-inline: 0;
     width: 0em;
+    height: 0em;
     opacity: 0;
   }
   50% {
     margin-inline: 0.125em;
-    width: 1.5em;
+    width: $icon-size;
+    height: $icon-size;
     opacity: 1;
   }
   95% {
     margin-inline: 0.125em;
-    width: 1.5em;
+    width: $icon-size;
+    height: $icon-size;
     opacity: 1;
   }
   100% {
     margin-inline: 0;
     width: 0em;
+    height: 0em;
     opacity: 0;
   }
 }
