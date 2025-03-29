@@ -24,7 +24,7 @@ import { ElementToBgColorPipe } from './element-to-bg-color.pipe';
   encapsulation: ViewEncapsulation.None,
 })
 export class ColorDemoComponent {
-  #document = inject(DOCUMENT);
+  private document = inject(DOCUMENT);
 
   protected displayHexColor = true;
 
@@ -122,6 +122,6 @@ export class ColorDemoComponent {
   });
 
   protected toClipboard(color: string) {
-    this.#document.defaultView?.navigator.clipboard.writeText(color);
+    this.document.defaultView?.navigator.clipboard.writeText(color);
   }
 }

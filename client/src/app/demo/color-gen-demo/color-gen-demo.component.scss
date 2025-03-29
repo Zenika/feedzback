@@ -1,0 +1,74 @@
+@use '../../app.scss' as app;
+
+.app-color-gen-demo {
+  &__container {
+    display: flex;
+    gap: 1.5rem;
+
+    @include app.media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+  }
+
+  &__preview {
+    flex-grow: 1;
+  }
+
+  &__code {
+    position: relative;
+    background-color: var(--mat-sys-surface-container);
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 2.5rem 1.25rem 1.25rem;
+    }
+
+    button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+
+  &__info {
+    display: inline-block;
+    width: 9rem;
+    padding: 0.25rem 0.5rem 0.25rem 0;
+    background-color: var(--mat-sys-surface);
+    font-family: monospace;
+  }
+
+  &__tables {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+
+    table {
+      flex-grow: 1;
+
+      border-collapse: collapse;
+    }
+
+    tr:first-child th {
+      text-align: start;
+      background-color: var(--mat-sys-surface-container);
+      color: var(--mat-sys-outline);
+      font-weight: bold;
+    }
+
+    tr {
+      border-bottom: 1px solid var(--mat-sys-outline);
+    }
+
+    th {
+      text-align: end;
+      color: var(--mat-sys-primary);
+      font-weight: normal;
+    }
+
+    th,
+    td {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}

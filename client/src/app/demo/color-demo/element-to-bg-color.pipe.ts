@@ -6,10 +6,10 @@ import { extractRgb, rgbToHex } from './element-to-bg-color.utils';
   name: 'elementToBgColor',
 })
 export class ElementToBgColorPipe implements PipeTransform {
-  #document = inject(DOCUMENT);
+  private document = inject(DOCUMENT);
 
   transform(element: HTMLElement, displayHexColor = false): string {
-    const backgroundColor = this.#document.defaultView?.getComputedStyle(element).backgroundColor;
+    const backgroundColor = this.document.defaultView?.getComputedStyle(element).backgroundColor;
     if (!backgroundColor) {
       return '';
     }

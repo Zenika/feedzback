@@ -1,0 +1,13 @@
+.app-color-gen-form {
+  &__form {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__adjust-align {
+    margin-bottom: 20px; // Match the height of the <mat-error> (in MatFormField)
+  }
+}
