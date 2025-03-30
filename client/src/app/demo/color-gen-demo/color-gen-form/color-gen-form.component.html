@@ -1,18 +1,20 @@
 <form [formGroup]="form" class="app-color-gen-form__form">
   <mat-form-field appearance="outline" style="width: 11rem">
     <mat-label>Color in hexadecimal</mat-label>
-    <input [formControl]="form.controls.rgb" matInput />
-    <mat-error>Invalid color</mat-error>
+    <input [formControl]="form.controls.color" matInput />
+    <mat-error>Invalid</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 6rem">
     <mat-label>Start</mat-label>
     <input [formControl]="form.controls.start" matInput type="number" min="0" max="100" />
+    <mat-error>Invalid</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 6rem">
     <mat-label>End</mat-label>
     <input [formControl]="form.controls.end" matInput type="number" min="0" max="100" />
+    <mat-error>Invalid</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" style="width: 11rem">
@@ -24,15 +26,15 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-checkbox [formControl]="form.controls.reverse" class="app-color-gen-form__adjust-align">Reverse</mat-checkbox>
+  <mat-checkbox [formControl]="form.controls.reverse" class="app-color-gen-form__align">Reverse</mat-checkbox>
 
-  <mat-checkbox [formControl]="form.controls.neutral" class="app-color-gen-form__adjust-align">Neutral</mat-checkbox>
+  <mat-checkbox [formControl]="form.controls.neutral" class="app-color-gen-form__align">Neutral</mat-checkbox>
 
   <button
     type="button"
     mat-icon-button
     aria-label="Settings"
-    class="app-color-gen-form__adjust-align"
+    class="app-color-gen-form__align"
     (click)="openSettings()"
   >
     <mat-icon>settings</mat-icon>

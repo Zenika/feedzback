@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { materialPaletteMapPercentages } from './color-gen-demo.constants';
-import { consolidateColorGenFormValue, easingFuncNames, percentageToRgbFactory } from './color-gen-demo.utils';
+import { easingFuncNames, percentageToRgbFactory } from './color-gen-demo.utils';
 import { ColorGenFormComponent } from './color-gen-form/color-gen-form.component';
 import { ColorGenFormValue } from './color-gen-form/color-gen-form.types';
 
@@ -38,10 +38,10 @@ export class ColorGenDemoComponent {
       return [];
     }
 
-    const { rgb, start, end, easing, reverse, neutral } = consolidateColorGenFormValue(formValue);
+    const { color, start, end, easing, reverse, neutral } = formValue;
 
     const mapPercentages = materialPaletteMapPercentages[neutral ? 'neutral' : 'default'];
-    const percentageToRgb = percentageToRgbFactory({ rgb, easing, reverse });
+    const percentageToRgb = percentageToRgbFactory({ color, easing, reverse });
 
     return mapPercentages
       .map((percentage) => ({
@@ -64,7 +64,13 @@ export class ColorGenDemoComponent {
     if (!formValue) {
       return;
     }
-    const settings = `  // ${JSON.stringify(consolidateColorGenFormValue(formValue))}`;
+    const settings = `  // ${this.stringifyColorGen(formValue)}`;
     this.document.defaultView?.navigator.clipboard.writeText(`${settings}\n${this.sassMap()}`);
+  }
+
+  private stringifyColorGen(formValue: ColorGenFormValue) {
+    const value = { ...formValue };
+    value.color = value.color.toLowerCase();
+    return JSON.stringify(value);
   }
 }

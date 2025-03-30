@@ -91,11 +91,11 @@ export const easingFuncs = [
 export const easingFuncNames = easingFuncs.map(({ name }) => name);
 
 export const percentageToRgbFactory = ({
-  rgb,
+  color,
   easing,
   reverse,
-}: Pick<ColorGenFormValue, 'rgb' | 'easing' | 'reverse'>) => {
-  const [h, l] = colorConvert.hex.hsl(rgb);
+}: Pick<ColorGenFormValue, 'color' | 'easing' | 'reverse'>) => {
+  const [h, l] = colorConvert.hex.hsl(color);
 
   const { func } = easingFuncs.find(({ name }) => name === easing) ?? easingFuncs[0];
 
@@ -104,18 +104,4 @@ export const percentageToRgbFactory = ({
     : (percent: number) => func(percent / 100) * 100;
 
   return (percent: number) => '#' + colorConvert.hsl.hex(h, l, s(percent)).toLowerCase();
-};
-
-export const getRange = (start: number | null, end: number | null): { start: number; end: number } => ({
-  start: start ?? 0,
-  end: end ?? 100,
-});
-
-export const consolidateColorGenFormValue = (formValue: ColorGenFormValue) => {
-  const value = { ...formValue };
-  value.rgb = value.rgb.toLowerCase();
-  value.start ??= 0;
-  value.end ??= 100;
-
-  return value as ColorGenFormValue & { start: number; end: number };
 };

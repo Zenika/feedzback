@@ -11,11 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { filter, map, startWith, tap } from 'rxjs';
 import { ColorGenFormValue } from './color-gen-form.types';
-import { hexColorValidator } from './color-gen-form.validator';
+import { hexColorValidator, RANGE_ERROR_KEY, rangeValidatorFactory } from './color-gen-form.validator';
 
 @Component({
   selector: 'app-color-gen-form',
-  host: { class: 'app-color-gen-form' },
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
@@ -31,16 +30,19 @@ import { hexColorValidator } from './color-gen-form.validator';
   encapsulation: ViewEncapsulation.None,
 })
 export class ColorGenFormComponent {
-  protected document = inject(DOCUMENT);
+  private localStorage = inject(DOCUMENT).defaultView?.localStorage;
 
-  protected form = inject(NonNullableFormBuilder).group({
-    rgb: ['#ee2238', [Validators.required, hexColorValidator]],
-    start: [0 as number | null],
-    end: [100 as number | null],
-    easing: ['linear', [Validators.required]],
-    reverse: [false],
-    neutral: [false],
-  });
+  protected form = inject(NonNullableFormBuilder).group(
+    {
+      color: ['#666666', [Validators.required, hexColorValidator]],
+      start: [0, [Validators.required]],
+      end: [100, [Validators.required]],
+      easing: ['linear', [Validators.required]],
+      reverse: [false],
+      neutral: [false],
+    },
+    { validators: [rangeValidatorFactory()] },
+  );
 
   formValueChange = outputFromObservable<ColorGenFormValue | undefined>(
     this.form.statusChanges.pipe(
@@ -55,16 +57,35 @@ export class ColorGenFormComponent {
   easingFuncNames = input.required<string[]>();
 
   constructor() {
+    this.initRangeErrorHandler();
     this.restore();
+  }
+
+  // ----- form -----
+
+  private initRangeErrorHandler() {
+    const updateRangeError = (formControl: FormControl) => {
+      if (this.form.getError(RANGE_ERROR_KEY)) {
+        formControl.setErrors({ ...formControl.errors, [RANGE_ERROR_KEY]: true });
+      } else if (formControl.hasError(RANGE_ERROR_KEY)) {
+        const errors = { ...formControl.errors };
+        delete errors[RANGE_ERROR_KEY];
+        formControl.setErrors(Object.keys(errors).length ? errors : null);
+      }
+    };
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      updateRangeError(this.form.controls.start);
+      updateRangeError(this.form.controls.end);
+    });
   }
 
   // ----- settings -----
 
-  protected settingsDialog?: MatDialogRef<unknown>;
+  private settingsDialog?: MatDialogRef<unknown>;
 
   private dialog = inject(MatDialog);
 
-  protected settingsTemplate = viewChild.required<TemplateRef<unknown>>('settingsTemplate');
+  private settingsTemplate = viewChild.required<TemplateRef<unknown>>('settingsTemplate');
 
   protected settingsCtrl = new FormControl('');
 
@@ -81,7 +102,7 @@ export class ColorGenFormComponent {
 
       this.settingsDialog?.close();
 
-      this.settingsCtrl.setValue(JSON.stringify(value));
+      this.settingsCtrl.setValue(JSON.stringify(value)); // This is just to format the value
     } catch {
       this.settingsCtrl.setErrors({ settings: true });
     }
@@ -90,11 +111,11 @@ export class ColorGenFormComponent {
   // ----- storage -----
 
   private store(formValue: ColorGenFormValue) {
-    this.document.defaultView?.localStorage.setItem('app-color-gen-form', JSON.stringify(formValue));
+    this.localStorage?.setItem('app-color-gen-form', JSON.stringify(formValue));
   }
 
   private restore() {
-    const value = this.document.defaultView?.localStorage.getItem('app-color-gen-form');
+    const value = this.localStorage?.getItem('app-color-gen-form');
     if (!value) {
       return;
     }
@@ -102,6 +123,7 @@ export class ColorGenFormComponent {
       this.form.setValue(JSON.parse(value));
       this.form.updateValueAndValidity();
     } catch {
+      this.localStorage?.removeItem('app-color-gen-form');
       console.error('ColorGenFormComponent: unable to restore value', value);
     }
   }

@@ -1,7 +1,7 @@
 export type ColorGenFormValue = {
-  rgb: string;
-  start: number | null;
-  end: number | null;
+  color: string;
+  start: number;
+  end: number;
   easing: string;
   reverse: boolean;
   neutral: boolean;
