@@ -1,0 +1,49 @@
+.app-color-gen-preview {
+  display: block;
+  position: relative;
+
+  &__config {
+    display: flex;
+    font-family: monospace;
+
+    &--mirror {
+      justify-content: flex-end;
+    }
+  }
+
+  &__percent {
+    width: 3rem;
+    padding: 0.25rem 0;
+    text-align: end;
+    color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-surface);
+  }
+
+  &__color {
+    padding: 0.25rem 1rem 0.25rem 0.5rem;
+    background-color: var(--mat-sys-surface);
+  }
+
+  &__action {
+    position: absolute !important;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: var(--mat-sys-surface) !important;
+    color: var(--mat-sys-on-surface) !important;
+    opacity: 0.5;
+    transition: opacity ease 150ms;
+
+    &--2 {
+      top: 3.5rem;
+    }
+
+    &--mirror {
+      left: 0.5rem;
+      right: auto;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

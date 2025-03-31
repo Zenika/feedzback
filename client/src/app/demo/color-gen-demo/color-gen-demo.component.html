@@ -1,22 +1,11 @@
-<app-color-gen-form [easingFuncNames]="easingFuncNames" (formValueChange)="formValue.set($event)" />
+<app-color-gen-form (formValueChange)="formValue.set($event)" />
 
-<div class="app-color-gen-demo__preview">
-  @for (config of colorMap(); track $index) {
-    <div class="app-color-gen-demo__config" [style.backgroundColor]="config.color">
-      <span class="app-color-gen-demo__percent">{{ config.percentage }}:</span>
-      <span class="app-color-gen-demo__color">{{ config.color }}</span>
-    </div>
+<div class="app-color-gen-demo__previews">
+  <app-color-gen-preview [formValue]="formValue()" (action)="formValueMirror.set(formValue())" />
+
+  @if (formValueMirror(); as mirror) {
+    <app-color-gen-preview [formValue]="mirror" mirrorView (action)="formValueMirror.set(undefined)" />
   }
-
-  <button
-    class="app-color-gen-demo__clipboard"
-    mat-icon-button
-    matTooltip="Copy Sass map to clipboard"
-    matTooltipPosition="left"
-    (click)="sassMapToClipboard()"
-  >
-    <mat-icon>content_copy</mat-icon>
-  </button>
 </div>
 
 <app-color-gen-guide />

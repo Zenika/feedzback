@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, computed, inject, input, signal, TemplateRef, viewChild, ViewEncapsulation } from '@angular/core';
+import { Component, computed, inject, signal, TemplateRef, viewChild, ViewEncapsulation } from '@angular/core';
 import { outputFromObservable, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { filter, map, startWith, tap } from 'rxjs';
 import { addFormControlErrors, removeFormControlErrors } from '../../../shared/validation/form-control-errors';
+import { easingFuncNames } from '../color-gen-demo.constants';
 import { ColorGenFormValue } from './color-gen-form.types';
 import { hexColorValidator, RANGE_ERROR_KEY, rangeValidatorFactory } from './color-gen-form.validator';
 
@@ -57,7 +58,7 @@ export class ColorGenFormComponent {
     ),
   );
 
-  easingFuncNames = input.required<string[]>();
+  easingFuncNames = easingFuncNames;
 
   constructor() {
     this.initRangeErrorHandler();

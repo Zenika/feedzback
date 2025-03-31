@@ -1,37 +1,10 @@
 .app-color-gen-demo {
-  &__preview {
-    position: relative;
-  }
-
-  &__config {
+  &__previews {
     display: flex;
-    font-family: monospace;
-  }
+    gap: 1px;
 
-  &__percent {
-    width: 3rem;
-    padding: 0.25rem 0;
-    text-align: end;
-    color: var(--mat-sys-primary);
-    background-color: var(--mat-sys-surface);
-  }
-
-  &__color {
-    padding: 0.25rem 1rem 0.25rem 0.5rem;
-    background-color: var(--mat-sys-surface);
-  }
-
-  &__clipboard {
-    position: absolute !important;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: var(--mat-sys-surface) !important;
-    color: var(--mat-sys-on-surface) !important;
-    opacity: 0.5;
-    transition: opacity ease 150ms;
-
-    &:hover {
-      opacity: 1;
+    > * {
+      flex-grow: 1;
     }
   }
 }

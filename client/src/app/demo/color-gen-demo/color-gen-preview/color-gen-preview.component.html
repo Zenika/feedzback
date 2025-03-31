@@ -1,0 +1,43 @@
+@for (config of colorMap(); track $index) {
+  <div
+    class="app-color-gen-preview__config"
+    [class.app-color-gen-preview__config--mirror]="mirrorView()"
+    [style.backgroundColor]="config.color"
+  >
+    <span class="app-color-gen-preview__percent">{{ config.percentage }}:</span>
+    <span class="app-color-gen-preview__color">{{ config.color }}</span>
+  </div>
+}
+
+<button
+  class="app-color-gen-preview__action"
+  [class.app-color-gen-preview__action--mirror]="mirrorView()"
+  mat-icon-button
+  matTooltip="Copy Sass map to clipboard"
+  [matTooltipPosition]="mirrorView() ? 'right' : 'left'"
+  (click)="sassMapToClipboard()"
+>
+  <mat-icon>content_copy</mat-icon>
+</button>
+
+@if (mirrorView()) {
+  <button
+    class="app-color-gen-preview__action app-color-gen-preview__action--2 app-color-gen-preview__action--mirror"
+    mat-icon-button
+    matTooltip="Close mirror view"
+    matTooltipPosition="right"
+    (click)="action.emit()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+} @else {
+  <button
+    class="app-color-gen-preview__action app-color-gen-preview__action--2"
+    mat-icon-button
+    matTooltip="Open mirror view"
+    matTooltipPosition="left"
+    (click)="action.emit()"
+  >
+    <mat-icon>compare</mat-icon>
+  </button>
+}
