@@ -1,150 +1,22 @@
 <app-color-gen-form [easingFuncNames]="easingFuncNames" (formValueChange)="formValue.set($event)" />
 
-<div class="app-color-gen-demo__container">
-  <div class="app-color-gen-demo__preview">
-    @for (config of colorMap(); track $index) {
-      <div [style.backgroundColor]="config.color">
-        <span class="app-color-gen-demo__info">{{ config.percentage }}: {{ config.color }}</span>
-      </div>
-    }
-  </div>
-
-  @if (sassMap(); as _sassMap) {
-    <div class="app-color-gen-demo__code">
-      <pre>{{ `(\n${_sassMap}\n)` }}</pre>
-
-      <button
-        mat-icon-button
-        matTooltip="Copy Sass map to clipboard"
-        matTooltipPosition="left"
-        (click)="sassMapToClipboard()"
-      >
-        <mat-icon>content_copy</mat-icon>
-      </button>
+<div class="app-color-gen-demo__preview">
+  @for (config of colorMap(); track $index) {
+    <div class="app-color-gen-demo__config" [style.backgroundColor]="config.color">
+      <span class="app-color-gen-demo__percent">{{ config.percentage }}:</span>
+      <span class="app-color-gen-demo__color">{{ config.color }}</span>
     </div>
   }
+
+  <button
+    class="app-color-gen-demo__clipboard"
+    mat-icon-button
+    matTooltip="Copy Sass map to clipboard"
+    matTooltipPosition="left"
+    (click)="sassMapToClipboard()"
+  >
+    <mat-icon>content_copy</mat-icon>
+  </button>
 </div>
 
-<div class="app-color-gen-demo__tables">
-  <table>
-    <caption>
-      Light palettes
-    </caption>
-    <tbody>
-      <tr>
-        <th colspan="2">primary</th>
-      </tr>
-      <tr>
-        <th>40</th>
-        <td>primary</td>
-      </tr>
-      <tr>
-        <th>100</th>
-        <td>on-primary</td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th colspan="2">neutral</th>
-      </tr>
-      <tr>
-        <th>10</th>
-        <td>on-surface</td>
-      </tr>
-      <tr>
-        <th>94</th>
-        <td>surface-container</td>
-      </tr>
-      <tr>
-        <th>98</th>
-        <td>surface</td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th colspan="2">neutral-variant</th>
-      </tr>
-      <tr>
-        <th>50</th>
-        <td>outline</td>
-      </tr>
-      <tr>
-        <th>90</th>
-        <td>surface-variant</td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th colspan="2">error</th>
-      </tr>
-      <tr>
-        <th>40</th>
-        <td>error</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <table>
-    <caption>
-      Dark palettes
-    </caption>
-    <tbody>
-      <tr>
-        <th colspan="2">primary</th>
-      </tr>
-      <tr>
-        <th>20</th>
-        <td>on-primary</td>
-      </tr>
-      <tr>
-        <th>80</th>
-        <td>primary</td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th colspan="2">neutral</th>
-      </tr>
-      <tr>
-        <th>6</th>
-        <td>surface</td>
-      </tr>
-      <tr>
-        <th>12</th>
-        <td>surface-container</td>
-      </tr>
-      <tr>
-        <th>90</th>
-        <td>on-surface</td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th colspan="2">neutral-variant</th>
-      </tr>
-      <tr>
-        <th>30</th>
-        <td>surface-variant</td>
-      </tr>
-      <tr>
-        <th>60</th>
-        <td>outline</td>
-      </tr>
-    </tbody>
-
-    <tbody>
-      <tr>
-        <th colspan="2">error</th>
-      </tr>
-      <tr>
-        <th>80</th>
-        <td>error</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<app-color-gen-guide />

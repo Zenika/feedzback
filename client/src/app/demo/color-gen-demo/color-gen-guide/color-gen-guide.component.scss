@@ -1,0 +1,43 @@
+@use '../../../app.scss' as app;
+
+.app-color-gen-guide {
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+
+  @include app.media-breakpoint-down(sm) {
+    flex-direction: column;
+  }
+
+  table {
+    flex-grow: 1;
+    border-collapse: collapse;
+  }
+
+  caption {
+    padding: 0.25rem 0.5rem;
+    text-align: start;
+  }
+
+  tr {
+    border-bottom: 1px solid var(--mat-sys-outline);
+  }
+
+  th,
+  td {
+    padding: 0.25rem 0.5rem;
+  }
+
+  tr:first-child th {
+    text-align: start;
+    background-color: var(--mat-sys-surface-container);
+    color: var(--mat-sys-outline);
+  }
+
+  tr:not(:first-child) th {
+    text-align: end;
+    color: var(--mat-sys-primary);
+    font-family: monospace;
+    font-weight: normal;
+  }
+}

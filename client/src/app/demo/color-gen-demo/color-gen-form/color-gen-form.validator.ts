@@ -1,4 +1,4 @@
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export const HEX_COLOR_REGEXP = /^#?([0-9abcdef]{3}|[0-9abcdef]{6})$/i;
 
@@ -19,10 +19,3 @@ export const rangeValidatorFactory =
       ? { [RANGE_ERROR_KEY]: true }
       : null;
   };
-
-export const asyncRangeParentValidator: AsyncValidatorFn = (control) => {
-  let resolve: (value: ValidationErrors | null) => void;
-  // Note: we have to wait for the parent validator error to be set
-  setTimeout(() => resolve(control.parent?.getError(RANGE_ERROR_KEY) ? { [RANGE_ERROR_KEY]: true } : null));
-  return new Promise((_resolve) => (resolve = _resolve));
-};

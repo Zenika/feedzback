@@ -1,4 +1,12 @@
 .app-color-gen-form {
+  &__snapshots {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
   &__form {
     margin-bottom: 1rem;
     display: flex;

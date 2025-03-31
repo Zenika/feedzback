@@ -9,10 +9,10 @@ import { materialPaletteMapPercentages } from './color-gen-demo.constants';
 import { easingFuncNames, percentageToRgbFactory } from './color-gen-demo.utils';
 import { ColorGenFormComponent } from './color-gen-form/color-gen-form.component';
 import { ColorGenFormValue } from './color-gen-form/color-gen-form.types';
+import { ColorGenGuideComponent } from './color-gen-guide/color-gen-guide.component';
 
 @Component({
   selector: 'app-color-gen-demo',
-  host: { class: 'app-color-gen-demo' },
   imports: [
     MatButtonModule,
     MatFormFieldModule,
@@ -20,6 +20,7 @@ import { ColorGenFormValue } from './color-gen-form/color-gen-form.types';
     MatInputModule,
     MatTooltipModule,
     ColorGenFormComponent,
+    ColorGenGuideComponent,
   ],
   templateUrl: './color-gen-demo.component.html',
   styleUrl: './color-gen-demo.component.scss',

@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, inject, input, TemplateRef, viewChild, ViewEncapsulation } from '@angular/core';
-import { outputFromObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, input, signal, TemplateRef, viewChild, ViewEncapsulation } from '@angular/core';
+import { outputFromObservable, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -9,7 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { filter, map, startWith, tap } from 'rxjs';
+import { addFormControlErrors, removeFormControlErrors } from '../../../shared/validation/form-control-errors';
 import { ColorGenFormValue } from './color-gen-form.types';
 import { hexColorValidator, RANGE_ERROR_KEY, rangeValidatorFactory } from './color-gen-form.validator';
 
@@ -24,6 +26,7 @@ import { hexColorValidator, RANGE_ERROR_KEY, rangeValidatorFactory } from './col
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatTooltipModule,
   ],
   templateUrl: './color-gen-form.component.html',
   styleUrl: './color-gen-form.component.scss',
@@ -66,11 +69,11 @@ export class ColorGenFormComponent {
   private initRangeErrorHandler() {
     const updateRangeError = (formControl: FormControl) => {
       if (this.form.getError(RANGE_ERROR_KEY)) {
-        formControl.setErrors({ ...formControl.errors, [RANGE_ERROR_KEY]: true });
+        // Propagate the error from parent to child control
+        addFormControlErrors(formControl, { [RANGE_ERROR_KEY]: true });
       } else if (formControl.hasError(RANGE_ERROR_KEY)) {
-        const errors = { ...formControl.errors };
-        delete errors[RANGE_ERROR_KEY];
-        formControl.setErrors(Object.keys(errors).length ? errors : null);
+        // Propagate the removal of the error from the parent to the child control
+        removeFormControlErrors(formControl, [RANGE_ERROR_KEY]);
       }
     };
     this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
@@ -126,5 +129,46 @@ export class ColorGenFormComponent {
       this.localStorage?.removeItem('app-color-gen-form');
       console.error('ColorGenFormComponent: unable to restore value', value);
     }
+  }
+
+  // ----- snapshot -----
+
+  protected maxSnapshots = 10;
+
+  protected snapshots = signal<{ alias: string; value: string }[]>([]);
+
+  protected formValueSnapshot = toSignal(this.form.valueChanges.pipe(map((formValue) => JSON.stringify(formValue))), {
+    initialValue: JSON.stringify(this.form.value),
+  });
+
+  protected takeSnapshot() {
+    this.snapshots.update((snapshots) => [
+      ...snapshots,
+      {
+        alias: this.nextSnapshotAlias,
+        value: this.formValueSnapshot(),
+      },
+    ]);
+  }
+
+  protected hasSelectedSnapshot = computed(() =>
+    this.snapshots().some(({ value }) => value === this.formValueSnapshot()),
+  );
+
+  protected removeSelectedSnapshot() {
+    this.snapshots.update((snapshots) => snapshots.filter(({ value }) => value !== this.formValueSnapshot()));
+  }
+
+  protected applySnapshot(snapshot: string) {
+    this.form.setValue(JSON.parse(snapshot));
+    this.form.updateValueAndValidity();
+  }
+
+  private snapshotAliasList = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  private snapshotAliasIndex = 0;
+
+  private get nextSnapshotAlias() {
+    return this.snapshotAliasList[this.snapshotAliasIndex++ % this.snapshotAliasList.length];
   }
 }

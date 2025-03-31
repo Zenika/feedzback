@@ -1,3 +1,40 @@
+<div class="app-color-gen-form__snapshots">
+  @let noMoreSnapshots = snapshots().length >= maxSnapshots;
+
+  @if (hasSelectedSnapshot()) {
+    <button
+      type="button"
+      aria-label="Remove selected snapshot"
+      matTooltip="Remove selected snapshot"
+      matTooltipPosition="above"
+      mat-icon-button
+      (click)="removeSelectedSnapshot()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  } @else {
+    <button
+      type="button"
+      aria-label="Take a snapshot"
+      matTooltip="Take a snapshot"
+      matTooltipPosition="above"
+      mat-icon-button
+      [disabled]="this.form.invalid || noMoreSnapshots"
+      (click)="takeSnapshot()"
+    >
+      <mat-icon>{{ noMoreSnapshots ? 'no_photography' : 'add_a_photo' }}</mat-icon>
+    </button>
+  }
+
+  @for (snapshot of snapshots(); track $index) {
+    @if (snapshot.value === formValueSnapshot()) {
+      <button type="button" mat-flat-button (click)="applySnapshot(snapshot.value)">{{ snapshot.alias }}</button>
+    } @else {
+      <button type="button" mat-button (click)="applySnapshot(snapshot.value)">{{ snapshot.alias }}</button>
+    }
+  }
+</div>
+
 <form [formGroup]="form" class="app-color-gen-form__form">
   <mat-form-field appearance="outline" style="width: 11rem">
     <mat-label>Color in hexadecimal</mat-label>
@@ -53,8 +90,8 @@
         cdkTextareaAutosize
         cdkAutosizeMaxRows="14"
         matInput
-        (focus)="ttt.select()"
-        #ttt
+        (focus)="settingsElement.select()"
+        #settingsElement
       ></textarea>
       <mat-error>Invalid settings</mat-error>
     </mat-form-field>
