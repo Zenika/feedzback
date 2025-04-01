@@ -2,8 +2,13 @@
 
 <button
   class="app-color-gen-bezier__point gbl-button-less"
+  [disabled]="disabled()"
+  matRipple
+  [matRippleCentered]="true"
+  [matRippleUnbounded]="true"
   cdkDrag
   cdkDragBoundary=".app-color-gen-bezier"
+  [cdkDragDisabled]="disabled()"
   (cdkDragEnded)="updateParam('p1')"
   #p1
 >
@@ -12,8 +17,13 @@
 
 <button
   class="app-color-gen-bezier__point gbl-button-less"
+  [disabled]="disabled()"
+  matRipple
+  [matRippleCentered]="true"
+  [matRippleUnbounded]="true"
   cdkDrag
   cdkDragBoundary=".app-color-gen-bezier"
+  [cdkDragDisabled]="disabled()"
   (cdkDragEnded)="updateParam('p2')"
   #p2
 >

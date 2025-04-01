@@ -1,3 +1,5 @@
+import { ColorGenBezier } from '../color-gen-bezier/color-gen-bezier.types';
+
 export type ColorGenFormValue = {
   color: string;
   start: number;
@@ -5,4 +7,6 @@ export type ColorGenFormValue = {
   easing: string;
   reverse: boolean;
   neutral: boolean;
+
+  cubicBezier: ColorGenBezier;
 };

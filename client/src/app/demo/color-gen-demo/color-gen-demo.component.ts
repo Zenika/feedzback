@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { Component, signal, ViewEncapsulation } from '@angular/core';
 import { ColorGenFormComponent } from './color-gen-form/color-gen-form.component';
 import { ColorGenFormValue } from './color-gen-form/color-gen-form.types';
@@ -7,7 +6,7 @@ import { ColorGenPreviewComponent } from './color-gen-preview/color-gen-preview.
 
 @Component({
   selector: 'app-color-gen-demo',
-  imports: [JsonPipe, ColorGenFormComponent, ColorGenGuideComponent, ColorGenPreviewComponent],
+  imports: [ColorGenFormComponent, ColorGenGuideComponent, ColorGenPreviewComponent],
   templateUrl: './color-gen-demo.component.html',
   styleUrl: './color-gen-demo.component.scss',
   encapsulation: ViewEncapsulation.None,

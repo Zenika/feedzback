@@ -24,7 +24,11 @@
     line-height: 1em;
     text-align: center;
     cursor: move;
-    background-color: var(--mat-sys-on-surface);
-    color: var(--mat-sys-surface-container);
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+
+    &:disabled {
+      opacity: 0.33;
+    }
   }
 }

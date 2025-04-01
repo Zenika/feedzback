@@ -1,17 +1,19 @@
 import { CdkDrag } from '@angular/cdk/drag-drop';
 import {
-  afterNextRender,
+  afterRenderEffect,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
   input,
   model,
   untracked,
   viewChild,
+  viewChildren,
   ViewEncapsulation,
 } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { MatRippleModule } from '@angular/material/core';
 import CubicBezier from '@mapbox/unitbezier';
 import { ColorGenBezier } from './color-gen-bezier.types';
 
@@ -22,12 +24,12 @@ import { ColorGenBezier } from './color-gen-bezier.types';
     '[style.--app-color-gen-bezier-canvas-size]': 'canvasSize() + "px"',
     '[style.--app-color-gen-bezier-point-size]': 'pointSize() + "px"',
   },
-  imports: [CdkDrag],
+  imports: [CdkDrag, MatRippleModule],
   templateUrl: './color-gen-bezier.component.html',
   styleUrl: './color-gen-bezier.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class ColorGenBezierComponent {
+export class ColorGenBezierComponent implements ControlValueAccessor {
   private containerElement: HTMLElement = inject(ElementRef).nativeElement;
 
   params = model<ColorGenBezier>({ p1x: 0, p1y: 0, p2x: 1, p2y: 1 });
@@ -49,12 +51,18 @@ export class ColorGenBezierComponent {
 
   pointSize = input(24);
 
+  lineColor = input<string>();
+
   skipNextParamsEffect = false;
 
-  constructor() {
-    afterNextRender(() => this.renderCanvas());
+  disabled = model(false);
 
-    effect(() => {
+  private cdkDrags = viewChildren(CdkDrag);
+
+  constructor() {
+    afterRenderEffect(() => this.updateCanvas());
+
+    afterRenderEffect(() => {
       const params = this.params();
       if (this.skipNextParamsEffect) {
         this.skipNextParamsEffect = false;
@@ -62,59 +70,95 @@ export class ColorGenBezierComponent {
       }
       untracked(() => this.positioningPoints(params));
     });
+
+    const ngControl = inject(NgControl, { optional: true, self: true });
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+    }
   }
 
   private positioningPoints(params: ColorGenBezier) {
-    const size = this.canvasSize() - this.pointSize();
+    const baseSize = this.canvasSize() - this.pointSize();
 
-    const p1 = this.p1().nativeElement;
-    p1.style.left = params.p1x * size + 'px';
-    p1.style.bottom = params.p1y * size + 'px';
+    const [p1Drag, p2Drag] = this.cdkDrags();
 
-    const p2 = this.p2().nativeElement;
-    p2.style.left = params.p2x * size + 'px';
-    p2.style.bottom = params.p2y * size + 'px';
+    p1Drag.setFreeDragPosition({
+      x: params.p1x * baseSize,
+      y: baseSize - params.p1y * baseSize,
+    });
+    p2Drag.setFreeDragPosition({
+      x: params.p2x * baseSize,
+      y: baseSize - params.p2y * baseSize,
+    });
   }
 
   protected updateParam(p: 'p1' | 'p2') {
     const container = this.containerElement.getBoundingClientRect();
     const point = this[p]().nativeElement.getBoundingClientRect();
-    const size = this.canvasSize() - this.pointSize();
+    const baseSize = this.canvasSize() - this.pointSize();
 
     this.skipNextParamsEffect = true;
     this.params.update((params) => {
-      const x = Math.round((1000 * (point.x - container.x)) / size) / 1000;
-      const y = Math.round(1000 - (1000 * (point.y - container.y)) / size) / 1000;
+      const x = Math.round((1000 * (point.x - container.x)) / baseSize) / 1000;
+      const y = Math.round(1000 - (1000 * (point.y - container.y)) / baseSize) / 1000;
 
+      const newParams = { ...params };
       if (p === 'p1') {
-        return { ...params, p1x: x, p1y: y };
+        newParams.p1x = x;
+        newParams.p1y = y;
       } else {
-        return { ...params, p2x: x, p2y: y };
+        newParams.p2x = x;
+        newParams.p2y = y;
       }
+      return newParams;
     });
-
-    this.renderCanvas();
+    this.onChange(this.params());
+    this.onTouched();
   }
 
-  private renderCanvas() {
+  private updateCanvas() {
     const ctx = this.canvasContext();
+    const canvasSize = this.canvasSize();
+    const cubicBezier = this.cubicBezier();
+    const lineColor = this.lineColor();
+
     if (!ctx) {
       console.warn('ColorGenBezierComponent: canvas is not supported');
       return;
     }
 
-    const size = this.canvasSize();
+    ctx.strokeStyle = lineColor ?? 'red';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
 
-    ctx.clearRect(0, 0, size, size);
-
-    ctx.strokeStyle = '#ee2236';
-    ctx.lineWidth = 2;
-
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
     ctx.beginPath();
-    ctx.moveTo(0, size);
-    for (let i = 0; i <= 1000; i += 10) {
-      ctx.lineTo((i * size) / 1000, (1 - this.cubicBezier().solve(i / 1000)) * size);
+    ctx.moveTo(0, canvasSize);
+    for (let step = 0; step <= canvasSize; step += 1) {
+      ctx.lineTo(step, (1 - cubicBezier.solve(step / canvasSize)) * canvasSize);
     }
     ctx.stroke();
+  }
+
+  // ----- ControlValueAccessor -----
+
+  private onChange: (params: ColorGenBezier) => void = () => undefined;
+
+  private onTouched: () => void = () => undefined;
+
+  registerOnChange(onChange: (params: ColorGenBezier) => undefined): void {
+    this.onChange = onChange;
+  }
+
+  registerOnTouched(onTouched: () => void): void {
+    this.onTouched = onTouched;
+  }
+
+  writeValue(params: ColorGenBezier | null | undefined): void {
+    this.params.set(params ?? { p1x: 0, p1y: 0, p2x: 1, p2y: 1 });
+  }
+
+  setDisabledState?(disabled: boolean): void {
+    this.disabled.set(disabled);
   }
 }

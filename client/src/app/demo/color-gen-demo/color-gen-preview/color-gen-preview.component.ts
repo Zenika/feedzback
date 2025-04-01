@@ -30,10 +30,10 @@ export class ColorGenPreviewComponent {
       return [];
     }
 
-    const { color, start, end, easing, reverse, neutral } = formValue;
+    const { color, start, end, /*easing, */ reverse, neutral, cubicBezier } = formValue;
 
     const percentagesMap = materialPalettePercentagesMap[neutral ? 'neutral' : 'default'];
-    const percentageToRgb = percentageToRgbFactory({ color, easing, reverse });
+    const percentageToRgb = percentageToRgbFactory({ color /*, easing*/, reverse, cubicBezier });
 
     return percentagesMap
       .map((percentage) => ({
