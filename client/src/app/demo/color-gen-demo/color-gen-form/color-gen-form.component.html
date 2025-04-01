@@ -63,6 +63,8 @@
     </mat-select>
   </mat-form-field>
 
+  <app-color-gen-bezier [(params)]="bezierParams" />
+
   <mat-checkbox [formControl]="form.controls.reverse" class="app-color-gen-form__align">Reverse</mat-checkbox>
 
   <mat-checkbox [formControl]="form.controls.neutral" class="app-color-gen-form__align">Neutral</mat-checkbox>

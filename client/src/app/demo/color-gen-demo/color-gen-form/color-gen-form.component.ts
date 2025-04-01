@@ -12,6 +12,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { filter, map, startWith, tap } from 'rxjs';
 import { addFormControlErrors, removeFormControlErrors } from '../../../shared/validation/form-control-errors';
+import { ColorGenBezierComponent } from '../color-gen-bezier/color-gen-bezier.component';
+import { ColorGenBezier } from '../color-gen-bezier/color-gen-bezier.types';
 import { easingFuncNames } from '../color-gen-demo.constants';
 import { ColorGenFormValue } from './color-gen-form.types';
 import { hexColorValidator, RANGE_ERROR_KEY, rangeValidatorFactory } from './color-gen-form.validator';
@@ -23,17 +25,20 @@ import { hexColorValidator, RANGE_ERROR_KEY, rangeValidatorFactory } from './col
     MatButtonModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatIconModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    ColorGenBezierComponent,
   ],
   templateUrl: './color-gen-form.component.html',
   styleUrl: './color-gen-form.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class ColorGenFormComponent {
+  protected bezierParams = signal<ColorGenBezier>({ p1x: 0, p1y: 0, p2x: 1, p2y: 1 });
+
   private localStorage = inject(DOCUMENT).defaultView?.localStorage;
 
   protected form = inject(NonNullableFormBuilder).group(
