@@ -11,7 +11,7 @@ export class SignInPage {
     await this.page.getByRole('button', { name: 'Se connecter avec identifiants' }).click();
     await this.page.getByLabel('Email').fill(persona);
     await this.page.getByLabel('Mot de passe', { exact: true }).fill('zenika');
-    await this.page.getByRole('button', { name: 'Se connecter' }).click();
+    await this.page.getByRole('button', { name: 'Se connecter', exact: true }).click();
 
     await this.page.waitForURL('/fr/home');
   }
