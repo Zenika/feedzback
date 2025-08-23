@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { unsavedFormGuardFactory } from '../shared/unsaved-form';
 import { AvatarDemoComponent } from './avatar-demo/avatar-demo.component';
 import { ColorDemoComponent } from './color-demo/color-demo.component';
-import { ColorGenDemoComponent } from './color-gen-demo/color-gen-demo.component';
 import { ContentDemoComponent } from './content-demo/content-demo.component';
 import { DialogTooltipDemoComponent } from './dialog-tooltip-demo/dialog-tooltip-demo.component';
 import { IconDemoComponent } from './icon-demo/icon-demo.component';
@@ -16,7 +15,6 @@ import { UnsavedFormStorageDemoComponent } from './unsaved-form-storage-demo/uns
 export const demoRoutes: Routes = [
   { path: 'avatar', component: AvatarDemoComponent },
   { path: 'color', component: ColorDemoComponent },
-  { path: 'color-gen', component: ColorGenDemoComponent },
   { path: 'content', component: ContentDemoComponent },
   { path: 'shadow', component: ShadowDemoComponent },
   { path: 'dialog-tooltip', component: DialogTooltipDemoComponent },
