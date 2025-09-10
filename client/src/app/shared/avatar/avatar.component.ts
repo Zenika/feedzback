@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, booleanAttribute, computed, input } from '@angular/core';
+import { Component, ViewEncapsulation, booleanAttribute, computed, input, resource } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DEFAULT_COLOR } from './avatar.config';
 import { Avatar } from './avatar.types';
@@ -24,15 +24,38 @@ export class AvatarComponent {
 
   small = input(false, { transform: booleanAttribute });
 
-  bgImage = computed(() => {
-    if (!this.photoUrl()) {
-      return undefined;
-    }
-    return `url(${this.photoUrl()})`;
+  protected photoBlob = resource({
+    request: () => this.photoUrl(),
+    loader: async ({ request, abortSignal }) => {
+      if (!request) {
+        return undefined;
+      }
+
+      try {
+        const photo = await fetch(request, { signal: abortSignal });
+        if (!photo.ok) {
+          throw new Error(); // Note: Google might respond "429 (Too Many Requests)"
+        }
+        return URL.createObjectURL(await photo.blob());
+      } catch {
+        console.warn('AvatarComponent: unable to fetch photo', this.photoUrl());
+        return undefined;
+      }
+    },
   });
 
-  avatar = computed<Avatar | undefined>(() => {
-    if (this.photoUrl()) {
+  protected hasPhoto = computed(() => this.photoBlob.isLoading() || this.photoBlob.hasValue());
+
+  protected bgImage = computed(() => {
+    const photoBlob = this.photoBlob.value();
+    if (!photoBlob) {
+      return undefined;
+    }
+    return `url(${photoBlob})`;
+  });
+
+  protected avatar = computed<Avatar | undefined>(() => {
+    if (this.hasPhoto()) {
       return undefined;
     }
     const name = this.name();

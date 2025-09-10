@@ -1,0 +1,16 @@
+@use '../../../app' as app;
+
+.app-menu-desktop {
+  &__avatar {
+    border-radius: 99px;
+    cursor: pointer;
+  }
+
+  @include app.media-breakpoint-down(md) {
+    &__hidden-on-mobile {
+      // Even if the menu is closed programmatically when switching the viewport to mobile,
+      // there's still a glitch, because it does not disappear immediately.
+      display: none;
+    }
+  }
+}

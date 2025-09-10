@@ -7,3 +7,11 @@
 .gbl-sys-primary-hover--transition {
   transition: color ease 250ms;
 }
+
+// TODO: The colour system must be updated so that `--mat-sys-on-surface` is as follows:
+:root {
+  --gbl-color-on-surface-accent: #121212; // currently, `--mat-sys-on-surface` is `#1f1f1f`
+}
+.gbl-theme-dark {
+  --gbl-color-on-surface-accent: #f2f2f2; // currently, `--mat-sys-on-surface` is `#b8b8b8`
+}

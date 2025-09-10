@@ -1,24 +1,47 @@
-<div class="app-header__logo app-header__logo--desktop">
-  <ng-container [ngTemplateOutlet]="logo" />
-</div>
+<!--<a
+  routerLink="/home"
+  routerLinkActive
+  ariaCurrentWhenActive="page"
+  aria-label="Accueil"
+  i18n-aria-label="@@Component.Header.HomeLink"
+  class="app-header__home gbl-title-large"
+>
+  <mat-icon svgIcon="app-icon-brand" appIcon class="app-header__brand-logo" />
+  <span aria-label="FeedZback">Feed<span class="app-header__brand-gradient">Z</span>back</span>
+</a>-->
+
+<a
+  routerLink="/home"
+  routerLinkActive
+  ariaCurrentWhenActive="page"
+  aria-label="Accueil"
+  i18n-aria-label="@@Component.Header.HomeLink"
+  class="app-header__home"
+  style="line-height: 0"
+>
+  <img src="assets/images/logo-feedzback.svg" width="106.28" height="56" alt="" />
+</a>
 
 <div class="app-header__burger">
-  @if (userStatus().authenticated) {
-    <app-burger class="app-header-nav-target" [(active)]="isNavOpen" />
-  }
+  <app-burger role="button" aria-label="Menu" i18n-aria-label="@@Component.Header.BurgerLink" [(active)]="isNavOpen" />
 </div>
 
 <nav
-  class="app-header__nav app-header-nav-target gbl-title-medium"
+  class="app-header__nav"
   [class.app-header__nav--open]="isNavOpen()"
-  [class.app-header__nav--content-hidden]="!isNavVisible()"
   (transitionstart)="$event.target === navElement && onNavTransition('start')"
   (transitionend)="$event.target === navElement && onNavTransition('end')"
   #navElement
 >
-  @if (userStatus().authenticated) {
-    <app-nav />
-  }
+  <div class="app-header__nav-inner" [class.app-header__nav-inner--hidden]="!isNavVisible()">
+    @if (userStatus().authenticated) {
+      <app-primary-nav class="app-header__primary-nav gbl-title-medium" />
+    }
+
+    <app-menu-desktop class="app-header__menu-desktop" />
+
+    <app-menu-mobile class="app-header__menu-mobile" />
+  </div>
 </nav>
 
 @if (isNavVisible()) {
@@ -29,23 +52,3 @@
     (click)="closeNav()"
   ></div>
 }
-
-<div class="app-header__logo app-header__logo--mobile">
-  <ng-container [ngTemplateOutlet]="logo" />
-</div>
-
-<div class="app-header__menu">
-  <app-menu />
-</div>
-
-<ng-template #logo>
-  <a
-    routerLink="/home"
-    routerLinkActive
-    ariaCurrentWhenActive="page"
-    aria-label="Accueil"
-    i18n-aria-label="@@Component.Header.HomeLink"
-  >
-    <img src="assets/images/logo-feedzback.svg" width="106" height="56" alt="" />
-  </a>
-</ng-template>

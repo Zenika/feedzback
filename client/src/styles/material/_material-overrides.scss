@@ -1,8 +1,13 @@
-:root {
-  --mdc-dialog-subhead-weight: 600;
+@use '@angular/material' as mat;
 
-  --mdc-dialog-supporting-text-size: 1rem;
-  --mdc-dialog-supporting-text-line-height: 1.5rem;
+:root {
+  @include mat.dialog-overrides(
+    (
+      subhead-weight: 600,
+      supporting-text-size: 1rem,
+      supporting-text-line-height: 1.5rem,
+    )
+  );
 }
 
 mat-icon {

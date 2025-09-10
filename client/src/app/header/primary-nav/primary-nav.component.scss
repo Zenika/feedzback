@@ -1,0 +1,54 @@
+@use '../../app' as app;
+
+.app-primary-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  @include app.media-breakpoint-up(md) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: 0 1em;
+  }
+
+  &__item {
+    position: relative;
+
+    // Note: 0.5em (margin-top) + 0.5em (padding-top) == 1em (padding-bottom)
+    margin-top: 0.5em;
+    padding: 0.5em 0.25em 1em 0.25em;
+
+    flex-shrink: 0; // Has an effect on desktop only
+    text-decoration: none;
+
+    color: var(--mat-sys-on-surface-variant);
+    transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    &:hover,
+    &--active {
+      color: var(--mat-sys-primary);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0.75em;
+      height: 3px;
+      left: 50%;
+      width: 0%;
+      opacity: 0;
+      border-radius: 4px;
+      background-color: var(--mat-sys-primary);
+      transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
+
+    &--active::after {
+      left: 0%;
+      width: 100%;
+      opacity: 1;
+    }
+  }
+}

@@ -8,13 +8,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--app-loading);
-}
-
-:root {
-  --app-loading: #{rgba($color: #ebebeb, $alpha: 0.65)}; // based on `surface`
-}
-
-.gbl-theme-dark {
-  --app-loading: #{rgba($color: #141414, $alpha: 0.65)}; // based on `surface`
+  background-color: rgb(from var(--mat-sys-surface) r g b / 0.65);
 }

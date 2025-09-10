@@ -29,7 +29,7 @@
         medium-weight: v.$font-medium-weight,
         bold-weight: v.$font-bold-weight,
       ),
-      density: 0,
+      density: -1,
     ),
     $overrides: f.map-merge-all(typography.$typography) // Add more maps if needed (separated by comma)...
   );
@@ -44,7 +44,6 @@
         primary: theme-dark.$primary-palette,
         tertiary: theme-dark.$tertiary-palette,
       ),
-      density: 0,
     )
   );
 }

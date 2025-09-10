@@ -87,7 +87,7 @@
 </mat-form-field>
 
 <ng-template #positiveFeedbackGuide>
-  <div mat-dialog-title i18n="@@Feedback.Positive">Points forts</div>
+  <div role="heading" aria-level="2" mat-dialog-title i18n="@@Feedback.Positive">Points forts</div>
 
   <app-positive-feedback-guide vertical mat-dialog-content />
 
@@ -97,7 +97,7 @@
 </ng-template>
 
 <ng-template #negativeFeedbackGuide>
-  <div mat-dialog-title i18n="@@Feedback.Negative">Axes d'améliorations</div>
+  <div role="heading" aria-level="2" mat-dialog-title i18n="@@Feedback.Negative">Axes d'améliorations</div>
 
   <app-negative-feedback-guide vertical mat-dialog-content />
 

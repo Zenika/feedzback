@@ -1,0 +1,80 @@
+$icon-size: 1.125em;
+
+.app-brand-name {
+  display: inline-flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: inherit;
+  line-height: 1em;
+  text-wrap-mode: nowrap;
+
+  &__feed,
+  &__back {
+    animation: appBrandNameTextAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      color: var(--mat-sys-on-surface);
+    }
+  }
+
+  &__z {
+    // Hack: Slightly modify the icon's baseline
+    position: relative;
+    top: 0.5px;
+    // End of Hack
+
+    width: 0em;
+    height: 0em;
+    animation: appBrandNameIconAnim 8s 2s cubic-bezier(0.77, 0.2, 0.05, 1) infinite forwards;
+
+    @media (prefers-reduced-motion: reduce) {
+      margin-inline: 0.125em;
+      width: $icon-size;
+      height: $icon-size;
+      animation: none;
+    }
+  }
+}
+
+@keyframes appBrandNameTextAnim {
+  46% {
+    color: inherit;
+  }
+  50% {
+    color: var(--mat-sys-on-surface);
+  }
+  96% {
+    color: var(--mat-sys-on-surface);
+  }
+  100% {
+    columns: inherit;
+  }
+}
+
+@keyframes appBrandNameIconAnim {
+  45% {
+    margin-inline: 0;
+    width: 0em;
+    height: 0em;
+    opacity: 0;
+  }
+  50% {
+    margin-inline: 0.125em;
+    width: $icon-size;
+    height: $icon-size;
+    opacity: 1;
+  }
+  95% {
+    margin-inline: 0.125em;
+    width: $icon-size;
+    height: $icon-size;
+    opacity: 1;
+  }
+  100% {
+    margin-inline: 0;
+    width: 0em;
+    height: 0em;
+    opacity: 0;
+  }
+}

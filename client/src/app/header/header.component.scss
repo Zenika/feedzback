@@ -1,98 +1,149 @@
 @use '../app' as app;
 
+//   0.5rem (the vertical padding of `.app-header`)
+// + 3.5rem (the height of the `<app-primary-nav>`, on desktop)
+// = 4rem
+$header-height: 4rem;
+
 $anim-duration-timing-function: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
 .app-header {
   position: relative;
+  box-sizing: border-box;
+  min-height: $header-height;
   padding: 0.25rem 0;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  &__logo {
-    line-height: 0;
+  &__home {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    text-decoration: none;
+    text-wrap-mode: nowrap;
+    color: var(--gbl-color-on-surface-accent);
+
+    @include app.media-breakpoint-down(sm) {
+      // On mobile, the app logo should be visible even when the nav is open.
+      z-index: 99;
+    }
+  }
+
+  &__brand-logo {
+    font-size: 1.5em;
+  }
+
+  &__brand-gradient {
+    background: linear-gradient(to right, #e5293b 25%, #be1e67 75%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   &__burger {
     z-index: 99;
   }
 
-  &__menu {
-    position: relative;
+  &__nav-inner {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__menu-desktop {
+    // Required to render `<app-menu-desktop>` above `<app-primary-nav>`.
+    position: relative;
+  }
+
+  &__menu-mobile {
+    margin: 0.5rem;
   }
 
   @include app.media-breakpoint-up(md) {
     &__burger,
-    &__nav-backdrop,
-    &__logo--mobile {
+    &__menu-mobile,
+    &__nav-backdrop {
       display: none;
-    }
-
-    &__logo--desktop,
-    &__menu {
-      flex-basis: 20%;
-    }
-
-    &__menu {
-      // When device width become smaller, allow the `&__menu` width to be smaller than the `&__logo` width
-      flex-shrink: 3;
     }
   }
 
   @include app.media-breakpoint-down(md) {
-    &__logo--desktop {
+    &__menu-desktop {
       display: none;
     }
 
-    &__burger,
-    &__menu {
-      flex-basis: 20%;
-    }
-
     &__nav {
+      border-bottom: 5px solid var(--mat-sys-primary);
+      background-color: var(--mat-sys-surface-container);
+
       position: fixed;
       z-index: 98;
-      overflow: auto;
-      box-sizing: border-box;
       top: 0;
       bottom: 0;
       max-width: 100%;
       width: 250px;
-      left: -250px;
-      padding: 80px 1.25rem 1.25rem 1.25rem;
+      right: -250px;
       box-shadow: 0 0 0px transparent;
-      border-bottom: 5px solid var(--mat-sys-primary);
-      background-color: var(--mat-sys-surface-container);
+
       transition:
-        left $anim-duration-timing-function,
+        width $anim-duration-timing-function,
+        right $anim-duration-timing-function,
         box-shadow $anim-duration-timing-function;
 
-      &--open {
-        left: 0px;
-        box-shadow: var(--mat-sys-level4);
+      @include app.media-breakpoint-down(sm) {
+        width: 100%;
+        right: -100%;
       }
 
-      &--content-hidden > * {
+      &--open {
+        right: 0px;
+        box-shadow: var(--mat-sys-level4);
+      }
+    }
+
+    &__nav-inner {
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 2rem;
+
+      overflow: auto;
+      overscroll-behavior: contain;
+
+      box-sizing: border-box;
+      padding-top: $header-height;
+      height: 100%;
+
+      @include app.media-breakpoint-down(sm) {
+        padding-top: 0;
+        margin-top: $header-height;
+        height: calc(100% - #{$header-height});
+      }
+
+      &--hidden {
         // This is the easiest way to prevent keyboard navigation on hidden elements.
         display: none !important;
       }
+    }
 
-      &-backdrop {
-        position: fixed;
-        z-index: 97;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
+    &__primary-nav {
+      padding-inline: 1.25rem;
+    }
 
-        animation: fadeInBackdrop $anim-duration-timing-function;
+    &__nav-backdrop {
+      position: fixed;
+      z-index: 97;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
 
-        &--closing {
-          animation: fadeOutBackdrop $anim-duration-timing-function;
-        }
+      animation: fadeInBackdrop $anim-duration-timing-function;
+
+      &--closing {
+        animation: fadeOutBackdrop $anim-duration-timing-function;
       }
     }
   }

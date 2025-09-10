@@ -3,22 +3,24 @@
 $show-analytics: false;
 
 .app-home {
-  @include app.media-breakpoint-down(md) {
-    @if $show-analytics {
-      // Prevent the usage analytics link to cover the guide link (when viewport height is small)
+  @if $show-analytics {
+    &__landing {
+      // Prevent the usage analytics link to cover the main content (when viewport height is small)
       padding-bottom: 2.5rem;
     }
   }
 
+  @include app.media-breakpoint-up(sm) {
+    &__link {
+      flex-basis: 150px; // Make both links the same width
+    }
+  }
+
   &__guide {
-    display: flex;
+    margin-top: 2.5rem;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: var(--mat-sys-level1);
-    border: 1px solid var(--mat-sys-tertiary-container);
-    background-color: var(--mat-sys-on-tertiary);
     text-wrap: balance;
 
     @include app.media-breakpoint-down(sm) {
@@ -33,6 +35,6 @@ $show-analytics: false;
 
     position: absolute !important;
     right: 1.25rem;
-    bottom: 1rem;
+    bottom: 1.25rem;
   }
 }

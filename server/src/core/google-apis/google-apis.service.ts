@@ -11,13 +11,12 @@ export class GoogleApisService {
 
   private serviceAccount = this.configService.get('firebaseServiceAccount', { infer: true })!;
 
-  private jwt = new auth.JWT(
-    this.serviceAccount.clientEmail,
-    undefined,
-    this.serviceAccount.privateKey,
-    JWT_SCOPES,
-    JWT_SUBJECT,
-  );
+  private jwt = new auth.JWT({
+    email: this.serviceAccount.clientEmail,
+    key: this.serviceAccount.privateKey,
+    scopes: JWT_SCOPES,
+    subject: JWT_SUBJECT,
+  });
 
   private accessToken = '';
 

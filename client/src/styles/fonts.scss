@@ -2,12 +2,12 @@
 
 // ----- Google icons font -----
 
-@use '@material-symbols/font-600/rounded.css';
+@use '@material-symbols/font-500/rounded.css';
 
 // ----- Nunito text font -----
 
-$font-normal-file: 600;
-$font-bold-file: 800;
+$font-normal-file: 500;
+$font-bold-file: 700;
 
 @font-face {
   font-family: 'Nunito';

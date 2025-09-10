@@ -5,19 +5,96 @@
 @use './variables' as v;
 @use './mixins' as m;
 
-// Note: to apply this global CSS class on an Angular component, you can use the dedicated `LandingDirective` directive
-// (more infos: src/app/shared/landing/landing.directive.ts)
-
 .gbl-landing {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 2rem;
-  text-align: center;
+  --gbl-landing-circle-from: rgb(from var(--mat-sys-surface) r g b / 0);
+  --gbl-landing-circle-to: rgb(from var(--mat-sys-surface) r g b / 1);
 
-  @if v.$use-background {
+  height: 100%;
+
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: minmax(0, 0.55fr) minmax(0, 0.45fr);
+  grid-template-rows: auto;
+  grid-template-areas: 'content picture';
+
+  &__content,
+  &__picture {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__content {
+    grid-area: content;
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  &__picture {
+    grid-area: picture;
+    align-items: flex-end;
+    text-align: end;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @include m.media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content max-content;
+    grid-template-areas:
+      'content'
+      'picture';
+
+    &__content,
+    &__picture {
+      align-items: center;
+      text-align: center;
+    }
+
+    &__picture {
+      img {
+        width: 55%;
+        min-width: 280px;
+      }
+    }
+  }
+
+  &__title {
+    margin: 0 0 1.25rem 0;
+    font: var(--mat-sys-headline-medium);
+    letter-spacing: var(--mat-sys-headline-medium-tracking);
+    text-wrap: balance;
+    color: var(--gbl-color-on-surface-accent);
+  }
+
+  &__subtitle {
+    margin: 0 0 3.75rem 0;
+    font-size: 1.25rem;
+    text-wrap: balance;
+  }
+
+  &__links {
+    align-self: normal; // as flex item
+    display: flex; // as flex box
+    flex-wrap: wrap;
+    gap: 1.25rem;
+
+    @include m.media-breakpoint-down(md) {
+      justify-content: center;
+    }
+
+    @include m.media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+  }
+
+  &:not(:has(.gbl-landing__picture)) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 'content';
+
     &::before,
     &::after {
       content: '';
@@ -30,10 +107,6 @@
     }
 
     &::before {
-      background-color: var(--mat-sys-surface);
-    }
-
-    &::after {
       background: url(../../public/assets/images/landing-bg.svg) center repeat;
       background-size: 480px;
       opacity: 0.5;
@@ -43,84 +116,19 @@
         animation: none;
       }
     }
-  }
 
-  &__title {
-    margin: 0;
-    font: var(--mat-sys-display-small);
-    letter-spacing: var(--mat-sys-display-small-tracking);
-    text-wrap: balance;
-    color: var(--mat-sys-primary);
-
-    @if v.$use-background {
-      padding: 1.5rem 3rem;
-      border-radius: 0.5rem;
-      background-color: var(--app-landing-title);
-    }
-
-    @include m.media-breakpoint-down(sm) {
-      padding: 1.5rem;
+    &::after {
+      background: radial-gradient(var(--gbl-landing-circle-from) 35%, var(--gbl-landing-circle-to) 70%);
     }
   }
 
-  &-links {
-    margin: 0;
-    align-self: normal; // as flex item
-    display: flex; // as flex box
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 2rem;
+  &:not(:has(.gbl-landing__picture)) &__content {
+    align-items: center;
+    text-align: center;
+  }
 
-    @include m.media-breakpoint-down(sm) {
-      flex-wrap: nowrap;
-      flex-direction: column;
-    }
-
-    &__item {
-      cursor: pointer;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.75em;
-      padding: 1em 4em;
-      box-shadow: 0px 6px 3px -3px rgb(0 0 0 / 0.22);
-      border-radius: 1rem;
-      border: 1px solid var(--mat-sys-outline-variant);
-      background: var(--mat-sys-primary);
-      color: var(--mat-sys-on-primary);
-      font: var(--mat-sys-title-medium);
-      letter-spacing: var(--mat-sys-title-medium-tracking);
-      transition: all 150ms ease-in-out;
-
-      @include m.media-breakpoint-down(md) {
-        flex-direction: column;
-        gap: 0.5em;
-      }
-
-      @include m.media-breakpoint-down(sm) {
-        padding: 1em 2em;
-      }
-
-      &:hover,
-      &:disabled {
-        box-shadow: none;
-        transform: translateY(3px);
-      }
-
-      &:disabled {
-        opacity: 0.65;
-        border-color: var(--mat-sys-outline-variant);
-        background-color: var(--mat-sys-surface-container);
-        color: var(--mat-sys-on-surface);
-        cursor: default;
-      }
-    }
-
-    &__icon {
-      width: 1em !important;
-      height: 1em !important;
-      font-size: 2.5em;
-    }
+  &:not(:has(.gbl-landing__picture)) &__links {
+    justify-content: center;
   }
 }
 
@@ -130,23 +138,13 @@
     opacity: 0;
   }
   10% {
-    transform: scale(1.1);
-    opacity: 0.5;
+    opacity: 0.35;
   }
   90% {
-    transform: scale(1.9);
     opacity: 0.15;
   }
   100% {
-    transform: scale(2);
+    transform: scale(1.5);
     opacity: 0;
   }
-}
-
-:root {
-  --app-landing-title: #{rgba($color: #ffffff, $alpha: 0.7)}; // based on `surface-container-lowest`
-}
-
-.gbl-theme-dark {
-  --app-landing-title: #{rgba($color: #0a0a0a, $alpha: 0.7)}; // based on `surface-container-lowest`
 }
