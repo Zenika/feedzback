@@ -1,4 +1,4 @@
-<a
+<!--<a
   routerLink="/home"
   routerLinkActive
   ariaCurrentWhenActive="page"
@@ -8,6 +8,18 @@
 >
   <mat-icon svgIcon="app-icon-brand" appIcon class="app-header__brand-logo" />
   <span aria-label="FeedZback">Feed<span class="app-header__brand-gradient">Z</span>back</span>
+</a>-->
+
+<a
+  routerLink="/home"
+  routerLinkActive
+  ariaCurrentWhenActive="page"
+  aria-label="Accueil"
+  i18n-aria-label="@@Component.Header.HomeLink"
+  class="app-header__home"
+  style="line-height: 0"
+>
+  <img src="assets/images/logo-feedzback.svg" width="106.28" height="56" alt="" />
 </a>
 
 <div class="app-header__burger">

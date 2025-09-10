@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { delay, filter } from 'rxjs';
 import { AuthService } from '../shared/auth';
-import { IconDirective } from '../shared/icon';
+//import { IconDirective } from '../shared/icon';
 import { BurgerComponent } from './burger/burger.component';
 import { MenuDesktopComponent, MenuMobileComponent } from './menu';
 import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
@@ -16,7 +16,7 @@ import { PrimaryNavComponent } from './primary-nav/primary-nav.component';
     MatIconModule,
     RouterLinkActive,
     RouterLinkWithHref,
-    IconDirective,
+    //IconDirective,
     BurgerComponent,
     MenuDesktopComponent,
     MenuMobileComponent,
