@@ -43,5 +43,8 @@ export const searchPersons = (query: string, searchablePersons: SearchablePerson
         searchTokens.some((searchToken) => searchToken.startsWith(querySearchToken)),
       ),
     )
-    .map(({ email, displayName, photoUrl }) => ({ email, displayName, photoUrl }));
+    .map((searchablePerson) => {
+      const { searchTokens, ...person } = searchablePerson; // eslint-disable-line @typescript-eslint/no-unused-vars
+      return person;
+    });
 };

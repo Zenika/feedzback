@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AppConfig } from '../config';
 import { JWT_SCOPES, JWT_SUBJECT } from './google-apis.config';
 import { Person } from './google-apis.types';
+import { mapGoogleUserRelationsToZenikaManagerEmail } from './google-apis.utils';
 
 @Injectable()
 export class GoogleApisService {
@@ -30,7 +31,7 @@ export class GoogleApisService {
 
       const { data } = await admin('directory_v1').users.list({
         access_token: accessToken,
-        fields: 'users(primaryEmail, name, thumbnailPhotoUrl), nextPageToken',
+        fields: 'users(primaryEmail, name, thumbnailPhotoUrl, relations), nextPageToken',
         viewType: 'domain_public',
         domain: 'zenika.com',
         pageToken,
@@ -47,6 +48,7 @@ export class GoogleApisService {
             email: user.primaryEmail,
             displayName: user.name?.fullName ?? undefined,
             photoUrl: user.thumbnailPhotoUrl ?? undefined,
+            managerEmail: mapGoogleUserRelationsToZenikaManagerEmail(user.relations),
           });
         }
         return _persons;

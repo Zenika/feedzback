@@ -39,7 +39,11 @@
 </h1>
 
 <form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
-  <app-autocomplete-email [email]="form.controls.receiverEmail" class="gbl-form-field" />
+  <app-autocomplete-email
+    [email]="form.controls.receiverEmail"
+    [showManagerEmail]="form.controls.shared.value"
+    class="gbl-form-field"
+  />
 
   <app-give-feedback-details
     [context]="form.controls.context"

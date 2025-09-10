@@ -29,6 +29,8 @@ import { ValidationErrorMessagePipe } from '../../validation/validation-error-me
 export class AutocompleteEmailComponent {
   forManager = input(false, { transform: booleanAttribute });
 
+  showManagerEmail = input(false, { transform: booleanAttribute });
+
   private allowedEmailDomainsValidator = allowedEmailDomainsValidatorFactory(inject(ALLOWED_EMAIL_DOMAINS));
 
   email = input(
