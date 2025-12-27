@@ -44,6 +44,7 @@ export const searchPersons = (query: string, searchablePersons: SearchablePerson
       ),
     )
     .map((searchablePerson) => {
+      // Remove `searchTokens` field and only keep: `email`, `displayName`, `photoUrl` and `managerEmail`
       const { searchTokens, ...person } = searchablePerson; // eslint-disable-line @typescript-eslint/no-unused-vars
       return person;
     });

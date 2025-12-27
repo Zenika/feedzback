@@ -10,7 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
-import { Observable, catchError, concatMap, filter, first, from, map, of, tap } from 'rxjs';
+import { Observable, catchError, concatMap, filter, first, from, map, of, pairwise, startWith, tap } from 'rxjs';
 import { FirebaseService } from '../firebase';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
 import { UserStatus } from './auth.types';
@@ -54,6 +54,23 @@ export class AuthService {
       displayName: user?.displayName ?? undefined,
     };
   });
+
+  signedIn$ = toObservable(this._user).pipe(
+    startWith(undefined),
+    pairwise(),
+    map(([prev, curr]) => {
+      if (curr === undefined) {
+        return undefined;
+      }
+      if (curr === null) {
+        return false;
+      }
+      // From `null` to `User` means "Signed-in now"
+      // From `undefined` to `User` means "Signed-in previously"
+      return prev === null ? ('now' as const) : ('previously' as const);
+    }),
+    filter((signedIn) => signedIn !== undefined),
+  );
 
   /**
    * @returns

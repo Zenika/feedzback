@@ -9,6 +9,7 @@ import { NotificationService } from '../shared/notification';
 import { ALLOWED_EMAIL_DOMAINS, allowedEmailDomainsValidatorFactory } from '../shared/validation/allowed-email-domains';
 import { forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 
+/** @deprecated */
 @Component({
   selector: 'app-settings',
   imports: [ReactiveFormsModule, MatButtonModule, MatIconModule, AutocompleteEmailComponent],

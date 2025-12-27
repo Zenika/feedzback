@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { BehaviorSubject } from 'rxjs';
 import { GoogleApisService, Person } from '../core/google-apis';
 import { PEOPLE_CACHE_RETRY_DURATION, PEOPLE_CACHE_VALIDITY_DURATION } from './people-cache.config';
 import { SearchablePerson } from './people-cache.types';
@@ -8,17 +9,17 @@ import { mapToSearchablePerson } from './people-cache.utils';
 export class PeopleCacheService {
   private logger = new Logger('PeopleCacheService');
 
-  private state: 'notAvailable' | 'ready' = 'notAvailable';
+  private _isReady$ = new BehaviorSubject(false);
+  isReady$ = this._isReady$.asObservable();
+  get isReady() {
+    return this._isReady$.value;
+  }
 
   private cachingInProgress = false;
 
   private searchablePersonsExpiryDate = 0;
 
   searchablePersons: SearchablePerson[] = [];
-
-  get isReady() {
-    return this.state === 'ready';
-  }
 
   constructor(private googleApis: GoogleApisService) {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -51,7 +52,7 @@ export class PeopleCacheService {
 
       this.searchablePersons = allPersons.map(mapToSearchablePerson);
       this.searchablePersonsExpiryDate = Date.now() + PEOPLE_CACHE_VALIDITY_DURATION;
-      this.state = 'ready';
+      this._isReady$.next(true);
 
       const cachingDuration = Math.round((Date.now() - cachingStartDate) / 100) / 10;
       this.logger.log(`Cache refreshed with ${allPersons.length} persons in ${cachingDuration}s`);

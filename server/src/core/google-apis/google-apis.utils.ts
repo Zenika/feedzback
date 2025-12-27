@@ -17,7 +17,9 @@ type ManagerRelation = {
 };
 
 const isManagerRelation = (relation: unknown): relation is ManagerRelation =>
-  Object.prototype.toString.call(relation) === '[object Object]' && (relation as ManagerRelation).type === 'manager';
+  Object.prototype.toString.call(relation) === '[object Object]' &&
+  (relation as ManagerRelation).type === 'manager' &&
+  typeof (relation as ManagerRelation).value === 'string';
 
 export const mapGoogleUserRelationsToZenikaManagerEmail = (relations: unknown) =>
   Array.isArray(relations) ? relations.find(isManagerRelation)?.value : undefined;

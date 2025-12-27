@@ -44,7 +44,7 @@ export class NoManagerDialogComponent {
       this.employeeService.data$
         .pipe(
           delay(this.delay),
-          map(({ managerEmail }) => !!managerEmail),
+          map((data) => !!data?.managerEmail),
         )
         .pipe(
           switchMap((hasManager) => {
