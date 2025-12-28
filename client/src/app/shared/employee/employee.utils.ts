@@ -5,4 +5,4 @@ export const updateEmployeeData = (oldData?: EmployeeData | null, newData?: Part
   ...newData,
 });
 
-export const isManager = (employeeData: EmployeeData | null) => !!employeeData?.managedEmails.length;
+export const isManager = (employeeData?: EmployeeData | null) => !!employeeData?.managedEmails.length;

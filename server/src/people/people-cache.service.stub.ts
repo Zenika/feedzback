@@ -7,8 +7,8 @@ import { SearchablePerson } from './people-cache.types';
 export class PeopleCacheStubService implements Partial<PeopleCacheService> {
   private logger = new Logger('PeopleCacheService');
 
-  isReady$ = new BehaviorSubject(true);
-  isReady = true;
+  isReady$ = new BehaviorSubject(false);
+  isReady = false;
 
   searchablePersons: SearchablePerson[] = [];
 

@@ -29,21 +29,24 @@ export class EmployeeController {
   @ApiOperation({ summary: 'Synchronize the managerEmail of the authenticated user using Google API' })
   @UseGuards(AuthGuard)
   @Get('sync-manager')
-  async syncManager(): Promise<{ managerEmail: string | null; previousManagerEmail?: string; updated?: boolean }> {
+  async syncManager(): Promise<
+    | { updated: false; managerEmail: null | string }
+    | { updated: true; managerEmail: string; previousManagerEmail?: string }
+  > {
     const employeeEmail = this.authService.userEmail!;
 
     const [person] = await this.peopleService.searchPersons(employeeEmail);
     if (!person?.managerEmail) {
-      return { managerEmail: null };
+      return { updated: false, managerEmail: null };
     }
 
     const employeeData = await this.employeeDbService.get(employeeEmail);
     if (employeeData?.managerEmail === person.managerEmail) {
-      return { managerEmail: person.managerEmail, updated: false };
+      return { updated: false, managerEmail: person.managerEmail };
     }
 
     await this.employeeDbService.updateManager(employeeEmail, person.managerEmail);
-    return { managerEmail: person.managerEmail, previousManagerEmail: employeeData?.managerEmail, updated: true };
+    return { updated: true, managerEmail: person.managerEmail, previousManagerEmail: employeeData?.managerEmail };
   }
 
   @ApiOperation({ summary: "Define the email address of the authenticated user's manager" })

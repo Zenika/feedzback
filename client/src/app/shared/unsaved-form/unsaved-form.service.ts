@@ -8,8 +8,6 @@ import { DialogComponent, DialogData } from '../dialog';
 import { LoadingService } from '../loading';
 import { UnsavedFormConfig } from './unsaved-form.types';
 
-// TODO: add E2E tests
-
 @Injectable()
 export class UnsavedFormService {
   private document = inject(DOCUMENT);

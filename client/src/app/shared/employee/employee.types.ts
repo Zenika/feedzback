@@ -3,8 +3,6 @@ export type EmployeeData = {
   managedEmails: string[];
 };
 
-export type EmployeeManagerEmailSync = {
-  managerEmail: string | null;
-  previousManagerEmail?: string;
-  updated?: boolean;
-};
+export type EmployeeManagerEmailSync =
+  | { updated: false; managerEmail: null | string }
+  | { updated: true; managerEmail: string; previousManagerEmail?: string };

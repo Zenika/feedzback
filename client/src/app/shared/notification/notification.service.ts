@@ -9,7 +9,7 @@ import { Notification, NotificationMessage, NotificationType } from './notificat
 export class NotificationService {
   private matSnackBar = inject(MatSnackBar);
 
-  readonly DURATION = 7000;
+  readonly DURATION = 10_000;
 
   show(message: NotificationMessage, type: NotificationType = 'info') {
     return this.matSnackBar.openFromComponent(NotificationComponent, {

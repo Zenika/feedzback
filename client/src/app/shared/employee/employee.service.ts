@@ -5,6 +5,7 @@ import { filter, map, of, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
 import { BYPASS_LOADING_CONTEXT } from '../loading';
+import { NotificationService } from '../notification';
 import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData, EmployeeManagerEmailSync } from './employee.types';
 import { isManager, updateEmployeeData } from './employee.utils';
@@ -16,6 +17,8 @@ export class EmployeeService {
   private httpClient = inject(HttpClient);
 
   private authService = inject(AuthService);
+
+  private notificationService = inject(NotificationService);
 
   private apiBaseUrl = environment.apiBaseUrl;
 
@@ -41,8 +44,17 @@ export class EmployeeService {
             case 'previously':
               return of(true);
             case 'now':
-              // TODO: Use the `tap` operator to detect when the managerEmail has been updated and display a message to the user about it.
-              return this.syncManager().pipe(map(() => true));
+              return this.syncManager().pipe(
+                tap((managerEmailSync) => {
+                  if (managerEmailSync.updated) {
+                    this.notificationService.show(
+                      $localize`:@@Message.ManagerEmailUpdated:L'email de votre manager a été mis à jour : ${managerEmailSync.managerEmail}`,
+                      'success',
+                    );
+                  }
+                }),
+                map(() => true),
+              );
           }
         }),
         switchMap((authenticated) => (!authenticated ? of(null) : this.fetchData())),
