@@ -39,22 +39,22 @@ export class UnsavedFormService {
     }
   }
 
-  markAsPristine() {
-    this.form?.markAsPristine();
-    this.storage(null);
-  }
-
   private isPristine() {
     return this.form?.pristine ?? true;
   }
 
   // ----- Storage -----
 
-  hasLocalStorage() {
+  hasStoredValue() {
     return !!this.storage();
   }
 
-  restoreFromLocalStorage(): boolean {
+  markAsPristineAndDeleteStoredValue() {
+    this.form?.markAsPristine();
+    this.storage(null);
+  }
+
+  restoreFromStoredValue(): boolean {
     const storageValue = this.storage();
     if (storageValue) {
       try {
@@ -70,7 +70,7 @@ export class UnsavedFormService {
     return false;
   }
 
-  private saveToLocalStorage() {
+  private save() {
     if (this.isPristine()) {
       return;
     }
@@ -121,9 +121,9 @@ export class UnsavedFormService {
         takeUntilDestroyed(this.destroyRef),
         filter(() => this.document.visibilityState === 'hidden'),
       )
-      .subscribe(() => this.saveToLocalStorage());
+      .subscribe(() => this.save());
 
-    this.destroyRef.onDestroy(() => this.saveToLocalStorage());
+    this.destroyRef.onDestroy(() => this.save());
   }
 
   // ----- Dialog -----

@@ -29,6 +29,6 @@ export class UnsavedFormGuardDemoComponent implements UnsavedFormGuard {
 
   submit() {
     // Save the form on the server... and then...
-    this.unsavedFormService.markAsPristine(); // <-- Indicate that the route can be de-activated
+    this.unsavedFormService.markAsPristineAndDeleteStoredValue(); // <-- Indicate that the route can be de-activated
   }
 }

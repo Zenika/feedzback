@@ -103,7 +103,7 @@ export class GiveFeedbackComponent implements UnsavedFormGuard {
       storageKey: 'giveFeedback',
       saveWhenLeaving: true,
     });
-    this.unsavedFormService.restoreFromLocalStorage();
+    this.unsavedFormService.restoreFromStoredValue();
 
     this.giveFeedbackDraftService.applyDraft$
       .pipe(
@@ -119,7 +119,7 @@ export class GiveFeedbackComponent implements UnsavedFormGuard {
       .subscribe((draft) => {
         this.form.patchValue(draft);
         this.form.updateValueAndValidity();
-        this.unsavedFormService.markAsPristine();
+        this.unsavedFormService.markAsPristineAndDeleteStoredValue();
       });
 
     effect(() => {
@@ -159,6 +159,8 @@ export class GiveFeedbackComponent implements UnsavedFormGuard {
           this.notificationService.showError();
         }
       } else {
+        this.unsavedFormService.markAsPristineAndDeleteStoredValue();
+
         this.feedbackId = result.id;
         this.giveFeedbackDraftService.delete(receiverEmail).subscribe();
         this.navigateToSuccess();
@@ -180,7 +182,7 @@ export class GiveFeedbackComponent implements UnsavedFormGuard {
       },
       complete: () => {
         this.disableForm(false);
-        this.unsavedFormService.markAsPristine();
+        this.unsavedFormService.markAsPristineAndDeleteStoredValue();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });

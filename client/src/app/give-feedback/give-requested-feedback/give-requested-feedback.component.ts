@@ -80,26 +80,26 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
   feedbackId?: string;
 
   constructor() {
-    this.unsavedFormService.register({
-      form: this.form,
-      storageKey: 'giveRequestedFeedback',
-      saveWhenLeaving: true,
-    });
-
     const effectRef = effect(
       () => {
+        this.unsavedFormService.register({
+          form: this.form,
+          storageKey: `giveRequestedFeedback.${this.request().id}`,
+          saveWhenLeaving: true,
+        });
+
         const draft = this.draft();
 
         if (!draft) {
-          this.unsavedFormService.restoreFromLocalStorage(); // restore from local storage if any...
+          this.unsavedFormService.restoreFromStoredValue(); // restore from local storage if any...
         } else {
           const applyDraft = () => {
             this.form.patchValue(draft);
             this.form.updateValueAndValidity();
-            this.unsavedFormService.markAsPristine();
+            this.unsavedFormService.markAsPristineAndDeleteStoredValue();
           };
 
-          if (this.unsavedFormService.hasLocalStorage()) {
+          if (this.unsavedFormService.hasStoredValue()) {
             const data: DialogData = {
               title: $localize`:@@Component.GiveRequestedFeedback.RestoreTitle:Restaurer ?`,
               content: $localize`:@@Component.GiveRequestedFeedback.RestoreContent:Nous avons trouvé des modifications non sauvegardées dans votre stockage local.`,
@@ -120,7 +120,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
               .pipe(map((useStorage?: boolean) => (useStorage === undefined ? false : useStorage)))
               .subscribe((useStorage) => {
                 if (useStorage) {
-                  this.unsavedFormService.restoreFromLocalStorage();
+                  this.unsavedFormService.restoreFromStoredValue();
                 } else {
                   applyDraft();
                 }
@@ -152,6 +152,8 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
           this.notificationService.showError();
         } else {
           this.giveRequestedFeedbackListService.refresh();
+          this.unsavedFormService.markAsPristineAndDeleteStoredValue();
+
           this.feedbackId = this.anonymous ? undefined : this.request()?.id;
           this.navigateToSuccess();
         }
@@ -167,7 +169,7 @@ export class GiveRequestedFeedbackComponent implements GiveRequestedFeedbackData
       error: () => this.notificationService.showError(),
       complete: () => {
         this.disableForm(false);
-        this.unsavedFormService.markAsPristine();
+        this.unsavedFormService.markAsPristineAndDeleteStoredValue();
         this.notificationService.show($localize`:@@Message.DraftSaved:Brouillon sauvegardé.`, 'success');
       },
     });
