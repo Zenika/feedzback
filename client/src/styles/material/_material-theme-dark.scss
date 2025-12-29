@@ -10,7 +10,11 @@ $_palettes: (
   primary: (
     0: #feecee,
     10: #fcd9dd,
-    20: #fbc6cb,
+
+    // Note: targets `--mat-sys-on-primary` token (the text of primary `matButton`, for example)
+    // which was not light enough (#fbc6cb)
+    20: #feecee,
+
     25: #f9b3ba,
     30: #f8a0a9,
     35: #f68d98,
@@ -70,7 +74,7 @@ $_palettes: (
     6: #141414,
     10: #1f1f1f,
 
-    // Note: targets the `background-color`of the Material menu
+    // Note: targets the `background-color` of the Material menu
     // The original value was #292929 but we want this to be lighter
     12: #333333,
 
@@ -87,7 +91,10 @@ $_palettes: (
     70: #999999,
     80: #a3a3a3,
     87: #adadad,
-    90: #b8b8b8,
+
+    // Note: targets `--mat-sys-on-surface` token, which was too dark (#b8b8b8)
+    90: #d6d6d6,
+
     92: #c2c2c2,
     94: #cccccc,
     95: #d6d6d6,
