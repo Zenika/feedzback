@@ -27,7 +27,6 @@
     "Action.SignInWithGoogle": "Sign in with Google",
     "Action.SignOut": "Sign out",
     "Action.Sort": "Sort",
-    "Action.Update": "Update",
     "Action.ViewFeedback": "View feedZback",
     "Action.ViewFeedbackRequest": "View request",
     "Component.ConfirmBeforeSubmit.ArchiveFeedbackContent": "Note that once archived, the feedZback will be removed from your history.",
@@ -84,8 +83,6 @@
     "Component.NegativeFeedbackGuide.Step2_Example": "This can delay progress on the project and create tension in the team.",
     "Component.NegativeFeedbackGuide.Step3_Definition": "Suggest {$START_TAG_STRONG}areas for improvement{$CLOSE_TAG_STRONG} that will benefit your colleague.",
     "Component.NegativeFeedbackGuide.Step3_Example": "Don't be afraid to ask your colleagues for help, because that doesn't take anything away from your qualities.",
-    "Component.NoManagerDialog.Message": "To get the most out of the application, please {$START_TAG_STRONG}enter your manager's email address{$CLOSE_TAG_STRONG} in the settings.",
-    "Component.NoManagerDialog.Title": "Welcome to FeedZback",
     "Component.PendingFeedback.CanNotBeCancelled": "The request is recent (less than {$INTERPOLATION} days) and cannot yet be archived",
     "Component.PendingFeedback.Remind": "Send a reminder",
     "Component.PendingFeedback.ReminderAlreadySentOn": "You have sent a reminder to your colleague on ",
@@ -118,7 +115,9 @@
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",
     "Component.RequestFeedbackSuccess.Title": "FeedZback requested from:",
     "Component.RequestFeedbackSuccess.ViewRequests": "View list of requests",
-    "Component.Settings.UpdateSuccess": "Your settings have been updated.",
+    "Component.SessionWarning.Message": "Your session has been idle for {$INTERPOLATION}.{$LINE_BREAK} Automatic logout imminent...",
+    "Component.Settings.ManagerEmailInfo": "If this information is incorrect, don't worry! It is provided by your Google account, which may take a few days to update. FeedZback syncs with your Google account every time you log in to the app.",
+    "Component.Settings.ManagerEmailUndefined": "You do not have a manager defined in the app.",
     "Component.SignIn.ErrorMessage": "Invalid credentials",
     "Component.SkipLinks.Link": "Skip to main content",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",
@@ -156,6 +155,7 @@
     "Message.FieldsRequired": "Fields marked with * are required",
     "Message.InvalidEmail": "The email address is invalid.",
     "Message.InvalidEmailPlural": "{VAR_PLURAL, plural, =one {The following email address is invalid:} =other {The following email addresses are invalid:}}",
+    "Message.ManagerEmailUpdated": "Your manager's email has been updated: {$PH}",
     "Message.NoResultsFor": "No results for \"{$INTERPOLATION}\"",
     "PageNotFound.InvalidFeedbackId": "The link is incorrect or the feedZback has been archived.",
     "PageNotFound.InvalidTokenId": "The link is incorrect or the feedZback request has been archived.",
@@ -180,7 +180,6 @@
     "Title.SharedFeedbackDetails": "Shared feedZback details",
     "Title.SharedFeedbackList": "Shared feedZback list",
     "Title.SignIn": "Sign in",
-    "Word.Later": "Later",
     "Word.Or": "or"
   }
 }

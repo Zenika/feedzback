@@ -1,8 +1,8 @@
 import { EmployeeData } from './employee.types';
 
-export const updateEmployeeData = (oldData?: EmployeeData, newData?: Partial<EmployeeData>): EmployeeData => ({
+export const updateEmployeeData = (oldData?: EmployeeData | null, newData?: Partial<EmployeeData>): EmployeeData => ({
   ...(oldData ?? { managerEmail: '', managedEmails: [] }),
   ...newData,
 });
 
-export const isManager = ({ managedEmails }: EmployeeData) => managedEmails.length > 0;
+export const isManager = (employeeData?: EmployeeData | null) => !!employeeData?.managedEmails.length;

@@ -29,6 +29,10 @@ test('Submit spontaneous feedback', async ({ page }) => {
 
   await new FeedbackHistoryDetailsPage(page).matchDone('given', Persona.Alfred, feedbackDetails);
 
+  // ====== Check that Bernard has no manager defined ======
+  // For details, see: '../../server/src/core/google-apis/google-apis.service.stub'
+
+  await new SettingsPage(page).gotoAndCheckManager(null);
   await new UserMenuPage(page).signOut();
 
   // ====== Alfred has received feedback from Bernard ======
@@ -44,9 +48,10 @@ test('Submit spontaneous feedback', async ({ page }) => {
 
   await new FeedbackHistoryDetailsPage(page).matchDone('received', Persona.Bernard, feedbackDetails);
 
-  // ====== Alfred sets Daniel as its manager ======
+  // ====== Check that Alfred has Daniel as its manager ======
+  // For details, see: '../../server/src/core/google-apis/google-apis.service.stub'
 
-  await new SettingsPage(page).gotoAndSetManager(Persona.Daniel);
+  await new SettingsPage(page).gotoAndCheckManager(Persona.Daniel);
   await new UserMenuPage(page).signOut();
 
   // ====== Daniel can now view the feedback that Alfred has shared with him ======

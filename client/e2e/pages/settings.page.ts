@@ -1,5 +1,9 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { Persona } from './sign-in.page';
+
+// NOTE: Only `Persona.Alfred` has a defined manager, which is: `Persona.Daniel`.
+// For details, see:
+//  - '../../server/src/core/google-apis/google-apis.service.stub'
 
 export class SettingsPage {
   constructor(private page: Page) {}
@@ -8,13 +12,16 @@ export class SettingsPage {
     await this.page.goto('/fr/settings');
   }
 
-  async setManager(persona: Persona) {
-    await this.page.getByLabel('Email de votre manager').fill(persona);
-    await this.page.getByRole('button', { name: 'Mettre à jour' }).click();
+  async checkManager(persona: Persona | null) {
+    if (persona) {
+      await expect(this.page.getByText(persona), `Manager email properly defined "${persona}"`).toBeVisible();
+    } else {
+      await expect(this.page.getByText("Vous n'avez pas de manager")).toBeVisible();
+    }
   }
 
-  async gotoAndSetManager(persona: Persona) {
+  async gotoAndCheckManager(persona: Persona | null) {
     await this.goto();
-    await this.setManager(persona);
+    await this.checkManager(persona);
   }
 }

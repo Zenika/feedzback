@@ -3,8 +3,21 @@
   <ng-container i18n="@@Title.Settings">Paramètres</ng-container>
 </h1>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-autocomplete-email forManager [email]="form.controls.managerEmail" class="gbl-form-field" />
+<h2 class="app-settings__label">
+  <mat-icon>alternate_email</mat-icon>
+  <span i18n="@@Field.EmailOfYourManager">Email de votre manager</span>
+</h2>
 
-  <button [disabled]="submitButtonDisabled" mat-flat-button i18n="@@Action.Update">Mettre à jour</button>
-</form>
+<p class="app-settings__value">
+  @if (employeeData().managerEmail; as managerEmail) {
+    {{ managerEmail }}
+  } @else {
+    <em i18n="@@Component.Settings.ManagerEmailUndefined">Vous n'avez pas de manager défini dans l'application.</em>
+  }
+</p>
+
+<app-message type="info" nonclosable i18n="@@Component.Settings.ManagerEmailInfo">
+  Si cette information est erronée, pas d'inquiétude ! Elle est fournie par votre compte Google, dont la mise à jour
+  peut prendre quelques jours. FeedZback se synchronise avec votre compte Google chaque fois que vous vous connectez à
+  l'application.
+</app-message>

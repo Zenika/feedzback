@@ -4,3 +4,5 @@ export type UserStatus = {
   authenticated: boolean;
   status: 'guest' | 'anonymous' | 'authenticated';
 };
+
+export type SignedIn = false | 'now' | 'previously';

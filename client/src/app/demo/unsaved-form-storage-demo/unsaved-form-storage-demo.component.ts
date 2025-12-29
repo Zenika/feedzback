@@ -27,11 +27,11 @@ export class UnsavedFormStorageDemoComponent {
       saveWhenLeaving: true, // <-- Enabling local storage feature
     });
 
-    this.unsavedFormService.restoreFromLocalStorage(); // <-- Restore form from local storage if any
+    this.unsavedFormService.restoreFromStoredValue(); // <-- Restore form from stored value if any
   }
 
   submit() {
     // Save the form on the server... and then...
-    this.unsavedFormService.markAsPristine();
+    this.unsavedFormService.markAsPristineAndDeleteStoredValue();
   }
 }

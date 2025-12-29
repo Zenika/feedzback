@@ -1,6 +1,15 @@
 import { COMMA } from '@angular/cdk/keycodes';
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, ViewEncapsulation, afterNextRender, inject, input, viewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ViewEncapsulation,
+  afterNextRender,
+  booleanAttribute,
+  inject,
+  input,
+  viewChild,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipEditedEvent, MatChipInput, MatChipsModule } from '@angular/material/chips';
@@ -54,6 +63,8 @@ export class MultiAutocompleteEmailComponent {
   );
 
   isInvalidEmail = input<((email: string) => boolean) | undefined>(undefined);
+
+  showManagerEmail = input(false, { transform: booleanAttribute });
 
   matChipInput = viewChild.required(MatChipInput);
 

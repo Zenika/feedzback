@@ -9,6 +9,7 @@ import { PeopleService } from './people.service';
 @Module({
   imports: [AppConfigModule, AuthModule, GoogleApisModule],
   providers: [PeopleService, PeopleCacheProvider],
+  exports: [PeopleService],
   controllers: [PeopleController],
 })
 export class PeopleModule {}

@@ -10,10 +10,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
-import { Observable, catchError, concatMap, filter, first, from, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, concatMap, filter, first, from, map, of, tap } from 'rxjs';
 import { FirebaseService } from '../firebase';
 import { AUTH_REDIRECT_PARAM } from './auth.config';
-import { UserStatus } from './auth.types';
+import { SignedIn, UserStatus } from './auth.types';
 import { buildUserStatus } from './auth.utils';
 
 @Injectable({
@@ -55,6 +55,10 @@ export class AuthService {
     };
   });
 
+  private _signedIn$ = new BehaviorSubject<SignedIn | undefined>(undefined);
+
+  signedIn$ = this._signedIn$.pipe(filter((signedIn) => signedIn !== undefined));
+
   /**
    * @returns
    * Unlike the `user` signal, the `user$` observable emits only known user states (`User` or `null` and NOT `undefined`).
@@ -68,7 +72,23 @@ export class AuthService {
   authenticated$ = this.user$.pipe(map((user) => buildUserStatus(user).authenticated));
 
   constructor() {
-    this.firebaseAuth.onAuthStateChanged((user) => this._user.set(user));
+    this.firebaseAuth.onAuthStateChanged((user) => {
+      const signedIn = this.getNextSignedInValue(user);
+
+      this._user.set(user); // Update the user signal first...
+      this._signedIn$.next(signedIn); // ...then update the signedIn$ observable
+    });
+  }
+
+  private getNextSignedInValue(nextUser: User | null): SignedIn {
+    if (nextUser === null) {
+      return false;
+    }
+
+    // From `null` to `User` means "Signed-in now"
+    // From `undefined` to `User` means "Signed-in previously"
+    const currUser = this._user();
+    return currUser === null ? 'now' : 'previously';
   }
 
   signInWithGoogle(): Observable<boolean> {

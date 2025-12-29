@@ -27,7 +27,6 @@
     "Action.SignInWithGoogle": "Se connecter avec Google",
     "Action.SignOut": "Se déconnecter",
     "Action.Sort": "Trier",
-    "Action.Update": "Mettre à jour",
     "Action.ViewFeedback": "Consulter le feedZback",
     "Action.ViewFeedbackRequest": "Consulter la demande",
     "Component.ConfirmBeforeSubmit.ArchiveFeedbackContent": "Notez qu'une fois archivé, le feedZback sera retiré de votre historique.",
@@ -84,8 +83,6 @@
     "Component.NegativeFeedbackGuide.Step2_Example": " Cela peut retarder l'avancement du projet et créer des tensions dans l'équipe. ",
     "Component.NegativeFeedbackGuide.Step3_Definition": " Proposer {$START_TAG_STRONG}des axes d'améliorations{$CLOSE_TAG_STRONG} profitables à votre collègue. ",
     "Component.NegativeFeedbackGuide.Step3_Example": " N'aie pas peur de demander de l'aide à tes collègues car cela n'enlève rien à tes qualités. ",
-    "Component.NoManagerDialog.Message": " Pour profiter au mieux de l'application, merci de {$START_TAG_STRONG}renseigner l'email de votre manager{$CLOSE_TAG_STRONG} dans les paramètres. ",
-    "Component.NoManagerDialog.Title": " Bienvenue sur FeedZback ",
     "Component.PendingFeedback.CanNotBeCancelled": " La demande est récente (moins de {$INTERPOLATION} jours) et ne peut pas encore être archivée ",
     "Component.PendingFeedback.Remind": "Envoyer un rappel",
     "Component.PendingFeedback.ReminderAlreadySentOn": " Vous avez envoyé une relance à votre collègue le ",
@@ -118,7 +115,9 @@
     "Component.RequestFeedbackSuccess.RequestAnother": "Demander un autre feedZback",
     "Component.RequestFeedbackSuccess.Title": "FeedZback demandé à :",
     "Component.RequestFeedbackSuccess.ViewRequests": " Consulter la liste des demandes ",
-    "Component.Settings.UpdateSuccess": "Vos paramètres ont bien été mis à jour.",
+    "Component.SessionWarning.Message": " Votre session est inactive depuis {$INTERPOLATION}.{$LINE_BREAK} Déconnexion automatique imminente...\n",
+    "Component.Settings.ManagerEmailInfo": " Si cette information est erronée, pas d'inquiétude ! Elle est fournie par votre compte Google, dont la mise à jour peut prendre quelques jours. FeedZback se synchronise avec votre compte Google chaque fois que vous vous connectez à l'application.\n",
+    "Component.Settings.ManagerEmailUndefined": "Vous n'avez pas de manager défini dans l'application.",
     "Component.SignIn.ErrorMessage": "L'identification a échoué",
     "Component.SkipLinks.Link": "Accéder au contenu principal",
     "Demo.LoremIpsum": "{$INTERPOLATION} dolor sit amet",
@@ -156,6 +155,7 @@
     "Message.FieldsRequired": "Les champs marqués d'une * sont obligatoires",
     "Message.InvalidEmail": "L'adresse email est invalide.",
     "Message.InvalidEmailPlural": "{VAR_PLURAL, plural, =one {L'adresse email suivante est invalide :} =other {Les adresses emails suivantes sont invalides :}}",
+    "Message.ManagerEmailUpdated": "L'email de votre manager a été mis à jour : {$PH}",
     "Message.NoResultsFor": " Aucun résultat pour \"{$INTERPOLATION}\" ",
     "PageNotFound.InvalidFeedbackId": "Le lien est erroné ou le feedZback a été archivé.",
     "PageNotFound.InvalidTokenId": "Le lien est erroné ou la demande de feedZback a été archivée.",
@@ -180,7 +180,6 @@
     "Title.SharedFeedbackDetails": "Détails du FeedZback partagé",
     "Title.SharedFeedbackList": "Liste des feedZbacks partagés",
     "Title.SignIn": "Se connecter",
-    "Word.Later": "Plus tard",
     "Word.Or": "ou"
   }
 }

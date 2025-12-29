@@ -89,9 +89,10 @@ test('Submit requested feedback', async ({ page }) => {
 
   await new FeedbackHistoryDetailsPage(page).matchDone('received', Persona.Bernard, feedbackDetails);
 
-  // ====== Alfred sets Daniel as its manager ======
+  // ====== Check that Alfred has Daniel as its manager ======
+  // For details, see: '../../server/src/core/google-apis/google-apis.service.stub'
 
-  await new SettingsPage(page).gotoAndSetManager(Persona.Daniel);
+  await new SettingsPage(page).gotoAndCheckManager(Persona.Daniel);
   await new UserMenuPage(page).signOut();
 
   // ====== Daniel can now view the feedbacks that Alfred has shared with him ======
