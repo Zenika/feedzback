@@ -166,7 +166,7 @@ export class FeedbackDbService {
       return null;
     }
 
-    return docWithId<FeedbackRequestWithId>(requestDoc);
+    return this.decryptFeedback(docWithId<FeedbackRequestWithId>(requestDoc));
   }
 
   async revealRequestTokenId(feedbackId: string, giverEmail: string) {
