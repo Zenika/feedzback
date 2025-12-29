@@ -6,9 +6,8 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth';
 import { BYPASS_LOADING_CONTEXT } from '../loading';
 import { NotificationService } from '../notification';
-import { UpdateManagerDto } from './employee.dto';
 import { EmployeeData, EmployeeManagerEmailSync } from './employee.types';
-import { isManager, updateEmployeeData } from './employee.utils';
+import { isManager } from './employee.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -72,12 +71,5 @@ export class EmployeeService {
     // This request is executed when the page is loaded and is used initially to control the display of the
     // "Manager" link in the header. This should not block the UI because of the loading spinner.
     return this.httpClient.get<EmployeeData>(`${this.apiBaseUrl}/employee`, { context: BYPASS_LOADING_CONTEXT });
-  }
-
-  /** @deprecated */
-  updateManager(managerEmail: string) {
-    return this.httpClient
-      .post<void>(`${this.apiBaseUrl}/employee/manager`, { managerEmail } as UpdateManagerDto)
-      .pipe(tap(() => this._data.update((data) => updateEmployeeData(data, { managerEmail }))));
   }
 }

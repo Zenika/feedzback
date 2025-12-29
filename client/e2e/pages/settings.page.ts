@@ -16,7 +16,7 @@ export class SettingsPage {
     if (persona) {
       await expect(this.page.getByText(persona), `Manager email properly defined "${persona}"`).toBeVisible();
     } else {
-      await expect(this.page.getByText("Votre manager n'est pas défini dans FeedZback.")).toBeVisible();
+      await expect(this.page.getByText("Vous n'avez pas de manager")).toBeVisible();
     }
   }
 

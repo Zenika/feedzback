@@ -1,9 +1,8 @@
-import { BadRequestException, Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard, AuthService } from '../core/auth';
 import { PeopleService } from '../people';
 import { EmployeeDbService } from './employee-db';
-import { UpdateManagerDto } from './employee.dto';
 import { buildRequiredEmployeeData } from './employee.utils';
 
 @ApiBearerAuth()
@@ -47,16 +46,5 @@ export class EmployeeController {
 
     await this.employeeDbService.updateManager(employeeEmail, person.managerEmail);
     return { updated: true, managerEmail: person.managerEmail, previousManagerEmail: employeeData?.managerEmail };
-  }
-
-  @ApiOperation({ summary: "Define the email address of the authenticated user's manager" })
-  @UseGuards(AuthGuard)
-  @Post('manager')
-  updateManager(@Body() { managerEmail }: UpdateManagerDto) {
-    const employeeEmail = this.authService.userEmail!;
-    if (employeeEmail === managerEmail) {
-      throw new BadRequestException();
-    }
-    return this.employeeDbService.updateManager(employeeEmail, managerEmail);
   }
 }
