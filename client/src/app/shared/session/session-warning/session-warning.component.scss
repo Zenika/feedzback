@@ -1,0 +1,37 @@
+.app-session-warning-panel > * {
+  // Remove Angular Material hard coded `max-width: 672px` on `.mat-mdc-snack-bar-container` element
+  max-width: none !important;
+
+  --mdc-snackbar-container-color: var(--mat-sys-primary);
+  --mdc-snackbar-supporting-text-color: var(--mat-sys-on-primary);
+  --mdc-circular-progress-active-indicator-color: var(--mat-sys-primary-container);
+}
+
+.app-session-warning {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__label {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  &__actions {
+    flex-shrink: 0;
+
+    button + button {
+      margin-left: 0.5rem;
+    }
+  }
+
+  @media (width < 600px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+
+    &__label {
+      text-wrap: balance;
+    }
+  }
+}

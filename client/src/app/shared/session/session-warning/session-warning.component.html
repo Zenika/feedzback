@@ -1,0 +1,8 @@
+<span class="app-session-warning__label" i18n="@@Component.SessionWarning.Message">
+  Votre session est inactive depuis {{ idleSinceInMinutes }}.<br />
+  Déconnexion automatique imminente...
+</span>
+
+<span class="app-session-warning__actions">
+  <mat-progress-spinner [diameter]="36" mode="determinate" [value]="idleCountDown()" />
+</span>

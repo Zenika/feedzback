@@ -12,6 +12,7 @@ import { provideLanguage } from './shared/i18n/language';
 import { provideMatPaginatorIntl } from './shared/i18n/mat-paginator-intl.provider';
 import { provideSvgIcons } from './shared/icon';
 import { loadingInterceptor } from './shared/loading';
+import { provideSession } from './shared/session';
 import { provideTheme } from './shared/theme';
 import { provideAllowedEmailDomains } from './shared/validation/allowed-email-domains';
 
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideBaseHref(),
     provideSvgIcons(),
     provideAuth(),
+    provideSession(),
     provideLanguage(),
     provideTheme(),
     provideAllowedEmailDomains(environment.allowedEmailDomains),
