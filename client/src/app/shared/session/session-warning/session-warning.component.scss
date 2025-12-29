@@ -2,9 +2,9 @@
   // Remove Angular Material hard coded `max-width: 672px` on `.mat-mdc-snack-bar-container` element
   max-width: none !important;
 
-  --mdc-snackbar-container-color: var(--mat-sys-primary);
-  --mdc-snackbar-supporting-text-color: var(--mat-sys-on-primary);
-  --mdc-circular-progress-active-indicator-color: var(--mat-sys-primary-container);
+  --mat-snackbar-container-color: var(--mat-sys-primary);
+  --mat-snackbar-supporting-text-color: var(--mat-sys-on-primary);
+  --mat-progress-spinner-active-indicator-color: var(--mat-sys-primary-container);
 }
 
 .app-session-warning {

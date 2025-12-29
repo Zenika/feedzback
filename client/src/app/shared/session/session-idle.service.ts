@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { inject, Injectable, NgZone } from '@angular/core';
+import { DOCUMENT, inject, Injectable, NgZone } from '@angular/core';
 import {
   delay,
   EMPTY,
