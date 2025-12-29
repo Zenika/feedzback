@@ -83,8 +83,6 @@
     "Component.NegativeFeedbackGuide.Step2_Example": " Cela peut retarder l'avancement du projet et créer des tensions dans l'équipe. ",
     "Component.NegativeFeedbackGuide.Step3_Definition": " Proposer {$START_TAG_STRONG}des axes d'améliorations{$CLOSE_TAG_STRONG} profitables à votre collègue. ",
     "Component.NegativeFeedbackGuide.Step3_Example": " N'aie pas peur de demander de l'aide à tes collègues car cela n'enlève rien à tes qualités. ",
-    "Component.NoManagerDialog.Message": " Pour profiter au mieux de l'application, merci de {$START_TAG_STRONG}renseigner l'email de votre manager{$CLOSE_TAG_STRONG} dans les paramètres. ",
-    "Component.NoManagerDialog.Title": " Bienvenue sur FeedZback ",
     "Component.PendingFeedback.CanNotBeCancelled": " La demande est récente (moins de {$INTERPOLATION} jours) et ne peut pas encore être archivée ",
     "Component.PendingFeedback.Remind": "Envoyer un rappel",
     "Component.PendingFeedback.ReminderAlreadySentOn": " Vous avez envoyé une relance à votre collègue le ",
@@ -182,7 +180,6 @@
     "Title.SharedFeedbackDetails": "Détails du FeedZback partagé",
     "Title.SharedFeedbackList": "Liste des feedZbacks partagés",
     "Title.SignIn": "Se connecter",
-    "Word.Later": "Plus tard",
     "Word.Or": "ou"
   }
 }
