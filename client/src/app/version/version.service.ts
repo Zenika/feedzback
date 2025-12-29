@@ -9,7 +9,7 @@ import { Versions } from './versions.types';
 export class VersionService {
   // FIXME: missing to send context `BYPASS_AUTHORIZATION_CONTEXT`
   // Feature NOT yet available for `httpResource` in Angular v19.2
-  private serverAppVersionResource = httpResource<{ appVersion: string }>(`${environment.apiBaseUrl}/version`);
+  private serverAppVersionResource = httpResource<{ appVersion: string }>(() => `${environment.apiBaseUrl}/version`);
 
   versions = computed<Versions>(() => {
     const client = environment.appVersion;

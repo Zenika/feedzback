@@ -13,7 +13,7 @@ import { NotFoundNavigationState } from './not-found.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class NotFoundComponent {
-  protected navigationState = inject(Router).getCurrentNavigation()?.extras.state as
+  protected navigationState = inject(Router).currentNavigation()?.extras.state as
     | Partial<NotFoundNavigationState>
     | undefined;
 }

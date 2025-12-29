@@ -25,7 +25,7 @@ export class StatsDetailsComponent {
 
   private theme = inject(ThemeService).theme;
 
-  protected chartTheme = computed((): ThemeOption | string | null => (this.theme() === 'dark' ? 'dark' : null));
+  protected chartTheme = computed((): ThemeOption | string => (this.theme() === 'dark' ? 'dark' : 'light'));
 
   protected usersOverviewChartOptions = computed((): EChartsOption => {
     const plucked = this.detailsPlucked();

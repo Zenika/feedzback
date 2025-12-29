@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { inject, Pipe, PipeTransform } from '@angular/core';
+import { DOCUMENT, inject, Pipe, PipeTransform } from '@angular/core';
 import { extractRgb, rgbToHex } from './element-to-bg-color.utils';
 
 @Pipe({

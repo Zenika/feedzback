@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, ViewEncapsulation, computed, inject } from '@angular/core';
+import { Component, DOCUMENT, ViewEncapsulation, computed, inject } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from '../../environments/environment';
 import { VersionService } from './version.service';

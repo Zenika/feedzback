@@ -1,5 +1,5 @@
-import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { DOCUMENT, Injectable, computed, inject, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
