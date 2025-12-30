@@ -1,5 +1,9 @@
 @if (loading()) {
-  <div class="app-loading__container" @fadeInOut>
+  <div
+    class="app-loading__container"
+    animate.enter="app-loading__container--enter"
+    animate.leave="app-loading__container--leave"
+  >
     <mat-spinner />
   </div>
 }

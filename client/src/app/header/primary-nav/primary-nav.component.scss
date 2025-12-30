@@ -16,6 +16,7 @@
 
   &__item {
     position: relative;
+    width: calc-size(auto);
 
     // Note: 0.5em (margin-top) + 0.5em (padding-top) == 1em (padding-bottom)
     margin-top: 0.5em;
@@ -26,6 +27,13 @@
 
     color: var(--mat-sys-on-surface-variant);
     transition: color 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    &--smooth-enter {
+      animation: appPrimaryNavItemSmoothEnter 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
 
     &:hover,
     &--active {
@@ -50,5 +58,13 @@
       width: 100%;
       opacity: 1;
     }
+  }
+}
+
+@keyframes appPrimaryNavItemSmoothEnter {
+  from {
+    width: 0px;
+    padding-inline: 0px;
+    opacity: 0;
   }
 }

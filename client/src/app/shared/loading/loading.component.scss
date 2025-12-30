@@ -1,12 +1,40 @@
-.app-loading__container {
-  position: fixed;
-  z-index: 2; // Note: the loader should NOT cover the header!
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(from var(--mat-sys-surface) r g b / 0.65);
+.app-loading {
+  &__container {
+    position: fixed;
+    z-index: 2; // Note: the loader should NOT cover the header!
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(from var(--mat-sys-surface) r g b / 0.65);
+
+    &--enter {
+      animation: appLoadingEnter 250ms ease-out;
+    }
+    &--leave {
+      animation: appLoadingLeave 250ms ease-in;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes appLoadingEnter {
+  from {
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(0);
+  }
+}
+
+@keyframes appLoadingLeave {
+  to {
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(0);
+  }
 }
