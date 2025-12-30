@@ -15,7 +15,7 @@
     "watch": "ng build --watch -c development",
     "extract-i18n": "ng extract-i18n --format json --output-path src/locales/ --out-file messages.fr.json",
     "postextract-i18n": "node src/locales/check-messages-translations.js",
-    "test": "jest --testPathPatterns src --coverage",
+    "test": "ng test",
     "lint": "ng lint --fix",
     "lint:ci": "ng lint",
     "format": "prettier --write .",
@@ -46,7 +46,6 @@
     "@angular/material": "^21.0.5",
     "@angular/material-date-fns-adapter": "^21.0.5",
     "@angular/platform-browser": "^21.0.6",
-    "@angular/platform-browser-dynamic": "^21.0.6",
     "@angular/router": "^21.0.6",
     "@fontsource/nunito": "^5.2.7",
     "@material-symbols/font-500": "^0.40.2",
@@ -68,7 +67,6 @@
     "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/canvas-confetti": "^1.9.0",
-    "@types/jest": "^30.0.0",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^25.0.3",
     "angular-eslint": "^21.1.0",
@@ -78,9 +76,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "firebase-tools": "^15.1.0",
-    "jest": "^30.2.0",
-    "jest-environment-jsdom": "^30.2.0",
-    "jest-preset-angular": "^16.0.0",
+    "jsdom": "^27.4.0",
     "postcss": "^8.5.6",
     "prettier": "^3.7.4",
     "prettier-plugin-organize-imports": "^4.3.0",
@@ -88,6 +84,7 @@
     "tailwindcss": "^4.1.18",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.51.0"
+    "typescript-eslint": "^8.51.0",
+    "vitest": "^4.0.16"
   }
 }
