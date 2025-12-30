@@ -93,6 +93,17 @@ export class GiveSpontaneousFeedbackPage {
 
   async saveAsDraft() {
     await this.page.getByRole('button', { name: 'Sauvegarder' }).click();
+
+    // IMPORTANT
+    // ---------
+    // We must wait until the notification appears because the localStorage is not cleared until the draft is fully saved.
+    //
+    // For more info, see:
+    //  -> File: src/app/give-feedback/give-feedback/give-feedback.component.ts
+    //    -> Method: onDraft()
+    //      -> Statement: this.unsavedFormService.markAsPristineAndDeleteStoredValue() // This is where the localStorage is cleared!
+    //
+    await expect(this.page.getByText('Brouillon sauvegardé.'), 'Draft saved notification should appear').toBeVisible();
   }
 
   async applyDraft(persona: Persona) {
