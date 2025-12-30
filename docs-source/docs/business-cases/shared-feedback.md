@@ -31,11 +31,12 @@ const feedback: Feedback = {
 This `shared` field is only set when requesting a feedback or when giving a spontaneous feedback and cannot be changed thereafter.
 :::
 
-### As an employee, define my manager
+### As an employee, synchronize my manager
 
 The `employee` Firestore collection contains the manager/managed data.
 
-When an employee defines his manager, 2 documents are updated:
+When an employee signs-in, the app checks their manager using Google API and synchronizes it if necessary.
+In this case, 2 documents are updated:
 
 ```ts
 const theManagedDocument: EmployeeData = {
@@ -47,7 +48,11 @@ const theManagerDocument: EmployeeData = {
 };
 ```
 
-When an employee updates his manager, a third document is updated because the `<managedEmail>` must be deleted from the previous manager's document.
+A third document may be updated during synchronization, as the `<managedEmail>` must be removed from the previous manager's document.
+
+:::note
+Since the synchronization process is performed each time the user signs-in, users are automatically signed-out after one hour of inactivity, forcing them to log in again.
+:::
 
 ### As a manager, view my shared feedbacks
 
@@ -58,6 +63,8 @@ From there, the manager can access the shared feedbacks.
 ## Links
 
 - **Client**
+  - [`EmployeeService`](https://github.com/Zenika/feedzback/blob/main/client/src/app/shared/employee/employee.service.ts)
+  - [`SessionService`](https://github.com/Zenika/feedzback/blob/main/client/src/app/shared/session/session.service.ts)
   - [`SettingsComponent`](https://github.com/Zenika/feedzback/blob/main/client/src/app/settings/settings.component.ts)
   - [`ManagerListComponent`](https://github.com/Zenika/feedzback/blob/main/client/src/app/manager/manager-list/manager-list.component.ts)
 - **Server**
