@@ -1,5 +1,5 @@
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -18,6 +18,7 @@ import { provideAllowedEmailDomains } from './shared/validation/allowed-email-do
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, loadingInterceptor])),
-    provideAnimationsAsync(),
+    provideAnimationsAsync(), // TODO: remove deprecated dependency
     provideMatPaginatorIntl(),
     provideBaseHref(),
     provideSvgIcons(),
