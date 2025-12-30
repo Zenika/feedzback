@@ -37,8 +37,8 @@
 
 @if (isManager()) {
   <a
-    [@smoothWidth]="device() !== 'mobile'"
     class="app-primary-nav__item"
+    [animate.enter]="device() !== 'mobile' ? 'app-primary-nav__item--smooth-enter' : undefined"
     routerLinkActive="app-primary-nav__item--active"
     routerLink="/manager"
     ariaCurrentWhenActive="page"
