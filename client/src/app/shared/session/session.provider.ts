@@ -1,9 +1,4 @@
-import { inject, provideAppInitializer } from '@angular/core';
-import { tap } from 'rxjs';
+import { inject, provideEnvironmentInitializer } from '@angular/core';
 import { SessionService } from './session.service';
 
-export const provideSession = () =>
-  provideAppInitializer(() => {
-    const sessionService = inject(SessionService);
-    return sessionService.checkIdleOnLoad().pipe(tap(() => sessionService.startIdleEventHandling()));
-  });
+export const provideSession = () => provideEnvironmentInitializer(() => inject(SessionService).init());

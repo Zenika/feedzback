@@ -31,6 +31,8 @@ export class SessionIdleService {
 
   private readonly config = SESSION_CONFIG;
 
+  private activityDate = this.getActivityDate();
+
   // ----- Activity date: events -----
 
   private activityDateFromCurrentTab$ = this.ngZone.runOutsideAngular(() => {
@@ -45,7 +47,7 @@ export class SessionIdleService {
       startWith('any value'),
       throttleTime(2000),
       map(() => Date.now()),
-      tap((activityDate) => this.setActivityDate(activityDate)),
+      tap((activityDate) => this.storeActivityDate(activityDate)),
     );
   });
 
@@ -85,6 +87,13 @@ export class SessionIdleService {
       if (!activityDate) {
         return EMPTY;
       }
+
+      if (this.hasIdleTimeout(activityDate)) {
+        this.activityDate = undefined;
+        return merge(of('idle' as const));
+      }
+
+      this.activityDate = activityDate;
       return merge(
         of('noIdleWarning' as const),
         of('idleWarning' as const).pipe(delay((this.config.idle - this.config.idleWarning) * 1000)),
@@ -93,9 +102,17 @@ export class SessionIdleService {
     }),
   );
 
+  private hasIdleTimeout(activityDate: number) {
+    if (!this.activityDate) {
+      return false;
+    }
+    const idleDelay = (activityDate - this.activityDate) / 1000;
+    return idleDelay > this.config.idle;
+  }
+
   // ----- Activity date: storage -----
 
-  private setActivityDate(activityDate: number) {
+  private storeActivityDate(activityDate: number) {
     this.window?.localStorage.setItem(SESSION_ACTIVITY_DATE_STORAGE_KEY, activityDate.toString());
   }
 
