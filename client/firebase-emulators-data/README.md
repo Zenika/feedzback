@@ -14,12 +14,12 @@ zenika
 
 ## How to update the data?
 
-If you need to update emulator data, temporarily add the option `--export-on-exit` to the end of the NPM `firebase:emulators` script like this:
+If you need to update emulator data, temporarily add the option `--export-on-exit` to the end of the NPM `firebase:emulators:watch` script like this:
 
 ```json
 {
   "scripts": {
-    "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev --import ./firebase-emulators-data --export-on-exit"
+    "firebase:emulators:watch": "firebase emulators:start --only auth:dev,firestore:dev --import ./firebase-emulators-data --export-on-exit"
   }
 }
 ```
@@ -27,7 +27,7 @@ If you need to update emulator data, temporarily add the option `--export-on-exi
 Then run the command:
 
 ```bash
-npm run firebase:emulators
+npm run firebase:emulators:watch
 ```
 
 The data will be exported when you terminate the command execution.

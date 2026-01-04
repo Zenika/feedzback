@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkfeedzback_docs=globalThis.webpackChunkfeedzback_docs||[]).push([[1903],{1912(e){e.exports=JSON.parse('{"blogBasePath":"/feedzback/blog","blogTitle":"Blog","authorsListPath":"/feedzback/blog/authors"}')}}]);
