@@ -78,7 +78,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run stack:e2e',
+    command: 'npm run stack:emulators',
     reuseExistingServer: !process.env['CI'],
     port: 4200,
     timeout: 60_000,

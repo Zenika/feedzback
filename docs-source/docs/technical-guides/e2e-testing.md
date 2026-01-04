@@ -36,17 +36,17 @@ export default defineConfig({
 
   // Run your local dev server before starting the tests
   webServer: {
-    command: 'npm run stack:e2e',
+    command: 'npm run stack:emulators',
     port: 4200,
     reuseExistingServer: !process.env['CI'],
   },
 });
 ```
 
-Before starting the tests, Playwright executes the command `npm run stack:e2e` and waits for the application to be available on port `4200`.
+Before starting the tests, Playwright executes the command `npm run stack:emulators` and waits for the application to be available on port `4200`.
 Due to the `reuseExistingServer` option (enabled for non-CI environment), the command will not be executed if the application is already available.
 
-Therefore, you can run the command `npm run stack:e2e` in one terminal, wait for the application to be available on port `4200`, and then run the command `npm run e2e:test` in another terminal.
+Therefore, you can run the command `npm run stack:emulators` in one terminal, wait for the application to be available on port `4200`, and then run the command `npm run e2e:test` in another terminal.
 In this case, Playwright will skip the `webServer.command`, starting the tests immediately.
 
 ## Running Playwright
@@ -71,13 +71,13 @@ To avoid this problem, use the method 2 instead.
 To start the app once and then have Playwright only start the tests, run the following commands in two separate terminals:
 
 ```bash
-npm run stack:e2e # First terminal
+npm run stack:emulators # First terminal
 ```
+
+:::tip
+As an alternative, run `npm run stack:emulators:watch` instead, to start the app in "watch" mode.
+:::
 
 ```bash
 npm run e2e:test # Second terminal
 ```
-
-:::tip
-As an alternative to the above command in the first terminal, run `npm run stack:emulators` instead, to start the app in "watch" mode.
-:::

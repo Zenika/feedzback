@@ -18,7 +18,7 @@ When using the Firebase emulator, the Google Auth provider is no longer availabl
 Only the Email/Password provider is enabled.
 :::
 
-## `*:emulators` scripts
+## `*:emulators:watch` scripts
 
 In this execution context, the _client_ and _server_ apps are running in "watch" mode.
 
@@ -30,22 +30,22 @@ Here are the NPM scripts for this execution context:
 {
   "scripts": {
     // Start Firebase "Auth" and "Firestore" emulators
-    "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev --import ./firebase-emulators-data",
+    "firebase:emulators:watch": "firebase emulators:start --only auth:dev,firestore:dev --import ./firebase-emulators-data",
 
     // Start the server app in "watch" mode
-    "server:emulators": "npm --prefix ../server run start:emulators",
+    "server:emulators:watch": "npm --prefix ../server run start:emulators:watch",
 
     // Start the client app in "watch" mode
-    "start:emulators": "ng serve -c development-emulators",
+    "start:emulators:watch": "ng serve -c development-emulators",
 
     // ----------------------------------------
     // Run all the previous scripts in parallel
-    "stack:emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\" \"npm run start:emulators\""
+    "stack:emulators:watch": "concurrently \"npm run firebase:emulators:watch\" \"npm run server:emulators:watch\" \"npm run start:emulators:watch\""
   }
 }
 ```
 
-## `*:e2e` scripts
+## `*:emulators` scripts
 
 In this execution context, the _client_ and _server_ apps are built before running.
 
@@ -60,17 +60,17 @@ Here are the NPM scripts for this execution context:
 {
   "scripts": {
     // Start Firebase "Auth", "Firestore" and "Hosting" emulators
-    "firebase:e2e": "firebase emulators:start --only auth:dev,firestore:dev,hosting:dev --import ./firebase-emulators-data",
+    "firebase:emulators": "firebase emulators:start --only auth:dev,firestore:dev,hosting:dev --import ./firebase-emulators-data",
 
     // Build and start the server app (see "<rootDir>/server/package.json" scripts for details)
-    "server:e2e": "npm --prefix ../server run start:e2e",
+    "server:emulators": "npm --prefix ../server run start:emulators",
 
     // Only build the client app (it will be served by Firebase "Hosting")
-    "prestack:e2e": "npm run build:e2e",
+    "prestack:emulators": "npm run build:emulators",
 
     // ----------------------------------------
     // Run all the previous scripts in parallel
-    "stack:e2e": "concurrently \"npm run firebase:e2e\" \"npm run server:e2e\""
+    "stack:emulators": "concurrently \"npm run firebase:emulators\" \"npm run server:emulators\""
   }
 }
 ```
