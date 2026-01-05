@@ -22,6 +22,8 @@ import {
   DeleteFeedbackDraftDto,
   FeedbackArchiveRequestDto,
   FeedbackListMapDto,
+  FeedbackPreRequestDto,
+  FeedbackPreRequestEmailDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
   GiveFeedbackDraftDto,
@@ -72,9 +74,7 @@ export class FeedbackController {
       throw new BadRequestException();
     }
 
-    const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
-
-    await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
+    await this.requestInternal(receiverEmail, giverEmail, message, shared);
   }
 
   @ApiOperation({ summary: 'Send a reminder email about a requested feedback' })
@@ -311,5 +311,55 @@ export class FeedbackController {
     }
 
     return success;
+  }
+
+  // ----- Pre-request feedback -----
+
+  @ApiOperation({ summary: 'Create a pre-request token for shareable feedback link' })
+  @UseGuards(AuthGuard)
+  @Post('pre-request')
+  async preRequest(@Body() { message, shared }: FeedbackPreRequestDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
+    const receiverEmail = this.authService.userEmail!;
+    const token = await this.feedbackDbService.preRequest(receiverEmail, message, shared);
+    return { token };
+  }
+
+  @ApiOperation({ summary: 'Check if a pre-request token is valid and get its details' })
+  @Get('check-pre-request/:token')
+  async checkPreRequest(@Param('token') token: string) {
+    const result = await this.feedbackDbService.checkPreRequest(token);
+    if (!result) {
+      throw new BadRequestException('invalid_token');
+    }
+    return result;
+  }
+
+  @ApiOperation({ summary: 'Submit email for pre-request token and trigger feedback request' })
+  @Post('pre-request/email')
+  async preRequestEmail(@Body() { token, giverEmail }: FeedbackPreRequestEmailDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
+    const result = await this.feedbackDbService.validateAndUsePreRequestToken(token, giverEmail);
+    if ('error' in result) {
+      throw new BadRequestException(result.error);
+    }
+
+    await this.requestInternal(result.receiverEmail, giverEmail, result.message, result.shared);
+  }
+
+  // ----- Private methods -----
+
+  private async requestInternal(receiverEmail: string, giverEmail: string, message: string, shared: boolean) {
+    const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
+    await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
+    return tokenId;
   }
 }

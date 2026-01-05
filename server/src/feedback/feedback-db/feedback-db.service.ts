@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { FieldPath } from 'firebase-admin/firestore';
 import { CryptoService } from '../../core/crypto/crypto.service';
 import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
+import { PRE_REQUEST_TOKEN_EXPIRATION_DAYS, PRE_REQUEST_TOKEN_MAX_USES } from '../feedback.config';
 import { Collection, feedbackItemFields } from './feedback-db.config';
 import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
 import {
@@ -13,6 +14,7 @@ import {
   FeedbackItemWithId,
   FeedbackListMap,
   FeedbackListType,
+  FeedbackPreRequestToken,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
@@ -46,6 +48,10 @@ export class FeedbackDbService {
 
   private get feedbackDraftCollection() {
     return this.firebaseService.db.collection(Collection.feedbackDraft);
+  }
+
+  private get feedbackPreRequestTokenCollection() {
+    return this.firebaseService.db.collection(Collection.feedbackPreRequestToken);
   }
 
   constructor(
@@ -483,6 +489,78 @@ export class FeedbackDbService {
     }
 
     return document;
+  }
+
+  // ----- Pre-request feedback -----
+
+  async preRequest(receiverEmail: string, message: string, shared: boolean) {
+    const expiresAt = Date.now() + PRE_REQUEST_TOKEN_EXPIRATION_DAYS * 24 * 60 * 60 * 1000; // TODO: refactoring
+    const preRequestToken: FeedbackPreRequestToken = {
+      receiverEmail,
+      message, // TODO: missing message encryption
+      shared,
+      expiresAt,
+      usedBy: [],
+    };
+    return (await this.feedbackPreRequestTokenCollection.add(preRequestToken)).id;
+  }
+
+  async checkPreRequest(
+    token: string,
+  ): Promise<Pick<FeedbackPreRequestToken, 'receiverEmail' | 'message' | 'shared'> | null> {
+    const doc = await this.feedbackPreRequestTokenCollection.doc(token).get();
+    if (!doc.exists) {
+      return null;
+    }
+    const { receiverEmail, message, shared } = doc.data() as FeedbackPreRequestToken;
+    return { receiverEmail, message, shared };
+  }
+
+  async validateAndUsePreRequestToken(
+    token: string,
+    giverEmail: string,
+  ): Promise<
+    | {
+        receiverEmail: string;
+        message: string;
+        shared: boolean;
+      }
+    | { error: string }
+  > {
+    const doc = await this.feedbackPreRequestTokenCollection.doc(token).get();
+
+    if (!doc.exists) {
+      return { error: 'invalid_token' };
+    }
+
+    const data = doc.data() as FeedbackPreRequestToken;
+
+    if (Date.now() > data.expiresAt) {
+      return { error: 'token_expired' };
+    }
+
+    if (data.usedBy.length >= PRE_REQUEST_TOKEN_MAX_USES) {
+      return { error: 'token_max_uses_reached' };
+    }
+
+    if (data.usedBy.includes(giverEmail)) {
+      return { error: 'email_already_used' };
+    }
+
+    if (giverEmail === data.receiverEmail) {
+      return { error: 'self_request_not_allowed' };
+    }
+
+    // Add email to usedBy array
+    await this.feedbackPreRequestTokenCollection.doc(token).update({
+      usedBy: [...data.usedBy, giverEmail],
+    });
+
+    return {
+      receiverEmail: data.receiverEmail,
+      message: data.message,
+      shared: data.shared,
+    };
   }
 
   // ----- Encrypt and decrypt feedback -----

@@ -26,6 +26,10 @@ export const routes: Routes = [
     loadChildren: () => import('./request-feedback/request-feedback.routes'),
   },
   {
+    path: 'pre-request',
+    loadChildren: () => import('./pre-request/pre-request.routes'),
+  },
+  {
     path: 'give',
     loadChildren: () => import('./give-feedback/give-feedback.routes'),
   },

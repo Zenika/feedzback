@@ -7,3 +7,6 @@ export const LARGE_MAX_LENGTH = 4000;
 
 // Note: due to date imprecision, on the server side, the deadline is shorter than on the client side.
 export const FEEDBACK_REQUEST_DEADLINE_IN_DAYS = 29; // (not `30` like on client-side)
+
+export const PRE_REQUEST_TOKEN_EXPIRATION_DAYS = 3;
+export const PRE_REQUEST_TOKEN_MAX_USES = 20;

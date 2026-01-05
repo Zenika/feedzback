@@ -150,3 +150,15 @@ export class SharedFeedbackListDto {
 export class SharedFeedbackDocumentDto {
   @IsString() feedbackId!: string;
 }
+
+export class FeedbackPreRequestDto {
+  @IsString() @Transform((params) => (params.value as string)?.trim()) @MaxLength(SMALL_MAX_LENGTH) message!: string;
+
+  @IsBoolean() shared!: boolean;
+}
+
+export class FeedbackPreRequestEmailDto {
+  @IsString() token!: string;
+
+  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) giverEmail!: string;
+}

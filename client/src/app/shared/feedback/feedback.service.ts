@@ -22,6 +22,8 @@ import {
   FeedbackRequestDraftType,
   FeedbackRequestItem,
   IdObject,
+  PreRequestResponse,
+  PreRequestTokenData,
   TokenObject,
 } from './feedback.types';
 
@@ -134,6 +136,37 @@ export class FeedbackService {
 
   archive(feedbackId: string) {
     return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/archive/${feedbackId}`, {});
+  }
+
+  // ----- Pre-request feedback -----
+
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
+  preRequest(message: string, shared: boolean): Observable<PreRequestResponse> {
+    return this.httpClient.post<PreRequestResponse>(
+      `${this.apiBaseUrl}/feedback/pre-request`,
+      { message, shared },
+      { withCredentials: true },
+    );
+  }
+
+  checkPreRequest(token: string): Observable<PreRequestTokenData> {
+    return this.httpClient.get<PreRequestTokenData>(`${this.apiBaseUrl}/feedback/check-pre-request/${token}`, {
+      context: BYPASS_AUTHORIZATION_CONTEXT,
+    });
+  }
+
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
+  preRequestEmail(token: string, giverEmail: string): Observable<void> {
+    return this.httpClient.post<void>(
+      `${this.apiBaseUrl}/feedback/pre-request/email`,
+      { token, giverEmail },
+      {
+        context: BYPASS_AUTHORIZATION_CONTEXT,
+        withCredentials: true,
+      },
+    );
   }
 
   // ----- View feedbacks (requested and given) -----
