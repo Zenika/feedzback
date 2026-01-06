@@ -1,6 +1,6 @@
 <h1 class="gbl-page-title">
   <mat-icon>forum</mat-icon>
-  <ng-container i18n="@@Title.History">Historique de mes feedZbacks</ng-container>
+  <ng-container i18n="@@Title.FeedbackHistory">Historique de mes feedZbacks</ng-container>
 </h1>
 
 @if (fetched) {
@@ -11,8 +11,8 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="app-history__label-icon">{{ 'received' | feedbackTypeIcon }}</mat-icon>
-        <ng-container i18n="@@Component.MyFeedbacks.Received">reçus</ng-container>
+        <mat-icon class="app-feedback-history__label-icon">{{ 'received' | feedbackTypeIcon }}</mat-icon>
+        <ng-container i18n="@@Component.FeedbackHistory.Received">reçus</ng-container>
       </ng-template>
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -20,8 +20,10 @@
       @if (received.length) {
         <app-feedback-list [feedbacks]="received" [filter]="filter" />
       } @else {
-        <div class="app-history__empty">
-          <div class="app-history__empty-label" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
+        <div class="app-feedback-history__empty">
+          <div class="app-feedback-history__empty-label" i18n="@@Component.FeedbackHistory.NoData">
+            Aucun feedZback...
+          </div>
 
           <button mat-stroked-button routerLink="/request">
             <mat-icon>contact_support</mat-icon>
@@ -33,8 +35,8 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="app-history__label-icon">{{ 'given' | feedbackTypeIcon }}</mat-icon>
-        <ng-container i18n="@@Component.MyFeedbacks.Given">donnés</ng-container>
+        <mat-icon class="app-feedback-history__label-icon">{{ 'given' | feedbackTypeIcon }}</mat-icon>
+        <ng-container i18n="@@Component.FeedbackHistory.Given">donnés</ng-container>
       </ng-template>
 
       <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -42,8 +44,10 @@
       @if (given.length) {
         <app-feedback-list [feedbacks]="given" [filter]="filter" />
       } @else {
-        <div class="app-history__empty">
-          <div class="app-history__empty-label" i18n="@@Component.MyFeedbacks.NoData">Aucun feedZback...</div>
+        <div class="app-feedback-history__empty">
+          <div class="app-feedback-history__empty-label" i18n="@@Component.FeedbackHistory.NoData">
+            Aucun feedZback...
+          </div>
 
           <button mat-stroked-button routerLink="/give">
             <mat-icon>chat</mat-icon>
@@ -56,8 +60,8 @@
     @if (sentRequest.length) {
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="app-history__label-icon">{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
-          <ng-container i18n="@@Component.MyFeedbacks.Requested">demandés</ng-container>
+          <mat-icon class="app-feedback-history__label-icon">{{ 'sentRequest' | feedbackTypeIcon }}</mat-icon>
+          <ng-container i18n="@@Component.FeedbackHistory.Requested">demandés</ng-container>
         </ng-template>
 
         <ng-container [ngTemplateOutlet]="filterTmpl" />
@@ -69,7 +73,7 @@
 }
 
 <ng-template #filterTmpl>
-  <mat-form-field appearance="fill" class="app-history__filter">
+  <mat-form-field appearance="fill" class="app-feedback-history__filter">
     <input
       #input
       matInput
