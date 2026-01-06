@@ -10,12 +10,12 @@ import { PreRequestSuccessState } from './pre-request-success.types';
   imports: [RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './pre-request-success.component.html',
 })
-export class PreRequestSuccessComponent {
+export class PreRequestFeedbackTokenSuccessComponent {
   private document = inject(DOCUMENT);
 
   private state: PreRequestSuccessState = this.document.defaultView?.history.state;
 
-  protected linkToShare = `${this.document.location.protocol}//${this.document.location.host}/pre-request/token/${this.state.token}`;
+  protected linkToShare = `${this.document.location.protocol}//${this.document.location.host}/pre-request-email/token/${this.state.token}`;
 
   protected toClipboard() {
     this.document.defaultView?.navigator.clipboard.writeText(this.linkToShare);

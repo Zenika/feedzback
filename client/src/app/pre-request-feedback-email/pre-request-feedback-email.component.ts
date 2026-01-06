@@ -12,11 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotFoundNavigationState } from '../../not-found/not-found.types';
-import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
-import { FeedbackService } from '../../shared/feedback/feedback.service';
-import { MessageComponent } from '../../shared/message/message.component';
-import { ValidationErrorMessagePipe } from '../../shared/validation/validation-error-message';
+import { NotFoundNavigationState } from '../not-found/not-found.types';
+import { DialogTooltipDirective } from '../shared/dialog-tooltip';
+import { FeedbackService } from '../shared/feedback/feedback.service';
+import { MessageComponent } from '../shared/message/message.component';
+import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message';
 
 const ERROR_MESSAGES: Record<string, string> = {
   invalid_token: 'Le lien est invalide',
@@ -27,10 +27,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   self_request_not_allowed: 'Vous ne pouvez pas vous demander un feedback à vous-même',
 };
 
-// TODO: should be renamed : "app-pre-request-email"
-
 @Component({
-  selector: 'app-pre-request-token',
+  selector: 'app-pre-request-feedback-email',
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -41,9 +39,9 @@ const ERROR_MESSAGES: Record<string, string> = {
     ValidationErrorMessagePipe,
     DialogTooltipDirective,
   ],
-  templateUrl: './pre-request-token.component.html',
+  templateUrl: './pre-request-feedback-email.component.html',
 })
-export class PreRequestTokenComponent implements OnInit {
+export class PreRequestFeedbackEmailComponent implements OnInit {
   private formBuilder = inject(NonNullableFormBuilder);
   private feedbackService = inject(FeedbackService);
   private activatedRoute = inject(ActivatedRoute);
@@ -92,7 +90,7 @@ export class PreRequestTokenComponent implements OnInit {
 
     this.feedbackService.preRequestEmail(this.token, giverEmail).subscribe({
       next: () => {
-        this.router.navigate(['/pre-request/token-success']);
+        this.router.navigate(['/pre-request-email/success']);
       },
       error: (error: HttpErrorResponse) => {
         const errorType = error.error?.message || 'invalid_token';

@@ -15,7 +15,7 @@ import { MessageComponent } from '../shared/message/message.component';
 import { PreRequestSuccessState } from './pre-request-success/pre-request-success.types';
 
 @Component({
-  selector: 'app-pre-request',
+  selector: 'app-pre-request-feedback-token',
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -27,10 +27,9 @@ import { PreRequestSuccessState } from './pre-request-success/pre-request-succes
     MessageComponent,
     DialogTooltipDirective,
   ],
-  templateUrl: './pre-request.component.html',
-  styleUrl: './pre-request.component.scss',
+  templateUrl: './pre-request-feedback-token.component.html',
 })
-export class PreRequestComponent {
+export class PreRequestFeedbackTokenComponent {
   private formBuilder = inject(NonNullableFormBuilder);
   private feedbackService = inject(FeedbackService);
   private router = inject(Router);
