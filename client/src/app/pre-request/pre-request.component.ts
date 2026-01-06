@@ -58,7 +58,7 @@ export class PreRequestComponent {
 
     const { message, shared } = this.form.getRawValue();
 
-    this.feedbackService.preRequest(message, shared).subscribe({
+    this.feedbackService.preRequestToken(message, shared).subscribe({
       next: ({ token }) => {
         this.router.navigate(['success'], {
           relativeTo: this.activatedRoute,

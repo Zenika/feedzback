@@ -3,6 +3,19 @@ import { IsBoolean, IsEmail, IsIn, IsNotEmpty, IsString, MaxLength } from 'class
 import { FeedbackDraftType, FeedbackListType, FeedbackRequestDraftType } from './feedback-db';
 import { LARGE_MAX_LENGTH, MEDIUM_MAX_LENGTH, SMALL_MAX_LENGTH } from './feedback.config';
 
+export class FeedbackPreRequestTokenDto {
+  @IsString() @Transform((params) => (params.value as string)?.trim()) @MaxLength(SMALL_MAX_LENGTH) message!: string;
+
+  @IsBoolean() shared!: boolean;
+}
+
+export class FeedbackPreRequestEmailDto {
+  @IsString() token!: string;
+
+  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) giverEmail!: string;
+}
+
+// Like `FeedbackPreRequestTokenDto` but with `recipient`
 export class FeedbackRequestDto {
   @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) recipient!: string;
 
@@ -149,16 +162,4 @@ export class SharedFeedbackListDto {
 
 export class SharedFeedbackDocumentDto {
   @IsString() feedbackId!: string;
-}
-
-export class FeedbackPreRequestDto {
-  @IsString() @Transform((params) => (params.value as string)?.trim()) @MaxLength(SMALL_MAX_LENGTH) message!: string;
-
-  @IsBoolean() shared!: boolean;
-}
-
-export class FeedbackPreRequestEmailDto {
-  @IsString() token!: string;
-
-  @IsEmail() @Transform((params) => (params.value as string).toLowerCase()) giverEmail!: string;
 }

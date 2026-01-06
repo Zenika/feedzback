@@ -88,6 +88,18 @@ export type IdObject = { id: string };
 
 export type TokenObject = { token: string };
 
+// ----- FeedbackPreRequestToken -----
+
+export type FeedbackPreRequestToken = {
+  receiverEmail: string;
+  message: string;
+  shared: boolean;
+  expiresAt: number;
+  usedBy: string[]; // TODO: rename `giverEmails`
+};
+
+export type FeedbackPreRequestSummary = Pick<FeedbackPreRequestToken, 'receiverEmail' | 'message' | 'shared'>;
+
 // ----- FeedbackRequestToken -----
 
 export type FeedbackRequestToken = {
@@ -131,13 +143,3 @@ export const feedbackEncryptedFields: (keyof FeedbackEncryptedFields)[] = [
   'negative',
   'comment',
 ] as const;
-
-// ----- FeedbackPreRequestToken -----
-
-export type FeedbackPreRequestToken = {
-  receiverEmail: string;
-  message: string;
-  shared: boolean;
-  expiresAt: number;
-  usedBy: string[];
-};

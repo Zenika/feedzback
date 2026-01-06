@@ -1,5 +1,7 @@
-import { FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from '../feedback.config';
+import { FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS, FEEDBACK_REQUEST_DEADLINE_IN_DAYS } from '../feedback.config';
 import { FeedbackArchived, FeedbackItemWithId, FeedbackRequestItemWithId, FeedbackStatus } from './feedback-db.types';
+
+export const feedbackPreRequestExpirationDate = () => Date.now() + FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS * 86_400_000;
 
 /**
  * A feedback request less than `FEEDBACK_REQUEST_DEADLINE_IN_DAYS` days old is considered recent.

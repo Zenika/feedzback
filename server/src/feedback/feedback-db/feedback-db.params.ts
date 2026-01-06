@@ -1,4 +1,6 @@
-import { Feedback } from './feedback-db.types';
+import { Feedback, FeedbackPreRequestToken } from './feedback-db.types';
+
+export type FeedbackPreRequestTokenParams = Pick<FeedbackPreRequestToken, 'receiverEmail' | 'message' | 'shared'>;
 
 export type FeedbackRequestParams = Pick<Feedback, 'giverEmail' | 'receiverEmail' | 'message' | 'shared'>;
 
