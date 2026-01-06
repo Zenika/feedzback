@@ -7,33 +7,36 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
+import { SMALL_MAX_LENGTH } from '../../shared/feedback/feedback.config';
+import { FeedbackService } from '../../shared/feedback/feedback.service';
+import { MessageComponent } from '../../shared/message/message.component';
+import { PreRequestSuccessState } from '../pre-request-feedback-token-success/pre-request-feedback-token-success.types';
 import { REQUEST_TEMPLATES } from '../request-feedback/request-feedback.config';
-import { DialogTooltipDirective } from '../shared/dialog-tooltip';
-import { SMALL_MAX_LENGTH } from '../shared/feedback/feedback.config';
-import { FeedbackService } from '../shared/feedback/feedback.service';
-import { MessageComponent } from '../shared/message/message.component';
-import { PreRequestSuccessState } from './pre-request-success/pre-request-success.types';
 
 @Component({
   selector: 'app-pre-request-feedback-token',
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
-    MatSlideToggleModule,
     MatIconModule,
+    MatInputModule,
     MatMenuModule,
-    MessageComponent,
+    MatSlideToggleModule,
     DialogTooltipDirective,
+    MessageComponent,
   ],
   templateUrl: './pre-request-feedback-token.component.html',
 })
 export class PreRequestFeedbackTokenComponent {
-  private formBuilder = inject(NonNullableFormBuilder);
-  private feedbackService = inject(FeedbackService);
   private router = inject(Router);
+
   private activatedRoute = inject(ActivatedRoute);
+
+  private formBuilder = inject(NonNullableFormBuilder);
+
+  private feedbackService = inject(FeedbackService);
 
   protected messageMaxLength = SMALL_MAX_LENGTH;
 
@@ -55,18 +58,11 @@ export class PreRequestFeedbackTokenComponent {
     }
     this.form.disable();
 
-    const { message, shared } = this.form.getRawValue();
-
-    this.feedbackService.preRequestToken(message, shared).subscribe({
-      next: ({ token }) => {
-        this.router.navigate(['success'], {
-          relativeTo: this.activatedRoute,
-          state: { token } satisfies PreRequestSuccessState,
-        });
-      },
-      error: () => {
-        this.form.enable();
-      },
+    this.feedbackService.preRequestToken(this.form.getRawValue()).subscribe(({ token }) => {
+      const state: PreRequestSuccessState = {
+        token,
+      };
+      this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
     });
   }
 }

@@ -22,16 +22,12 @@ export const routes: Routes = [
     title: 'FeedZback',
   },
   {
-    path: 'pre-request-token',
-    loadChildren: () => import('./pre-request-feedback-token/pre-request-feedback-token.routes'),
-  },
-  {
-    path: 'pre-request-email',
-    loadChildren: () => import('./pre-request-feedback-email/pre-request-feedback-email.routes'),
-  },
-  {
     path: 'request',
-    loadChildren: () => import('./request-feedback/request-feedback.routes'),
+    loadChildren: () => import('./request/request.routes'),
+  },
+  {
+    path: 'pre-request',
+    loadChildren: () => import('./pre-request-feedback-email/pre-request-feedback-email.routes'),
   },
   {
     path: 'give',

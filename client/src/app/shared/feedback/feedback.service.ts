@@ -5,6 +5,8 @@ import { environment } from '../../../environments/environment';
 import { BYPASS_AUTHORIZATION_CONTEXT } from '../auth';
 import {
   FeedbackArchiveRequestDto,
+  FeedbackPreRequestEmailDto,
+  FeedbackPreRequestTokenDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
   GiveFeedbackDto,
@@ -17,13 +19,12 @@ import {
   FeedbackItem,
   FeedbackListMap,
   FeedbackListType,
+  FeedbackPreRequestSummary,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
   FeedbackRequestItem,
   IdObject,
-  PreRequestResponse,
-  PreRequestTokenData,
   TokenObject,
 } from './feedback.types';
 
@@ -37,30 +38,23 @@ export class FeedbackService {
 
   // ----- Pre-request feedback -----
 
-  preRequestToken(message: string, shared: boolean): Observable<PreRequestResponse> {
-    return this.httpClient.post<PreRequestResponse>(`${this.apiBaseUrl}/feedback/pre-request/token`, {
-      message,
-      shared,
-    });
+  preRequestToken(dto: FeedbackPreRequestTokenDto) {
+    return this.httpClient.post<TokenObject>(`${this.apiBaseUrl}/feedback/pre-request/token`, dto);
   }
 
-  checkPreRequest(token: string): Observable<PreRequestTokenData> {
-    return this.httpClient.get<PreRequestTokenData>(`${this.apiBaseUrl}/feedback/check-pre-request/${token}`, {
+  checkPreRequest(token: string) {
+    return this.httpClient.get<FeedbackPreRequestSummary>(`${this.apiBaseUrl}/feedback/check-pre-request/${token}`, {
       context: BYPASS_AUTHORIZATION_CONTEXT,
     });
   }
 
   // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
   // so that the server can determine the language to be used in the emails.
-  preRequestEmail(token: string, giverEmail: string): Observable<void> {
-    return this.httpClient.post<void>(
-      `${this.apiBaseUrl}/feedback/pre-request/email`,
-      { token, giverEmail },
-      {
-        context: BYPASS_AUTHORIZATION_CONTEXT,
-        withCredentials: true,
-      },
-    );
+  preRequestEmail(dto: FeedbackPreRequestEmailDto) {
+    return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/pre-request/email`, dto, {
+      context: BYPASS_AUTHORIZATION_CONTEXT,
+      withCredentials: true,
+    });
   }
 
   // ----- Request feedback and give requested feedback -----

@@ -9,23 +9,23 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { AuthService } from '../shared/auth';
-import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
-import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit';
-import { DialogTooltipDirective } from '../shared/dialog-tooltip';
-import { FeedbackService } from '../shared/feedback';
-import { SMALL_MAX_LENGTH } from '../shared/feedback/feedback.config';
-import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
-import { MessageComponent } from '../shared/message';
-import { StringArrayError } from '../shared/validation';
-import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
+import { AuthService } from '../../shared/auth';
+import { MultiAutocompleteEmailComponent } from '../../shared/autocomplete-email';
+import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
+import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
+import { FeedbackService } from '../../shared/feedback';
+import { SMALL_MAX_LENGTH } from '../../shared/feedback/feedback.config';
+import { FeedbackRequestDto } from '../../shared/feedback/feedback.dto';
+import { MessageComponent } from '../../shared/message';
+import { StringArrayError } from '../../shared/validation';
+import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../../shared/validation/forbidden-values';
 import {
   MULTIPLE_EMAILS_ERROR_KEY,
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../shared/validation/multiple-emails';
-import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
+} from '../../shared/validation/multiple-emails';
+import { RequestFeedbackSuccess } from '../request-feedback-success/request-feedback-success.types';
 import { REQUEST_TEMPLATES } from './request-feedback.config';
 
 @Component({
@@ -100,7 +100,7 @@ export class RequestFeedbackComponent {
     this.form.controls.message.updateValueAndValidity();
   }
 
-  protected async onSubmit() {
+  protected onSubmit() {
     if (this.form.invalid) {
       return;
     }

@@ -1,81 +1,59 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { Component, effect, inject, input, signal } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NotFoundNavigationState } from '../not-found/not-found.types';
-import { DialogTooltipDirective } from '../shared/dialog-tooltip';
+import { FeedbackTypeIconPipe } from '../shared/feedback';
+import { MultiLineComponent } from '../shared/feedback/feedback-body/multi-line';
 import { FeedbackService } from '../shared/feedback/feedback.service';
+import { FeedbackPreRequestSummary } from '../shared/feedback/feedback.types';
 import { MessageComponent } from '../shared/message/message.component';
+import { forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message';
-
-const ERROR_MESSAGES: Record<string, string> = {
-  invalid_token: 'Le lien est invalide',
-  token_expired: 'Le lien a expiré',
-  token_max_uses_reached: "Ce lien a atteint le nombre maximum d'utilisations",
-  email_already_used: 'Cet email a déjà été utilisé avec ce lien',
-  invalid_email: "L'email est invalide",
-  self_request_not_allowed: 'Vous ne pouvez pas vous demander un feedback à vous-même',
-};
+import { getPreRequestFeedbackEmailErrMsg } from './pre-request-feedback-email.constants';
 
 @Component({
   selector: 'app-pre-request-feedback-email',
   imports: [
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
+    FeedbackTypeIconPipe,
+    MultiLineComponent,
     MessageComponent,
     ValidationErrorMessagePipe,
-    DialogTooltipDirective,
   ],
   templateUrl: './pre-request-feedback-email.component.html',
 })
-export class PreRequestFeedbackEmailComponent implements OnInit {
-  private formBuilder = inject(NonNullableFormBuilder);
-  private feedbackService = inject(FeedbackService);
-  private activatedRoute = inject(ActivatedRoute);
+export class PreRequestFeedbackEmailComponent {
   private router = inject(Router);
 
-  protected token = '';
-  protected receiverEmail = '';
-  protected message = '';
-  protected shared = false;
+  private activatedRoute = inject(ActivatedRoute);
 
-  protected submitError = '';
+  private formBuilder = inject(NonNullableFormBuilder);
+
+  private feedbackService = inject(FeedbackService);
+
+  token = input.required<string>();
+
+  summary = input.required<FeedbackPreRequestSummary>();
 
   protected form = this.formBuilder.group({
-    giverEmail: ['', [Validators.required, Validators.email, this.emailNotSameAsReceiverValidator.bind(this)]],
+    recipient: ['', [Validators.required, Validators.email]],
   });
 
-  ngOnInit() {
-    this.token = this.activatedRoute.snapshot.params['token'];
+  protected errorMessage = signal('');
 
-    this.feedbackService.checkPreRequest(this.token).subscribe({
-      next: (data) => {
-        this.receiverEmail = data.receiverEmail;
-        this.message = data.message;
-        this.shared = data.shared;
-      },
-      error: (error: HttpErrorResponse) => {
-        const errorType = error.error?.message || 'invalid_token';
-        const errorDetails = ERROR_MESSAGES[errorType] || ERROR_MESSAGES['invalid_token'];
-
-        const state: NotFoundNavigationState = {
-          details: errorDetails,
-        };
-        this.router.navigate(['/not-found'], { state });
-      },
+  constructor() {
+    effect(() => {
+      const { receiverEmail } = this.summary();
+      this.form.controls.recipient.addValidators(forbiddenValuesValidatorFactory([receiverEmail]));
+      this.form.controls.recipient.updateValueAndValidity();
     });
   }
 
@@ -84,27 +62,18 @@ export class PreRequestFeedbackEmailComponent implements OnInit {
       return;
     }
     this.form.disable();
-    this.submitError = '';
+    this.errorMessage.set('');
 
-    const { giverEmail } = this.form.getRawValue();
+    const { recipient } = this.form.getRawValue();
 
-    this.feedbackService.preRequestEmail(this.token, giverEmail).subscribe({
+    this.feedbackService.preRequestEmail({ token: this.token(), giverEmail: recipient }).subscribe({
       next: () => {
-        this.router.navigate(['/pre-request-email/success']);
+        this.router.navigate(['../../success'], { relativeTo: this.activatedRoute });
       },
-      error: (error: HttpErrorResponse) => {
-        const errorType = error.error?.message || 'invalid_token';
-        this.submitError = ERROR_MESSAGES[errorType] || 'Une erreur est survenue';
+      error: (response: HttpErrorResponse) => {
         this.form.enable();
+        this.errorMessage.set(getPreRequestFeedbackEmailErrMsg(response) ?? '');
       },
     });
-  }
-
-  private emailNotSameAsReceiverValidator(control: AbstractControl): ValidationErrors | null {
-    if (!control.value || !this.receiverEmail) {
-      return null;
-    }
-    const isSameEmail = control.value.toLowerCase() === this.receiverEmail.toLowerCase();
-    return isSameEmail ? { emailSameAsReceiver: true } : null;
   }
 }

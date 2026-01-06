@@ -71,8 +71,8 @@ export class FeedbackController {
     if (result === null) {
       throw new BadRequestException();
     }
-    if (result === false) {
-      throw new ForbiddenException();
+    if (typeof result === 'string') {
+      throw new ForbiddenException(result);
     }
     return result;
   }

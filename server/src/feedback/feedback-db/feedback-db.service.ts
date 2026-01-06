@@ -102,10 +102,15 @@ export class FeedbackDbService {
       return null;
     }
 
-    const { receiverEmail, message, shared, expiresAt } = tokenDoc.data() as FeedbackPreRequestToken;
+    const { receiverEmail, message, shared, expiresAt, usedBy } = tokenDoc.data() as FeedbackPreRequestToken;
+
     if (Date.now() > expiresAt) {
-      return false;
+      return 'token_expired' as const;
     }
+    if (usedBy.length >= FEEDBACK_PRE_REQUEST_MAX_USES) {
+      return 'token_max_uses_reached' as const;
+    }
+
     return this.decryptFeedback({ receiverEmail, message, shared }) satisfies FeedbackPreRequestSummary;
   }
 
@@ -123,11 +128,12 @@ export class FeedbackDbService {
     if (usedBy.length >= FEEDBACK_PRE_REQUEST_MAX_USES) {
       return 'token_max_uses_reached' as const;
     }
+
     if (usedBy.includes(giverEmail)) {
-      return 'giver_email_already_used' as const;
+      return 'recipient_already_used' as const;
     }
     if (giverEmail === receiverEmail) {
-      return 'self_request_not_allowed' as const;
+      return 'recipient_forbidden' as const;
     }
 
     await this.feedbackPreRequestTokenCollection.doc(token).update({ usedBy: [...usedBy, giverEmail] });

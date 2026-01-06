@@ -12,6 +12,7 @@ h1.gbl-page-title {
   color: var(--mat-sys-primary);
   font: var(--mat-sys-headline-large);
   letter-spacing: var(--mat-sys-headline-large-tracking);
+  text-wrap: balance;
 
   &--center {
     justify-content: center;

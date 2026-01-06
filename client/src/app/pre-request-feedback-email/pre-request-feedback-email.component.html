@@ -1,79 +1,48 @@
 <h1 class="gbl-page-title">
-  <mat-icon>feedback</mat-icon>
-  <ng-container i18n="@@Title.PreRequestToken">Répondre à une demande de feedZback</ng-container>
+  <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
+  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à une demande de feedZback </ng-container>
 </h1>
 
-@if (receiverEmail) {
-  <app-message type="info" nonclosable>
-    <ng-container i18n="@@Component.PreRequestToken.Message1">
-      Vous répondez à la demande de feedZback qui vous a été envoyée par
-    </ng-container>
-    <strong>{{ receiverEmail }}</strong
-    >.
+@let s = summary();
 
-    @if (message) {
-      <br />
-      <ng-container i18n="@@Component.PreRequestToken.RequestMessage">Message de la demande :</ng-container>
-      {{ message }}
-    }
+<app-message type="info" nonclosable>
+  <ng-container i18n="@@Component.PreRequestFeedbackEmail.Message1">
+    Afin de répondre à la demande de feedZback qui vous a été envoyée par <strong>{{ s.receiverEmail }}</strong
+    >, merci de renseigner votre email.
+  </ng-container>
+</app-message>
 
-    @if (shared) {
-      <br />
-      <strong i18n="@@Component.PreRequestToken.Message2">
-        Notez que votre feedZback sera partagé avec son manager.
-      </strong>
-      <button
-        type="button"
-        class="gbl-button-less gbl-link align-middle"
-        appDialogTooltip
-        ariaLabelFromDialogTitle
-        dialogTitle="FeedZback partagé"
-        dialogContent="Le destinataire du feedZback et son manager pourront échanger ensemble et ainsi bénéficier au mieux de son contenu."
-        dialogWidth="600px"
-        i18n-dialogTitle="@@Component.GiveRequestedFeedback.ShareFeedbackMessageTitle"
-        i18n-dialogContent="@@Component.GiveRequestedFeedback.ShareFeedbackMessageContent"
-      >
-        <mat-icon>help</mat-icon>
-      </button>
-    }
-  </app-message>
-
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    @if (submitError) {
-      <app-message type="danger" icon="error">
-        {{ submitError }}
-      </app-message>
-    }
-
-    <mat-form-field appearance="outline" class="gbl-form-field">
-      <mat-label i18n="@@Component.PreRequestToken.YourEmail">Votre email</mat-label>
-      <input
-        [formControl]="form.controls.giverEmail"
-        matInput
-        type="email"
-        autocomplete="email"
-        i18n-placeholder="@@Component.PreRequestToken.EmailPlaceholder"
-        placeholder="votre.email@exemple.com"
-      />
-      @if (form.controls.giverEmail.errors?.['emailSameAsReceiver']) {
-        <mat-error i18n="@@Component.PreRequestToken.SameEmailError">
-          Vous ne pouvez pas utiliser la même adresse email
-        </mat-error>
-      } @else {
-        <mat-error>{{ form.controls.giverEmail | validationErrorMessage }}</mat-error>
-      }
-    </mat-form-field>
-
-    <div class="gbl-form-submit">
-      <button [disabled]="form.invalid || form.disabled" mat-flat-button type="submit">
-        <mat-icon>send</mat-icon>
-        <ng-container i18n="@@Action.Submit">Envoyer</ng-container>
-      </button>
-
-      <div class="gbl-form-submit__info">
-        <mat-icon>info</mat-icon>
-        <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
-      </div>
-    </div>
-  </form>
+@if (s.message) {
+  <h2 class="mb-1">Message</h2>
+  <app-multi-line class="mb-8! block" [text]="s.message" />
 }
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  @if (errorMessage(); as errMsg) {
+    <app-message type="danger">{{ errMsg }}</app-message>
+  }
+
+  <mat-form-field appearance="outline" class="gbl-form-field">
+    <mat-label i18n="@@Field.YourEmail">Votre email</mat-label>
+    <input
+      [formControl]="form.controls.recipient"
+      matInput
+      type="email"
+      autocomplete="email"
+      placeholder="jean.dupont@gmail.com"
+    />
+    <mat-error>{{ form.controls.recipient.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
+  <div class="gbl-form-submit">
+    <button [disabled]="form.invalid || form.disabled" mat-flat-button>
+      <mat-icon>alternate_email</mat-icon>
+      <ng-container i18n="@@Action.Validate">Valider</ng-container>
+    </button>
+
+    <div class="gbl-form-submit__info">
+      <mat-icon>info</mat-icon>
+      <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
+    </div>
+  </div>
+</form>
