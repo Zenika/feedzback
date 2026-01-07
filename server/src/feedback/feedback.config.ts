@@ -10,4 +10,4 @@ export const FEEDBACK_REQUEST_DEADLINE_IN_DAYS = 29; // (not `30` like on client
 
 // Note: due to date imprecision, on the server side, the deadline is longer than on the client side.
 export const FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS = 4; // (not `3` like on client-side)
-export const FEEDBACK_PRE_REQUEST_MAX_USES = 20;
+export const FEEDBACK_PRE_REQUEST_MAX_USES = 10;
