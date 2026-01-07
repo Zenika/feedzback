@@ -8,10 +8,12 @@ const preRequestFeedbackRoutes: Routes = [
     path: 'token/:token',
     component: PreRequestFeedbackComponent,
     resolve: { summary: preRequestFeedbackResolver },
+    title: 'FeedZback - ' + $localize`:@@Title.GiveRequestedFeedback: Répondre à la demande de feedZback `,
   },
   {
     path: 'success',
     component: PreRequestFeedbackSuccessComponent,
+    title: 'FeedZback - ' + $localize`:@@Title.Confirmation:Confirmation`,
   },
 ];
 

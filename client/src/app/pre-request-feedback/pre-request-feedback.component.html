@@ -1,20 +1,24 @@
 <h1 class="gbl-page-title">
   <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
-  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à une demande de feedZback </ng-container>
+  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à la demande de feedZback </ng-container>
 </h1>
 
 @let s = summary();
 
 <app-message type="info" nonclosable>
-  <ng-container i18n="@@Component.PreRequestFeedback.Message1">
-    Afin de répondre à la demande de feedZback qui vous a été envoyée par <strong>{{ s.receiverEmail }}</strong
-    >, merci de renseigner votre email.
+  <ng-container i18n="@@Component.GiveRequestedFeedback.Message1">Cette demande vous a été envoyée par :</ng-container>
+  <strong> {{ s.receiverEmail }}</strong
+  >.<br />
+
+  <ng-container i18n="@@Component.PreRequestFeedback.Requirement">
+    Veuillez saisir et valider <strong>votre adresse email</strong>.
   </ng-container>
 </app-message>
 
 @if (s.message) {
-  <h2 class="mb-1">Message</h2>
-  <app-multi-line class="mb-8! block" [text]="s.message" />
+  <app-message icon="waving_hand">
+    <app-multi-line [text]="s.message" />
+  </app-message>
 }
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">

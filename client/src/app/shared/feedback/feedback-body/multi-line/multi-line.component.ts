@@ -9,4 +9,6 @@ import { buildTextMatrix } from './multi-line.utils';
 export class MultiLineComponent {
   // note: property `text` represents a "text matrix"
   text = input([], { transform: (text?: string) => buildTextMatrix(text) });
+
+  noTrailingMargin = input(true);
 }

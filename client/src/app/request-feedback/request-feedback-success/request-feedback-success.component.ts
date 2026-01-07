@@ -17,7 +17,7 @@ export class RequestFeedbackSuccessComponent {
 
   protected state?: RequestFeedbackSuccess = this.document.defaultView?.history.state;
 
-  protected toClipboard(linkToShare: string) {
-    this.document.defaultView?.navigator.clipboard.writeText(linkToShare);
+  protected toClipboard(magicLink: string) {
+    this.document.defaultView?.navigator.clipboard.writeText(magicLink);
   }
 }

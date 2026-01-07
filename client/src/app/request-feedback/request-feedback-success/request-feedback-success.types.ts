@@ -1,3 +1,3 @@
 export type RequestFeedbackSuccess =
   | { method: 'send'; recipients: string[] }
-  | { method: 'generate'; linkToShare: string };
+  | { method: 'generate'; magicLink: string };

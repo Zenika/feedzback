@@ -178,7 +178,7 @@ export class RequestFeedbackComponent {
     this.feedbackService.preRequestToken({ message, shared }).subscribe(({ token }) => {
       this.navigateToSuccess({
         method: 'generate',
-        linkToShare: `${this.document.location.origin}/pre-request/token/${token}`,
+        magicLink: `${this.document.location.origin}/pre-request/token/${token}`,
       });
     });
   }
