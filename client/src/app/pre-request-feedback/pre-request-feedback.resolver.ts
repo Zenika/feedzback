@@ -5,9 +5,9 @@ import { catchError, of } from 'rxjs';
 import { NotFoundNavigationState } from '../not-found/not-found.types';
 import { FeedbackService } from '../shared/feedback';
 import { FeedbackPreRequestSummary } from '../shared/feedback/feedback.types';
-import { getPreRequestFeedbackEmailErrMsg } from './pre-request-feedback-email.constants';
+import { getPreRequestFeedbackErrMsg } from './pre-request-feedback.constants';
 
-export const preRequestFeedbackEmailResolver: ResolveFn<FeedbackPreRequestSummary> = (route) => {
+export const preRequestFeedbackResolver: ResolveFn<FeedbackPreRequestSummary> = (route) => {
   const router = inject(Router);
 
   return inject(FeedbackService)
@@ -15,7 +15,7 @@ export const preRequestFeedbackEmailResolver: ResolveFn<FeedbackPreRequestSummar
     .pipe(
       catchError((response: HttpErrorResponse) => {
         const state: NotFoundNavigationState = {
-          details: getPreRequestFeedbackEmailErrMsg(response) ?? '',
+          details: getPreRequestFeedbackErrMsg(response) ?? '',
         };
         return of(new RedirectCommand(router.parseUrl('/not-found'), { state, replaceUrl: true }));
       }),

@@ -13,10 +13,11 @@ import { FeedbackPreRequestSummary } from '../shared/feedback/feedback.types';
 import { MessageComponent } from '../shared/message/message.component';
 import { forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import { ValidationErrorMessagePipe } from '../shared/validation/validation-error-message';
-import { getPreRequestFeedbackEmailErrMsg } from './pre-request-feedback-email.constants';
+import { PreRequestFeedbackSuccess } from './pre-request-feedback-success/pre-request-feedback-success.types';
+import { getPreRequestFeedbackErrMsg } from './pre-request-feedback.constants';
 
 @Component({
-  selector: 'app-pre-request-feedback-email',
+  selector: 'app-pre-request-feedback',
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
@@ -28,9 +29,9 @@ import { getPreRequestFeedbackEmailErrMsg } from './pre-request-feedback-email.c
     MessageComponent,
     ValidationErrorMessagePipe,
   ],
-  templateUrl: './pre-request-feedback-email.component.html',
+  templateUrl: './pre-request-feedback.component.html',
 })
-export class PreRequestFeedbackEmailComponent {
+export class PreRequestFeedbackComponent {
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
@@ -66,13 +67,14 @@ export class PreRequestFeedbackEmailComponent {
 
     const { recipient } = this.form.getRawValue();
 
-    this.feedbackService.preRequestEmail({ token: this.token(), giverEmail: recipient }).subscribe({
+    this.feedbackService.preRequestEmail({ token: this.token(), recipient }).subscribe({
       next: () => {
-        this.router.navigate(['../../success'], { relativeTo: this.activatedRoute });
+        const state: PreRequestFeedbackSuccess = { recipient };
+        this.router.navigate(['../../success'], { relativeTo: this.activatedRoute, state });
       },
       error: (response: HttpErrorResponse) => {
         this.form.enable();
-        this.errorMessage.set(getPreRequestFeedbackEmailErrMsg(response) ?? '');
+        this.errorMessage.set(getPreRequestFeedbackErrMsg(response) ?? '');
       },
     });
   }

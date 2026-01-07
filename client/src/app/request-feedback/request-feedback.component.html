@@ -1,3 +1,8 @@
+<h1 class="gbl-page-title">
+  <mat-icon>contact_support</mat-icon>
+  <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>
+</h1>
+
 @if (form.enabled) {
   @if (sentEmails.length) {
     <app-message type="success" nonclosable>
@@ -32,11 +37,19 @@
 <form
   [formGroup]="form"
   [appConfirmBeforeSubmit]="onSubmit.bind(this)"
+  [appConfirmBeforeSubmitBypass]="form.controls.method.value === 'generate'"
   appConfirmBeforeSubmitConfig="sendFeedbackRequest"
 >
+  <!--
   <app-message type="light" icon="lightbulb" i18n="@@Component.RequestFeedback.EmailsRequirements">
     Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion).
   </app-message>
+  -->
+
+  <mat-radio-group class="gbl-form-field block" [formControl]="form.controls.method" aria-label="Méthode">
+    <mat-radio-button class="me-4" value="send">Envoyer la demande par email</mat-radio-button>
+    <mat-radio-button class="me-4" value="generate">Générer un lien de demande à partager</mat-radio-button>
+  </mat-radio-group>
 
   <app-multi-autocomplete-email
     class="gbl-form-field"
@@ -100,8 +113,19 @@
 
   <div class="gbl-form-submit">
     <button [disabled]="form.invalid || form.disabled" mat-flat-button>
-      <mat-icon>send</mat-icon>
-      <ng-container i18n="@@Action.Send">Envoyer</ng-container>
+      <mat-icon>
+        @if (form.controls.method.value === 'send') {
+          send
+        } @else {
+          add_link
+        }
+      </mat-icon>
+
+      @if (form.controls.method.value === 'send') {
+        <ng-container i18n="@@Action.Send">Envoyer</ng-container>
+      } @else {
+        <ng-container i18n="@@Action.Generate">Générer</ng-container>
+      }
     </button>
 
     <div class="gbl-form-submit__info">

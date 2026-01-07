@@ -79,7 +79,7 @@ export class FeedbackController {
 
   @ApiOperation({ summary: 'Submit email for pre-request token and trigger feedback request' })
   @Post('pre-request/email')
-  async preRequestEmail(@Body() { token, giverEmail }: FeedbackPreRequestEmailDto) {
+  async preRequestEmail(@Body() { token, recipient: giverEmail }: FeedbackPreRequestEmailDto) {
     if (!this.contextService.hasValidClientLocaleIdCookie) {
       // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
       throw new BadRequestException('locale_id_cookie_missing');

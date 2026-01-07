@@ -113,7 +113,7 @@
     "Component.RequestFeedback.TemplateStartingAtZenikaTitle": "Starting at Zenika",
     "Component.RequestFeedback.UseTemplate": "Use a template",
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",
-    "Component.RequestFeedbackSuccess.Title": "FeedZback requested from:",
+    "Component.RequestFeedbackSuccess.SendTitle": "FeedZback requested from:",
     "Component.RequestFeedbackSuccess.ViewRequests": "View list of requests",
     "Component.SessionWarning.Message": "Your session has been idle for {$INTERPOLATION}.{$LINE_BREAK} Automatic logout imminent...",
     "Component.Settings.ManagerEmailInfo": "If this information is incorrect, don't worry! It is provided by your Google account, which may take a few days to update. FeedZback syncs with your Google account every time you log in to the app.",

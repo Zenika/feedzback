@@ -45,7 +45,9 @@
     </mat-autocomplete>
   </mat-chip-grid>
 
-  <mat-hint align="start" i18n="@@Component.EmailsField.Hint">Séparez les emails par des virgules</mat-hint>
+  @if (emails().enabled) {
+    <mat-hint align="start" i18n="@@Component.EmailsField.Hint">Séparez les emails par des virgules</mat-hint>
+  }
 
   <mat-error>{{ emails().errors | validationErrorMessage }}</mat-error>
 </mat-form-field>

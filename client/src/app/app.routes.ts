@@ -23,11 +23,11 @@ export const routes: Routes = [
   },
   {
     path: 'request',
-    loadChildren: () => import('./request/request.routes'),
+    loadChildren: () => import('./request-feedback/request-feedback.routes'),
   },
   {
     path: 'pre-request',
-    loadChildren: () => import('./pre-request-feedback-email/pre-request-feedback-email.routes'),
+    loadChildren: () => import('./pre-request-feedback/pre-request-feedback.routes'),
   },
   {
     path: 'give',

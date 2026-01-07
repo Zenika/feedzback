@@ -5,7 +5,7 @@ export type FeedbackPreRequestTokenDto = {
 
 export type FeedbackPreRequestEmailDto = {
   token: string;
-  giverEmail: string;
+  recipient: string;
 };
 
 export type FeedbackRequestDto = {

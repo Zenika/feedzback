@@ -1,31 +1,33 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, DOCUMENT, ViewEncapsulation, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { AuthService } from '../../shared/auth';
-import { MultiAutocompleteEmailComponent } from '../../shared/autocomplete-email';
-import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit';
-import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
-import { FeedbackService } from '../../shared/feedback';
-import { SMALL_MAX_LENGTH } from '../../shared/feedback/feedback.config';
-import { FeedbackRequestDto } from '../../shared/feedback/feedback.dto';
-import { MessageComponent } from '../../shared/message';
-import { StringArrayError } from '../../shared/validation';
-import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../../shared/validation/forbidden-values';
+import { AuthService } from '../shared/auth';
+import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
+import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit';
+import { DialogTooltipDirective } from '../shared/dialog-tooltip';
+import { FeedbackService } from '../shared/feedback';
+import { SMALL_MAX_LENGTH } from '../shared/feedback/feedback.config';
+import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
+import { MessageComponent } from '../shared/message';
+import { StringArrayError } from '../shared/validation';
+import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
 import {
   MULTIPLE_EMAILS_ERROR_KEY,
   MULTIPLE_EMAILS_PLACEHOLDER,
   getMultipleEmails,
   multipleEmailsValidatorFactory,
-} from '../../shared/validation/multiple-emails';
-import { RequestFeedbackSuccess } from '../request-feedback-success/request-feedback-success.types';
+} from '../shared/validation/multiple-emails';
+import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
 import { REQUEST_TEMPLATES } from './request-feedback.config';
 
 @Component({
@@ -37,6 +39,7 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatRadioModule,
     MatSlideToggleModule,
     MatTooltipModule,
     MultiAutocompleteEmailComponent,
@@ -48,6 +51,8 @@ import { REQUEST_TEMPLATES } from './request-feedback.config';
   encapsulation: ViewEncapsulation.None,
 })
 export class RequestFeedbackComponent {
+  private document = inject(DOCUMENT);
+
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
@@ -63,6 +68,7 @@ export class RequestFeedbackComponent {
   private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 
   protected form = this.formBuilder.group({
+    method: ['send'] as ('send' | 'generate')[],
     recipients: [
       this.recipient ? [this.recipient] : [],
       [Validators.required, multipleEmailsValidatorFactory(), this.forbiddenValuesValidator],
@@ -70,6 +76,12 @@ export class RequestFeedbackComponent {
     message: ['', [Validators.maxLength(this.messageMaxLength)]],
     shared: [true],
   });
+
+  constructor() {
+    this.form.controls.method.valueChanges.pipe(takeUntilDestroyed()).subscribe((method) => {
+      this.form.controls.recipients[method === 'generate' ? 'disable' : 'enable']();
+    });
+  }
 
   protected requestTemplates = REQUEST_TEMPLATES;
 
@@ -101,6 +113,14 @@ export class RequestFeedbackComponent {
   }
 
   protected onSubmit() {
+    if (this.form.controls.method.value === 'send') {
+      this.send();
+    } else {
+      this.generate();
+    }
+  }
+
+  private send() {
     if (this.form.invalid) {
       return;
     }
@@ -126,7 +146,10 @@ export class RequestFeedbackComponent {
         if (this.remainingUnsentEmails.length || this.remainingInvalidEmails.length) {
           this.form.enable();
         } else {
-          this.navigateToSuccess();
+          this.navigateToSuccess({
+            method: 'send',
+            recipients: this.sentEmails,
+          });
         }
       });
   }
@@ -144,10 +167,23 @@ export class RequestFeedbackComponent {
     this.form.controls.recipients.updateValueAndValidity();
   }
 
-  private navigateToSuccess() {
-    const state: RequestFeedbackSuccess = {
-      recipients: this.sentEmails,
-    };
+  private generate() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.form.disable();
+
+    const { message, shared } = this.form.getRawValue();
+
+    this.feedbackService.preRequestToken({ message, shared }).subscribe(({ token }) => {
+      this.navigateToSuccess({
+        method: 'generate',
+        linkToShare: `${this.document.location.origin}/pre-request/token/${token}`,
+      });
+    });
+  }
+
+  private navigateToSuccess(state: RequestFeedbackSuccess) {
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
   }
 }
