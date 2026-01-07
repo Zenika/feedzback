@@ -60,7 +60,9 @@
     </app-message>
   } @else {
     <app-message type="light" icon="link" nonclosable i18n="@@Component.RequestFeedback.GenerateRequirement">
-      Ce lien est valable pedant 3 jours et peut être utilisé 20 fois.
+      Pour des raisons de sécurité, le lien magique est valable pendant
+      <strong>{{ preRequestConfig.expirationInDays }} jours</strong> et peut être utilisé jusqu'à
+      <strong>{{ preRequestConfig.maxUses }} fois</strong>.
     </app-message>
   }
 

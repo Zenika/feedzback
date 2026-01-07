@@ -28,7 +28,11 @@ import {
   multipleEmailsValidatorFactory,
 } from '../shared/validation/multiple-emails';
 import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
-import { REQUEST_TEMPLATES } from './request-feedback.config';
+import {
+  FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS,
+  FEEDBACK_PRE_REQUEST_MAX_USES,
+  REQUEST_TEMPLATES,
+} from './request-feedback.config';
 
 @Component({
   selector: 'app-request-feedback',
@@ -64,6 +68,11 @@ export class RequestFeedbackComponent {
   private recipient: string = this.activatedRoute.snapshot.queryParams['recipient'] ?? '';
 
   protected messageMaxLength = SMALL_MAX_LENGTH;
+
+  protected preRequestConfig = {
+    expirationInDays: FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS,
+    maxUses: FEEDBACK_PRE_REQUEST_MAX_USES,
+  };
 
   private readonly forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 

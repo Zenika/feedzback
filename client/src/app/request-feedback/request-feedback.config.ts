@@ -20,3 +20,6 @@ export const REQUEST_TEMPLATES = [
     content: $localize`:@@Component.RequestFeedback.Template.ConferenceContent:Bonjour,\nRécemment, j'ai donné une conférence à laquelle tu as assisté et j'aimerais avoir ton feedback sur ce qui a bien fonctionné et ce que je pourrais améliorer.\nMerci par avance.`,
   },
 ] as const;
+
+export const FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS = 3; // (not `4` like on server-side)
+export const FEEDBACK_PRE_REQUEST_MAX_USES = 20;
