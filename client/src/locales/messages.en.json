@@ -129,6 +129,7 @@
     "Component.RequestFeedback.UseTemplate": "Use a template",
     "Component.RequestFeedbackSuccess.GenerateTitle": "Magic link to share with your colleagues:",
     "Component.RequestFeedbackSuccess.MagicLink": "Magic link",
+    "Component.RequestFeedbackSuccess.MagicLinkWarning": "Remember to copy the magic link, accessible only on this page!",
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",
     "Component.RequestFeedbackSuccess.SendTitle": "FeedZback requested from:",
     "Component.RequestFeedbackSuccess.ViewRequests": "View list of requests",

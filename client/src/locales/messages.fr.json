@@ -129,6 +129,7 @@
     "Component.RequestFeedback.UseTemplate": "S'inspirer d'un modèle",
     "Component.RequestFeedbackSuccess.GenerateTitle": " Lien magique à partager avec vos collègues : ",
     "Component.RequestFeedbackSuccess.MagicLink": "Lien magique",
+    "Component.RequestFeedbackSuccess.MagicLinkWarning": " Pensez à copier le lien magique, accessible uniquement sur cette page ! ",
     "Component.RequestFeedbackSuccess.RequestAnother": "Demander un autre feedZback",
     "Component.RequestFeedbackSuccess.SendTitle": "FeedZback demandé à :",
     "Component.RequestFeedbackSuccess.ViewRequests": " Consulter la liste des demandes ",
