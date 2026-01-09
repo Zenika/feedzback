@@ -29,24 +29,24 @@
 }
 
 .app-notification-snackbar {
-  --mat-snackbar-supporting-text-font: var(--mat-sys-title-medium-font);
-  --mat-snackbar-supporting-text-size: var(--mat-sys-title-medium-size);
-  --mat-snackbar-supporting-text-line-height: var(--mat-sys-title-medium-line-height);
-  --mat-snackbar-supporting-text-weight: var(--mat-sys-title-medium-weight);
+  --mat-snack-bar-supporting-text-font: var(--mat-sys-title-medium-font);
+  --mat-snack-bar-supporting-text-size: var(--mat-sys-title-medium-size);
+  --mat-snack-bar-supporting-text-line-height: var(--mat-sys-title-medium-line-height);
+  --mat-snack-bar-supporting-text-weight: var(--mat-sys-title-medium-weight);
 
   &--info {
-    --mat-snackbar-container-color: var(--app-notification-info-background-color);
-    --mat-snackbar-supporting-text-color: var(--app-notification-info-color);
+    --mat-snack-bar-container-color: var(--app-notification-info-background-color);
+    --mat-snack-bar-supporting-text-color: var(--app-notification-info-color);
   }
 
   &--success {
-    --mat-snackbar-container-color: var(--app-notification-success-background-color);
-    --mat-snackbar-supporting-text-color: var(--app-notification-success-color);
+    --mat-snack-bar-container-color: var(--app-notification-success-background-color);
+    --mat-snack-bar-supporting-text-color: var(--app-notification-success-color);
   }
 
   &--danger {
-    --mat-snackbar-container-color: var(--app-notification-danger-background-color);
-    --mat-snackbar-supporting-text-color: var(--app-notification-danger-color);
+    --mat-snack-bar-container-color: var(--app-notification-danger-background-color);
+    --mat-snack-bar-supporting-text-color: var(--app-notification-danger-color);
   }
 }
 
