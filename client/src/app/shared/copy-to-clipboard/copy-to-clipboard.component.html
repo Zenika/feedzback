@@ -1,0 +1,15 @@
+<input
+  class="app-copy-to-clipboard__input"
+  name="copy-to-clipboard"
+  readonly
+  [value]="value()"
+  (focus)="toClipboard()"
+/>
+
+<mat-icon class="app-copy-to-clipboard__icon" [class.app-copy-to-clipboard__icon--done]="done()">
+  @if (done()) {
+    task_alt
+  } @else {
+    content_copy
+  }
+</mat-icon>

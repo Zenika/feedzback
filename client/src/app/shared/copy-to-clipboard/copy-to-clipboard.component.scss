@@ -1,0 +1,37 @@
+.app-copy-to-clipboard {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+
+  border-radius: 0.25rem;
+  border: 1px solid var(--mat-sys-surface-container-high);
+  background-color: var(--mat-sys-surface-container-lowest);
+
+  &__input {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    field-sizing: content;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: inherit;
+    padding: 0 calc(24px + 1rem) 0 0.5rem;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 2.5rem;
+  }
+
+  &__icon {
+    position: absolute;
+    z-index: 0;
+    top: calc(1.25rem - 12px);
+    right: 0.5rem;
+
+    transition: color 150ms ease;
+
+    &--done {
+      color: var(--mat-sys-primary);
+    }
+  }
+}

@@ -35,17 +35,7 @@
           Lien magique à partager avec vos collègues :
         </h1>
 
-        <button
-          mat-button
-          (click)="toClipboard(state.magicLink)"
-          i18n-matTooltip="@@Action.CopyToClipboard"
-          matTooltip="Copier dans le presse-papier"
-        >
-          <div class="max-w-[75vw] overflow-hidden text-ellipsis whitespace-nowrap">
-            {{ state.magicLink }}
-          </div>
-          <mat-icon iconPositionEnd>content_copy</mat-icon>
-        </button>
+        <app-copy-to-clipboard [value]="state.magicLink" style="max-width: 80vw" />
       </div>
     }
   }
