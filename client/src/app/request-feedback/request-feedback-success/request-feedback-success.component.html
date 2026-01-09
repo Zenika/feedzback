@@ -35,7 +35,14 @@
           Lien magique à partager avec vos collègues :
         </h1>
 
-        <app-copy-to-clipboard [value]="state.magicLink" style="max-width: 80vw" />
+        <button
+          appCopyToClipboard
+          aria-label="Lien magique"
+          i18n-aria-label="@@Component.RequestFeedbackSuccess.MagicLink"
+          style="max-width: 80vw"
+        >
+          {{ state.magicLink }}
+        </button>
       </div>
     }
   }

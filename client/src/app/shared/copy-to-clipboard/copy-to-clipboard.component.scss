@@ -1,33 +1,45 @@
 .app-copy-to-clipboard {
-  position: relative;
-  display: inline-block;
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
   max-width: 100%;
+  cursor: copy;
+  user-select: text;
 
+  outline-offset: 0;
+  outline: 1px solid transparent;
   border-radius: 0.25rem;
   border: 1px solid var(--mat-sys-surface-container-high);
   background-color: var(--mat-sys-surface-container-lowest);
 
-  &__input {
-    position: relative;
-    z-index: 1;
-    max-width: 100%;
-    field-sizing: content;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: inherit;
-    padding: 0 calc(24px + 1rem) 0 0.5rem;
-    font: inherit;
-    font-size: 1rem;
-    line-height: 2.5rem;
+  color: inherit;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 2.5rem;
+
+  transition:
+    outline-color 150ms ease,
+    border-color 150ms ease;
+
+  &:focus {
+    outline-color: var(--mat-sys-primary);
+    border-color: var(--mat-sys-primary);
+  }
+
+  &__content {
+    text-wrap: nowrap;
+    overflow: auto;
+
+    // Hide scrollbar (act like an <input /> field)
+    scrollbar-width: none; // Firefox
+    &::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
   }
 
   &__icon {
-    position: absolute;
-    z-index: 0;
-    top: calc(1.25rem - 12px);
-    right: 0.5rem;
-
+    flex-shrink: 0;
     transition: color 150ms ease;
 
     &--done {
