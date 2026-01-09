@@ -10,7 +10,11 @@ const preRequestFeedbackErrMsg = {
 
 export const getPreRequestFeedbackErrMsg = ({ status, error }: HttpErrorResponse) => {
   if (status === 400) {
-    return preRequestFeedbackErrMsg['token_invalid'];
+    if (error.message === 'token_invalid') {
+      return preRequestFeedbackErrMsg['token_invalid'];
+    } else {
+      return $localize`:@@Message.ErrorOccured:Une erreur s'est produite.`;
+    }
   }
   return (preRequestFeedbackErrMsg as Record<string, string | undefined>)[error?.message];
 };

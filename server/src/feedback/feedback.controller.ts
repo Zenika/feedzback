@@ -69,7 +69,7 @@ export class FeedbackController {
   async checkPreRequest(@Param('token') tokenId: string) {
     const result = await this.feedbackDbService.checkPreRequest(tokenId);
     if (result === null) {
-      throw new BadRequestException();
+      throw new BadRequestException('token_invalid'); // The value 'token_invalid' is used on the client.
     }
     if (typeof result === 'string') {
       throw new ForbiddenException(result);
@@ -88,7 +88,7 @@ export class FeedbackController {
     const result = await this.feedbackDbService.preRequestEmail(token, giverEmail);
 
     if (result === null) {
-      throw new BadRequestException();
+      throw new BadRequestException('token_invalid'); // The value 'token_invalid' is used on the client.
     }
     if (typeof result === 'string') {
       throw new ForbiddenException(result);
