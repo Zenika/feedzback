@@ -2,8 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { FieldPath } from 'firebase-admin/firestore';
 import { CryptoService } from '../../core/crypto/crypto.service';
 import { FirebaseService, docWithId, docsWithId, sortList } from '../../core/firebase';
+import { FEEDBACK_PRE_REQUEST_MAX_USES } from '../feedback.config';
 import { Collection, feedbackItemFields } from './feedback-db.config';
-import { FeedbackRequestParams, GiveFeedbackParams, GiveRequestedFeedbackParams } from './feedback-db.params';
+import {
+  FeedbackPreRequestTokenParams,
+  FeedbackRequestParams,
+  GiveFeedbackParams,
+  GiveRequestedFeedbackParams,
+} from './feedback-db.params';
 import {
   Feedback,
   FeedbackArchived,
@@ -13,6 +19,8 @@ import {
   FeedbackItemWithId,
   FeedbackListMap,
   FeedbackListType,
+  FeedbackPreRequestSummary,
+  FeedbackPreRequestToken,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
@@ -29,6 +37,7 @@ import {
 import {
   NOT_ARCHIVED_FOR_GIVER,
   NOT_ARCHIVED_FOR_RECEIVER,
+  feedbackPreRequestExpirationDate,
   isRecentFeedbackRequest,
   sortFeedbackItemsDesc,
   sumFeedbackArchived,
@@ -38,6 +47,10 @@ import {
 export class FeedbackDbService {
   private get feedbackCollection() {
     return this.firebaseService.db.collection(Collection.feedback);
+  }
+
+  private get feedbackPreRequestTokenCollection() {
+    return this.firebaseService.db.collection(Collection.feedbackPreRequestToken);
   }
 
   private get feedbackRequestTokenCollection() {
@@ -67,6 +80,65 @@ export class FeedbackDbService {
         }),
       );
     });
+  }
+
+  // ----- Pre-request feedback -----
+
+  async preRequestToken({ receiverEmail, message, shared }: FeedbackPreRequestTokenParams) {
+    const preRequestToken: FeedbackPreRequestToken = this.encryptFeedback({
+      receiverEmail,
+      message,
+      shared,
+      expiresAt: feedbackPreRequestExpirationDate(),
+      usedBy: [],
+    });
+    const token = (await this.feedbackPreRequestTokenCollection.add(preRequestToken)).id;
+    return token;
+  }
+
+  async checkPreRequest(tokenId: string) {
+    const tokenDoc = await this.feedbackPreRequestTokenCollection.doc(tokenId).get();
+    if (!tokenDoc.exists) {
+      return null;
+    }
+
+    const { receiverEmail, message, shared, expiresAt, usedBy } = tokenDoc.data() as FeedbackPreRequestToken;
+
+    if (Date.now() > expiresAt) {
+      return 'token_expired' as const;
+    }
+    if (usedBy.length >= FEEDBACK_PRE_REQUEST_MAX_USES) {
+      return 'token_max_uses_reached' as const;
+    }
+
+    return this.decryptFeedback({ receiverEmail, message, shared }) satisfies FeedbackPreRequestSummary;
+  }
+
+  async preRequestEmail(token: string, giverEmail: string) {
+    const tokenDoc = await this.feedbackPreRequestTokenCollection.doc(token).get();
+    if (!tokenDoc.exists) {
+      return null;
+    }
+
+    const { receiverEmail, message, shared, expiresAt, usedBy } = tokenDoc.data() as FeedbackPreRequestToken;
+
+    if (Date.now() > expiresAt) {
+      return 'token_expired' as const;
+    }
+    if (usedBy.length >= FEEDBACK_PRE_REQUEST_MAX_USES) {
+      return 'token_max_uses_reached' as const;
+    }
+
+    if (usedBy.includes(giverEmail)) {
+      return 'recipient_already_used' as const;
+    }
+    if (giverEmail === receiverEmail) {
+      return 'recipient_forbidden' as const;
+    }
+
+    await this.feedbackPreRequestTokenCollection.doc(token).update({ usedBy: [...usedBy, giverEmail] });
+
+    return this.decryptFeedback({ receiverEmail, message, shared }) satisfies FeedbackPreRequestSummary;
   }
 
   // ----- Request feedback and give requested feedback -----

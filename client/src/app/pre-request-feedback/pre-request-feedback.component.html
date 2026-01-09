@@ -1,0 +1,52 @@
+<h1 class="gbl-page-title">
+  <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
+  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à la demande de feedZback </ng-container>
+</h1>
+
+@let s = summary();
+
+<app-message type="info" nonclosable>
+  <ng-container i18n="@@Component.GiveRequestedFeedback.Message1">Cette demande vous a été envoyée par :</ng-container>
+  <strong> {{ s.receiverEmail }}</strong
+  >.<br />
+
+  <ng-container i18n="@@Component.PreRequestFeedback.Requirement">
+    Veuillez saisir et valider <strong>votre adresse email</strong>.
+  </ng-container>
+</app-message>
+
+@if (s.message) {
+  <app-message icon="waving_hand">
+    <app-multi-line [text]="s.message" />
+  </app-message>
+}
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  @if (errorMessage(); as errMsg) {
+    <app-message type="danger">{{ errMsg }}</app-message>
+  }
+
+  <mat-form-field appearance="outline" class="gbl-form-field">
+    <mat-label i18n="@@Field.YourEmail">Votre email</mat-label>
+    <input
+      [formControl]="form.controls.recipient"
+      matInput
+      type="email"
+      autocomplete="email"
+      placeholder="jean.dupont@gmail.com"
+    />
+    <mat-error>{{ form.controls.recipient.errors | validationErrorMessage }}</mat-error>
+  </mat-form-field>
+
+  <div class="gbl-form-submit">
+    <button [disabled]="form.invalid || form.disabled" mat-flat-button>
+      <mat-icon>alternate_email</mat-icon>
+      <ng-container i18n="@@Action.Validate">Valider</ng-container>
+    </button>
+
+    <div class="gbl-form-submit__info">
+      <mat-icon>info</mat-icon>
+      <ng-container i18n="@@Message.FieldsRequired">Les champs marqués d'une * sont obligatoires</ng-container>
+    </div>
+  </div>
+</form>

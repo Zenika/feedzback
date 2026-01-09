@@ -16,8 +16,8 @@ import {
 } from '../shared/feedback/feedback.utils';
 
 @Component({
-  selector: 'app-history',
-  host: { class: 'app-history' },
+  selector: 'app-feedback-history',
+  host: { class: 'app-feedback-history' },
   imports: [
     NgTemplateOutlet,
     RouterLink,
@@ -29,11 +29,11 @@ import {
     FeedbackListComponent,
     FeedbackTypeIconPipe,
   ],
-  templateUrl: './history.component.html',
-  styleUrl: './history.component.scss',
+  templateUrl: './feedback-history.component.html',
+  styleUrl: './feedback-history.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export default class HistoryComponent {
+export default class FeedbackHistoryComponent {
   type = input(FeedbackType.received, {
     transform: (value: string) => getFeedbackType(value) ?? FeedbackType.received,
   });

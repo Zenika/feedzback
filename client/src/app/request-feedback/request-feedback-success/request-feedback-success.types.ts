@@ -1,3 +1,3 @@
-export type RequestFeedbackSuccess = {
-  recipients: string[];
-};
+export type RequestFeedbackSuccess =
+  | { method: 'send'; recipients: string[] }
+  | { method: 'generate'; magicLink: string };

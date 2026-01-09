@@ -2,6 +2,7 @@ import { FeedbackItem } from './feedback-db.types';
 
 export const Collection = {
   feedback: 'feedback',
+  feedbackPreRequestToken: 'feedbackPreRequestToken',
   feedbackRequestToken: 'feedbackRequestToken',
   feedbackDraft: 'feedbackDraft',
 } as const;

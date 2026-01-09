@@ -1,0 +1,9 @@
+<span class="app-copy-to-clipboard__content" #content><ng-content /></span>
+
+<mat-icon class="app-copy-to-clipboard__icon" [class.app-copy-to-clipboard__icon--done]="done()">
+  @if (done()) {
+    task_alt
+  } @else {
+    content_copy
+  }
+</mat-icon>

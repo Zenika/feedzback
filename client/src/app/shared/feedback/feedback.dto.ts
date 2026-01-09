@@ -1,3 +1,13 @@
+export type FeedbackPreRequestTokenDto = {
+  message: string;
+  shared: boolean;
+};
+
+export type FeedbackPreRequestEmailDto = {
+  token: string;
+  recipient: string;
+};
+
 export type FeedbackRequestDto = {
   recipient: string;
   message: string;

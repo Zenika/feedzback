@@ -22,6 +22,8 @@ import {
   DeleteFeedbackDraftDto,
   FeedbackArchiveRequestDto,
   FeedbackListMapDto,
+  FeedbackPreRequestEmailDto,
+  FeedbackPreRequestTokenDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
   GiveFeedbackDraftDto,
@@ -51,6 +53,53 @@ export class FeedbackController {
     return { ok: await this.feedbackDbService.ping() };
   }
 
+  // ----- Pre-request feedback -----
+
+  @ApiOperation({ summary: 'Create a pre-request token for shareable feedback link' })
+  @UseGuards(AuthGuard)
+  @Post('pre-request/token')
+  async preRequestToken(@Body() { message, shared }: FeedbackPreRequestTokenDto) {
+    const receiverEmail = this.authService.userEmail!;
+    const token = await this.feedbackDbService.preRequestToken({ receiverEmail, message, shared });
+    return { token };
+  }
+
+  @ApiOperation({ summary: 'Check if a pre-request token is valid and get its details' })
+  @Get('check-pre-request/:token')
+  async checkPreRequest(@Param('token') tokenId: string) {
+    const result = await this.feedbackDbService.checkPreRequest(tokenId);
+    if (result === null) {
+      throw new BadRequestException('token_invalid'); // The value 'token_invalid' is used on the client.
+    }
+    if (typeof result === 'string') {
+      throw new ForbiddenException(result);
+    }
+    return result;
+  }
+
+  @ApiOperation({ summary: 'Submit email for pre-request token and trigger feedback request' })
+  @Post('pre-request/email')
+  async preRequestEmail(@Body() { token, recipient: giverEmail }: FeedbackPreRequestEmailDto) {
+    if (!this.contextService.hasValidClientLocaleIdCookie) {
+      // The `clientLocaleId` is mandatory to determine the language to use in `FeedbackEmailService`
+      throw new BadRequestException('locale_id_cookie_missing');
+    }
+
+    const result = await this.feedbackDbService.preRequestEmail(token, giverEmail);
+
+    if (result === null) {
+      throw new BadRequestException('token_invalid'); // The value 'token_invalid' is used on the client.
+    }
+    if (typeof result === 'string') {
+      throw new ForbiddenException(result);
+    }
+
+    const { receiverEmail, message, shared } = result;
+
+    const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
+    await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
+  }
+
   // ----- Request feedback and give requested feedback -----
 
   @ApiOperation({ summary: 'Request feedback from one recipient' })
@@ -73,7 +122,6 @@ export class FeedbackController {
     }
 
     const tokenId = await this.feedbackDbService.request({ giverEmail, receiverEmail, message, shared });
-
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 

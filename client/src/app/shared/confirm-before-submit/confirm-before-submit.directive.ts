@@ -18,7 +18,14 @@ export class ConfirmBeforeSubmitDirective {
 
   submit = input.required<CallableFunction>({ alias: 'appConfirmBeforeSubmit' });
 
+  bypass = input(false, { alias: 'appConfirmBeforeSubmitBypass' });
+
   confirmBeforeSubmit() {
+    if (this.bypass()) {
+      this.submit()();
+      return;
+    }
+
     const config = this.config();
     const data: DialogData = typeof config === 'string' ? confirmBeforeSubmitMap[config] : config;
 

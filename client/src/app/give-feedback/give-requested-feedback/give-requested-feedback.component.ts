@@ -14,6 +14,7 @@ import { ConfirmBeforeSubmitDirective } from '../../shared/confirm-before-submit
 import { DialogComponent, DialogData } from '../../shared/dialog';
 import { DialogTooltipDirective } from '../../shared/dialog-tooltip';
 import { FeedbackService, FeedbackTypeIconPipe } from '../../shared/feedback';
+import { MultiLineComponent } from '../../shared/feedback/feedback-body/multi-line';
 import { FeedbackRequest, FeedbackRequestDraft } from '../../shared/feedback/feedback.types';
 import { MessageComponent } from '../../shared/message';
 import { NotificationService } from '../../shared/notification';
@@ -35,6 +36,7 @@ import { GiveRequestedFeedbackData } from './give-requested-feedback.types';
     ConfirmBeforeSubmitDirective,
     FeedbackTypeIconPipe,
     DialogTooltipDirective,
+    MultiLineComponent,
     MessageComponent,
     GiveFeedbackDetailsComponent,
   ],

@@ -1,0 +1,49 @@
+.app-copy-to-clipboard {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  max-width: 100%;
+  cursor: copy;
+  user-select: text;
+
+  outline-offset: 0;
+  outline: 1px solid transparent;
+  border-radius: 0.25rem;
+  border: 1px solid var(--mat-sys-surface-container-high);
+  background-color: var(--mat-sys-surface-container-lowest);
+
+  color: inherit;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 2.5rem;
+
+  transition:
+    outline-color 150ms ease,
+    border-color 150ms ease;
+
+  &:focus {
+    outline-color: var(--mat-sys-primary);
+    border-color: var(--mat-sys-primary);
+  }
+
+  &__content {
+    text-wrap: nowrap;
+    overflow: auto;
+
+    // Hide scrollbar (act like an <input /> field)
+    scrollbar-width: none; // Firefox
+    &::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    transition: color 150ms ease;
+
+    &--done {
+      color: var(--mat-sys-primary);
+    }
+  }
+}

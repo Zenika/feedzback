@@ -1,27 +1,57 @@
-@if (state.recipients) {
+@if (state) {
   <mat-icon class="gbl-info__icon">task_alt</mat-icon>
 
-  <div>
-    <h1 class="gbl-info__title" i18n="@@Component.RequestFeedbackSuccess.Title">FeedZback demandé à :</h1>
+  @switch (state.method) {
+    @case ('send') {
+      <div>
+        <h1 class="gbl-info__title" i18n="@@Component.RequestFeedbackSuccess.SendTitle">FeedZback demandé à :</h1>
 
-    <ul class="gbl-list inline-block">
-      @for (email of state.recipients; track email) {
-        <li class="gbl-list__item">{{ email }}</li>
-      }
-    </ul>
-  </div>
+        <ul class="gbl-list inline-block">
+          @for (email of state.recipients; track email) {
+            <li class="gbl-list__item">{{ email }}</li>
+          }
+        </ul>
+      </div>
 
-  <div class="gbl-info__buttons">
-    <button mat-stroked-button routerLink="/history/type/sentRequest">
-      <mat-icon>visibility</mat-icon>
-      <ng-container i18n="@@Component.RequestFeedbackSuccess.ViewRequests">
-        Consulter la liste des demandes
-      </ng-container>
-    </button>
+      <div class="gbl-info__buttons">
+        <button mat-stroked-button routerLink="/history/type/sentRequest">
+          <mat-icon>visibility</mat-icon>
+          <ng-container i18n="@@Component.RequestFeedbackSuccess.ViewRequests">
+            Consulter la liste des demandes
+          </ng-container>
+        </button>
 
-    <button mat-stroked-button routerLink="../">
-      <mat-icon>contact_support</mat-icon>
-      <ng-container i18n="@@Component.RequestFeedbackSuccess.RequestAnother">Demander un autre feedZback</ng-container>
-    </button>
-  </div>
+        <button mat-stroked-button routerLink="../">
+          <mat-icon>contact_support</mat-icon>
+          <ng-container i18n="@@Component.RequestFeedbackSuccess.RequestAnother"
+            >Demander un autre feedZback</ng-container
+          >
+        </button>
+      </div>
+    }
+    @case ('generate') {
+      <div>
+        <h1 class="gbl-info__title" i18n="@@Component.RequestFeedbackSuccess.GenerateTitle">
+          Lien magique à partager avec vos collègues :
+        </h1>
+
+        <button
+          appCopyToClipboard
+          aria-label="Lien magique"
+          i18n-aria-label="@@Component.RequestFeedbackSuccess.MagicLink"
+          style="max-width: 80vw"
+        >
+          {{ state.magicLink }}
+        </button>
+
+        <p
+          class="gbl-label-small mt-1! text-balance"
+          style="color: var(--mat-sys-on-surface-variant)"
+          i18n="@@Component.RequestFeedbackSuccess.MagicLinkWarning"
+        >
+          Pensez à copier le lien magique, accessible uniquement sur cette page !
+        </p>
+      </div>
+    }
+  }
 }

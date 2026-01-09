@@ -5,6 +5,8 @@ import { environment } from '../../../environments/environment';
 import { BYPASS_AUTHORIZATION_CONTEXT } from '../auth';
 import {
   FeedbackArchiveRequestDto,
+  FeedbackPreRequestEmailDto,
+  FeedbackPreRequestTokenDto,
   FeedbackRequestAgainDto,
   FeedbackRequestDto,
   GiveFeedbackDto,
@@ -17,6 +19,7 @@ import {
   FeedbackItem,
   FeedbackListMap,
   FeedbackListType,
+  FeedbackPreRequestSummary,
   FeedbackRequest,
   FeedbackRequestDraft,
   FeedbackRequestDraftType,
@@ -32,6 +35,27 @@ export class FeedbackService {
   private httpClient = inject(HttpClient);
 
   private apiBaseUrl = environment.apiBaseUrl;
+
+  // ----- Pre-request feedback -----
+
+  preRequestToken(dto: FeedbackPreRequestTokenDto) {
+    return this.httpClient.post<TokenObject>(`${this.apiBaseUrl}/feedback/pre-request/token`, dto);
+  }
+
+  checkPreRequest(token: string) {
+    return this.httpClient.get<FeedbackPreRequestSummary>(`${this.apiBaseUrl}/feedback/check-pre-request/${token}`, {
+      context: BYPASS_AUTHORIZATION_CONTEXT,
+    });
+  }
+
+  // The cookie `app-locale-id` must be provided (using the `withCredentials` option)
+  // so that the server can determine the language to be used in the emails.
+  preRequestEmail(dto: FeedbackPreRequestEmailDto) {
+    return this.httpClient.post<void>(`${this.apiBaseUrl}/feedback/pre-request/email`, dto, {
+      context: BYPASS_AUTHORIZATION_CONTEXT,
+      withCredentials: true,
+    });
+  }
 
   // ----- Request feedback and give requested feedback -----
 

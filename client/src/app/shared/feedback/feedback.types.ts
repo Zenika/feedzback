@@ -94,6 +94,14 @@ export type IdObject = { id: string };
 
 export type TokenObject = { token: string };
 
+// ----- FeedbackPreRequest -----
+
+export type FeedbackPreRequestSummary = {
+  receiverEmail: string;
+  message: string;
+  shared: boolean;
+};
+
 // --------------------------
 // ----- Internal types -----
 

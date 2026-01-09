@@ -1,0 +1,15 @@
+<mat-icon class="gbl-info__icon">task_alt</mat-icon>
+
+@if (state?.recipient; as recipient) {
+  <div>
+    <h1 class="gbl-info__title mb-1" i18n="@@Component.PreRequestFeedbackSuccess.Title">
+      Nous venons de vous envoyer un email à l'adresse :
+    </h1>
+
+    <p class="gbl-sys-primary mb-6!">{{ recipient }}</p>
+
+    <p class="text-balance" i18n="@@Component.PreRequestFeedbackSuccess.Message">
+      Il contient <strong>un lien sécurisé</strong> vous permettant de donner votre feedZback.
+    </p>
+  </div>
+}

@@ -1,8 +1,10 @@
+@let _noTrailingMargin = noTrailingMargin();
+
 @for (paragraph of text(); track $index) {
-  <p>
-    @for (line of paragraph; track $index; let isLast = $last) {
+  <p [class.mb-0!]="$last && _noTrailingMargin">
+    @for (line of paragraph; track $index) {
       {{ line }}
-      @if (!isLast) {
+      @if (!$last) {
         <br />
       }
     }

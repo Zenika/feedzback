@@ -6,7 +6,7 @@
 @if (form.enabled) {
   @if (sentEmails.length) {
     <app-message type="success" nonclosable>
-      <ng-container i18n="@@Component.RequestFeedback.Success">Votre demande a bien été envoyée à :</ng-container>
+      <ng-container i18n="@@Component.RequestFeedback.SentSuccess">Votre demande a bien été envoyée à :</ng-container>
       <br />
       {{ sentEmails.join(', ') }}
     </app-message>
@@ -14,7 +14,7 @@
 
   @if (remainingUnsentEmails.length) {
     <app-message type="danger" nonclosable>
-      <ng-container i18n="@@Component.RequestFeedback.Error"
+      <ng-container i18n="@@Component.RequestFeedback.SentError"
         >Une erreur s'est produite lors de l'envoi à :</ng-container
       >
       <br />
@@ -37,11 +37,34 @@
 <form
   [formGroup]="form"
   [appConfirmBeforeSubmit]="onSubmit.bind(this)"
+  [appConfirmBeforeSubmitBypass]="form.controls.method.value === 'generate'"
   appConfirmBeforeSubmitConfig="sendFeedbackRequest"
 >
-  <app-message type="light" icon="lightbulb" i18n="@@Component.RequestFeedback.EmailsRequirements">
-    Utilisez les adresses emails personnelles de vos collègues (évitez les listes de diffusion).
-  </app-message>
+  <mat-radio-group
+    class="gbl-form-field block"
+    [formControl]="form.controls.method"
+    aria-label="Méthode"
+    i18n-aria-label="@@Component.RequestFeedback.Method"
+  >
+    <mat-radio-button class="me-4" value="send" i18n="@@Component.RequestFeedback.SendMethod">
+      Par email
+    </mat-radio-button>
+    <mat-radio-button class="me-4" value="generate" i18n="@@Component.RequestFeedback.GenerateMethod">
+      Avec un lien magique
+    </mat-radio-button>
+  </mat-radio-group>
+
+  @if (form.controls.method.value === 'send') {
+    <app-message type="light" icon="alternate_email" nonclosable i18n="@@Component.RequestFeedback.SendRequirement">
+      Utilisez les adresses emails individuelles de vos collègues (évitez les listes de diffusion).
+    </app-message>
+  } @else {
+    <app-message type="light" icon="link" nonclosable i18n="@@Component.RequestFeedback.GenerateRequirement">
+      Pour des raisons de sécurité, le lien magique est valable pendant
+      <strong>{{ preRequestConfig.expirationInDays }} jours</strong> et peut être utilisé jusqu'à
+      <strong>{{ preRequestConfig.maxUses }} fois</strong>.
+    </app-message>
+  }
 
   <app-multi-autocomplete-email
     class="gbl-form-field"
@@ -105,8 +128,19 @@
 
   <div class="gbl-form-submit">
     <button [disabled]="form.invalid || form.disabled" mat-flat-button>
-      <mat-icon>send</mat-icon>
-      <ng-container i18n="@@Action.Send">Envoyer</ng-container>
+      <mat-icon>
+        @if (form.controls.method.value === 'send') {
+          send
+        } @else {
+          add_link
+        }
+      </mat-icon>
+
+      @if (form.controls.method.value === 'send') {
+        <ng-container i18n="@@Action.Send">Envoyer</ng-container>
+      } @else {
+        <ng-container i18n="@@Action.Generate">Générer</ng-container>
+      }
     </button>
 
     <div class="gbl-form-submit__info">

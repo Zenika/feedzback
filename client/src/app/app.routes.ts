@@ -26,6 +26,10 @@ export const routes: Routes = [
     loadChildren: () => import('./request-feedback/request-feedback.routes'),
   },
   {
+    path: 'pre-request',
+    loadChildren: () => import('./pre-request-feedback/pre-request-feedback.routes'),
+  },
+  {
     path: 'give',
     loadChildren: () => import('./give-feedback/give-feedback.routes'),
   },
@@ -40,9 +44,9 @@ export const routes: Routes = [
   },
   {
     path: 'history/type/:type',
-    loadComponent: () => import('./history/history.component'),
+    loadComponent: () => import('./feedback-history/feedback-history.component'),
     canActivate: [authGuard],
-    title: 'FeedZback - ' + $localize`:@@Title.History:Historique de mes feedZbacks`,
+    title: 'FeedZback - ' + $localize`:@@Title.FeedbackHistory:Historique de mes feedZbacks`,
   },
   {
     path: 'history/id/:id',

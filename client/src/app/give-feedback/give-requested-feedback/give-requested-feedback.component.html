@@ -1,13 +1,11 @@
 <h1 class="gbl-page-title">
   <mat-icon>{{ 'receivedRequest' | feedbackTypeIcon }}</mat-icon>
-  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à une demande de feedZback </ng-container>
+  <ng-container i18n="@@Title.GiveRequestedFeedback"> Répondre à la demande de feedZback </ng-container>
 </h1>
 
 <app-message type="info" nonclosable>
-  <ng-container i18n="@@Component.GiveRequestedFeedback.Message1">
-    Vous répondez à la demande de feedZback qui vous a été envoyée par
-  </ng-container>
-  <strong>{{ request().receiverEmail }}</strong
+  <ng-container i18n="@@Component.GiveRequestedFeedback.Message1">Cette demande vous a été envoyée par :</ng-container>
+  <strong> {{ request().receiverEmail }}</strong
   >.
 
   @if (request().shared) {
@@ -30,6 +28,12 @@
     </button>
   }
 </app-message>
+
+@if (request().message; as message) {
+  <app-message icon="waving_hand">
+    <app-multi-line [text]="message" />
+  </app-message>
+}
 
 <form [formGroup]="form" [appConfirmBeforeSubmit]="onSubmit.bind(this)" appConfirmBeforeSubmitConfig="sendFeedback">
   @if (anonymous) {
