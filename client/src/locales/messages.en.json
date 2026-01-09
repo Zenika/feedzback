@@ -103,7 +103,7 @@
     "Component.PreRequestFeedback.TokenExpired": "The magic link has expired.",
     "Component.PreRequestFeedback.TokenInvalid": "The magic link is invalid or has been deleted.",
     "Component.PreRequestFeedback.TokenMaxUsesReached": "The magic link usage limit has been reached.",
-    "Component.PreRequestFeedbackSuccess.Message": "It contains {$START_TAG_STRONG}a secure link{$CLOSE_TAG_STRONG} allowing you to provide your feedback.",
+    "Component.PreRequestFeedbackSuccess.Message": "It contains {$START_TAG_STRONG}a secure link{$CLOSE_TAG_STRONG} allowing you to provide your feedZback.",
     "Component.PreRequestFeedbackSuccess.Title": "We just sent you an email to the address:",
     "Component.RequestFeedback.GenerateMethod": "With a magic link",
     "Component.RequestFeedback.GenerateRequirement": "For security reasons, the magic link is valid for {$START_TAG_STRONG}{$INTERPOLATION} days{$CLOSE_TAG_STRONG} and can be used up to {$START_TAG_STRONG}{$INTERPOLATION_1} times{$CLOSE_TAG_STRONG}.",

@@ -95,7 +95,7 @@ export type FeedbackPreRequestToken = {
   message: string;
   shared: boolean;
   expiresAt: number;
-  usedBy: string[]; // TODO: rename `giverEmails`
+  usedBy: string[];
 };
 
 export type FeedbackPreRequestSummary = Pick<FeedbackPreRequestToken, 'receiverEmail' | 'message' | 'shared'>;
