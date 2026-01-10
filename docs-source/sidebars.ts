@@ -10,6 +10,7 @@ const sidebars: SidebarsConfig = {
       label: 'Business cases',
       items: [
         'business-cases/request-feedback',
+        'business-cases/pre-request-feedback',
         'business-cases/reply-to-feedback-request',
         'business-cases/give-spontaneous-feedback',
         'business-cases/feedback-draft',
