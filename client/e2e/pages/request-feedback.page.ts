@@ -14,8 +14,7 @@ export class RequestFeedbackPage {
     await emailsField.press('Tab');
 
     if (message) {
-      const messageField = this.page.getByText('Message');
-      messageField.fill(message);
+      await this.page.getByRole('textbox', { name: 'Message' }).fill(message);
     }
 
     await this.page.getByRole('button', { name: 'Envoyer' }).click();
