@@ -5,12 +5,14 @@ export class PreRequestFeedbackTokenPage {
 
   async goto() {
     await this.page.goto('/fr/request');
-
-    await this.page.getByRole('radio', { name: 'Avec un lien magique' }).check();
-    await expect(this.page.getByText('Emails de vos collègues')).toBeDisabled();
   }
 
+  // ----- Generate new magic link -----
+
   async generate(message = '') {
+    await this.page.getByRole('radio', { name: 'Avec un lien magique' }).check();
+    await expect(this.page.getByText('Emails de vos collègues')).toBeDisabled();
+
     if (message) {
       await this.page.getByRole('textbox', { name: 'Message' }).fill(message);
     }
@@ -19,7 +21,7 @@ export class PreRequestFeedbackTokenPage {
     await this.page.waitForURL('/fr/request/success');
   }
 
-  async getMagicLink(): Promise<string> {
+  async getMagicLinkFromFromSuccess(): Promise<string> {
     await this.page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
 
     await this.page.getByRole('button', { name: 'Lien magique' }).click();
@@ -29,9 +31,28 @@ export class PreRequestFeedbackTokenPage {
     return await this.page.evaluate(() => navigator.clipboard.readText());
   }
 
-  async gotoGenerateAndGetMagicLink(message = ''): Promise<string> {
+  async gotoGenerateAndGetMagicLinkFromSuccess(message = ''): Promise<string> {
     await this.goto();
     await this.generate(message);
-    return await this.getMagicLink();
+    return await this.getMagicLinkFromFromSuccess();
+  }
+
+  // ----- Check existing magic link -----
+
+  async checkMagicLinkFromDialog(rowIndex: number) {
+    await this.page.getByRole('button', { name: 'Liens magiques' }).click();
+
+    await this.page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+
+    await this.page.getByRole('button').filter({ hasText: 'content_copy' }).nth(rowIndex).click();
+
+    await this.page.getByRole('button', { name: 'Fermer' }).click();
+
+    return await this.page.evaluate(() => navigator.clipboard.readText());
+  }
+
+  async gotoAndCheckMagicLinkFromDialog(rowIndex: number): Promise<string> {
+    await this.goto();
+    return await this.checkMagicLinkFromDialog(rowIndex);
   }
 }

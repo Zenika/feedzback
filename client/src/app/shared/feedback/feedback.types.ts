@@ -102,6 +102,20 @@ export type FeedbackPreRequestSummary = {
   shared: boolean;
 };
 
+export type FeedbackPreRequestDetails = {
+  // Fields of `FeedbackPreRequestToken` Firestore collection
+  receiverEmail: string;
+  message: string;
+  shared: boolean;
+  expiresAt: number;
+  usedBy: string[];
+
+  // Additional fields
+  token: string;
+  expiresInHours: number;
+  remainingUses: number;
+};
+
 // --------------------------
 // ----- Internal types -----
 

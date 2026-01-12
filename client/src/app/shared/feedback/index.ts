@@ -5,6 +5,7 @@ export * from './feedback-list/feedback-list.component';
 export * from './feedback-type-icon.pipe';
 export * from './feedback.service';
 export * from './pending-feedback/pending-feedback.component';
+export * from './pre-request-feedback.service';
 
 // Note:
 // The following files, although part of the public API, have not been exported because they contain too many symbols.

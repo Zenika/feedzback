@@ -19,6 +19,7 @@ import {
   FeedbackItemWithId,
   FeedbackListMap,
   FeedbackListType,
+  FeedbackPreRequestDetails,
   FeedbackPreRequestSummary,
   FeedbackPreRequestToken,
   FeedbackRequest,
@@ -139,6 +140,33 @@ export class FeedbackDbService {
     await this.feedbackPreRequestTokenCollection.doc(token).update({ usedBy: [...usedBy, giverEmail] });
 
     return this.decryptFeedback({ receiverEmail, message, shared }) satisfies FeedbackPreRequestSummary;
+  }
+
+  async getValidPreRequestList(receiverEmail: string) {
+    const listDocs = await this.feedbackPreRequestTokenCollection.where('receiverEmail', '==', receiverEmail).get();
+
+    const now = Date.now();
+    const deletePromises: Promise<unknown>[] = [];
+    const nonExpiredTokens: FeedbackPreRequestDetails[] = [];
+
+    for (const doc of listDocs.docs) {
+      const data = doc.data() as FeedbackPreRequestToken;
+
+      if (now > data.expiresAt || data.usedBy.length >= FEEDBACK_PRE_REQUEST_MAX_USES) {
+        deletePromises.push(doc.ref.delete());
+      } else {
+        nonExpiredTokens.push({
+          ...this.decryptFeedback(data),
+          token: doc.id,
+          expiresInHours: Math.round((data.expiresAt - now) / 3_600_000),
+          remainingUses: FEEDBACK_PRE_REQUEST_MAX_USES - data.usedBy.length,
+        });
+      }
+    }
+
+    await Promise.all(deletePromises);
+
+    return nonExpiredTokens.sort((a, b) => b.expiresAt - a.expiresAt);
   }
 
   // ----- Request feedback and give requested feedback -----

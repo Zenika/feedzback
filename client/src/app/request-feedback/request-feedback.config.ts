@@ -21,5 +21,5 @@ export const REQUEST_TEMPLATES = [
   },
 ] as const;
 
-export const FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS = 3; // (not `4` like on server-side)
+export const FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS = 3;
 export const FEEDBACK_PRE_REQUEST_MAX_USES = 10;

@@ -8,6 +8,7 @@
     "Action.Close": "Fermer",
     "Action.CloseSession": "Fermer la session",
     "Action.Confirm": "Confirmer",
+    "Action.CopyToClipboard": "Copier dans le presse papier",
     "Action.DarkTheme": "Thème foncé",
     "Action.Delete": "Supprimer",
     "Action.Discard": "Abandonner",
@@ -50,6 +51,10 @@
     "Component.FeedbackHistory.NoData": " Aucun feedZback... ",
     "Component.FeedbackHistory.Received": "reçus",
     "Component.FeedbackHistory.Requested": "demandés",
+    "Component.FeedbackPreRequestList.ExpiresInHours": "Expire dans",
+    "Component.FeedbackPreRequestList.Preview": "Aperçu dans un nouvel onglet",
+    "Component.FeedbackPreRequestList.RemainingUses": " Utilisations restantes ",
+    "Component.FeedbackPreRequestList.Shared": "Partagé",
     "Component.GiveFeedback.ApplyDraftContent": "Si vous appliquez le brouillon, le feedZback que vous avez commencé à rédiger sera perdu.",
     "Component.GiveFeedback.ApplyDraftTitle": "Appliquer le brouillon ?",
     "Component.GiveFeedback.Share": " Partager le feedZback avec le manager de votre collègue ",
@@ -107,6 +112,7 @@
     "Component.PreRequestFeedbackSuccess.Title": " Nous venons de vous envoyer un email à l'adresse : ",
     "Component.RequestFeedback.GenerateMethod": " Avec un lien magique ",
     "Component.RequestFeedback.GenerateRequirement": " Pour des raisons de sécurité, le lien magique est valable pendant {$START_TAG_STRONG}{$INTERPOLATION} jours{$CLOSE_TAG_STRONG} et peut être utilisé jusqu'à {$START_TAG_STRONG}{$INTERPOLATION_1} fois{$CLOSE_TAG_STRONG}. ",
+    "Component.RequestFeedback.MagicLinks": "Liens magiques",
     "Component.RequestFeedback.Method": "Méthode",
     "Component.RequestFeedback.NoTemplate": " Aucun modèle ",
     "Component.RequestFeedback.SendMethod": " Par email ",
@@ -129,7 +135,6 @@
     "Component.RequestFeedback.UseTemplate": "S'inspirer d'un modèle",
     "Component.RequestFeedbackSuccess.GenerateTitle": " Lien magique à partager avec vos collègues : ",
     "Component.RequestFeedbackSuccess.MagicLink": "Lien magique",
-    "Component.RequestFeedbackSuccess.MagicLinkWarning": " Pensez à copier le lien magique, accessible uniquement sur cette page ! ",
     "Component.RequestFeedbackSuccess.RequestAnother": "Demander un autre feedZback",
     "Component.RequestFeedbackSuccess.SendTitle": "FeedZback demandé à :",
     "Component.RequestFeedbackSuccess.ViewRequests": " Consulter la liste des demandes ",
@@ -198,6 +203,7 @@
     "Title.SharedFeedbackDetails": "Détails du FeedZback partagé",
     "Title.SharedFeedbackList": "Liste des feedZbacks partagés",
     "Title.SignIn": "Se connecter",
-    "Word.Or": "ou"
+    "Word.Or": "ou",
+    "Word.Times": "{VAR_PLURAL, plural, =one {fois} =other {fois}}"
   }
 }

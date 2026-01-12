@@ -100,6 +100,12 @@ export type FeedbackPreRequestToken = {
 
 export type FeedbackPreRequestSummary = Pick<FeedbackPreRequestToken, 'receiverEmail' | 'message' | 'shared'>;
 
+export type FeedbackPreRequestDetails = FeedbackPreRequestToken & {
+  token: string;
+  expiresInHours: number;
+  remainingUses: number;
+};
+
 // ----- FeedbackRequestToken -----
 
 export type FeedbackRequestToken = {
