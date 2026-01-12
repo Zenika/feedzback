@@ -1,4 +1,4 @@
-@if (magicLinkList(); as list) {
+@if (magicLinkList()?.length && magicLinkList(); as list) {
   @if (device() !== 'mobile') {
     <button mat-flat-button class="float-right ms-4" (click)="openMagicLinksDialog()">
       <mat-icon>link</mat-icon>

@@ -11,12 +11,16 @@ const feedbackMessage = 'Quel est votre feedback ?';
 
 test.beforeEach(({ page }) => new FirestorePage(page).reset());
 
-test('Submit spontaneous feedback', async ({ page }) => {
+test('Pre-request feedback', async ({ page }) => {
   // ====== Alfred generate magic link ======
 
   await new SignInPage(page).gotoAndSignIn(Persona.Alfred);
 
-  const magicLink = await new PreRequestFeedbackTokenPage(page).gotoGenerateAndGetMagicLink(feedbackMessage);
+  const magicLink = await new PreRequestFeedbackTokenPage(page).gotoGenerateAndGetMagicLinkFromSuccess(feedbackMessage);
+
+  const magicLinkFromDialog = await new PreRequestFeedbackTokenPage(page).gotoAndCheckMagicLinkFromDialog(0);
+
+  expect(magicLinkFromDialog, 'Magic link from dialog matches the one from success-page').toEqual(magicLink);
 
   await new UserMenuPage(page).signOut();
 
