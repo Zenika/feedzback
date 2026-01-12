@@ -1,8 +1,8 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { Component, DOCUMENT, ViewEncapsulation, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, TemplateRef, ViewEncapsulation, inject, viewChild } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -12,14 +12,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concatMap, from, toArray } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { AuthService } from '../shared/auth';
 import { MultiAutocompleteEmailComponent } from '../shared/autocomplete-email';
+import { BreakpointService } from '../shared/breakpoint';
 import { ConfirmBeforeSubmitDirective } from '../shared/confirm-before-submit';
 import { DialogTooltipDirective } from '../shared/dialog-tooltip';
-import { FeedbackService } from '../shared/feedback';
+import { FeedbackService, PreRequestFeedbackService } from '../shared/feedback';
 import { SMALL_MAX_LENGTH } from '../shared/feedback/feedback.config';
 import { FeedbackRequestDto } from '../shared/feedback/feedback.dto';
+import { IconDirective } from '../shared/icon';
 import { MessageComponent } from '../shared/message';
 import { StringArrayError } from '../shared/validation';
 import { FORBIDDEN_VALUES_KEY, forbiddenValuesValidatorFactory } from '../shared/validation/forbidden-values';
@@ -29,6 +30,7 @@ import {
   getMultipleEmails,
   multipleEmailsValidatorFactory,
 } from '../shared/validation/multiple-emails';
+import { FeedbackPreRequestListComponent } from './feedback-pre-request-list/feedback-pre-request-list.component';
 import { RequestFeedbackSuccess } from './request-feedback-success/request-feedback-success.types';
 import {
   FEEDBACK_PRE_REQUEST_EXPIRATION_IN_DAYS,
@@ -41,6 +43,7 @@ import {
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -51,23 +54,33 @@ import {
     MultiAutocompleteEmailComponent,
     ConfirmBeforeSubmitDirective,
     DialogTooltipDirective,
+    IconDirective,
     MessageComponent,
+    FeedbackPreRequestListComponent,
   ],
   templateUrl: './request-feedback.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class RequestFeedbackComponent {
-  private document = inject(DOCUMENT);
-
-  private appBaseHref = inject(APP_BASE_HREF);
-
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
 
   private formBuilder = inject(NonNullableFormBuilder);
 
+  private matDialog = inject(MatDialog);
+
+  protected device = toSignal(inject(BreakpointService).device$);
+
   private feedbackService = inject(FeedbackService);
+
+  private preRequestFeedbackService = inject(PreRequestFeedbackService);
+
+  private magicLinkDialogRef?: MatDialogRef<unknown>;
+
+  magicLinkDialogTmpl = viewChild.required<TemplateRef<unknown>>('magicLinkDialogTmpl');
+
+  protected magicLinkList = toSignal(this.feedbackService.getPreRequestList()); // Note: this value is NOT reactive!
 
   private recipient: string = this.activatedRoute.snapshot.queryParams['recipient'] ?? '';
 
@@ -191,22 +204,17 @@ export class RequestFeedbackComponent {
     this.feedbackService.preRequestToken({ message, shared }).subscribe(({ token }) => {
       this.navigateToSuccess({
         method: 'generate',
-        magicLink: this.buildMagicLink(token),
+        magicLink: this.preRequestFeedbackService.buildMagicLink(token),
       });
     });
   }
 
-  private buildMagicLink(token: string) {
-    // IMPORTANT NOTE:
-    // The magic link does not contain the locale.
-    // The redirection to `/fr` or `/en` occurs when the colleague visits the magic link page (see `src/404.html` for details).
-    // However, since this redirection is not functional in the `dev-local` environment, the locale is explicitly added only in this case.
-    const locale = environment.alias === 'dev-local' ? this.appBaseHref : '/';
-
-    return `${this.document.location.origin}${locale}pre-request/token/${token}`;
-  }
-
   private navigateToSuccess(state: RequestFeedbackSuccess) {
     this.router.navigate(['success'], { relativeTo: this.activatedRoute, state });
+  }
+
+  protected openMagicLinksDialog() {
+    this.magicLinkDialogRef = this.matDialog.open(this.magicLinkDialogTmpl(), { width: '560px' });
+    this.magicLinkDialogRef.afterClosed().subscribe(() => (this.magicLinkDialogRef = undefined));
   }
 }

@@ -1,0 +1,66 @@
+<table mat-table [dataSource]="list()" class="w-full">
+  <ng-container matColumnDef="expiresInHours">
+    <th mat-header-cell *matHeaderCellDef i18n="@@Component.FeedbackPreRequestList.ExpiresInHours">Expire dans</th>
+    <td mat-cell *matCellDef="let element">{{ d(element).expiresInHours }}h</td>
+  </ng-container>
+
+  <ng-container matColumnDef="remainingUses">
+    <th mat-header-cell *matHeaderCellDef i18n="@@Component.FeedbackPreRequestList.RemainingUses">
+      Utilisations restantes
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{ d(element).remainingUses }}
+      <ng-container i18n="@@Word.Times">{d(element).remainingUses, plural, =one {fois} =other {fois}}</ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="shared">
+    <th mat-header-cell *matHeaderCellDef i18n="@@Component.FeedbackPreRequestList.Shared">Partagé</th>
+    <td mat-cell *matCellDef="let element">
+      @if (d(element).shared) {
+        <mat-icon>check</mat-icon>
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+    <td mat-cell *matCellDef="let element" class="w-0 whitespace-nowrap">
+      @let magicLink = preRequestFeedbackService.buildMagicLink(d(element).token);
+      @let isCopiedMagicLink = magicLink === copiedMagicLink();
+
+      <a
+        [href]="magicLink"
+        target="feedbackPreRequestPreview"
+        class="gbl-sys-primary-hover"
+        mat-icon-button
+        matTooltipPosition="left"
+        matTooltip="Aperçu dans un nouvel onglet"
+        i18n-matTooltip="@@Component.FeedbackPreRequestList.Preview"
+      >
+        <mat-icon>open_in_new</mat-icon>
+      </a>
+
+      <button
+        class="gbl-sys-primary-hover"
+        [style.color]="isCopiedMagicLink ? 'var(--mat-sys-primary)' : undefined"
+        mat-icon-button
+        matTooltipPosition="right"
+        matTooltip="Copier dans le presse papier"
+        i18n-matTooltip="@@Action.CopyToClipboard"
+        (click)="toClipboard(magicLink)"
+      >
+        <mat-icon>
+          @if (isCopiedMagicLink) {
+            task_alt
+          } @else {
+            content_copy
+          }
+        </mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
+</table>

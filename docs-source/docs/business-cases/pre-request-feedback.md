@@ -1,4 +1,4 @@
-# Pre-request feedback with magic link
+# Pre-request feedback
 
 ## User story
 
@@ -55,7 +55,7 @@ https://feedzback.znk.io/pre-request/token/abc123xyz
 ```
 
 The magic link does not contain the locale.
-The redirection to `/fr` or `/en` occurs when the colleague visits the magic link page (see `src/404.html` for details).
+The redirection to `/fr` or `/en` occurs when the colleague visits the magic link page (see [`src/404.html`](https://github.com/Zenika/feedzback/blob/main/client/src/404.html) for details).
 
 However, since this redirection is not functional in the `dev-local` environment, the locale is explicitly added only in this case.
 

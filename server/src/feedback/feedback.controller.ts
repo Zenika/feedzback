@@ -100,6 +100,14 @@ export class FeedbackController {
     await this.feedbackEmailService.requested(giverEmail, receiverEmail, message, tokenId);
   }
 
+  @ApiOperation({ summary: 'Get the list of valid feedback pre-requests for the authenticated user' })
+  @UseGuards(AuthGuard)
+  @Get('pre-request/list')
+  async getValidPreRequestList() {
+    const receiverEmail = this.authService.userEmail!;
+    return this.feedbackDbService.getValidPreRequestList(receiverEmail);
+  }
+
   // ----- Request feedback and give requested feedback -----
 
   @ApiOperation({ summary: 'Request feedback from one recipient' })

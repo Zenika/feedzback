@@ -1,3 +1,38 @@
+@if (magicLinkList(); as list) {
+  @if (device() !== 'mobile') {
+    <button mat-flat-button class="float-right ms-4" (click)="openMagicLinksDialog()">
+      <mat-icon>link</mat-icon>
+      <ng-container i18n="@@Component.RequestFeedback.MagicLinks">Liens magiques</ng-container>
+    </button>
+  } @else {
+    <button
+      mat-mini-fab
+      class="absolute! top-5 right-5"
+      matTooltipPosition="left"
+      matTooltip="Liens magiques"
+      i18n-matTooltip="@@Component.RequestFeedback.MagicLinks"
+      aria-label="Liens magiques"
+      i18n-aria-label="@@Component.RequestFeedback.MagicLinks"
+      (click)="openMagicLinksDialog()"
+    >
+      <mat-icon>link</mat-icon>
+    </button>
+  }
+
+  <ng-template #magicLinkDialogTmpl>
+    <div role="heading" aria-level="2" mat-dialog-title>
+      <mat-icon appIcon size="md" pull="left">link</mat-icon>
+      <ng-container i18n="@@Component.RequestFeedback.MagicLinks">Liens magiques</ng-container>
+    </div>
+    <div mat-dialog-content>
+      <app-feedback-pre-request-list [list]="list" />
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close cdkFocusInitial i18n="@@Action.Close">Fermer</button>
+    </div>
+  </ng-template>
+}
+
 <h1 class="gbl-page-title">
   <mat-icon>contact_support</mat-icon>
   <ng-container i18n="@@Title.RequestFeedback">Demander du feedZback</ng-container>

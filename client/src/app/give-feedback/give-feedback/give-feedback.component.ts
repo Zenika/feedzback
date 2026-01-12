@@ -49,8 +49,6 @@ import { giveFeedbackDraftDialogData } from './give-feedback.constants';
   encapsulation: ViewEncapsulation.None,
 })
 export class GiveFeedbackComponent implements UnsavedFormGuard {
-  draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
-
   private router = inject(Router);
 
   private activatedRoute = inject(ActivatedRoute);
@@ -78,6 +76,8 @@ export class GiveFeedbackComponent implements UnsavedFormGuard {
   private forbiddenValuesValidator = forbiddenValuesValidatorFactory([inject(AuthService).userEmail()]);
 
   private draftDialogRef?: MatDialogRef<unknown>;
+
+  draftDialogTmpl = viewChild.required<TemplateRef<unknown>>('draftDialogTmpl');
 
   protected form = this.formBuilder.group({
     receiverEmail: [

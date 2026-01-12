@@ -19,6 +19,7 @@ import {
   FeedbackItem,
   FeedbackListMap,
   FeedbackListType,
+  FeedbackPreRequestDetails,
   FeedbackPreRequestSummary,
   FeedbackRequest,
   FeedbackRequestDraft,
@@ -55,6 +56,10 @@ export class FeedbackService {
       context: BYPASS_AUTHORIZATION_CONTEXT,
       withCredentials: true,
     });
+  }
+
+  getPreRequestList() {
+    return this.httpClient.get<FeedbackPreRequestDetails[]>(`${this.apiBaseUrl}/feedback/pre-request/list`);
   }
 
   // ----- Request feedback and give requested feedback -----

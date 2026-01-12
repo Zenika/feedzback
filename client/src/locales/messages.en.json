@@ -8,6 +8,7 @@
     "Action.Close": "Close",
     "Action.CloseSession": "Close session",
     "Action.Confirm": "Confirm",
+    "Action.CopyToClipboard": "Copy to clipboard",
     "Action.DarkTheme": "Dark theme",
     "Action.Delete": "Delete",
     "Action.Discard": "Discard",
@@ -50,6 +51,10 @@
     "Component.FeedbackHistory.NoData": "No feedZback...",
     "Component.FeedbackHistory.Received": "received",
     "Component.FeedbackHistory.Requested": "requested",
+    "Component.FeedbackPreRequestList.ExpiresInHours": "Expires in",
+    "Component.FeedbackPreRequestList.Preview": "Preview in new tab",
+    "Component.FeedbackPreRequestList.RemainingUses": "Remaining uses",
+    "Component.FeedbackPreRequestList.Shared": "Shared",
     "Component.GiveFeedback.ApplyDraftContent": "If you apply the draft, the feedZback you've started will be lost.",
     "Component.GiveFeedback.ApplyDraftTitle": "Apply draft?",
     "Component.GiveFeedback.Share": "Share feedback with your colleague's manager",
@@ -107,6 +112,7 @@
     "Component.PreRequestFeedbackSuccess.Title": "We just sent you an email to the address:",
     "Component.RequestFeedback.GenerateMethod": "With a magic link",
     "Component.RequestFeedback.GenerateRequirement": "For security reasons, the magic link is valid for {$START_TAG_STRONG}{$INTERPOLATION} days{$CLOSE_TAG_STRONG} and can be used up to {$START_TAG_STRONG}{$INTERPOLATION_1} times{$CLOSE_TAG_STRONG}.",
+    "Component.RequestFeedback.MagicLinks": "Magic links",
     "Component.RequestFeedback.Method": "Method",
     "Component.RequestFeedback.NoTemplate": "No template",
     "Component.RequestFeedback.SendMethod": "By email",
@@ -129,7 +135,6 @@
     "Component.RequestFeedback.UseTemplate": "Use a template",
     "Component.RequestFeedbackSuccess.GenerateTitle": "Magic link to share with your colleagues:",
     "Component.RequestFeedbackSuccess.MagicLink": "Magic link",
-    "Component.RequestFeedbackSuccess.MagicLinkWarning": "Remember to copy the magic link, accessible only on this page!",
     "Component.RequestFeedbackSuccess.RequestAnother": "Request another feedZback",
     "Component.RequestFeedbackSuccess.SendTitle": "FeedZback requested from:",
     "Component.RequestFeedbackSuccess.ViewRequests": "View list of requests",
@@ -198,6 +203,7 @@
     "Title.SharedFeedbackDetails": "Shared feedZback details",
     "Title.SharedFeedbackList": "Shared feedZback list",
     "Title.SignIn": "Sign in",
-    "Word.Or": "or"
+    "Word.Or": "or",
+    "Word.Times": "{VAR_PLURAL, plural, =one {time} =other {times}}"
   }
 }
